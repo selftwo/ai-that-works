@@ -1,0 +1,8287 @@
+1
+00:00:03,510 --> 00:00:03,520
+is really really really fascinating in
+
+2
+00:00:03,520 --> 00:00:05,600
+the form of
+
+3
+00:00:05,600 --> 00:00:07,359
+almost like taking coding agents to the
+
+4
+00:00:07,359 --> 00:00:09,679
+nth degree is how I when I first saw
+
+5
+00:00:09,679 --> 00:00:11,679
+this concept is how I framed it in my
+
+6
+00:00:11,679 --> 00:00:17,199
+mind is what happens when um when you
+
+7
+00:00:17,199 --> 00:00:19,520
+just let a coding agent go wild and I
+
+8
+00:00:19,520 --> 00:00:23,680
+think most people's perspective is
+
+9
+00:00:23,680 --> 00:00:26,640
+nothing much or nothing nothing useful
+
+10
+00:00:26,640 --> 00:00:28,640
+and I was convinced that that may be
+
+11
+00:00:28,640 --> 00:00:32,079
+wrong Um, and I think that is really the
+
+12
+00:00:32,079 --> 00:00:33,600
+topic of today's conversation for
+
+13
+00:00:33,600 --> 00:00:35,680
+everyone interested. I'm BBOP. I work on
+
+14
+00:00:35,680 --> 00:00:36,960
+BAML, which is a programming language
+
+15
+00:00:36,960 --> 00:00:40,160
+for building AI stuff. And my co-host,
+
+16
+00:00:40,160 --> 00:00:43,040
+uh, I'm Dex. I work on code layer, which
+
+17
+00:00:43,040 --> 00:00:45,680
+is an IDE for getting more out of coding
+
+18
+00:00:45,680 --> 00:00:47,520
+agents.
+
+19
+00:00:47,520 --> 00:00:49,440
+>> If you guys find this kind of stuff fun,
+
+20
+00:00:49,440 --> 00:00:51,280
+this is the link where we post events
+
+21
+00:00:51,280 --> 00:00:52,800
+usually up ahead of time, and usually
+
+22
+00:00:52,800 --> 00:00:54,000
+they have the right link to the live
+
+23
+00:00:54,000 --> 00:00:57,440
+stream. Uh, [laughter] but I think with
+
+24
+00:00:57,440 --> 00:00:59,280
+that, we should really get started. I
+
+25
+00:00:59,280 --> 00:01:00,640
+think we have a really special guest
+
+26
+00:01:00,640 --> 00:01:02,079
+joining today.
+
+27
+00:01:02,079 --> 00:01:04,960
+>> I did just send him the link. Um I told
+
+28
+00:01:04,960 --> 00:01:07,360
+him I would do a quick intro before we
+
+29
+00:01:07,360 --> 00:01:09,119
+got him on stage anyways. So if you want
+
+30
+00:01:09,119 --> 00:01:13,360
+to coordinate with him on X or wherever
+
+31
+00:01:13,360 --> 00:01:15,119
+um and make sure he can get in, I can
+
+32
+00:01:15,119 --> 00:01:16,240
+start running through kind of what we're
+
+33
+00:01:16,240 --> 00:01:17,040
+going to talk about today.
+
+34
+00:01:17,040 --> 00:01:18,400
+>> Do it. Let's get people.
+
+35
+00:01:18,400 --> 00:01:21,119
+>> Amazing. Okay, so I'm actually going to
+
+36
+00:01:21,119 --> 00:01:22,960
+start with a demo because that seems to
+
+37
+00:01:22,960 --> 00:01:26,320
+be pretty fun. Um, I am going to pop
+
+38
+00:01:26,320 --> 00:01:29,280
+over to my terminal and I have a very
+
+39
+00:01:29,280 --> 00:01:31,280
+silly little Next.js app. So, if I go to
+
+40
+00:01:31,280 --> 00:01:34,479
+local S 3000, this is the complete
+
+41
+00:01:34,479 --> 00:01:38,240
+generic Nex.js starter app. Um, and I
+
+42
+00:01:38,240 --> 00:01:39,680
+have a couple things in here that I'm
+
+43
+00:01:39,680 --> 00:01:41,360
+going to go over with you, but I just
+
+44
+00:01:41,360 --> 00:01:43,520
+want to before I kick this off, I just
+
+45
+00:01:43,520 --> 00:01:45,759
+want to um kind of create some
+
+46
+00:01:45,759 --> 00:01:47,439
+specifications for an app that we want
+
+47
+00:01:47,439 --> 00:01:50,399
+to make. So, uh, Vibob, do you have any
+
+48
+00:01:50,399 --> 00:01:52,399
+suggestions for an app you'd like to see
+
+49
+00:01:52,399 --> 00:01:54,960
+us build today?
+
+50
+00:01:54,960 --> 00:01:56,159
+>> I think we could do something really
+
+51
+00:01:56,159 --> 00:01:57,439
+complex, but let's do something really
+
+52
+00:01:57,439 --> 00:01:58,799
+simple so people can we can talk about
+
+53
+00:01:58,799 --> 00:02:00,479
+the concepts more. Let's make a simple
+
+54
+00:02:00,479 --> 00:02:02,479
+to like a task manager, like a to-do
+
+55
+00:02:02,479 --> 00:02:04,719
+list. Very, very basic example, but we
+
+56
+00:02:04,719 --> 00:02:06,000
+can take it to the end degree and make
+
+57
+00:02:06,000 --> 00:02:10,479
+it as complicated as we need to.
+
+58
+00:02:10,479 --> 00:02:11,840
+>> All right, I'm going to do login with
+
+59
+00:02:11,840 --> 00:02:14,800
+email and magic link. Um, so what users
+
+60
+00:02:14,800 --> 00:02:17,280
+can add to-dos,
+
+61
+00:02:17,280 --> 00:02:21,599
+they can group to-dos into lists. They
+
+62
+00:02:21,599 --> 00:02:25,680
+can share a list of to-dos with other
+
+63
+00:02:25,680 --> 00:02:27,599
+users.
+
+64
+00:02:27,599 --> 00:02:31,760
+They can add comments and emoji
+
+65
+00:02:31,760 --> 00:02:34,640
+reactions to to-dos.
+
+66
+00:02:34,640 --> 00:02:39,680
+Um, they can mark
+
+67
+00:02:39,680 --> 00:02:43,440
+to-dos as to
+
+68
+00:02:43,440 --> 00:02:47,200
+>> doing, done, cancelled.
+
+69
+00:02:47,200 --> 00:02:47,519
+>> Yeah.
+
+70
+00:02:47,519 --> 00:02:49,360
+>> And maybe I want to see a conbon board
+
+71
+00:02:49,360 --> 00:02:50,800
+while I'm at it.
+
+72
+00:02:50,800 --> 00:02:55,200
+They can view all their to-dos for a
+
+73
+00:02:55,200 --> 00:02:59,360
+list in a conbon board or view all
+
+74
+00:02:59,360 --> 00:03:01,519
+to-dos
+
+75
+00:03:01,519 --> 00:03:04,480
+across all lists in a single board.
+
+76
+00:03:04,480 --> 00:03:04,879
+Great.
+
+77
+00:03:04,879 --> 00:03:05,599
+>> Cool.
+
+78
+00:03:05,599 --> 00:03:08,560
+>> Uh I'm going to kick this
+
+79
+00:03:08,560 --> 00:03:10,239
+>> simple concept and like took it to the
+
+80
+00:03:10,239 --> 00:03:11,840
+nth degree because that is more than a
+
+81
+00:03:11,840 --> 00:03:13,200
+basic to-do app.
+
+82
+00:03:13,200 --> 00:03:16,159
+>> Yep. Um, so, uh, what we're going to do
+
+83
+00:03:16,159 --> 00:03:18,480
+is we're gonna NVM deactivate and then
+
+84
+00:03:18,480 --> 00:03:20,319
+we're going to run this this loop. Um,
+
+85
+00:03:20,319 --> 00:03:21,360
+I'm not going to tell you what this is
+
+86
+00:03:21,360 --> 00:03:23,760
+doing because I'm going to pop over to
+
+87
+00:03:23,760 --> 00:03:26,879
+kind of the, um, let me just make sure
+
+88
+00:03:26,879 --> 00:03:29,360
+we got our whiteboard up. This is not
+
+89
+00:03:29,360 --> 00:03:32,080
+it. Okay, this is the whiteboard we'll
+
+90
+00:03:32,080 --> 00:03:34,000
+be using. I sent you the link. Um, we're
+
+91
+00:03:34,000 --> 00:03:35,280
+going to learn a technique today called
+
+92
+00:03:35,280 --> 00:03:37,440
+Ralph Wigum, which was written um by
+
+93
+00:03:37,440 --> 00:03:39,920
+Jeff Huntley as part of um, a bunch of
+
+94
+00:03:39,920 --> 00:03:41,280
+research he was doing with coding agents
+
+95
+00:03:41,280 --> 00:03:45,360
+this year. Um the basic idea here is you
+
+96
+00:03:45,360 --> 00:03:49,040
+run a coding a in a loop forever. Uh and
+
+97
+00:03:49,040 --> 00:03:50,720
+you just give it the same prompt over
+
+98
+00:03:50,720 --> 00:03:52,720
+and over and over again. We'll go into
+
+99
+00:03:52,720 --> 00:03:55,360
+what that prompt is. Um and you can look
+
+100
+00:03:55,360 --> 00:03:56,879
+at this and you can say, "Oh, this is
+
+101
+00:03:56,879 --> 00:03:59,200
+like a very dumb way to use a coding
+
+102
+00:03:59,200 --> 00:04:00,560
+agent." Uh and Je
+
+103
+00:04:00,560 --> 00:04:03,439
+>> is a very dumb way to use a text.
+
+104
+00:04:03,439 --> 00:04:05,680
+>> There he is. What's up, man?
+
+105
+00:04:05,680 --> 00:04:07,920
+>> I remember dropping in to San Franand
+
+106
+00:04:07,920 --> 00:04:10,000
+around about July saying just showing
+
+107
+00:04:10,000 --> 00:04:11,760
+you this thing. It's like this has to be
+
+108
+00:04:11,760 --> 00:04:13,439
+the dumbest thing.
+
+109
+00:04:13,439 --> 00:04:13,680
+>> Yeah.
+
+110
+00:04:13,680 --> 00:04:16,799
+>> Um just to basically research, explore
+
+111
+00:04:16,799 --> 00:04:19,040
+the limits of what is possible.
+
+112
+00:04:19,040 --> 00:04:19,600
+>> Um
+
+113
+00:04:19,600 --> 00:04:20,799
+>> yeah,
+
+114
+00:04:20,799 --> 00:04:24,880
+>> but it turns out it is
+
+115
+00:04:24,880 --> 00:04:26,639
+>> you can make it a little bit better.
+
+116
+00:04:26,639 --> 00:04:30,000
+There are limitations to it. Um
+
+117
+00:04:30,000 --> 00:04:31,600
+>> yeah, there's so much.
+
+118
+00:04:31,600 --> 00:04:33,199
+>> I think the main thing that it did for
+
+119
+00:04:33,199 --> 00:04:35,040
+me when you first uh when I first read
+
+120
+00:04:35,040 --> 00:04:36,240
+this concept and talked about it with
+
+121
+00:04:36,240 --> 00:04:37,680
+both of you was really just changed the
+
+122
+00:04:37,680 --> 00:04:38,720
+paradigm of how I thought about it. So,
+
+123
+00:04:38,720 --> 00:04:40,400
+we talk about context injuring a lot on
+
+124
+00:04:40,400 --> 00:04:44,160
+the show. And I think one of the things
+
+125
+00:04:44,160 --> 00:04:46,000
+that I find myself having to do every
+
+126
+00:04:46,000 --> 00:04:48,560
+single time and very often is challenge
+
+127
+00:04:48,560 --> 00:04:51,040
+myself into remembering what can a model
+
+128
+00:04:51,040 --> 00:04:52,880
+do. Sometimes
+
+129
+00:04:52,880 --> 00:04:54,960
+>> I'm always I'm always like I get kind of
+
+130
+00:04:54,960 --> 00:04:57,280
+like um skill capped based on my last
+
+131
+00:04:57,280 --> 00:04:59,680
+assumption of what the model is doing.
+
+132
+00:04:59,680 --> 00:05:01,680
+>> And what some of the best AI engineers I
+
+133
+00:05:01,680 --> 00:05:03,120
+know are the ones that actually like
+
+134
+00:05:03,120 --> 00:05:04,880
+constantly challenge their own worldview
+
+135
+00:05:04,880 --> 00:05:06,880
+of what is happening. And I think that
+
+136
+00:05:06,880 --> 00:05:08,880
+why I like
+
+137
+00:05:08,880 --> 00:05:10,800
+Why this topic specifically I think was
+
+138
+00:05:10,800 --> 00:05:12,000
+really useful is because I think it was
+
+139
+00:05:12,000 --> 00:05:14,479
+the first time when it um challenged my
+
+140
+00:05:14,479 --> 00:05:16,960
+worldview of what a model can do and it
+
+141
+00:05:16,960 --> 00:05:19,840
+reframed the perspective of like hey
+
+142
+00:05:19,840 --> 00:05:21,759
+like there was a time when to build
+
+143
+00:05:21,759 --> 00:05:23,600
+roller coaster tycoon you had to do bit
+
+144
+00:05:23,600 --> 00:05:26,000
+magic and make all the stuff work and
+
+145
+00:05:26,000 --> 00:05:28,960
+like today you can do it way faster and
+
+146
+00:05:28,960 --> 00:05:30,479
+context engineering is a very very
+
+147
+00:05:30,479 --> 00:05:32,000
+useful skill set and even today you
+
+148
+00:05:32,000 --> 00:05:33,759
+still optimize your code but you don't
+
+149
+00:05:33,759 --> 00:05:35,520
+optimize at the level of bit magic
+
+150
+00:05:35,520 --> 00:05:36,880
+usually you optimize at the level of
+
+151
+00:05:36,880 --> 00:05:39,360
+like networking different things have
+
+152
+00:05:39,360 --> 00:05:40,720
+become bottlenecks and you want you want
+
+153
+00:05:40,720 --> 00:05:43,039
+to make sure that you constantly evolve
+
+154
+00:05:43,039 --> 00:05:45,520
+and Ralph Wigum as a concept of running
+
+155
+00:05:45,520 --> 00:05:47,360
+that while loop and letting it just like
+
+156
+00:05:47,360 --> 00:05:49,600
+produce an app
+
+157
+00:05:49,600 --> 00:05:52,160
+I think does that same I don't think
+
+158
+00:05:52,160 --> 00:05:53,680
+it's there yet like you were saying Jeff
+
+159
+00:05:53,680 --> 00:05:54,560
+but I think it is
+
+160
+00:05:54,560 --> 00:05:56,320
+>> it's not all there yet it's not all yet
+
+161
+00:05:56,320 --> 00:05:58,560
+but but it it warps your brain a little
+
+162
+00:05:58,560 --> 00:06:02,479
+bit um it's it's got all the I like to
+
+163
+00:06:02,479 --> 00:06:05,919
+use the term harnesses and models so any
+
+164
+00:06:05,919 --> 00:06:08,560
+agentic tooling out there like cursor,
+
+165
+00:06:08,560 --> 00:06:10,720
+wind surf, all these other tools out
+
+166
+00:06:10,720 --> 00:06:12,960
+there, open code, their harnesses, they
+
+167
+00:06:12,960 --> 00:06:15,520
+do pretty much nothing. They do pretty
+
+168
+00:06:15,520 --> 00:06:18,000
+much nothing. It's all the model and how
+
+169
+00:06:18,000 --> 00:06:20,720
+you use the model.
+
+170
+00:06:20,720 --> 00:06:21,199
+And
+
+171
+00:06:21,199 --> 00:06:23,199
+>> so I've got a before we get into this,
+
+172
+00:06:23,199 --> 00:06:24,479
+Jeff, uh give everyone a quick
+
+173
+00:06:24,479 --> 00:06:26,479
+background. Who are you? Uh what have
+
+174
+00:06:26,479 --> 00:06:27,759
+you worked on?
+
+175
+00:06:27,759 --> 00:06:30,720
+>> Why do you think uh you're awesome? And
+
+176
+00:06:30,720 --> 00:06:33,120
+and let's let's quickly before you jump
+
+177
+00:06:33,120 --> 00:06:34,720
+like tell us who you are, what you've
+
+178
+00:06:34,720 --> 00:06:36,479
+been working on and also like let's work
+
+179
+00:06:36,479 --> 00:06:38,479
+backwards like talk about cursed and
+
+180
+00:06:38,479 --> 00:06:40,319
+your experience and how you learned that
+
+181
+00:06:40,319 --> 00:06:42,560
+and then we'll pop back to the code. I
+
+182
+00:06:42,560 --> 00:06:44,400
+have a bunch of other examples of other
+
+183
+00:06:44,400 --> 00:06:46,160
+things you can use Ralph for that we'll
+
+184
+00:06:46,160 --> 00:06:47,840
+get into actual like code that we'll
+
+185
+00:06:47,840 --> 00:06:49,280
+ship as part of this episode. But yeah,
+
+186
+00:06:49,280 --> 00:06:50,639
+give us the intro. How did you find this
+
+187
+00:06:50,639 --> 00:06:52,800
+and what did you use it to build?
+
+188
+00:06:52,800 --> 00:06:56,880
+Yeah. So um uh my personal journey with
+
+189
+00:06:56,880 --> 00:06:59,680
+AI starts ran about December almost a
+
+190
+00:06:59,680 --> 00:07:03,440
+year ago now. Um I did a very crude
+
+191
+00:07:03,440 --> 00:07:07,919
+running uh running an agent in a loop
+
+192
+00:07:07,919 --> 00:07:10,639
+but I was myself attended and then
+
+193
+00:07:10,639 --> 00:07:13,680
+through myself having to babysit this I
+
+194
+00:07:13,680 --> 00:07:15,120
+was able to identify like some
+
+195
+00:07:15,120 --> 00:07:16,880
+abstractions and then I learned a little
+
+196
+00:07:16,880 --> 00:07:19,759
+bit more about what inferencing is in
+
+197
+00:07:19,759 --> 00:07:21,680
+that sense and like context engineer in
+
+198
+00:07:21,680 --> 00:07:23,280
+the early days even before those terms
+
+199
+00:07:23,280 --> 00:07:25,360
+weren't even defined and I just kept
+
+200
+00:07:25,360 --> 00:07:28,240
+playing um and I realized if I had long
+
+201
+00:07:28,240 --> 00:07:31,039
+run one long running chat I was getting
+
+202
+00:07:31,039 --> 00:07:33,280
+worse and worse outcomes. But if I
+
+203
+00:07:33,280 --> 00:07:35,360
+clicked new chat and then I and I was
+
+204
+00:07:35,360 --> 00:07:38,000
+able to encodify that up. So I was a
+
+205
+00:07:38,000 --> 00:07:40,800
+tech lead over at Campber doing AI dev
+
+206
+00:07:40,800 --> 00:07:44,560
+tooling. Um moved over this when I saw
+
+207
+00:07:44,560 --> 00:07:46,639
+you uh Dex. So I was over at SourceCraft
+
+208
+00:07:46,639 --> 00:07:49,039
+was one of the engineers building AMP.
+
+209
+00:07:49,039 --> 00:07:53,199
+>> Um and where I am now is not public
+
+210
+00:07:53,199 --> 00:07:56,319
+knowledge. Um
+
+211
+00:07:56,319 --> 00:07:58,080
+typical good things.
+
+212
+00:07:58,080 --> 00:08:01,759
+>> Yeah. Um, so,
+
+213
+00:08:01,759 --> 00:08:02,879
+um, for me it was always
+
+214
+00:08:02,879 --> 00:08:05,039
+>> You did something very specific that I I
+
+215
+00:08:05,039 --> 00:08:06,720
+personally thought was very impressive.
+
+216
+00:08:06,720 --> 00:08:09,120
+One of your first earliest like mad
+
+217
+00:08:09,120 --> 00:08:12,800
+crazy AI projects, cursing.
+
+218
+00:08:12,800 --> 00:08:15,759
+>> Yeah. So, that that was like
+
+219
+00:08:15,759 --> 00:08:18,800
+it was kind of kind of there's so many
+
+220
+00:08:18,800 --> 00:08:21,199
+people just saying, "Hey, uh, it's not
+
+221
+00:08:21,199 --> 00:08:22,560
+good enough yet. I'm only going to be
+
+222
+00:08:22,560 --> 00:08:24,400
+interested when it makes a programming
+
+223
+00:08:24,400 --> 00:08:26,160
+language." And I didn't have to pay for
+
+224
+00:08:26,160 --> 00:08:27,599
+tokens.
+
+225
+00:08:27,599 --> 00:08:29,360
+I didn't have to pay for tokens. I'm
+
+226
+00:08:29,360 --> 00:08:30,560
+like, bet.
+
+227
+00:08:30,560 --> 00:08:32,080
+>> And that's the goal, right? Is like
+
+228
+00:08:32,080 --> 00:08:34,000
+everybody who's building with AI is
+
+229
+00:08:34,000 --> 00:08:35,760
+like, yeah, you don't want to just spend
+
+230
+00:08:35,760 --> 00:08:37,440
+tokens and throw them into the black
+
+231
+00:08:37,440 --> 00:08:39,839
+hole. But the more
+
+232
+00:08:39,839 --> 00:08:41,599
+meaning the more you can spend
+
+233
+00:08:41,599 --> 00:08:43,360
+meaningful tokens on things that
+
+234
+00:08:43,360 --> 00:08:46,000
+actually make progress, even if it's
+
+235
+00:08:46,000 --> 00:08:48,480
+incremental or small progress, you want
+
+236
+00:08:48,480 --> 00:08:50,000
+to spend as many tokens as possible.
+
+237
+00:08:50,000 --> 00:08:51,440
+This is what we always pitch. It's a
+
+238
+00:08:51,440 --> 00:08:52,560
+little bit of a meme, but it's like at
+
+239
+00:08:52,560 --> 00:08:53,519
+the end of the day, that should be your
+
+240
+00:08:53,519 --> 00:08:55,680
+goal is like how can you spend as many
+
+241
+00:08:55,680 --> 00:08:58,399
+tokens on meaningful work with as little
+
+242
+00:08:58,399 --> 00:09:00,160
+human input and effort as possible,
+
+243
+00:09:00,160 --> 00:09:01,519
+right?
+
+244
+00:09:01,519 --> 00:09:04,320
+>> Exactly. Um I I've heard stories of
+
+245
+00:09:04,320 --> 00:09:07,440
+companies capping uh productivity like
+
+246
+00:09:07,440 --> 00:09:10,720
+like a max dollar spend of like $500 a
+
+247
+00:09:10,720 --> 00:09:12,800
+month per employee type stuff. And then
+
+248
+00:09:12,800 --> 00:09:15,920
+none of that stuff makes sense. Um you
+
+249
+00:09:15,920 --> 00:09:19,120
+you don't want to cap uh uh people like
+
+250
+00:09:19,120 --> 00:09:22,399
+they're when they're productive um and
+
+251
+00:09:22,399 --> 00:09:25,519
+you do want to ensure that you you are
+
+252
+00:09:25,519 --> 00:09:28,399
+getting incremental output. So Kirst was
+
+253
+00:09:28,399 --> 00:09:31,360
+kind of proving that hey look it you
+
+254
+00:09:31,360 --> 00:09:33,440
+could make a new programming language.
+
+255
+00:09:33,440 --> 00:09:35,760
+Now, it's it's pretty much the dumbest
+
+256
+00:09:35,760 --> 00:09:38,160
+way to do it because it'd be re much
+
+257
+00:09:38,160 --> 00:09:41,440
+easier to clone the Golang source code
+
+258
+00:09:41,440 --> 00:09:45,120
+and just use reax and just like relex.
+
+259
+00:09:45,120 --> 00:09:46,000
+It
+
+260
+00:09:46,000 --> 00:09:47,839
+>> would have been change all the keywords
+
+261
+00:09:47,839 --> 00:09:49,440
+and leave all the source code the same.
+
+262
+00:09:49,440 --> 00:09:50,640
+>> Just change the keywords. There's a
+
+263
+00:09:50,640 --> 00:09:53,839
+keyword swap, right? So, it was a for me
+
+264
+00:09:53,839 --> 00:09:55,839
+playing around with the idea of like
+
+265
+00:09:55,839 --> 00:09:59,680
+what languages work best for LLMs.
+
+266
+00:09:59,680 --> 00:10:02,880
+So I started in C and I was able to see
+
+267
+00:10:02,880 --> 00:10:06,160
+that it was uh it was able to do a prep
+
+268
+00:10:06,160 --> 00:10:09,839
+pasa pretty well. Uh it was going quite
+
+269
+00:10:09,839 --> 00:10:11,760
+it was making progress but it was going
+
+270
+00:10:11,760 --> 00:10:13,440
+backwards because there was not what I
+
+271
+00:10:13,440 --> 00:10:15,120
+described as like back pressure on the
+
+272
+00:10:15,120 --> 00:10:18,000
+generation. So some sort of type system
+
+273
+00:10:18,000 --> 00:10:23,600
+etc or like it lms can drive GDB
+
+274
+00:10:23,600 --> 00:10:25,680
+and you it's able to troubleshoot
+
+275
+00:10:25,680 --> 00:10:27,839
+itself. you add print f debug logging
+
+276
+00:10:27,839 --> 00:10:30,160
+but it was just going backwards. So
+
+277
+00:10:30,160 --> 00:10:34,880
+cursed originally was in C. Um then I
+
+278
+00:10:34,880 --> 00:10:35,839
+took it over to
+
+279
+00:10:35,839 --> 00:10:38,160
+>> curs the cursed compiler itself that
+
+280
+00:10:38,160 --> 00:10:39,040
+like generates like
+
+281
+00:10:39,040 --> 00:10:40,800
+>> yeah cursed compiler itself originally
+
+282
+00:10:40,800 --> 00:10:42,720
+it's actually three compilers in the
+
+283
+00:10:42,720 --> 00:10:44,720
+history there on GitHub.
+
+284
+00:10:44,720 --> 00:10:47,680
+>> First first was in C.
+
+285
+00:10:47,680 --> 00:10:48,399
+>> Go ahead.
+
+286
+00:10:48,399 --> 00:10:51,839
+>> Um it was in C then it went to Rust then
+
+287
+00:10:51,839 --> 00:10:54,000
+it went to Zigg.
+
+288
+00:10:54,000 --> 00:10:55,680
+>> Let's get into it. I want to ask I want
+
+289
+00:10:55,680 --> 00:10:57,279
+to ask a couple quick questions when you
+
+290
+00:10:57,279 --> 00:10:59,440
+were doing this. So let's to catch
+
+291
+00:10:59,440 --> 00:11:01,040
+everyone else up. What is the goal of
+
+292
+00:11:01,040 --> 00:11:02,800
+curs? So one, we wanted to make a new
+
+293
+00:11:02,800 --> 00:11:04,320
+programming language with the goal of
+
+294
+00:11:04,320 --> 00:11:06,480
+pushing current models to their limits
+
+295
+00:11:06,480 --> 00:11:09,040
+and see what is possible. And I think um
+
+296
+00:11:09,040 --> 00:11:10,640
+I can say it best, making a programming
+
+297
+00:11:10,640 --> 00:11:12,880
+language is [ __ ] hard. Um I've been
+
+298
+00:11:12,880 --> 00:11:15,680
+doing a bit you build a real programming
+
+299
+00:11:15,680 --> 00:11:17,600
+language not as a joke.
+
+300
+00:11:17,600 --> 00:11:19,440
+>> Um and like it is really hard. And
+
+301
+00:11:19,440 --> 00:11:21,839
+you're right, AI models do struggle with
+
+302
+00:11:21,839 --> 00:11:24,000
+this. And this is why I was a really big
+
+303
+00:11:24,000 --> 00:11:25,519
+skeptic on AI coding in general for a
+
+304
+00:11:25,519 --> 00:11:27,760
+while because like I was like there's
+
+305
+00:11:27,760 --> 00:11:28,959
+just certain classes of problems where
+
+306
+00:11:28,959 --> 00:11:31,839
+they don't work well in but obviously I
+
+307
+00:11:31,839 --> 00:11:35,200
+feel differently now. Um so I want to
+
+308
+00:11:35,200 --> 00:11:37,600
+like tell the goal of it. So cursed lang
+
+309
+00:11:37,600 --> 00:11:40,240
+you write a cursed file. What happens
+
+310
+00:11:40,240 --> 00:11:42,240
+from like a whiteboard? What happens
+
+311
+00:11:42,240 --> 00:11:43,680
+next? So you write a cursed file. The
+
+312
+00:11:43,680 --> 00:11:46,880
+compiler is supposed to do blah fill in
+
+313
+00:11:46,880 --> 00:11:47,279
+blah.
+
+314
+00:11:47,279 --> 00:11:52,320
+>> Yeah sure. Um it's essentially uh it has
+
+315
+00:11:52,320 --> 00:11:55,360
+LLVM back end um okay and it also has
+
+316
+00:11:55,360 --> 00:11:58,160
+interpreted mode. There's a couple bugs
+
+317
+00:11:58,160 --> 00:12:01,839
+um that I need to resolve uh to get over
+
+318
+00:12:01,839 --> 00:12:03,680
+line. Um this thing has been the biggest
+
+319
+00:12:03,680 --> 00:12:06,000
+test of faith for me. We'll get into
+
+320
+00:12:06,000 --> 00:12:08,800
+that a little bit later. Um, but the
+
+321
+00:12:08,800 --> 00:12:10,480
+ultimate goal for me was really to test
+
+322
+00:12:10,480 --> 00:12:12,560
+the boundaries
+
+323
+00:12:12,560 --> 00:12:14,560
+of what is possible for research and
+
+324
+00:12:14,560 --> 00:12:16,720
+understanding how to drive an LLM really
+
+325
+00:12:16,720 --> 00:12:19,360
+hard. For example,
+
+326
+00:12:19,360 --> 00:12:22,160
+um there's a there's a f there's a this
+
+327
+00:12:22,160 --> 00:12:24,240
+uh LLM
+
+328
+00:12:24,240 --> 00:12:25,680
+um people say, well, it's not in the
+
+329
+00:12:25,680 --> 00:12:28,560
+training data set. It can't be done.
+
+330
+00:12:28,560 --> 00:12:31,519
+I was out there to prove that wrong.
+
+331
+00:12:31,519 --> 00:12:33,680
+Like the fact that it can make a
+
+332
+00:12:33,680 --> 00:12:35,680
+compiler
+
+333
+00:12:35,680 --> 00:12:37,760
+>> not that interesting, right? There's a
+
+334
+00:12:37,760 --> 00:12:40,480
+huge tone of knowledge. It's it fact
+
+335
+00:12:40,480 --> 00:12:42,320
+that it can make a compiler is not that
+
+336
+00:12:42,320 --> 00:12:44,720
+interesting to me. What is interesting
+
+337
+00:12:44,720 --> 00:12:48,480
+is how the heck did it generate all of
+
+338
+00:12:48,480 --> 00:12:51,519
+the actual programs in the language when
+
+339
+00:12:51,519 --> 00:12:54,399
+it's not in the training data set.
+
+340
+00:12:54,399 --> 00:12:56,800
+>> So I've got I think that's a really
+
+341
+00:12:56,800 --> 00:12:57,839
+interesting thing. We should double
+
+342
+00:12:57,839 --> 00:12:59,360
+click on that. So the question I have
+
+343
+00:12:59,360 --> 00:13:00,720
+for you is I think one of the decisions
+
+344
+00:13:00,720 --> 00:13:02,079
+that you made for cursing in the very
+
+345
+00:13:02,079 --> 00:13:05,519
+very big uh first uh is that you're not
+
+346
+00:13:05,519 --> 00:13:07,519
+going to reinvent all the syntax. You're
+
+347
+00:13:07,519 --> 00:13:09,440
+going to say I want to copy the syntax
+
+348
+00:13:09,440 --> 00:13:12,480
+of go effectively and I'll change the
+
+349
+00:13:12,480 --> 00:13:13,920
+keywords to mean something totally
+
+350
+00:13:13,920 --> 00:13:16,079
+different where it doesn't really matter
+
+351
+00:13:16,079 --> 00:13:18,240
+to the model and then what I will do is
+
+352
+00:13:18,240 --> 00:13:20,399
+then I will convert that to an LVM back
+
+353
+00:13:20,399 --> 00:13:22,720
+end. Do you leverage any of the existing
+
+354
+00:13:22,720 --> 00:13:24,959
+Go pipelines to do any of that work or
+
+355
+00:13:24,959 --> 00:13:27,920
+do you go straight from curs to LVM?
+
+356
+00:13:27,920 --> 00:13:29,839
+curse straight to LLVM.
+
+357
+00:13:29,839 --> 00:13:31,760
+>> Okay, perfect. So, that's part one. I
+
+358
+00:13:31,760 --> 00:13:33,040
+think just so people can understand what
+
+359
+00:13:33,040 --> 00:13:34,800
+that is. What is LVM? A lot of people
+
+360
+00:13:34,800 --> 00:13:36,079
+may not know. I'll just give a quick
+
+361
+00:13:36,079 --> 00:13:39,519
+primer. LVM is the premise of like uh
+
+362
+00:13:39,519 --> 00:13:40,639
+for those of you that don't know how to
+
+363
+00:13:40,639 --> 00:13:42,560
+describe this in a really good concrete
+
+364
+00:13:42,560 --> 00:13:44,320
+way.
+
+365
+00:13:44,320 --> 00:13:48,160
+When you want to write uh
+
+366
+00:13:48,160 --> 00:13:49,600
+at some point your code has to convert
+
+367
+00:13:49,600 --> 00:13:52,399
+to a lot of bits and machinery that a
+
+368
+00:13:52,399 --> 00:13:53,839
+machine operates. You don't want to run
+
+369
+00:13:53,839 --> 00:13:55,760
+all the assembly instructions yourself.
+
+370
+00:13:55,760 --> 00:13:56,480
+LVM is just
+
+371
+00:13:56,480 --> 00:13:58,160
+>> you don't want to roll
+
+372
+00:13:58,160 --> 00:14:00,399
+>> you don't want to roll for x86 you don't
+
+373
+00:14:00,399 --> 00:14:01,839
+want to roll for ARM you don't want to
+
+374
+00:14:01,839 --> 00:14:04,320
+run roll for different CPU architectures
+
+375
+00:14:04,320 --> 00:14:06,639
+you just want to like a common format
+
+376
+00:14:06,639 --> 00:14:10,079
+that you can target and that handles uh
+
+377
+00:14:10,079 --> 00:14:11,360
+the lowering
+
+378
+00:14:11,360 --> 00:14:12,720
+>> yeah and it also does a lot of the
+
+379
+00:14:12,720 --> 00:14:14,160
+optimization stuff so you get to take
+
+380
+00:14:14,160 --> 00:14:15,519
+advantage of all the optimizations and
+
+381
+00:14:15,519 --> 00:14:17,519
+everything on there a lot of existing
+
+382
+00:14:17,519 --> 00:14:21,519
+systems used uh LVM uh for a lot of it
+
+383
+00:14:21,519 --> 00:14:23,440
+if you've ever used client that uses LVM
+
+384
+00:14:23,440 --> 00:14:25,760
+I'm pretty sure JavaScript also does
+
+385
+00:14:25,760 --> 00:14:27,760
+that but I might be wrong.
+
+386
+00:14:27,760 --> 00:14:29,680
+>> Oh sorry that's not what I meant.
+
+387
+00:14:29,680 --> 00:14:31,600
+>> Remember right it was an Apple invent
+
+388
+00:14:31,600 --> 00:14:33,760
+clang came from Apple.
+
+389
+00:14:33,760 --> 00:14:35,120
+>> Yeah.
+
+390
+00:14:35,120 --> 00:14:37,279
+>> So this entire objective C ecosystem
+
+391
+00:14:37,279 --> 00:14:40,560
+swift um pretty much everything targets
+
+392
+00:14:40,560 --> 00:14:43,920
+clang. Clang so targeting LLVM is
+
+393
+00:14:43,920 --> 00:14:47,120
+normally the compiler's nerdy
+
+394
+00:14:47,120 --> 00:14:49,440
+destination they want to get to.
+
+395
+00:14:49,440 --> 00:14:52,160
+>> Yes. So the the the the point here, I
+
+396
+00:14:52,160 --> 00:14:54,399
+guess, is the idea that like this is
+
+397
+00:14:54,399 --> 00:14:57,440
+this is not vibe coding your Nex.js
+
+398
+00:14:57,440 --> 00:15:00,480
+website. This is incredibly complex
+
+399
+00:15:00,480 --> 00:15:03,760
+systems coding that is probably not as
+
+400
+00:15:03,760 --> 00:15:06,160
+well represented in the training set.
+
+401
+00:15:06,160 --> 00:15:07,760
+And I think what was really interesting
+
+402
+00:15:07,760 --> 00:15:09,519
+to me about this is like Jeeoff, do you
+
+403
+00:15:09,519 --> 00:15:11,120
+want to walk through kind of like how
+
+404
+00:15:11,120 --> 00:15:12,959
+you've set things up? show us kind of
+
+405
+00:15:12,959 --> 00:15:15,600
+like early version of prompt.mmdday,
+
+406
+00:15:15,600 --> 00:15:17,279
+early versions of the specifications
+
+407
+00:15:17,279 --> 00:15:20,560
+like what are the inputs to Ralph that
+
+408
+00:15:20,560 --> 00:15:23,760
+that that allowed you to output a bunch
+
+409
+00:15:23,760 --> 00:15:26,000
+of code and also like you know hundreds
+
+410
+00:15:26,000 --> 00:15:27,440
+of markdown files, right? That's the
+
+411
+00:15:27,440 --> 00:15:28,720
+joke that everyone talks about now is
+
+412
+00:15:28,720 --> 00:15:30,720
+like Claude just dumping out tons of all
+
+413
+00:15:30,720 --> 00:15:33,760
+uppercade markdown files.
+
+414
+00:15:33,760 --> 00:15:35,519
+>> Yeah. So it started with a simple
+
+415
+00:15:35,519 --> 00:15:37,519
+prompt. The simple prompt is, hey, I
+
+416
+00:15:37,519 --> 00:15:40,399
+want to make a compiler. Um, but all the
+
+417
+00:15:40,399 --> 00:15:44,079
+lexical keywords are Gen Z.
+
+418
+00:15:44,079 --> 00:15:47,519
+So, yeet, vibe, slay, highkey, low key,
+
+419
+00:15:47,519 --> 00:15:51,199
+that's it. And, um, you see in tools
+
+420
+00:15:51,199 --> 00:15:53,680
+there's a planning mode.
+
+421
+00:15:53,680 --> 00:15:55,920
+Um, these planning modes are basically
+
+422
+00:15:55,920 --> 00:15:57,920
+nothing. There's basically an additional
+
+423
+00:15:57,920 --> 00:16:02,560
+prompt that uh says do not implement. So
+
+424
+00:16:02,560 --> 00:16:04,240
+if you want to do planning, all you got
+
+425
+00:16:04,240 --> 00:16:06,959
+to do is choose a model that's good for
+
+426
+00:16:06,959 --> 00:16:09,120
+planning. So GPT5 is pretty good for
+
+427
+00:16:09,120 --> 00:16:11,120
+planning. Gemini is pretty good for
+
+428
+00:16:11,120 --> 00:16:14,160
+planning. I think I either used
+
+429
+00:16:14,160 --> 00:16:17,360
+Sonnet or Gemini 25 in the early days
+
+430
+00:16:17,360 --> 00:16:19,360
+and I specifically prompted do not
+
+431
+00:16:19,360 --> 00:16:21,279
+implement your goal is to have a
+
+432
+00:16:21,279 --> 00:16:24,959
+conversation. So the context window is
+
+433
+00:16:24,959 --> 00:16:28,240
+best just being seen from a consumer
+
+434
+00:16:28,240 --> 00:16:31,040
+point of view as an array that's
+
+435
+00:16:31,040 --> 00:16:34,720
+continually appended to with messages.
+
+436
+00:16:34,720 --> 00:16:37,680
+So I'm having a large conversation
+
+437
+00:16:37,680 --> 00:16:40,079
+about hey I want to build a compiler.
+
+438
+00:16:40,079 --> 00:16:42,480
+What could a compiler need? And I'm like
+
+439
+00:16:42,480 --> 00:16:44,880
+steering it left and right etc. And I'm
+
+440
+00:16:44,880 --> 00:16:46,160
+not never giving it permission to
+
+441
+00:16:46,160 --> 00:16:47,759
+implement.
+
+442
+00:16:47,759 --> 00:16:50,079
+I'm just loading up this array with all
+
+443
+00:16:50,079 --> 00:16:52,079
+this context.
+
+444
+00:16:52,079 --> 00:16:53,759
+I have a discussion about different
+
+445
+00:16:53,759 --> 00:16:56,639
+types of pasa designs. I I I talk about
+
+446
+00:16:56,639 --> 00:17:00,480
+LVM. I going to use this language. So
+
+447
+00:17:00,480 --> 00:17:02,079
+I'm loading up this just continually
+
+448
+00:17:02,079 --> 00:17:04,880
+appending to this array. My both myself
+
+449
+00:17:04,880 --> 00:17:08,720
+and also the outcomes of actually using
+
+450
+00:17:08,720 --> 00:17:12,079
+the LLM itself. Um the result of asking
+
+451
+00:17:12,079 --> 00:17:15,120
+a question appends to that array.
+
+452
+00:17:15,120 --> 00:17:17,760
+Once I'm satisi satisfied, I tell it to
+
+453
+00:17:17,760 --> 00:17:20,000
+create out a markdown markdown file
+
+454
+00:17:20,000 --> 00:17:24,640
+called specs.md. I give it one prompt uh
+
+455
+00:17:24,640 --> 00:17:28,079
+and that prompt is hey can you uh write
+
+456
+00:17:28,079 --> 00:17:31,600
+out to a folder specs slash
+
+457
+00:17:31,600 --> 00:17:35,120
+um one file per topic like for lexical
+
+458
+00:17:35,120 --> 00:17:38,400
+one is a file grammar is a file
+
+459
+00:17:38,400 --> 00:17:40,640
+uh yada yada yada yada and I got all
+
+460
+00:17:40,640 --> 00:17:43,360
+these files and that's that's the
+
+461
+00:17:43,360 --> 00:17:45,039
+baseline
+
+462
+00:17:45,039 --> 00:17:47,039
+now
+
+463
+00:17:47,039 --> 00:17:49,520
+um this part is this is the part that's
+
+464
+00:17:49,520 --> 00:17:52,960
+really really important
+
+465
+00:17:52,960 --> 00:17:56,720
+uh one one line bad co one bad line of
+
+466
+00:17:56,720 --> 00:18:00,559
+code is one line bad line of code
+
+467
+00:18:00,559 --> 00:18:06,880
+but like uh a bad spec will like one bad
+
+468
+00:18:06,880 --> 00:18:09,039
+line of spec can result in tens of
+
+469
+00:18:09,039 --> 00:18:11,200
+thousands or 50 thousands or hundreds of
+
+470
+00:18:11,200 --> 00:18:13,120
+thousands
+
+471
+00:18:13,120 --> 00:18:16,320
+worth of bad code output. So when I
+
+472
+00:18:16,320 --> 00:18:18,160
+first kicked this off, if you roll back
+
+473
+00:18:18,160 --> 00:18:20,080
+the GitHub history to the bit the GitHub
+
+474
+00:18:20,080 --> 00:18:22,880
+history to the beginning of time, you'll
+
+475
+00:18:22,880 --> 00:18:26,480
+come across things like uh I had two two
+
+476
+00:18:26,480 --> 00:18:28,080
+of the keywords for the programming
+
+477
+00:18:28,080 --> 00:18:31,919
+language. They had a jeweled meaning cuz
+
+478
+00:18:31,919 --> 00:18:34,720
+I the specs were wrong. So So when I
+
+479
+00:18:34,720 --> 00:18:37,120
+kicked it off in the loop unattended,
+
+480
+00:18:37,120 --> 00:18:39,280
+guess what it got most of the way and
+
+481
+00:18:39,280 --> 00:18:41,360
+then it tore itself down like it was
+
+482
+00:18:41,360 --> 00:18:43,280
+brilliant but dumb. It these things
+
+483
+00:18:43,280 --> 00:18:46,080
+can't think. So this is um I'm just
+
+484
+00:18:46,080 --> 00:18:47,520
+going to quickly kind of show for
+
+485
+00:18:47,520 --> 00:18:49,760
+example some of the files that are in
+
+486
+00:18:49,760 --> 00:18:51,760
+the specifications which is like this is
+
+487
+00:18:51,760 --> 00:18:53,360
+actually like the grammar of the
+
+488
+00:18:53,360 --> 00:18:56,160
+language with a bunch of examples right?
+
+489
+00:18:56,160 --> 00:18:57,120
+>> Yeah.
+
+490
+00:18:57,120 --> 00:18:57,919
+>> Yeah.
+
+491
+00:18:57,919 --> 00:18:59,840
+>> And I have a question here. How much of
+
+492
+00:18:59,840 --> 00:19:01,120
+this stuff did you read? You were
+
+493
+00:19:01,120 --> 00:19:02,880
+running this in a pure while loop. So
+
+494
+00:19:02,880 --> 00:19:06,080
+almost no interruptions on your end.
+
+495
+00:19:06,080 --> 00:19:08,000
+If I was paying for tokens, I would have
+
+496
+00:19:08,000 --> 00:19:10,000
+put a lot more care in this. And because
+
+497
+00:19:10,000 --> 00:19:12,559
+this was meant to be like a Dogecoin or
+
+498
+00:19:12,559 --> 00:19:14,778
+programming languages,
+
+499
+00:19:14,778 --> 00:19:17,760
+[laughter] um, I just kicked it off,
+
+500
+00:19:17,760 --> 00:19:20,400
+um, and just put it on YouTube and like
+
+501
+00:19:20,400 --> 00:19:22,400
+Twitch and just walked away. And I just
+
+502
+00:19:22,400 --> 00:19:25,120
+watched it build and tear down build the
+
+503
+00:19:25,120 --> 00:19:27,039
+Roman Empire and tear down the Ro Roman
+
+504
+00:19:27,039 --> 00:19:29,039
+Empire. I think it reimplemented the
+
+505
+00:19:29,039 --> 00:19:30,559
+Lexa
+
+506
+00:19:30,559 --> 00:19:33,280
+uh, [laughter] probably at least 10
+
+507
+00:19:33,280 --> 00:19:35,840
+times.
+
+508
+00:19:35,840 --> 00:19:38,080
+Um, and before I just cuz I'm just
+
+509
+00:19:38,080 --> 00:19:40,640
+looking at it. Like if you look at the
+
+510
+00:19:40,640 --> 00:19:44,960
+output of your from your harness, you
+
+511
+00:19:44,960 --> 00:19:46,880
+can start to notice patterns and
+
+512
+00:19:46,880 --> 00:19:48,880
+behaviors and you start asking the why
+
+513
+00:19:48,880 --> 00:19:50,400
+is that happening? It's like, oh, I've
+
+514
+00:19:50,400 --> 00:19:53,840
+seen it. Why is it going in a loop?
+
+515
+00:19:53,840 --> 00:19:56,640
+Kill the the while true loop and then
+
+516
+00:19:56,640 --> 00:19:59,600
+eventually like, oh, you idiot.
+
+517
+00:19:59,600 --> 00:20:01,760
+So, it's really important to your point,
+
+518
+00:20:01,760 --> 00:20:03,039
+Dex,
+
+519
+00:20:03,039 --> 00:20:07,120
+>> is if you if you're doing this serious,
+
+520
+00:20:07,120 --> 00:20:11,120
+>> spend your time reading the specs
+
+521
+00:20:11,120 --> 00:20:13,200
+>> before you kick off anything.
+
+522
+00:20:13,200 --> 00:20:13,520
+>> Yeah,
+
+523
+00:20:13,520 --> 00:20:15,600
+>> this is the uh
+
+524
+00:20:15,600 --> 00:20:17,440
+>> Oh, go ahead. One really interesting I
+
+525
+00:20:17,440 --> 00:20:20,799
+wanted to call out was actually just the
+
+526
+00:20:20,799 --> 00:20:25,200
+the concept here of uh that I think is
+
+527
+00:20:25,200 --> 00:20:26,480
+really undervalued when you actually
+
+528
+00:20:26,480 --> 00:20:28,000
+work with a coding agent versus working
+
+529
+00:20:28,000 --> 00:20:30,559
+with a human. You said you rewrote this
+
+530
+00:20:30,559 --> 00:20:32,720
+thing like five times.
+
+531
+00:20:32,720 --> 00:20:33,440
+>> Yep.
+
+532
+00:20:33,440 --> 00:20:35,120
+>> When you rewrote this thing like five
+
+533
+00:20:35,120 --> 00:20:37,200
+times, it's fascinating because like
+
+534
+00:20:37,200 --> 00:20:40,080
+what you can do is with a no with a
+
+535
+00:20:40,080 --> 00:20:41,440
+person, you can't just tell someone to
+
+536
+00:20:41,440 --> 00:20:42,880
+go delete the code and rewrite it again.
+
+537
+00:20:42,880 --> 00:20:44,799
+There's like feelings involved. This is
+
+538
+00:20:44,799 --> 00:20:46,640
+a motivator [laughter] feelings.
+
+539
+00:20:46,640 --> 00:20:48,720
+>> It's it feels different to tell a person
+
+540
+00:20:48,720 --> 00:20:50,640
+to say, "Hey, rewrite all your code
+
+541
+00:20:50,640 --> 00:20:52,000
+versus telling an agent, I don't like
+
+542
+00:20:52,000 --> 00:20:54,240
+that. Restart from zero."
+
+543
+00:20:54,240 --> 00:20:56,240
+>> In some ways, that's actually a thing
+
+544
+00:20:56,240 --> 00:20:57,679
+that people should be leveraging more
+
+545
+00:20:57,679 --> 00:20:58,720
+and more,
+
+546
+00:20:58,720 --> 00:21:00,320
+>> not absolutely thinking about the old
+
+547
+00:21:00,320 --> 00:21:01,760
+way of writing code because everything
+
+548
+00:21:01,760 --> 00:21:04,480
+in coding is almost always incremental.
+
+549
+00:21:04,480 --> 00:21:06,400
+>> And usually the biggest tax is like,
+
+550
+00:21:06,400 --> 00:21:07,520
+"Hey, we don't want to rip it out and
+
+551
+00:21:07,520 --> 00:21:10,960
+redo everything again." It's way way
+
+552
+00:21:10,960 --> 00:21:12,640
+faster in many scenarios to actually
+
+553
+00:21:12,640 --> 00:21:14,640
+just rip it out. You you said you redid
+
+554
+00:21:14,640 --> 00:21:17,440
+it again from like you said see rust and
+
+555
+00:21:17,440 --> 00:21:18,640
+sick.
+
+556
+00:21:18,640 --> 00:21:19,120
+>> Yep.
+
+557
+00:21:19,120 --> 00:21:21,760
+>> You could have never done that in the
+
+558
+00:21:21,760 --> 00:21:23,360
+old world where like you need a human to
+
+559
+00:21:23,360 --> 00:21:27,200
+go do that. You'd get so much like um
+
+560
+00:21:27,200 --> 00:21:30,080
+like like just like stuff you have to
+
+561
+00:21:30,080 --> 00:21:31,679
+deal with that's just like ah
+
+562
+00:21:31,679 --> 00:21:33,440
+>> now we have to go. Turns out
+
+563
+00:21:33,440 --> 00:21:35,360
+>> I have emotional connection with the
+
+564
+00:21:35,360 --> 00:21:36,559
+specs
+
+565
+00:21:36,559 --> 00:21:39,760
+>> number. When I was technically back over
+
+566
+00:21:39,760 --> 00:21:41,600
+at Camber, I remember an engineering
+
+567
+00:21:41,600 --> 00:21:42,720
+director
+
+568
+00:21:42,720 --> 00:21:44,799
+>> saying, "Jeff, why did you implement it
+
+569
+00:21:44,799 --> 00:21:46,880
+in Rust? Rust is not an approved
+
+570
+00:21:46,880 --> 00:21:48,320
+language here."
+
+571
+00:21:48,320 --> 00:21:50,240
+>> And I was just sitting there on the Zoom
+
+572
+00:21:50,240 --> 00:21:53,120
+call. I just deleted the source code.
+
+573
+00:21:53,120 --> 00:21:54,799
+Just just delete the source code. Just
+
+574
+00:21:54,799 --> 00:21:57,120
+like, "Yep, all right. See you in 8
+
+575
+00:21:57,120 --> 00:22:00,240
+hours." So, I put on like Jag and this
+
+576
+00:22:00,240 --> 00:22:02,480
+is before I was just sitting down
+
+577
+00:22:02,480 --> 00:22:04,880
+watching like old episodes of Jag and I
+
+578
+00:22:04,880 --> 00:22:07,200
+and I was just pressing continue
+
+579
+00:22:07,200 --> 00:22:09,039
+continue. It's like here it goes. It's a
+
+580
+00:22:09,039 --> 00:22:12,400
+Golang now and it's like 40,000 lines of
+
+581
+00:22:12,400 --> 00:22:14,720
+code in 8 hours and [laughter] it's like
+
+582
+00:22:14,720 --> 00:22:16,960
+with full TUI this full TUI. It's the
+
+583
+00:22:16,960 --> 00:22:19,840
+the equivalence of like the equivalence
+
+584
+00:22:19,840 --> 00:22:23,679
+of uh Goose Goose with LCP and all this
+
+585
+00:22:23,679 --> 00:22:26,559
+stuff just
+
+586
+00:22:26,559 --> 00:22:29,520
+>> I want to start watching TV.
+
+587
+00:22:29,520 --> 00:22:30,640
+>> I want to start diving a little bit
+
+588
+00:22:30,640 --> 00:22:32,240
+deeper into some of these concepts. So
+
+589
+00:22:32,240 --> 00:22:33,600
+you said one of the things that you were
+
+590
+00:22:33,600 --> 00:22:34,640
+talking about earlier was like which
+
+591
+00:22:34,640 --> 00:22:35,919
+programming language works better for
+
+592
+00:22:35,919 --> 00:22:37,919
+AI. Let's talk about that because you
+
+593
+00:22:37,919 --> 00:22:39,440
+said you tried three for a very
+
+594
+00:22:39,440 --> 00:22:42,080
+complicated problem. We have chosen Rust
+
+595
+00:22:42,080 --> 00:22:44,559
+for building a programming language and
+
+596
+00:22:44,559 --> 00:22:46,799
+I have feelings about AI vibe coding
+
+597
+00:22:46,799 --> 00:22:49,679
+Rust. Um, and I have feelings about AI
+
+598
+00:22:49,679 --> 00:22:51,520
+coding C++. I have feelings about AI
+
+599
+00:22:51,520 --> 00:22:53,679
+putting TypeScript, Python. I want to
+
+600
+00:22:53,679 --> 00:22:55,200
+hear your perspective. What did you
+
+601
+00:22:55,200 --> 00:22:57,760
+learn um
+
+602
+00:22:57,760 --> 00:22:59,600
+about each of the three implementations
+
+603
+00:22:59,600 --> 00:23:01,760
+that I think helped you understand
+
+604
+00:23:01,760 --> 00:23:04,000
+better what the model was doing and what
+
+605
+00:23:04,000 --> 00:23:06,400
+the model is not capable of doing?
+
+606
+00:23:06,400 --> 00:23:10,559
+So I'd like to uh I see the I visualize
+
+607
+00:23:10,559 --> 00:23:13,039
+software development as bit of a wheel
+
+608
+00:23:13,039 --> 00:23:14,559
+in the sense that the top half of the
+
+609
+00:23:14,559 --> 00:23:18,799
+wheel is the generation phase and then
+
+610
+00:23:18,799 --> 00:23:20,159
+that's the top half of the wheel and
+
+611
+00:23:20,159 --> 00:23:21,919
+then eventually that wheel as it turns
+
+612
+00:23:21,919 --> 00:23:24,159
+is going to hit the road and the road is
+
+613
+00:23:24,159 --> 00:23:25,360
+basically where you need a bit of
+
+614
+00:23:25,360 --> 00:23:27,120
+friction to be able to move the car
+
+615
+00:23:27,120 --> 00:23:30,559
+forward and I call that back pressure.
+
+616
+00:23:30,559 --> 00:23:33,520
+So with C there were there's no
+
+617
+00:23:33,520 --> 00:23:35,919
+friction. There's no back pressure like
+
+618
+00:23:35,919 --> 00:23:38,559
+it's an untyped language
+
+619
+00:23:38,559 --> 00:23:43,520
+etc. And there's no back pressure.
+
+620
+00:23:43,520 --> 00:23:44,880
+>> Back pressure. I just want to drill in.
+
+621
+00:23:44,880 --> 00:23:46,559
+That's that's things like the model
+
+622
+00:23:46,559 --> 00:23:49,120
+being able to run a unit test suite and
+
+623
+00:23:49,120 --> 00:23:50,559
+understand if things are working. the
+
+624
+00:23:50,559 --> 00:23:52,000
+model being able I mean part of the
+
+625
+00:23:52,000 --> 00:23:53,280
+reason I think that makes programming
+
+626
+00:23:53,280 --> 00:23:57,039
+languages such a good like example use
+
+627
+00:23:57,039 --> 00:23:59,919
+case for unattended coding agents is
+
+628
+00:23:59,919 --> 00:24:01,600
+precisely because you can create this
+
+629
+00:24:01,600 --> 00:24:03,600
+loop of like it's not a website where
+
+630
+00:24:03,600 --> 00:24:05,039
+the model has to take a picture of it
+
+631
+00:24:05,039 --> 00:24:06,480
+with playright and then decide if it
+
+632
+00:24:06,480 --> 00:24:08,159
+looks good or not. It's like write the
+
+633
+00:24:08,159 --> 00:24:10,159
+source file. If the compiler can compile
+
+634
+00:24:10,159 --> 00:24:12,080
+it and the source does what we think it
+
+635
+00:24:12,080 --> 00:24:14,159
+should do then it works. And so the
+
+636
+00:24:14,159 --> 00:24:16,080
+model can give itself its own feedback
+
+637
+00:24:16,080 --> 00:24:18,159
+without having to like have opinions
+
+638
+00:24:18,159 --> 00:24:19,919
+just by reading or reviewing the code
+
+639
+00:24:19,919 --> 00:24:21,120
+itself.
+
+640
+00:24:21,120 --> 00:24:23,679
+>> Is that like kind of what how how would
+
+641
+00:24:23,679 --> 00:24:25,120
+you expand on that in terms of how you
+
+642
+00:24:25,120 --> 00:24:28,159
+define and think about back pressure?
+
+643
+00:24:28,159 --> 00:24:32,710
+>> So let me pull this up.
+
+644
+00:24:35,830 --> 00:24:35,840
+>> Um we're into an area here where this is
+
+645
+00:24:35,840 --> 00:24:37,520
+not really vibe coding. It's more like
+
+646
+00:24:37,520 --> 00:24:40,240
+vibe engineering.
+
+647
+00:24:40,240 --> 00:24:45,200
+Um so um this is del you're deliberately
+
+648
+00:24:45,200 --> 00:24:47,440
+putting your engineering hat on. So you
+
+649
+00:24:47,440 --> 00:24:50,240
+take your your specs which is like your
+
+650
+00:24:50,240 --> 00:24:51,919
+PD what you want to generate that's the
+
+651
+00:24:51,919 --> 00:24:53,760
+top half of the wheel. You got your
+
+652
+00:24:53,760 --> 00:24:56,559
+technical uh pattern library on how like
+
+653
+00:24:56,559 --> 00:24:58,080
+logging what else have you and that's
+
+654
+00:24:58,080 --> 00:25:02,159
+like typically language agnostic
+
+655
+00:25:02,159 --> 00:25:05,200
+typically agnostic. Um, and then you got
+
+656
+00:25:05,200 --> 00:25:07,200
+the bottom part, the bottom half, and
+
+657
+00:25:07,200 --> 00:25:10,159
+that's that's where it's your job uh to
+
+658
+00:25:10,159 --> 00:25:12,080
+put your engineering hat on, run your
+
+659
+00:25:12,080 --> 00:25:14,880
+unit tests, run the build, program
+
+660
+00:25:14,880 --> 00:25:17,520
+anything in there like a security
+
+661
+00:25:17,520 --> 00:25:19,840
+scanning software um that you would
+
+662
+00:25:19,840 --> 00:25:22,320
+normally do. But the key thing is the
+
+663
+00:25:22,320 --> 00:25:26,799
+wheel needs to spin fast and the the
+
+664
+00:25:26,799 --> 00:25:28,559
+bottom half of like the cargo test
+
+665
+00:25:28,559 --> 00:25:30,960
+clippy that I've got shown here, it
+
+666
+00:25:30,960 --> 00:25:33,120
+needs to be enough back pressure to stop
+
+667
+00:25:33,120 --> 00:25:35,679
+the wheel from turning if the code
+
+668
+00:25:35,679 --> 00:25:38,159
+generation step was bad. if it if it's
+
+669
+00:25:38,159 --> 00:25:41,919
+any form of hallucination in the output.
+
+670
+00:25:41,919 --> 00:25:44,960
+Um, and I realized that if I look at it
+
+671
+00:25:44,960 --> 00:25:46,480
+from the right way and like I'm just
+
+672
+00:25:46,480 --> 00:25:49,520
+sitting down watching TV,
+
+673
+00:25:49,520 --> 00:25:51,200
+um, and I'm just doing these things
+
+674
+00:25:51,200 --> 00:25:53,679
+manually, I could do a while true loop.
+
+675
+00:25:53,679 --> 00:25:55,200
+I could probably just do a bash loop.
+
+676
+00:25:55,200 --> 00:25:57,360
+And that's how it came to be. Um,
+
+677
+00:25:57,360 --> 00:26:01,760
+there's a question in, uh, in the, uh,
+
+678
+00:26:01,760 --> 00:26:05,120
+in chat and I'll address it, Dave. Yes.
+
+679
+00:26:05,120 --> 00:26:07,120
+Uh, no one as far as I'm aware of has
+
+680
+00:26:07,120 --> 00:26:10,159
+actually successfully did it, but I I
+
+681
+00:26:10,159 --> 00:26:12,960
+started reimplementing OS step in three
+
+682
+00:26:12,960 --> 00:26:16,240
+easy pieces using Ralph and it got
+
+683
+00:26:16,240 --> 00:26:19,120
+sufficiently along the way enough where
+
+684
+00:26:19,120 --> 00:26:21,919
+I was able to boot a VM uh so a virtual
+
+685
+00:26:21,919 --> 00:26:24,480
+box machine. was able to read the text
+
+686
+00:26:24,480 --> 00:26:27,279
+console out. From there, I was able to
+
+687
+00:26:27,279 --> 00:26:29,279
+basically engineer the bottom half of
+
+688
+00:26:29,279 --> 00:26:32,960
+the loop and I got got all got all the
+
+689
+00:26:32,960 --> 00:26:36,320
+way like in uh past bootloadader and we
+
+690
+00:26:36,320 --> 00:26:38,880
+start getting into like
+
+691
+00:26:38,880 --> 00:26:41,760
+next couple chapters of OS step. Um
+
+692
+00:26:41,760 --> 00:26:45,120
+these LLMs know what a compiler is
+
+693
+00:26:45,120 --> 00:26:47,840
+better than I did at the time and they
+
+694
+00:26:47,840 --> 00:26:49,919
+know what an operating system is at a
+
+695
+00:26:49,919 --> 00:26:51,760
+implemented level better than I do. So
+
+696
+00:26:51,760 --> 00:26:53,600
+you can you can lean upon that but you
+
+697
+00:26:53,600 --> 00:26:56,240
+still need to have your brain on to your
+
+698
+00:26:56,240 --> 00:26:57,840
+question Bab of like different
+
+699
+00:26:57,840 --> 00:26:59,760
+languages.
+
+700
+00:26:59,760 --> 00:27:02,880
+It's the speed of the wheel
+
+701
+00:27:02,880 --> 00:27:05,728
+that matters like how fast it turns.
+
+702
+00:27:05,728 --> 00:27:08,880
+[snorts] So if we we look at Rust, Rust
+
+703
+00:27:08,880 --> 00:27:11,919
+is a strongly typed language
+
+704
+00:27:11,919 --> 00:27:13,520
+and the good thing about a strongly
+
+705
+00:27:13,520 --> 00:27:17,200
+typed language is it will reject any bad
+
+706
+00:27:17,200 --> 00:27:19,919
+like generation. It's very particular.
+
+707
+00:27:19,919 --> 00:27:22,080
+That's it's things like Haskell is the
+
+708
+00:27:22,080 --> 00:27:23,919
+same like strongly typed language is
+
+709
+00:27:23,919 --> 00:27:29,200
+really good. Um because that provides
+
+710
+00:27:29,200 --> 00:27:32,400
+soundness in the language by default.
+
+711
+00:27:32,400 --> 00:27:34,159
+If the language doesn't have that
+
+712
+00:27:34,159 --> 00:27:36,080
+soundness, you need to do more
+
+713
+00:27:36,080 --> 00:27:38,559
+engineering like you you have to wire
+
+714
+00:27:38,559 --> 00:27:41,039
+that stuff in. Like if you on Python,
+
+715
+00:27:41,039 --> 00:27:43,919
+you would have to configure your like
+
+716
+00:27:43,919 --> 00:27:48,240
+your uh your your pyite like your your
+
+717
+00:27:48,240 --> 00:27:52,400
+actual type checkers. Um same with
+
+718
+00:27:52,400 --> 00:27:54,640
+TypeScript on the compiler yada yada
+
+719
+00:27:54,640 --> 00:27:59,679
+yada you get the idea. Um so but Rust's
+
+720
+00:27:59,679 --> 00:28:02,480
+compiler is slow.
+
+721
+00:28:02,480 --> 00:28:04,480
+Uh the Rust compile compilation speed
+
+722
+00:28:04,480 --> 00:28:06,559
+can be really really slow. So there's a
+
+723
+00:28:06,559 --> 00:28:08,320
+tradeoff.
+
+724
+00:28:08,320 --> 00:28:10,720
+um
+
+725
+00:28:10,720 --> 00:28:13,440
+you want the generation speed to be
+
+726
+00:28:13,440 --> 00:28:16,399
+sufficiently slowed down but you still
+
+727
+00:28:16,399 --> 00:28:19,600
+want the generation speed to be fast.
+
+728
+00:28:19,600 --> 00:28:23,120
+So if you've got a single loop running
+
+729
+00:28:23,120 --> 00:28:26,159
+then the speed of the generation the
+
+730
+00:28:26,159 --> 00:28:27,760
+inferencing step and the speed of the
+
+731
+00:28:27,760 --> 00:28:30,640
+compilation is essentially your velocity
+
+732
+00:28:30,640 --> 00:28:33,039
+and output unless you concurrency it
+
+733
+00:28:33,039 --> 00:28:35,360
+have some form of concurrency.
+
+734
+00:28:35,360 --> 00:28:36,399
+now.
+
+735
+00:28:36,399 --> 00:28:36,960
+>> So,
+
+736
+00:28:36,960 --> 00:28:41,600
+>> um, I've done C, I've done Python, I've
+
+737
+00:28:41,600 --> 00:28:45,200
+done Elixir, I've done Zigg,
+
+738
+00:28:45,200 --> 00:28:48,080
+I've donenet,
+
+739
+00:28:48,080 --> 00:28:51,039
+um, I've done Java, I've played with
+
+740
+00:28:51,039 --> 00:28:53,440
+them all like almost got into like a
+
+741
+00:28:53,440 --> 00:28:56,080
+like a tier list
+
+742
+00:28:56,080 --> 00:28:57,840
+>> of what languages LM are good at
+
+743
+00:28:57,840 --> 00:28:58,880
+writing.
+
+744
+00:28:58,880 --> 00:29:02,480
+>> Yeah. Um, so and
+
+745
+00:29:02,480 --> 00:29:03,840
+>> finish your point and then I wanna I
+
+746
+00:29:03,840 --> 00:29:05,440
+want to jump back into code and like
+
+747
+00:29:05,440 --> 00:29:07,039
+whiteboarding and kind of talk a little
+
+748
+00:29:07,039 --> 00:29:09,279
+bit more under the hood about, you know,
+
+749
+00:29:09,279 --> 00:29:12,320
+how do context windows work and why is
+
+750
+00:29:12,320 --> 00:29:15,120
+like Ralph such a good strategy based on
+
+751
+00:29:15,120 --> 00:29:17,919
+the concepts of context engineering.
+
+752
+00:29:17,919 --> 00:29:19,840
+Does that sound good? Bye Bob. You good?
+
+753
+00:29:19,840 --> 00:29:23,679
+>> Sounds good. Um, I would like to say
+
+754
+00:29:23,679 --> 00:29:26,559
+it's how you drive the LLM, which will
+
+755
+00:29:26,559 --> 00:29:28,799
+segue into context engineering
+
+756
+00:29:28,799 --> 00:29:30,559
+>> that matters.
+
+757
+00:29:30,559 --> 00:29:34,640
+>> Um, all the sample applications in Kurs
+
+758
+00:29:34,640 --> 00:29:37,600
+Kirst is about 15 million lines of code
+
+759
+00:29:37,600 --> 00:29:39,840
+folks.
+
+760
+00:29:39,840 --> 00:29:45,200
+Okay. um and all the sample applications
+
+761
+00:29:45,200 --> 00:29:47,120
+and all the things in there that they
+
+762
+00:29:47,120 --> 00:29:51,120
+were generated by the LLM and the LLM
+
+763
+00:29:51,120 --> 00:29:53,440
+was not trained on that data. It was
+
+764
+00:29:53,440 --> 00:29:55,679
+through the context engineering I was
+
+765
+00:29:55,679 --> 00:29:59,279
+able to create the right loop where it
+
+766
+00:29:59,279 --> 00:30:01,039
+was able to generate program for
+
+767
+00:30:01,039 --> 00:30:04,559
+something it hadn't been programmed on.
+
+768
+00:30:04,559 --> 00:30:05,840
+>> So you can do some really
+
+769
+00:30:05,840 --> 00:30:08,480
+>> make one um go ahead.
+
+770
+00:30:08,480 --> 00:30:10,320
+Yeah, you can do some really uh you can
+
+771
+00:30:10,320 --> 00:30:14,159
+do some really unhinged things. Um you
+
+772
+00:30:14,159 --> 00:30:16,399
+can either
+
+773
+00:30:16,399 --> 00:30:19,360
+work on its inbuilt training data set,
+
+774
+00:30:19,360 --> 00:30:21,120
+but if it lacks the training data set,
+
+775
+00:30:21,120 --> 00:30:22,720
+it's how you do the context engine that
+
+776
+00:30:22,720 --> 00:30:24,240
+matters.
+
+777
+00:30:24,240 --> 00:30:26,240
+>> So let's take a let's take a deeper dive
+
+778
+00:30:26,240 --> 00:30:28,000
+into that really fast. But before we go
+
+779
+00:30:28,000 --> 00:30:29,120
+into that, you mentioned a couple things
+
+780
+00:30:29,120 --> 00:30:30,799
+about the tra the loop being the most
+
+781
+00:30:30,799 --> 00:30:33,039
+important part. I think it's really when
+
+782
+00:30:33,039 --> 00:30:34,159
+I think about it, I think it's about
+
+783
+00:30:34,159 --> 00:30:35,520
+trade-offs that you want to make in your
+
+784
+00:30:35,520 --> 00:30:38,000
+engineering cycle. So, let's talk about
+
+785
+00:30:38,000 --> 00:30:39,039
+the different trade-offs we might want
+
+786
+00:30:39,039 --> 00:30:40,799
+to make. One is about speed.
+
+787
+00:30:40,799 --> 00:30:42,399
+>> Guys, guys, guys, guys, guys, let's
+
+788
+00:30:42,399 --> 00:30:44,320
+let's get practical. Sorry, I'm gonna
+
+789
+00:30:44,320 --> 00:30:45,760
+I'm gonna I'm gonna hijack this
+
+790
+00:30:45,760 --> 00:30:47,360
+conversation. We can keep talking about
+
+791
+00:30:47,360 --> 00:30:48,799
+theory, but let's do a little bit of
+
+792
+00:30:48,799 --> 00:30:50,399
+practice and we can work that use that
+
+793
+00:30:50,399 --> 00:30:52,720
+as a as a platform to do the theory on.
+
+794
+00:30:52,720 --> 00:30:54,159
+>> Let's show the platform. Let's show the
+
+795
+00:30:54,159 --> 00:30:56,000
+prompt. MD that you have. I think that's
+
+796
+00:30:56,000 --> 00:30:56,559
+actually
+
+797
+00:30:56,559 --> 00:30:57,679
+>> Exactly. We're going to show the prompt
+
+798
+00:30:57,679 --> 00:30:58,480
+and then I'm going to I'm going to
+
+799
+00:30:58,480 --> 00:30:59,919
+whiteboard out kind of how we how we
+
+800
+00:30:59,919 --> 00:31:02,720
+like to talk about this. Um, so we have
+
+801
+00:31:02,720 --> 00:31:05,679
+prompt MD. Um, it's a very simple
+
+802
+00:31:05,679 --> 00:31:07,520
+prompt. This is very similar to the one
+
+803
+00:31:07,520 --> 00:31:09,120
+that I think was the initial one that
+
+804
+00:31:09,120 --> 00:31:10,720
+Jeff published with the Ralph paper.
+
+805
+00:31:10,720 --> 00:31:12,480
+Jeff, you can read this prompt and romp.
+
+806
+00:31:12,480 --> 00:31:14,640
+You can you can roast this prompt, but
+
+807
+00:31:14,640 --> 00:31:17,760
+>> it's essentially very very short. It's
+
+808
+00:31:17,760 --> 00:31:20,159
+read the specs, read the code and
+
+809
+00:31:20,159 --> 00:31:22,640
+source, read the implementation plan,
+
+810
+00:31:22,640 --> 00:31:24,240
+and implement the single highest
+
+811
+00:31:24,240 --> 00:31:26,080
+priority feature using up to 50 sub
+
+812
+00:31:26,080 --> 00:31:27,600
+agents. Now, I'm using Claude with the
+
+813
+00:31:27,600 --> 00:31:29,679
+default, so it'll only do like five max.
+
+814
+00:31:29,679 --> 00:31:31,440
+I haven't changed the Envar that lets
+
+815
+00:31:31,440 --> 00:31:32,960
+you have more sub agents, but I left
+
+816
+00:31:32,960 --> 00:31:36,480
+this in as a nod to curs. uh ensure all
+
+817
+00:31:36,480 --> 00:31:37,840
+the tests and linting passes, then
+
+818
+00:31:37,840 --> 00:31:39,360
+update implementation plan with your
+
+819
+00:31:39,360 --> 00:31:42,240
+progress, and then commit. And so we can
+
+820
+00:31:42,240 --> 00:31:44,480
+see this has been working. We have a few
+
+821
+00:31:44,480 --> 00:31:47,120
+commits going on. Phase one, phase two.
+
+822
+00:31:47,120 --> 00:31:49,279
+Um I'm going to show you what we're
+
+823
+00:31:49,279 --> 00:31:51,440
+actually running under the hood as well.
+
+824
+00:31:51,440 --> 00:31:53,039
+Um and I'm actually going to make a
+
+825
+00:31:53,039 --> 00:31:54,640
+quick tweak to this. So this is our this
+
+826
+00:31:54,640 --> 00:31:57,679
+is our our loop. Um, I'm actually going
+
+827
+00:31:57,679 --> 00:31:58,960
+to run this headless, but basically what
+
+828
+00:31:58,960 --> 00:32:00,000
+we're doing is I'm running it with
+
+829
+00:32:00,000 --> 00:32:01,360
+Claude instead of AMP, but we're running
+
+830
+00:32:01,360 --> 00:32:03,440
+Claude with dangerously skip permissions
+
+831
+00:32:03,440 --> 00:32:05,200
+and stream the JSON, and we're piping
+
+832
+00:32:05,200 --> 00:32:06,640
+into this little visualizer. When you
+
+833
+00:32:06,640 --> 00:32:09,279
+run Claude in headless mode, um, you
+
+834
+00:32:09,279 --> 00:32:14,000
+basically get this like JSON output. Um,
+
+835
+00:32:14,000 --> 00:32:15,679
+and so it's going to stream out all this
+
+836
+00:32:15,679 --> 00:32:17,519
+stuff. We wrote a small little
+
+837
+00:32:17,519 --> 00:32:19,919
+visualizer that basically makes this a
+
+838
+00:32:19,919 --> 00:32:22,080
+little bit nicer to look at. Um, but
+
+839
+00:32:22,080 --> 00:32:23,840
+it's the same. It's just pars. It's all
+
+840
+00:32:23,840 --> 00:32:26,240
+it's doing is parsing that JSON. So,
+
+841
+00:32:26,240 --> 00:32:28,000
+we're catting that prompt over and over
+
+842
+00:32:28,000 --> 00:32:29,760
+again. I'm going to show you when I
+
+843
+00:32:29,760 --> 00:32:33,120
+started this um it basically
+
+844
+00:32:33,120 --> 00:32:35,279
+um had no implementation plan file. So,
+
+845
+00:32:35,279 --> 00:32:38,000
+it just created this based on the specs
+
+846
+00:32:38,000 --> 00:32:39,760
+and it's been going through and creating
+
+847
+00:32:39,760 --> 00:32:41,919
+all the CRUD operations. It's created
+
+848
+00:32:41,919 --> 00:32:44,080
+the allegedly like the database schema.
+
+849
+00:32:44,080 --> 00:32:47,760
+I believe it shows like um Prisma and
+
+850
+00:32:47,760 --> 00:32:49,840
+Postgress as the but I I gave it no
+
+851
+00:32:49,840 --> 00:32:51,840
+guidance on how to do this stuff. Um,
+
+852
+00:32:51,840 --> 00:32:53,840
+and it's just taking notes and keeping
+
+853
+00:32:53,840 --> 00:32:58,559
+its own like list of tasks in the plan.
+
+854
+00:32:58,559 --> 00:33:00,240
+>> Um, and we can go and have a look and
+
+855
+00:33:00,240 --> 00:33:02,080
+see how it's doing. I actually I saw
+
+856
+00:33:02,080 --> 00:33:04,720
+that in the M.LE
+
+857
+00:33:04,720 --> 00:33:09,200
+it had created uh Gmail keys. Um, which
+
+858
+00:33:09,200 --> 00:33:11,279
+I've actually I added one more piece.
+
+859
+00:33:11,279 --> 00:33:13,279
+This is an idea of like when might you
+
+860
+00:33:13,279 --> 00:33:15,200
+want to actually steer this is I wanted
+
+861
+00:33:15,200 --> 00:33:16,720
+it to use resend because I don't want to
+
+862
+00:33:16,720 --> 00:33:18,399
+give it my Gmail keys live on the
+
+863
+00:33:18,399 --> 00:33:20,240
+stream. So, I just added a new feature
+
+864
+00:33:20,240 --> 00:33:22,799
+and an example should have uh should
+
+865
+00:33:22,799 --> 00:33:24,720
+have a resend API key. So, it has it
+
+866
+00:33:24,720 --> 00:33:28,480
+hasn't picked this up yet. Um, but I I
+
+867
+00:33:28,480 --> 00:33:30,240
+want to get into kind of like what's the
+
+868
+00:33:30,240 --> 00:33:32,640
+structure of this prompt and like why is
+
+869
+00:33:32,640 --> 00:33:35,440
+this like, you know, uh Malik and Code
+
+870
+00:33:35,440 --> 00:33:38,799
+and compiling and all this stuff. Um,
+
+871
+00:33:38,799 --> 00:33:41,360
+Jeff, you're a Kubernetes guy, right?
+
+872
+00:33:41,360 --> 00:33:44,080
+>> Yeah. Um, so one of the things that we
+
+873
+00:33:44,080 --> 00:33:45,760
+like to think about in terms of like
+
+874
+00:33:45,760 --> 00:33:48,399
+when I think about Ralph is as in terms
+
+875
+00:33:48,399 --> 00:33:50,960
+of control loops, right? Yep. And so
+
+876
+00:33:50,960 --> 00:33:52,799
+every component in a lot of like
+
+877
+00:33:52,799 --> 00:33:54,720
+complicated systems that are able to run
+
+878
+00:33:54,720 --> 00:33:57,919
+autonomously is they have a very focused
+
+879
+00:33:57,919 --> 00:33:59,519
+what we call control loop where you have
+
+880
+00:33:59,519 --> 00:34:01,360
+the desired state of the world, you have
+
+881
+00:34:01,360 --> 00:34:02,880
+the current state of the world and then
+
+882
+00:34:02,880 --> 00:34:05,760
+you take one action to progress the
+
+883
+00:34:05,760 --> 00:34:07,679
+current state towards the desired state
+
+884
+00:34:07,679 --> 00:34:09,440
+and then you read it again. And you kind
+
+885
+00:34:09,440 --> 00:34:11,599
+of do this in a loop forever. And if all
+
+886
+00:34:11,599 --> 00:34:13,359
+the components have the right like
+
+887
+00:34:13,359 --> 00:34:15,839
+federated responsibilities, then this
+
+888
+00:34:15,839 --> 00:34:17,919
+becomes a really nice model like mental
+
+889
+00:34:17,919 --> 00:34:21,440
+model for thinking about your code. Yes.
+
+890
+00:34:21,440 --> 00:34:22,240
+>> Yep.
+
+891
+00:34:22,240 --> 00:34:24,159
+>> Yeah. Yeah. So, but that's one of the
+
+892
+00:34:24,159 --> 00:34:26,800
+harder things is because everything is
+
+893
+00:34:26,800 --> 00:34:29,839
+so undeterministic. That's why I use the
+
+894
+00:34:29,839 --> 00:34:34,000
+image of Ralph in the oven. um that loop
+
+895
+00:34:34,000 --> 00:34:36,320
+is either underbaked,
+
+896
+00:34:36,320 --> 00:34:38,960
+perfectly baked or overbaked with later
+
+897
+00:34:38,960 --> 00:34:40,480
+tendencies or things you never
+
+898
+00:34:40,480 --> 00:34:41,679
+specified,
+
+899
+00:34:41,679 --> 00:34:44,320
+>> right? If these two things are equal,
+
+900
+00:34:44,320 --> 00:34:46,240
+well, the models want to be helpful. And
+
+901
+00:34:46,240 --> 00:34:48,399
+so even if they're equal, the model will
+
+902
+00:34:48,399 --> 00:34:50,079
+find something to do because you've
+
+903
+00:34:50,079 --> 00:34:51,760
+invoked you've invoked the cloud CLI.
+
+904
+00:34:51,760 --> 00:34:54,159
+It's like, well, it's it's default. It's
+
+905
+00:34:54,159 --> 00:34:57,599
+heavily trained to do something, right?
+
+906
+00:34:57,599 --> 00:34:59,280
+And so then it will come up with more
+
+907
+00:34:59,280 --> 00:35:02,160
+actions and it usually defaults to
+
+908
+00:35:02,160 --> 00:35:03,839
+changing the desired state of the world
+
+909
+00:35:03,839 --> 00:35:06,000
+to justify its continued existence and
+
+910
+00:35:06,000 --> 00:35:07,440
+working. Right?
+
+911
+00:35:07,440 --> 00:35:09,440
+>> A concrete example is when I was running
+
+912
+00:35:09,440 --> 00:35:12,079
+a loop, it decided to add some types to
+
+913
+00:35:12,079 --> 00:35:13,599
+the programming language. I never
+
+914
+00:35:13,599 --> 00:35:16,079
+specified some types, but you do a 100
+
+915
+00:35:16,079 --> 00:35:17,839
+loops and it says it's done, it's done,
+
+916
+00:35:17,839 --> 00:35:21,440
+it's done. on the 105th time and five
+
+917
+00:35:21,440 --> 00:35:24,400
+times complaining it's done
+
+918
+00:35:24,400 --> 00:35:26,640
+it hallucinates and says well a
+
+919
+00:35:26,640 --> 00:35:28,720
+programming language should use some
+
+920
+00:35:28,720 --> 00:35:31,119
+types and next thing you know that the
+
+921
+00:35:31,119 --> 00:35:33,839
+way I was driving it was just completely
+
+922
+00:35:33,839 --> 00:35:36,720
+brainless it would decided to add some
+
+923
+00:35:36,720 --> 00:35:38,079
+sub some types to the implementation
+
+924
+00:35:38,079 --> 00:35:40,079
+plan
+
+925
+00:35:40,079 --> 00:35:40,720
+>> I love it
+
+926
+00:35:40,720 --> 00:35:42,320
+>> and it's off to the races so it's like
+
+927
+00:35:42,320 --> 00:35:44,720
+baked underbaked baked or baked with
+
+928
+00:35:44,720 --> 00:35:46,640
+latent tendencies all these kind of
+
+929
+00:35:46,640 --> 00:35:48,320
+properties and behaviors are
+
+930
+00:35:48,320 --> 00:35:49,920
+controllable
+
+931
+00:35:49,920 --> 00:35:53,920
+but um that's a little bit more abstract
+
+932
+00:35:53,920 --> 00:35:56,320
+than we can get here. Now,
+
+933
+00:35:56,320 --> 00:35:58,480
+>> so coming coming to the context window
+
+934
+00:35:58,480 --> 00:36:01,920
+side of this, essentially like we have a
+
+935
+00:36:01,920 --> 00:36:03,760
+the most common way to work with AI
+
+936
+00:36:03,760 --> 00:36:05,280
+models is you have all your system stuff
+
+937
+00:36:05,280 --> 00:36:07,200
+and then you have your user message. And
+
+938
+00:36:07,200 --> 00:36:09,280
+the idea is that this will usually get
+
+939
+00:36:09,280 --> 00:36:12,000
+you to about you know depending on how
+
+940
+00:36:12,000 --> 00:36:14,000
+many MCPS you have somewhere between
+
+941
+00:36:14,000 --> 00:36:17,280
+five and 60% of your context window. But
+
+942
+00:36:17,280 --> 00:36:18,480
+let's assume you're being responsible.
+
+943
+00:36:18,480 --> 00:36:20,000
+This gets you to like somewhere between
+
+944
+00:36:20,000 --> 00:36:22,160
+five and 15% of your context window
+
+945
+00:36:22,160 --> 00:36:24,800
+used. I'd like to see that you got about
+
+946
+00:36:24,800 --> 00:36:28,480
+176k. Ignore the million etc. It's still
+
+947
+00:36:28,480 --> 00:36:30,800
+all it's still like 200.
+
+948
+00:36:30,800 --> 00:36:33,760
+>> So you take 200, you minus 16 for your
+
+949
+00:36:33,760 --> 00:36:37,440
+harness prompt to minus 16 for your LLM
+
+950
+00:36:37,440 --> 00:36:40,079
+system prompt. Just the rough numbers.
+
+951
+00:36:40,079 --> 00:36:40,400
+>> Yeah.
+
+952
+00:36:40,400 --> 00:36:42,160
+>> And then all of a sudden you got about
+
+953
+00:36:42,160 --> 00:36:45,440
+176 usable. You add your MCPs in and
+
+954
+00:36:45,440 --> 00:36:47,920
+that comes out of 176. So now all of a
+
+955
+00:36:47,920 --> 00:36:50,160
+sudden you're like you've had 50k of
+
+956
+00:36:50,160 --> 00:36:54,640
+MCPs, you're now down to like 100 120k
+
+957
+00:36:54,640 --> 00:36:56,000
+usable.
+
+958
+00:36:56,000 --> 00:36:58,480
+>> Well, and also if you fill like if let's
+
+959
+00:36:58,480 --> 00:37:00,640
+say you don't have a lot of MCPS, if you
+
+960
+00:37:00,640 --> 00:37:03,200
+like the most high performance range I
+
+961
+00:37:03,200 --> 00:37:05,839
+found for the models is like before you
+
+962
+00:37:05,839 --> 00:37:08,800
+hit this 30 to 40% mark and anything
+
+963
+00:37:08,800 --> 00:37:10,960
+past there. So, if this is all full of
+
+964
+00:37:10,960 --> 00:37:13,599
+[ __ ] MCPs, then you're actually doing
+
+965
+00:37:13,599 --> 00:37:16,160
+all of your work in the like what I call
+
+966
+00:37:16,160 --> 00:37:18,079
+the dumb zone
+
+967
+00:37:18,079 --> 00:37:20,240
+>> where there's so much context in terms
+
+968
+00:37:20,240 --> 00:37:22,320
+of like here's all the things you can do
+
+969
+00:37:22,320 --> 00:37:24,000
+that it becomes much harder to actually
+
+970
+00:37:24,000 --> 00:37:27,440
+get it to do something valuable.
+
+971
+00:37:27,440 --> 00:37:29,200
+>> This is conceptually universal
+
+972
+00:37:29,200 --> 00:37:31,680
+regardless which LLM that you choose or
+
+973
+00:37:31,680 --> 00:37:33,520
+which model you choose. This is a
+
+974
+00:37:33,520 --> 00:37:36,320
+fundamental thing. The less you use, the
+
+975
+00:37:36,320 --> 00:37:38,960
+better it h it gets. I when I was back
+
+976
+00:37:38,960 --> 00:37:41,920
+in February, I was noticing
+
+977
+00:37:41,920 --> 00:37:45,680
+uh like kind of a a degrading like a
+
+978
+00:37:45,680 --> 00:37:47,760
+degrade the more that I used it.
+
+979
+00:37:47,760 --> 00:37:48,240
+>> Yep.
+
+980
+00:37:48,240 --> 00:37:50,720
+>> Um and then that was just through like
+
+981
+00:37:50,720 --> 00:37:52,640
+kind of like jazz banding kind of with
+
+982
+00:37:52,640 --> 00:37:55,520
+the LLM like pure observation and lots
+
+983
+00:37:55,520 --> 00:37:57,359
+of time playing with it.
+
+984
+00:37:57,359 --> 00:38:00,720
+>> Um nothing scientific but
+
+985
+00:38:00,720 --> 00:38:02,320
+>> I'll toss a slightly more controversial
+
+986
+00:38:02,320 --> 00:38:04,800
+opinion. I think that was very very true
+
+987
+00:38:04,800 --> 00:38:06,880
+a long time ago. I think it's becoming
+
+988
+00:38:06,880 --> 00:38:10,240
+less true um with every new release that
+
+989
+00:38:10,240 --> 00:38:11,920
+they put out personally because they
+
+990
+00:38:11,920 --> 00:38:13,119
+have more they have more training data
+
+991
+00:38:13,119 --> 00:38:15,440
+for longer context data like it's so
+
+992
+00:38:15,440 --> 00:38:16,800
+definitely true that longer context
+
+993
+00:38:16,800 --> 00:38:18,240
+training data is very hard to collect
+
+994
+00:38:18,240 --> 00:38:19,760
+but now with all these coding agents
+
+995
+00:38:19,760 --> 00:38:22,320
+running a muk they have really long
+
+996
+00:38:22,320 --> 00:38:24,880
+continuous sequences of training data
+
+997
+00:38:24,880 --> 00:38:26,960
+>> that that I think are making the models
+
+998
+00:38:26,960 --> 00:38:29,119
+better. Yes, they are getting better,
+
+999
+00:38:29,119 --> 00:38:31,920
+but I've said this every at least twice
+
+1000
+00:38:31,920 --> 00:38:34,320
+a week since April, maybe even earlier,
+
+1001
+00:38:34,320 --> 00:38:37,119
+is like they are getting better, but no
+
+1002
+00:38:37,119 --> 00:38:38,960
+one will disagree even when the models
+
+1003
+00:38:38,960 --> 00:38:41,200
+support 10 million context token windows
+
+1004
+00:38:41,200 --> 00:38:42,720
+like and actually they can do something
+
+1005
+00:38:42,720 --> 00:38:45,359
+with it. No one will deny that you get
+
+1006
+00:38:45,359 --> 00:38:47,599
+better results if you use less because
+
+1007
+00:38:47,599 --> 00:38:50,000
+the attention is spread over less noise,
+
+1008
+00:38:50,000 --> 00:38:50,400
+right?
+
+1009
+00:38:50,400 --> 00:38:52,480
+>> And don't mix the concerns. Don't mix
+
+1010
+00:38:52,480 --> 00:38:54,640
+the concerns. Don't don't just like have
+
+1011
+00:38:54,640 --> 00:38:58,000
+a the way most people use cursor is they
+
+1012
+00:38:58,000 --> 00:38:59,839
+take that window there, they continually
+
+1013
+00:38:59,839 --> 00:39:02,000
+append to it and it's like sweet, it's
+
+1014
+00:39:02,000 --> 00:39:03,920
+all working now. I'm going to make the
+
+1015
+00:39:03,920 --> 00:39:05,920
+website pink. Oh, now I'm going to do
+
+1016
+00:39:05,920 --> 00:39:09,040
+some data SQL migrations and all those
+
+1017
+00:39:09,040 --> 00:39:11,920
+unrelated things are appended in there.
+
+1018
+00:39:11,920 --> 00:39:13,119
+And
+
+1019
+00:39:13,119 --> 00:39:15,760
+>> to be clear, folks, when you
+
+1020
+00:39:15,760 --> 00:39:18,160
+>> this array that gets appended, it gets
+
+1021
+00:39:18,160 --> 00:39:20,720
+appended and sent back each time. It's
+
+1022
+00:39:20,720 --> 00:39:23,280
+stateless. like you just send it back.
+
+1023
+00:39:23,280 --> 00:39:25,119
+You send it back.
+
+1024
+00:39:25,119 --> 00:39:28,800
+>> Um, so when you have unrelated things,
+
+1025
+00:39:28,800 --> 00:39:30,560
+>> it makes
+
+1026
+00:39:30,560 --> 00:39:32,640
+>> no sense. So I'm going to find a
+
+1027
+00:39:32,640 --> 00:39:32,960
+picture.
+
+1028
+00:39:32,960 --> 00:39:35,599
+>> That was one of the the key things was I
+
+1029
+00:39:35,599 --> 00:39:38,800
+realized if I useless drove the context
+
+1030
+00:39:38,800 --> 00:39:43,359
+window with and had one item per task,
+
+1031
+00:39:43,359 --> 00:39:45,280
+good outcomes.
+
+1032
+00:39:45,280 --> 00:39:46,960
+>> Yeah. And this is kind of the idea is
+
+1033
+00:39:46,960 --> 00:39:48,800
+every time you're sending the entire
+
+1034
+00:39:48,800 --> 00:39:51,119
+thing to the LLM, the only thing that
+
+1035
+00:39:51,119 --> 00:39:53,920
+determines whether it is going to pick
+
+1036
+00:39:53,920 --> 00:39:56,000
+the right next step or the wrong next
+
+1037
+00:39:56,000 --> 00:39:59,760
+step is what was already in the context
+
+1038
+00:39:59,760 --> 00:40:02,480
+window. And coding agents are
+
+1039
+00:40:02,480 --> 00:40:03,839
+interesting because you don't actually
+
+1040
+00:40:03,839 --> 00:40:05,520
+write every word of what's in the
+
+1041
+00:40:05,520 --> 00:40:06,960
+context window. You have to kind of
+
+1042
+00:40:06,960 --> 00:40:08,640
+guide it to I mean you could paste in
+
+1043
+00:40:08,640 --> 00:40:10,480
+the contents of all the files that
+
+1044
+00:40:10,480 --> 00:40:11,920
+matter. But the idea is it's slightly
+
+1045
+00:40:11,920 --> 00:40:14,240
+easier to be like, read these four files
+
+1046
+00:40:14,240 --> 00:40:16,160
+and then go do one thing. And then when
+
+1047
+00:40:16,160 --> 00:40:17,359
+the one thing is done, then you're
+
+1048
+00:40:17,359 --> 00:40:19,200
+sending the whole conversation of like,
+
+1049
+00:40:19,200 --> 00:40:20,560
+cool, they said read these files and
+
+1050
+00:40:20,560 --> 00:40:21,920
+then they said do this thing and now
+
+1051
+00:40:21,920 --> 00:40:22,960
+they're saying do this thing. And
+
+1052
+00:40:22,960 --> 00:40:24,800
+there's just like more for the agent to
+
+1053
+00:40:24,800 --> 00:40:27,440
+think through and decide which part of
+
+1054
+00:40:27,440 --> 00:40:30,640
+this conversation is relevant to the
+
+1055
+00:40:30,640 --> 00:40:33,040
+next edit call or the next write call or
+
+1056
+00:40:33,040 --> 00:40:37,910
+the next search call. Yes.
+
+1057
+00:40:39,910 --> 00:40:39,920
+Um, all right. I want to model this a
+
+1058
+00:40:39,920 --> 00:40:40,800
+little bit differently and then I'm
+
+1059
+00:40:40,800 --> 00:40:42,240
+going to go through a couple different
+
+1060
+00:40:42,240 --> 00:40:44,720
+use cases that I love using Ralph for.
+
+1061
+00:40:44,720 --> 00:40:46,240
+Um, and I'd love to hear your thoughts,
+
+1062
+00:40:46,240 --> 00:40:47,440
+Jeff, on which of these you've had
+
+1063
+00:40:47,440 --> 00:40:47,920
+success.
+
+1064
+00:40:47,920 --> 00:40:50,160
+>> Yeah. Let's go to let's actually go to
+
+1065
+00:40:50,160 --> 00:40:51,680
+the next part of Ralph. So, we're told
+
+1066
+00:40:51,680 --> 00:40:53,839
+it to create the specifications.
+
+1067
+00:40:53,839 --> 00:40:54,480
+>> Well, so,
+
+1068
+00:40:54,480 --> 00:40:55,520
+>> uh, the next
+
+1069
+00:40:55,520 --> 00:40:56,880
+>> really really quick, I just kind of want
+
+1070
+00:40:56,880 --> 00:40:58,880
+to like model how like how Ralph works
+
+1071
+00:40:58,880 --> 00:41:00,960
+in terms of a context window. Sure.
+
+1072
+00:41:00,960 --> 00:41:02,880
+>> Is so we have our desired state of the
+
+1073
+00:41:02,880 --> 00:41:04,079
+world, which is, you know, read the
+
+1074
+00:41:04,079 --> 00:41:06,480
+specs.
+
+1075
+00:41:06,480 --> 00:41:08,640
+Um,
+
+1076
+00:41:08,640 --> 00:41:10,720
+right. Read the specs, then read the
+
+1077
+00:41:10,720 --> 00:41:12,319
+source code. That's the current state of
+
+1078
+00:41:12,319 --> 00:41:14,480
+the world. And then our implementation
+
+1079
+00:41:14,480 --> 00:41:16,560
+plan is kind of like the rolling action
+
+1080
+00:41:16,560 --> 00:41:19,359
+plan. And by because we only tell it to
+
+1081
+00:41:19,359 --> 00:41:23,839
+do one thing, we end up with we end up
+
+1082
+00:41:23,839 --> 00:41:26,079
+with using like you're more likely to
+
+1083
+00:41:26,079 --> 00:41:28,400
+stay in the smart zone of the context
+
+1084
+00:41:28,400 --> 00:41:30,720
+window versus the dumb zone.
+
+1085
+00:41:30,720 --> 00:41:31,520
+>> Correct?
+
+1086
+00:41:31,520 --> 00:41:33,280
+>> And then you bomb out. You say just do
+
+1087
+00:41:33,280 --> 00:41:35,440
+one thing and then exit. And so rather
+
+1088
+00:41:35,440 --> 00:41:37,359
+than telling, hey Codeex, keep working
+
+1089
+00:41:37,359 --> 00:41:39,040
+and don't stop working and make sure
+
+1090
+00:41:39,040 --> 00:41:40,880
+don't stop working after nine tasks and
+
+1091
+00:41:40,880 --> 00:41:42,480
+don't stop working after 10 and trying
+
+1092
+00:41:42,480 --> 00:41:44,480
+to prompt it to be able to remember to
+
+1093
+00:41:44,480 --> 00:41:46,400
+keep working. You just say, hey, you
+
+1094
+00:41:46,400 --> 00:41:48,079
+have a really easy job. Stay in the
+
+1095
+00:41:48,079 --> 00:41:50,640
+smart zone, pop one thing off of the
+
+1096
+00:41:50,640 --> 00:41:52,880
+implementation plan list and go do that
+
+1097
+00:41:52,880 --> 00:41:55,760
+and then you're done. And then actually
+
+1098
+00:41:55,760 --> 00:41:56,480
+you can
+
+1099
+00:41:56,480 --> 00:41:58,720
+>> horrendously inefficient.
+
+1100
+00:41:58,720 --> 00:42:00,480
+>> You see the top of the line where it's
+
+1101
+00:42:00,480 --> 00:42:02,240
+decide a decided state of the world, the
+
+1102
+00:42:02,240 --> 00:42:04,560
+user message and the harness, etc. Yeah,
+
+1103
+00:42:04,560 --> 00:42:06,079
+>> what you're doing is you're you're
+
+1104
+00:42:06,079 --> 00:42:09,119
+actually malicking uh and burning a lot
+
+1105
+00:42:09,119 --> 00:42:11,680
+of tokens so it can just do that one
+
+1106
+00:42:11,680 --> 00:42:14,480
+thing. It's it's highly inefficient and
+
+1107
+00:42:14,480 --> 00:42:16,160
+that because I wasn't paying for tokens,
+
+1108
+00:42:16,160 --> 00:42:19,599
+I didn't care. Um but the idea was if I
+
+1109
+00:42:19,599 --> 00:42:21,839
+could deterministically allocate the
+
+1110
+00:42:21,839 --> 00:42:22,880
+array,
+
+1111
+00:42:22,880 --> 00:42:23,280
+>> yes,
+
+1112
+00:42:23,280 --> 00:42:26,160
+>> or the context window
+
+1113
+00:42:26,160 --> 00:42:29,520
+then and I tell it to to do one thing, I
+
+1114
+00:42:29,520 --> 00:42:33,440
+didn't care if uh like to the costs. But
+
+1115
+00:42:33,440 --> 00:42:35,839
+the idea was allocate one thing to the
+
+1116
+00:42:35,839 --> 00:42:38,720
+array to the context window and do one
+
+1117
+00:42:38,720 --> 00:42:42,079
+thing and just burn lots of tokens. Um I
+
+1118
+00:42:42,079 --> 00:42:43,920
+could have forked or clone context
+
+1119
+00:42:43,920 --> 00:42:46,880
+windows and got snazzy and stuff, but
+
+1120
+00:42:46,880 --> 00:42:48,560
+really what I'm doing is just malicking
+
+1121
+00:42:48,560 --> 00:42:51,280
+the the array the same time every loop.
+
+1122
+00:42:51,280 --> 00:42:53,359
+>> So what's interesting here is like what
+
+1123
+00:42:53,359 --> 00:42:55,280
+we have here is desired current and then
+
+1124
+00:42:55,280 --> 00:42:57,359
+implementation plan. And so what that
+
+1125
+00:42:57,359 --> 00:42:59,119
+might let you do is actually cache if
+
+1126
+00:42:59,119 --> 00:43:01,119
+you if you if you tune it just right,
+
+1127
+00:43:01,119 --> 00:43:02,800
+you may actually be able to cache this.
+
+1128
+00:43:02,800 --> 00:43:04,640
+Now I know the claude system message
+
+1129
+00:43:04,640 --> 00:43:07,040
+actually like changes based on the get
+
+1130
+00:43:07,040 --> 00:43:09,920
+dirty state, but like you could
+
+1131
+00:43:09,920 --> 00:43:12,160
+potentially set this up so that you're
+
+1132
+00:43:12,160 --> 00:43:14,640
+constantly forking off of this set and
+
+1133
+00:43:14,640 --> 00:43:16,319
+so you're only updating the current
+
+1134
+00:43:16,319 --> 00:43:17,680
+state of the worldly implementation
+
+1135
+00:43:17,680 --> 00:43:19,920
+plan. This is where context engineering
+
+1136
+00:43:19,920 --> 00:43:21,839
+comes in. I intentionally made a mistake
+
+1137
+00:43:21,839 --> 00:43:24,240
+in this prompt because when I at@mention
+
+1138
+00:43:24,240 --> 00:43:26,000
+this it means it gets pulled in as part
+
+1139
+00:43:26,000 --> 00:43:28,319
+of the user message which means there's
+
+1140
+00:43:28,319 --> 00:43:29,760
+no way we're going to be able to cache
+
+1141
+00:43:29,760 --> 00:43:31,040
+any of that because it's going to read
+
+1142
+00:43:31,040 --> 00:43:32,640
+the implementation plan as part of the
+
+1143
+00:43:32,640 --> 00:43:34,400
+user message and so none of the rest of
+
+1144
+00:43:34,400 --> 00:43:36,319
+this can be cached
+
+1145
+00:43:36,319 --> 00:43:38,560
+>> anyways that's it's totally a tangent
+
+1146
+00:43:38,560 --> 00:43:39,599
+but that does that match your
+
+1147
+00:43:39,599 --> 00:43:40,880
+understanding?
+
+1148
+00:43:40,880 --> 00:43:42,640
+>> Yep.
+
+1149
+00:43:42,640 --> 00:43:43,280
+Um
+
+1150
+00:43:43,280 --> 00:43:44,160
+>> um
+
+1151
+00:43:44,160 --> 00:43:46,160
+>> what we've done what we got drawn out
+
+1152
+00:43:46,160 --> 00:43:48,720
+here is we told it go immediately to the
+
+1153
+00:43:48,720 --> 00:43:50,720
+implementation plan
+
+1154
+00:43:50,720 --> 00:43:52,400
+>> um but we haven't told how the
+
+1155
+00:43:52,400 --> 00:43:54,640
+implementation plan came to be.
+
+1156
+00:43:54,640 --> 00:43:58,720
+>> So the second train of thought there was
+
+1157
+00:43:58,720 --> 00:44:01,680
+>> okay I've got my specs
+
+1158
+00:44:01,680 --> 00:44:03,200
+I've generated them in the context
+
+1159
+00:44:03,200 --> 00:44:04,880
+window of research planning and then I
+
+1160
+00:44:04,880 --> 00:44:06,240
+gave it permission to write markdown
+
+1161
+00:44:06,240 --> 00:44:08,960
+then I've thrown away that array.
+
+1162
+00:44:08,960 --> 00:44:13,040
+The next step is I would run lots of
+
+1163
+00:44:13,040 --> 00:44:14,960
+loops.
+
+1164
+00:44:14,960 --> 00:44:17,599
+Um, I was using Gemini for its large
+
+1165
+00:44:17,599 --> 00:44:19,440
+context window when I first started,
+
+1166
+00:44:19,440 --> 00:44:22,400
+probably around about Juneish.
+
+1167
+00:44:22,400 --> 00:44:25,040
+>> And maybe it was Marchish, Junish,
+
+1168
+00:44:25,040 --> 00:44:29,040
+Marchish. And um, essentially what I
+
+1169
+00:44:29,040 --> 00:44:30,720
+said was
+
+1170
+00:44:30,720 --> 00:44:31,119
+uh,
+
+1171
+00:44:31,119 --> 00:44:34,640
+>> so you would be giving it
+
+1172
+00:44:34,640 --> 00:44:38,630
+>> Sorry.
+
+1173
+00:44:39,670 --> 00:44:39,680
+Yeah,
+
+1174
+00:44:39,680 --> 00:44:41,359
+>> study the specs to understand what needs
+
+1175
+00:44:41,359 --> 00:44:43,359
+to be implemented.
+
+1176
+00:44:43,359 --> 00:44:46,079
+Then uh what I want you to do is look at
+
+1177
+00:44:46,079 --> 00:44:49,200
+the source code directory and set the
+
+1178
+00:44:49,200 --> 00:44:52,880
+two. Tell me what's not implemented.
+
+1179
+00:44:52,880 --> 00:44:55,119
+That's the high level theory.
+
+1180
+00:44:55,119 --> 00:44:55,520
+>> Yeah,
+
+1181
+00:44:55,520 --> 00:44:58,800
+>> set the two and
+
+1182
+00:44:58,800 --> 00:45:01,920
+run that many times. Lots of times. Lots
+
+1183
+00:45:01,920 --> 00:45:03,680
+lots of times. and then tell it to write
+
+1184
+00:45:03,680 --> 00:45:06,640
+an implementation plan.
+
+1185
+00:45:06,640 --> 00:45:09,359
+>> So when you run it lots of times like
+
+1186
+00:45:09,359 --> 00:45:11,119
+are you running it in a single context
+
+1187
+00:45:11,119 --> 00:45:12,560
+window and it's going and doing all the
+
+1188
+00:45:12,560 --> 00:45:14,160
+reading or is it like is there what's
+
+1189
+00:45:14,160 --> 00:45:16,720
+the exhaust from each run of this loop?
+
+1190
+00:45:16,720 --> 00:45:18,720
+>> I try to blow the context window up in
+
+1191
+00:45:18,720 --> 00:45:20,400
+this stage.
+
+1192
+00:45:20,400 --> 00:45:22,319
+>> You try to have as much context as
+
+1193
+00:45:22,319 --> 00:45:25,760
+possible. load as much a big the big so
+
+1194
+00:45:25,760 --> 00:45:27,839
+this is back when Gemini was
+
+1195
+00:45:27,839 --> 00:45:29,920
+>> so you're literally doing a million and
+
+1196
+00:45:29,920 --> 00:45:34,400
+then Claude was like tiny like Claude
+
+1197
+00:45:34,400 --> 00:45:38,800
+was tiny um but the idea was
+
+1198
+00:45:38,800 --> 00:45:41,280
+>> get it to execute RIP GP lots of times
+
+1199
+00:45:41,280 --> 00:45:44,000
+and get like get like no fs no fs
+
+1200
+00:45:44,000 --> 00:45:44,800
+because
+
+1201
+00:45:44,800 --> 00:45:46,960
+>> when it's searching the source code
+
+1202
+00:45:46,960 --> 00:45:48,880
+versus specifications what it's doing is
+
+1203
+00:45:48,880 --> 00:45:51,280
+it's executing a tool and that tool is
+
+1204
+00:45:51,280 --> 00:45:53,760
+rip grip and rip RIP powers the source
+
+1205
+00:45:53,760 --> 00:45:55,520
+code intelligence for all the coding
+
+1206
+00:45:55,520 --> 00:45:58,000
+harnesses out there. Like Ripcript runs
+
+1207
+00:45:58,000 --> 00:46:01,359
+the world, but the input to the function
+
+1208
+00:46:01,359 --> 00:46:03,440
+of what it searches for the search query
+
+1209
+00:46:03,440 --> 00:46:07,200
+into RipG is nondeterministic.
+
+1210
+00:46:07,200 --> 00:46:08,960
+It's generative
+
+1211
+00:46:08,960 --> 00:46:11,280
+>> generative based on what it's seen so
+
+1212
+00:46:11,280 --> 00:46:12,000
+far.
+
+1213
+00:46:12,000 --> 00:46:14,319
+>> It's generative input to a to a
+
+1214
+00:46:14,319 --> 00:46:15,839
+deterministic
+
+1215
+00:46:15,839 --> 00:46:18,720
+uh tool. So I ran it lots of times.
+
+1216
+00:46:18,720 --> 00:46:20,480
+>> So you did this all in one context
+
+1217
+00:46:20,480 --> 00:46:21,920
+window over and over and over again. Let
+
+1218
+00:46:21,920 --> 00:46:22,640
+it do something
+
+1219
+00:46:22,640 --> 00:46:24,000
+>> over and over and over again.
+
+1220
+00:46:24,000 --> 00:46:25,520
+>> Run and over. And then at the very end,
+
+1221
+00:46:25,520 --> 00:46:26,800
+you say, "Write the implementation
+
+1222
+00:46:26,800 --> 00:46:27,920
+plan."
+
+1223
+00:46:27,920 --> 00:46:30,000
+>> Pretty much like I'd either do it by
+
+1224
+00:46:30,000 --> 00:46:33,040
+hand or I'd run it in a bash loop and
+
+1225
+00:46:33,040 --> 00:46:35,359
+blow the stack.
+
+1226
+00:46:35,359 --> 00:46:35,839
+>> Okay.
+
+1227
+00:46:35,839 --> 00:46:37,920
+>> From a very tangible perspective, when
+
+1228
+00:46:37,920 --> 00:46:40,079
+should someone do this? Like this Ralph
+
+1229
+00:46:40,079 --> 00:46:41,520
+Wiggum technique of where you run this
+
+1230
+00:46:41,520 --> 00:46:50,950
+in a while loop, you let it rip.
+
+1231
+00:46:52,309 --> 00:46:52,319
+pull up some of the examples that we
+
+1232
+00:46:52,319 --> 00:46:54,640
+have and I'd love to get Jeff your
+
+1233
+00:46:54,640 --> 00:46:56,240
+thoughts on this. Um, and then we'll
+
+1234
+00:46:56,240 --> 00:46:56,720
+come back at the
+
+1235
+00:46:56,720 --> 00:46:57,920
+>> Did you repeat yourself? Starling
+
+1236
+00:46:57,920 --> 00:46:58,560
+dropped out
+
+1237
+00:46:58,560 --> 00:47:00,880
+>> next.js server.
+
+1238
+00:47:00,880 --> 00:47:02,720
+>> Uh, we're going to look at some other
+
+1239
+00:47:02,720 --> 00:47:04,480
+examples.
+
+1240
+00:47:04,480 --> 00:47:07,839
+>> Yeah. Of what of what what Ralph can do
+
+1241
+00:47:07,839 --> 00:47:11,200
+not not just for the not not just for
+
+1242
+00:47:11,200 --> 00:47:12,800
+building a new programming language from
+
+1243
+00:47:12,800 --> 00:47:14,240
+scratch, but um
+
+1244
+00:47:14,240 --> 00:47:17,200
+>> there's forward modes, there's research
+
+1245
+00:47:17,200 --> 00:47:19,839
+modes, and there's reverse modes. So
+
+1246
+00:47:19,839 --> 00:47:21,440
+this is what I have here as a reverse
+
+1247
+00:47:21,440 --> 00:47:23,920
+mode. So this is our your job is to
+
+1248
+00:47:23,920 --> 00:47:26,319
+build the specifications for we have a
+
+1249
+00:47:26,319 --> 00:47:27,839
+process that's written in Golang and we
+
+1250
+00:47:27,839 --> 00:47:30,079
+want to rewrite it in Typescript and so
+
+1251
+00:47:30,079 --> 00:47:32,720
+I've written kind of the same style of
+
+1252
+00:47:32,720 --> 00:47:36,160
+prompt to build out specifications
+
+1253
+00:47:36,160 --> 00:47:39,040
+from so it's like read the code
+
+1254
+00:47:39,040 --> 00:47:40,720
+familiarize yourself with what's in the
+
+1255
+00:47:40,720 --> 00:47:42,800
+specs but now this is the desired state
+
+1256
+00:47:42,800 --> 00:47:44,319
+of the world and this is the current
+
+1257
+00:47:44,319 --> 00:47:46,079
+state of the world because our output is
+
+1258
+00:47:46,079 --> 00:47:47,680
+specifications.
+
+1259
+00:47:47,680 --> 00:47:49,440
+Does that sound right?
+
+1260
+00:47:49,440 --> 00:47:53,119
+>> Yep. So, I've ran Ralph in reverse
+
+1261
+00:47:53,119 --> 00:47:57,920
+>> and I've cloned things that I went I
+
+1262
+00:47:57,920 --> 00:48:01,119
+heard that like commercial open source
+
+1263
+00:48:01,119 --> 00:48:05,359
+companies like crazy stuff crazy crazy
+
+1264
+00:48:05,359 --> 00:48:08,480
+stuff just ran it in full reverse and
+
+1265
+00:48:08,480 --> 00:48:10,000
+then
+
+1266
+00:48:10,000 --> 00:48:13,119
+um due to a pecuriality in Australian
+
+1267
+00:48:13,119 --> 00:48:16,000
+copyright law because it was kind of
+
+1268
+00:48:16,000 --> 00:48:18,880
+like no effort involved. It was computer
+
+1269
+00:48:18,880 --> 00:48:21,599
+doing it. It's actually legal.
+
+1270
+00:48:21,599 --> 00:48:23,839
+So you could take a proprietary code
+
+1271
+00:48:23,839 --> 00:48:24,800
+base,
+
+1272
+00:48:24,800 --> 00:48:26,400
+>> take it up to your white label
+
+1273
+00:48:26,400 --> 00:48:28,160
+specifications,
+
+1274
+00:48:28,160 --> 00:48:30,559
+>> throw away the tainted IP and then Ralph
+
+1275
+00:48:30,559 --> 00:48:33,359
+run Ralph forwards.
+
+1276
+00:48:33,359 --> 00:48:35,520
+>> So let me u let me try and reframe this
+
+1277
+00:48:35,520 --> 00:48:37,680
+question really fast. For example, we
+
+1278
+00:48:37,680 --> 00:48:39,920
+run everything BAML's run purely in
+
+1279
+00:48:39,920 --> 00:48:42,160
+Rust. Let's say I decided tomorrow that
+
+1280
+00:48:42,160 --> 00:48:44,640
+I want to migrate our 300,000 lines of
+
+1281
+00:48:44,640 --> 00:48:49,040
+Rust code as a compiler to Zig.
+
+1282
+00:48:49,040 --> 00:48:50,960
+>> Bro, did you did you know what I was
+
+1283
+00:48:50,960 --> 00:48:52,640
+doing on this episode? This is literally
+
+1284
+00:48:52,640 --> 00:48:55,599
+my one of my examples.
+
+1285
+00:48:55,599 --> 00:48:58,000
+>> That's so funny. But um I not know that.
+
+1286
+00:48:58,000 --> 00:48:59,520
+But I have a question. Give me your
+
+1287
+00:48:59,520 --> 00:49:00,880
+overunder on how well you think that
+
+1288
+00:49:00,880 --> 00:49:02,400
+would work in terms of the most
+
+1289
+00:49:02,400 --> 00:49:05,280
+important part being opaque reliability
+
+1290
+00:49:05,280 --> 00:49:08,079
+to a user. How how much would you trust
+
+1291
+00:49:08,079 --> 00:49:10,720
+it? Because the hardest part about the
+
+1292
+00:49:10,720 --> 00:49:13,119
+system is like
+
+1293
+00:49:13,119 --> 00:49:15,280
+>> the testing coverage is very hard at the
+
+1294
+00:49:15,280 --> 00:49:17,680
+end of a real code base. So in this
+
+1295
+00:49:17,680 --> 00:49:19,440
+scenario, I bet we could get a prototype
+
+1296
+00:49:19,440 --> 00:49:21,920
+that gets pretty close. But how how
+
+1297
+00:49:21,920 --> 00:49:23,680
+close to current parody would we
+
+1298
+00:49:23,680 --> 00:49:25,760
+actually get?
+
+1299
+00:49:25,760 --> 00:49:27,760
+The way I look at Ralph is kind of like
+
+1300
+00:49:27,760 --> 00:49:30,640
+a a principal software engineer who
+
+1301
+00:49:30,640 --> 00:49:32,480
+wants to
+
+1302
+00:49:32,480 --> 00:49:35,680
+uh get something done
+
+1303
+00:49:35,680 --> 00:49:38,240
+without having to like sit down for
+
+1304
+00:49:38,240 --> 00:49:41,599
+endless meetings. Like the specs is your
+
+1305
+00:49:41,599 --> 00:49:43,599
+kind of the PRD, the working code
+
+1306
+00:49:43,599 --> 00:49:48,800
+prototype. Um, you can use it to get
+
+1307
+00:49:48,800 --> 00:49:50,960
+essentially an army of interns to just
+
+1308
+00:49:50,960 --> 00:49:53,920
+get a concept in your idea out really
+
+1309
+00:49:53,920 --> 00:49:55,760
+fast.
+
+1310
+00:49:55,760 --> 00:49:59,440
+Um, conceptual prototype without like
+
+1311
+00:49:59,440 --> 00:50:01,119
+enough if you have an idea that you
+
+1312
+00:50:01,119 --> 00:50:02,720
+could scaffold a team around you pretty
+
+1313
+00:50:02,720 --> 00:50:04,800
+much instantly,
+
+1314
+00:50:04,800 --> 00:50:06,640
+right? And there's no nothing precious
+
+1315
+00:50:06,640 --> 00:50:08,079
+about the source code. So that's that's
+
+1316
+00:50:08,079 --> 00:50:11,200
+the level of maturity that I I think at
+
+1317
+00:50:11,200 --> 00:50:15,040
+now. I've had successes in essentially
+
+1318
+00:50:15,040 --> 00:50:18,640
+oneshotting things. It it it you got to
+
+1319
+00:50:18,640 --> 00:50:21,119
+really think about the unit the concrete
+
+1320
+00:50:21,119 --> 00:50:24,960
+unit of domain. So I like when I was
+
+1321
+00:50:24,960 --> 00:50:27,359
+over at source graph I there was a
+
+1322
+00:50:27,359 --> 00:50:33,839
+really good um mermaid library in Golang
+
+1323
+00:50:33,839 --> 00:50:36,480
+and it had really good property based
+
+1324
+00:50:36,480 --> 00:50:38,319
+tests
+
+1325
+00:50:38,319 --> 00:50:39,680
+and because of those really good
+
+1326
+00:50:39,680 --> 00:50:43,839
+property based tests I was able to go oh
+
+1327
+00:50:43,839 --> 00:50:46,720
+I can use those property based tests as
+
+1328
+00:50:46,720 --> 00:50:49,760
+input data to drive the new generation
+
+1329
+00:50:49,760 --> 00:50:51,760
+to reject if the new generation is bad.
+
+1330
+00:50:51,760 --> 00:50:54,720
+So it was like take this Golang like
+
+1331
+00:50:54,720 --> 00:50:57,680
+mermaid diagram drawer and make it in
+
+1332
+00:50:57,680 --> 00:51:00,400
+Typescript and then we're able to just
+
+1333
+00:51:00,400 --> 00:51:02,800
+essentially transpile and use the old
+
+1334
+00:51:02,800 --> 00:51:05,359
+test data to drive the loop or the new
+
+1335
+00:51:05,359 --> 00:51:06,319
+one
+
+1336
+00:51:06,319 --> 00:51:08,480
+>> and you didn't even have to imple you
+
+1337
+00:51:08,480 --> 00:51:10,640
+didn't even need to have to implement
+
+1338
+00:51:10,640 --> 00:51:13,359
+the testing feedback back pressure loop.
+
+1339
+00:51:13,359 --> 00:51:15,200
+You just had to have it designed. You
+
+1340
+00:51:15,200 --> 00:51:16,800
+had to know what the properties you
+
+1341
+00:51:16,800 --> 00:51:19,680
+wanted to test. This is the engineering
+
+1342
+00:51:19,680 --> 00:51:21,119
+engineering not coding.
+
+1343
+00:51:21,119 --> 00:51:23,680
+>> The the people who are really really
+
+1344
+00:51:23,680 --> 00:51:26,800
+good at this like agentic engineering
+
+1345
+00:51:26,800 --> 00:51:29,200
+they'll spend three days designing the
+
+1346
+00:51:29,200 --> 00:51:30,800
+back pressure harness. They won't even
+
+1347
+00:51:30,800 --> 00:51:32,800
+implement it. They'll just design the
+
+1348
+00:51:32,800 --> 00:51:34,640
+answer to the question how will the
+
+1349
+00:51:34,640 --> 00:51:37,119
+model know that it's working and then
+
+1350
+00:51:37,119 --> 00:51:38,319
+they'll spend three days on that and
+
+1351
+00:51:38,319 --> 00:51:39,599
+then they'll just hand it to the model
+
+1352
+00:51:39,599 --> 00:51:42,079
+and let it cook for 48 hours and they'll
+
+1353
+00:51:42,079 --> 00:51:44,160
+come back to 50,000 lines of working
+
+1354
+00:51:44,160 --> 00:51:45,359
+code.
+
+1355
+00:51:45,359 --> 00:51:46,960
+So I have a question about this because
+
+1356
+00:51:46,960 --> 00:51:49,440
+I think this premise that you're saying
+
+1357
+00:51:49,440 --> 00:51:51,280
+is very similar to why the Rust language
+
+1358
+00:51:51,280 --> 00:51:53,599
+exists. Like Rust exists like why does
+
+1359
+00:51:53,599 --> 00:51:55,280
+code in Rust mostly just work? I mean
+
+1360
+00:51:55,280 --> 00:51:57,040
+part of it's just syntax. My personal
+
+1361
+00:51:57,040 --> 00:51:58,880
+opinion is that because like testing is
+
+1362
+00:51:58,880 --> 00:52:00,400
+one of the few things that is built into
+
+1363
+00:52:00,400 --> 00:52:02,880
+Rust as a part of the core language not
+
+1364
+00:52:02,880 --> 00:52:04,400
+as a part of like an afterthought. Like
+
+1365
+00:52:04,400 --> 00:52:06,079
+in Python you have to import piest to do
+
+1366
+00:52:06,079 --> 00:52:08,319
+it. In Typescript to import Jest like
+
+1367
+00:52:08,319 --> 00:52:10,720
+test is just a syntax.
+
+1368
+00:52:10,720 --> 00:52:12,079
+>> For someone that has never seen Rust
+
+1369
+00:52:12,079 --> 00:52:13,280
+code I'll just show you guys really fast
+
+1370
+00:52:13,280 --> 00:52:15,839
+what I mean. And I have a the reason I'm
+
+1371
+00:52:15,839 --> 00:52:16,960
+asking this is because I actually do
+
+1372
+00:52:16,960 --> 00:52:19,119
+have a question about this
+
+1373
+00:52:19,119 --> 00:52:21,440
+which is um like
+
+1374
+00:52:21,440 --> 00:52:23,359
+>> I describe this as the soundness of the
+
+1375
+00:52:23,359 --> 00:52:24,800
+language
+
+1376
+00:52:24,800 --> 00:52:26,240
+>> like right over here like I don't know
+
+1377
+00:52:26,240 --> 00:52:28,079
+about that but like I think R is
+
+1378
+00:52:28,079 --> 00:52:29,520
+beautiful but I know many people that
+
+1379
+00:52:29,520 --> 00:52:31,280
+probably would like disagree like you
+
+1380
+00:52:31,280 --> 00:52:32,880
+basically mark a test as a test thing
+
+1381
+00:52:32,880 --> 00:52:34,240
+and now you can one you get really nice
+
+1382
+00:52:34,240 --> 00:52:35,920
+hooks to run this and this is like a CLI
+
+1383
+00:52:35,920 --> 00:52:41,109
+command run
+
+1384
+00:52:43,270 --> 00:52:43,280
+you can just write test anywhere in the
+
+1385
+00:52:43,280 --> 00:52:46,079
+file it doesn't need a file any just
+
+1386
+00:52:46,079 --> 00:52:49,119
+become a test. So if I for example let's
+
+1387
+00:52:49,119 --> 00:52:51,520
+say this is sorry this is very
+
+1388
+00:52:51,520 --> 00:52:53,119
+complicated code. I'll just let's say I
+
+1389
+00:52:53,119 --> 00:52:54,240
+wanted to write a test for this
+
+1390
+00:52:54,240 --> 00:52:56,000
+function. I could literally just write
+
+1391
+00:52:56,000 --> 00:52:59,119
+really quickly cfg test. Boom. I now
+
+1392
+00:52:59,119 --> 00:53:02,240
+have a test for this function.
+
+1393
+00:53:02,240 --> 00:53:04,000
+Uh and this will test this function for
+
+1394
+00:53:04,000 --> 00:53:05,839
+me and do something with it if I wanted
+
+1395
+00:53:05,839 --> 00:53:08,400
+to. And the fact that I can just write a
+
+1396
+00:53:08,400 --> 00:53:09,920
+test really quickly means that whenever
+
+1397
+00:53:09,920 --> 00:53:12,400
+I write Rust code, I will basically
+
+1398
+00:53:12,400 --> 00:53:15,520
+never um how do I how do I describe it?
+
+1399
+00:53:15,520 --> 00:53:17,839
+I'll basically never ever break my code
+
+1400
+00:53:17,839 --> 00:53:19,119
+because the minute I get a bug, I just
+
+1401
+00:53:19,119 --> 00:53:20,480
+add this test into here and now my code
+
+1402
+00:53:20,480 --> 00:53:22,400
+is just magically tested from here on
+
+1403
+00:53:22,400 --> 00:53:23,520
+out.
+
+1404
+00:53:23,520 --> 00:53:25,040
+>> And the fact that the language does this
+
+1405
+00:53:25,040 --> 00:53:28,160
+makes that the loop is really good. But
+
+1406
+00:53:28,160 --> 00:53:30,559
+what the question I have for you guys is
+
+1407
+00:53:30,559 --> 00:53:33,520
+what I run into is even if I write the
+
+1408
+00:53:33,520 --> 00:53:35,520
+test in theory this Ralph Wiggum
+
+1409
+00:53:35,520 --> 00:53:36,640
+technique should work with any coding
+
+1410
+00:53:36,640 --> 00:53:38,240
+agent. It it shouldn't really require
+
+1411
+00:53:38,240 --> 00:53:39,599
+the Ralph Wigum technique. I should be
+
+1412
+00:53:39,599 --> 00:53:42,400
+able to do this in cloud code in codeex
+
+1413
+00:53:42,400 --> 00:53:45,680
+and in any scenario. What is the alpha
+
+1414
+00:53:45,680 --> 00:53:47,599
+that I'm getting specifically with the
+
+1415
+00:53:47,599 --> 00:53:49,520
+Ralph Wigum technique and what is what
+
+1416
+00:53:49,520 --> 00:53:51,599
+help me distill that into like a one-s
+
+1417
+00:53:51,599 --> 00:53:54,640
+sentence um difference between just
+
+1418
+00:53:54,640 --> 00:53:56,240
+running Claude code from both of you
+
+1419
+00:53:56,240 --> 00:53:59,119
+independently. I'd love to hear that
+
+1420
+00:53:59,119 --> 00:54:01,040
+>> the
+
+1421
+00:54:01,040 --> 00:54:03,520
+it's distilled down to I realize the
+
+1422
+00:54:03,520 --> 00:54:05,839
+LLMs understand what a compiler is
+
+1423
+00:54:05,839 --> 00:54:10,160
+better than most university students or
+
+1424
+00:54:10,160 --> 00:54:13,680
+people who are many years past like out
+
+1425
+00:54:13,680 --> 00:54:15,920
+of university unless that's their
+
+1426
+00:54:15,920 --> 00:54:19,119
+professional job. So you can lean upon
+
+1427
+00:54:19,119 --> 00:54:22,319
+that training data set and it can make
+
+1428
+00:54:22,319 --> 00:54:23,920
+decisions
+
+1429
+00:54:23,920 --> 00:54:26,720
+statistically make decisions of what the
+
+1430
+00:54:26,720 --> 00:54:29,280
+next logical order of things that should
+
+1431
+00:54:29,280 --> 00:54:31,440
+implement. So if we're not talking about
+
+1432
+00:54:31,440 --> 00:54:34,319
+compilers quickly, I've had it run
+
+1433
+00:54:34,319 --> 00:54:38,480
+through an implementation plan for
+
+1434
+00:54:38,480 --> 00:54:41,119
+um an implementation plan and it's done
+
+1435
+00:54:41,119 --> 00:54:44,079
+logging first. Like it's got 20 items to
+
+1436
+00:54:44,079 --> 00:54:46,319
+do. does logging first and then I tell
+
+1437
+00:54:46,319 --> 00:54:48,079
+it it should have telemetry and it does
+
+1438
+00:54:48,079 --> 00:54:51,920
+the telemetry next and then it's uh uh
+
+1439
+00:54:51,920 --> 00:54:53,520
+tenant awareness because I'm doing
+
+1440
+00:54:53,520 --> 00:54:55,680
+multi-tenant applications. So next thing
+
+1441
+00:54:55,680 --> 00:54:59,280
+you know it creates the uh the tenant uh
+
+1442
+00:54:59,280 --> 00:55:03,359
+middleware and none of this the the key
+
+1443
+00:55:03,359 --> 00:55:04,960
+and it it does that and then from that
+
+1444
+00:55:04,960 --> 00:55:06,960
+point forward it it builds continually
+
+1445
+00:55:06,960 --> 00:55:09,440
+on it because it's statistically making
+
+1446
+00:55:09,440 --> 00:55:10,960
+better decisions what to what to
+
+1447
+00:55:10,960 --> 00:55:14,240
+implement than most engineers do or like
+
+1448
+00:55:14,240 --> 00:55:17,440
+even best matching what I would do. It's
+
+1449
+00:55:17,440 --> 00:55:19,680
+it's about the probably the simplest way
+
+1450
+00:55:19,680 --> 00:55:22,800
+of looking at this is we got into our
+
+1451
+00:55:22,800 --> 00:55:25,839
+profession because we loved controlling
+
+1452
+00:55:25,839 --> 00:55:28,079
+computers. It is so good to like the
+
+1453
+00:55:28,079 --> 00:55:30,559
+control aspect. I get to control the
+
+1454
+00:55:30,559 --> 00:55:32,319
+computer.
+
+1455
+00:55:32,319 --> 00:55:34,160
+The people who really get it Dex and
+
+1456
+00:55:34,160 --> 00:55:37,359
+I'll hand over to you is I feel they've
+
+1457
+00:55:37,359 --> 00:55:39,440
+surrendered the control but not their
+
+1458
+00:55:39,440 --> 00:55:41,040
+thinking.
+
+1459
+00:55:41,040 --> 00:55:43,520
+They've they've they they've they've
+
+1460
+00:55:43,520 --> 00:55:45,760
+they've learned to understand that
+
+1461
+00:55:45,760 --> 00:55:48,880
+statistically it can create and decide
+
+1462
+00:55:48,880 --> 00:55:51,680
+what the next step is
+
+1463
+00:55:51,680 --> 00:55:54,640
+as good as what you would do at times.
+
+1464
+00:55:54,640 --> 00:55:58,079
+And at times it's most of the time it's
+
+1465
+00:55:58,079 --> 00:56:00,079
+scary how good it's able to make the the
+
+1466
+00:56:00,079 --> 00:56:01,920
+next step or decision.
+
+1467
+00:56:01,920 --> 00:56:04,240
+>> But is that different than just letting
+
+1468
+00:56:04,240 --> 00:56:06,880
+it rip in cloud code? That's I think
+
+1469
+00:56:06,880 --> 00:56:08,240
+that's what I'm trying to like from a
+
+1470
+00:56:08,240 --> 00:56:09,520
+practical standpoint. I think most
+
+1471
+00:56:09,520 --> 00:56:11,359
+people that are watching and listening
+
+1472
+00:56:11,359 --> 00:56:12,880
+what they do is they use cloud code,
+
+1473
+00:56:12,880 --> 00:56:15,680
+they use codec, they use cursor
+
+1474
+00:56:15,680 --> 00:56:17,200
+uh and like what you guys are doing is
+
+1475
+00:56:17,200 --> 00:56:18,880
+slightly different technique. You're
+
+1476
+00:56:18,880 --> 00:56:20,079
+literally running a prompt and it's
+
+1477
+00:56:20,079 --> 00:56:21,359
+still running through cloud code but
+
+1478
+00:56:21,359 --> 00:56:22,799
+there's a slightly different harness
+
+1479
+00:56:22,799 --> 00:56:24,880
+that you're using to run cloud code is
+
+1480
+00:56:24,880 --> 00:56:26,880
+the way that I describe it.
+
+1481
+00:56:26,880 --> 00:56:28,960
+>> So what is that advantage?
+
+1482
+00:56:28,960 --> 00:56:30,720
+>> So let me yeah let me let me give my
+
+1483
+00:56:30,720 --> 00:56:32,400
+take here. Um because Jeff made some
+
+1484
+00:56:32,400 --> 00:56:33,920
+good points about like hey there's a lot
+
+1485
+00:56:33,920 --> 00:56:35,599
+in the training data set that if you
+
+1486
+00:56:35,599 --> 00:56:37,440
+just kind of like let it figure itself
+
+1487
+00:56:37,440 --> 00:56:40,559
+out you will get good answers to I think
+
+1488
+00:56:40,559 --> 00:56:42,880
+for me the challenge with and I think of
+
+1489
+00:56:42,880 --> 00:56:45,359
+like model inner harness outer harness
+
+1490
+00:56:45,359 --> 00:56:46,559
+right so you have the inner harness
+
+1491
+00:56:46,559 --> 00:56:48,000
+which is something like claude code or
+
+1492
+00:56:48,000 --> 00:56:50,480
+codeex or the CLI and then you have
+
+1493
+00:56:50,480 --> 00:56:52,400
+things like that I would describe as
+
+1494
+00:56:52,400 --> 00:56:55,040
+your outer harness and I've used two
+
+1495
+00:56:55,040 --> 00:56:57,280
+different outer harnesses quite often
+
+1496
+00:56:57,280 --> 00:56:59,040
+one of them is the research plan
+
+1497
+00:56:59,040 --> 00:57:00,720
+implement workflow that works really
+
+1498
+00:57:00,720 --> 00:57:02,720
+well for brownfield code bases and lets
+
+1499
+00:57:02,720 --> 00:57:04,720
+you get like a vertical slice of
+
+1500
+00:57:04,720 --> 00:57:06,559
+relevant context in a really old
+
+1501
+00:57:06,559 --> 00:57:08,079
+codebase so you can make a valid
+
+1502
+00:57:08,079 --> 00:57:09,760
+implementation plan and the review of a
+
+1503
+00:57:09,760 --> 00:57:11,119
+human in the loop like that's our outer
+
+1504
+00:57:11,119 --> 00:57:13,599
+harness. The other outer harness is this
+
+1505
+00:57:13,599 --> 00:57:14,960
+thing like the biggest problem with
+
+1506
+00:57:14,960 --> 00:57:17,200
+these coding agents that requires the
+
+1507
+00:57:17,200 --> 00:57:18,640
+human to be in the loop is like people
+
+1508
+00:57:18,640 --> 00:57:20,079
+say oh cloud code it'll work for a
+
+1509
+00:57:20,079 --> 00:57:21,520
+minute and then I'll have to come give
+
+1510
+00:57:21,520 --> 00:57:22,880
+it the next thing and the next thing and
+
+1511
+00:57:22,880 --> 00:57:24,720
+the next and even if I prompted we saw
+
+1512
+00:57:24,720 --> 00:57:26,000
+some someone from the AI the works
+
+1513
+00:57:26,000 --> 00:57:28,240
+community was giving a talk um at the
+
+1514
+00:57:28,240 --> 00:57:29,920
+unconference and he basically showed us
+
+1515
+00:57:29,920 --> 00:57:31,760
+his prompt and it was like do not stop
+
+1516
+00:57:31,760 --> 00:57:33,680
+after one step do not stop after two
+
+1517
+00:57:33,680 --> 00:57:35,040
+steps do not he literally his whole
+
+1518
+00:57:35,040 --> 00:57:36,799
+prompt was literally just like trying to
+
+1519
+00:57:36,799 --> 00:57:38,960
+convince the model to keep working but
+
+1520
+00:57:38,960 --> 00:57:39,440
+the problem is
+
+1521
+00:57:39,440 --> 00:57:41,599
+>> it doesn't work the models get anxiety
+
+1522
+00:57:41,599 --> 00:57:44,400
+model, it will terminate early.
+
+1523
+00:57:44,400 --> 00:57:45,760
+>> Yeah. And so there's two there's two
+
+1524
+00:57:45,760 --> 00:57:47,359
+pieces of this like one of them is like
+
+1525
+00:57:47,359 --> 00:57:48,799
+how do you get a model to work for
+
+1526
+00:57:48,799 --> 00:57:52,480
+longer than uh it wants to is you
+
+1527
+00:57:52,480 --> 00:57:53,920
+actually have it only you tell it to
+
+1528
+00:57:53,920 --> 00:57:56,079
+work for only a short time and you do
+
+1529
+00:57:56,079 --> 00:57:58,160
+that over and over again. And then the
+
+1530
+00:57:58,160 --> 00:58:00,480
+other side is like how do you do context
+
+1531
+00:58:00,480 --> 00:58:03,680
+engineering? How do you guarantee as
+
+1532
+00:58:03,680 --> 00:58:05,599
+much work as possible? As you say Jay
+
+1533
+00:58:05,599 --> 00:58:08,720
+like Jeff like the more context you use
+
+1534
+00:58:08,720 --> 00:58:11,200
+the worse results you'll get. How do you
+
+1535
+00:58:11,200 --> 00:58:13,119
+make sure that you're doing most of the
+
+1536
+00:58:13,119 --> 00:58:15,599
+work in the smart zone as we call it?
+
+1537
+00:58:15,599 --> 00:58:18,160
+And so how like this allows you if you
+
+1538
+00:58:18,160 --> 00:58:19,920
+can set your specs and allocate them
+
+1539
+00:58:19,920 --> 00:58:22,559
+properly of like exactly how much budget
+
+1540
+00:58:22,559 --> 00:58:23,599
+you know I mean you were the first
+
+1541
+00:58:23,599 --> 00:58:25,200
+person to explain this to me Jeff was
+
+1542
+00:58:25,200 --> 00:58:27,280
+like okay you want to budget about 7% of
+
+1543
+00:58:27,280 --> 00:58:29,920
+your context window for specs 7% for
+
+1544
+00:58:29,920 --> 00:58:31,520
+finding the state of the world you know
+
+1545
+00:58:31,520 --> 00:58:33,520
+3% for actually reading the cont the
+
+1546
+00:58:33,520 --> 00:58:35,599
+implementation plan and then you budget
+
+1547
+00:58:35,599 --> 00:58:37,920
+your you know 10 to 15% for your like
+
+1548
+00:58:37,920 --> 00:58:40,480
+base message and MCPS and all this crap
+
+1549
+00:58:40,480 --> 00:58:42,799
+y and that way you know that like
+
+1550
+00:58:42,799 --> 00:58:44,559
+because it's not just writing the files
+
+1551
+00:58:44,559 --> 00:58:48,240
+it's like 10% 20% of your context window
+
+1552
+00:58:48,240 --> 00:58:49,760
+if that's all you have right if this is
+
+1553
+00:58:49,760 --> 00:58:52,079
+10% for doing the work you need to be
+
+1554
+00:58:52,079 --> 00:58:54,640
+able to do the number of edits you need
+
+1555
+00:58:54,640 --> 00:58:56,079
+you need to be able to run the test you
+
+1556
+00:58:56,079 --> 00:58:57,599
+need to be able to fix the test you need
+
+1557
+00:58:57,599 --> 00:58:59,119
+to be able to update the plan with your
+
+1558
+00:58:59,119 --> 00:59:01,680
+status and you need to be able to commit
+
+1559
+00:59:01,680 --> 00:59:04,960
+like two file edits is enough that like
+
+1560
+00:59:04,960 --> 00:59:06,240
+you're going to fill up 10% of your
+
+1561
+00:59:06,240 --> 00:59:08,240
+context window with everything else and
+
+1562
+00:59:08,240 --> 00:59:10,240
+so this is the other part is like long
+
+1563
+00:59:10,240 --> 00:59:12,079
+horizon by just constantly looping it
+
+1564
+00:59:12,079 --> 00:59:14,559
+through and restarting but also better
+
+1565
+00:59:14,559 --> 00:59:16,640
+results because you're designing it to
+
+1566
+00:59:16,640 --> 00:59:18,640
+only do the smallest possible chunk of
+
+1567
+00:59:18,640 --> 00:59:20,160
+work at a time.
+
+1568
+00:59:20,160 --> 00:59:22,640
+>> Yeah, the bash loop is the most abstract
+
+1569
+00:59:22,640 --> 00:59:26,319
+thing. I was doing this all by hand in
+
+1570
+00:59:26,319 --> 00:59:28,880
+cursor back
+
+1571
+00:59:28,880 --> 00:59:30,079
+like
+
+1572
+00:59:30,079 --> 00:59:32,880
+>> check off the box
+
+1573
+00:59:32,880 --> 00:59:35,280
+>> just absolutely driving it like
+
+1574
+00:59:35,280 --> 00:59:37,280
+>> text
+
+1575
+00:59:37,280 --> 00:59:38,640
+>> just so people get an idea of what we're
+
+1576
+00:59:38,640 --> 00:59:40,319
+talking about the command line tool of
+
+1577
+00:59:40,319 --> 00:59:42,559
+like the what do you just cat it so
+
+1578
+00:59:42,559 --> 00:59:43,920
+people know what we mean by the bash
+
+1579
+00:59:43,920 --> 00:59:45,119
+loop
+
+1580
+00:59:45,119 --> 00:59:46,960
+>> yeah we'll have another look
+
+1581
+00:59:46,960 --> 00:59:49,440
+>> so it's actually
+
+1582
+00:59:49,440 --> 00:59:52,720
+>> there's no silver bullet here
+
+1583
+00:59:52,720 --> 00:59:55,920
+>> there's no silver bullet here. It's it's
+
+1584
+00:59:55,920 --> 00:59:58,240
+how you think and approach the problem
+
+1585
+00:59:58,240 --> 01:00:00,640
+domain. It's not a tool. It's not a
+
+1586
+01:00:00,640 --> 01:00:02,240
+workflow.
+
+1587
+01:00:02,240 --> 01:00:05,440
+Um you could
+
+1588
+01:00:05,440 --> 01:00:08,400
+the bash loop was
+
+1589
+01:00:08,400 --> 01:00:10,880
+nice because I started to see common
+
+1590
+01:00:10,880 --> 01:00:13,119
+failure domains
+
+1591
+01:00:13,119 --> 01:00:15,359
+and then I was able to update the bash
+
+1592
+01:00:15,359 --> 01:00:18,640
+loop to do a git reset hard or like
+
+1593
+01:00:18,640 --> 01:00:20,559
+reset the agent or all these other
+
+1594
+01:00:20,559 --> 01:00:22,079
+things. It allowed me to start thinking
+
+1595
+01:00:22,079 --> 01:00:23,920
+abstractly.
+
+1596
+01:00:23,920 --> 01:00:26,079
+>> So the biggest difference in the hot
+
+1597
+01:00:26,079 --> 01:00:27,280
+seat
+
+1598
+01:00:27,280 --> 01:00:28,720
+>> I'm going to try and summarize what I
+
+1599
+01:00:28,720 --> 01:00:30,880
+took away as the takeaway from this
+
+1600
+01:00:30,880 --> 01:00:32,720
+perspective. If you go back whenever you
+
+1601
+01:00:32,720 --> 01:00:33,920
+show that text.
+
+1602
+01:00:33,920 --> 01:00:34,240
+>> Yeah.
+
+1603
+01:00:34,240 --> 01:00:35,760
+>> The biggest difference between running
+
+1604
+01:00:35,760 --> 01:00:37,920
+quad code or codeex or something else
+
+1605
+01:00:37,920 --> 01:00:40,480
+here versus running the walkwigum loop
+
+1606
+01:00:40,480 --> 01:00:43,839
+from what I see is this ability to go
+
+1607
+01:00:43,839 --> 01:00:46,880
+ahead and when I pull this up is this
+
+1608
+01:00:46,880 --> 01:00:49,040
+ability to say that for extremely
+
+1609
+01:00:49,040 --> 01:00:52,559
+extremely hard tasks what I need to
+
+1610
+01:00:52,559 --> 01:00:55,920
+worry about at all times is the model
+
+1611
+01:00:55,920 --> 01:00:57,760
+will not continue them. And I think I
+
+1612
+01:00:57,760 --> 01:00:58,799
+have personally experienced that and a
+
+1613
+01:00:58,799 --> 01:00:59,920
+lot of people have experienced that.
+
+1614
+01:00:59,920 --> 01:01:02,640
+What I do is because I'm usually working
+
+1615
+01:01:02,640 --> 01:01:05,760
+with Claude or Codeex, it hasn't really
+
+1616
+01:01:05,760 --> 01:01:07,200
+been a problem because I just let it
+
+1617
+01:01:07,200 --> 01:01:08,559
+come. But it's definitely a problem that
+
+1618
+01:01:08,559 --> 01:01:10,000
+if I go to bed and I definitely want
+
+1619
+01:01:10,000 --> 01:01:12,240
+Claw to keep continuing reaching to some
+
+1620
+01:01:12,240 --> 01:01:15,119
+good horizon by the end of the by the
+
+1621
+01:01:15,119 --> 01:01:17,680
+end, then I definitely need to provide
+
+1622
+01:01:17,680 --> 01:01:21,119
+that in some better mechanism.
+
+1623
+01:01:21,119 --> 01:01:24,000
+So in that scenario, what I can do is I
+
+1624
+01:01:24,000 --> 01:01:27,119
+can either prop it and tell the model to
+
+1625
+01:01:27,119 --> 01:01:28,559
+keep going until it's actually done and
+
+1626
+01:01:28,559 --> 01:01:31,920
+hope that it does that or I can force it
+
+1627
+01:01:31,920 --> 01:01:33,839
+to go do this. And the only way I can
+
+1628
+01:01:33,839 --> 01:01:35,200
+really force it to do this is basically
+
+1629
+01:01:35,200 --> 01:01:37,040
+continuously run the process.
+
+1630
+01:01:37,040 --> 01:01:39,520
+>> Like I deterministic again, Claude.
+
+1631
+01:01:39,520 --> 01:01:40,079
+>> Yeah.
+
+1632
+01:01:40,079 --> 01:01:42,160
+>> Like basically add determinism to
+
+1633
+01:01:42,160 --> 01:01:43,440
+running forever.
+
+1634
+01:01:43,440 --> 01:01:45,680
+>> Like for and what I
+
+1635
+01:01:45,680 --> 01:01:47,760
+>> now when I run into this, can you go
+
+1636
+01:01:47,760 --> 01:01:48,960
+back?
+
+1637
+01:01:48,960 --> 01:01:51,359
+>> Uh yeah. Yeah. And then I'll I have a
+
+1638
+01:01:51,359 --> 01:01:52,240
+picture. Yeah.
+
+1639
+01:01:52,240 --> 01:01:54,240
+>> Yeah. And then when you run into this,
+
+1640
+01:01:54,240 --> 01:01:57,200
+the fundamental tradeoff that you end up
+
+1641
+01:01:57,200 --> 01:02:00,160
+here is some tasks do indeed need long
+
+1642
+01:02:00,160 --> 01:02:02,559
+context horizon. And in those tasks,
+
+1643
+01:02:02,559 --> 01:02:05,280
+this loop will not work well because if
+
+1644
+01:02:05,280 --> 01:02:07,440
+you need a long context horizon like
+
+1645
+01:02:07,440 --> 01:02:10,000
+you're you've design the system and I'm
+
+1646
+01:02:10,000 --> 01:02:11,440
+not saying there's you can't modify this
+
+1647
+01:02:11,440 --> 01:02:13,119
+loop to make it run better for those
+
+1648
+01:02:13,119 --> 01:02:16,400
+tasks. But as stated here, this task
+
+1649
+01:02:16,400 --> 01:02:17,680
+will probably suffer because the
+
+1650
+01:02:17,680 --> 01:02:20,160
+implementation plan just may not contain
+
+1651
+01:02:20,160 --> 01:02:21,920
+enough details. And
+
+1652
+01:02:21,920 --> 01:02:22,880
+>> this is when I'd see it
+
+1653
+01:02:22,880 --> 01:02:24,880
+>> to be able to do something.
+
+1654
+01:02:24,880 --> 01:02:26,720
+>> When I see it like hill climbing towards
+
+1655
+01:02:26,720 --> 01:02:28,079
+a destination, it's just not getting
+
+1656
+01:02:28,079 --> 01:02:30,160
+there. Like it's keep resetting hard too
+
+1657
+01:02:30,160 --> 01:02:31,520
+many times.
+
+1658
+01:02:31,520 --> 01:02:34,720
+>> Um this is where you know I do haven't
+
+1659
+01:02:34,720 --> 01:02:36,559
+got here yet. I would throw away the
+
+1660
+01:02:36,559 --> 01:02:38,720
+implementation plan continually because
+
+1661
+01:02:38,720 --> 01:02:40,240
+it was so easy to regenerate the
+
+1662
+01:02:40,240 --> 01:02:42,799
+implement and you start again.
+
+1663
+01:02:42,799 --> 01:02:44,079
+Then you just kick it off and you go
+
+1664
+01:02:44,079 --> 01:02:46,480
+down to the pub and drink a beer.
+
+1665
+01:02:46,480 --> 01:02:48,079
+>> Exactly. So, it's not saying that it
+
+1666
+01:02:48,079 --> 01:02:49,280
+doesn't work. It's just that you
+
+1667
+01:02:49,280 --> 01:02:51,200
+interrupt it. You interact with it in a
+
+1668
+01:02:51,200 --> 01:02:51,599
+different way.
+
+1669
+01:02:51,599 --> 01:02:53,920
+>> Oh, absolutely. This is
+
+1670
+01:02:53,920 --> 01:02:54,880
+>> like It's not like
+
+1671
+01:02:54,880 --> 01:02:57,359
+>> It's kind of like a If you're a really
+
+1672
+01:02:57,359 --> 01:02:59,839
+good M2, like a manager 2, that's kind
+
+1673
+01:02:59,839 --> 01:03:01,200
+of what you do. You're not really going
+
+1674
+01:03:01,200 --> 01:03:02,319
+to go and interrupt. You don't want
+
+1675
+01:03:02,319 --> 01:03:04,400
+stand up bigs from your teams, but you
+
+1676
+01:03:04,400 --> 01:03:06,240
+do need a way to stop a team from going
+
+1677
+01:03:06,240 --> 01:03:07,760
+down the totally wrong direction if
+
+1678
+01:03:07,760 --> 01:03:09,599
+they've been at it for a while.
+
+1679
+01:03:09,599 --> 01:03:12,880
+>> I would. And I think this is kind of the
+
+1680
+01:03:12,880 --> 01:03:16,000
+The reason I had it streaming, V, is so
+
+1681
+01:03:16,000 --> 01:03:19,200
+I I could just rewind to a point in time
+
+1682
+01:03:19,200 --> 01:03:22,079
+and skip through and I was monitoring it
+
+1683
+01:03:22,079 --> 01:03:23,920
+as if I was an engineering manager
+
+1684
+01:03:23,920 --> 01:03:27,280
+getting my daily status updates or my
+
+1685
+01:03:27,280 --> 01:03:29,440
+Jurro board. Like it was a second
+
+1686
+01:03:29,440 --> 01:03:32,160
+monitor that was available on my phone.
+
+1687
+01:03:32,160 --> 01:03:34,640
+I was using YouTube to stream to my
+
+1688
+01:03:34,640 --> 01:03:37,359
+phone with VCR record. And I was going
+
+1689
+01:03:37,359 --> 01:03:39,200
+through reviewing all that work and the
+
+1690
+01:03:39,200 --> 01:03:41,200
+amount of times it's failed
+
+1691
+01:03:41,200 --> 01:03:44,400
+>> and it's failed because of uh the idiot
+
+1692
+01:03:44,400 --> 01:03:46,880
+in front of the computer, me, I gave it
+
+1693
+01:03:46,880 --> 01:03:48,480
+the wrong input data, the wrong
+
+1694
+01:03:48,480 --> 01:03:51,440
+implementation plan, the wrong specs or
+
+1695
+01:03:51,440 --> 01:03:55,440
+I underspecified what the objective is
+
+1696
+01:03:55,440 --> 01:03:57,119
+and it gets that behavior exactly you
+
+1697
+01:03:57,119 --> 01:03:58,480
+described.
+
+1698
+01:03:58,480 --> 01:04:00,079
+>> We've got one really important question
+
+1699
+01:04:00,079 --> 01:04:02,960
+that keeps coming up. How does it stop?
+
+1700
+01:04:02,960 --> 01:04:04,240
+>> Uh and I know we talked about this
+
+1701
+01:04:04,240 --> 01:04:06,000
+briefly. The answer is it stops in
+
+1702
+01:04:06,000 --> 01:04:08,319
+general. You've deterministically said
+
+1703
+01:04:08,319 --> 01:04:10,319
+it should not stop. It stops when you
+
+1704
+01:04:10,319 --> 01:04:13,680
+hit control C. That is it.
+
+1705
+01:04:13,680 --> 01:04:16,079
+>> This is why you do a commit after every
+
+1706
+01:04:16,079 --> 01:04:18,400
+loop when you get a success a successful
+
+1707
+01:04:18,400 --> 01:04:20,000
+compilation. So
+
+1708
+01:04:20,000 --> 01:04:21,599
+>> it's like model training, right? It's
+
+1709
+01:04:21,599 --> 01:04:23,280
+like you overtrain the model and then
+
+1710
+01:04:23,280 --> 01:04:25,440
+you re you roll back to the actual good
+
+1711
+01:04:25,440 --> 01:04:27,680
+version, right?
+
+1712
+01:04:27,680 --> 01:04:30,000
+>> Yeah. The other part that we didn't get
+
+1713
+01:04:30,000 --> 01:04:33,599
+into was uh
+
+1714
+01:04:33,599 --> 01:04:36,720
+a perspective of how when in that loop
+
+1715
+01:04:36,720 --> 01:04:40,960
+is h how you drove the context window,
+
+1716
+01:04:40,960 --> 01:04:43,760
+how you drive the context window. I
+
+1717
+01:04:43,760 --> 01:04:46,720
+realized you could register
+
+1718
+01:04:46,720 --> 01:04:50,400
+uh new context windows
+
+1719
+01:04:50,400 --> 01:04:54,480
+in as tools in an existing context
+
+1720
+01:04:54,480 --> 01:04:59,359
+window. We call them sub aents. now. And
+
+1721
+01:04:59,359 --> 01:05:03,200
+what that meant was I could spawn a
+
+1722
+01:05:03,200 --> 01:05:06,160
+green thread like a new process green
+
+1723
+01:05:06,160 --> 01:05:09,599
+thread and anything that was a minty
+
+1724
+01:05:09,599 --> 01:05:12,720
+allocation like cargo test and maybe
+
+1725
+01:05:12,720 --> 01:05:15,359
+that that maybe that uses 200k of
+
+1726
+01:05:15,359 --> 01:05:18,799
+tokens. I don't want 200k of tokens
+
+1727
+01:05:18,799 --> 01:05:23,280
+appended to the main inferencing loop. I
+
+1728
+01:05:23,280 --> 01:05:26,000
+want garbage collection. I went green
+
+1729
+01:05:26,000 --> 01:05:27,520
+threads with garbage collection. I went
+
+1730
+01:05:27,520 --> 01:05:30,079
+from mal malicking manually with C
+
+1731
+01:05:30,079 --> 01:05:32,960
+memory with C all the way into the JVM
+
+1732
+01:05:32,960 --> 01:05:35,920
+era. I wanted automatic garbage
+
+1733
+01:05:35,920 --> 01:05:37,680
+collection. That's the way I was looking
+
+1734
+01:05:37,680 --> 01:05:40,240
+at it. I wanted I was running a
+
+1735
+01:05:40,240 --> 01:05:42,799
+operating system process as a single
+
+1736
+01:05:42,799 --> 01:05:45,680
+process. Everyone's talking about agent
+
+1737
+01:05:45,680 --> 01:05:50,640
+agent like microservices type stuff. Um
+
+1738
+01:05:50,640 --> 01:05:53,359
+I I don't think it's a thing right now.
+
+1739
+01:05:53,359 --> 01:05:55,119
+But what what I was focusing on is
+
+1740
+01:05:55,119 --> 01:05:57,280
+keeping it simple. And the idea was how
+
+1741
+01:05:57,280 --> 01:06:01,200
+do I keep one process running forever?
+
+1742
+01:06:01,200 --> 01:06:03,920
+That loop running forever. How do I keep
+
+1743
+01:06:03,920 --> 01:06:06,160
+it running forever? And the key was
+
+1744
+01:06:06,160 --> 01:06:09,359
+don't allocate to it. And the way to not
+
+1745
+01:06:09,359 --> 01:06:11,760
+allocate to it is to spawn a green
+
+1746
+01:06:11,760 --> 01:06:12,720
+thread,
+
+1747
+01:06:12,720 --> 01:06:14,559
+>> JVM
+
+1748
+01:06:14,559 --> 01:06:17,599
+like vinking and garbage collect. So the
+
+1749
+01:06:17,599 --> 01:06:20,079
+idea is all you care about is the Unix
+
+1750
+01:06:20,079 --> 01:06:22,960
+return code on cargo test
+
+1751
+01:06:22,960 --> 01:06:24,079
+>> will and
+
+1752
+01:06:24,079 --> 01:06:26,319
+>> we're running a little bit long today.
+
+1753
+01:06:26,319 --> 01:06:29,200
+>> You summarize back to make decisions.
+
+1754
+01:06:29,200 --> 01:06:31,039
+>> I'm going to show one more thing on the
+
+1755
+01:06:31,039 --> 01:06:32,480
+how does it exit and then I'm going to
+
+1756
+01:06:32,480 --> 01:06:33,920
+hand it to you viob.
+
+1757
+01:06:33,920 --> 01:06:34,160
+>> Yeah,
+
+1758
+01:06:34,160 --> 01:06:35,680
+>> we did this
+
+1759
+01:06:35,680 --> 01:06:37,440
+>> uh we did this in a hackathon and we
+
+1760
+01:06:37,440 --> 01:06:39,119
+used it to port a bunch of repos from
+
+1761
+01:06:39,119 --> 01:06:40,720
+Python to Typescript and things like
+
+1762
+01:06:40,720 --> 01:06:43,599
+this. Uh, one of the agents figured out
+
+1763
+01:06:43,599 --> 01:06:46,240
+it was running in an infinite loop and
+
+1764
+01:06:46,240 --> 01:06:48,960
+it figured out how to send a kill signal
+
+1765
+01:06:48,960 --> 01:06:51,680
+to its own process and stop itself. It
+
+1766
+01:06:51,680 --> 01:06:53,920
+like freaked out an existential crisis
+
+1767
+01:06:53,920 --> 01:06:56,799
+and like offed itself. But that's that's
+
+1768
+01:06:56,799 --> 01:06:58,799
+one option of how it finishes is if if
+
+1769
+01:06:58,799 --> 01:07:00,400
+the prompt is in a certain way, it will
+
+1770
+01:07:00,400 --> 01:07:02,000
+figure that out.
+
+1771
+01:07:02,000 --> 01:07:04,000
+>> Um, I have a couple things. We started a
+
+1772
+01:07:04,000 --> 01:07:05,359
+demo at the beginning of this call where
+
+1773
+01:07:05,359 --> 01:07:07,280
+we were like, we ran the raw loop for
+
+1774
+01:07:07,280 --> 01:07:08,960
+the to-do loop. Let's see it. We built a
+
+1775
+01:07:08,960 --> 01:07:11,839
+to-do app. Do you can you share a quick
+
+1776
+01:07:11,839 --> 01:07:13,359
+description of what the initial to-do
+
+1777
+01:07:13,359 --> 01:07:15,119
+app was speced out to be
+
+1778
+01:07:15,119 --> 01:07:17,440
+>> and then I want to show off what we have
+
+1779
+01:07:17,440 --> 01:07:20,240
+now and we'll start with purely the
+
+1780
+01:07:20,240 --> 01:07:21,680
+demo.
+
+1781
+01:07:21,680 --> 01:07:23,839
+So yeah, so here's the spec. You know,
+
+1782
+01:07:23,839 --> 01:07:26,000
+to-dos application login with email and
+
+1783
+01:07:26,000 --> 01:07:27,760
+magic link. Users can add to-dos. They
+
+1784
+01:07:27,760 --> 01:07:30,319
+can group to-dos into lists. Um they can
+
+1785
+01:07:30,319 --> 01:07:31,760
+share a list of to-dos with other users.
+
+1786
+01:07:31,760 --> 01:07:32,960
+They can add comments and emoji
+
+1787
+01:07:32,960 --> 01:07:34,400
+reactions. They can mark. And then I
+
+1788
+01:07:34,400 --> 01:07:36,079
+added in the middle of this I added a
+
+1789
+01:07:36,079 --> 01:07:38,000
+one new instruction. So let's go let's
+
+1790
+01:07:38,000 --> 01:07:40,480
+go have a look at it. Um
+
+1791
+01:07:40,480 --> 01:07:42,640
+>> and it's an X.js app. So we just go look
+
+1792
+01:07:42,640 --> 01:07:45,440
+at it. Cool. Magic links.
+
+1793
+01:07:45,440 --> 01:07:45,839
+>> Yep.
+
+1794
+01:07:45,839 --> 01:07:48,000
+>> Human layer.dev. We'll send a link
+
+1795
+01:07:48,000 --> 01:07:51,760
+there. I'm going to shut resend API key
+
+1796
+01:07:51,760 --> 01:07:52,960
+manually while you
+
+1797
+01:07:52,960 --> 01:07:54,160
+>> I set that in the environment.
+
+1798
+01:07:54,160 --> 01:07:55,520
+>> Agent did not do that. Yes.
+
+1799
+01:07:55,520 --> 01:07:57,039
+>> No. Yeah, I didn't want to wait for it
+
+1800
+01:07:57,039 --> 01:07:58,400
+to do that.
+
+1801
+01:07:58,400 --> 01:08:00,400
+>> Totally valid.
+
+1802
+01:08:00,400 --> 01:08:02,480
+>> Um
+
+1803
+01:08:02,480 --> 01:08:03,920
+let's see. Post offline.
+
+1804
+01:08:03,920 --> 01:08:05,839
+>> Let's see what the app did.
+
+1805
+01:08:05,839 --> 01:08:06,799
+>> So, I'm trying
+
+1806
+01:08:06,799 --> 01:08:08,640
+>> while we're running this demo. people
+
+1807
+01:08:08,640 --> 01:08:10,240
+definitely uh we'll take questions now
+
+1808
+01:08:10,240 --> 01:08:11,760
+for the next five or 10 minutes if
+
+1809
+01:08:11,760 --> 01:08:13,920
+people have them and then we'll go um
+
+1810
+01:08:13,920 --> 01:08:15,920
+we'll try and like just like I said show
+
+1811
+01:08:15,920 --> 01:08:17,279
+the real code of what ended up
+
+1812
+01:08:17,279 --> 01:08:20,319
+concluding at the end of this content
+
+1813
+01:08:20,319 --> 01:08:21,600
+>> cuz like while we were talking a lot
+
+1814
+01:08:21,600 --> 01:08:23,120
+about this I think the best thing about
+
+1815
+01:08:23,120 --> 01:08:25,600
+this episode is we actually don't
+
+1816
+01:08:25,600 --> 01:08:27,600
+there's not much to code and show like
+
+1817
+01:08:27,600 --> 01:08:29,199
+we really just run a while loop with a
+
+1818
+01:08:29,199 --> 01:08:30,880
+very simple prompt in cloud code and let
+
+1819
+01:08:30,880 --> 01:08:33,040
+it rip and I think a lot of this why we
+
+1820
+01:08:33,040 --> 01:08:34,480
+talk so much about theory is because
+
+1821
+01:08:34,480 --> 01:08:36,239
+like
+
+1822
+01:08:36,239 --> 01:08:38,000
+>> honestly that's what's useful in like
+
+1823
+01:08:38,000 --> 01:08:39,679
+understanding why this stuff works
+
+1824
+01:08:39,679 --> 01:08:41,120
+because we'll run this code and we'll
+
+1825
+01:08:41,120 --> 01:08:42,560
+see what happens.
+
+1826
+01:08:42,560 --> 01:08:45,199
+>> So, I didn't get the email yet. Um, so
+
+1827
+01:08:45,199 --> 01:08:47,359
+I'm just going to grab happened to log
+
+1828
+01:08:47,359 --> 01:08:49,120
+out the magic link.
+
+1829
+01:08:49,120 --> 01:08:51,759
+Yeah. So this is what exactly why we
+
+1830
+01:08:51,759 --> 01:08:53,759
+spend so much time in theory because
+
+1831
+01:08:53,759 --> 01:08:57,040
+it's not I see so many pro people going
+
+1832
+01:08:57,040 --> 01:09:01,040
+look at my perfect prompt the like buy
+
+1833
+01:09:01,040 --> 01:09:03,920
+my course of the perfect prompt or the
+
+1834
+01:09:03,920 --> 01:09:06,400
+perfect sub aent persona and all the
+
+1835
+01:09:06,400 --> 01:09:10,719
+rest like it it it it's all about like
+
+1836
+01:09:10,719 --> 01:09:13,120
+engineering is first principles thinking
+
+1837
+01:09:13,120 --> 01:09:18,080
+here um and I'm looking for someone to
+
+1838
+01:09:18,080 --> 01:09:19,520
+come up with something better than a
+
+1839
+01:09:19,520 --> 01:09:22,000
+while true bash loop. Whatever comes
+
+1840
+01:09:22,000 --> 01:09:24,319
+next is going to be really great. Like
+
+1841
+01:09:24,319 --> 01:09:25,920
+how do you solve the halting problem?
+
+1842
+01:09:25,920 --> 01:09:28,480
+Like how do you like
+
+1843
+01:09:28,480 --> 01:09:30,239
+decide when it's going to terminate?
+
+1844
+01:09:30,239 --> 01:09:32,000
+I've seen self- termination. Dex has
+
+1845
+01:09:32,000 --> 01:09:34,239
+seen self- termination. I've seen
+
+1846
+01:09:34,239 --> 01:09:37,120
+underbaking. I've seen perfectly baked
+
+1847
+01:09:37,120 --> 01:09:39,440
+and you just do get reset. This is where
+
+1848
+01:09:39,440 --> 01:09:41,199
+you put your judgment in. And I've seen
+
+1849
+01:09:41,199 --> 01:09:43,679
+overbaked when it's it's added features
+
+1850
+01:09:43,679 --> 01:09:46,560
+because I was silly and I didn't look at
+
+1851
+01:09:46,560 --> 01:09:48,799
+the specifications or was hallucinated
+
+1852
+01:09:48,799 --> 01:09:50,560
+and just on the implementation plan
+
+1853
+01:09:50,560 --> 01:09:52,799
+decide to add something more.
+
+1854
+01:09:52,799 --> 01:09:55,360
+>> Yeah. Like running like
+
+1855
+01:09:55,360 --> 01:09:56,719
+>> think about it yourself as like an
+
+1856
+01:09:56,719 --> 01:09:58,159
+engineer. If someone gives you a
+
+1857
+01:09:58,159 --> 01:09:59,600
+checklist of all the features you want
+
+1858
+01:09:59,600 --> 01:10:01,360
+running and then they're all checked off
+
+1859
+01:10:01,360 --> 01:10:02,640
+and they're like they just give it to
+
+1860
+01:10:02,640 --> 01:10:05,520
+you of like build stuff, you will build
+
+1861
+01:10:05,520 --> 01:10:06,960
+stuff because that is what
+
+1862
+01:10:06,960 --> 01:10:09,920
+>> it just builds stuff. It it's it's kind
+
+1863
+01:10:09,920 --> 01:10:12,640
+of like the Fantasia mop,
+
+1864
+01:10:12,640 --> 01:10:16,960
+>> like the scary uh pdoom
+
+1865
+01:10:16,960 --> 01:10:19,040
+a fantasia mop when I was first coming
+
+1866
+01:10:19,040 --> 01:10:20,400
+across it cuz I realized
+
+1867
+01:10:20,400 --> 01:10:21,199
+>> it just keeps working.
+
+1868
+01:10:21,199 --> 01:10:22,400
+>> This is enough.
+
+1869
+01:10:22,400 --> 01:10:24,400
+>> It just keeps working. This is enough to
+
+1870
+01:10:24,400 --> 01:10:27,440
+to get software I don't know 70% done,
+
+1871
+01:10:27,440 --> 01:10:29,840
+80% done. like the prototype that
+
+1872
+01:10:29,840 --> 01:10:31,760
+normally got off like all this
+
+1873
+01:10:31,760 --> 01:10:34,080
+offshoring that people normally did for
+
+1874
+01:10:34,080 --> 01:10:36,320
+6 months or two years and they they
+
+1875
+01:10:36,320 --> 01:10:39,120
+dropped 100 grand for like a a little
+
+1876
+01:10:39,120 --> 01:10:42,239
+pock like I just don't see the place in
+
+1877
+01:10:42,239 --> 01:10:44,800
+the market for it anymore because a
+
+1878
+01:10:44,800 --> 01:10:48,159
+competent engineer can just run the loop
+
+1879
+01:10:48,159 --> 01:10:50,400
+and and they get the results back in in
+
+1880
+01:10:50,400 --> 01:10:52,000
+in a couple days.
+
+1881
+01:10:52,000 --> 01:10:54,080
+>> I I will tell you one counter-argument
+
+1882
+01:10:54,080 --> 01:10:56,480
+for why I disagree with that though.
+
+1883
+01:10:56,480 --> 01:10:58,560
+Honestly, when I want to when I hire
+
+1884
+01:10:58,560 --> 01:11:00,960
+someone or when I when I ask some
+
+1885
+01:11:00,960 --> 01:11:02,719
+software to solve my problem, I often
+
+1886
+01:11:02,719 --> 01:11:04,000
+most of the time just want the problem
+
+1887
+01:11:04,000 --> 01:11:06,159
+solved for me. And even if I could do it
+
+1888
+01:11:06,159 --> 01:11:09,040
+myself, it's just not as interesting as
+
+1889
+01:11:09,040 --> 01:11:10,880
+just having the problem be solved for
+
+1890
+01:11:10,880 --> 01:11:11,840
+me.
+
+1891
+01:11:11,840 --> 01:11:12,239
+>> Yeah.
+
+1892
+01:11:12,239 --> 01:11:15,040
+>> And I think so like even if even if it's
+
+1893
+01:11:15,040 --> 01:11:16,640
+possible for me to go technically write
+
+1894
+01:11:16,640 --> 01:11:18,640
+the code to go do it, it's still highly
+
+1895
+01:11:18,640 --> 01:11:20,239
+useful for me to hire someone else that
+
+1896
+01:11:20,239 --> 01:11:21,679
+can just go take care of that problem
+
+1897
+01:11:21,679 --> 01:11:23,760
+and spend their time thinking about it.
+
+1898
+01:11:23,760 --> 01:11:25,040
+Because like for example right now
+
+1899
+01:11:25,040 --> 01:11:26,560
+Dexter is working on communicating with
+
+1900
+01:11:26,560 --> 01:11:28,334
+the model to make this work. Could I be
+
+1901
+01:11:28,334 --> 01:11:30,880
+[laughter] doing that 100%. Like I could
+
+1902
+01:11:30,880 --> 01:11:33,440
+go do that but it's definitely useful
+
+1903
+01:11:33,440 --> 01:11:34,960
+for someone else to be doing that and me
+
+1904
+01:11:34,960 --> 01:11:36,320
+not spending my time on there. So like
+
+1905
+01:11:36,320 --> 01:11:37,600
+when people talk about these incredibly
+
+1906
+01:11:37,600 --> 01:11:40,080
+small teams doing everything. I think
+
+1907
+01:11:40,080 --> 01:11:42,080
+one person can definitely do more than
+
+1908
+01:11:42,080 --> 01:11:45,199
+they used to be able to do. But
+
+1909
+01:11:45,199 --> 01:11:47,600
+definitely five people all doing more
+
+1910
+01:11:47,600 --> 01:11:49,040
+than what one person individually used
+
+1911
+01:11:49,040 --> 01:11:50,800
+to do will do more than what five people
+
+1912
+01:11:50,800 --> 01:11:53,440
+used to do before as well. And some
+
+1913
+01:11:53,440 --> 01:11:55,199
+problems, you're right, don't need five
+
+1914
+01:11:55,199 --> 01:11:57,280
+people of work. But some problem, most
+
+1915
+01:11:57,280 --> 01:11:58,560
+problems that are interesting, I think
+
+1916
+01:11:58,560 --> 01:12:00,400
+do need usually at least two people's
+
+1917
+01:12:00,400 --> 01:12:02,080
+worth of work.
+
+1918
+01:12:02,080 --> 01:12:04,080
+>> There's building upon that, there's
+
+1919
+01:12:04,080 --> 01:12:06,480
+there's failure domains, liability, and
+
+1920
+01:12:06,480 --> 01:12:10,159
+warranty domains of business. Like I I I
+
+1921
+01:12:10,159 --> 01:12:16,880
+cloned um uh San Fran um uh PKI startup
+
+1922
+01:12:16,880 --> 01:12:20,000
+um just just run Ralph in reverse to
+
+1923
+01:12:20,000 --> 01:12:22,719
+specifications and ran it forward.
+
+1924
+01:12:22,719 --> 01:12:23,600
+see if it could
+
+1925
+01:12:23,600 --> 01:12:25,760
+>> Did you pull their docs?
+
+1926
+01:12:25,760 --> 01:12:28,159
+>> I put so some of the source code wasn't
+
+1927
+01:12:28,159 --> 01:12:30,320
+available cuz it's enterprise.
+
+1928
+01:12:30,320 --> 01:12:30,719
+>> Sure.
+
+1929
+01:12:30,719 --> 01:12:32,719
+>> So I used their public facing
+
+1930
+01:12:32,719 --> 01:12:34,960
+documentation as additional context to
+
+1931
+01:12:34,960 --> 01:12:36,640
+reverse engineer to get the
+
+1932
+01:12:36,640 --> 01:12:38,239
+specifications cuz the a lot of the
+
+1933
+01:12:38,239 --> 01:12:40,400
+source code wasn't available and it was
+
+1934
+01:12:40,400 --> 01:12:42,640
+able to generate it really well. But
+
+1935
+01:12:42,640 --> 01:12:45,600
+let's be clear, we're talking about PKI
+
+1936
+01:12:45,600 --> 01:12:48,719
+here, folks. Like that's a perfect
+
+1937
+01:12:48,719 --> 01:12:50,560
+example. Like just because you can do it
+
+1938
+01:12:50,560 --> 01:12:51,600
+doesn't mean you're going to do it. but
+
+1939
+01:12:51,600 --> 01:12:52,960
+you're not going to run your business on
+
+1940
+01:12:52,960 --> 01:12:57,679
+it. Um, you it's nice knowing that
+
+1941
+01:12:57,679 --> 01:13:00,239
+there's a a company that I can pay money
+
+1942
+01:13:00,239 --> 01:13:02,400
+to and they're specialized specialist in
+
+1943
+01:13:02,400 --> 01:13:06,709
+this domain.
+
+1944
+01:13:08,310 --> 01:13:08,320
+Uh Dave, your question running in
+
+1945
+01:13:08,320 --> 01:13:11,040
+reverse is literally you take an
+
+1946
+01:13:11,040 --> 01:13:14,800
+existing piece of intellectual property,
+
+1947
+01:13:14,800 --> 01:13:17,920
+whether that be proprietary software or
+
+1948
+01:13:17,920 --> 01:13:20,480
+proprietary documentation
+
+1949
+01:13:20,480 --> 01:13:23,600
+and you essentially do a clean room. You
+
+1950
+01:13:23,600 --> 01:13:25,679
+take it up to specific, you take the
+
+1951
+01:13:25,679 --> 01:13:27,840
+proprietary code, you create uh
+
+1952
+01:13:27,840 --> 01:13:29,360
+specifications
+
+1953
+01:13:29,360 --> 01:13:31,120
+>> in autonomous way
+
+1954
+01:13:31,120 --> 01:13:33,199
+>> and then you throw away the tainted
+
+1955
+01:13:33,199 --> 01:13:34,960
+intellectual property.
+
+1956
+01:13:34,960 --> 01:13:37,840
+>> Um, you need to speak with lawyers
+
+1957
+01:13:37,840 --> 01:13:41,520
+because it could be argued under US law
+
+1958
+01:13:41,520 --> 01:13:45,280
+that it's not a true clean room.
+
+1959
+01:13:45,280 --> 01:13:47,360
+>> Um, I've
+
+1960
+01:13:47,360 --> 01:13:50,400
+>> had some discussions and then you still
+
+1961
+01:13:50,400 --> 01:13:53,440
+drive forwards to implement it.
+
+1962
+01:13:53,440 --> 01:13:55,600
+Both of you have tried this for quite a
+
+1963
+01:13:55,600 --> 01:13:57,120
+few different programs. And before we
+
+1964
+01:13:57,120 --> 01:13:58,560
+close this out, I have a couple
+
+1965
+01:13:58,560 --> 01:14:00,560
+questions that I want to ask you guys.
+
+1966
+01:14:00,560 --> 01:14:02,400
+>> One, how many of your programs got to
+
+1967
+01:14:02,400 --> 01:14:04,880
+past 80% correctness? Like are actually
+
+1968
+01:14:04,880 --> 01:14:06,719
+good and like reliable when you did this
+
+1969
+01:14:06,719 --> 01:14:08,640
+loop?
+
+1970
+01:14:08,640 --> 01:14:10,400
+>> I think it's almost always you can get
+
+1971
+01:14:10,400 --> 01:14:13,920
+to 90 or 95%. There's almost always a
+
+1972
+01:14:13,920 --> 01:14:15,600
+little bit of steering and polishing.
+
+1973
+01:14:15,600 --> 01:14:17,760
+Yeah. Jeff, what do you think?
+
+1974
+01:14:17,760 --> 01:14:20,800
+Uh it I I
+
+1975
+01:14:20,800 --> 01:14:24,239
+think software outsourcing is cooked.
+
+1976
+01:14:24,239 --> 01:14:26,560
+Um like
+
+1977
+01:14:26,560 --> 01:14:30,320
+>> you can get into the high 70s 80s. Like
+
+1978
+01:14:30,320 --> 01:14:32,560
+there's going to be holes.
+
+1979
+01:14:32,560 --> 01:14:36,080
+Um you don't trust the output. When it
+
+1980
+01:14:36,080 --> 01:14:37,920
+says it's done, it's not really done.
+
+1981
+01:14:37,920 --> 01:14:40,560
+Like reviewing code is one of the
+
+1982
+01:14:40,560 --> 01:14:43,840
+hardest things now. um because the
+
+1983
+01:14:43,840 --> 01:14:46,400
+velocity is so fast, it's it comes at
+
+1984
+01:14:46,400 --> 01:14:48,880
+you faster than you can mentally adjust
+
+1985
+01:14:48,880 --> 01:14:51,679
+and then you put a team factor into it.
+
+1986
+01:14:51,679 --> 01:14:55,760
+It's really weird, folks. But
+
+1987
+01:14:55,760 --> 01:14:59,280
+um if I needed to generatively figure
+
+1988
+01:14:59,280 --> 01:15:02,320
+out the shape of it, like why wouldn't
+
+1989
+01:15:02,320 --> 01:15:04,400
+you not take a spec and then implement
+
+1990
+01:15:04,400 --> 01:15:06,400
+it in Zigg and then implement it in Rust
+
+1991
+01:15:06,400 --> 01:15:09,199
+and implement it in Python and then like
+
+1992
+01:15:09,199 --> 01:15:11,520
+go down to the pub, go for lunch, come
+
+1993
+01:15:11,520 --> 01:15:14,080
+back and go, this is what it could kind
+
+1994
+01:15:14,080 --> 01:15:15,920
+of look like. like really lean into the
+
+1995
+01:15:15,920 --> 01:15:18,239
+generative aspects
+
+1996
+01:15:18,239 --> 01:15:20,560
+um which allows you to capitalize on
+
+1997
+01:15:20,560 --> 01:15:23,040
+things that would
+
+1998
+01:15:23,040 --> 01:15:24,400
+there used to be a higher level
+
+1999
+01:15:24,400 --> 01:15:26,719
+emotional connection to me with code.
+
+2000
+01:15:26,719 --> 01:15:29,280
+>> It it doesn't exist anymore. Code is
+
+2001
+01:15:29,280 --> 01:15:32,080
+disposable to me now. Ideas are not.
+
+2002
+01:15:32,080 --> 01:15:35,440
+>> And the other thing is
+
+2003
+01:15:35,440 --> 01:15:37,679
+um
+
+2004
+01:15:37,679 --> 01:15:39,040
+it just feels like code's more
+
+2005
+01:15:39,040 --> 01:15:40,640
+disposable now. It's more throwaway.
+
+2006
+01:15:40,640 --> 01:15:43,840
+It's more like it's more about
+
+2007
+01:15:43,840 --> 01:15:47,760
+um it's idea to execution immediately.
+
+2008
+01:15:47,760 --> 01:15:49,840
+Idea execution, execution, execution,
+
+2009
+01:15:49,840 --> 01:15:52,320
+execution. It's all about the idea. And
+
+2010
+01:15:52,320 --> 01:15:54,159
+that's what's changed. Like it's just
+
+2011
+01:15:54,159 --> 01:15:55,679
+this huge dopamine hit of getting
+
+2012
+01:15:55,679 --> 01:15:59,199
+outcomes. It's crazy. But it's nowhere I
+
+2013
+01:15:59,199 --> 01:16:00,640
+wouldn't call it engineering.
+
+2014
+01:16:00,640 --> 01:16:02,480
+Engineering has li professional
+
+2015
+01:16:02,480 --> 01:16:04,480
+liability to it. If you build a bridge
+
+2016
+01:16:04,480 --> 01:16:06,719
+and the build bridge collapses, then you
+
+2017
+01:16:06,719 --> 01:16:08,080
+should lose your license, should be
+
+2018
+01:16:08,080 --> 01:16:11,600
+sued. Um kind of out of time, but I
+
+2019
+01:16:11,600 --> 01:16:13,199
+think software engineering should have
+
+2020
+01:16:13,199 --> 01:16:15,760
+professional liability to it. Um just
+
+2021
+01:16:15,760 --> 01:16:19,440
+because AI generated it does not mean
+
+2022
+01:16:19,440 --> 01:16:20,640
+>> that I mean
+
+2023
+01:16:20,640 --> 01:16:23,440
+>> that like your brain you need to take
+
+2024
+01:16:23,440 --> 01:16:25,520
+accountability for it.
+
+2025
+01:16:25,520 --> 01:16:28,800
+>> The model will generate 70% done really
+
+2026
+01:16:28,800 --> 01:16:31,920
+fast, really well in a generative way.
+
+2027
+01:16:31,920 --> 01:16:34,080
+>> You can't hang up a shelf and then blame
+
+2028
+01:16:34,080 --> 01:16:36,080
+the drill. Like it's your job to make
+
+2029
+01:16:36,080 --> 01:16:38,400
+sure it's safe.
+
+2030
+01:16:38,400 --> 01:16:41,199
+is um cool. I think with that we should
+
+2031
+01:16:41,199 --> 01:16:42,800
+uh I think this episode has been really
+
+2032
+01:16:42,800 --> 01:16:44,960
+fun. Uh I think that's if Have we got
+
+2033
+01:16:44,960 --> 01:16:46,239
+the website working? Otherwise, we'll
+
+2034
+01:16:46,239 --> 01:16:48,480
+post it later if it works.
+
+2035
+01:16:48,480 --> 01:16:50,159
+>> I'll push all the code when it's done.
+
+2036
+01:16:50,159 --> 01:16:52,560
+It's it's still churning. I think an
+
+2037
+01:16:52,560 --> 01:16:54,719
+hour to bake is not enough time for a
+
+2038
+01:16:54,719 --> 01:16:56,560
+app with that many features. And I was
+
+2039
+01:16:56,560 --> 01:16:58,159
+using Opus. I think we used it would
+
+2040
+01:16:58,159 --> 01:16:59,440
+have gone a little bit faster. I want to
+
+2041
+01:16:59,440 --> 01:17:01,440
+share one more thing that I really love.
+
+2042
+01:17:01,440 --> 01:17:03,920
+Uh thank you so much, Jeff. Uh I'm going
+
+2043
+01:17:03,920 --> 01:17:05,840
+to share my screen one more time. It's a
+
+2044
+01:17:05,840 --> 01:17:07,600
+little give give us all a little pat on
+
+2045
+01:17:07,600 --> 01:17:10,880
+the back here. Um, let's have a look and
+
+2046
+01:17:10,880 --> 01:17:14,960
+we'll we'll end on this one. Uh,
+
+2047
+01:17:14,960 --> 01:17:16,719
+this is the most interesting show on
+
+2048
+01:17:16,719 --> 01:17:19,840
+YouTube. Thank you, Jeff, for joining us
+
+2049
+01:17:19,840 --> 01:17:22,239
+and making it even more interesting than
+
+2050
+01:17:22,239 --> 01:17:25,199
+it is in in general. This was a blast.
+
+2051
+01:17:25,199 --> 01:17:26,719
+Uh, [laughter]
+
+2052
+01:17:26,719 --> 01:17:30,480
+>> until we next catch up in San Fran.
+
+2053
+01:17:30,480 --> 01:17:32,400
+>> Um, we'll get there. And then funny
+
+2054
+01:17:32,400 --> 01:17:34,560
+enough, uh Dash and I for the first time
+
+2055
+01:17:34,560 --> 01:17:37,040
+are actually a room apart uh while we're
+
+2056
+01:17:37,040 --> 01:17:38,480
+doing this thing. We just sadly didn't
+
+2057
+01:17:38,480 --> 01:17:40,000
+have a webcam set up to go do it on the
+
+2058
+01:17:40,000 --> 01:17:42,239
+same computer. Um but for everyone else
+
+2059
+01:17:42,239 --> 01:17:44,080
+that's tuning in, uh this AI that works.
+
+2060
+01:17:44,080 --> 01:17:45,840
+We try and show real working pipelines.
+
+2061
+01:17:45,840 --> 01:17:47,520
+Um we will push the code and all the
+
+2062
+01:17:47,520 --> 01:17:48,560
+markdown files and everything that
+
+2063
+01:17:48,560 --> 01:17:50,159
+Dexter is doing here in the repo. So
+
+2064
+01:17:50,159 --> 01:17:52,800
+you'll get it as per usual. Uh next
+
+2065
+01:17:52,800 --> 01:17:54,640
+week's episode is going to go back to
+
+2066
+01:17:54,640 --> 01:17:56,320
+some interesting context endurance stuff
+
+2067
+01:17:56,320 --> 01:17:58,000
+and how to build a stick pipelines. I
+
+2068
+01:17:58,000 --> 01:17:59,840
+think that'll be interesting and fun.
+
+2069
+01:17:59,840 --> 01:18:02,239
+Uh, come join, sign up, and then we'll
+
+2070
+01:18:02,239 --> 01:18:03,920
+see you guys soon.
+
+2071
+01:18:03,920 --> 01:18:04,800
+>> Bye everyone.
+
+2072
+01:18:04,800 --> 01:18:07,760
+>> Thanks everybody.

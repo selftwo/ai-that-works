@@ -1,0 +1,5 @@
+{"kind":"observed","claim":"The speakers prioritize a working pipeline and infrastructure before prompt optimization.","start":"00:02:40","end":"00:06:42","confidence":"high","source":"knowledge/episodes/aitw-011/transcripts/stitched.txt"}
+{"kind":"observed","claim":"The implementation streams typed pipeline states to the frontend.","start":"00:17:29","end":"00:23:45","confidence":"high","source":"knowledge/episodes/aitw-011/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Real recordings are preferred over synthetic examples for pipeline testing.","start":"00:28:31","end":"00:36:20","confidence":"medium","source":"knowledge/episodes/aitw-011/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Complex content generation is considered for separation into multiple calls.","start":"00:49:14","end":"00:57:30","confidence":"medium","source":"knowledge/episodes/aitw-011/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Published output remains subject to human review.","start":"01:03:22","end":"01:11:40","confidence":"medium","source":"knowledge/episodes/aitw-011/transcripts/stitched.txt"}

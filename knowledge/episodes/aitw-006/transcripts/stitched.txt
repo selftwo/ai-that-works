@@ -1,0 +1,1806 @@
+[00:00:06.710] And let's um let's kick it off. Dex, how
+[00:00:06.720] was uh how was this last weekend? Oh
+[00:00:10.000] man, what a blast. Uh we still got to do
+[00:00:12.000] the post, but um had a lot of fun. Um
+[00:00:14.799] for those of you who who missed the
+[00:00:16.640] Well, we didn't post about it. So um we
+[00:00:19.760] did a eight hour AI that works workshop
+[00:00:22.480] where we went super deep on a lot of
+[00:00:24.240] advanced prompt engineering techniques
+[00:00:26.320] and um
+[00:00:31.630] built some 12 factor agents from
+[00:00:31.640] scratch. Um I think some interesting
+[00:00:34.000] takeaways for me uh one of the biggest
+[00:00:35.520] ones is like this thing that keeps
+[00:00:36.800] coming up which is like we don't need
+[00:00:39.520] bootstrap for agents. We need shad CN
+[00:00:41.920] for agents. We need like an open box
+[00:00:44.320] that you know yes you generate all the
+[00:00:46.640] code and then I own it and there's no
+[00:00:48.239] library like it doesn't I can't just
+[00:00:49.840] like upgrade the version and get new
+[00:00:51.440] stuff. I have to do it by hand. But I
+[00:00:53.760] think I think that's what people want
+[00:00:55.600] right now.
+[00:00:57.920] What was your favorite takeaway?
+[00:01:00.600] Um, I think I was surprised that 40
+[00:01:03.840] engineers stuck around on a beautiful
+[00:01:05.439] Saturday uh afternoon with the windows
+[00:01:08.320] outside and decided to listen to us talk
+[00:01:10.159] for uh eight hours rather than go
+[00:01:12.240] outside for a walk or do anything else
+[00:01:13.680] with their time. That was quite fun.
+[00:01:16.759] Um but um I really I think I really
+[00:01:21.040] liked what some of the people were
+[00:01:22.159] saying like this analogy that they were
+[00:01:23.840] starting to gro about Chad CN as well
+[00:01:26.479] about how what where we really need is
+[00:01:28.320] prompts that we control not prompts that
+[00:01:30.479] a library controls or framework controls
+[00:01:32.159] and that being like a really good
+[00:01:33.560] booster for being able to build these
+[00:01:35.759] kinds of things.
+[00:01:38.280] Awesome. Um cool. Well, I'm really
+[00:01:40.880] excited about what we're working on
+[00:01:42.079] today. Um, I guess we wait for a couple
+[00:01:44.400] more people to You want to start at like
+[00:01:45.520] 10:05? I just shot you a link to the
+[00:01:47.119] whiteboard and two links.
+[00:01:50.320] Uh, which one is first or second?
+[00:01:52.560] Usually the second one is the public
+[00:01:54.079] one. Okay.
+[00:02:00.469] Yeah. I think the one that I'm really
+[00:02:00.479] really excited about today cuz like I
+[00:02:02.000] think uh usually we end up talking about
+[00:02:04.240] theory and today we're going to do
+[00:02:06.719] something very practical uh which is
+[00:02:09.039] we're going to start from a problem from
+[00:02:10.399] scratch and we're going to write a bunch
+[00:02:11.920] of code and I think the beauty of the
+[00:02:13.760] problem that we're tackling today is
+[00:02:15.040] that it's really not that much
+[00:02:17.879] code especially once you break down the
+[00:02:20.480] problem in the right
+[00:02:22.840] way. Um but shall we kick it off?
+[00:02:27.120] Uh yeah cool. So, do you want to set the
+[00:02:29.200] stage and describe the problem in
+[00:02:30.959] general?
+[00:02:32.560] Yeah. So, let me um I can share my
+[00:02:34.480] screen and kind of um walk through some
+[00:02:37.120] of this stuff. Um so, I'm going to pause
+[00:02:39.599] for one sec and just close a bunch of
+[00:02:51.750] Um so, um what we got is everybody hear
+[00:02:51.760] me? Okay, sounds good.
+[00:02:54.879] Audio is great. Um, let me switch and
+[00:02:58.000] see if I'm pretty sure for context. I
+[00:03:00.640] think one of the most common problems
+[00:03:02.080] that exists in AI is this problem that a
+[00:03:04.959] lot of people have which is like you
+[00:03:06.239] have some guidelines that you want
+[00:03:08.080] something to follow. So then you can
+[00:03:10.000] write an AI pipeline that mimics those
+[00:03:11.760] guideline that guideline evaluation in
+[00:03:13.760] some way and that was the theme of what
+[00:03:16.319] Dexter titled this talk which is like
+[00:03:18.080] policy to prompt.
+[00:03:20.640] Yeah. So essentially like one of the
+[00:03:23.280] biggest things that I think people are
+[00:03:24.480] doing a lot on in AI and there's a lot
+[00:03:26.080] of AI startups that are doing literally
+[00:03:28.080] just this which is like taking a set of
+[00:03:30.640] policies um and so this could be things
+[00:03:34.680] like FINRA this could be things like SEC
+[00:03:39.239] guidelines this could be things like
+[00:03:41.840] accounting laws in Europe
+[00:03:48.869] um basically anything where there's like
+[00:03:48.879] a big set of documents
+[00:03:50.640] Um, and so like one of these that we're
+[00:03:52.799] going to look at today is what's called
+[00:03:54.239] Sarbain Oxley, which like there's a
+[00:03:56.159] plain text version. You can just get it
+[00:03:57.519] from Wikipedia, but it's a bunch of
+[00:03:59.360] rules about like from like the early
+[00:04:02.480] 2000s, I think, about like how do
+[00:04:05.519] corporations need to operate in order to
+[00:04:08.239] kind of be held accountable and, you
+[00:04:10.560] know, to keep their um all the crazy
+[00:04:12.959] rights that they get. Um, this was
+[00:04:14.480] published by the SEC in the early 2000s.
+[00:04:17.120] So like there's big sections of plain
+[00:04:19.519] text and like what are really really
+[00:04:21.600] good at is processing giant chunks of
+[00:04:23.440] plain text and turning them into
+[00:04:24.800] structured information.
+[00:04:26.840] Um, so what um what is a really common
+[00:04:31.199] problem is like you take a set of
+[00:04:32.720] policies and then you take a bunch of
+[00:04:34.960] evidence which is just like here's
+[00:04:37.199] something that happened and this can be
+[00:04:38.800] super generic and you put them together
+[00:04:41.600] and you say like for each piece of
+[00:04:44.120] evidence was the policy
+[00:04:51.830] followed? Um and you can output
+[00:04:51.840] basically a list of like
+[00:04:55.360] um
+[00:04:56.280] results that will tell you you know for
+[00:05:00.600] policy a section two yes policy A
+[00:05:05.840] section
+[00:05:07.240] three no and of course we have LM so we
+[00:05:10.160] can have some descript description or
+[00:05:12.160] something else right
+[00:05:14.400] um super common problem I've talked to
+[00:05:16.240] tons and tons of founders doing this
+[00:05:17.919] tons and tons of companies doing this um
+[00:05:20.960] people trying to use AI to do this. I
+[00:05:22.720] know some of the company that are making
+[00:05:24.320] like seven figures doing this as a as a
+[00:05:26.639] company. Yeah. Me and Vibob like to joke
+[00:05:29.680] that we're going to create uh a thousand
+[00:05:31.759] a thousand AI companies this year just
+[00:05:33.919] by showing people how to do some simple
+[00:05:35.840] stuff that's super super
+[00:05:42.469] valuable. Um not uh not not ourselves by
+[00:05:42.479] the way. You all have to take this and
+[00:05:43.840] go make something dope with it.
+[00:05:49.909] Um I think uh Dax one thing I want to
+[00:05:49.919] highlight here is like this general
+[00:05:51.360] problem space that we have of like you
+[00:05:52.720] have some policy you have some evidence
+[00:05:53.840] and you want to take the evidence with
+[00:05:55.120] the policies and analyze if it's
+[00:05:56.639] followed or not. Yeah.
+[00:06:00.120] How I guess like the most important part
+[00:06:02.320] is like what do what do you think is the
+[00:06:03.440] hardest part about this problem? Let's
+[00:06:05.919] start with that and then let's do some
+[00:06:07.120] whiteboarding of like system
+[00:06:08.160] architecture stuff and then let's talk
+[00:06:09.520] about it.
+[00:06:11.080] Um yeah, I mean so I think like the core
+[00:06:13.600] of this is like you have a piece of
+[00:06:16.360] evidence. Uh and let's make it more
+[00:06:19.120] concrete. What do you mean by evidence?
+[00:06:21.360] Uh so like the example we're going to do
+[00:06:23.039] today is going to be um we're going to
+[00:06:26.080] use the emails from the Enron data set.
+[00:06:29.199] Um, I don't know if anyone knows
+[00:06:31.039] quickly, but the story of Enron,
+[00:06:34.120] um, is that they were a big big company
+[00:06:37.039] and it turned out they were doing a lot
+[00:06:38.560] of really shady stuff and the entire
+[00:06:40.400] company fell apart and all the
+[00:06:41.840] executives were kind of like screwing
+[00:06:43.520] everybody over. Um, and then the company
+[00:06:47.160] died. And so the idea is the Enron email
+[00:06:51.360] data set, it was published by CMU. It's
+[00:06:54.080] a giant uh 1.7 g gig archive of emails
+[00:06:58.479] from sent by people at Enron. Um and so
+[00:07:02.560] you can come and see all these sent
+[00:07:04.120] messages. Um and you can see this. So
+[00:07:06.400] what we're going to do is kind of go
+[00:07:07.360] through each of these pieces of evidence
+[00:07:08.880] and say, "Hey, did did this email break
+[00:07:10.800] any rules?"
+[00:07:13.039] Does that track? Yep.
+[00:07:17.000] Um so this will be a fun one.
+[00:07:20.440] um still kind of poking around with
+[00:07:22.720] different sets of rules. But one thing
+[00:07:24.160] that um we were messing with was this uh
+[00:07:27.599] this is a 2004 code of conduct that is
+[00:07:30.240] published by JP Morgan. It has lots of
+[00:07:32.400] rules about uh talking about the
+[00:07:34.400] business publicly about um accepting
+[00:07:38.080] gifts and things like that about
+[00:07:39.919] publicly talking about finances without
+[00:07:41.840] disclosing you're an employee. Um I'm
+[00:07:44.160] not sure we're going to get out of this
+[00:07:45.360] but um we will we will try a couple
+[00:07:48.000] different things. So we'll pump Sarbain
+[00:07:49.360] Oxley and a couple other things through
+[00:07:50.720] here. Um, and the idea is not that like
+[00:07:52.960] today we're going to build a full end to
+[00:07:54.639] end demo. We're going to kind of like
+[00:07:55.919] build the architecture and then figure
+[00:07:57.840] out how and do it really naively to
+[00:07:59.520] start. Um, and so what we want to have
+[00:08:02.000] is kind of like extracting
+[00:08:05.479] uh kind of like from the policy you're
+[00:08:08.319] basically building a set of prompts,
+[00:08:09.840] right? And so like it for each Yeah,
+[00:08:14.400] let's write some code.
+[00:08:17.479] uh find uh violations,
+[00:08:35.870] right? We'll go we'll go Pythony here.
+[00:08:35.880] Um policies list of
+[00:08:38.279] string, emails list of
+[00:08:41.399] string.
+[00:08:48.910] Um and then this will be like a list of
+[00:08:48.920] results, right? And a result will have
+[00:09:00.949] uh what goes in the result of
+[00:09:00.959] um I think before we Yeah, we can write
+[00:09:03.600] this out really fast. The source email.
+[00:09:05.839] Sure.
+[00:09:08.240] um
+[00:09:13.829] some sort of identifier of the policy,
+[00:09:13.839] right? I don't know exactly how we're
+[00:09:15.040] going to if it's a pointer or if it's
+[00:09:16.560] the content or whatever and then it's
+[00:09:18.399] like
+[00:09:24.230] something like this. Yeah, I think
+[00:09:24.240] that's a pretty good um I think that's a
+[00:09:26.720] pretty good uh start. But I think like
+[00:09:29.600] before we even go go into this, let's
+[00:09:31.200] just like try and whiteboard a little
+[00:09:32.240] bit and just say like what kind of uh
+[00:09:33.839] diagrams do we actually have? So I think
+[00:09:36.160] when I look at this data the first thing
+[00:09:37.760] that comes to my mind is like what's the
+[00:09:39.279] data that we have available to
+[00:09:40.320] ourselves. So we have like the you said
+[00:09:42.480] the what what are those docs called that
+[00:09:44.320] you talked about you had two documents
+[00:09:47.360] specifically one was a plain text
+[00:09:48.800] document and then one was the one was
+[00:09:50.560] the one was a PDF. Yeah the JP Morgan JP
+[00:09:55.200] Morgan and then what's the other
+[00:09:56.399] document here? So beans exactly and I
+[00:10:00.399] think mo there's two different ways that
+[00:10:01.920] we could do this. The most naive way is
+[00:10:03.440] we put this into some context window. We
+[00:10:05.200] put this into some context window and
+[00:10:06.560] then we just ask the LM to do the dumb
+[00:10:09.040] thing and say okay is this is this uh
+[00:10:12.959] does this match the policy break policy
+[00:10:17.040] and there's probably a word world in
+[00:10:18.959] which like um where this
+[00:10:21.720] works where like you can actually take
+[00:10:23.760] this email ask it like literally just
+[00:10:25.680] ask the LM directly does this break the
+[00:10:27.519] policy and just get a yes or no. Yeah
+[00:10:30.640] but I don't think this will work with
+[00:10:32.079] most models today yet. So, we actually
+[00:10:34.560] have to break this problem down into a
+[00:10:36.079] different problem. And I think and I
+[00:10:38.000] actually want to say like we could even
+[00:10:39.519] go even bigger and we could say all of
+[00:10:41.440] the emails tell me which emails break
+[00:10:43.440] the policy and why. But you're already
+[00:10:45.519] skipping that one, right? Yeah. Yeah. I
+[00:10:46.959] skip that one. We can't send all the
+[00:10:48.399] emails. So, we say for a single email,
+[00:10:50.320] here's the entire policy. What's the
+[00:10:52.800] email? This is what we always talk
+[00:10:53.760] about, right? is like if you can solve
+[00:10:55.519] the problem slowly and expensively at
+[00:10:58.480] the start but you know it's possible
+[00:11:00.640] then you can go grind it down and try to
+[00:11:02.640] do something more focused. Exactly. So
+[00:11:05.120] now what I would say is instead what if
+[00:11:07.040] we could break down the plain text into
+[00:11:09.040] a bunch of
+[00:11:11.399] policies and then go ask oh I see. So we
+[00:11:14.800] have the ability to go and take this
+[00:11:16.160] whole thing and break it down to a bunch
+[00:11:17.440] of unique policies and then ask
+[00:11:18.720] questions about each policy in
+[00:11:21.399] parallel. we will probably get slightly
+[00:11:24.079] better answers and even over here we can
+[00:11:26.880] actually use like a single prompt to go
+[00:11:28.480] do all this like we don't technically
+[00:11:31.360] need different prompts
+[00:11:34.320] um where we ask it for every single one
+[00:11:37.680] um and just ask it which of these did we
+[00:11:39.360] break and we kind of know exactly what's
+[00:11:40.959] going on you're talking about single
+[00:11:42.880] prompt as in like ask it to reason
+[00:11:44.880] through 20 policies first and then
+[00:11:48.160] produce it answer well once we have a
+[00:11:50.320] list of policies and doesn't really
+[00:11:51.760] matter how we did this step. I should I
+[00:11:53.680] should be clear on this. Oh, when you
+[00:11:55.440] say Yeah. When you say single prompt,
+[00:11:56.959] you mean one prompt where we just have
+[00:11:58.640] template in the policy and template in
+[00:12:00.959] the evidence. So the input to this
+[00:12:03.360] prompt is the policy description and
+[00:12:05.279] then the and the email and we just ask
+[00:12:07.200] it does this does this email break this
+[00:12:10.600] policy? So that's one thing that we
+[00:12:13.279] could go do. Uh right. So I'll break
+[00:12:16.000] this out later. um t so like defaf
+[00:12:20.360] um check policy will take
+[00:12:28.990] in we'll take in like an
+[00:12:29.000] email stir and a
+[00:12:32.760] policy stir and literally just return a
+[00:12:35.440] boolean y that's what each of these do
+[00:12:38.639] but I think that this is actually not
+[00:12:40.480] going to end up working as well for most
+[00:12:42.279] systems so instead what I would what I
+[00:12:45.120] think we could do wait why
+[00:12:47.800] um one because the nuances of the policy
+[00:12:50.639] will probably get lost on the system a
+[00:12:52.639] lot. So like for example uh we worked at
+[00:12:54.880] some fintech companies and like one of
+[00:12:56.639] the things that comes up is
+[00:12:58.519] like the word asset means something
+[00:13:02.160] completely different in the context of
+[00:13:03.920] different financial
+[00:13:06.279] companies and even extracting the
+[00:13:09.600] terminology of that word asset is really
+[00:13:11.600] really really hard.
+[00:13:14.240] Okay. Right. Because in some companies
+[00:13:16.720] like like if you're in like macro uh in
+[00:13:19.600] like doing like macro uh macro trading
+[00:13:22.000] then like assets can include like oil
+[00:13:23.920] fields or like uh like like a bond that
+[00:13:26.800] you have on an oil field or something
+[00:13:28.160] else. But if you're in like a and the
+[00:13:31.040] word crypto like what do crypto what
+[00:13:32.880] does crypto mean in the sense of assets?
+[00:13:34.639] It we really don't know. So I actually
+[00:13:37.360] think to do might actually be to go even
+[00:13:39.920] further and say in fact we're actually
+[00:13:42.240] not going to pick every policy. We're
+[00:13:44.160] only going to pick some of
+[00:13:45.959] them. And for now, instead of being
+[00:13:48.399] really good at detecting every policy
+[00:13:50.279] break, we'll pick a couple policies that
+[00:13:52.880] we know are critical and go specific
+[00:13:56.800] uh and I'm going to name these now.
+[00:13:58.560] Policy A, policy B, and go build
+[00:14:02.880] specific um pipelines for policy A and
+[00:14:07.040] policy B
+[00:14:09.399] uniquely, if that makes sense.
+[00:14:12.720] Cool. So these might have their own
+[00:14:14.320] custom prompts and it's not just
+[00:14:15.839] templating in two strings and saying
+[00:14:17.920] like does this match. Yeah. And they
+[00:14:19.839] might even have more than just a prompt.
+[00:14:21.680] They might have a whole pipeline
+[00:14:24.560] for each one if that makes sense. Cool.
+[00:14:28.560] Yeah, that makes sense. Um I'm wondering
+[00:14:30.639] if it might make sense just to
+[00:14:31.680] demonstrate kind of like really simply
+[00:14:33.440] and like testing and prompts like what
+[00:14:35.279] what this naive way looks like before we
+[00:14:37.519] go start and do the advanced stuff.
+[00:14:39.040] Yeah, let's do it. So like just just to
+[00:14:41.920] quickly just so we have something to
+[00:14:43.199] build from like let's go from like here
+[00:14:46.480] let's do like evaluate
+[00:14:50.279] policy and we would just say
+[00:14:53.880] like email
+[00:14:57.000] string policy string.
+[00:15:00.880] Um, and we actually we built another
+[00:15:02.720] pipeline already or I I was hacking on a
+[00:15:04.800] short pipeline that is basically just
+[00:15:06.160] extracting questions. And so like read
+[00:15:09.040] through a giant policy document and
+[00:15:11.360] extract a list of kind of like policies.
+[00:15:13.920] I think VIB made a really good point
+[00:15:15.600] which is like if you use a bunch of LLM
+[00:15:17.920] generated inputs, you're going to get
+[00:15:19.440] lowquality LM generated outputs. But
+[00:15:21.920] like here's an example of like what this
+[00:15:23.920] might look like. Um, so you could take
+[00:15:26.240] this question and ask, you know, of this
+[00:15:30.320] email what what what was there? Um, but
+[00:15:33.120] that's just kind of framing the shape of
+[00:15:34.639] this. Um
+[00:15:44.030] and compare them
+[00:15:44.040] to pieces of email evidence, right?
+[00:15:49.600] Yep.
+[00:15:52.240] Your goal is to determine whether the
+[00:15:55.199] email evidence violated the policy,
+[00:15:57.440] right? Yep.
+[00:16:01.199] Here's the email.
+[00:16:05.680] Say
+[00:16:08.199] email policy
+[00:16:11.199] say, you know, I would actually put the
+[00:16:12.639] policy in the system prompt. Okay, cool.
+[00:16:17.920] Um,
+[00:16:26.629] We'll just have one. Uh maybe we should
+[00:16:26.639] return an array of violations.
+[00:16:31.910] Even though we're only going to do one
+[00:16:31.920] policy.
+[00:16:37.269] Yeah, one policy at a time with a bunch
+[00:16:37.279] of
+[00:16:39.040] um and then I would also list out like
+[00:16:41.920] uh Yeah, we can do
+[00:16:44.600] that. I would put the reason before the
+[00:16:47.680] reasoning.
+[00:16:52.790] Oh, sorry. I put the result before the
+[00:16:52.800] Yeah, there you go. Okay. Why is that?
+[00:16:55.120] Well, let's let's let's just run it.
+[00:16:56.639] We'll try. We'll flip it around. We'll
+[00:16:57.680] see see how it affects the output,
+[00:16:59.040] right?
+[00:17:01.279] Um, so the email let's just grab one of
+[00:17:04.240] these. You can just grab one of these
+[00:17:05.839] and run
+[00:17:25.429] And then the policy would be something
+[00:17:25.439] like members must not accept gifts. And
+[00:17:28.079] then one more hashtag at the end. Yep.
+[00:17:32.080] Oh, other way. Swap it.
+[00:17:40.070] Oh, really? Oh, sorry. It's like this.
+[00:17:40.080] Yeah. Sorry. Since I highlighting on
+[00:17:41.679] your color scheme doesn't work for my
+[00:17:43.120] brain.
+[00:18:00.789] bull. All right, here we go.
+[00:18:00.799] Uh, just hit command. Yeah, I think if
+[00:18:03.440] you hit command S on the file, it should
+[00:18:05.120] load for you. I'll figure out why for
+[00:18:07.200] you specifically. This seems to be a
+[00:18:08.640] problem.
+[00:18:10.160] Um.
+[00:18:16.390] Oh, do I need to? No, you should. I
+[00:18:16.400] already updated this. You can just open
+[00:18:17.840] it. Can you hit run
+[00:18:20.360] test? Just say command S. Yeah, there
+[00:18:22.559] you go. Just say command S on that file.
+[00:18:26.080] Uh, this is odd. There you go. There we
+[00:18:28.720] go. All right. Here we go.
+[00:18:32.960] So result false reasoning not accept any
+[00:18:36.880] does not discuss any acceptance of gifts
+[00:18:38.559] or favors. Yeah.
+[00:18:41.880] Um okay. So that's kind of the the shape
+[00:18:44.960] of it though. Um let's write a test. Uh
+[00:18:48.559] and then I think the the thing about
+[00:18:50.080] reasoning is like um there's a couple
+[00:18:52.880] kinds of things that we could go do.
+[00:19:01.270] Uh, shouldn't you before? Um, it depends
+[00:19:01.280] on what you're trying to go do. Uh,
+[00:19:02.880] sorry, there's a couple questions uh
+[00:19:04.480] that people are asking. And I realized
+[00:19:06.799] Oh, yeah. I did not have my chat window
+[00:19:08.320] open while I was looking. Um, Kosal
+[00:19:11.679] asked, "Wouldn't you say in the system
+[00:19:12.960] prompt uh what you are working with to
+[00:19:14.799] avoid that you don't know an asset?" and
+[00:19:17.120] cush that that's that's true. But if I'm
+[00:19:19.679] building something that analyzes all of
+[00:19:21.200] the Enron data sets, then you can do
+[00:19:24.000] equal equals instead of just
+[00:19:26.600] result. Yeah. Uh if I'm analyzing
+[00:19:28.799] something that analyzes the entire Enron
+[00:19:30.559] data set and that ends up being really
+[00:19:32.160] hard because uh like well in the world
+[00:19:34.880] of Enron there is no crypto. But you can
+[00:19:36.960] imagine that in today's if I'm a large
+[00:19:38.559] asset manager that sometimes I'll have
+[00:19:40.160] crypto, sometimes I won't. It's very
+[00:19:41.799] conditional. So you can actually like
+[00:19:43.760] hardcode that in uh cursor rule files.
+[00:19:46.480] There is one I can share that in a bit.
+[00:19:49.559] Um can we do contextual aware
+[00:19:52.559] decomposition for the policies and only
+[00:19:54.240] check with relevant policies and
+[00:19:55.760] exactly? So Deborah exactly so we don't
+[00:19:59.280] actually want to go do all the policies
+[00:20:00.640] but you're still going to have to build
+[00:20:01.679] some pipeline that predicts which
+[00:20:03.039] policies are relevant to this. And
+[00:20:05.120] there's different ways that we can go do
+[00:20:06.480] this but at some point we can use an lm
+[00:20:08.400] per policy. We can do like some sort of
+[00:20:10.720] selection with some sort of embeddings.
+[00:20:12.640] We can do like the ability to turn on
+[00:20:15.520] and off policy A and B and whether we're
+[00:20:18.559] running A or B could be another
+[00:20:20.080] prefilter step that we choose to run to
+[00:20:22.880] decide which of the policies are even
+[00:20:24.400] relevant for an email. Yeah. Like this
+[00:20:27.280] break policy A doesn't have to call an
+[00:20:29.440] LLM. It could have a step that says is
+[00:20:31.919] policy A relevant for this email and if
+[00:20:35.440] it is then we'll then we'll try it out.
+[00:20:38.880] Okay. So basically in our find policy
+[00:20:41.840] violations we would first do
+[00:20:44.280] like
+[00:20:46.280] filtered policies equals filter.
+[00:20:54.710] Yeah something like that becomes an
+[00:20:54.720] option that we can go do. And then Kyle
+[00:20:56.799] asked the problem um
+[00:21:00.400] uh Kyle asked a problem for um like
+[00:21:02.960] shouldn't we put the reasoning before
+[00:21:04.240] the result? It depends on what you want
+[00:21:06.799] to go use the reasoning for. So in this
+[00:21:08.640] case, what I would want to go do is I'd
+[00:21:10.400] probably want to show the reasoning to
+[00:21:11.679] the user about like what we did. But
+[00:21:13.520] what I would actually here Can you go
+[00:21:15.039] back the other prompt? You want to go to
+[00:21:17.039] the code? Yeah. What I would do is like
+[00:21:19.280] I would add one more thing above result
+[00:21:23.600] uh above. So and then that's like uh
+[00:21:26.559] like um relevant snippets.
+[00:21:30.960] Ah yeah string array. Exactly. And
+[00:21:34.799] that's going to be snippets of the email
+[00:21:36.480] that might be relevant to the policy
+[00:21:39.120] that and then what I would say that are
+[00:21:40.720] that I would say that may be relevant
+[00:21:43.600] specifically. I'm going to use the word
+[00:21:45.360] may so it's more permissive. Yeah. And
+[00:21:48.880] then I would go run this prompt and you
+[00:21:50.559] can just see how that this works.
+[00:21:53.520] Yeah. Um cool to find a way. Do you have
+[00:21:56.960] any um any hacks on uh how we might go
+[00:22:00.080] through this seven gig 1.7 gigs of
+[00:22:03.120] emails and find some that are
+[00:22:04.799] interesting? I would grap for gift
+[00:22:12.789] That's what I would do. I I there
+[00:22:12.799] might be one which because Enron
+[00:22:16.480] um and that might be the fast way to go
+[00:22:18.159] find something or I would just make a
+[00:22:19.840] test case that like is like artificially
+[00:22:21.760] there and then eventually we can just go
+[00:22:23.520] run this in a massive AWS job.
+[00:22:26.320] Yeah, that was the other thing. I was
+[00:22:27.600] like, it would be interesting to talk
+[00:22:28.640] about kind of how do you scale this
+[00:22:30.080] thing, right? How do you actually just
+[00:22:31.440] go fan out to hundreds of emails in
+[00:22:33.440] parallel? Well, the problem you'll first
+[00:22:35.440] run into is rate limiting. Um, yeah. Oh,
+[00:22:40.520] nice. I
+[00:22:42.440] saw a gift card is what I saw.
+[00:22:47.120] There's a lot of um there's a lot of ads
+[00:22:50.000] in people's email. I think these are all
+[00:22:53.120] like spam emails selling people [ __ ]
+[00:22:56.559] I mean that's fine. Share it in gift.
+[00:23:07.990] you can just copy and paste one of
+[00:23:08.000] these. It doesn't have to be everything.
+[00:23:09.200] It just has to be part of it. I think we
+[00:23:11.360] should just go and write as much as we
+[00:23:18.710] can. Oh yes, you are a command line
+[00:23:18.720] copier which is makes sense.
+[00:23:25.430] Uh, I can't tell if you're complimenting
+[00:23:25.440] me or talking [ __ ] but I'll take it.
+[00:23:43.750] Yeah. And there's there's interesting
+[00:23:43.760] things in here, too. So, like there's
+[00:23:45.360] clearly emails that
+[00:23:53.990] um Oh, it's going to copy and paste all
+[00:23:54.000] this. I would just Yeah, using an LLM
+[00:23:56.000] for copy paste is really uh is really a
+[00:23:58.720] great is a great approach. Like write it
+[00:24:01.039] yourself.
+[00:24:03.520] Yeah.
+[00:24:16.269] it
+[00:24:16.279] doesn't cool I think you have too many
+[00:24:19.360] curies at the bottom.
+[00:24:22.559] Oh, they were already there.
+[00:24:35.190] Yeah. Let's try this one.
+[00:24:35.200] Result true.
+[00:24:37.120] Um, so it pulled the relevant snippets.
+[00:24:40.960] Result true. And then we have our
+[00:24:42.320] reasoning here. Yeah. And like we can
+[00:24:44.799] just skim this email really fast just to
+[00:24:46.240] make sure. I think it's useful to
+[00:24:47.360] actually read it because like no matter
+[00:24:48.880] what we do fundamentally at this point
+[00:24:50.480] like the LM is going to go do this.
+[00:24:53.039] Yeah. So let's read
+[00:24:55.080] this. So clearly this person did not
+[00:24:57.919] receive a
+[00:24:59.960] gift. This person sent a gift which is
+[00:25:03.120] very different than receiving a gift.
+[00:25:04.880] And this is exactly what I was talking
+[00:25:06.320] about. Having a general policy system
+[00:25:09.360] that does this won't capture the nuance
+[00:25:11.679] of the actual policy.
+[00:25:13.679] Yeah. And that's going to make it hard
+[00:25:15.760] to actually build a good pipeline.
+[00:25:18.720] Okay. Like this is like a clear example
+[00:25:21.200] of what's going on. So here's how I
+[00:25:25.039] would attack this problem in a little
+[00:25:26.480] bit. Instead of going for this directly,
+[00:25:28.080] I would say we're not going to build a
+[00:25:29.520] system that evaluates a policy. We're
+[00:25:30.799] going to build a system that evaluates a
+[00:25:32.159] gift
+[00:25:33.400] policy because I don't want to suddenly
+[00:25:36.159] flag people
+[00:25:38.480] uh for actually like not uh for not
+[00:25:41.480] actually Yeah, there you go. I don't
+[00:25:44.799] want to suddenly flag people for uh
+[00:25:48.080] giving gifts, not getting gifts. Now,
+[00:25:50.400] there might be something illegal that we
+[00:25:51.880] do evaluate gift policy is probably what
+[00:25:54.960] we want.
+[00:25:57.600] Yep.
+[00:26:00.000] Yeah, exactly. So, and what I
+[00:26:03.960] really exactly what I really want to do
+[00:26:06.320] is I might even put the text of the
+[00:26:08.000] policy in there myself if if it's
+[00:26:10.279] useful.
+[00:26:19.029] Um, yeah, there you go. Uh, we don't
+[00:26:19.039] need the policy parameter going into
+[00:26:20.640] this. Yeah. Um, and then we the
+[00:26:24.080] violation is going to be slightly
+[00:26:25.279] different. Um, so can I ask for remote
+[00:26:28.240] control? Yeah, go for
+[00:26:30.360] it. You're supposed to figure out the u
+[00:26:34.240] code remote screen sharing thing, but go
+[00:26:36.640] for it. All right, you're in. So, this
+[00:26:38.720] is kind of how I do this. Instead of a
+[00:26:40.159] violation, I'm do like class
+[00:26:43.400] email gift email
+[00:26:48.279] analysis. Uh, and I'll say like uh type
+[00:26:52.360] um
+[00:27:05.990] received gift given. Yeah,
+[00:27:06.000] um sender will be like the sender of who
+[00:27:08.640] it is. We don't actually need to see
+[00:27:10.320] this.
+[00:27:12.559] um sender
+[00:27:21.350] company and specifically what I mean to
+[00:27:21.360] say when I say sender and is like um
+[00:27:25.559] risk uh I see okay so you're kind of
+[00:27:29.600] hard coding the exact reasoning steps
+[00:27:31.760] you want the model to take into the
+[00:27:33.440] structured output
+[00:27:40.230] exactly um and then specifically what I
+[00:27:40.240] want to do is like recipient
+[00:27:45.750] Um
+[00:27:45.760] yeah.
+[00:27:53.669] Um all right, cool. Recipient. Uh what I
+[00:27:53.679] really wanted to hear is like recipient
+[00:27:56.880] uh company.
+[00:27:59.360] Yeah. What I really wanted between the
+[00:28:02.159] sender
+[00:28:04.520] and let me write this out. Oh, can you
+[00:28:07.279] do sender and the company?
+[00:28:10.960] Not company. Yeah, exactly. And then
+[00:28:12.640] same thing down
+[00:28:15.240] below. Exactly. And now make that again.
+[00:28:17.679] What is the What is the company? I feel
+[00:28:20.000] like that's gonna be Oh, yeah. But at
+[00:28:22.000] the top, put like
+[00:28:23.320] company. I I may want to pass in the
+[00:28:25.760] company as a parameter into line 13 as a
+[00:28:28.480] as a as an input. No, we may not even
+[00:28:31.360] want that. Actually, we may not want
+[00:28:32.880] that. We're going to send it like as a
+[00:28:34.320] parameter like uh the as parameter on
+[00:28:37.679] line 13. Yeah. Let's send in the company
+[00:28:40.720] name.
+[00:28:47.190] Exactly.
+[00:28:47.200] I mean, if I know is it the So, the
+[00:28:49.919] company name in this case is Enron or if
+[00:28:52.240] it's the the other party. Exactly.
+[00:28:54.360] Enron. You Okay. So if I'm doing this on
+[00:28:56.960] behalf of and on line 18 you'd say on
+[00:28:59.440] behalf of
+[00:29:09.710] uh on line 18 you're combined on behalf
+[00:29:09.720] of Yeah. Exactly. So now you
+[00:29:13.799] just exactly
+[00:29:22.310] working at Yeah. Sure. Yeah. Okay. Um,
+[00:29:22.320] so this is cool, but I want to throw
+[00:29:24.000] another sticky one your way, which is
+[00:29:25.440] like um I think what's what's probably
+[00:29:29.440] tricky is like figuring out which policy
+[00:29:31.600] this is and generating good test cases
+[00:29:34.559] with real data. Um, because what I want
+[00:29:37.200] to do before we like do any more
+[00:29:38.720] optimizations of the pipeline, I want to
+[00:29:40.480] do what we talked about last week, which
+[00:29:42.240] is build a really simple end toend eval
+[00:29:45.200] um, and kind of build out that golden
+[00:29:47.120] data set. I know I know that's kind of
+[00:29:49.520] ends up being a lot of manual work, but
+[00:29:51.520] like is there is there ways we can build
+[00:29:53.919] kind of the pre-processing pipeline to
+[00:29:56.240] kind of set up based on what we have
+[00:29:58.399] here um and kind of do a parallel search
+[00:30:01.679] through all this stuff to try to find
+[00:30:02.880] that? Well, like one of the first things
+[00:30:04.480] we said last time was the most important
+[00:30:06.080] thing to do here is going to end up
+[00:30:08.000] being like some sort of like a vibe
+[00:30:09.200] eval. So, I just want to get a feel for
+[00:30:11.039] what that was. Like you notice how it's
+[00:30:12.559] just like putting a gift in there from
+[00:30:14.880] last time when we did when we did that
+[00:30:17.360] gift email. The first thing we noticed
+[00:30:18.720] like oh this is a clear bug because
+[00:30:21.600] started happening was can can you bring
+[00:30:24.960] that test case over?
+[00:30:27.200] The first thing we noticed that this was
+[00:30:28.559] a clear bug. Oops. Uh because this was
+[00:30:32.559] the bug here wasn't actually the fact
+[00:30:33.919] that everything was wrong. It's just
+[00:30:35.120] that this is like a
+[00:30:37.880] Exactly. So now let's try running this
+[00:30:40.159] really fast. I just want to see what
+[00:30:41.520] ends up happening.
+[00:30:43.520] Yep. And just hit command S again or
+[00:30:45.919] press enter or
+[00:30:47.320] something. There you go.
+[00:30:59.350] great. That's great. So like the first
+[00:30:59.360] thing that this did is it actually was
+[00:31:00.640] able to figure out that this was a gift
+[00:31:03.799] given from Kathy to uh the third party
+[00:31:09.240] business and the risk level is medium
+[00:31:12.720] right it could be risky because Enron is
+[00:31:16.240] not Enron employees are not supposed to
+[00:31:17.840] give gifts to people and like maybe
+[00:31:19.840] that's why the previous system said true
+[00:31:21.919] but we can go into this much much better
+[00:31:25.120] um and we can figure out like why we
+[00:31:27.039] might want to go do
+[00:31:28.320] like maybe this is a charity, maybe this
+[00:31:30.000] is something else. Um, so my manual
+[00:31:32.399] thing, the first thing I would do in
+[00:31:33.440] this one is like go I'm just going to
+[00:31:35.360] throw something out for later or maybe a
+[00:31:37.120] follow-up episode, which is like we
+[00:31:38.799] could do a follow-up of like turning
+[00:31:40.159] this into something a lot more agentic,
+[00:31:41.919] which is like, hey, what what follow-up
+[00:31:44.320] research tasks might you want to make
+[00:31:46.240] before you to get all the context for
+[00:31:48.480] evaluating this? And that might be like
+[00:31:50.559] read this email and see like, oh, I want
+[00:31:52.159] to go do a web search of Kinder Morgan
+[00:31:53.840] and see who that is. Because that's what
+[00:31:54.960] I would do as a human. I would be like,
+[00:31:56.080] who the heck are these guys?
+[00:31:58.919] Exactly. So like that's one way to make
+[00:32:01.120] it super agentic where you just go and
+[00:32:02.559] scrape the data and you can go do that.
+[00:32:04.320] So what that means is we might actually
+[00:32:05.919] want what you were adding earlier which
+[00:32:07.600] is the company names into all of
+[00:32:09.799] them. So let's add company names. Uh or
+[00:32:12.880] like maybe we had a recipient type first
+[00:32:15.440] of all.
+[00:32:17.480] Yeah. recipient type uh would be like
+[00:32:22.000] what like and let's say like let's call
+[00:32:24.000] that like client supplier other let's
+[00:32:27.200] make a type called entity
+[00:32:34.070] yeah so then now we'll do entity we'll
+[00:32:34.080] make an entity type at the
+[00:32:37.240] bottom exactly like this yes
+[00:32:41.279] I would say I would say entities might
+[00:32:43.600] be like
+[00:32:49.070] individual I would I would probably say
+[00:32:49.080] individual corporation.
+[00:32:57.190] Oh, I see. Or Yeah. Okay. Right. Or like
+[00:32:57.200] charity.
+[00:33:02.549] Uh because like we know in gifts like
+[00:33:02.559] these are probably like three kinds of
+[00:33:03.679] things that are involved. And now let's
+[00:33:05.519] try test case
+[00:33:22.789] Yeah, it sounds like the um the person
+[00:33:22.799] that received it is detecting as an
+[00:33:24.399] individual, which makes sense because it
+[00:33:26.000] was given on behalf of the per Can you
+[00:33:28.480] read the email again?
+[00:33:30.799] Yeah.
+[00:33:32.480] So, what's weird is this is like a
+[00:33:33.600] multiple thread, right? This was sent to
+[00:33:35.919] a [ __ ] ton of people at
+[00:33:37.559] Enron from it was like
+[00:33:41.720] forwarded by Kathy
+[00:33:49.350] Mayfield and it looks like Bill was
+[00:33:49.360] thanking Kathy for the gift
+[00:33:53.039] and then I decided to donate he further
+[00:33:55.519] donated the gift to a different center.
+[00:33:58.799] Yes. Right. So it's like a three-way
+[00:34:00.960] hop. So what that's interesting because
+[00:34:02.640] it goes from Enron to Kinderborg which
+[00:34:04.640] then went to another children's center
+[00:34:06.799] and you could completely see how um this
+[00:34:09.440] actually will
+[00:34:12.280] um effectively require additional
+[00:34:14.879] followup to actually go and like track
+[00:34:16.560] this down and find the relationship
+[00:34:17.839] between Bill and Kathy.
+[00:34:20.480] Yep. Right. So I think the first thing
+[00:34:22.879] that I really recommend that you're
+[00:34:24.639] seeing here is like what we're doing
+[00:34:25.760] here is we're reading the email and
+[00:34:26.960] we're just analyzing the test case one
+[00:34:28.480] thing at a time. We're not trying to if
+[00:34:30.480] we go and straight build the eval, we'll
+[00:34:32.159] kind of get lost in the sauce. Yep. What
+[00:34:34.879] we really should do is just read some
+[00:34:36.320] data. And like here, I think we've
+[00:34:38.639] collected probably enough information to
+[00:34:40.399] then say like there's not much more we
+[00:34:41.919] can get out of this email. Everything
+[00:34:43.679] else that we do would be a follow-up
+[00:34:45.280] based on the reasoning that comes out of
+[00:34:46.720] it. Yeah. You might want to Can you go
+[00:34:49.919] up one more step
+[00:34:52.359] after? Yeah, we can do like next next
+[00:34:55.839] steps after reasoning.
+[00:34:59.359] string array. Yeah.
+[00:35:07.750] Or like follow-up steps, right? Yeah.
+[00:35:07.760] Follow up actions. Yeah, sure. And I
+[00:35:10.000] would put that after
+[00:35:17.910] and like action could even be like
+[00:35:17.920] basically like a this could tr turn into
+[00:35:20.880] like a list of tool calls to do.
+[00:35:23.040] Exactly. Can you put it after reason
+[00:35:24.880] though? Oh yeah. Yeah. Now press
+[00:35:39.270] play. Cool. We can do that, too. Yeah,
+[00:35:39.280] let's go
+[00:35:52.069] there. Cool. So, that looks good. And
+[00:35:52.079] then you're right, we could turn that
+[00:35:53.119] into actions that are more oriented or
+[00:35:54.640] we could pass it into a secondary agent
+[00:35:56.000] like pipeline that has to go deal with
+[00:35:58.280] that. Um, but I think this is kind of
+[00:36:01.839] where I would um stop and just say,
+[00:36:05.119] okay, now I have a thing that's pretty
+[00:36:06.560] good. Yeah. Okay. Okay. So, so, so do
+[00:36:11.680] you want to write some Python code here?
+[00:36:13.280] Write some Python code now. Okay,
+[00:36:16.040] cool. So, um, I'm going to make a new
+[00:36:18.640] file.
+[00:36:20.240] So, let's just assume what we're going
+[00:36:21.599] to get is an email input.
+[00:36:29.589] Yeah. Sorry. Let me um pop back up here.
+[00:36:29.599] Dude, you got to keep your extensions up
+[00:36:31.200] to date. Your uh rough is also out of
+[00:36:33.680] date. It's We don't use type checking in
+[00:36:37.440] this house. I'm actually going to turn
+[00:36:39.599] it off just to trigger you. Oh my god.
+[00:36:42.000] Yeah. There we go. Don't do that. Don't
+[00:36:43.760] do that, please. All right. All right.
+[00:36:45.040] All
+[00:36:48.720] right. Um, we don't even you can ignore
+[00:36:50.960] the if main or whatever. It doesn't
+[00:36:52.560] matter. Okay, cool. Um, so now that what
+[00:36:55.520] we'll do is we'll get let's assume we're
+[00:36:57.200] going to get a single email,
+[00:37:13.030] Sure. Yeah. I was in we don't even have
+[00:37:13.040] to read the email, but yes, we can do
+[00:37:14.720] that if we want.
+[00:37:16.880] Well, because I I would eventually like
+[00:37:18.400] to build up some stuff that lets us just
+[00:37:20.160] like grab a random email. Like, we're
+[00:37:21.760] not going to be able to do the whole
+[00:37:22.880] set, but Okay, that's fine. Uh, yeah.
+[00:37:45.390] mail people talking [ __ ]
+[00:37:45.400] Okay. Um,
+[00:37:49.359] or do you want to read that exact that
+[00:37:50.880] exact one with Doesn't matter. I I just
+[00:37:52.960] want something. Yeah. Yeah. Yeah. Okay.
+[00:37:56.720] Cool. Great. So, we're going to read an
+[00:37:58.400] email and then here's kind of what I
+[00:38:00.160] would do as we read these emails. Yeah.
+[00:38:03.280] So, Oh, I mean it kind of that cool. Um,
+[00:38:06.079] and then you have to import B. There you
+[00:38:08.640] go. Oh, my cursor is getting quite good.
+[00:38:10.640] Okay. So, this is actually not going to
+[00:38:12.480] work because our gift policy makes an
+[00:38:15.040] assumption that there is a gift thing
+[00:38:16.720] built into it. This was I think uh
+[00:38:18.800] someone's question earlier like
+[00:38:20.079] Deborah's question. We probably want to
+[00:38:22.240] we probably want to ask a very simple
+[00:38:24.160] question like is a gift involved? Yes or
+[00:38:26.160] no. Gotcha. On so that's right another
+[00:38:29.400] model. Sorry, you have to open. Yeah.
+[00:38:32.160] So, we can just do like
+[00:38:34.920] function mentions gift with gift
+[00:38:38.000] involved. We don't even have to like
+[00:38:39.839] mention that. We could have like rejects
+[00:38:41.520] the word gift.
+[00:38:43.839] Okay. Right. Like let's do we'll make it
+[00:38:45.680] a Python function for now. Yeah.
+[00:38:49.720] Exactly. There you go. And then we'll
+[00:38:52.480] just do
+[00:38:54.760] that.
+[00:38:56.680] Exactly. And now we have analysis on the
+[00:38:59.200] emails. And now we basically have like a
+[00:39:00.720] gift pipeline that is able to go check
+[00:39:02.720] this.
+[00:39:04.240] Gotcha. Right. Um and then you probably
+[00:39:06.800] want an else
+[00:39:08.520] statement. if else or if return. Yeah.
+[00:39:12.560] Yeah. We we'll just return. Very cool.
+[00:39:16.040] Um and this is kind of what I would do.
+[00:39:18.880] And now we have a system that is able to
+[00:39:20.480] go from like not knowing if GIFs exist
+[00:39:22.560] to where we can probably find all the
+[00:39:24.000] policies where GIFs are involved and the
+[00:39:26.640] risk is high.
+[00:39:39.270] like exactly. And I would only print out
+[00:39:39.280] those analysis and I would print out
+[00:39:41.200] like the email path for those emails. So
+[00:39:43.119] I what what that's why I was trying to
+[00:39:44.720] write the function that does this not
+[00:39:46.000] like the whole pipeline because if we
+[00:39:47.119] have a function then we can wrap it
+[00:39:48.079] around a pipeline that passes in an
+[00:39:49.520] email. Yeah. Yeah. Um
+[00:40:10.470] Uh you want to make it async then you
+[00:40:10.480] have to do uh async client on line two.
+[00:40:14.160] Oh yeah. Um
+[00:40:17.040] yeah and then
+[00:40:19.079] yeah line two needs to
+[00:40:28.950] change. Line two needs to change. Oh you
+[00:40:28.960] want to just do async. Yeah exactly.
+[00:40:32.480] Cool. Cool. Uh, and then you have to
+[00:40:35.040] import
+[00:40:41.630] async.io. Cool. Let's try
+[00:40:41.640] it. Um, all right. We'll just run it
+[00:40:43.920] from
+[00:40:58.710] wrong. Yeah, this is kind of the goal,
+[00:40:58.720] Andrew, for this time. Usually we do a
+[00:41:00.079] lot of theory but our goal this time was
+[00:41:01.359] like let's start from nothing and
+[00:41:02.880] actually build up the pipeline
+[00:41:05.359] right so while D for so one of the
+[00:41:08.319] things that email does not mention on
+[00:41:09.920] gifts cool let's put a freaking for loop
+[00:41:11.440] around it and just run it on everything
+[00:41:14.079] so before you do that this LM thing is
+[00:41:16.480] going to blow out the water so don't
+[00:41:17.760] actually like run on LM just like
+[00:41:19.440] exactly
+[00:41:21.440] iterate over every email and just go run
+[00:41:23.280] it when you go do that so I'll show you
+[00:41:25.280] how to go do can I take over
+[00:41:28.010] [Music]
+[00:41:29.880] Um, sure. Okay, go for
+[00:41:34.680] it. Want to write some cursor code.
+[00:41:49.750] That'll probably work. It's They're not
+[00:41:49.760] as star.txt. They're just like number
+[00:41:51.839] dot is the thing.
+[00:41:54.720] Um, okay. And then it was like read.
+[00:41:58.079] It's like starst star.
+[00:42:00.960] Okay. So I just asked cursor to write
+[00:42:02.560] the code then. Okay. Sorry I can't type
+[00:42:04.000] under. Yeah. Yeah.
+[00:42:12.870] Isn't it path? Isn't it just pathstar
+[00:42:12.880] slar?
+[00:42:27.190] that. Wait, I don't think it has. Oh.
+[00:42:27.200] Oh, I guess that does
+[00:42:29.160] work. Okay, then. No, then don't you?
+[00:42:31.599] No, you're passing the path already.
+[00:42:33.119] That's why that that's why it does it
+[00:42:34.480] that way.
+[00:42:40.950] Say that again. You're passing here. Let
+[00:42:40.960] me tell you. You got it.
+[00:42:44.800] Can you turn off Vin mode for me,
+[00:42:46.160] please?
+[00:42:47.540] [Music]
+[00:42:47.780] [Laughter]
+[00:42:56.589] star path. Okay,
+[00:42:56.599] great. Is file. Then we just append it.
+[00:42:59.119] We load it in.
+[00:43:01.280] That's probably going to blow up memory
+[00:43:02.800] because it's like 1.8 gigs. 1.8 gigs is
+[00:43:06.119] nothing. Uh, okay. What we'll say is
+[00:43:09.599] like I got a very old MacBook over here,
+[00:43:11.680] buddy. Okay. talking 2022
+[00:43:15.839] than
+[00:43:17.160] uh
+[00:43:19.240] 10,000. Okay. How about this? Yeah.
+[00:43:21.520] Yeah, let's do that. All right. So,
+[00:43:22.800] we'll load emails from Dur and then what
+[00:43:24.640] we'll do is like we'll say
+[00:43:26.599] like
+[00:43:35.589] dev that should be easier. So I'll do is
+[00:43:35.599] for every email and
+[00:43:54.069] io check emails
+[00:43:54.079] then you don't need this anymore. Look
+[00:43:56.319] no I do I do I do need this. Oh you just
+[00:43:58.880] need the first part. Yeah. Okay, we're
+[00:44:01.760] going to do this, but I'm not going to
+[00:44:02.800] actually run this because what else I
+[00:44:04.079] want to do is this is the other thing
+[00:44:05.200] people forget to do, which is um sele
+[00:44:08.240] Four.
+[00:44:31.910] Perfect. We're going to do this. And
+[00:44:31.920] then what I'm actually going to do is
+[00:44:33.359] I'm just going to return
+[00:44:42.150] false, right? Because you want to
+[00:44:42.160] collect the results. Exactly. And return
+[00:44:45.280] true. So, I'm going to return this
+[00:44:46.560] because I don't actually want to trigger
+[00:44:47.599] the LM yet. If I trigger the LM, I'm
+[00:44:49.119] going to be
+[00:44:51.000] closed. Uh, and what I want to do here
+[00:44:53.520] is equal to
+[00:44:55.240] results equals this. And then I want to
+[00:44:58.800] return results or return the results.
+[00:45:09.109] count. Oh, cool. Now that should do it.
+[00:45:09.119] So, now I can go do this. Um, the reason
+[00:45:11.440] I don't want to trigger the LLM shortly
+[00:45:13.280] yet is because I am going to run 10,000
+[00:45:15.599] emails here. We're going to be sitting
+[00:45:17.599] here for minutes if we're in end up uh
+[00:45:21.440] in this loop. So, I just want to get a
+[00:45:22.800] proxy for what my data has before I go
+[00:45:25.440] and execute it in a meaningful way. Um,
+[00:45:28.480] this is going to run up to 10 in
+[00:45:30.000] parallel. That's why I did async.io.
+[00:45:32.640] Oh, 44. Pretty fast. Cool. So, that's
+[00:45:35.359] fine. We can 44 emails. We can go
+[00:45:37.520] process. We can use an LM for this. This
+[00:45:39.040] isn't going to be a big deal. So, let's
+[00:45:40.240] actually turn on the LM. But before we
+[00:45:42.000] do that, um, so now we know that this
+[00:45:45.119] isn't Can you Can I go back to the code
+[00:45:46.880] again? Yep.
+[00:45:49.720] Okay. So, this is great. And
+[00:45:52.240] specifically, I'm going to start
+[00:45:53.200] changing this to return a nonobject
+[00:45:55.119] instead. Sorry, I have my Zoom. And this
+[00:45:56.880] is like an optional of analysis that it
+[00:45:59.040] returns. Exactly.
+[00:46:01.680] I can do that. Uh, wait one second. It's
+[00:46:03.920] on option on office. Let's be very
+[00:46:05.920] clear. Uh, this is going to be I'm only
+[00:46:09.440] going to return high risk levels. Yep.
+[00:46:13.760] Can you can you make that uh can you
+[00:46:15.599] return sorry can you return analysis if
+[00:46:18.240] the risk level is high? Yes.
+[00:46:27.910] Yeah. Otherwise return none. Exactly.
+[00:46:27.920] And then actually can you do can you do
+[00:46:29.839] can you can you uh you have to import
+[00:46:32.400] it. Yeah, there you go. Can you do me
+[00:46:34.800] another favor and it return if it's high
+[00:46:36.400] or
+[00:46:43.829] medium? There you go. Cool. Uh let's run
+[00:46:43.839] the sucker.
+[00:47:04.150] Looks like we had a validation error.
+[00:47:04.160] Okay, so we should try catch that
+[00:47:05.520] because this will happen at some
+[00:47:06.560] cadence. Why did this actually go look
+[00:47:09.599] at this? Oh, there's no there's no gift
+[00:47:12.200] received. Um, so that's true. Sometimes
+[00:47:14.720] there is no gift. Can you go up and read
+[00:47:16.319] this? Oh, yeah. You can turn it on.
+[00:47:21.440] Um, so let's take a email. It looks like
+[00:47:24.720] the model had no gift received. The type
+[00:47:26.880] was null because it probably to find
+[00:47:29.119] gift received or gift given. Oh, I see.
+[00:47:32.000] Right. It's like what did it return?
+[00:47:33.680] Let's go down and read. It tells you.
+[00:47:36.400] No, this is just the prompt. Yeah, but I
+[00:47:38.400] want to read the prompt and see what it
+[00:47:39.680] said. The model returned a null value
+[00:47:42.640] for that. Yeah. Gift receiver gift
+[00:47:44.960] given. Or I mean it might have returned
+[00:47:46.880] something that doesn't match this en it
+[00:47:48.880] said null. The model returned null. You
+[00:47:50.480] can read it up there. Okay.
+[00:47:57.109] See? Got null. Got null. Got null. Got
+[00:47:57.119] all. Can you go down? Oh, here's what we
+[00:47:58.720] responded. Okay, cool. Exactly. Can you
+[00:48:00.079] go down? Let's just read the email
+[00:48:01.760] really fast and skip. Um because Okay,
+[00:48:03.920] so our gift check passed, right? We did
+[00:48:06.800] is if if gift in email was true, but the
+[00:48:10.319] model decided this isn't about a gift.
+[00:48:12.720] Yeah, exactly. Which makes sense because
+[00:48:14.000] we used the reax.
+[00:48:16.640] I was God's gift and made sure I knew it
+[00:48:18.800] constantly, which makes sense. Okay,
+[00:48:21.359] cool. So, okay, let's just put a let's
+[00:48:24.000] allow the model to say like not a gift.
+[00:48:26.480] So, let's return two types. What was
+[00:48:29.040] either not a gift class not a gift?
+[00:48:32.319] Yeah.
+[00:48:35.079] Exactly. Done. Um, and then union the
+[00:48:39.280] result. No, we don't need that. We don't
+[00:48:41.200] need that either. Union the result.
+[00:48:45.200] Exactly. Now, let's go back to our code
+[00:48:47.359] and say if should we put Should we put
+[00:48:49.440] this one first?
+[00:48:51.040] No, it uh yeah, sure. Yeah, actually.
+[00:48:53.520] Yeah, it'll probably be because like
+[00:48:55.040] it's a smaller object, right? Yeah, I
+[00:48:57.040] agree. I agree. Let's go back and then
+[00:48:59.599] let's go back to the code. No, we don't
+[00:49:01.119] want to run this yet. You have to
+[00:49:02.119] actually Yeah. Yeah. Okay. Um pipeline.
+[00:49:06.480] So, just say like if if analysis
+[00:49:10.520] type analysis
+[00:49:19.910] type Yeah, exactly. Return none. Done.
+[00:49:19.920] Cool. Now we've given the model an
+[00:49:21.599] escape hatch. Exactly. Um, yeah. So, how
+[00:49:25.839] long will this take? I don't know.
+[00:49:27.200] There's like 44 emails. 44 seconds would
+[00:49:29.760] be kind of what I estimate, but I'm
+[00:49:31.040] running 10 in parallel. So, like I'd
+[00:49:33.440] estimate like around like the like 10 15
+[00:49:37.200] seconds, no more. Yeah. Okay. So,
+[00:49:40.000] basically, we have all of our emails and
+[00:49:42.960] then we have emails. I'll put it I'll do
+[00:49:45.839] top to bottom. is like a much smaller
+[00:49:49.040] set of those is like contains gift
+[00:49:52.680] string and then some subset of those are
+[00:49:55.680] going to be like not a gift. Yep. And
+[00:49:58.720] then some of them are going to be, you
+[00:50:00.880] know, analysis results. Yeah. But now
+[00:50:03.040] while we're waiting, let's go back. And
+[00:50:06.400] then these are going to be low, medium,
+[00:50:08.240] high. Exactly.
+[00:50:15.829] Oops. Oh, can we go back to our code? I
+[00:50:15.839] didn't realize that we Hold on a sec.
+[00:50:18.400] I'm gonna just uh obviously 44 out of
+[00:50:20.880] 10,000 is not visually described by
+[00:50:22.960] this, but uh
+[00:50:28.470] um yeah. Well, no, I messed up because
+[00:50:28.480] if you go back to the code, yeah, you're
+[00:50:32.160] sorry. If you go back to the way that we
+[00:50:34.559] actually count it, the counter is not
+[00:50:36.359] correct. We say if it's true. See how
+[00:50:38.880] there's a static analysis there? Um
+[00:50:42.599] yes. Uh exactly.
+[00:50:46.079] Uh, exactly. And exactly. That's what
+[00:50:50.160] you actually need to do. Uh, and this is
+[00:50:52.559] one of the reasons that I'm really
+[00:50:53.599] excited to go like
+[00:50:55.319] um um this is why I'm Oh, and then I
+[00:50:59.680] would do like lend tasks for the first
+[00:51:02.440] one.
+[00:51:07.589] Exactly. Oh, yeah. That's great. And
+[00:51:07.599] then for the first one, can you do Yeah,
+[00:51:10.319] that's great. High, medium. And then can
+[00:51:13.119] for the first one instead of sum can you
+[00:51:14.640] just do like len len of tasks. Yeah
+[00:51:19.480] exactly. Um you can do not none just
+[00:51:23.440] like len tasks
+[00:51:29.030] Yeah because that's how many
+[00:51:29.040] things we have.
+[00:51:32.319] Um
+[00:51:34.240] so that's how many mentions. Oh no
+[00:51:36.559] you're right.
+[00:51:38.480] I think we need to filter by none. Yeah.
+[00:51:41.760] Yeah, you're
+[00:51:48.630] right. What does check gift email do?
+[00:51:48.640] Wait, what does check gift email do? Oh,
+[00:51:52.079] gift email does the whole thing. Yeah,
+[00:51:54.079] exactly. Okay. Yeah, you're right.
+[00:51:55.599] Sorry, your old code was right. I'm I'm
+[00:51:57.839] silly.
+[00:51:59.440] Yeah, I think that's right.
+[00:52:01.640] Cool. So, I just go run this. And like
+[00:52:04.079] one of the things here, this is why I'm
+[00:52:06.000] really really excited to work on caching
+[00:52:07.520] for us is Oh, you want to turn off the
+[00:52:09.280] logs. You do not want the logs on.
+[00:52:17.990] One of the reasons I'm excited to work
+[00:52:18.000] on caching is actually because of this
+[00:52:19.520] fact where it's like you saw that the
+[00:52:20.960] thing that we're actually modifying was
+[00:52:22.400] actually not everything else. What else?
+[00:52:24.880] So we got another error.
+[00:52:32.790] Ah entity type is unknown. It's because
+[00:52:32.800] we didn't give if you go back to the
+[00:52:34.160] entity
+[00:52:35.640] type data type. Ah it wants to have an
+[00:52:38.480] unknown.
+[00:52:39.720] Exactly. You put other, but other still
+[00:52:43.680] implies that it's
+[00:52:50.150] known, right? So, we might it might
+[00:52:50.160] prefer the word unknown over anything
+[00:52:51.680] else. Yeah. I notic this a lot with some
+[00:52:54.160] of the other like random you use like
+[00:52:55.680] deepseek and and quen some of them are
+[00:52:57.599] not as good at following the exact enum
+[00:53:00.160] instructions. Exactly.
+[00:53:02.800] And then we might actually find that hey
+[00:53:04.319] at some this is again something that
+[00:53:05.920] we're doing right now but we might
+[00:53:07.440] actually just want to put a try catch
+[00:53:08.640] around this pipeline because it doesn't
+[00:53:09.839] matter if we ran all of them or not. We
+[00:53:11.599] just need to be pretty good. Oh that's
+[00:53:13.200] kind of cool. We found four high risk,
+[00:53:16.079] five low risk by medium risk. Yeah. By
+[00:53:19.839] medium risk. So I think this is kind of
+[00:53:21.520] interesting. So can we do one one thing
+[00:53:23.040] Dexter? Do you have your API set up for
+[00:53:25.040] your dashboard?
+[00:53:26.960] Uh sure. Running this every single time.
+[00:53:29.440] Um, yeah. Yeah. Fire it up and send it
+[00:53:31.760] over to there. Yeah. Let's uh let's grab
+[00:53:34.640] an API key because the problem that
+[00:53:37.040] we're going to run into is we're
+[00:53:38.240] basically going to start like running
+[00:53:39.280] everything back and forth and I kind of
+[00:53:40.480] just want to look at this data more and
+[00:53:42.000] more. Yeah. Yeah. Yeah. And there's two
+[00:53:44.559] options that you can have for this. You
+[00:53:45.680] can actually build serialization by
+[00:53:47.200] default. This and this is that's what I
+[00:53:48.640] do with most of these pipelines is I'll
+[00:53:50.319] just dump out the JSON after every step
+[00:53:52.319] of like the collection of objects just
+[00:53:54.000] so you could go and inspect it. But this
+[00:53:55.599] is probably an easier way to do it. So,
+[00:53:57.119] let me get a key real quick and then
+[00:53:58.319] I'll start sharing again. Okay. Oh, you
+[00:54:00.319] stopped sharing. I was wondering why it
+[00:54:01.520] stopped. That makes sense.
+[00:54:08.390] Yeah. And I think this is this iteration
+[00:54:08.400] loop that we're doing right over here is
+[00:54:09.839] really the iteration loop that I see
+[00:54:11.119] most people doing. And at the end of
+[00:54:12.319] this, what we'll have is we'll have a
+[00:54:13.599] way to go through this. Oh, nice. You
+[00:54:15.040] shared anyway. Okay. All right. We'll
+[00:54:16.640] cycle that key. It's fine.
+[00:54:27.990] Uh, you still have to record. Wait,
+[00:54:28.000] control Z C. Do me a favor. Yeah, go to
+[00:54:30.720] your code. I'm just gonna make it easier
+[00:54:33.200] to go see. Uh, pipeline uppi. Are you in
+[00:54:36.720] Vim mode again? Disable that sucker. Oh,
+[00:54:39.359] you want to trace the whole thing? Yeah.
+[00:54:41.359] So, I just want to like have that in
+[00:54:42.640] there.
+[00:54:44.400] It does. It works automatically though.
+[00:54:46.720] It does.
+[00:54:53.109] You just want to group them in a single
+[00:54:53.119] single trace.
+[00:54:54.800] Um, cool.
+[00:55:00.309] Um, that's really the main thing that I
+[00:55:00.319] wanted to do. I just want to group
+[00:55:01.599] everything because it just makes
+[00:55:02.640] everything way easier to read. You can
+[00:55:04.319] just see it all in one run. Okay, cool.
+[00:55:06.559] Done. All right, let's ship
+[00:55:13.309] it. Let me just make sure this is
+[00:55:13.319] working. All right, good.
+[00:55:21.990] Yeah, it's a little bit bigger. Like
+[00:55:22.000] caching is like one of the things that
+[00:55:23.760] caching and mocking are one of the two
+[00:55:25.680] key things that every LM developer will
+[00:55:27.680] need long term because like what most
+[00:55:30.400] people mostly notice whenever we do this
+[00:55:32.160] is we spend very very little time
+[00:55:34.800] actually writing the AI part. We spend
+[00:55:37.119] most of our time writing the Python
+[00:55:38.880] part. Right? And so what you have is
+[00:55:41.119] like you have Python code and then you
+[00:55:43.520] have LM LM prompts and then you have the
+[00:55:47.359] LM, right? And what you want to do is
+[00:55:49.839] you want to test this
+[00:55:52.559] and say, "Okay, if I run this prompt
+[00:55:54.000] with this data, I get this result."
+[00:55:56.319] Exactly. And then separately, you want
+[00:55:57.760] to test this without having to round
+[00:56:00.160] trip to the LLM to test your Python
+[00:56:01.839] code. Exactly. And so, you want to
+[00:56:03.119] basically mock on this side and over
+[00:56:06.640] here you're going to mock on this side.
+[00:56:07.839] And you say, "Okay, here's fake data
+[00:56:09.200] that I know is in our pipeline, and over
+[00:56:11.200] here it's here." Yeah, exactly. And you
+[00:56:13.599] need to make this swappable really,
+[00:56:15.119] really easily. And ideally, I don't even
+[00:56:16.799] want mocking. I want like record replay
+[00:56:18.720] because most people don't have good data
+[00:56:20.559] sets that they're going to build over
+[00:56:21.680] time. Yep. I really want to and then be
+[00:56:24.799] able to like immediately know when I can
+[00:56:26.720] and cannot catch this. Okay, cool. Now
+[00:56:28.160] the data is done. Let's go look at it.
+[00:56:30.079] Okay, cool.
+[00:56:40.789] Just refresh. Can you just refresh
+[00:56:40.799] command R? Yeah. What was the pipeline
+[00:56:43.920] called? Let me just see what Let me go
+[00:56:45.200] see which project it's in. I don't
+[00:56:47.200] remember which project we put it in.
+[00:56:49.480] Yeah. All right. Good. Look at the ID
+[00:56:52.720] 7543.
+[00:57:01.670] Do you have it? Do you want me to go do
+[00:57:01.680] it? Hang on. I'm just going to uh
+[00:57:14.950] I got it. Okay, so this should be the
+[00:57:14.960] project. I'm not sure why they didn't
+[00:57:17.119] just change the
+[00:57:19.240] filters. That's
+[00:57:21.480] tough. And it's like last 30 days or
+[00:57:28.870] something. Um, did it make it through?
+[00:57:28.880] Maybe it
+[00:57:30.200] didn't. I set a new key and I'm running
+[00:57:32.480] it again right now. So now we should
+[00:57:35.960] have
+[00:57:37.960] Huh. Oh,
+[00:57:47.349] Yeah, we don't have this yet. Yeah,
+[00:57:47.359] that's odd. Um, is your SAS working? I
+[00:57:50.000] have no idea. It doesn't matter. Let's
+[00:57:51.440] just run it with terminal really fast. I
+[00:57:53.119] don't really care. We should We really
+[00:57:54.319] just want to have it running. And I
+[00:57:56.319] think that's the most important part.
+[00:57:58.160] Yeah.
+[00:58:00.040] Um, yeah. No, it should be sending the
+[00:58:02.160] data up. I suspect the No, we're in the
+[00:58:04.160] middle of migrating the old thing to the
+[00:58:05.760] new thing. Um, but let's go ahead and
+[00:58:08.000] just look at some of this data and just
+[00:58:09.119] see what you want to just dump stuff out
+[00:58:10.720] to JSON or dump it out to a file. All
+[00:58:13.119] right, cool. That was going to be my
+[00:58:15.839] suggestion. Anyways, um, save everything
+[00:58:18.559] that is not none into a file.
+[00:58:28.309] Like they're listening to you.
+[00:58:28.319] Um, but there is one difference that I
+[00:58:30.400] want. You'll notice that this is the
+[00:58:31.680] part that uh Yeah, but don't do that in
+[00:58:34.240] there. One second.
+[00:58:36.400] Uh what is f? Oh, I see. Yeah, save save
+[00:58:40.000] that. And then what we also want I would
+[00:58:41.520] save every single individual email as a
+[00:58:44.480] duplicate into that file as
+[00:58:46.680] well. So what I this is where actually
+[00:58:49.440] most people mess up when they go do
+[00:58:50.799] this. So can I go do this one time?
+[00:58:54.240] Uh I got it. Well, I I want everything
+[00:58:58.559] to be in a unique file.
+[00:59:01.040] Oh, every single email. Exactly. because
+[00:59:03.440] it's going to be impossible to go read
+[00:59:04.480] in a giant JSON blog. It's basically
+[00:59:05.920] going to be useless. And I would
+[00:59:06.880] specifically want them in two separate
+[00:59:08.079] files.
+[00:59:10.240] The email and the analysis email and
+[00:59:12.160] analysis in a separate file uh that's
+[00:59:14.480] just like indexed by order in some way.
+[00:59:26.069] It's code that we don't write anymore.
+[00:59:26.079] I don't know,
+[00:59:27.480] man. Okay. Uh high risk.
+[00:59:32.240] Does that look right? Let me just do
+[00:59:33.760] this off the top of my head. It's going
+[00:59:36.079] to put in either the high-risisk or the
+[00:59:37.599] lowrisk folder. And then that's going to
+[00:59:39.599] email and then the Okay, cool. That
+[00:59:41.359] looks great. Let's go run this. Yeah.
+[00:59:44.480] And the reason I'm doing this is for a
+[00:59:46.160] couple of reasons, but the primary one
+[00:59:47.599] is just that what I really want to have
+[00:59:49.119] access to over here is I want to be able
+[00:59:50.720] to look up this stuff really, really
+[00:59:52.160] fast and make my iteration loop super
+[00:59:54.559] super fast.
+[00:59:56.559] And if I don't do this, like if I didn't
+[00:59:58.480] do the small stuff of making this
+[00:59:59.680] parallel, our iteration loop here
+[01:00:01.119] wouldn't be 10 seconds. It'd be a
+[01:00:02.480] minute. And that would Yeah. So let's go
+[01:00:06.160] back. It's changing. I wonder if it's
+[01:00:08.400] using a different set of emails also.
+[01:00:11.200] No, probably not. Um but all high risk.
+[01:00:15.599] Yeah. So So here's our email. Exactly.
+[01:00:18.880] So we can actually see what's end ends
+[01:00:20.720] up going on here is we actually can
+[01:00:22.480] really quickly You saw how fast you
+[01:00:23.920] navigated to that. Oh, this is
+[01:00:26.520] cool. Just by picking up 10,000 random
+[01:00:29.359] emails, we found a bunch.
+[01:00:32.160] Yeah. And like what does it
+[01:00:34.119] say? Well, let's go read the JSON object
+[01:00:36.720] first. I'm back in the office today. Oh,
+[01:00:38.240] you want to see? Yeah. So, it says
+[01:00:50.069] Received gifts from Ron Shangle who is
+[01:00:50.079] affiliated with NB USA, supplier,
+[01:00:52.160] business partner of Enron.
+[01:00:59.430] Cool. That looks like that looks like
+[01:00:59.440] something could be done. And what's
+[01:01:00.720] really interesting about this whole
+[01:01:01.680] workload is we notice that from a scale
+[01:01:03.200] of 10,000 emails, there's not that many
+[01:01:04.960] that are high risk. So you could
+[01:01:06.559] actually just build a loop that has a
+[01:01:07.920] human in the loop that tells, hey, I'm
+[01:01:09.680] going to build a dashboard that looks
+[01:01:10.880] and filters for all of these and then a
+[01:01:12.559] human will go and evaluate whether these
+[01:01:14.000] actually are bad or not. And now we've
+[01:01:17.200] Yeah. So that was that was kind of my
+[01:01:18.480] last question. is like, okay, we found
+[01:01:20.720] one that actually looks like the element
+[01:01:22.799] is doing what we want. How do we bake
+[01:01:24.880] this into our golden set so that as we
+[01:01:27.040] change the prompt and evolve the
+[01:01:28.319] pipelines, we can keep track of whether
+[01:01:30.400] this one's like obviously the visually
+[01:01:31.920] eval of what's the diff, but also just
+[01:01:34.640] the like we should check to make sure
+[01:01:36.640] that this email always gets a high risk
+[01:01:38.400] level that we can just evaluate
+[01:01:39.880] deterministically. I know we're getting
+[01:01:42.000] close on time. Um, but like do you want
+[01:01:44.319] to spend a minute doing that? I would
+[01:01:46.160] just literally make a test case for this
+[01:01:47.680] email that says that, hey, this email
+[01:01:49.520] just does that and that's it. See, I
+[01:01:51.200] love that. Like everyone tries to over
+[01:01:53.280] complicate this
+[01:01:55.079] stuff. Test pipeline.
+[01:02:01.670] Yeah. And then you can literally write
+[01:02:01.680] like deaf uh exactly test
+[01:02:05.160] pipeline or like test test that specific
+[01:02:08.079] email that you
+[01:02:14.309] have and you can just put the path to
+[01:02:14.319] the email. Exactly.
+[01:02:16.960] Um, put the path for this email instead.
+[01:02:19.119] That's what I would do. Yeah. I got to
+[01:02:21.119] find it though.
+[01:02:22.810] [Music]
+[01:02:25.480] Um, there you go. I don't think it's
+[01:02:28.480] gonna It will not grab. You'll have to
+[01:02:30.720] grab for that.
+[01:02:32.720] Um, just grab for the message ID.
+[01:02:36.799] Oh, yeah. Good idea, man. All these
+[01:02:38.960] random tips and tricks. Yeah. Like I
+[01:02:43.359] think people highly highly underestimate
+[01:02:45.040] how how important it is. But the most
+[01:02:46.559] important thing that everyone needs to
+[01:02:47.520] do is just like get really fast at this.
+[01:02:49.920] Great. Now we have a path. Exactly.
+[01:02:59.549] Cool. Exactly. So now you would just
+[01:02:59.559] like for test and test cases. Exactly.
+[01:03:02.559] Import
+[01:03:11.829] check. Yep. Uh risk level. There you go.
+[01:03:11.839] And if you look at the result that
+[01:03:13.520] should be assert result is not
+[01:03:22.190] none. Import
+[01:03:22.200] piest. Exactly. Uh and then import
+[01:03:25.359] piest.
+[01:03:29.990] Yep.
+[01:03:30.000] And really you should make a
+[01:03:31.280] parameterized test case, but that's
+[01:03:32.640] okay. Yeah, sure. That's fine. Just
+[01:03:34.640] highlight it and cursor will change it
+[01:03:35.920] for you. Yeah, there you
+[01:03:39.640] go. Cool.
+[01:03:41.760] Yeah. And now you just run pi
+[01:03:47.670] test. Oh, you need to mark it. Oh,
+[01:03:47.680] whatever. Let's see if it
+[01:03:50.440] works. Oh. Uh,
+[01:04:01.990] why is it I wonder if it's collecting
+[01:04:02.000] files from all of the data. Oh yeah, C
+[01:04:04.319] and just pass it to specific directory.
+[01:04:06.400] Yeah.
+[01:04:14.470] Um, Unexpected indent. Oh, tap tap.
+[01:04:14.480] Yeah, come on.
+[01:04:24.150] Cursor C routine object async.
+[01:04:24.160] Yeah. And you have to import uh pi test.
+[01:04:26.559] Oh, maybe. Yeah. A dash async.io. It's
+[01:04:30.119] dash.
+[01:04:35.589] Yeah. Uh you have to mark it at
+[01:04:35.599] piest.mmark.
+[01:04:42.390] Yeah. Yeah. Yep. Now it'll work. And
+[01:04:42.400] then we got to await it. Oh, yeah. Oh,
+[01:04:50.349] wait.
+[01:04:50.359] Um Oh, you have to actually load the You
+[01:04:52.880] loaded the path. You have to actually
+[01:04:54.160] load the
+[01:04:56.119] path. Think you have to load the email.
+[01:05:00.480] Oh, is this just the text? Okay. Yeah.
+[01:05:03.760] Like
+[01:05:05.079] load.
+[01:05:07.720] Yeah. There you go. And you probably
+[01:05:10.240] have to give it data slash I think.
+[01:05:12.079] Yeah, there you go. Yeah, tab. The data
+[01:05:15.599] thing was also correct on line six.
+[01:05:37.589] there you go.
+[01:05:37.599] Let's see. Amaron
+[01:05:54.230] cursor. Okay, so this is our
+[01:05:54.240] deterministic eval. Can we also make a
+[01:05:56.559] vibe eval? Exactly. Like a visualizer.
+[01:05:59.440] Notice what we did, right? We we started
+[01:06:00.880] off with a vibe eval. Then we got real
+[01:06:03.039] data. When we looked at the real data,
+[01:06:04.400] we're like, cool. This one when we
+[01:06:06.559] looked at it should always be correct.
+[01:06:09.760] So how are we going to do this? And we
+[01:06:11.440] did what you did which is like okay now
+[01:06:12.880] we did a little bit of extra work to go
+[01:06:14.319] write this code and it takes 5 10
+[01:06:16.400] minutes but if you keep doing this over
+[01:06:18.160] and over again now you have better and
+[01:06:19.520] better systems. And so there's like two
+[01:06:22.319] dimensions that we're exploding around
+[01:06:23.920] here. um which like I would love to chat
+[01:06:26.240] more about like how to do this at scale
+[01:06:27.680] but it's like there's the dimension of
+[01:06:29.200] like finding all the test cases for this
+[01:06:31.760] just this gift policy just one rule in
+[01:06:34.319] our policy set and getting that really
+[01:06:36.480] really good and then there's doing that
+[01:06:38.640] again you know squaring the uh input
+[01:06:41.920] space for every single policy that we
+[01:06:44.640] might care about and that's I think
+[01:06:46.480] probably highlights why like this is how
+[01:06:48.319] you do it and get really good quality
+[01:06:50.240] and that highlights probably why just
+[01:06:52.319] like ramming out a bunch of questions
+[01:06:54.799] from a policy document is probably less
+[01:06:57.200] less less useful than but notice the way
+[01:07:00.160] that we got the give policy is you ran
+[01:07:01.839] that process already and then you're
+[01:07:03.280] like okay this policy seems like one
+[01:07:04.720] that we can tackle like yep and notice
+[01:07:07.440] what I did what one of the things I
+[01:07:09.200] forced you to do was I forced you to
+[01:07:10.480] basically ignore all the other questions
+[01:07:12.079] we said we're just going to talk about
+[01:07:13.039] gifts today
+[01:07:15.520] like we actually we just said we're only
+[01:07:18.319] going to talk about gifts because we
+[01:07:19.280] could have spent this whole time talking
+[01:07:21.039] about just policies and we would have
+[01:07:22.640] gotten no Yep. But now that we feel
+[01:07:26.240] pretty good about that's like really
+[01:07:28.160] good. So now let's bump it up even
+[01:07:29.839] further. Can you go back to your code?
+[01:07:32.240] Yeah. Where do you want to go? Let's run
+[01:07:34.640] 100,000 emails. Oh, okay. But now you'll
+[01:07:38.400] notice that this is going to be kind of
+[01:07:39.440] annoying. So yeah, make it 100,000. But
+[01:07:40.960] this is going to be kind Don't run it.
+[01:07:41.920] Don't run Don't run it. Um, this is
+[01:07:44.400] going to be kind of annoying. So like
+[01:07:45.440] this is another thing that I would do.
+[01:07:54.630] Um, how do I how do I cursor? H how do I
+[01:07:54.640] ask cursor? Uh, command K. Oh, yeah.
+[01:07:58.839] Sorry. Use um
+[01:08:07.190] what is TQDM?
+[01:08:07.200] It's great.
+[01:08:16.309] That's great. You'll see. We're use TQDM
+[01:08:16.319] to go do this.
+[01:08:22.630] Um, I think this will be pretty good,
+[01:08:22.640] but I'm going to do a couple more things
+[01:08:24.000] just to make this slightly better. Now
+[01:08:26.560] that we're running 100,000, I'm just
+[01:08:28.319] going to mark this
+[01:08:30.319] as Oh, you're just going to log out the
+[01:08:32.000] exceptions.
+[01:08:34.640] Well, I'm just going to say
+[01:08:36.520] like if it
+[01:08:42.070] fails, that's okay. We want to return
+[01:08:42.080] like gift email analysis or error or
+[01:08:44.560] none so that we can write it to a file.
+[01:08:47.759] Exactly. Called string or whatever.
+[01:08:50.799] Well, do you want the error message
+[01:08:52.239] basically? I don't really care. Okay.
+[01:08:59.430] I'm just And I think I have to return
+[01:08:59.440] this as well. Yeah. What I'll just
+[01:09:02.400] return a false specifically a false.
+[01:09:05.040] Okay.
+[01:09:06.759] Um, and there's only one type of error
+[01:09:09.199] that I'm actually going to catch, which
+[01:09:24.149] is Oh, sorry. Imported from the wrong
+[01:09:24.159] thing.
+[01:09:39.590] I basically only want to capture like
+[01:09:39.600] validation errors and if they happen
+[01:09:44.159] um I basically just want to ignore them
+[01:09:46.400] and return false.
+[01:09:48.880] Okay, I don't want to think about it.
+[01:09:50.719] Oh, I have to use literal
+[01:09:58.229] false. Just return literal error is
+[01:09:58.239] fine.
+[01:10:00.560] Um,
+[01:10:06.390] and then you want to log out the number
+[01:10:06.400] that have errors here. Exactly. So I
+[01:10:09.360] want to say like
+[01:10:11.360] cursor should figure this out.
+[01:10:24.790] Okay. What's TQDM? Are you going to tell
+[01:10:24.800] us and then let's let's run this one
+[01:10:26.239] last time and then let's do 15 minutes
+[01:10:27.920] for questions and we'll let people go.
+[01:10:30.120] Exactly. Run it. Run it. I think this
+[01:10:32.239] will work. What is this? Just run it.
+[01:10:33.920] Just run it. Trust me. All right. All
+[01:10:35.280] right. All right. And turn off your turn
+[01:10:37.280] off your terminal
+[01:10:55.910] TKDM in theory. This should work. Oh,
+[01:10:55.920] cool. It's just like a progress bar.
+[01:10:58.120] Exactly. Why does this not work the way
+[01:11:01.120] I thought it would? The progress bar
+[01:11:02.800] didn't do what I was supposed to. We
+[01:11:03.920] should cancel
+[01:11:05.239] this. While this is cancelling, let's
+[01:11:07.520] update the progress bar so it actually
+[01:11:09.440] does the right thing. Can you update the
+[01:11:10.560] progress bar so it does the right thing?
+[01:11:12.400] Um, what I will do
+[01:11:14.600] is So, let me write this down really
+[01:11:18.120] fast. Go ahead.
+[01:11:30.470] You got to like chunk it or something. I
+[01:11:30.480] don't
+[01:11:37.430] know. How does this work? Uh, I have to
+[01:11:37.440] ask cursor fix this. I forgot how to
+[01:11:43.120] the world's best prompt engineer and the
+[01:11:45.040] only thing you know how to tell cursor
+[01:11:46.320] is fix this and make it better. Yeah,
+[01:11:48.239] there you go. Uh, there you go. I think
+[01:11:49.760] this will work.
+[01:12:00.870] There you go.
+[01:12:00.880] Yeah. So, and and why do we do this?
+[01:12:02.640] Like who was um who was asking this is
+[01:12:05.199] like how do we be running this? Like
+[01:12:06.560] Charlie was asking how long will it
+[01:12:07.679] take? Now we have an approximate mental
+[01:12:08.960] model of how it's going to take too.
+[01:12:10.239] We're processing 100,000 emails
+[01:12:12.800] um and we know roughly how long it's
+[01:12:14.719] going to take by running this through.
+[01:12:16.560] And this is like something that a lot of
+[01:12:18.159] people don't do. But again, small thing
+[01:12:19.760] like adding the progress bar makes it so
+[01:12:21.280] we're not waiting forever. With 10,000,
+[01:12:22.960] we're like, "Ah, it's not that bad. So,
+[01:12:24.239] let's just go run this." With 100,000,
+[01:12:27.199] that no longer becomes feasible. So,
+[01:12:29.120] like I really want to have a good proxy
+[01:12:30.400] for like how how far along are we?
+[01:12:32.159] What's going on? What are the metrics
+[01:12:33.199] that are happening? Um, and if you're
+[01:12:35.280] not investing time in this kind of stuff
+[01:12:36.560] while you're iterating, again, it feels
+[01:12:38.800] slow in the moment, but now you see that
+[01:12:40.480] we're moving a lot
+[01:12:41.800] faster because like we know
+[01:12:43.760] approximately what we're waiting on,
+[01:12:45.120] what we're not waiting on.
+[01:12:48.320] Cool. That's dope. Should we open it for
+[01:12:50.640] questions? Yeah, let's wait. I I kind of
+[01:12:53.120] want to see the results of what
+[01:12:53.920] happened. Let's see the results. All
+[01:12:55.040] right. Um, let's add Let's look at the
+[01:12:58.159] results. Let's find one that's legit.
+[01:12:59.440] And let's add one more test case. Risk
+[01:13:01.920] level high. Financial donation to
+[01:13:03.840] cultural arts while seeking approval.
+[01:13:05.679] God damn, these people are all over the
+[01:13:07.520] place. All right, we'll we'll drop this
+[01:13:09.120] one in. Um, that's crazy. And I think
+[01:13:12.719] this what's great about the system like
+[01:13:14.560] yeah it did find something out.
+[01:13:25.189] we didn't find that one.
+[01:13:25.199] Um but this is kind of why I was saying
+[01:13:27.440] when you save stuff to disk it's just
+[01:13:29.040] not as good because like now capturing
+[01:13:31.199] this whole information is very very
+[01:13:32.719] hard.
+[01:13:34.320] Yeah. I mean, we could just like copy
+[01:13:36.159] this into a test cases folder probably
+[01:13:38.320] what we would do. Like, you're not going
+[01:13:39.440] to commit the entire set of emails or
+[01:13:41.600] whatever, but
+[01:13:43.800] um but yeah, this is kind of the this is
+[01:13:46.640] kind of um the interesting stuff that we
+[01:13:48.960] get to go do. Um any and then you can
+[01:13:50.800] imagine a UI around this really really
+[01:13:52.880] working really nicely. Exactly. Um cool.
+[01:13:55.520] I'm going to stop sharing. Um we can pop
+[01:13:57.120] back to the whiteboard if needed. But uh
+[01:13:58.800] what questions do folks have? So
+[01:14:00.560] question one from Andrew. This is all
+[01:14:02.239] assumed GT40 Mini. Did you vibe consider
+[01:14:04.560] other models? Um, I think it was 40 for
+[01:14:08.320] the record, but yeah. Yeah, I think we
+[01:14:10.239] could have considered any model, but
+[01:14:11.679] honestly, it didn't matter. What we
+[01:14:13.199] really wanted to go work on this time
+[01:14:14.800] was just whether or not this problem
+[01:14:16.480] could be solved. If the problem can't be
+[01:14:18.719] solved, it doesn't matter what models
+[01:14:20.239] can and cannot do it. So, we just want
+[01:14:22.080] to invest time in that sort of workload
+[01:14:24.360] first. And once we know it's good and we
+[01:14:26.880] know it's good enough, once we get more
+[01:14:28.239] vibes about it, then we can worry about
+[01:14:29.679] making the model smaller. Yeah. And if
+[01:14:31.840] we notice like, hey, the model really
+[01:14:33.120] sucks at finding ones that really should
+[01:14:34.880] be detected, then we'll use 03. We'll go
+[01:14:36.719] up to a bigger model. Exactly.
+[01:14:45.830] Uh, let me jump in, guys. Um, also
+[01:14:45.840] awesome, by the way, to watch you two
+[01:14:47.440] like wizarding all over the code. It's
+[01:14:49.760] really nice today. Um, what what would
+[01:14:52.159] be like the next steps from here? Like
+[01:14:53.600] how how would you what would you think
+[01:14:54.960] about doing after this? Well, the next
+[01:14:56.880] step is really to figure out how you're
+[01:14:58.159] going to process like five million
+[01:14:59.360] emails because processing five million
+[01:15:00.960] emails is not going to work with any
+[01:15:02.239] rate limit that we have. We did some
+[01:15:03.679] basics with parallelism on this. But
+[01:15:06.719] what I would do is I would say probably
+[01:15:09.520] need Amazon SQSQ or something of that
+[01:15:11.840] order of magnitude. Go process that
+[01:15:13.600] through and you just churn data at some
+[01:15:14.960] cadence and then you just sample real
+[01:15:17.440] production data like what Dex was doing
+[01:15:19.360] where he would like would look at the
+[01:15:20.560] file and just say like let's just look
+[01:15:21.600] at the high data and see if it looks
+[01:15:22.800] right. Let's look at the med medium
+[01:15:24.400] data. See if it looks right. Let's send
+[01:15:27.120] some random sample of the low data to
+[01:15:29.760] GPT4 uh G3 and just see maybe it missed
+[01:15:33.239] something. Um and it's really just like
+[01:15:35.520] going and building a metric for the
+[01:15:37.440] pipeline. And I wouldn't go ahead out of
+[01:15:40.080] my personally I wouldn't go ahead out of
+[01:15:41.679] my way to make the pipeline way way
+[01:15:43.520] better and way perfectly more accurate.
+[01:15:45.679] I just want to know approximately how
+[01:15:47.840] good it is. And once you have the core
+[01:15:49.920] of it, then I think you switch really to
+[01:15:51.679] like a test-driven development mode
+[01:15:53.440] where you're eyeballing stuff. And like
+[01:15:55.679] I think what you showed last week of
+[01:15:57.520] visualizing the diff and the drift is a
+[01:16:00.239] great way to quickly find new things
+[01:16:02.159] that should be test cases. And then what
+[01:16:04.560] you do is you say, "Cool, that should be
+[01:16:05.760] a test case that and you build a
+[01:16:07.040] pipeline to do that and add your test
+[01:16:08.560] cases. And then once you have more test
+[01:16:10.719] cases that that don't pass, then you can
+[01:16:13.520] go make the pipeline better." Or once
+[01:16:15.040] you wake up one morning and you're
+[01:16:16.320] spending $50 a day on open API to open
+[01:16:18.560] AAI tokens, then you go and say cool
+[01:16:20.880] like what's the bottleneck here? Which
+[01:16:22.400] step is spending the most tokens? Yeah.
+[01:16:24.560] And and really or you say this policy is
+[01:16:26.880] good enough. Let's move on to policy the
+[01:16:28.880] next policy.
+[01:16:30.800] Like we spent an hour built a pretty
+[01:16:32.560] decent giftgiving policy. Doesn't have
+[01:16:34.080] to be perfect. It's just good enough.
+[01:16:35.440] Caught some real scenarios that looked
+[01:16:36.960] high risk and instead of taking the
+[01:16:39.120] policy to like 100% I just put a human
+[01:16:41.040] in the loop in my process and I can
+[01:16:42.400] solve my software. Yep. And my favorite
+[01:16:45.199] and my favorite actual takeaway of this
+[01:16:46.719] is like most of this was not prompt
+[01:16:48.719] engineering. Like spending a day
+[01:16:50.640] building a perfect prompt and catching
+[01:16:52.560] every case is actually like way less
+[01:16:54.000] productive than setting up the rails and
+[01:16:56.000] the pipelines and the testing
+[01:16:57.120] infrastructure and the eval
+[01:16:58.280] infrastructure. So that when it comes
+[01:17:00.400] time to change your prompt, you know
+[01:17:02.320] exactly what you're doing and why you're
+[01:17:04.159] doing it. And you're not just vibing
+[01:17:05.679] like, "Hey, I think we should put the
+[01:17:07.120] things in this order instead of that
+[01:17:08.480] order because I read it in some [ __ ]
+[01:17:10.080] blog post.
+[01:17:18.550] Yes. And oh, another question on today
+[01:17:18.560] is like you were searching just on gift
+[01:17:20.480] in the emails. Like what would be
+[01:17:22.480] another way to do it or like the the
+[01:17:24.719] risk is that you don't find like it's
+[01:17:26.880] lab or it's labeled something else like
+[01:17:28.320] what would be another way of doing that?
+[01:17:30.080] I mean you could use embeddings are way
+[01:17:31.840] faster than passing every single one
+[01:17:33.280] through an LM. You could pass every
+[01:17:34.800] single one through an LM but again
+[01:17:36.159] that's more expensive. Um I don't know.
+[01:17:39.360] What do you got?
+[01:17:41.520] Um, yeah, but I think that most people
+[01:17:44.000] should just be looking at the data
+[01:17:45.960] first. Like just read like I I noticed
+[01:17:50.159] Dex this time too. Like instinct until I
+[01:17:52.400] like forced him to stop and read the
+[01:17:53.760] email. He didn't really do it. Um, and
+[01:17:57.040] like there's no amount of evals that we
+[01:17:59.040] could have done on that pipeline until
+[01:18:00.719] he just read the
+[01:18:02.360] email. Um, it would have been useless
+[01:18:05.719] effectively and like just slow down and
+[01:18:08.239] read look at the freaking data. Cool.
+[01:18:22.790] Amazing. Thanks all for hanging out. All
+[01:18:22.800] right. Thanks everyone. Have a good one.
+[01:18:26.000] Catch you all next week.

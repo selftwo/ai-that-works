@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID 0dx3j4CmSFw",
+  "transcript_path": "2026-05-12-code-mode-deep-dive/transcript.txt",
+  "transcript_range": "00:00.216 to 01:05:07.284",
+  "timestamp_order": "verified by knowledge/scripts/verify_transcript.py",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "all timestamped claim spans"
+  ],
+  "timestamped_claim_count": 7,
+  "source_duration_check": "not run: source media was not downloaded",
+  "remaining_uncertainty": [
+    "transcript provenance and ASR model",
+    "exact recording start",
+    "speaker attribution",
+    "screen only evidence"
+  ]
+}
+

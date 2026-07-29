@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "primary": [
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/transcript.md", "role": "timestamped transcript"},
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/meta.md", "role": "episode metadata and source links"},
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/README.md", "role": "episode description and whiteboard links"}
+  ],
+  "supporting": [
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/IMPLEMENTATION_PLAN.md", "role": "BurritoOps task state and reported verification"},
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/RALPH.md", "role": "one task per loop instructions"},
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/email.md", "role": "post-episode editorial summary"},
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/whiteboards.md", "role": "links to visual source artifacts"},
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/src", "role": "live demo and workflow source"},
+    {"path": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks/logs", "role": "saved agent and workflow run artifacts"}
+  ],
+  "external": [
+    {"url": "https://www.youtube.com/watch?v=qgAny0sEdIk", "role": "recording"},
+    {"url": "https://luma.com/12-factors-to-coding-agents", "role": "event page"}
+  ],
+  "link_status": "Source meta.md and README.md agree on the YouTube URL. External links were not fetched during packet creation."
+}

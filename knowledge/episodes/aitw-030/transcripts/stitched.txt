@@ -1,0 +1,1631 @@
+[00:00:03.030] Everyone, uh, welcome to another episode
+[00:00:03.040] of AI that works. We are back and I
+[00:00:07.759] think today one of the key things that
+[00:00:10.559] I'm really, really excited to talk about
+[00:00:12.800] is a concept that has come up a few
+[00:00:15.120] times in our past streams, but it's
+[00:00:16.720] really about how to build working AI
+[00:00:18.720] pipelines.
+[00:00:20.240] Um, so for everyone that hasn't attended
+[00:00:22.000] before, this is a show called AI that
+[00:00:23.680] works. Every week we run a live
+[00:00:26.240] conversation where our goal is to talk
+[00:00:28.320] about how to build a pipeline that
+[00:00:29.679] actually can make real productive
+[00:00:31.359] examples. If you find this sort of stuff
+[00:00:33.680] interesting, check out our link and
+[00:00:36.239] we'll usually post new events there. And
+[00:00:38.000] we run this every single Tuesday at 10
+[00:00:39.840] a.m. uh for about an hour and the goal
+[00:00:42.079] is to get to coding as soon as possible.
+[00:00:45.440] My name is Vivof uh on the side. I work
+[00:00:47.360] on BAML. Um and today I have with me
+[00:00:50.719] special guest uh Dexter sadly can't make
+[00:00:52.879] it today. So, for all of you that are
+[00:00:54.239] hoping to see him, I'm really sorry
+[00:00:56.320] you're stuck with just myself, but
+[00:00:57.920] luckily we have Anders on um to make it
+[00:01:00.640] a lot more interesting and fun.
+[00:01:03.520] >> Yeah.
+[00:01:04.640] >> Anders, do you want to give a quick
+[00:01:05.600] intro about yourself? Uh I know you're a
+[00:01:07.280] YC founder. I have gotten to know you uh
+[00:01:10.080] for quite some time now. Um
+[00:01:12.560] >> Yeah.
+[00:01:13.439] >> And
+[00:01:13.920] >> uh first of all, is my mic working
+[00:01:15.760] properly?
+[00:01:17.200] >> Okay. All right. Uh yeah. So yeah, it's
+[00:01:22.640] been a it's been a while since we known
+[00:01:23.759] each other now. Um but yeah, so we did
+[00:01:26.560] the um YCS25 batch, but basically we're
+[00:01:30.240] building uh SageKit, which is like a
+[00:01:32.400] workflow automation platform. Uh it's
+[00:01:35.439] kind of like chat GPT meets Zapier. Like
+[00:01:38.159] you just sort of chat and it builds you
+[00:01:39.840] like workflow automations. So yeah,
+[00:01:42.720] very, you know, key thing to our product
+[00:01:44.479] experience is just having like a super
+[00:01:46.079] good like chat experience, right? So
+[00:01:48.880] there's a lot of things involved in sort
+[00:01:50.159] of making that kind of experience good,
+[00:01:53.840] right? And uh like making sure that
+[00:01:57.759] yeah, users always have sort of the
+[00:02:00.240] right thing happen at the right time
+[00:02:02.799] when they're on our platform. So
+[00:02:04.719] >> yeah, and I think the first time we met
+[00:02:06.640] is actually when you were working on a
+[00:02:08.160] thing called magnitude back at that
+[00:02:09.599] time. Um, and I and for everyone else
+[00:02:12.000] that we're going to talk about today is
+[00:02:13.040] we're going to talk about event- driven
+[00:02:14.160] actions. And why are we going to talk
+[00:02:15.280] about event- driven actions? Well,
+[00:02:16.879] because I think it's one of the most
+[00:02:18.080] interesting ways to go model how to go
+[00:02:20.000] build agents behind the scene. And we'll
+[00:02:23.280] get to the whiteboards really fast
+[00:02:24.400] before we get to coding in a second. But
+[00:02:26.879] the reason that we brought Anders on
+[00:02:28.160] today is because I think Anders built
+[00:02:30.480] their first thing called Magnitude as I
+[00:02:32.239] mentioned before, which was an open
+[00:02:33.360] source system. And I think you guys did
+[00:02:34.800] pretty well in Hacker News. They got a
+[00:02:36.560] bunch of GitHub stars around it. Um, and
+[00:02:39.040] I think the way I described it was kind
+[00:02:41.280] of like browser based but worked. Uh,
+[00:02:43.840] but worked.
+[00:02:44.400] >> Yeah, that's that's a good way to
+[00:02:45.760] describe it. Basically,
+[00:02:47.680] >> it's just like the I think you hit
+[00:02:49.200] number one on all the benchmarks for a
+[00:02:50.720] while.
+[00:02:55.830] >> Still are number one on the benchmarks.
+[00:02:55.840] Um, I know a bunch of the YC companies
+[00:02:57.599] that are in that space all use you guys.
+[00:02:59.200] I know a lot of startups down there used
+[00:03:00.640] you guys.
+[00:03:02.080] >> Um, and I happened to meet you because
+[00:03:04.159] uh I guess you were using BAML at the
+[00:03:05.760] time to go build it. But through that
+[00:03:07.519] interaction, I think eventually you
+[00:03:08.879] settled on this interesting really
+[00:03:10.239] interesting product idea which was along
+[00:03:13.200] the lines of I think we had a whiteboard
+[00:03:15.840] conversations once about it uh while we
+[00:03:18.239] were hanging out about how to build
+[00:03:19.280] event- driven actions and I remember we
+[00:03:21.440] were just like vibing and conver
+[00:03:22.640] conversing about it but it sounds like
+[00:03:23.760] you guys did it to like the nth degree.
+[00:03:26.560] >> Yeah. Before we get really into it, how
+[00:03:30.000] about we just show people what it feels
+[00:03:31.840] like and then we can talk about
+[00:03:32.959] technical architecture and everything
+[00:03:34.000] else once people get a sense of what's
+[00:03:36.720] like what does it mean to have an event
+[00:03:38.480] action because I think it can feel so
+[00:03:40.560] ambiguous along the way,
+[00:03:42.879] >> right? Yeah. Um should I go and share
+[00:03:46.239] here?
+[00:03:46.879] >> Yeah, go for it. Screen share.
+[00:04:05.670] Oh, shoot. I gota rejoin real quick.
+[00:04:05.680] >> Cool.
+[00:04:08.319] >> While everyone else is on here, uh, for
+[00:04:10.319] everyone else that's joining, um, how
+[00:04:12.000] many of you have actually built event-
+[00:04:13.439] driven actions by chance? Has anyone
+[00:04:15.040] built a kind of system that can be
+[00:04:16.639] really almost feel natural? I think the
+[00:04:18.560] closest that I have seen is probably
+[00:04:19.840] quad code to where you can interact with
+[00:04:22.400] it as it's going. And that was one of
+[00:04:24.080] the first innovations that they had. I
+[00:04:26.080] think that's what made quad code
+[00:04:27.520] personally so good. And then obviously
+[00:04:29.680] cursor copied it, everyone else copied
+[00:04:30.960] it. And everyone had the very simple
+[00:04:32.240] thing that you could do which is as you
+[00:04:33.759] typed code you actually could cancel the
+[00:04:36.400] previous message and make it go work.
+[00:04:38.320] But Claude did something very
+[00:04:39.520] interesting on launch which was it cued
+[00:04:40.960] a message. And that behavior pattern I
+[00:04:43.759] thought of queuing messages was
+[00:04:46.080] foundationally different than everything
+[00:04:48.080] else in a very subtle but massive way. I
+[00:04:51.120] think very similar to
+[00:04:53.759] a lot of the great UI innovations like
+[00:04:55.520] Amazon's oneclick buy. So subtle the
+[00:04:57.840] fact that you can just one click check
+[00:04:58.960] out without having to do anything else.
+[00:05:00.240] But it makes a huge difference. And I
+[00:05:01.680] think in AI stuff event driven and like
+[00:05:05.040] interruptions and queuing all these
+[00:05:07.440] other behaviors are really the
+[00:05:08.639] difference between like an okay app
+[00:05:09.919] versus an amazing app.
+[00:05:12.560] We've got someone working on it right
+[00:05:14.160] now. Um that's that's great. Um so
+[00:05:18.000] Andrew, let's show the demo and show how
+[00:05:19.520] it works and how it feels.
+[00:05:22.263] [clears throat]
+[00:05:22.560] >> Yeah. So
+[00:05:25.199] first of all,
+[00:05:27.840] generally speaking, right? So this is
+[00:05:29.520] like our our sort of chat experience,
+[00:05:33.840] right?
+[00:05:35.039] So let's say what I want to do is I want
+[00:05:37.360] to go scrape Reddit uh subreddit for
+[00:05:41.280] r/lang chain for everyone complaining
+[00:05:43.520] about structured outputs or complaining
+[00:05:45.840] about lang. Let's do that.
+[00:05:49.919] Uh and the categor and categorize the
+[00:05:51.840] types of complaints.
+[00:05:54.000] >> Okay,
+[00:05:55.919] we'll ask it a question after.
+[00:06:05.189] So, okay, let's let's make a
+[00:06:05.199] modification.
+[00:06:08.080] >> So, that's interesting. What you do is
+[00:06:09.520] you actually ban the inputs during
+[00:06:10.960] certain time periods when you don't
+[00:06:12.160] allow interruptions.
+[00:06:13.600] >> Yeah.
+[00:06:21.110] Okay. So, let me extend the plan there.
+[00:06:21.120] So, okay. So, just to be clear, yeah, we
+[00:06:24.240] don't um basically over the past couple
+[00:06:27.039] days, I was rethinking how sort of the
+[00:06:30.560] events should work in the chat and like
+[00:06:32.479] how we should best enable like stopping
+[00:06:34.560] and interruption and queuing messages
+[00:06:36.479] and stuff like that.
+[00:06:37.840] >> So, this is um not actually in our
+[00:06:40.720] production chat app yet, but I have like
+[00:06:42.240] another demo that's just like I
+[00:06:44.319] basically used when I was prototyping
+[00:06:46.240] the new
+[00:06:46.880] >> Yeah.
+[00:06:47.199] >> sort of architecture. Um, but this is
+[00:06:49.199] just sort of a general idea of like the
+[00:06:50.720] types of flows that you have in sort of
+[00:06:52.560] a very interactive chat app. So it's
+[00:06:54.080] like you have, you know, back and forth
+[00:06:55.680] messages, you have, you know, plan
+[00:06:56.960] approvals and stuff like that. You know,
+[00:06:58.880] a lot of the same stuff that you have in
+[00:07:00.080] like interfaces like cloud code and that
+[00:07:02.400] kind of thing.
+[00:07:04.240] And so if you weren't logged into like
+[00:07:06.479] some of these apps, sometimes you would
+[00:07:08.000] get like ooth flows happening in the
+[00:07:09.919] middle here. So there's a lot of like um
+[00:07:12.639] complex states that kind of come up
+[00:07:14.479] that'll just sort of like happen in the
+[00:07:16.160] chat. So it gets sort of like
+[00:07:18.479] interesting to basically manage all that
+[00:07:21.039] state and like figure out what should be
+[00:07:23.039] happening at a given time like at a
+[00:07:24.960] certain time like should the user be
+[00:07:26.160] able to send a message? Should they be
+[00:07:27.440] able to interrupt it? Should they be
+[00:07:29.840] able to authorize with a certain like a
+[00:07:33.599] connection?
+[00:07:35.759] Um and yeah, so there we go. So it's
+[00:07:38.160] it's basically just built a workflow for
+[00:07:39.840] us. And this is sort of like a summary
+[00:07:42.080] of what it's going to do. So it'll like
+[00:07:43.520] use Reddit. um review them for
+[00:07:46.960] complaints and it'll use like Gemini to
+[00:07:49.120] analyze them and then it will format
+[00:07:51.919] that. So yeah, we can just run that
+[00:07:54.560] basically. So it just builds it all
+[00:07:56.639] completely on its own
+[00:08:00.319] and then we run it and it's basically
+[00:08:02.560] like
+[00:08:04.319] using the Reddit
+[00:08:06.720] connector to
+[00:08:08.800] list the posts and then it's making a
+[00:08:10.400] bunch of AI calls to analyze them for
+[00:08:13.360] complaints. Makes sense.
+[00:08:15.120] >> Yeah.
+[00:08:16.240] >> So, how do we um how so talk to me about
+[00:08:19.759] how you what do where would you add
+[00:08:21.840] interruptions? Because we've talked
+[00:08:23.039] about this a bit and I think you have um
+[00:08:26.240] like interruptions and queuing. So, it
+[00:08:27.599] sounds like I can definitely send a
+[00:08:28.800] bunch of messages, but this looks very
+[00:08:30.479] linear,
+[00:08:31.599] >> right? Yeah. So, what you really want to
+[00:08:33.680] be able to do, right, and which we're
+[00:08:35.039] adding like tomorrow or something, um is
+[00:08:37.919] you want to be able to just queue up
+[00:08:39.919] messages however much you want. Like
+[00:08:41.200] right now if I like type another
+[00:08:42.320] message,
+[00:08:43.440] >> it should just do stuff.
+[00:08:44.640] >> It should it should just do stuff,
+[00:08:46.240] right?
+[00:08:46.959] >> Yeah.
+[00:08:47.440] >> And it's like I can send another
+[00:08:48.959] message, but I can't send another
+[00:08:49.920] message here. Right now it's just an
+[00:08:51.120] invalid state.
+[00:08:52.240] >> Yeah.
+[00:08:52.560] >> Um but ideally like Yeah. You know,
+[00:08:54.640] people want to be able to like send more
+[00:08:56.000] messages like maybe they have a thought
+[00:08:57.200] while it's building. So they want to
+[00:08:58.800] keep be able to like send things. So um
+[00:09:02.800] here's like right just a demo of sort of
+[00:09:06.880] what the new uh architecture vaguely
+[00:09:09.600] looks like that's sort of like very just
+[00:09:12.240] event to the max.
+[00:09:14.240] >> Yeah. Let me zoom in. This is a
+[00:09:16.720] >> and then we'll take a look at the code
+[00:09:18.160] pretty soon too. But I think this is
+[00:09:20.399] this I think it's
+[00:09:22.480] >> uh what one thing I find really
+[00:09:24.240] fascinating is always when we're able to
+[00:09:25.680] go look into this in a deep way and just
+[00:09:27.279] go check this out.
+[00:09:29.360] >> Yeah. So, if I, you know, I say hi, and
+[00:09:33.120] there's not a lot of scrolling here, but
+[00:09:34.800] you can see it stream back a response,
+[00:09:36.480] and these are all just sort of like
+[00:09:37.760] events like coming from, you know, the
+[00:09:40.480] LLM that are eventually streaming into
+[00:09:42.959] the chat. Um, but right, we might have
+[00:09:46.240] other types of events. So, it's like
+[00:09:47.360] tell me a long story. It's like another
+[00:09:51.040] type of event is like interruption,
+[00:09:55.120] right? So if we interrupt
+[00:09:58.160] that happens sort of concurrently during
+[00:10:00.720] this process of streaming and then the
+[00:10:02.800] question is like okay how do you deal
+[00:10:04.000] with that event in the context of like
+[00:10:05.760] okay we're also streaming from the LLM
+[00:10:08.480] um so like what's happening now based on
+[00:10:10.480] those events that occurred right those
+[00:10:12.080] like the sort of source of truth um in
+[00:10:14.640] terms of like we started the LLM
+[00:10:16.480] response it gave these chunks at this
+[00:10:19.040] point in time the user pressed the stop
+[00:10:21.200] button what should happen now right so
+[00:10:23.200] it's like basically react acts to that
+[00:10:25.680] it's like okay I need to stop you know
+[00:10:28.240] listening to the LLM I need to you know
+[00:10:31.120] present some sort of message that sort
+[00:10:33.200] of reflects what the user did um and
+[00:10:36.480] then you know put the user back in a
+[00:10:40.000] valid state where they can send more
+[00:10:41.200] messages. So yeah, the user can also
+[00:10:43.680] just, you know,
+[00:10:45.839] ceue up messages as well, right? And you
+[00:10:48.079] sort of have to think about like what
+[00:10:49.519] you want the behavior for queuing to be
+[00:10:51.440] like,
+[00:10:53.040] uh, we sort of followed like the cloud
+[00:10:54.399] code model here where it's like if you
+[00:10:55.600] send a message, it will start like
+[00:10:57.360] responding to it and then if you like
+[00:10:58.640] queue up more messages,
+[00:11:00.640] it's like tell me a long story.
+[00:11:04.560] uh if you like send a bunch of messages
+[00:11:07.519] during this point, it'll just sort of
+[00:11:09.600] like accumulate those and then once the
+[00:11:12.800] LM is done with its story, uh these will
+[00:11:17.839] basically all like resolve into the
+[00:11:20.160] context window. So it will like see all
+[00:11:22.240] of these at once and then respond again.
+[00:11:27.360] >> So I guess what I would say is like
+[00:11:29.120] let's talk about this a little bit more.
+[00:11:30.320] So what I'm going to do is I want to
+[00:11:31.680] maybe we should jump to whiteboards
+[00:11:33.760] because I think that often it might be
+[00:11:35.279] easier way to go describe this kind of
+[00:11:36.720] state because as we go see this
+[00:11:38.399] >> there's a lot of complicated things that
+[00:11:39.920] are happening. One is I I have this chat
+[00:11:41.600] thread this chat thread that's running
+[00:11:43.440] all the time. I'm guessing in some
+[00:11:44.720] backend API call because it can't run
+[00:11:46.320] directly from the front end.
+[00:11:47.680] >> Yep. And then some it sounds like the
+[00:11:49.680] most complicated thing here is what I'm
+[00:11:51.279] really doing is I'm sending a bunch of
+[00:11:52.560] commands from the front end and then I
+[00:11:54.880] have to update the world view and
+[00:11:56.959] somehow send a Wii view of the world
+[00:11:58.640] view back to the front end.
+[00:11:59.839] >> The analogy that I've always personally
+[00:12:01.839] found here is actually video games. If
+[00:12:04.079] you ever play like a multiplayer video
+[00:12:05.440] game of any kind,
+[00:12:07.279] >> that is, I think, the closest analogy to
+[00:12:09.360] building these kinds of agentic systems
+[00:12:11.200] because like for example, we might have
+[00:12:13.360] totally different lags in the world. And
+[00:12:15.680] what if I'm running and you like shoot
+[00:12:18.480] me
+[00:12:19.600] >> in your in your scope? It might actually
+[00:12:22.000] look like you actually landed the shot
+[00:12:23.440] and you killed me, but from my
+[00:12:25.200] perspective, I'm lagging in the world
+[00:12:26.959] view, it didn't actually hit me.
+[00:12:29.519] >> So,
+[00:12:29.920] >> right. Like what video games actually do
+[00:12:33.120] is they actually say we favor the person
+[00:12:34.880] that is like killing the person because
+[00:12:36.480] if it looks like they killed you,
+[00:12:38.800] >> it should actually kill you even if you
+[00:12:40.320] can't tell. And they actually correct in
+[00:12:42.880] that way because it feels really bad to
+[00:12:45.440] feel like you did the right thing and
+[00:12:46.880] then someone else uh because of their
+[00:12:49.279] internet lag didn't and world state kind
+[00:12:51.839] of lied based on what you thought.
+[00:12:54.240] >> Right.
+[00:12:55.920] >> Yeah. Yeah. It's basically like right
+[00:12:57.519] you have all these events happening,
+[00:12:59.120] right? And it's like what you show to
+[00:13:01.600] the user is always some variation of a
+[00:13:03.920] lie, right? It's like it's not the exact
+[00:13:06.000] you're not showing them literally every
+[00:13:07.519] single thing that happened, right? It's
+[00:13:09.279] like if you showed them like the exact
+[00:13:11.360] like function calling format that the
+[00:13:13.440] LLM used and the exact tool results that
+[00:13:16.240] the LM got back and all this kind of
+[00:13:18.000] stuff like basically what you want the
+[00:13:19.920] user to perceive is like different from
+[00:13:23.600] the truth and it's different from what
+[00:13:25.279] you want the LM to see also. So it's
+[00:13:27.040] like everyone see needs a different
+[00:13:28.480] version of the truth and so it's like
+[00:13:30.079] how do you manage that and then how do
+[00:13:31.360] you manage like the concurrency and
+[00:13:32.959] stuff?
+[00:13:34.000] >> Yeah. So what we should do is um we
+[00:13:37.279] should actually go ahead and um talk
+[00:13:39.680] through what's it called? Let me open
+[00:13:41.519] the whiteboard really fast so we can
+[00:13:42.639] actually draw this out because I think
+[00:13:43.680] it's going to be a lot better.
+[00:13:45.279] >> Um and I'll send you the link as well.
+[00:13:46.959] Give me one second.
+[00:13:49.040] >> Share screen.
+[00:13:51.040] Skelelet draw
+[00:14:10.949] Uh sorry about this. Dexter usually does
+[00:14:10.959] this stuff [laughter]
+[00:14:23.269] and then I'll send this to you uh only.
+[00:14:23.279] So while we're actually going to go talk
+[00:14:24.959] about this
+[00:14:28.000] what we really want to do is we want to
+[00:14:29.360] figure out a way to go draw this out
+[00:14:31.680] from a system architecture. So what we
+[00:14:34.000] have is we have a front end. And in our
+[00:14:36.480] front end, what we're going to want to
+[00:14:38.240] do is we're going to want to send a
+[00:14:40.240] regular system of events to our back
+[00:14:42.639] end. And once we send system of data to
+[00:14:46.320] our back end, what we want to make sure
+[00:14:48.079] is whatever this is triggering should
+[00:14:50.800] not directly trigger the actual um
+[00:14:55.920] it should not trigger the direct uh
+[00:14:57.920] what's it called? The direct agent loop.
+[00:14:59.600] because if it triggers a direct agent
+[00:15:00.959] loop and it responds directly to to the
+[00:15:03.199] user in a very linear way, we can no
+[00:15:06.160] longer interrupt the system. So what we
+[00:15:08.880] need to make sure that we do is we need
+[00:15:11.519] to go ahead and somehow send data from
+[00:15:13.440] the front end to the back end.
+[00:15:17.440] And once the back end is gone, this
+[00:15:19.440] needs to kick off some task in some form
+[00:15:21.839] factor where this will go write
+[00:15:24.480] information
+[00:15:26.720] to some central database.
+[00:15:29.600] get task and then somehow this database
+[00:15:32.720] is or database like thing and somehow
+[00:15:35.120] this front end will listen to state
+[00:15:36.880] actions coming from the uh database and
+[00:15:40.000] now what you can do at least and correct
+[00:15:42.320] me if you're if I'm wrong on this Anders
+[00:15:44.160] and you guys do something different
+[00:15:45.120] because I think it'd be a very
+[00:15:46.079] interesting conversation to have is as
+[00:15:49.040] events come in as new events come in you
+[00:15:51.440] can basically have your agent task
+[00:15:53.120] somehow be loading these events from uh
+[00:15:58.000] new events Oh, sorry. New can also be
+[00:16:00.639] written to the database and then your
+[00:16:01.839] agent task can also have a readwrite
+[00:16:03.440] system from here somehow.
+[00:16:06.240] >> Great. Yeah.
+[00:16:07.519] >> Go ahead.
+[00:16:09.040] >> Yeah. So, yeah, the way I think about
+[00:16:11.839] this, right, is that right, the event
+[00:16:14.800] the event stream and the events
+[00:16:16.320] produced, they're coming from a lot of
+[00:16:17.920] different places actually, right? And
+[00:16:19.360] it's like,
+[00:16:19.920] >> okay,
+[00:16:21.040] >> um, so it's like you have different sort
+[00:16:22.959] of types of events that I that I think
+[00:16:24.800] about, right? So this is like um Right.
+[00:16:28.399] So this is what like the user over here.
+[00:16:30.720] This is uh
+[00:16:33.360] right. So I mean obviously we have you
+[00:16:36.480] know an LLM in here.
+[00:16:39.839] >> This is a very different style. It's
+[00:16:41.440] going to be an interesting graph. Uh
+[00:16:43.471] [laughter]
+[00:16:44.399] >> I can fix that. You can just keep
+[00:16:45.600] drawing. I'll fix.
+[00:16:46.240] >> Okay.
+[00:16:47.759] Right. But we have a lot of different
+[00:16:49.199] things like contributing to the event
+[00:16:50.560] stream. Right. So it's like we obviously
+[00:16:51.920] have an LLM in here. Um we have you know
+[00:16:56.399] we have some kind of strategy for
+[00:16:58.399] especially with streaming like we
+[00:16:59.680] usually have some sort of way of like
+[00:17:01.519] interpreting or like parsing um what the
+[00:17:04.400] LM is doing. So usually it's actually
+[00:17:06.240] like this. It's like we're doing that
+[00:17:08.000] and then that's going into the event
+[00:17:09.679] stream. Um
+[00:17:12.559] and then we sometimes have you know like
+[00:17:15.520] handling for like doing different like
+[00:17:17.520] tool calls or other things. So it's like
+[00:17:19.439] we have some like
+[00:17:21.520] tool calls and maybe sometimes the
+[00:17:23.280] parser goes and does a tool call first
+[00:17:25.839] and then that becomes sort of like an
+[00:17:27.520] event, right? So it's like there's a lot
+[00:17:29.679] of different things that can sort of
+[00:17:31.360] contribute to that, right? And so sort
+[00:17:33.679] of think what the the confusing part
+[00:17:35.600] becomes is like okay, how do you
+[00:17:38.720] um who's sort of in control? Like what's
+[00:17:41.600] like what's in control of this whole
+[00:17:42.960] like loop? Uh how do things like feed
+[00:17:45.520] events into each other?
+[00:17:47.600] um and and sort of what happens there.
+[00:17:50.559] So
+[00:17:52.720] yeah, the the way like there's a lot of
+[00:17:54.720] different ways that you can structure
+[00:17:56.320] that, right? So it's like we have sort
+[00:17:58.080] of
+[00:17:59.840] in this, you know, little diagram, we
+[00:18:01.360] just have this event stream thing here,
+[00:18:02.880] but it's like
+[00:18:04.880] um there's different ways that you could
+[00:18:07.919] do that, right? could be like
+[00:18:10.480] one sort of continuous sort of event
+[00:18:14.240] stream from like LLM to like parser to
+[00:18:17.919] like um some sort of representation for
+[00:18:22.720] both the user and for the
+[00:18:25.919] LLM, right? So it's like you have
+[00:18:28.080] different ways that you need to display
+[00:18:29.760] the event stream.
+[00:18:31.760] Um,
+[00:18:36.789] and
+[00:18:36.799] yeah, so I'd say like you basically
+[00:18:39.760] yeah, you basically have things that add
+[00:18:40.880] to the event stream in different ways
+[00:18:43.280] and you have things that need to like
+[00:18:44.400] perceive that event stream is like the
+[00:18:45.760] main idea I would say.
+[00:18:47.039] >> So is is the right way to think about
+[00:18:48.880] this? You basically have a function in
+[00:18:50.640] your code somewhere else. So an event
+[00:18:52.000] handler that takes in some event kind of
+[00:18:55.200] some any of the many events that you
+[00:18:57.760] have and then based on the event kind.
+[00:19:00.640] Oh, this is center text. We did not want
+[00:19:02.400] that. What you end up doing is you end
+[00:19:04.400] up basically saying, hey, if it's an LLM
+[00:19:06.880] stream, if it's an LLM event,
+[00:19:08.883] [clears throat] I should say like a
+[00:19:10.320] parsed event, then you do something else
+[00:19:14.000] where like maybe it's like write send to
+[00:19:16.400] UI
+[00:19:18.799] of some kind. Otherwise, like if it's
+[00:19:20.880] like a if it's a tool tool response of
+[00:19:24.400] some kind, you say like do action where
+[00:19:28.240] you do the next action over here,
+[00:19:30.400] >> right?
+[00:19:31.120] >> And you go fill this out. And then if
+[00:19:32.799] it's like if user request,
+[00:19:37.360] >> you end up saying something like Q uh
+[00:19:41.120] action of some kind where you like cue
+[00:19:42.799] an action. And this is basically it's
+[00:19:44.960] triggering a almost like a cron job
+[00:19:47.120] that's running all the time where like
+[00:19:50.148] [snorts] every single system that you
+[00:19:51.520] have like every agent task isn't
+[00:19:53.200] actually a whole loop. It's actually a
+[00:19:55.280] system that's just adding a new event
+[00:19:56.720] through a massive like event log of
+[00:19:58.559] what's happening.
+[00:19:59.600] >> Exactly. Yeah. I think basically the way
+[00:20:02.160] I think about it is like Yeah. It's like
+[00:20:04.240] a reactive system. So it's like it's not
+[00:20:06.720] instead of like thinking about it as
+[00:20:09.360] like a while loop um it's more like cues
+[00:20:13.200] of events.
+[00:20:14.880] >> Yeah. So your worldview model so that's
+[00:20:18.000] interesting. It's a it's actually a
+[00:20:19.280] different worldview model than what I've
+[00:20:20.559] used in the in the past where like my
+[00:20:22.559] way of representing the worldview has
+[00:20:23.840] actually been like I have a giant state
+[00:20:25.039] object that represents the state of the
+[00:20:26.400] world of some kind. It sounds like your
+[00:20:29.840] world view is actually you have like an
+[00:20:32.080] a ve or an array.
+[00:20:34.320] >> Yep. of actions that have happened in
+[00:20:36.880] the past and this is what represents
+[00:20:38.320] your state. It's not to say either one
+[00:20:39.520] is good or bad but this is what you
+[00:20:41.679] found is really easy because then what
+[00:20:43.200] you say is for example the way that you
+[00:20:46.080] pro tell me if this is wrong or not. The
+[00:20:48.640] way that you implement queuing is that
+[00:20:50.320] you say like a Q event
+[00:20:54.720] is a thing that gets pushed into your
+[00:20:56.480] array and once the next action finishes
+[00:20:59.280] you go back and you see if there's any
+[00:21:00.720] cute events that are not
+[00:21:01.679] >> done yet. Right. Yeah. It's it's very
+[00:21:03.760] sort of native to that system, right? So
+[00:21:05.840] yeah, so what we had sort of in the past
+[00:21:07.840] was sort of more like a state based
+[00:21:09.919] model where we just have a state and we
+[00:21:11.679] mutate it and it's you know it's you
+[00:21:14.159] know very reasonable kind of makes sense
+[00:21:15.520] like you can just sort of change the
+[00:21:17.840] state as needed react to that you know
+[00:21:19.440] do think different things depending on
+[00:21:21.600] what that state is at the current time
+[00:21:24.080] uh and that kind of thing. But the
+[00:21:25.360] problem is like what we did more and
+[00:21:27.600] more over time is like we started uh
+[00:21:30.720] sort of mixing these paradigms because
+[00:21:32.159] it's like oh well we need like a whole
+[00:21:34.000] like log of everything that happened in
+[00:21:35.600] the chat so that we can like view it
+[00:21:38.640] right in the chat and also the LLM needs
+[00:21:40.559] to be able to perceive it in a certain
+[00:21:41.919] way in terms of like converting that to
+[00:21:43.760] something that goes in the context
+[00:21:45.039] window. Um
+[00:21:48.640] and then it became very unwieldy to like
+[00:21:51.200] maintain both like these events that are
+[00:21:54.320] like the source of truth for like what
+[00:21:56.320] happened and then also like a separate
+[00:21:58.799] state which is like we have to keep it
+[00:22:01.039] synchronized with like what happened and
+[00:22:03.440] then so basically
+[00:22:06.159] um what I wanted to do instead was just
+[00:22:08.159] like okay what if everything is just
+[00:22:11.280] basically a pure function of the events
+[00:22:13.200] that actually occurred. Um, and so like
+[00:22:16.559] you can have like representations of
+[00:22:19.120] state in this model where you sort of
+[00:22:20.880] centralize around events still, but
+[00:22:22.559] they're just like
+[00:22:24.960] functions of that event.
+[00:22:27.760] >> Describe I'm going to try and describe
+[00:22:29.280] what a user might do and how someone
+[00:22:30.640] else can view the code and then we'll
+[00:22:31.840] take a look at the code really fast. So
+[00:22:33.679] in this case, what I have is a user
+[00:22:34.960] started off with some user event with
+[00:22:36.320] some request. Maybe it's as simple as
+[00:22:37.600] just like hello and your agent started
+[00:22:39.760] responding with like hello how really
+[00:22:42.480] fast and then right at that point the
+[00:22:44.480] user said wait. So there and if they
+[00:22:46.720] cued the event, the behavior ends up I'm
+[00:22:48.640] guessing something like this where you
+[00:22:50.080] get a bunch more stream text of some
+[00:22:52.080] other text
+[00:22:53.120] >> and at some point your state engine
+[00:22:55.760] recognizes that like obviously when
+[00:22:58.559] you're streaming you can also say like
+[00:23:00.159] done streaming
+[00:23:02.799] and now your user invent uh uh your
+[00:23:05.600] agent system can say as soon as it the
+[00:23:07.760] event handler for the done event goes
+[00:23:10.480] and checks the queue for this specific
+[00:23:12.320] user ID or this specific conversation ID
+[00:23:15.120] and says
+[00:23:15.919] Q event. Well, let's give this event an
+[00:23:18.000] ID of like ID of some kind. Sorry, let
+[00:23:21.520] me make bigger and too small. ID equals
+[00:23:25.280] 1. And then what I can do is I can say
+[00:23:27.600] like handle uh handled event and now I
+[00:23:31.520] can handle event id equals 1 where it'll
+[00:23:34.480] actually treat this and transform this
+[00:23:36.720] into another user event of like wait
+[00:23:40.640] at this point. And now
+[00:23:44.000] this has basically been handled. So now
+[00:23:45.520] the system will start streaming and send
+[00:23:47.039] the response into the user.
+[00:23:48.880] >> Right. One way to handle a queueing.
+[00:23:51.440] >> Yeah. But yeah, the main the main thing
+[00:23:53.440] here is that um when this queue event
+[00:23:57.760] happens, right, we have to immediately
+[00:24:01.200] right interrupt whatever thread or is
+[00:24:04.320] going on that's handling the streaming
+[00:24:06.000] part, right? And ignore the rest of it
+[00:24:08.640] right away. Well, no, not the interrupt.
+[00:24:11.039] The queue event.
+[00:24:14.240] >> Oh,
+[00:24:14.880] >> yeah. Sorry.
+[00:24:15.520] >> You mean just literally?
+[00:24:17.200] >> Oh, yeah.
+[00:24:18.559] >> Oh, oh yeah. Oh, yeah. Yeah. My bad.
+[00:24:19.760] Yeah. For queuing events. Yeah. Yeah.
+[00:24:21.360] Yeah. So, yeah, we let it keep going.
+[00:24:23.919] Um,
+[00:24:24.880] >> on the other hand, let's talk about the
+[00:24:26.559] second part, which is interrupt event.
+[00:24:28.000] Let's say the user sent this as an
+[00:24:29.279] interrupt instead
+[00:24:31.520] of Q. Oops.
+[00:24:33.840] Interrupt.
+[00:24:36.240] Well, interrupts are I think very very
+[00:24:38.400] similar to queuing in that same in that
+[00:24:40.240] same form factor where oh sorry one
+[00:24:43.039] second. Um
+[00:24:48.710] I have to reload the page so my view
+[00:24:48.720] length is better
+[00:24:56.630] go back to the right area. Click on new.
+[00:24:56.640] So interrupt is very very similar to
+[00:24:58.240] queuing where instead of queuing the
+[00:25:00.240] event though all these systems that come
+[00:25:02.159] in what you can tell your back end is
+[00:25:04.960] hey don't add these events to my I mean
+[00:25:07.600] you can cancel it as well but you can
+[00:25:08.880] also just say like just don't add these
+[00:25:11.840] to the queue like basically don't add
+[00:25:13.520] them into the queue and spin up a new
+[00:25:15.200] event as if this happened. And you can
+[00:25:18.240] do what's interesting here is you can
+[00:25:20.880] choose how you handle these previous
+[00:25:22.320] events. You can choose to maintain them
+[00:25:24.320] in the record or you can actually say
+[00:25:26.320] that actually you know what I am these
+[00:25:29.200] are bad so I will just like delete them
+[00:25:31.520] after the fact even though they
+[00:25:33.039] technically exist in the record and my
+[00:25:34.880] the my world view when I query and when
+[00:25:38.799] I show in the UI how to represent this
+[00:25:40.640] this exists but I don't render it or I
+[00:25:43.520] can delete it and purge it from the
+[00:25:44.880] event record in any way myself.
+[00:25:47.039] >> Yeah. Exactly. And I think that's the
+[00:25:48.320] nice thing about this type of system,
+[00:25:49.600] right, is that you can basically just
+[00:25:52.080] look at what happens and sort of have
+[00:25:55.279] however you handle events decide like
+[00:25:58.799] what what is supposed to be viewed or
+[00:26:03.120] perceived when like you know this type
+[00:26:05.919] of situation happens where you have like
+[00:26:08.320] okay these events were streamed but then
+[00:26:10.240] the interrupt happened. It's like okay
+[00:26:12.159] do I just ignore the ones that happened
+[00:26:14.080] after that? Do I ignore all of them? And
+[00:26:16.960] you can sort of you know implement that
+[00:26:19.360] however you want.
+[00:26:21.679] >> Yeah. And like once you model the world
+[00:26:23.360] in this way where it's just like a
+[00:26:24.480] sequence of elements that are being
+[00:26:26.080] collected and like drawn upon like
+[00:26:28.159] writing code for this is actually very
+[00:26:30.000] simple. I'm guessing like this code
+[00:26:31.760] system is not that hard. And in terms of
+[00:26:35.120] actually you like rendering in the UI
+[00:26:37.120] well that's also very easy because you
+[00:26:39.120] just say how do I render the sequence of
+[00:26:40.799] events? And
+[00:26:42.480] >> you can do that in any which way that
+[00:26:43.919] you want as a developer. You can render
+[00:26:45.440] like and show the stream text. We know
+[00:26:47.279] how to do that. You can render and show
+[00:26:49.919] um show cute events. You can not show
+[00:26:51.600] cute events. You can show interruptions.
+[00:26:53.440] You can show middle states. You can show
+[00:26:55.360] like the entire conversation history.
+[00:26:57.840] You can go back and fork at any point
+[00:26:59.840] because it's just copy this screenshot,
+[00:27:02.240] copy this action array of everything up
+[00:27:04.640] before this event and start copying from
+[00:27:06.640] here.
+[00:27:08.000] >> Yeah. Yeah. I'd say there's like a
+[00:27:09.279] little bit of like
+[00:27:11.120] just like
+[00:27:14.240] setup in terms of thinking about your
+[00:27:16.240] agent as a sequence of events and not as
+[00:27:19.039] like just oh I have state and I mutate
+[00:27:21.600] it but like once you start thinking
+[00:27:23.039] about it that way yeah you get a lot of
+[00:27:26.000] >> benefits from that like you know some of
+[00:27:27.679] the things you mentioned
+[00:27:28.960] >> you know what this really reminds me of
+[00:27:30.240] this really reminds me of how like
+[00:27:31.360] database transactions are made.
+[00:27:32.880] >> Yeah. um in some ways where like you
+[00:27:34.960] basically have in a lot of ways you just
+[00:27:36.640] write a bunch of logs to some event file
+[00:27:38.320] and eventually the database becomes like
+[00:27:39.919] consistent on its own by saying like
+[00:27:41.679] these event files eventually have to be
+[00:27:43.200] recorded in the database
+[00:27:44.799] >> with some yeah it's kind of like that in
+[00:27:46.880] a way yeah um right yeah so you can yeah
+[00:27:51.120] like yeah the key things that you can
+[00:27:52.640] really get out of this are you have sort
+[00:27:56.000] of right you have the one source of
+[00:27:57.600] events instead of like state that you're
+[00:27:59.600] mutating on the back end state that
+[00:28:01.039] you're mutating on the front end those
+[00:28:03.039] might get out of sync, right? You have
+[00:28:04.240] all sorts of like weird things. It's
+[00:28:05.600] like everything just driven by sort of
+[00:28:07.360] this one engine that's handling the
+[00:28:09.600] events and that kind of thing and it can
+[00:28:11.520] just send like okay front end like you
+[00:28:13.520] should look like this at this point in
+[00:28:15.360] time based on the events.
+[00:28:18.159] >> I'm actually really curious to see what
+[00:28:19.600] this code ends up looking like in
+[00:28:20.880] practice. Someone asked a really
+[00:28:22.640] important question before we go into
+[00:28:23.760] that
+[00:28:24.880] >> um which is do you store the same events
+[00:28:28.480] in the same table in a database? I my
+[00:28:31.039] hunch says probably yes. I suspect your
+[00:28:33.200] database is basically a union of events.
+[00:28:35.919] >> Yeah, it's literally just the way the
+[00:28:38.159] way I've done this is it just it's just
+[00:28:40.000] one array of events just in a you know
+[00:28:43.279] database column. It's just um
+[00:28:47.679] >> I'm guessing you're you're
+[00:28:48.880] >> just like a discriminated union of
+[00:28:50.880] different like event types. Um, that's
+[00:28:53.520] it.
+[00:28:59.029] >> And I'm guessing it it's just basically
+[00:28:59.039] like event and then you do a group by
+[00:29:01.600] user ID and convo ID and now you have
+[00:29:03.279] your entire event history for every
+[00:29:04.640] single and like time stamp and obviously
+[00:29:06.240] all the metadata.
+[00:29:08.159] >> Yep. Yeah. So that's basically what it
+[00:29:09.760] is. Yeah. So you just an array of events
+[00:29:12.080] and so the representation is like
+[00:29:14.080] extremely simple, right? You can just
+[00:29:16.240] load those events and do whatever you
+[00:29:17.679] want with them.
+[00:29:18.399] >> Yeah. And you can load as many of the
+[00:29:19.760] events you want. You can get the most
+[00:29:20.880] recent 50. You can get the most, you can
+[00:29:22.960] get all of them forever. You the first
+[00:29:24.960] 10, the last 10. It's all up to you.
+[00:29:28.480] >> Yeah. And it's extremely like uh
+[00:29:30.720] debugable and testable as well. Um, like
+[00:29:33.360] when you think about like one one thing
+[00:29:35.360] that was hard when we were sort of
+[00:29:38.240] >> building our our chat is just like it's
+[00:29:40.880] hard to test it without like running the
+[00:29:42.880] the back end and the front end and and
+[00:29:44.799] like testing different scenarios like
+[00:29:46.399] manually and that kind of thing like
+[00:29:48.159] with sort of a traditional system where
+[00:29:49.679] you have some sort of state that you're
+[00:29:51.600] managing on the back end and on the
+[00:29:53.600] front end that's trying to synchronize
+[00:29:55.360] because you don't really know from the
+[00:29:57.120] backend code alone what the front end is
+[00:29:59.120] going to look like at any point in time.
+[00:30:01.039] But if you have sort of everything
+[00:30:03.440] driven by the events and like your back
+[00:30:05.360] end is basically just telling what your
+[00:30:06.880] front end and what it should look like
+[00:30:08.000] exactly at any point in time based on
+[00:30:09.840] those then it becomes very testable
+[00:30:12.559] because you can just write tests that
+[00:30:13.600] are like okay at this point in time I
+[00:30:14.880] expect the interrupt button to be
+[00:30:16.559] available or not based on these events
+[00:30:18.320] that occurred.
+[00:30:18.960] >> It's it's another analogy for this for
+[00:30:21.120] me is like very similar to like use
+[00:30:22.399] state and react. When I write use state
+[00:30:24.720] and react I can like how do I debug
+[00:30:26.880] state that is bad? Well, I usually just
+[00:30:28.240] hardcode the initial condition of the
+[00:30:29.520] state. I say change the state to this
+[00:30:31.360] like just show me what the rendering
+[00:30:32.559] looks like and then I debug it really
+[00:30:34.000] easily.
+[00:30:35.279] >> Um because like React just says assume I
+[00:30:37.840] have state of this shape and now render
+[00:30:40.000] it however I want and it's a really easy
+[00:30:41.840] transaction for me to go make as a
+[00:30:44.080] developer.
+[00:30:46.559] Um we should uh we should get the code.
+[00:30:50.080] Uh we got like two interesting questions
+[00:30:51.600] while you set up the code and you go
+[00:30:52.799] screen share for that. Take over my
+[00:30:54.320] screen share while you go do that. Yeah,
+[00:30:56.159] >> which is um where do we persist the
+[00:30:58.880] context for LLMs in this case? And I
+[00:31:01.760] think this is a really interesting
+[00:31:03.440] question that all people ask, but this
+[00:31:04.960] goes back to how we we've talked about
+[00:31:06.559] this in the episode quite a few times,
+[00:31:08.799] which is what the heck is an agent?
+[00:31:10.880] Well, let me see if I can pull that up.
+[00:31:14.159] We talked about this in the 12 uh
+[00:31:16.960] factors um selecting thousand tools from
+[00:31:19.760] MCP
+[00:31:21.360] uh tool. Let me pull this up really
+[00:31:23.360] fast. I'm gonna take I'm gonna take over
+[00:31:24.640] the screen share for one more second.
+[00:31:26.240] >> Okay, my bad.
+[00:31:28.080] >> It's okay. Um screen
+[00:31:32.480] we talked about in this episode
+[00:31:33.919] actually. And when you go think about an
+[00:31:36.159] agent loop really fast, what I have
+[00:31:38.320] personally found is u take it here
+[00:31:42.960] really fast. Sorry.
+[00:31:46.399] You can view every single agent as
+[00:31:48.640] basically a thing a model as just a
+[00:31:51.200] thing whose only job it is to do which
+[00:31:53.360] is
+[00:31:56.000] close up. You take some context window
+[00:31:58.880] that you're building up over time and
+[00:32:00.320] you ask the model to do something that
+[00:32:01.840] is very stateless which is determine the
+[00:32:03.600] next step. See the question that you're
+[00:32:05.039] asking is how do you build your context
+[00:32:06.480] window? Well, your context window is
+[00:32:09.440] also really just a projection of this
+[00:32:12.559] state. You take this state and you turn
+[00:32:14.880] it into a chat prompt of some kind. And
+[00:32:17.200] that's just a function that you can
+[00:32:18.320] write which says or turn your action
+[00:32:20.399] array or event array into a chat prompt.
+[00:32:23.440] Now, I suspect Andrews will be showing
+[00:32:24.880] this code when he talks through this.
+[00:32:27.279] But let's get into it. All yours,
+[00:32:29.919] Anders.
+[00:32:30.559] >> All righty.
+[00:32:31.679] >> And as people have questions, keep
+[00:32:33.200] sending them. We'll try and uh answer
+[00:32:34.720] them as fast as we can.
+[00:32:52.149] >> Yeah. All right. So, here's the code for
+[00:32:52.159] um sort of that demo that I was showing
+[00:32:54.080] that
+[00:32:54.559] >> bun. I love it.
+[00:32:57.039] >> Where do you see the bun at?
+[00:32:58.399] >> I thought bun.serve.
+[00:33:00.000] >> Oh, [laughter]
+[00:33:01.679] yeah. Bun. Um, so
+[00:33:05.200] yeah, when I was playing around with
+[00:33:06.720] sort of the ideas for doing this very,
+[00:33:10.000] you know, event driven thing, um, one
+[00:33:13.279] thing that I, you know, had, uh, heard
+[00:33:16.399] about but not experimented enough with
+[00:33:18.159] was effect TS. Um, and so I'm I'm an
+[00:33:21.279] effect TS newbie. Um but for people who
+[00:33:24.640] don't know it's like you know a library
+[00:33:26.399] that makes it
+[00:33:28.320] >> hard
+[00:33:28.880] >> gives gives gives a lot of tools um for
+[00:33:32.799] for TypeScript in terms of doing a lot
+[00:33:35.519] of different stuff like error handling
+[00:33:37.440] but also like streams and just like
+[00:33:39.679] piping things between other things and
+[00:33:41.279] just like all sorts of different like
+[00:33:42.480] transformations.
+[00:33:44.000] And so
+[00:33:46.240] um
+[00:33:47.919] yeah, basically it became like obvious
+[00:33:50.320] that like it was like a pretty good way
+[00:33:52.080] to structured this type of system where
+[00:33:54.480] you have sort of inherently like a lot
+[00:33:56.240] of streams of events like feeding into
+[00:33:58.640] each other uh and different stuff like
+[00:34:00.640] that. So yeah, this is a very like this
+[00:34:04.799] demo is like very eventt. So um yeah,
+[00:34:09.040] basically like how this has been like
+[00:34:12.000] structured here is just like effectively
+[00:34:14.399] like the the the the back end here
+[00:34:17.599] that's actually receiving the websocket
+[00:34:20.800] connections from the front end and it's
+[00:34:22.079] running the whole chat has basically
+[00:34:25.440] these different like services that are
+[00:34:29.440] at any time going to basically observe
+[00:34:31.599] events and like maybe produce events
+[00:34:34.000] also. Um, and so
+[00:34:38.240] these are all sort of controlled by like
+[00:34:40.320] an event bus which is like going to be
+[00:34:43.599] getting different events from like the
+[00:34:45.599] front end. Say a user sends a chat
+[00:34:47.200] message that will go in here, right? So
+[00:34:49.520] it's like let's take a look at a
+[00:34:51.280] specific example. Um,
+[00:34:59.670] yeah. So it's like basically when
+[00:34:59.680] something wants to send an event back
+[00:35:01.359] into sort of the engine that's has these
+[00:35:04.720] different things perceiving the events
+[00:35:07.040] uh it can use this event bus it can like
+[00:35:09.040] publish the event and it will basically
+[00:35:11.200] be subscribed to by the other things. Um
+[00:35:15.440] so
+[00:35:20.790] >> so let's take a look at some of the
+[00:35:20.800] events if you're down. Why don't we look
+[00:35:22.320] at
+[00:35:22.640] >> Yeah. Yeah. Let's start with um the
+[00:35:25.040] events right. So yeah. So here's what
+[00:35:26.560] some of the events looks like for
+[00:35:27.599] example. Um
+[00:35:31.440] so basically these are all the types of
+[00:35:32.960] events that can live in this event bus
+[00:35:35.440] and can be like sent to it as sort of
+[00:35:37.839] like from external source or like
+[00:35:41.359] um sent from one of these event handlers
+[00:35:44.640] back into the system to be you know
+[00:35:46.880] transformed or something. Um, so like
+[00:35:49.280] user message, you know, obviously that's
+[00:35:50.720] like going to come from the front end.
+[00:35:52.720] Um, and it's going to sort of go into
+[00:35:54.800] the system and it'll be reacted to in
+[00:35:56.960] some way or another depending on like
+[00:35:58.160] what's currently going on. So like if we
+[00:36:00.320] look at
+[00:36:03.440] like what's Oh man, I've got like Hold
+[00:36:05.839] on. Just delete this.
+[00:36:13.589] >> You can just filter forts files. Just
+[00:36:13.599] hit the down arrow on the left or the
+[00:36:16.720] dot dot dots.
+[00:36:18.560] if you need
+[00:36:28.550] >> it or might be TSX if you're looking for
+[00:36:28.560] your front end.
+[00:36:30.560] >> Uh
+[00:36:32.480] >> no, but it's like um yeah, so it's like
+[00:36:36.720] this is like the message function that's
+[00:36:38.320] just like on the server itself. So like
+[00:36:41.599] when it gets a websocket message from
+[00:36:43.359] the front end that's like I want to send
+[00:36:46.320] a user message then it will basically
+[00:36:48.160] like publish that to the event bus right
+[00:36:52.960] and so we can see like what uses that
+[00:36:57.440] right so we have basically
+[00:37:00.800] a subscriber to that event bus right
+[00:37:03.200] which is like this messages state
+[00:37:06.000] service right and basically what this is
+[00:37:08.079] just trying to do at any time is
+[00:37:10.160] actually basically trying to like
+[00:37:11.680] perceive like a current state out of
+[00:37:14.640] what events are being streamed that have
+[00:37:17.599] to do with that are like message related
+[00:37:19.359] right so it's like user message or like
+[00:37:20.960] different like LLM chunks or other
+[00:37:23.520] things
+[00:37:24.720] >> so basically right
+[00:37:26.480] >> and this is interesting so it's not that
+[00:37:28.000] you don't have a state object it's that
+[00:37:30.079] you don't keep the state object as your
+[00:37:31.839] representation of truth
+[00:37:33.200] >> you have an you have an event history
+[00:37:36.000] >> and you turn the event history into a
+[00:37:38.000] state object in every single every
+[00:37:39.760] single time you do something with it.
+[00:37:42.000] >> Exactly.
+[00:37:42.320] >> So then you're now you say now given the
+[00:37:44.160] state object now what's the next action?
+[00:37:45.760] >> Right. Yeah. You could right. So you
+[00:37:47.119] could imagine like in a sort of normal
+[00:37:50.320] like um state based system where you
+[00:37:52.720] just sort of like mutating state you
+[00:37:54.480] would like you would just have an object
+[00:37:56.400] like this and you would just initialize
+[00:37:57.839] it to this and then like you would be
+[00:37:59.839] like whenever you finish streaming a
+[00:38:02.880] message you'd like append it to this
+[00:38:04.320] list or something. Um, and like whenever
+[00:38:06.640] you get a message and you look at
+[00:38:08.560] everything and you're like, "Oh, I think
+[00:38:09.440] this should be cued." You would add it
+[00:38:10.720] to here instead. And then you'd like
+[00:38:12.000] move it between these or something. So
+[00:38:14.400] all we're really doing here is like
+[00:38:15.839] we're saying, "Okay, we're still going
+[00:38:17.920] to like this is still helpful to like
+[00:38:19.359] perceive something as like a state of
+[00:38:21.119] like
+[00:38:21.520] >> yeah,
+[00:38:21.920] >> different things in a certain context,
+[00:38:23.839] but we can construct that purely from
+[00:38:26.480] the events that are actually happening
+[00:38:28.079] in a specific way. So that's what this
+[00:38:29.920] is really doing here, right? this
+[00:38:31.280] message state thing is it's just
+[00:38:33.520] perceiving the event stream as like
+[00:38:36.560] what's currently going on with the
+[00:38:38.000] messages. Um so like are we streaming
+[00:38:40.640] are any of them cued? Um like how many
+[00:38:43.280] tokens are we using? Like all that kind
+[00:38:44.720] of stuff
+[00:38:45.920] >> and this can change at any time because
+[00:38:48.480] you're just it's just a simplified view
+[00:38:50.160] of the event history because you're like
+[00:38:51.760] I don't want to look at the act the time
+[00:38:53.599] at which cute events happen. I just want
+[00:38:55.040] to like pull out all the cute events and
+[00:38:56.560] just have them available really fast.
+[00:38:59.200] >> Exactly. Yeah. you can just decide
+[00:39:01.200] exactly what this needs to be like what
+[00:39:03.359] what information is important to hold on
+[00:39:05.040] to and that kind of stuff right so yeah
+[00:39:07.680] and then so like an example of like
+[00:39:09.280] something you'd actually do right I is
+[00:39:11.839] like if we look at
+[00:39:14.800] what's actually happening here right so
+[00:39:16.320] it's like processing
+[00:39:19.040] user messages so this is a specific
+[00:39:23.040] stream for just the events that have
+[00:39:27.040] that type user message these are
+[00:39:28.880] basically
+[00:39:29.760] coming from the front end through the
+[00:39:31.359] websocket. Um, and basically we have the
+[00:39:34.320] stream to handle those specifically. Um,
+[00:39:38.480] and basically based on our current
+[00:39:41.440] state, right? So we're looking at our
+[00:39:42.720] current state like if we're streaming
+[00:39:44.240] and that kind of stuff. So if we're
+[00:39:45.920] currently streaming, we aren't going to
+[00:39:49.119] send it right away. We're not aren't
+[00:39:50.160] going to trigger the LM to start
+[00:39:51.599] streaming again. We're just going to
+[00:39:53.520] update it and we're going to put that in
+[00:39:54.800] the ceued user messages, right? instead
+[00:39:56.800] of the the normal messages and otherwise
+[00:40:00.160] right we just add it to sort of the
+[00:40:01.920] normal message array sort of the history
+[00:40:03.839] here and in addition right we also have
+[00:40:07.280] sort of an effect right so we also
+[00:40:10.640] trigger the LLM right to respond right
+[00:40:14.160] which is the sort of this utility here
+[00:40:15.920] which again is checking some things and
+[00:40:19.040] then it's producing another event right
+[00:40:23.359] so
+[00:40:25.040] it's like if we get a message and
+[00:40:29.040] um you know it's not currently streaming
+[00:40:32.480] then we're going to
+[00:40:35.359] cue
+[00:40:36.960] this event right lm response started and
+[00:40:40.320] that's going to basically trigger an LM
+[00:40:42.523] [clears throat] response. So we could we
+[00:40:44.320] could trace that further here if we
+[00:40:45.760] wanted.
+[00:40:46.480] >> And the reason and just to be very clear
+[00:40:48.400] like the reason we add that LM response
+[00:40:50.480] started is because we want to somehow
+[00:40:51.920] show in our UI that we've we've handled
+[00:40:54.320] the message in some way or the message
+[00:40:55.920] is like addressed and we should show
+[00:40:57.760] some UI indicator to the user or like we
+[00:41:00.640] shouldn't cue we shouldn't just run
+[00:41:02.160] another message right now because
+[00:41:03.119] there's something else in progress at
+[00:41:04.480] this moment.
+[00:41:05.040] >> Right? So it serves a dual purpose,
+[00:41:06.400] right? So first of all, yeah, it could
+[00:41:07.839] be represented in the UI if we wanted,
+[00:41:09.599] but also it means that we can delegate
+[00:41:13.119] sort of what it means to start an LLM
+[00:41:15.520] response to like another part of the
+[00:41:17.920] codebase, right? Which is like more
+[00:41:19.520] dedicated for that purpose, right? So
+[00:41:21.119] that's what like this is here, right? So
+[00:41:23.040] it's like um that goes back into the
+[00:41:25.520] event bus and now the LLM service picks
+[00:41:29.599] it up, right? So this is not a thing
+[00:41:32.400] responsible for maintaining chat state
+[00:41:34.560] anymore, but this is um a thing
+[00:41:37.040] responsible for basically managing a
+[00:41:40.000] stream of chunks that come back from an
+[00:41:42.720] LLM and deciding what to do with them.
+[00:41:44.720] Right? So again, we're subscribing to
+[00:41:46.960] the LLM response started event and then
+[00:41:52.560] basically we're going to listen to that
+[00:41:53.839] and then when we get one of those types
+[00:41:56.720] of events
+[00:42:00.079] we're going to do a few different
+[00:42:01.520] things, right? So first of all, we
+[00:42:03.920] reference actually a different state,
+[00:42:06.160] right? And this is sort of a a state
+[00:42:08.560] managed by another service, right? LM
+[00:42:11.440] memory state which is sort of the
+[00:42:12.800] perception of the messages as context
+[00:42:16.640] which we can look at in a second but
+[00:42:18.640] basically that gets like messages that
+[00:42:21.280] are nice for the LLM um and they're sort
+[00:42:24.319] of like in a a format that's ready to go
+[00:42:26.880] for that um
+[00:42:28.720] >> and and the idea is that you can remove
+[00:42:30.400] all the croft and state signal like you
+[00:42:32.800] don't for getting messages in the
+[00:42:34.400] current state you really only want the
+[00:42:35.680] final LM response from every LM past LM
+[00:42:38.319] interaction you want the chat thread
+[00:42:40.240] with the most recent views. So
+[00:42:41.839] interruptions and stream text and
+[00:42:43.599] everything else is removed and you
+[00:42:45.680] really want to simplify this.
+[00:42:47.200] >> You can decide like exactly what you
+[00:42:49.440] want to go into the context window,
+[00:42:52.880] right? It's like very explicit. Like
+[00:42:54.400] it's not like a lot of the times like I
+[00:42:56.240] feel like when you're building an agent
+[00:42:57.280] loop, the easiest thing to do is just
+[00:42:58.720] like you're just appending messages to
+[00:43:01.119] like a list when it's like you know use
+[00:43:03.520] like ro user this content, ro assistant
+[00:43:06.480] this content and then everything is
+[00:43:08.800] coupled together. like your control loop
+[00:43:10.240] is like looking at those messages and
+[00:43:12.240] like deciding what to do based on what
+[00:43:14.160] those look like. You're feeding them to
+[00:43:16.160] your LLM. You're trying to display them
+[00:43:18.079] on the UI, but like when your agent gets
+[00:43:20.400] more complex, these sort of states
+[00:43:23.680] diverge. Like what you want to show on
+[00:43:25.520] your UI is no longer the same as what
+[00:43:27.200] you want to show to the LLM. Um, and so
+[00:43:30.160] it makes more sense to produce those
+[00:43:32.960] states instead.
+[00:43:34.560] >> Projections.
+[00:43:35.119] >> Yeah. Different.
+[00:43:35.839] >> I think there's a really question that's
+[00:43:37.440] happening here because I think
+[00:43:39.040] >> I I think I see what you're doing. You
+[00:43:41.359] basically have this giant event catalog
+[00:43:43.040] and based on different use cases, you're
+[00:43:44.800] turning it into different subsets of
+[00:43:47.119] that catalog based on how you want to go
+[00:43:48.880] use it.
+[00:43:49.599] >> So case of a new user event comes in,
+[00:43:52.560] what you want to ask yourself is the
+[00:43:54.560] only thing you really care about is, is
+[00:43:56.160] anything active happening right now? If
+[00:43:58.400] something active is happening right now,
+[00:43:59.920] the new user message is a cued message.
+[00:44:02.400] >> If nothing active is happening right
+[00:44:04.000] now, the new user message is the next
+[00:44:06.800] action that should happen next. And I
+[00:44:09.599] think while and right over here, you did
+[00:44:12.400] another projection where you said the LM
+[00:44:14.960] is going to interact. So I want a subset
+[00:44:16.640] of the messages that I want to send to
+[00:44:17.760] the LM. But I think there's something
+[00:44:18.960] that might be confusing a few folks
+[00:44:21.040] really fast, which is a really important
+[00:44:22.880] question.
+[00:44:23.680] >> When do they get persisted? Like I get
+[00:44:26.079] that I could keep this thing in memory,
+[00:44:27.520] but like do you save this into a
+[00:44:28.880] database anywhere right now? And if you
+[00:44:30.319] don't, where would you because how does
+[00:44:32.640] that work?
+[00:44:33.680] >> Right? So in this like demo code,
+[00:44:36.000] there's it's just all in memory, right?
+[00:44:38.560] But it's it's very easy to
+[00:44:40.319] >> can you show the data structure that
+[00:44:41.920] keeps everything in memory because I
+[00:44:43.359] think that would also make it a lot more
+[00:44:44.800] clear.
+[00:44:46.400] >> Yeah. I mean effect doing some magic.
+[00:44:50.240] >> So it's it's effect doing some magic.
+[00:44:53.359] Okay.
+[00:44:53.599] >> So, it's it's all being basically it's
+[00:44:55.680] all persisted in memory basically in the
+[00:44:59.280] like the stream buffers and that kind of
+[00:45:01.359] thing. Um, from my limited understanding
+[00:45:04.560] of effect at least I think that I think
+[00:45:06.160] that's where it lives.
+[00:45:08.480] >> Right. But
+[00:45:09.200] >> but if you were to save in a database,
+[00:45:11.280] can you show the pointing code when you
+[00:45:12.720] would do this? I suspect it's an event
+[00:45:14.240] bus,
+[00:45:15.200] >> right? Yeah. So, you could do this. Um,
+[00:45:19.920] >> I suspect if someone publishes a new
+[00:45:22.480] event, I suspect you do it on publish.
+[00:45:25.280] >> So, you could do it on publish, right?
+[00:45:27.200] But it's like it depends on the
+[00:45:28.560] frequency of persistence that you want
+[00:45:30.160] and and sometimes, right, you don't want
+[00:45:31.520] to persist everything right away because
+[00:45:32.880] it's like you could have sort of invalid
+[00:45:34.400] states like you imagine like
+[00:45:36.640] >> um if someone's just interrupted an LM
+[00:45:38.720] in the middle of a bunch of stuff, like
+[00:45:40.079] it's like, oh, do you want to persist it
+[00:45:42.079] there or do you want to wait for like
+[00:45:43.359] the LM to finish its turn? or like if an
+[00:45:46.000] LM is like in the middle of streaming
+[00:45:48.079] like it doesn't really make sense to
+[00:45:49.200] persist it on every chunk right so it's
+[00:45:51.119] like you have to decide like when does
+[00:45:52.560] it make sense to persist it um but
+[00:45:55.760] basically yeah you could have
+[00:45:59.040] um one way to do it was just like you
+[00:46:00.720] just have a subscriber to um all the
+[00:46:03.599] events right and you just have like
+[00:46:07.520] basically
+[00:46:08.640] >> and can you show let me just write some
+[00:46:10.400] pseudo code really fast or maybe let's
+[00:46:12.160] write let's write the code really fast I
+[00:46:13.760] would show how it get persistent in
+[00:46:15.359] effect. I think also for those of you
+[00:46:17.280] that don't know, effect is actually a
+[00:46:18.880] pretty good library. Um, if you're
+[00:46:21.119] trying to build extremely resilient
+[00:46:22.720] system, uh, effect will make it easier
+[00:46:25.520] to go do that kind of thing. And in the
+[00:46:27.040] world of LMS where you have a lot of
+[00:46:28.319] error handling, it is easier. But that
+[00:46:30.079] said, it is a long to learn. Uh, so
+[00:46:33.280] >> let's ask let's ask Claude code because
+[00:46:35.200] I I'm not very good at writing effect,
+[00:46:37.119] but Claude is pretty good at it.
+[00:46:38.560] >> I I [laughter]
+[00:46:46.550] love it. How would we persist uh all
+[00:46:46.560] events in the event bus so we can
+[00:46:51.760] reload the chat later?
+[00:46:54.319] >> Yeah, there you go. Um it'll figure it
+[00:46:56.800] out. Um and it will go write the code
+[00:46:58.720] and I think can you and we'll be able to
+[00:47:00.400] see a git diff really fast as well. So
+[00:47:02.079] that'll be able to just look at the
+[00:47:03.599] diff. So that will give a little
+[00:47:05.599] >> while that's running. Thank you for
+[00:47:07.200] queuing that up. Let's go continue
+[00:47:08.720] reading the code.
+[00:47:09.760] >> Yep. Um, so yeah, maybe we could look at
+[00:47:13.280] another example of sort of one of those
+[00:47:15.200] projections.
+[00:47:15.680] >> Let's look at I think there I think the
+[00:47:17.200] question there was actually really good,
+[00:47:18.400] which was how does this actually go into
+[00:47:19.839] an LM? I I think we should go look I
+[00:47:22.319] want to see your projection of what
+[00:47:23.920] events are you discarding when you
+[00:47:25.839] create this giant event array from all
+[00:47:28.480] the possible events to the LM memory
+[00:47:30.560] state. And you can if you could put side
+[00:47:32.000] by side the LM memory state that you're
+[00:47:33.839] building and on the other side if you
+[00:47:35.839] can put the
+[00:47:37.760] um and on the other side you can put all
+[00:47:39.599] the events. So we can actually just like
+[00:47:41.040] see it side by side. I think it' be
+[00:47:42.240] really cool.
+[00:47:43.280] >> And could you hit command? Yes, exactly.
+[00:47:45.200] Thank you.
+[00:47:46.720] >> Oops.
+[00:47:56.230] There we go. Um, right. So I mean in
+[00:47:56.240] this example, right, the the
+[00:47:59.119] events for the LM are we're just sort of
+[00:48:01.520] rendering it out to just a simple
+[00:48:03.440] message with,
+[00:48:04.480] >> you know, user assistant role and just
+[00:48:06.319] string content, right? And then we have
+[00:48:08.079] all these types of events that could be
+[00:48:09.440] encountered sort of over the over the
+[00:48:12.560] time where it processes events. Um
+[00:48:16.560] and yeah, [snorts] so what we do is we
+[00:48:19.359] basically just
+[00:48:21.280] we can listen to the specific events
+[00:48:23.520] that we care about or not. But in this
+[00:48:25.920] case, we're actually looking at the
+[00:48:28.480] message state. So we're actually looking
+[00:48:29.839] at another state in this state, right?
+[00:48:32.720] So we're looking at the messages state,
+[00:48:34.960] which we looked at earlier. um which
+[00:48:38.640] again is basically just keeping track of
+[00:48:42.079] a list of messages and some other
+[00:48:43.760] information.
+[00:48:45.280] And because that's really the only thing
+[00:48:46.800] that we care about for showing the LLM
+[00:48:48.480] in this case as well, it makes more
+[00:48:50.400] sense to just
+[00:48:52.400] um look at that than like redo all that
+[00:48:54.720] logic of like trying to figure out when
+[00:48:56.800] a chunk should be appended to the last
+[00:48:58.480] message and like all this different
+[00:48:59.839] stuff. So the LLM memory state here
+[00:49:04.800] which is constructing the specific
+[00:49:07.839] messages for the LLM is just going to
+[00:49:10.079] tap into that state that we've already
+[00:49:12.559] constructed. So it's just mapping those
+[00:49:15.839] messages that are in that state
+[00:49:19.280] to right these simple versions that can
+[00:49:22.000] be passed to an LM. So uh in this demo
+[00:49:24.960] right we have sort of text events which
+[00:49:26.880] are just like you know from the user to
+[00:49:29.119] the LM or the LM to the user right just
+[00:49:31.280] sort of standard messages
+[00:49:32.880] >> or we have like function calls right so
+[00:49:34.800] it's like basically we parsed the LLM
+[00:49:37.119] response and we decided okay this is a
+[00:49:38.880] function call
+[00:49:39.680] >> on that format function call so people
+[00:49:41.280] can go see this I think it's going to
+[00:49:42.720] help make it a lot more tangible
+[00:49:45.040] >> yeah so this is like basically the the
+[00:49:48.160] function syntax that we told the len to
+[00:49:51.359] use for context text here, right? So we
+[00:49:54.160] we told it to use this sort of XML
+[00:49:56.960] format,
+[00:49:58.640] right? So when the LM responds and wants
+[00:50:00.640] to call a function, it does something
+[00:50:01.920] like this. And so when we and so we
+[00:50:05.200] parse that out, right? And we can
+[00:50:06.640] validate the parameters and that kind of
+[00:50:08.240] stuff. But then we instead of storing it
+[00:50:10.480] directly and sort of feeding it back
+[00:50:12.480] since we want it to be sort of this
+[00:50:13.920] clean um format as an event we have to
+[00:50:18.800] just reconstruct what we want the LM to
+[00:50:21.599] see that it's set right so basically
+[00:50:25.119] we're we're reconstructing that format
+[00:50:28.800] for the function call here. So that's
+[00:50:31.520] just so you can keep everything be
+[00:50:32.880] really in sync with what you're with
+[00:50:34.640] what you wanted to do. And you could
+[00:50:36.160] have done this and you could have done
+[00:50:37.359] this in many which ways, but you're I'm
+[00:50:38.720] guessing you just found that since
+[00:50:40.160] you're doing codegen, I'm guessing XML
+[00:50:42.559] works pretty well.
+[00:50:43.680] >> Yeah. So this is this is um the same
+[00:50:47.920] uh XML format that like anthropic models
+[00:50:50.720] use internally. So we just imitate that.
+[00:50:53.119] >> Good to mimic it. Exactly. Yes.
+[00:50:54.640] Especially if you're using anthropic
+[00:50:55.839] models, you should just mimic whatever
+[00:50:57.040] they're doing.
+[00:50:57.760] >> Yep. So that's why we have that specific
+[00:50:59.920] format there.
+[00:51:01.440] >> So it sounds like really I think the big
+[00:51:03.680] takeaway for almost everyone that's on
+[00:51:05.440] this and like what if you're down to you
+[00:51:07.359] should commit this code to the AI that
+[00:51:08.720] works repo in the folder for today's
+[00:51:10.559] event. I think people might have fun
+[00:51:12.079] running this code and playing out with
+[00:51:13.359] them for themselves and just like
+[00:51:14.720] understanding what's happening.
+[00:51:16.559] >> Yeah, sure.
+[00:51:17.359] >> Um but just things like some final
+[00:51:20.480] closing thoughts as we're out here. And
+[00:51:22.000] also if people have questions, feel free
+[00:51:23.359] to chime in. Uh we've got a pretty hard
+[00:51:24.880] stop today, so we'll be stopping right
+[00:51:26.319] on time. Um,
+[00:51:29.440] so what's the big takeaway here? How
+[00:51:31.520] hard in your mind? How hard is this to
+[00:51:33.760] build? Like on a scale of 1 to 10, 10
+[00:51:36.880] being like Linux.
+[00:51:38.800] >> So I think I think the the real question
+[00:51:41.839] here is like how complicated is your
+[00:51:45.599] agent? Like how many interactions and
+[00:51:48.800] like possible states are there at any
+[00:51:50.960] point in time, right? And like like if
+[00:51:53.760] you're building a simple, you know, back
+[00:51:55.359] and forth chat agent, like this is like
+[00:51:57.440] completely overkill, you know? It's like
+[00:51:58.960] you can just you can just store the
+[00:52:00.400] messages and and and just show that and
+[00:52:03.440] to the user, show that to the LM, like
+[00:52:05.359] whatever.
+[00:52:06.319] >> Um
+[00:52:07.920] but yeah, we're I mean, the reason that
+[00:52:10.559] I I started thinking about this in the
+[00:52:12.240] first place is that um we were just sort
+[00:52:15.040] of, you know, we have so many different
+[00:52:16.559] things going on in our chat UI and our
+[00:52:19.119] product because like you know, we have
+[00:52:20.720] like um You can screen share again and
+[00:52:23.200] show show what you mean.
+[00:52:25.119] >> Right. So
+[00:52:35.670] >> we have a lot of different things. You
+[00:52:35.680] can build you can build a full plan. You
+[00:52:37.440] can run it could be running code and
+[00:52:39.040] maybe you want to change the code. Maybe
+[00:52:40.720] you want to change the pipeline while
+[00:52:42.000] it's running the pipeline.
+[00:52:43.760] >> Like that's very complicated interaction
+[00:52:46.400] to model.
+[00:52:48.000] >> Yeah. It's like I could be like um also
+[00:52:51.520] email this to myself.
+[00:52:54.000] >> Yeah.
+[00:52:54.640] >> And it's like okay now it has to think
+[00:52:56.079] about like
+[00:52:58.000] >> it has to think about like okay what's
+[00:52:59.520] what's in the current workflow like how
+[00:53:01.359] do I
+[00:53:03.119] >> oh yeah it's also seeing like errors.
+[00:53:04.960] It's also perceiving errors like from
+[00:53:06.880] the workflow runs like when we run it it
+[00:53:09.040] will also like know about what happened
+[00:53:10.400] during the run. So it's like making a
+[00:53:12.160] fix based on that.
+[00:53:14.319] the the thing I think that would really
+[00:53:15.680] suck about that which is you said also
+[00:53:17.280] emailed to myself maybe you've been
+[00:53:18.640] running the pipeline for like 15 minutes
+[00:53:20.400] already and it's been running and
+[00:53:22.000] collecting a bunch of data and now it's
+[00:53:24.000] basically just going to throw all that
+[00:53:25.200] away and make a whole new pipeline and
+[00:53:27.520] then say now let's run it again
+[00:53:29.520] >> and whereas if you did it with your
+[00:53:31.359] event driven system you could say this
+[00:53:33.040] is this is how I want to modify the
+[00:53:34.960] pipeline you could run another event
+[00:53:36.400] that says what's a diff of this new
+[00:53:38.079] pipeline versus the old pipeline the
+[00:53:40.559] diff is very small and now you and now
+[00:53:44.800] it's basically just kind of working
+[00:53:46.800] along the way.
+[00:53:48.000] >> Yeah. Yeah. But basically, right? Yeah.
+[00:53:49.680] We we have like a lot of different types
+[00:53:51.359] of interactions happening, right? It's
+[00:53:52.800] like it's editing. So, under the under
+[00:53:54.640] the hood, this is basically like a
+[00:53:56.000] coding agent. Like the workflow is code
+[00:53:57.680] and it's editing it.
+[00:53:58.960] >> Yeah.
+[00:53:59.280] >> Um, so it's it's like a coding agent,
+[00:54:00.960] but then it's also like adding these
+[00:54:02.720] connectors which require like a specific
+[00:54:04.880] OOTH flow, which requires like human
+[00:54:06.800] approval, and then it's also like
+[00:54:08.559] proposing these plans and it's like,
+[00:54:10.240] okay, the user has to approve or reject
+[00:54:11.760] those. And it's like okay if they
+[00:54:13.520] approve them it has to also ask for the
+[00:54:15.839] ooth and then what happens if they
+[00:54:17.200] reject one of those. It's like all these
+[00:54:19.280] like different variations of state and
+[00:54:22.079] it it gets like really unwieldy if you
+[00:54:24.319] don't have sort of a system for like
+[00:54:25.839] understanding it right and I think
+[00:54:27.599] having sort of everything be a
+[00:54:29.280] projection of the events allows you to
+[00:54:31.280] like have very clear views of those
+[00:54:34.000] events in the exact ways that you need
+[00:54:36.400] to actually understand what's going on.
+[00:54:38.319] I think it's kind of like React, right?
+[00:54:39.760] Technically, use state is really really
+[00:54:41.760] overkill. All you want to do is build a
+[00:54:43.440] website,
+[00:54:44.319] >> but it turns out the minute you add
+[00:54:45.760] interactivity, it's there's no simpler
+[00:54:48.640] way. And that little bit of complexity
+[00:54:51.280] just makes it a lot easier to build that
+[00:54:54.079] website in the way that we want to.
+[00:54:56.640] >> But over here, you really, it's the same
+[00:54:59.680] thing. Like yes, it's a little complex
+[00:55:01.280] to think about everything as a
+[00:55:02.640] projection from like your event history
+[00:55:04.880] and your event array, but once you've
+[00:55:06.640] done that, you really have a beautifully
+[00:55:08.960] simple system where everything is really
+[00:55:10.880] just a readonly interaction on the
+[00:55:12.480] current view of the world.
+[00:55:14.079] >> Here's my current worldview. Go do
+[00:55:15.680] something with it. Here's my current
+[00:55:16.960] worldview and it keeps changing. And
+[00:55:19.440] someone asked a really good question.
+[00:55:20.640] It's like, could tools also write events
+[00:55:22.880] to the stream? The answer is yes. They
+[00:55:24.480] definitely could because there's just
+[00:55:26.559] they're just adding events to this
+[00:55:28.319] database that we have. Uh if I were to
+[00:55:31.040] share screen again, one second.
+[00:55:34.240] Yep.
+[00:55:34.720] >> If we go back to what we were sharing
+[00:55:36.319] over here, what everything is doing is
+[00:55:38.960] fundamentally we're just adding data to
+[00:55:41.280] this database which is user ID, convoy
+[00:55:43.520] ID, and event. And you just keep pushing
+[00:55:45.119] more and more data into that. And that
+[00:55:46.880] is your current worldview. And the next
+[00:55:48.319] time your system runs or handles on
+[00:55:50.559] events, you just go do that. If any of
+[00:55:52.960] you have ever built like an event
+[00:55:54.240] handler or web hook service, that's
+[00:55:55.920] basically what you're doing. An event
+[00:55:57.200] comes in, handle the event, you get the
+[00:55:59.119] world view, and you go do stuff with it.
+[00:56:01.760] >> It's funnily enough, this paradigm
+[00:56:04.240] exists in so many elements software. The
+[00:56:05.760] more and more I think about it,
+[00:56:07.440] >> yeah.
+[00:56:07.839] >> Um like the more I'm thinking like this
+[00:56:10.160] is just everywhere.
+[00:56:11.680] >> It's just that most of us haven't had to
+[00:56:13.440] write code that has dealt with this, so
+[00:56:14.799] it feels really foreign. But all of us
+[00:56:16.960] have used code that has done this in
+[00:56:18.799] some form factor or another.
+[00:56:21.149] [clears throat]
+[00:56:21.359] >> Yeah.
+[00:56:23.040] Yeah, it's just sort of like it's a
+[00:56:24.880] product of right the the chat loop gets
+[00:56:28.319] really complex and ugly.
+[00:56:30.079] >> The chat loop is so disgusting to
+[00:56:32.000] maintain forever
+[00:56:33.119] >> and it's just like ew like what I'm I'm
+[00:56:35.520] like holding these events like I have
+[00:56:37.040] this chat history. So basically before I
+[00:56:39.280] was like had this like you know history
+[00:56:41.280] of events for the UI I had like event
+[00:56:43.440] like or like messages for the UI
+[00:56:44.880] messages for the LM some sort of like
+[00:56:46.640] mutated you know mutated state that's
+[00:56:48.480] like tracking other things and it's just
+[00:56:49.839] like gez like I can't even think about
+[00:56:51.520] like what's happening at any point in
+[00:56:53.119] time. So it's just like very very
+[00:56:55.280] non-productive at some point when the
+[00:56:57.119] when the chat agent gets complex enough.
+[00:56:59.119] So yeah.
+[00:57:00.880] >> Um so I think we're gonna have to close
+[00:57:02.559] it off here. I've got a sadly a hard
+[00:57:04.319] stop today. Uh normally we will stay on
+[00:57:06.559] for questions and answers. Now if any of
+[00:57:09.040] you um do have more questions about this
+[00:57:12.559] definitely definitely uh we'll send out
+[00:57:14.480] an email update with this and send your
+[00:57:15.920] questions there. You can definitely ask
+[00:57:17.119] questions on the BAML Discord as well.
+[00:57:20.160] We'll post a link on there in a second
+[00:57:21.599] as well. Um and you can find the link on
+[00:57:24.480] there if you want to sign up for next
+[00:57:25.599] week's episode. We're going to have
+[00:57:26.559] another really fun episode. Uh sign up
+[00:57:28.559] on our link over here. This has been AI
+[00:57:31.119] Networks. We've got Anders over here
+[00:57:32.799] helping us go. actually wrote a whole
+[00:57:34.720] demo, made it work, showed a ventor in
+[00:57:36.559] action a really cool way. So, uh, thank
+[00:57:39.920] you for making time for that. Follow
+[00:57:41.440] them on Twitter, check out their demo,
+[00:57:43.119] check out their product. It's really
+[00:57:44.319] freaking cool. It gets really deep. And
+[00:57:45.599] I'm super excited once you have it the
+[00:57:47.440] event driven loop you show in the demo
+[00:57:48.720] of live in the code. It's going to make
+[00:57:50.240] it even more fun to play around with.
+[00:57:53.520] Uh, but for everyone else, thank you for
+[00:57:55.520] making time out of your day to come
+[00:57:56.720] listen to us. Um, this has been fun.
+[00:57:58.720] >> Yeah,
+[00:57:59.440] >> another episode out the out the window.
+[00:58:02.160] All right, we'll send an email update to
+[00:58:03.520] everyone that's watching. Uh, thank you
+[00:58:05.440] everyone.

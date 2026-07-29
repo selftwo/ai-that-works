@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md, README.md, and catalog agree on YouTube ID jzhVo0iAX_I",
+  "transcript_range": "00:00.526 to 01:01:33.659",
+  "timestamp_order": "passed: 361 timestamps verified by knowledge/scripts/verify_transcript.py",
+  "spot_checks": ["receipt variation", "six deterministic checks", "discount false positive", "three-stage architecture", "saved JSON", "small-to-large iteration", "optimizer warning", "runtime retry and human review", "final 350-receipt run"],
+  "timestamped_claim_count": 9,
+  "supporting_artifact_check": "passed: BAML prompt, Python evaluator, Streamlit dashboard, nine run metadata files, and nine run summaries inspected",
+  "saved_run_check": "passed: final summary records 350 total receipts, 349 successful extractions, and 327 overall passes",
+  "source_duration_check": "not run: source media was not downloaded",
+  "end_to_end_check": "not run: dataset images and generated BAML client are absent",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "screen-only receipt evidence", "current BAML schema does not visibly match every field referenced by evaluator", "model comparison generalizability"]
+}

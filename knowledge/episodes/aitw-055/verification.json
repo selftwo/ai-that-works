@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID KCqsoXveqiI",
+  "transcript_path": "2026-04-28-no-vibes-design-docs/transcript.txt",
+  "transcript_range": "00:00.501 to 01:10:41.751",
+  "timestamp_order": "verified by knowledge/scripts/verify_transcript.py",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "all timestamped claim spans"
+  ],
+  "timestamped_claim_count": 7,
+  "source_duration_check": "not run: source media was not downloaded",
+  "remaining_uncertainty": [
+    "transcript provenance and ASR model",
+    "exact recording start",
+    "speaker attribution",
+    "screen only evidence"
+  ]
+}
+

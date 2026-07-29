@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-057",
+  "episode": 57,
+  "season": 2,
+  "title": "Code Mode Deep Dive",
+  "source_folder": "2026-05-12-code-mode-deep-dive",
+  "recorded_at": "2026-05-12T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "0dx3j4CmSFw",
+  "youtube_url": "https://www.youtube.com/watch?v=0dx3j4CmSFw",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}
+

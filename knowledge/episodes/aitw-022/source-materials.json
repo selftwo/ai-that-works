@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-022",
+  "primary_transcript": "knowledge/episodes/aitw-022/transcripts/stitched.txt",
+  "source_folder": "2025-09-09-generative-uis",
+  "materials": [
+    {
+      "path": "2025-09-09-generative-uis/README.md",
+      "role": "episode summary and links"
+    },
+    {
+      "path": "2025-09-09-generative-uis/meta.md",
+      "role": "episode identity and event metadata"
+    },
+    {
+      "path": "2025-09-09-generative-uis/baml_src",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-09-09-generative-uis/app",
+      "role": "supporting implementation or workflow evidence"
+    }
+  ],
+  "notes": [
+    "Transcript claims are grounded in timestamped automatic captions.",
+    "Supporting files establish implementation context but do not prove every spoken claim."
+  ]
+}

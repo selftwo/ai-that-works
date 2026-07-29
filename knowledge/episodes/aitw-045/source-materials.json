@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-045",
+  "primary": [
+    "2026-02-17-automating-aitw/transcript.txt",
+    "2026-02-17-automating-aitw/meta.md",
+    "2026-02-17-automating-aitw/README.md"
+  ],
+  "supporting": [
+    "2026-02-17-automating-aitw/README.md",
+    "2026-02-17-automating-aitw/meta.md",
+    "2026-02-17-automating-aitw/email.md",
+    "2026-02-17-automating-aitw/baml_src/email.baml",
+    "2026-02-17-automating-aitw/baml_src/thumbnail.baml",
+    "2026-02-17-automating-aitw/baml_src/title_suggester.baml",
+    "2026-02-17-automating-aitw/baml_src/clip.baml"
+  ],
+  "notes": "Supporting artifacts provide implementation context but do not independently verify speaker claims."
+}

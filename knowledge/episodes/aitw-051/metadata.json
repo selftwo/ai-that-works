@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-051",
+  "episode": 51,
+  "season": 2,
+  "title": "No Vibes Allowed March Edition",
+  "source_folder": "2026-03-31-no-vibes-march",
+  "recorded_at": "2026-03-31T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "0rMG-3iiilc",
+  "youtube_url": "https://www.youtube.com/watch?v=0rMG-3iiilc",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}
+

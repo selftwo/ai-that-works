@@ -1,0 +1,6767 @@
+1
+00:00:03,070 --> 00:00:03,080
+There we go.
+
+2
+00:00:03,080 --> 00:00:03,960
+Um
+
+3
+00:00:03,960 --> 00:00:05,680
+where we have env vars and these are
+
+4
+00:00:05,680 --> 00:00:09,280
+also just like installed by the user.
+
+5
+00:00:09,280 --> 00:00:10,720
+Now, I'm going to make a couple of
+
+6
+00:00:10,720 --> 00:00:12,680
+constraints onto our problem just to
+
+7
+00:00:12,680 --> 00:00:14,720
+make this easier.
+
+8
+00:00:14,720 --> 00:00:16,360
+I'm going to assume env vars are
+
+9
+00:00:16,360 --> 00:00:18,800
+completely locked and cannot be Oh, I
+
+10
+00:00:18,800 --> 00:00:22,070
+cannot
+
+11
+00:00:23,750 --> 00:00:23,760
+env vars are completely locked and
+
+12
+00:00:23,760 --> 00:00:27,600
+cannot be modified by I cannot do that.
+
+13
+00:00:27,600 --> 00:00:29,040
+Env vars are completely locked and
+
+14
+00:00:29,040 --> 00:00:31,440
+cannot be modified by um
+
+15
+00:00:31,440 --> 00:00:33,080
+by the end user
+
+16
+00:00:33,080 --> 00:00:34,800
+at any point during the run time of the
+
+17
+00:00:34,800 --> 00:00:36,240
+system. We're going to simplify this a
+
+18
+00:00:36,240 --> 00:00:38,560
+little bit.
+
+19
+00:00:38,560 --> 00:00:40,120
+Um we'll assume the things that we are
+
+20
+00:00:40,120 --> 00:00:42,000
+allowed to modify are the files and
+
+21
+00:00:42,000 --> 00:00:43,680
+where you should be able to install new
+
+22
+00:00:43,680 --> 00:00:45,760
+things into our system.
+
+23
+00:00:45,760 --> 00:00:46,280
+Um
+
+24
+00:00:46,280 --> 00:00:47,880
+Okay, so like the packages and things
+
+25
+00:00:47,880 --> 00:00:49,880
+like that, like pip packages and things
+
+26
+00:00:49,880 --> 00:00:52,200
+Okay. Exactly.
+
+27
+00:00:52,200 --> 00:00:53,720
+Um now that we have our environment
+
+28
+00:00:53,720 --> 00:00:55,600
+defined, let's talk about what our what
+
+29
+00:00:55,600 --> 00:00:59,240
+the user is going to tell us. Oops.
+
+30
+00:00:59,240 --> 00:01:00,680
+The user is likely going to give us some
+
+31
+00:01:00,680 --> 00:01:03,320
+sort of instructions. Uh so like
+
+32
+00:01:03,320 --> 00:01:06,030
+instructions.
+
+33
+00:01:07,550 --> 00:01:07,560
+And this will come in the form of some
+
+34
+00:01:07,560 --> 00:01:09,560
+text for now. Uh we can talk about
+
+35
+00:01:09,560 --> 00:01:11,480
+multimodal later, but just to keep it a
+
+36
+00:01:11,480 --> 00:01:13,560
+little bit easier, we'll uh we'll talk
+
+37
+00:01:13,560 --> 00:01:15,280
+about just text.
+
+38
+00:01:15,280 --> 00:01:17,000
+And at some point, what I really want
+
+39
+00:01:17,000 --> 00:01:19,040
+coming out of this
+
+40
+00:01:19,040 --> 00:01:24,110
+is effectively a new environment
+
+41
+00:01:25,550 --> 00:01:25,560
+that somehow has slightly different
+
+42
+00:01:25,560 --> 00:01:26,880
+files.
+
+43
+00:01:26,880 --> 00:01:29,240
+Um
+
+44
+00:01:29,240 --> 00:01:31,120
+Oops, let me Let me make this the wrong
+
+45
+00:01:31,120 --> 00:01:36,030
+thing.
+
+46
+00:01:37,390 --> 00:01:37,400
+And then
+
+47
+00:01:37,400 --> 00:01:39,160
+excel. Okay.
+
+48
+00:01:39,160 --> 00:01:40,560
+Somehow what I want to do is I want to
+
+49
+00:01:40,560 --> 00:01:42,040
+take the new I want to take a shot I
+
+50
+00:01:42,040 --> 00:01:45,720
+want to take a some environment and some
+
+51
+00:01:45,720 --> 00:01:46,800
+I want to take some environment and some
+
+52
+00:01:46,800 --> 00:01:48,080
+instructions and spit out a new
+
+53
+00:01:48,080 --> 00:01:49,680
+environment out of this.
+
+54
+00:01:49,680 --> 00:01:52,000
+So at the very high level,
+
+55
+00:01:52,000 --> 00:01:54,240
+what we'll do is figure out how we can
+
+56
+00:01:54,240 --> 00:01:55,640
+go do this. Now there's a couple of
+
+57
+00:01:55,640 --> 00:01:57,120
+different problems that we want to go
+
+58
+00:01:57,120 --> 00:01:59,280
+into this. The first problem is
+
+59
+00:01:59,280 --> 00:02:01,400
+the user's instructions may not be very
+
+60
+00:02:01,400 --> 00:02:03,280
+good.
+
+61
+00:02:03,280 --> 00:02:05,400
+The second problem is I will somehow
+
+62
+00:02:05,400 --> 00:02:07,200
+want to know exactly which files are
+
+63
+00:02:07,200 --> 00:02:08,920
+actually relevant over here. So I'll
+
+64
+00:02:08,920 --> 00:02:12,120
+start writing some of this stuff down.
+
+65
+00:02:12,120 --> 00:02:15,480
+Uh why is this so ugly?
+
+66
+00:02:15,480 --> 00:02:17,480
+Um okay.
+
+67
+00:02:17,480 --> 00:02:18,920
+Uh
+
+68
+00:02:18,920 --> 00:02:20,080
+cool.
+
+69
+00:02:20,080 --> 00:02:25,590
+Uh instruc- instructions unclear.
+
+70
+00:02:27,670 --> 00:02:27,680
+Very hard to write.
+
+71
+00:02:27,680 --> 00:02:28,920
+Instructions are going to be unclear,
+
+72
+00:02:28,920 --> 00:02:30,040
+and then also we're going to have to
+
+73
+00:02:30,040 --> 00:02:33,160
+figure out find the right files.
+
+74
+00:02:33,160 --> 00:02:35,040
+But let us assume that these two
+
+75
+00:02:35,040 --> 00:02:37,280
+problems can eventually be solved.
+
+76
+00:02:37,280 --> 00:02:38,640
+Somehow we can write a different bot
+
+77
+00:02:38,640 --> 00:02:40,560
+that can go solve these problems.
+
+78
+00:02:40,560 --> 00:02:42,480
+Even if I have the instructions and I
+
+79
+00:02:42,480 --> 00:02:43,960
+have all the right files, there's
+
+80
+00:02:43,960 --> 00:02:46,000
+another problem, which is
+
+81
+00:02:46,000 --> 00:02:48,680
+generate the right code.
+
+82
+00:02:48,680 --> 00:02:50,720
+And this last problem ends up in my eyes
+
+83
+00:02:50,720 --> 00:02:53,600
+being a lot more complicated and harder
+
+84
+00:02:53,600 --> 00:02:55,760
+than uh or at least being
+
+85
+00:02:55,760 --> 00:02:57,080
+perceived to be a lot more complicated
+
+86
+00:02:57,080 --> 00:02:59,000
+and harder than it actually is.
+
+87
+00:02:59,000 --> 00:03:01,280
+So before we dive really deep into how
+
+88
+00:03:01,280 --> 00:03:02,840
+to clarify instructions and how to find
+
+89
+00:03:02,840 --> 00:03:04,600
+the right files, let's focus on the
+
+90
+00:03:04,600 --> 00:03:06,360
+bottom part of the problem, which is how
+
+91
+00:03:06,360 --> 00:03:08,440
+we can actually generate the right code
+
+92
+00:03:08,440 --> 00:03:10,720
+given clear instructions and the right
+
+93
+00:03:10,720 --> 00:03:14,400
+subset of files involved.
+
+94
+00:03:14,400 --> 00:03:15,440
+Let's see what we can do to take
+
+95
+00:03:15,440 --> 00:03:17,120
+advantage of the fact that this is code
+
+96
+00:03:17,120 --> 00:03:20,150
+and not plain English.
+
+97
+00:03:22,310 --> 00:03:22,320
+So when I go write this,
+
+98
+00:03:22,320 --> 00:03:23,880
+there's a there's a couple of different
+
+99
+00:03:23,880 --> 00:03:24,880
+things we can do, but I'm going to write
+
+100
+00:03:24,880 --> 00:03:27,200
+some pseudo code over here.
+
+101
+00:03:27,200 --> 00:03:29,960
+Def uh update file
+
+102
+00:03:29,960 --> 00:03:31,600
+instructions
+
+103
+00:03:31,600 --> 00:03:36,360
+stir and then uh files map
+
+104
+00:03:36,360 --> 00:03:39,590
+stir stir.
+
+105
+00:03:40,870 --> 00:03:40,880
+Let's talk about what pseudo code for
+
+106
+00:03:40,880 --> 00:03:42,040
+this kind of problem would end up
+
+107
+00:03:42,040 --> 00:03:43,360
+looking like.
+
+108
+00:03:43,360 --> 00:03:44,600
+The first thing we could do is we could
+
+109
+00:03:44,600 --> 00:03:46,680
+just ask the LLM to regenerate the whole
+
+110
+00:03:46,680 --> 00:03:49,160
+file. That is probably not going to be
+
+111
+00:03:49,160 --> 00:03:50,840
+very effective just because eventually
+
+112
+00:03:50,840 --> 00:03:52,120
+we all have files that are more than
+
+113
+00:03:52,120 --> 00:03:54,880
+4,000 tokens long or 8,000 tokens long.
+
+114
+00:03:54,880 --> 00:03:56,560
+So we just know off the bat that that
+
+115
+00:03:56,560 --> 00:03:59,520
+won't work for any sophisticated system.
+
+116
+00:03:59,520 --> 00:04:00,960
+So let's break this out into smaller
+
+117
+00:04:00,960 --> 00:04:02,000
+things. What we'll do is we'll have it
+
+118
+00:04:02,000 --> 00:04:05,160
+generate diffs of some kind.
+
+119
+00:04:05,160 --> 00:04:07,920
+Uh generate diffs
+
+120
+00:04:07,920 --> 00:04:13,110
+uh instructions
+
+121
+00:04:14,790 --> 00:04:14,800
+files.
+
+122
+00:04:14,800 --> 00:04:16,200
+And the reason that I'm jumping straight
+
+123
+00:04:16,200 --> 00:04:17,840
+to diffs and not even talking about why
+
+124
+00:04:17,840 --> 00:04:19,280
+to generate files is again because it
+
+125
+00:04:19,280 --> 00:04:21,600
+can't actually be solved. It's not
+
+126
+00:04:21,600 --> 00:04:23,760
+possible given the output token limits
+
+127
+00:04:23,760 --> 00:04:25,840
+of the models today to really solve the
+
+128
+00:04:25,840 --> 00:04:27,600
+constraint around this problem. And yes,
+
+129
+00:04:27,600 --> 00:04:29,080
+I know I can run a while loop on the
+
+130
+00:04:29,080 --> 00:04:30,520
+models and let it keep generating more
+
+131
+00:04:30,520 --> 00:04:32,240
+tokens.
+
+132
+00:04:32,240 --> 00:04:33,680
+But at least in my experience, the code
+
+133
+00:04:33,680 --> 00:04:35,200
+bases are a little bit too complex to
+
+134
+00:04:35,200 --> 00:04:36,920
+have it go do that. Diffs seem a little
+
+135
+00:04:36,920 --> 00:04:38,200
+bit more tractable and naturally
+
+136
+00:04:38,200 --> 00:04:39,600
+compressing the information I need to
+
+137
+00:04:39,600 --> 00:04:41,440
+just what I need.
+
+138
+00:04:41,440 --> 00:04:46,200
+Now what I can do is for diff in diff
+
+139
+00:04:46,200 --> 00:04:49,120
+or maybe I should do this.
+
+140
+00:04:49,120 --> 00:04:51,440
+Apply diff
+
+141
+00:04:51,440 --> 00:04:53,600
+diffs files.
+
+142
+00:04:53,600 --> 00:04:54,720
+And somehow I should be able to generate
+
+143
+00:04:54,720 --> 00:04:56,920
+new files by then applying the diffs.
+
+144
+00:04:56,920 --> 00:04:58,400
+And once I apply the diffs, I want to
+
+145
+00:04:58,400 --> 00:05:01,280
+somehow run some validation.
+
+146
+00:05:01,280 --> 00:05:02,600
+Validate
+
+147
+00:05:02,600 --> 00:05:03,240
+uh
+
+148
+00:05:03,240 --> 00:05:04,480
+validate where I'm going to pass in
+
+149
+00:05:04,480 --> 00:05:08,710
+instructions
+
+150
+00:05:10,430 --> 00:05:10,440
+new files.
+
+151
+00:05:10,440 --> 00:05:12,680
+Oops.
+
+152
+00:05:12,680 --> 00:05:16,630
+Files.
+
+153
+00:05:18,310 --> 00:05:18,320
+Uh and then have some sort of result out
+
+154
+00:05:18,320 --> 00:05:20,910
+of this.
+
+155
+00:05:22,350 --> 00:05:22,360
+And what I might want to do is more
+
+156
+00:05:22,360 --> 00:05:33,110
+along the lines of this. While true,
+
+157
+00:05:43,030 --> 00:05:43,040
+And I'll
+
+158
+00:05:43,040 --> 00:05:45,040
+this is kind of breaking down the core
+
+159
+00:05:45,040 --> 00:05:48,240
+of just bag of tools into some kind of
+
+160
+00:05:48,240 --> 00:05:51,440
+more smaller deterministic glue between
+
+161
+00:05:51,440 --> 00:05:53,800
+some really focused small things we can
+
+162
+00:05:53,800 --> 00:05:55,800
+write as really focused small prompts.
+
+163
+00:05:55,800 --> 00:05:57,640
+Exactly. And the real reason that we
+
+164
+00:05:57,640 --> 00:06:00,480
+want to go do this is because if I go
+
+165
+00:06:00,480 --> 00:06:02,200
+look at what generate diffs can do, this
+
+166
+00:06:02,200 --> 00:06:03,920
+itself could be a whole agentic loop on
+
+167
+00:06:03,920 --> 00:06:06,000
+its own, and we'll go talk about this.
+
+168
+00:06:06,000 --> 00:06:08,440
+How you apply the diffs could or could
+
+169
+00:06:08,440 --> 00:06:10,360
+not be an LLM.
+
+170
+00:06:10,360 --> 00:06:12,920
+Um and then the actual result itself is
+
+171
+00:06:12,920 --> 00:06:14,480
+likely not going to be an LLM because at
+
+172
+00:06:14,480 --> 00:06:16,160
+some point we want to probably run some
+
+173
+00:06:16,160 --> 00:06:20,160
+code to determine if it's good or bad.
+
+174
+00:06:20,160 --> 00:06:22,320
+So let's go talk about how we could
+
+175
+00:06:22,320 --> 00:06:24,040
+apply the diffs
+
+176
+00:06:24,040 --> 00:06:26,080
+to our system. And then I think the last
+
+177
+00:06:26,080 --> 00:06:30,310
+thing I'm going to go do is
+
+178
+00:06:31,430 --> 00:06:31,440
+Let's talk about how we can generate the
+
+179
+00:06:31,440 --> 00:06:33,520
+diffs. So when I go into the diff
+
+180
+00:06:33,520 --> 00:06:35,480
+generation, I think the easiest way to
+
+181
+00:06:35,480 --> 00:06:37,040
+talk about this is actually write
+
+182
+00:06:37,040 --> 00:06:39,000
+writing some code.
+
+183
+00:06:39,000 --> 00:06:40,960
+So I have some code over here.
+
+184
+00:06:40,960 --> 00:06:46,470
+Uh where did it go?
+
+185
+00:06:47,910 --> 00:06:47,920
+And
+
+186
+00:06:47,920 --> 00:06:49,240
+Dash, you want to give them a quick walk
+
+187
+00:06:49,240 --> 00:06:50,440
+through on what this code is that I'm
+
+188
+00:06:50,440 --> 00:06:51,640
+sharing?
+
+189
+00:06:51,640 --> 00:06:53,440
+Uh yeah, yeah, I think you should pull
+
+190
+00:06:53,440 --> 00:06:55,240
+the latest though. Uh I think there's
+
+191
+00:06:55,240 --> 00:07:00,270
+like an extra file in there.
+
+192
+00:07:01,670 --> 00:07:01,680
+you go.
+
+193
+00:07:01,680 --> 00:07:03,400
+Uh so there's not much here right now.
+
+194
+00:07:03,400 --> 00:07:05,840
+Um so we've got some kind of like base
+
+195
+00:07:05,840 --> 00:07:08,240
+So we have a project on the on the left
+
+196
+00:07:08,240 --> 00:07:09,480
+which is just a
+
+197
+00:07:09,480 --> 00:07:10,760
+small little like calculator
+
+198
+00:07:10,760 --> 00:07:12,960
+application. It's like a
+
+199
+00:07:12,960 --> 00:07:16,600
+CLI that can uh run thing run uh
+
+200
+00:07:16,600 --> 00:07:18,560
+run basic calculations. Uh I showed it
+
+201
+00:07:18,560 --> 00:07:20,160
+to Vaibhav. He said it sucks. I was like
+
+202
+00:07:20,160 --> 00:07:22,440
+perfect. Let's get the agent uh let's
+
+203
+00:07:22,440 --> 00:07:24,880
+have the agent make it better.
+
+204
+00:07:24,880 --> 00:07:26,800
+Uh I actually agree. This is a terrible
+
+205
+00:07:26,800 --> 00:07:28,320
+implementation of a calculator. I think
+
+206
+00:07:28,320 --> 00:07:30,520
+Claude wrote this.
+
+207
+00:07:30,520 --> 00:07:33,200
+So yeah, if you want to do math, uh you
+
+208
+00:07:33,200 --> 00:07:37,750
+have seven steps to add 5 + 2.
+
+209
+00:07:40,670 --> 00:07:40,680
+Uh so this is the program the example
+
+210
+00:07:40,680 --> 00:07:42,400
+program that we'll have our agent code
+
+211
+00:07:42,400 --> 00:07:45,080
+up and make better and we'll improve the
+
+212
+00:07:45,080 --> 00:07:47,880
+uh the kind of UX of this thing. But um
+
+213
+00:07:47,880 --> 00:07:49,240
+and then in this this other folder in
+
+214
+00:07:49,240 --> 00:07:51,640
+agent, we have kind of a scaffolding out
+
+215
+00:07:51,640 --> 00:07:54,600
+of um a small AI application.
+
+216
+00:07:54,600 --> 00:07:56,000
+Um the only thing that's already written
+
+217
+00:07:56,000 --> 00:07:58,800
+here is just code to walk a directory
+
+218
+00:07:58,800 --> 00:08:01,480
+tree and give us kind of a dictionary of
+
+219
+00:08:01,480 --> 00:08:04,400
+file name to file contents.
+
+220
+00:08:04,400 --> 00:08:05,560
+Yep.
+
+221
+00:08:05,560 --> 00:08:07,480
+Um so let's start off with the first
+
+222
+00:08:07,480 --> 00:08:12,710
+part. Let's generate a diff.
+
+223
+00:08:14,470 --> 00:08:14,480
+Now you've all probably seen functions
+
+224
+00:08:14,480 --> 00:08:16,080
+that generate diffs before, but I'm
+
+225
+00:08:16,080 --> 00:08:17,080
+going to show like two or three
+
+226
+00:08:17,080 --> 00:08:18,600
+different options on how to generate
+
+227
+00:08:18,600 --> 00:08:19,760
+diffs because they can make a huge
+
+228
+00:08:19,760 --> 00:08:23,440
+difference, and especially if we have um
+
+229
+00:08:23,440 --> 00:08:25,080
+especially the minute you start going to
+
+230
+00:08:25,080 --> 00:08:27,480
+smaller models, it can really really
+
+231
+00:08:27,480 --> 00:08:28,920
+dramatically change the quality of your
+
+232
+00:08:28,920 --> 00:08:30,760
+results as we go talk about this. And I
+
+233
+00:08:30,760 --> 00:08:31,640
+think that's going to be a very
+
+234
+00:08:31,640 --> 00:08:32,960
+interesting part about this. So generate
+
+235
+00:08:32,960 --> 00:08:34,240
+diff.
+
+236
+00:08:34,240 --> 00:08:37,360
+What we're going to have is instructions
+
+237
+00:08:37,360 --> 00:08:38,880
+string
+
+238
+00:08:38,880 --> 00:08:42,280
+and then what we'll have is like code.
+
+239
+00:08:42,280 --> 00:08:44,159
+And for now we'll pass in only a single
+
+240
+00:08:44,159 --> 00:08:45,760
+file. We won't pass in more than one
+
+241
+00:08:45,760 --> 00:08:47,640
+file at once. We'll ask it to generate a
+
+242
+00:08:47,640 --> 00:08:48,880
+So that's like the current code, the
+
+243
+00:08:48,880 --> 00:08:50,280
+current state of the file basically,
+
+244
+00:08:50,280 --> 00:08:50,720
+right?
+
+245
+00:08:50,720 --> 00:08:51,840
+Exactly. Uh I'll call it I'll call it
+
+246
+00:08:51,840 --> 00:08:54,080
+something better. Current code.
+
+247
+00:08:54,080 --> 00:08:57,360
+And what I want to output is some code.
+
+248
+00:08:57,360 --> 00:08:58,880
+Uh
+
+249
+00:08:58,880 --> 00:09:00,440
+Let's use GPT-4 over now and I'll bump
+
+250
+00:09:00,440 --> 00:09:03,080
+myself down.
+
+251
+00:09:03,080 --> 00:09:05,440
+Um
+
+252
+00:09:05,440 --> 00:09:10,790
+instructions, here's the current code.
+
+253
+00:09:18,390 --> 00:09:18,400
+And then what I will do is I will
+
+254
+00:09:18,400 --> 00:09:22,240
+probably do this. dot roll user
+
+255
+00:09:22,240 --> 00:09:23,760
+cuz we're using OpenAI's models, they
+
+256
+00:09:23,760 --> 00:09:25,520
+send to they send to like system
+
+257
+00:09:25,520 --> 00:09:27,320
+instructions with roll users, and then
+
+258
+00:09:27,320 --> 00:09:28,760
+we'll add another part of it, which is
+
+259
+00:09:28,760 --> 00:09:30,480
+going to be
+
+260
+00:09:30,480 --> 00:09:32,000
+file path.
+
+261
+00:09:32,000 --> 00:09:33,760
+Um No, I don't need file path. Okay,
+
+262
+00:09:33,760 --> 00:09:36,520
+let's just add current code.
+
+263
+00:09:36,520 --> 00:09:38,200
+Okay, let's open this, and then I'm
+
+264
+00:09:38,200 --> 00:09:39,560
+going to start pasting in some test
+
+265
+00:09:39,560 --> 00:09:42,870
+cases really fast.
+
+266
+00:09:48,910 --> 00:09:48,920
+Okay, uh
+
+267
+00:09:48,920 --> 00:09:50,760
+and when I go ahead and actually get the
+
+268
+00:09:50,760 --> 00:09:52,440
+calculator, let's grab this calculator
+
+269
+00:09:52,440 --> 00:09:54,920
+code just so I can test it.
+
+270
+00:09:54,920 --> 00:09:59,510
+Mhm.
+
+271
+00:10:01,750 --> 00:10:01,760
+Okay. Now I have something I can go test
+
+272
+00:10:01,760 --> 00:10:04,120
+really fast that is
+
+273
+00:10:04,120 --> 00:10:06,320
+doing interesting things
+
+274
+00:10:06,320 --> 00:10:08,040
+with the calculator.
+
+275
+00:10:08,040 --> 00:10:10,400
+Oh man, this is so this is so clean.
+
+276
+00:10:10,400 --> 00:10:11,600
+What instructions are you going to give
+
+277
+00:10:11,600 --> 00:10:14,160
+it? So what I think I'm going to do is
+
+278
+00:10:14,160 --> 00:10:16,280
+I'm going to say let's say I want to add
+
+279
+00:10:16,280 --> 00:10:17,680
+exponent
+
+280
+00:10:17,680 --> 00:10:19,600
+uh capability on the on the
+
+281
+00:10:19,600 --> 00:10:24,510
+go.
+
+282
+00:10:25,950 --> 00:10:25,960
+operator
+
+283
+00:10:25,960 --> 00:10:27,480
+So it's a pretty clear instruction. The
+
+284
+00:10:27,480 --> 00:10:28,960
+code is pretty clear and it's pretty
+
+285
+00:10:28,960 --> 00:10:31,080
+self-constrained as to exactly what it
+
+286
+00:10:31,080 --> 00:10:33,520
+should go do.
+
+287
+00:10:33,520 --> 00:10:35,200
+And I probably want to go ahead and
+
+288
+00:10:35,200 --> 00:10:36,800
+figure out what I can go do and I don't
+
+289
+00:10:36,800 --> 00:10:38,920
+know what this do.
+
+290
+00:10:38,920 --> 00:10:42,190
+I don't even know what this is.
+
+291
+00:10:43,870 --> 00:10:43,880
+Uh and then it's going to go add add
+
+292
+00:10:43,880 --> 00:10:46,800
+multiply divide. So it will have to
+
+293
+00:10:46,800 --> 00:10:49,200
+touch multiple files in the system.
+
+294
+00:10:49,200 --> 00:10:51,040
+But we'll go see exactly what we can do
+
+295
+00:10:51,040 --> 00:10:52,920
+if we can go add the exponent operations
+
+296
+00:10:52,920 --> 00:10:54,360
+to the calculator.
+
+297
+00:10:54,360 --> 00:10:56,480
+If I go run this, it will probably go do
+
+298
+00:10:56,480 --> 00:10:57,680
+something.
+
+299
+00:10:57,680 --> 00:11:00,430
+Um
+
+300
+00:11:02,750 --> 00:11:02,760
+And the first part that I will get is
+
+301
+00:11:02,760 --> 00:11:04,400
+it's not going to really go to do in the
+
+302
+00:11:04,400 --> 00:11:06,240
+right way. It's going to offer like uh
+
+303
+00:11:06,240 --> 00:11:08,360
+giant update system in a way that isn't
+
+304
+00:11:08,360 --> 00:11:09,600
+very useful. So let's make it actually
+
+305
+00:11:09,600 --> 00:11:11,760
+better at this.
+
+306
+00:11:11,760 --> 00:11:14,800
+Uh class this
+
+307
+00:11:14,800 --> 00:11:16,960
+Uh what we'll do is like we'll say goal
+
+308
+00:11:16,960 --> 00:11:19,000
+string.
+
+309
+00:11:19,000 --> 00:11:20,120
+Mhm.
+
+310
+00:11:20,120 --> 00:11:21,680
+It's just kind of having it outline its
+
+311
+00:11:21,680 --> 00:11:23,440
+reasoning a little bit before it goes
+
+312
+00:11:23,440 --> 00:11:27,070
+out into generation.
+
+313
+00:11:28,990 --> 00:11:29,000
+description And then I'll have it
+
+314
+00:11:29,000 --> 00:11:31,440
+generate the diff right over here.
+
+315
+00:11:31,440 --> 00:11:33,640
+Um and I'll say the return type of this
+
+316
+00:11:33,640 --> 00:11:36,040
+is going to be a diff.
+
+317
+00:11:36,040 --> 00:11:38,640
+So now what I have Oh, let me do word
+
+318
+00:11:38,640 --> 00:11:40,200
+wrap.
+
+319
+00:11:40,200 --> 00:11:41,760
+Now what I have over here is I have a
+
+320
+00:11:41,760 --> 00:11:44,400
+method that can go ahead and return some
+
+321
+00:11:44,400 --> 00:11:46,680
+sort of goal and then diff back to me.
+
+322
+00:11:46,680 --> 00:11:47,920
+Oh, probably don't want to call this
+
+323
+00:11:47,920 --> 00:11:50,040
+goal. I'll call it like update
+
+324
+00:11:50,040 --> 00:11:52,440
+description.
+
+325
+00:11:52,440 --> 00:11:54,360
+Cool.
+
+326
+00:11:54,360 --> 00:11:55,560
+Cool.
+
+327
+00:11:55,560 --> 00:11:57,720
+So it kind of did a diff, but it did it
+
+328
+00:11:57,720 --> 00:11:59,480
+in a format that is
+
+329
+00:11:59,480 --> 00:12:02,400
+kind of useful, not super useful.
+
+330
+00:12:02,400 --> 00:12:04,240
+Um because I can't actually be
+
+331
+00:12:04,240 --> 00:12:05,600
+guaranteed that any of this is going to
+
+332
+00:12:05,600 --> 00:12:07,000
+be abided by because I didn't give it a
+
+333
+00:12:07,000 --> 00:12:08,720
+way to read the diff.
+
+334
+00:12:08,720 --> 00:12:09,800
+So let's add a little bit more
+
+335
+00:12:09,800 --> 00:12:11,680
+constraints onto this. Wait, I didn't I
+
+336
+00:12:11,680 --> 00:12:14,000
+didn't quite follow that. Um cuz I saw
+
+337
+00:12:14,000 --> 00:12:15,160
+that my first impression was like, "Oh,
+
+338
+00:12:15,160 --> 00:12:16,720
+that's a diff. That's a patch file I can
+
+339
+00:12:16,720 --> 00:12:18,360
+go apply to my project right away." So
+
+340
+00:12:18,360 --> 00:12:20,280
+what's what's missing from this? So the
+
+341
+00:12:20,280 --> 00:12:21,800
+first thing that's really missing from
+
+342
+00:12:21,800 --> 00:12:24,320
+this for me is a couple of things.
+
+343
+00:12:24,320 --> 00:12:24,600
+Yeah.
+
+344
+00:12:24,600 --> 00:12:26,560
+Um and the first one is really just the
+
+345
+00:12:26,560 --> 00:12:29,000
+fact that like calculator_original.py is
+
+346
+00:12:29,000 --> 00:12:33,590
+probably not the name of my file.
+
+347
+00:12:34,030 --> 00:12:34,040
+Right?
+
+348
+00:12:34,040 --> 00:12:35,200
+I see. Okay.
+
+349
+00:12:35,200 --> 00:12:36,880
+Uh calculator_updated.py is not the name
+
+350
+00:12:36,880 --> 00:12:38,839
+of the output file.
+
+351
+00:12:38,839 --> 00:12:40,600
+There's these small nuances and I think
+
+352
+00:12:40,600 --> 00:12:42,000
+these nuances are dramatically going to
+
+353
+00:12:42,000 --> 00:12:43,520
+change how we parse and go read things
+
+354
+00:12:43,520 --> 00:12:45,320
+around it.
+
+355
+00:12:45,320 --> 00:12:45,800
+But
+
+356
+00:12:45,800 --> 00:12:47,880
+Okay. what I do see is that this thing
+
+357
+00:12:47,880 --> 00:12:50,280
+probably wants to know what it is going
+
+358
+00:12:50,280 --> 00:12:51,760
+to go do. So let's give it like a file
+
+359
+00:12:51,760 --> 00:12:54,400
+path file name in general.
+
+360
+00:12:54,400 --> 00:12:56,040
+Okay. Real quick by the way, there was a
+
+361
+00:12:56,040 --> 00:12:57,400
+question about like which part of this
+
+362
+00:12:57,400 --> 00:13:00,520
+is in the user pro user message versus
+
+363
+00:13:00,520 --> 00:13:02,760
+system prompt um if you want to clarify
+
+364
+00:13:02,760 --> 00:13:02,960
+that.
+
+365
+00:13:02,960 --> 00:13:04,839
+doing right now is everything above this
+
+366
+00:13:04,839 --> 00:13:06,839
+for GPT-4o is generally going to by
+
+367
+00:13:06,839 --> 00:13:08,480
+default being the system message,
+
+368
+00:13:08,480 --> 00:13:10,720
+instructions that the user gives me, and
+
+369
+00:13:10,720 --> 00:13:12,800
+the output format I want. And the actual
+
+370
+00:13:12,800 --> 00:13:14,680
+code goes into the user message. I'm
+
+371
+00:13:14,680 --> 00:13:16,200
+basically treating the instructions of
+
+372
+00:13:16,200 --> 00:13:19,320
+the user as good as a
+
+373
+00:13:19,320 --> 00:13:21,800
+uh as good as um
+
+374
+00:13:21,800 --> 00:13:24,400
+instructions that I gave on the team. Uh
+
+375
+00:13:24,400 --> 00:13:26,760
+as someone uh on our code wrote. Even
+
+376
+00:13:26,760 --> 00:13:27,920
+though it's user incoming message, I
+
+377
+00:13:27,920 --> 00:13:30,480
+treat it like a system message.
+
+378
+00:13:30,480 --> 00:13:31,400
+So let's talk about like
+
+379
+00:13:31,400 --> 00:13:32,839
+like what is it like a lot of them all
+
+380
+00:13:32,839 --> 00:13:34,800
+models have better instruction following
+
+381
+00:13:34,800 --> 00:13:36,280
+for what you put in the system prompt,
+
+382
+00:13:36,280 --> 00:13:37,440
+right?
+
+383
+00:13:37,440 --> 00:13:39,240
+Why not put the current code in the user
+
+384
+00:13:39,240 --> 00:13:40,320
+prompt?
+
+385
+00:13:40,320 --> 00:13:42,760
+Um
+
+386
+00:13:42,760 --> 00:13:44,960
+Oh, why why put the current code? So
+
+387
+00:13:44,960 --> 00:13:46,360
+there's a couple of different reasons of
+
+388
+00:13:46,360 --> 00:13:47,839
+why we put this in the current why we
+
+389
+00:13:47,839 --> 00:13:49,200
+put this in the current code as opposed
+
+390
+00:13:49,200 --> 00:13:50,440
+to the user prompt. And the biggest
+
+391
+00:13:50,440 --> 00:13:51,680
+reason is just like the way the models
+
+392
+00:13:51,680 --> 00:13:53,600
+are oriented. So let's just take a look
+
+393
+00:13:53,600 --> 00:13:55,240
+at what what this does. If I were to go
+
+394
+00:13:55,240 --> 00:13:57,160
+were to go read the prompt
+
+395
+00:13:57,160 --> 00:13:59,600
+you can view like the you can view these
+
+396
+00:13:59,600 --> 00:14:01,560
+role semantics as basically just like
+
+397
+00:14:01,560 --> 00:14:03,839
+automatic um oops
+
+398
+00:14:03,839 --> 00:14:06,040
+I should fix that.
+
+399
+00:14:06,040 --> 00:14:08,360
+As automatic um
+
+400
+00:14:08,360 --> 00:14:10,120
+breakers for where the code actually
+
+401
+00:14:10,120 --> 00:14:12,120
+lives. So now if I were to go write
+
+402
+00:14:12,120 --> 00:14:13,680
+this, it isn't actually obvious where
+
+403
+00:14:13,680 --> 00:14:15,480
+the section of my code begins or doesn't
+
+404
+00:14:15,480 --> 00:14:17,839
+begin. I'd have to add some prefix like
+
+405
+00:14:17,839 --> 00:14:20,640
+uh code here.
+
+406
+00:14:20,640 --> 00:14:21,760
+But if I'm using user
+
+407
+00:14:21,760 --> 00:14:23,839
+I see. system messages, I kind of get
+
+408
+00:14:23,839 --> 00:14:25,959
+that by default because these are
+
+409
+00:14:25,959 --> 00:14:28,839
+special tokens that the model ingest
+
+410
+00:14:28,839 --> 00:14:31,000
+that let it know that it's eliminating
+
+411
+00:14:31,000 --> 00:14:33,120
+something by default.
+
+412
+00:14:33,120 --> 00:14:34,720
+Okay, so you're you're not really
+
+413
+00:14:34,720 --> 00:14:37,600
+relying on the assistant user tuning in
+
+414
+00:14:37,600 --> 00:14:40,280
+terms of like a chat conversation, but
+
+415
+00:14:40,280 --> 00:14:41,880
+you're just using switching the user
+
+416
+00:14:41,880 --> 00:14:44,680
+mode as a really really well-tuned
+
+417
+00:14:44,680 --> 00:14:46,680
+separator between whatever came before
+
+418
+00:14:46,680 --> 00:14:47,760
+whatever's coming next.
+
+419
+00:14:47,760 --> 00:14:48,400
+Exactly.
+
+420
+00:14:48,400 --> 00:14:50,360
+Cool. Cuz the model is well-tuned to
+
+421
+00:14:50,360 --> 00:14:51,800
+understand this and this gives me a
+
+422
+00:14:51,800 --> 00:14:53,880
+really really free way to go paste this
+
+423
+00:14:53,880 --> 00:14:55,400
+down.
+
+424
+00:14:55,400 --> 00:14:57,120
+Um Yeah, I think it's he's saying like
+
+425
+00:14:57,120 --> 00:14:59,000
+basically like if you if you used XML
+
+426
+00:14:59,000 --> 00:15:00,720
+tags around it, that would be similar.
+
+427
+00:15:00,720 --> 00:15:02,120
+We're just using this for the purpose of
+
+428
+00:15:02,120 --> 00:15:04,040
+separating. Yeah, and like we can go do
+
+429
+00:15:04,040 --> 00:15:05,280
+this and like this
+
+430
+00:15:05,280 --> 00:15:07,440
+we can do this even now, but it we
+
+431
+00:15:07,440 --> 00:15:09,200
+really don't need to
+
+432
+00:15:09,200 --> 00:15:11,959
+because this is pretty well understood
+
+433
+00:15:11,959 --> 00:15:13,280
+in terms of what the errors they could
+
+434
+00:15:13,280 --> 00:15:15,990
+have are.
+
+435
+00:15:16,870 --> 00:15:16,880
+Cool.
+
+436
+00:15:16,880 --> 00:15:18,640
+Sorry, you were talking about diffs.
+
+437
+00:15:18,640 --> 00:15:21,360
+Let's Let's go back to diffs. Now, I do
+
+438
+00:15:21,360 --> 00:15:23,480
+like the update descriptions. I think
+
+439
+00:15:23,480 --> 00:15:25,079
+these descriptions could be a little bit
+
+440
+00:15:25,079 --> 00:15:28,120
+better. So like uh let's just rename
+
+441
+00:15:28,120 --> 00:15:29,680
+this to update notes. And right now I'm
+
+442
+00:15:29,680 --> 00:15:31,880
+just updating it directly
+
+443
+00:15:31,880 --> 00:15:33,480
+uh rather than changing like alias or
+
+444
+00:15:33,480 --> 00:15:35,280
+anything because I'm just I I'm not
+
+445
+00:15:35,280 --> 00:15:36,959
+really using this code anywhere. And now
+
+446
+00:15:36,959 --> 00:15:40,440
+let's talk about diffs. Now, a couple of
+
+447
+00:15:40,440 --> 00:15:43,480
+Okay. So
+
+448
+00:15:43,480 --> 00:15:45,640
+return in
+
+449
+00:15:45,640 --> 00:15:47,720
+this format. Let's give it a more
+
+450
+00:15:47,720 --> 00:15:49,880
+constrained format.
+
+451
+00:15:49,880 --> 00:15:51,959
+diff
+
+452
+00:15:51,959 --> 00:15:53,480
+And then what I want is I'm going to
+
+453
+00:15:53,480 --> 00:15:54,839
+make it generate the diff in a markdown
+
+454
+00:15:54,839 --> 00:15:57,079
+file.
+
+455
+00:15:57,079 --> 00:15:58,800
+And I'm going to try and look like this
+
+456
+00:15:58,800 --> 00:16:00,320
+diff as much as possible cuz this seems
+
+457
+00:16:00,320 --> 00:16:08,510
+to be the thing the model likes to do.
+
+458
+00:16:29,270 --> 00:16:29,280
+Yeah, Gabe. Great uh great question.
+
+459
+00:16:29,280 --> 00:16:30,200
+Yeah, so we're going to start with
+
+460
+00:16:30,200 --> 00:16:32,880
+GPT-4o and then um we're going to show
+
+461
+00:16:32,880 --> 00:16:34,880
+how we can use some prompt techniques to
+
+462
+00:16:34,880 --> 00:16:36,640
+make this work really well even with 4o
+
+463
+00:16:36,640 --> 00:16:41,310
+mini or something.
+
+464
+00:16:42,870 --> 00:16:42,880
+There we go. So I'm going to let it go
+
+465
+00:16:42,880 --> 00:16:44,000
+do this
+
+466
+00:16:44,000 --> 00:16:45,839
+uh in this example.
+
+467
+00:16:45,839 --> 00:16:46,920
+Where the way that it's going to
+
+468
+00:16:46,920 --> 00:16:48,320
+generate the diff is I want it to tell
+
+469
+00:16:48,320 --> 00:16:49,880
+me what file it's removing, what file
+
+470
+00:16:49,880 --> 00:16:51,720
+it's adding. And then it's going to put
+
+471
+00:16:51,720 --> 00:16:53,240
+in some like line numbers or something
+
+472
+00:16:53,240 --> 00:16:55,240
+around this, I guess. And then
+
+473
+00:16:55,240 --> 00:16:57,560
+surrounding code, add the deleted code,
+
+474
+00:16:57,560 --> 00:16:58,959
+add the added code, and give me back
+
+475
+00:16:58,959 --> 00:17:01,560
+surrounding code at the very end.
+
+476
+00:17:01,560 --> 00:17:04,040
+Um and it added the closing XML marks by
+
+477
+00:17:04,040 --> 00:17:06,360
+default. So it didn't really work. So I
+
+478
+00:17:06,360 --> 00:17:08,760
+updated so it's not a closing tag.
+
+479
+00:17:08,760 --> 00:17:10,320
+Now, this clearly looks like it could be
+
+480
+00:17:10,320 --> 00:17:12,000
+misinterpreted. So I'm going to I'm
+
+481
+00:17:12,000 --> 00:17:13,800
+going to write it like this just to like
+
+482
+00:17:13,800 --> 00:17:15,720
+make it a little bit more clear that's
+
+483
+00:17:15,720 --> 00:17:21,270
+not XML or something by default.
+
+484
+00:17:24,150 --> 00:17:24,160
+So let's try running this now.
+
+485
+00:17:24,160 --> 00:17:26,079
+Um
+
+486
+00:17:26,079 --> 00:17:29,280
+Return this format. Don't need quotes.
+
+487
+00:17:29,280 --> 00:17:35,470
+So escape this.
+
+488
+00:17:40,550 --> 00:17:40,560
+So let's go read this code and see what
+
+489
+00:17:40,560 --> 00:17:43,160
+actually pulled out.
+
+490
+00:17:43,160 --> 00:17:44,480
+So it did actually do something pretty
+
+491
+00:17:44,480 --> 00:17:47,560
+nice for me whereas it gave me a diff.
+
+492
+00:17:47,560 --> 00:17:49,600
+It said these lines changed.
+
+493
+00:17:49,600 --> 00:17:51,080
+And then it gave me another diff where
+
+494
+00:17:51,080 --> 00:17:52,800
+it says these lines changed. And it told
+
+495
+00:17:52,800 --> 00:17:54,760
+me exactly what I need to add remove and
+
+496
+00:17:54,760 --> 00:17:57,320
+add uh this format.
+
+497
+00:17:57,320 --> 00:17:58,560
+Which is kind of interesting because it
+
+498
+00:17:58,560 --> 00:17:59,720
+actually was able to detect that the
+
+499
+00:17:59,720 --> 00:18:01,560
+divide needed a comma and then it added
+
+500
+00:18:01,560 --> 00:18:02,240
+the exponent.
+
+501
+00:18:02,240 --> 00:18:04,679
+Mhm. So this seems to work pretty well
+
+502
+00:18:04,679 --> 00:18:06,080
+in terms of what it's parsing and what
+
+503
+00:18:06,080 --> 00:18:08,000
+it's returning back to me.
+
+504
+00:18:08,000 --> 00:18:09,840
+Um Looks like it did still have the
+
+505
+00:18:09,840 --> 00:18:11,200
+backticks though. Were you trying to get
+
+506
+00:18:11,200 --> 00:18:13,440
+rid of those? Yeah, let me see uh return
+
+507
+00:18:13,440 --> 00:18:15,800
+this format. Use
+
+508
+00:18:15,800 --> 00:18:18,080
+So I told it not to do something as we
+
+509
+00:18:18,080 --> 00:18:20,840
+saw like my prompt said don't need to
+
+510
+00:18:20,840 --> 00:18:22,440
+add quotes to escape this. Instead of a
+
+511
+00:18:22,440 --> 00:18:23,920
+don't, let's add this. Let's Let's give
+
+512
+00:18:23,920 --> 00:18:25,760
+it a capability instead of removing a
+
+513
+00:18:25,760 --> 00:18:31,840
+capability. Use triple backticks
+
+514
+00:18:31,840 --> 00:18:32,360
+to
+
+515
+00:18:32,360 --> 00:18:34,000
+Do you want triple backticks though?
+
+516
+00:18:34,000 --> 00:18:34,919
+Like aren't you going to just going to
+
+517
+00:18:34,919 --> 00:18:37,919
+strip those out later? characters.
+
+518
+00:18:37,919 --> 00:18:39,880
+So I'll show you what I mean.
+
+519
+00:18:39,880 --> 00:18:42,390
+Okay.
+
+520
+00:18:48,190 --> 00:18:48,200
+Let's see if I can get to do this.
+
+521
+00:18:48,200 --> 00:18:50,669
+Yeah.
+
+522
+00:18:52,390 --> 00:18:52,400
+Uh
+
+523
+00:18:52,400 --> 00:19:00,870
+Let's call this field something else.
+
+524
+00:19:07,030 --> 00:19:07,040
+And this is kind of like a version of
+
+525
+00:19:07,040 --> 00:19:08,400
+few-shot sampling, I guess you could
+
+526
+00:19:08,400 --> 00:19:10,909
+say.
+
+527
+00:19:12,550 --> 00:19:12,560
+That's trying to produce some good code
+
+528
+00:19:12,560 --> 00:19:14,159
+here. Let's try and run this. Funny, we
+
+529
+00:19:14,159 --> 00:19:19,470
+have syntax highlighting broken.
+
+530
+00:19:21,470 --> 00:19:21,480
+Did it go do it? No, it's still adding
+
+531
+00:19:21,480 --> 00:19:23,280
+the triple backticks. So it sounds like
+
+532
+00:19:23,280 --> 00:19:25,440
+I can go do this.
+
+533
+00:19:25,440 --> 00:19:26,840
+Um
+
+534
+00:19:26,840 --> 00:19:29,760
+So you're telling it to use backticks?
+
+535
+00:19:29,760 --> 00:19:30,679
+Let me tell you why I'm trying to use
+
+536
+00:19:30,679 --> 00:19:31,919
+triple backticks.
+
+537
+00:19:31,919 --> 00:19:33,520
+So the problem is if I don't use triple
+
+538
+00:19:33,520 --> 00:19:34,760
+backticks, it's going to put the thing
+
+539
+00:19:34,760 --> 00:19:37,040
+in quotes. If I put it in quotes, it's
+
+540
+00:19:37,040 --> 00:19:39,000
+going to be really hard for me to find
+
+541
+00:19:39,000 --> 00:19:42,919
+out where this quotes start and stop cuz
+
+542
+00:19:42,919 --> 00:19:44,640
+my code itself has quotation marks in
+
+543
+00:19:44,640 --> 00:19:45,760
+it.
+
+544
+00:19:45,760 --> 00:19:47,159
+So when I generate the diff, it's going
+
+545
+00:19:47,159 --> 00:19:49,200
+to break eventually because if it
+
+546
+00:19:49,200 --> 00:19:50,760
+doesn't the quotes correctly or do
+
+547
+00:19:50,760 --> 00:19:51,720
+something else correctly, it's
+
+548
+00:19:51,720 --> 00:19:53,680
+definitely going to go break. So, maybe
+
+549
+00:19:53,680 --> 00:19:56,840
+what I need to do is I need to call this
+
+550
+00:19:56,840 --> 00:20:00,160
+diff update diff.
+
+551
+00:20:00,160 --> 00:20:01,760
+Let it code. Let's call this updated
+
+552
+00:20:01,760 --> 00:20:03,320
+code.
+
+553
+00:20:03,320 --> 00:20:06,950
+And then try something here again.
+
+554
+00:20:08,710 --> 00:20:08,720
+Use triple backticks to prevent escape
+
+555
+00:20:08,720 --> 00:20:11,430
+characters.
+
+556
+00:20:12,550 --> 00:20:12,560
+There we go.
+
+557
+00:20:12,560 --> 00:20:14,720
+So, it's what it looked like is naming
+
+558
+00:20:14,720 --> 00:20:16,480
+it diff over here was confusing the
+
+559
+00:20:16,480 --> 00:20:18,280
+model.
+
+560
+00:20:18,280 --> 00:20:19,520
+But, now that I'm using a name that's a
+
+561
+00:20:19,520 --> 00:20:21,240
+little bit more unique and specifically
+
+562
+00:20:21,240 --> 00:20:23,160
+not related to the actual thing I'm cuz
+
+563
+00:20:23,160 --> 00:20:24,720
+I'm overloading the word diff to mean
+
+564
+00:20:24,720 --> 00:20:25,960
+too many things. It's both the name of
+
+565
+00:20:25,960 --> 00:20:27,440
+my output and the action that I want it
+
+566
+00:20:27,440 --> 00:20:28,800
+to go do.
+
+567
+00:20:28,800 --> 00:20:30,960
+So, by renaming it to update code, it's
+
+568
+00:20:30,960 --> 00:20:32,960
+probably a just a little bit easier for
+
+569
+00:20:32,960 --> 00:20:34,200
+the model to go understand what's going
+
+570
+00:20:34,200 --> 00:20:35,960
+on.
+
+571
+00:20:35,960 --> 00:20:37,760
+Um
+
+572
+00:20:37,760 --> 00:20:39,680
+escape characters uh
+
+573
+00:20:39,680 --> 00:20:43,080
+and no quotes.
+
+574
+00:20:43,080 --> 00:20:44,360
+Let's try this one more time see if I
+
+575
+00:20:44,360 --> 00:20:46,120
+can get something good.
+
+576
+00:20:46,120 --> 00:20:49,680
+Um nope, the other way was necessary.
+
+577
+00:20:49,680 --> 00:20:50,720
+Okay.
+
+578
+00:20:50,720 --> 00:20:52,160
+Oops, there we go. Okay, so this is
+
+579
+00:20:52,160 --> 00:20:55,160
+actually a a sort of like um
+
+580
+00:20:55,160 --> 00:20:57,720
+an intuition you have about specifically
+
+581
+00:20:57,720 --> 00:20:59,880
+about how the YAML parser is pulling
+
+582
+00:20:59,880 --> 00:21:02,280
+things out of this field. Well, it's
+
+583
+00:21:02,280 --> 00:21:03,680
+also just about what I need the model to
+
+584
+00:21:03,680 --> 00:21:05,560
+go do. I do not want the model to
+
+585
+00:21:05,560 --> 00:21:07,720
+generate worry about these quotes cuz it
+
+586
+00:21:07,720 --> 00:21:09,280
+will mess up cuz I'm generating large
+
+587
+00:21:09,280 --> 00:21:11,040
+sequences of code.
+
+588
+00:21:11,040 --> 00:21:13,080
+Oh, because it's trying to make JSON and
+
+589
+00:21:13,080 --> 00:21:14,440
+those triple quotes are going to like
+
+590
+00:21:14,440 --> 00:21:15,920
+make it think that it accidentally made
+
+591
+00:21:15,920 --> 00:21:17,240
+invalid JSON or something.
+
+592
+00:21:17,240 --> 00:21:18,760
+Exactly. Got you.
+
+593
+00:21:18,760 --> 00:21:19,720
+And that's going to be really really
+
+594
+00:21:19,720 --> 00:21:22,000
+hard thing for me to go get. And the raw
+
+595
+00:21:22,000 --> 00:21:23,280
+output of the
+
+596
+00:21:23,280 --> 00:21:24,880
+uh prompt looks like this.
+
+597
+00:21:24,880 --> 00:21:28,270
+Thanks, someone else.
+
+598
+00:21:30,430 --> 00:21:30,440
+Yeah, so that context that output format
+
+599
+00:21:30,440 --> 00:21:33,400
+ends up translating into this this is
+
+600
+00:21:33,400 --> 00:21:35,880
+like the full raw prompt. And I'm
+
+601
+00:21:35,880 --> 00:21:37,760
+noticing like answering JSON the schema,
+
+602
+00:21:37,760 --> 00:21:39,000
+I'll just get rid of that really fast
+
+603
+00:21:39,000 --> 00:21:41,800
+because this is so finicky.
+
+604
+00:21:41,800 --> 00:21:43,360
+Prefix
+
+605
+00:21:43,360 --> 00:21:46,870
+equals
+
+606
+00:22:07,910 --> 00:22:07,920
+Um and then why is that outputting JSON
+
+607
+00:22:07,920 --> 00:22:10,080
+so Let me go update this. Okay, so your
+
+608
+00:22:10,080 --> 00:22:11,600
+concern is that it's trying to escape
+
+609
+00:22:11,600 --> 00:22:13,760
+all the quotes in the JSON and the
+
+610
+00:22:13,760 --> 00:22:15,320
+concern is that if the model has to
+
+611
+00:22:15,320 --> 00:22:16,920
+think about that, then it's going to
+
+612
+00:22:16,920 --> 00:22:18,880
+kind of gum up and take attention away
+
+613
+00:22:18,880 --> 00:22:20,960
+from the core task, which is generating
+
+614
+00:22:20,960 --> 00:22:22,920
+good code. Exactly. So, let's add a
+
+615
+00:22:22,920 --> 00:22:24,200
+couple more things. Let's add
+
+616
+00:22:24,200 --> 00:22:26,880
+temperature zero to my system.
+
+617
+00:22:26,880 --> 00:22:28,600
+Let's run this one more time and see
+
+618
+00:22:28,600 --> 00:22:29,800
+what it does.
+
+619
+00:22:29,800 --> 00:22:30,440
+Um
+
+620
+00:22:30,440 --> 00:22:34,990
+and let's try this one more time.
+
+621
+00:22:35,950 --> 00:22:35,960
+What I'm going to do is I'm going to
+
+622
+00:22:35,960 --> 00:22:37,000
+actually move this out of the
+
+623
+00:22:37,000 --> 00:22:38,760
+description and just try seeing if I can
+
+624
+00:22:38,760 --> 00:22:40,760
+give it a few-shot example right over
+
+625
+00:22:40,760 --> 00:22:47,430
+here.
+
+626
+00:22:49,470 --> 00:22:49,480
+Allow
+
+627
+00:22:49,480 --> 00:22:51,400
+for no
+
+628
+00:22:51,400 --> 00:22:54,800
+escape characters.
+
+629
+00:22:54,800 --> 00:22:59,710
+And now the prompt looks like this.
+
+630
+00:23:01,270 --> 00:23:01,280
+I see. So, you took the description out
+
+631
+00:23:01,280 --> 00:23:03,120
+of the actual schema and you're just
+
+632
+00:23:03,120 --> 00:23:04,840
+adding this as a standalone instruction.
+
+633
+00:23:04,840 --> 00:23:07,640
+Exactly. So, allow for Oh, I know what
+
+634
+00:23:07,640 --> 00:23:10,080
+it To allow for multi-
+
+635
+00:23:10,080 --> 00:23:12,240
+line strings.
+
+636
+00:23:12,240 --> 00:23:14,320
+There we go.
+
+637
+00:23:14,320 --> 00:23:16,560
+And now we have it working. I see. Okay,
+
+638
+00:23:16,560 --> 00:23:17,960
+so you And this comes after the thing
+
+639
+00:23:17,960 --> 00:23:19,040
+that I think I've heard you say a lot
+
+640
+00:23:19,040 --> 00:23:20,840
+before, which is this idea of like let
+
+641
+00:23:20,840 --> 00:23:23,200
+the model write code in the way that
+
+642
+00:23:23,200 --> 00:23:24,840
+it's most trained to write code, which
+
+643
+00:23:24,840 --> 00:23:28,000
+is not code inside a big JSON object,
+
+644
+00:23:28,000 --> 00:23:31,360
+but is just stream the code out flat as
+
+645
+00:23:31,360 --> 00:23:33,880
+as it as an actual file. And so, by
+
+646
+00:23:33,880 --> 00:23:35,560
+telling it to use triple backticks, the
+
+647
+00:23:35,560 --> 00:23:37,360
+model thinks, "Oh, now I don't have to
+
+648
+00:23:37,360 --> 00:23:39,280
+deal with escape characters. I can just
+
+649
+00:23:39,280 --> 00:23:41,200
+do this as multi- multi-line string."
+
+650
+00:23:41,200 --> 00:23:43,720
+Exactly. Exactly. And one quick thing to
+
+651
+00:23:43,720 --> 00:23:46,080
+note here is I told it to a multi-line
+
+652
+00:23:46,080 --> 00:23:47,400
+string and you saw me iterate in many
+
+653
+00:23:47,400 --> 00:23:49,480
+different ways. I wrote a lot of nots in
+
+654
+00:23:49,480 --> 00:23:50,840
+the before.
+
+655
+00:23:50,840 --> 00:23:52,720
+And really what I was able to nail nail
+
+656
+00:23:52,720 --> 00:23:54,200
+down here is by getting rid of all the
+
+657
+00:23:54,200 --> 00:23:56,600
+nots and really thinking hard about what
+
+658
+00:23:56,600 --> 00:23:57,800
+I was trying to get it to do, which was
+
+659
+00:23:57,800 --> 00:23:58,840
+really just like I wanted to output
+
+660
+00:23:58,840 --> 00:24:02,190
+multi-line strings.
+
+661
+00:24:04,750 --> 00:24:04,760
+By letting it go do that,
+
+662
+00:24:04,760 --> 00:24:06,720
+it can now understand exactly what it's
+
+663
+00:24:06,720 --> 00:24:10,200
+going trying to go do a lot better.
+
+664
+00:24:10,200 --> 00:24:11,640
+Right, cuz it hasn't been trained on
+
+665
+00:24:11,640 --> 00:24:14,160
+generating code inside a JSON object.
+
+666
+00:24:14,160 --> 00:24:16,120
+It's been trained on generating code as
+
+667
+00:24:16,120 --> 00:24:18,360
+a flat thing. Exactly. And like it's
+
+668
+00:24:18,360 --> 00:24:19,960
+really about the not concept that is
+
+669
+00:24:19,960 --> 00:24:21,240
+hard to go wrap my head around,
+
+670
+00:24:21,240 --> 00:24:22,360
+especially the minute I go to like the
+
+671
+00:24:22,360 --> 00:24:23,560
+smaller models. So, let's use like a
+
+672
+00:24:23,560 --> 00:24:25,920
+smaller model like this one.
+
+673
+00:24:25,920 --> 00:24:27,840
+Temperature 0.1.
+
+674
+00:24:27,840 --> 00:24:28,920
+Let's just boil this down and see if it
+
+675
+00:24:28,920 --> 00:24:34,350
+does approximately the right thing.
+
+676
+00:24:37,270 --> 00:24:37,280
+The idea of a not is just very very hard
+
+677
+00:24:37,280 --> 00:24:38,560
+for it to go do. And now you can notice
+
+678
+00:24:38,560 --> 00:24:39,760
+that the diff has gone a little bit
+
+679
+00:24:39,760 --> 00:24:41,080
+longer because of the slightly smaller
+
+680
+00:24:41,080 --> 00:24:42,360
+model.
+
+681
+00:24:42,360 --> 00:24:45,080
+And if I'm doing this, the first worry
+
+682
+00:24:45,080 --> 00:24:46,720
+that I have is, "Oh, is the model just
+
+683
+00:24:46,720 --> 00:24:48,200
+outputting like a lot more code than it
+
+684
+00:24:48,200 --> 00:24:49,679
+needs to?" Let's see if I can trim that
+
+685
+00:24:49,679 --> 00:24:50,800
+down.
+
+686
+00:24:50,800 --> 00:24:52,600
+One easy way to trim that down is to
+
+687
+00:24:52,600 --> 00:24:54,080
+just make it return multiple diffs
+
+688
+00:24:54,080 --> 00:24:57,390
+instead of one diff.
+
+689
+00:24:58,310 --> 00:24:58,320
+Cool.
+
+690
+00:24:58,320 --> 00:25:04,230
+Right? So, let's just go do that.
+
+691
+00:25:20,830 --> 00:25:20,840
+Oh, it's outputting a lot more code.
+
+692
+00:25:20,840 --> 00:25:23,080
+Uh let's add some instructions.
+
+693
+00:25:23,080 --> 00:25:25,200
+Keep diffs
+
+694
+00:25:25,200 --> 00:25:27,440
+small and
+
+695
+00:25:27,440 --> 00:25:30,880
+and use multiple diffs.
+
+696
+00:25:30,880 --> 00:25:32,640
+I wonder if this thing is messing it up
+
+697
+00:25:32,640 --> 00:25:33,720
+right now
+
+698
+00:25:33,720 --> 00:25:35,120
+because it's actually telling me that
+
+699
+00:25:35,120 --> 00:25:37,040
+this allow Technically, the diff format
+
+700
+00:25:37,040 --> 00:25:38,600
+allows for multiple things to be
+
+701
+00:25:38,600 --> 00:25:41,800
+included. Let's get rid of this.
+
+702
+00:25:41,800 --> 00:25:43,800
+Uh Are you going to be able to what Keep
+
+703
+00:25:43,800 --> 00:25:46,000
+going. I have questions. I'm going to
+
+704
+00:25:46,000 --> 00:25:48,480
+Let's let's hear this example.
+
+705
+00:25:48,480 --> 00:25:52,550
+Okay, let's run this.
+
+706
+00:26:01,310 --> 00:26:01,320
+Um this did not add any pluses or
+
+707
+00:26:01,320 --> 00:26:02,679
+minuses and we'll talk about this in a
+
+708
+00:26:02,679 --> 00:26:04,640
+little bit later. And let's go add one
+
+709
+00:26:04,640 --> 00:26:06,000
+more thing.
+
+710
+00:26:06,000 --> 00:26:07,440
+I actually change this to be update
+
+711
+00:26:07,440 --> 00:26:10,720
+notes just to be um a string
+
+712
+00:26:10,720 --> 00:26:12,000
+instead of a multi-line string cuz
+
+713
+00:26:12,000 --> 00:26:13,600
+what's likely happening is writing
+
+714
+00:26:13,600 --> 00:26:15,480
+multiple diffs
+
+715
+00:26:15,480 --> 00:26:18,000
+and then it's going to head and just um
+
+716
+00:26:18,000 --> 00:26:19,400
+not really understanding what it needs
+
+717
+00:26:19,400 --> 00:26:22,280
+to go do. So, what we should really do
+
+718
+00:26:22,280 --> 00:26:25,590
+is class
+
+719
+00:26:31,030 --> 00:26:31,040
+So, here's what I'm going to do. I'm
+
+720
+00:26:31,040 --> 00:26:33,080
+going to let notes be multiple and for
+
+721
+00:26:33,080 --> 00:26:34,600
+each one of these notes, I want it to
+
+722
+00:26:34,600 --> 00:26:40,070
+generate one code sample.
+
+723
+00:27:14,790 --> 00:27:14,800
+Um and then this will return multiple
+
+724
+00:27:14,800 --> 00:27:17,080
+multiple and then I do not need this
+
+725
+00:27:17,080 --> 00:27:20,710
+anymore.
+
+726
+00:27:22,510 --> 00:27:22,520
+And one more try.
+
+727
+00:27:22,520 --> 00:27:25,080
+What What's the prompt look like now?
+
+728
+00:27:25,080 --> 00:27:27,000
+There we go.
+
+729
+00:27:27,000 --> 00:27:27,880
+But, here's what the prompt looks like
+
+730
+00:27:27,880 --> 00:27:28,720
+now.
+
+731
+00:27:28,720 --> 00:27:31,520
+Let's go read this fast. Um
+
+732
+00:27:31,520 --> 00:27:34,360
+So, what we really want to go do is what
+
+733
+00:27:34,360 --> 00:27:35,960
+we want to go do is we want to say that
+
+734
+00:27:35,960 --> 00:27:37,400
+we're going to generate a triple
+
+735
+00:27:37,400 --> 00:27:39,080
+backtick string for multi-line files.
+
+736
+00:27:39,080 --> 00:27:40,400
+We're going to literally let it generate
+
+737
+00:27:40,400 --> 00:27:41,840
+the code. Then we're going to say you
+
+738
+00:27:41,840 --> 00:27:43,120
+can actually generate multiple diffs in
+
+739
+00:27:43,120 --> 00:27:45,000
+this format.
+
+740
+00:27:45,000 --> 00:27:46,240
+Uh and then we're going to keep the
+
+741
+00:27:46,240 --> 00:27:47,560
+diffs small, use multiple diffs for the
+
+742
+00:27:47,560 --> 00:27:49,480
+same file.
+
+743
+00:27:49,480 --> 00:27:50,920
+What the model ends up generating is
+
+744
+00:27:50,920 --> 00:27:52,080
+something actually very useful, which is
+
+745
+00:27:52,080 --> 00:27:53,560
+add exponentiation operation to the
+
+746
+00:27:53,560 --> 00:27:55,920
+calculator and this is GPT-4 mini.
+
+747
+00:27:55,920 --> 00:27:56,960
+And actually it was able to break it
+
+748
+00:27:56,960 --> 00:27:59,440
+down to say my file, it says, "I need to
+
+749
+00:27:59,440 --> 00:28:01,480
+go add exponentiate over here and I need
+
+750
+00:28:01,480 --> 00:28:03,920
+to go ahead and add exponentiate down
+
+751
+00:28:03,920 --> 00:28:05,400
+here."
+
+752
+00:28:05,400 --> 00:28:07,720
+Now, the thing that's missing it looks
+
+753
+00:28:07,720 --> 00:28:09,800
+like is the at symbols actually helped
+
+754
+00:28:09,800 --> 00:28:12,320
+it quite a lot.
+
+755
+00:28:12,320 --> 00:28:14,200
+It also added an exponentiate function
+
+756
+00:28:14,200 --> 00:28:16,400
+directly into this method instead of
+
+757
+00:28:16,400 --> 00:28:18,600
+adding it to the import.
+
+758
+00:28:18,600 --> 00:28:20,920
+Um let's go ahead and add a little bit
+
+759
+00:28:20,920 --> 00:28:24,430
+more context onto here.
+
+760
+00:28:25,750 --> 00:28:25,760
+Do you want to tell it what file name
+
+761
+00:28:25,760 --> 00:28:27,960
+we're changing as one of the parameters?
+
+762
+00:28:27,960 --> 00:28:29,080
+That's kind of what I was thinking as
+
+763
+00:28:29,080 --> 00:28:29,960
+well.
+
+764
+00:28:29,960 --> 00:28:32,159
+Cuz it seems like it's getting uh
+
+765
+00:28:32,159 --> 00:28:36,030
+confused by this.
+
+766
+00:28:43,270 --> 00:28:43,280
+And that's probably good enough.
+
+767
+00:28:43,280 --> 00:28:45,320
+So, let me know if that
+
+768
+00:28:45,320 --> 00:28:48,040
+file name calculator.py.
+
+769
+00:28:48,040 --> 00:28:49,720
+So, let's read the prompt one more time.
+
+770
+00:28:49,720 --> 00:28:51,440
+We have the file calculator.py, we have
+
+771
+00:28:51,440 --> 00:28:54,159
+the actual contents of the file.
+
+772
+00:28:54,159 --> 00:28:56,679
+And then what we really have is
+
+773
+00:28:56,679 --> 00:29:00,600
+uh let's run this code in one more time.
+
+774
+00:29:00,600 --> 00:29:01,800
+I just want to let you know we're at
+
+775
+00:29:01,800 --> 00:29:04,360
+about 20 minutes left, so I'm um not
+
+776
+00:29:04,360 --> 00:29:05,960
+sure if when you want to you want to
+
+777
+00:29:05,960 --> 00:29:07,400
+switch to actually like applying these
+
+778
+00:29:07,400 --> 00:29:07,880
+diffs.
+
+779
+00:29:07,880 --> 00:29:09,200
+Cool. That's a good point. Or kind of
+
+780
+00:29:09,200 --> 00:29:11,360
+the other stages of the pipeline. Let's
+
+781
+00:29:11,360 --> 00:29:12,320
+talk about the next stage of the
+
+782
+00:29:12,320 --> 00:29:13,960
+pipeline. So, we have something that
+
+783
+00:29:13,960 --> 00:29:15,440
+seems to be able to generate some amount
+
+784
+00:29:15,440 --> 00:29:17,960
+of code from here. And we then we also
+
+785
+00:29:17,960 --> 00:29:19,000
+have something that can also apply
+
+786
+00:29:19,000 --> 00:29:20,000
+diffs.
+
+787
+00:29:20,000 --> 00:29:21,000
+So, now let's talk about the next part,
+
+788
+00:29:21,000 --> 00:29:22,679
+which is actually generating diffs. I
+
+789
+00:29:22,679 --> 00:29:25,080
+think we had one last question, which is
+
+790
+00:29:25,080 --> 00:29:27,080
+how much does indentation matter in the
+
+791
+00:29:27,080 --> 00:29:28,800
+description in the prompt?
+
+792
+00:29:28,800 --> 00:29:30,720
+Um indentation pretty much just matters
+
+793
+00:29:30,720 --> 00:29:32,480
+because it's just like noise.
+
+794
+00:29:32,480 --> 00:29:34,679
+For example, if I were to not indent
+
+795
+00:29:34,679 --> 00:29:36,400
+this versus indent this, it probably
+
+796
+00:29:36,400 --> 00:29:38,640
+just reads slightly differently.
+
+797
+00:29:38,640 --> 00:29:40,720
+You want to show the token view?
+
+798
+00:29:40,720 --> 00:29:42,600
+Um can we see if it changes the actual
+
+799
+00:29:42,600 --> 00:29:45,200
+like tokens? It I mean, indentation is
+
+800
+00:29:45,200 --> 00:29:47,400
+white space, but like in the end what it
+
+801
+00:29:47,400 --> 00:29:49,240
+really it doesn't really matter too
+
+802
+00:29:49,240 --> 00:29:50,520
+much. And the reason it doesn't matter
+
+803
+00:29:50,520 --> 00:29:52,280
+too much is
+
+804
+00:29:52,280 --> 00:29:54,680
+the way I look at this is like
+
+805
+00:29:54,680 --> 00:29:56,080
+think about like a human reading it for
+
+806
+00:29:56,080 --> 00:29:59,120
+clarity. If I indent this, then the real
+
+807
+00:29:59,120 --> 00:30:00,960
+benefit that I get as a human is I can
+
+808
+00:30:00,960 --> 00:30:02,440
+really quickly jump down here and see if
+
+809
+00:30:02,440 --> 00:30:03,960
+this is where it ends.
+
+810
+00:30:03,960 --> 00:30:04,960
+Mhm.
+
+811
+00:30:04,960 --> 00:30:06,880
+The model can also pick up on patterns
+
+812
+00:30:06,880 --> 00:30:08,800
+while reading this sort of thing, and it
+
+813
+00:30:08,800 --> 00:30:10,200
+should be able to detect that this thing
+
+814
+00:30:10,200 --> 00:30:11,760
+it just belongs to the thing above it
+
+815
+00:30:11,760 --> 00:30:14,800
+because it's indented.
+
+816
+00:30:14,800 --> 00:30:16,160
+So, in reality, I should probably be
+
+817
+00:30:16,160 --> 00:30:17,720
+like tapping these in as well, just
+
+818
+00:30:17,720 --> 00:30:18,960
+because it's just like easier for it to
+
+819
+00:30:18,960 --> 00:30:21,160
+see like, oh, this is like one
+
+820
+00:30:21,160 --> 00:30:22,800
+one indentation and this is two
+
+821
+00:30:22,800 --> 00:30:24,200
+indentations.
+
+822
+00:30:24,200 --> 00:30:25,680
+Cuz there are tokens that exist for like
+
+823
+00:30:25,680 --> 00:30:28,120
+four four space tokens.
+
+824
+00:30:28,120 --> 00:30:29,920
+So, it just like it reads two tokens as,
+
+825
+00:30:29,920 --> 00:30:31,600
+oh, it probably belongs to a diff inside
+
+826
+00:30:31,600 --> 00:30:32,720
+of this array. It probably belongs to a
+
+827
+00:30:32,720 --> 00:30:34,800
+diff inside of this array.
+
+828
+00:30:34,800 --> 00:30:36,280
+And then I'm going to go back to the
+
+829
+00:30:36,280 --> 00:30:37,320
+photo.
+
+830
+00:30:37,320 --> 00:30:38,280
+And now I want to talk about the next
+
+831
+00:30:38,280 --> 00:30:39,480
+part, which I think a lot of people
+
+832
+00:30:39,480 --> 00:30:41,120
+overlook, which is how can I actually go
+
+833
+00:30:41,120 --> 00:30:44,000
+ahead and apply this diff?
+
+834
+00:30:44,000 --> 00:30:45,200
+Because once you start applying the
+
+835
+00:30:45,200 --> 00:30:46,240
+diff,
+
+836
+00:30:46,240 --> 00:30:47,920
+the hardest thing that most people run
+
+837
+00:30:47,920 --> 00:30:53,470
+into is actually going to be
+
+838
+00:30:54,990 --> 00:30:55,000
+I'm going to go back to here, which is
+
+839
+00:30:55,000 --> 00:30:56,240
+when we go out and apply this diff and
+
+840
+00:30:56,240 --> 00:30:57,720
+we have a bunch of diffs,
+
+841
+00:30:57,720 --> 00:30:59,120
+most people are like, I'll just go and
+
+842
+00:30:59,120 --> 00:31:01,280
+like string replace, go do this. But
+
+843
+00:31:01,280 --> 00:31:02,680
+actually, the best way to think about
+
+844
+00:31:02,680 --> 00:31:06,200
+this problem is on a per file basis.
+
+845
+00:31:06,200 --> 00:31:08,760
+So, instead of viewing this as a massive
+
+846
+00:31:08,760 --> 00:31:09,680
+um
+
+847
+00:31:09,680 --> 00:31:11,040
+as a I'm going to apply all the diffs at
+
+848
+00:31:11,040 --> 00:31:12,040
+once, what I'm going to do is I'm going
+
+849
+00:31:12,040 --> 00:31:13,760
+to apply a single diff
+
+850
+00:31:13,760 --> 00:31:15,360
+at one point at a time. So, there's
+
+851
+00:31:15,360 --> 00:31:17,040
+going to be a diff object,
+
+852
+00:31:17,040 --> 00:31:18,520
+and this will be all and this will be
+
+853
+00:31:18,520 --> 00:31:20,160
+only that one file that it really
+
+854
+00:31:20,160 --> 00:31:21,960
+touches.
+
+855
+00:31:21,960 --> 00:31:23,000
+And I want to go think about this
+
+856
+00:31:23,000 --> 00:31:24,520
+problem.
+
+857
+00:31:24,520 --> 00:31:25,720
+The first thing you have to do in this
+
+858
+00:31:25,720 --> 00:31:29,240
+problem is you have to go ahead and say
+
+859
+00:31:29,240 --> 00:31:33,070
+find match
+
+860
+00:31:37,590 --> 00:31:37,600
+And this is going to be like some find
+
+861
+00:31:37,600 --> 00:31:39,360
+match function of the old method of the
+
+862
+00:31:39,360 --> 00:31:41,000
+file and then like the current version
+
+863
+00:31:41,000 --> 00:31:42,600
+of the file.
+
+864
+00:31:42,600 --> 00:31:43,800
+And if you failed to find a match,
+
+865
+00:31:43,800 --> 00:31:44,960
+there's a couple of things you can go
+
+866
+00:31:44,960 --> 00:31:45,920
+do.
+
+867
+00:31:45,920 --> 00:31:51,750
+You can toss it to another LLM
+
+868
+00:31:53,350 --> 00:31:53,360
+to go ahead and see if you can find a
+
+869
+00:31:53,360 --> 00:31:55,400
+match. You can use something like uh
+
+870
+00:31:55,400 --> 00:31:56,679
+Levenshtein distance or something else
+
+871
+00:31:56,679 --> 00:31:57,200
+to see if there's something
+
+872
+00:31:57,200 --> 00:32:00,040
+approximately close to the match.
+
+873
+00:32:00,040 --> 00:32:01,560
+But in reality, if you failed to find a
+
+874
+00:32:01,560 --> 00:32:03,200
+complete match, then this whole thing
+
+875
+00:32:03,200 --> 00:32:04,720
+that it generated at the top is probably
+
+876
+00:32:04,720 --> 00:32:06,800
+not very useful, even if if you can't
+
+877
+00:32:06,800 --> 00:32:08,679
+toss it to an if another LLM is unable
+
+878
+00:32:08,679 --> 00:32:11,000
+to find another match for you.
+
+879
+00:32:11,000 --> 00:32:12,840
+Yeah, I've seen I've seen cloud code
+
+880
+00:32:12,840 --> 00:32:14,360
+mess this up a lot, and I I think
+
+881
+00:32:14,360 --> 00:32:16,600
+there's this not like plus minus diffing
+
+882
+00:32:16,600 --> 00:32:18,560
+and it's a little bit more like
+
+883
+00:32:18,560 --> 00:32:20,240
+string to replace So, they do it with
+
+884
+00:32:20,240 --> 00:32:22,000
+like a find replace basically, and then
+
+885
+00:32:22,000 --> 00:32:23,320
+it if it can't find the string to
+
+886
+00:32:23,320 --> 00:32:25,360
+replace, it'll fall back to trying to
+
+887
+00:32:25,360 --> 00:32:28,280
+use like said and grep. Yeah. So, if you
+
+888
+00:32:28,280 --> 00:32:30,640
+remember, there was this thing that we
+
+889
+00:32:30,640 --> 00:32:32,240
+we talked about a couple sessions ago,
+
+890
+00:32:32,240 --> 00:32:33,679
+which is about managing the context and
+
+891
+00:32:33,679 --> 00:32:35,960
+like the case of like an error system
+
+892
+00:32:35,960 --> 00:32:37,320
+where like um
+
+893
+00:32:37,320 --> 00:32:40,280
+when I'm generating like a Cypher query,
+
+894
+00:32:40,280 --> 00:32:41,679
+uh I'm going to have the user generate
+
+895
+00:32:41,679 --> 00:32:43,679
+some context, and at some point the
+
+896
+00:32:43,679 --> 00:32:45,720
+model will get it wrong.
+
+897
+00:32:45,720 --> 00:32:47,120
+Well, then what I will end up doing is
+
+898
+00:32:47,120 --> 00:32:48,640
+when the model gets it wrong, I will add
+
+899
+00:32:48,640 --> 00:32:50,360
+some new context on top of it. I will
+
+900
+00:32:50,360 --> 00:32:51,679
+let the model go generate a new
+
+901
+00:32:51,679 --> 00:32:53,080
+response, and then it will probably
+
+902
+00:32:53,080 --> 00:32:56,160
+hopefully get it right at this point.
+
+903
+00:32:56,160 --> 00:32:57,920
+And for my final context window, what I
+
+904
+00:32:57,920 --> 00:33:00,040
+end up doing is I say
+
+905
+00:33:00,040 --> 00:33:01,800
+I will literally just ignore everything
+
+906
+00:33:01,800 --> 00:33:03,679
+that the model did in the middle and
+
+907
+00:33:03,679 --> 00:33:05,840
+only give the right query.
+
+908
+00:33:05,840 --> 00:33:07,120
+Oops, I'll change the colors on here so
+
+909
+00:33:07,120 --> 00:33:09,520
+it's a little bit more clear.
+
+910
+00:33:09,520 --> 00:33:10,960
+And only give it the right query and
+
+911
+00:33:10,960 --> 00:33:12,960
+delete these other two contexts out of
+
+912
+00:33:12,960 --> 00:33:14,679
+it.
+
+913
+00:33:14,679 --> 00:33:15,760
+So, I'm basically just managing the
+
+914
+00:33:15,760 --> 00:33:17,400
+context. I'm pretending like I got the
+
+915
+00:33:17,400 --> 00:33:19,800
+answer on the right on the first try.
+
+916
+00:33:19,800 --> 00:33:21,200
+I can go do the same thing with a diff
+
+917
+00:33:21,200 --> 00:33:22,360
+system,
+
+918
+00:33:22,360 --> 00:33:25,360
+which is once I find a match in here,
+
+919
+00:33:25,360 --> 00:33:27,400
+uh whether it's by using an LLM, whether
+
+920
+00:33:27,400 --> 00:33:29,320
+it's by using like a string match,
+
+921
+00:33:29,320 --> 00:33:30,920
+Levenshtein distance, or anything else
+
+922
+00:33:30,920 --> 00:33:33,160
+onto here, I'll I'll do my best to find
+
+923
+00:33:33,160 --> 00:33:35,160
+a match. If I failed to find a match, I
+
+924
+00:33:35,160 --> 00:33:37,080
+have to abort out of the loop
+
+925
+00:33:37,080 --> 00:33:39,000
+and leave and go back.
+
+926
+00:33:39,000 --> 00:33:40,840
+But once I find a match,
+
+927
+00:33:40,840 --> 00:33:42,040
+then I can do a couple of different
+
+928
+00:33:42,040 --> 00:33:53,030
+things, which is I can apply the match.
+
+929
+00:33:55,190 --> 00:33:55,200
+And this is a basic operation to just do
+
+930
+00:33:55,200 --> 00:33:59,790
+like a string replace.
+
+931
+00:34:01,190 --> 00:34:01,200
+And once I'm able to go ahead and apply
+
+932
+00:34:01,200 --> 00:34:02,760
+the match, I can do the next part of the
+
+933
+00:34:02,760 --> 00:34:06,070
+system, which I think
+
+934
+00:34:07,990 --> 00:34:08,000
+is the part that most people never do,
+
+935
+00:34:08,000 --> 00:34:12,470
+which is leverage the AST.
+
+936
+00:34:14,070 --> 00:34:14,080
+What does that mean?
+
+937
+00:34:14,080 --> 00:34:16,080
+Well, there's two parts of code that
+
+938
+00:34:16,080 --> 00:34:17,520
+needs to be correct when I go generate
+
+939
+00:34:17,520 --> 00:34:18,679
+this.
+
+940
+00:34:18,679 --> 00:34:20,080
+One of the parts of code that needs to
+
+941
+00:34:20,080 --> 00:34:21,960
+be correct when I go generate this is
+
+942
+00:34:21,960 --> 00:34:23,679
+going to be that the syntax of the code
+
+943
+00:34:23,679 --> 00:34:25,679
+is actually correct.
+
+944
+00:34:25,679 --> 00:34:30,640
+I can I can use the AST library
+
+945
+00:34:30,640 --> 00:34:33,159
+uh uh Python provides to go validate the
+
+946
+00:34:33,159 --> 00:34:35,159
+file itself. And it's not actually going
+
+947
+00:34:35,159 --> 00:34:36,280
+to make sure that all my imports are
+
+948
+00:34:36,280 --> 00:34:38,120
+correct or anything else, but what it
+
+949
+00:34:38,120 --> 00:34:39,560
+can do is just validate the actual
+
+950
+00:34:39,560 --> 00:34:41,760
+syntax that the LLM generated in the new
+
+951
+00:34:41,760 --> 00:34:44,120
+diff is correct. So, for example, if it
+
+952
+00:34:44,120 --> 00:34:45,480
+missed a comma or something else. And I
+
+953
+00:34:45,480 --> 00:34:48,359
+can find exactly what line has the AST
+
+954
+00:34:48,359 --> 00:34:49,840
+mistake,
+
+955
+00:34:49,840 --> 00:35:00,790
+and I can do put this in a while loop.
+
+956
+00:35:02,110 --> 00:35:02,120
+Okay, so this isn't going to catch
+
+957
+00:35:02,120 --> 00:35:04,560
+issues with like imports that are broken
+
+958
+00:35:04,560 --> 00:35:06,080
+or methods from other files that are
+
+959
+00:35:06,080 --> 00:35:07,440
+called wrong, but at least we'll know
+
+960
+00:35:07,440 --> 00:35:09,800
+that the code was syntactically correct.
+
+961
+00:35:09,800 --> 00:35:11,640
+Exactly. Cuz I want to scope down the
+
+962
+00:35:11,640 --> 00:35:13,280
+problem as much as possible because if
+
+963
+00:35:13,280 --> 00:35:15,600
+I'm going to go use
+
+964
+00:35:15,600 --> 00:35:18,800
+um if I'm going to go use something like
+
+965
+00:35:18,800 --> 00:35:19,440
+um
+
+966
+00:35:19,440 --> 00:35:21,840
+like code generation, I don't want to
+
+967
+00:35:21,840 --> 00:35:23,480
+have the model worry about everything
+
+968
+00:35:23,480 --> 00:35:25,520
+always all at once.
+
+969
+00:35:25,520 --> 00:35:27,720
+If I can have guarantee like what
+
+970
+00:35:27,720 --> 00:35:28,960
+guarantee do I provide at the first
+
+971
+00:35:28,960 --> 00:35:31,040
+sentence? I provide a guarantee that the
+
+972
+00:35:31,040 --> 00:35:34,000
+match of the old diff exists in some
+
+973
+00:35:34,000 --> 00:35:35,920
+shape or form matching the existing file
+
+974
+00:35:35,920 --> 00:35:37,080
+somehow.
+
+975
+00:35:37,080 --> 00:35:39,160
+And it doesn't matter that I use an LLM
+
+976
+00:35:39,160 --> 00:35:41,040
+or string replace inside of this method
+
+977
+00:35:41,040 --> 00:35:43,800
+to go find that exact line.
+
+978
+00:35:43,800 --> 00:35:45,600
+All that matters is that I was able to
+
+979
+00:35:45,600 --> 00:35:47,640
+find it.
+
+980
+00:35:47,640 --> 00:35:48,840
+And when I apply the match, this is a
+
+981
+00:35:48,840 --> 00:35:49,960
+string replace. I don't have to think
+
+982
+00:35:49,960 --> 00:35:51,720
+about it. But what I wanted to go do
+
+983
+00:35:51,720 --> 00:35:54,800
+here is I want to make sure that
+
+984
+00:35:54,800 --> 00:35:56,280
+um
+
+985
+00:35:56,280 --> 00:35:57,520
+Okay, so you have another LLM with a
+
+986
+00:35:57,520 --> 00:35:59,760
+very specific prompt that is like, hey,
+
+987
+00:35:59,760 --> 00:36:01,400
+here was the change you tried to make,
+
+988
+00:36:01,400 --> 00:36:03,680
+here was the original goal, here were
+
+989
+00:36:03,680 --> 00:36:05,880
+the errors. Exactly.
+
+990
+00:36:05,880 --> 00:36:07,520
+And generate a new diff basically.
+
+991
+00:36:07,520 --> 00:36:09,880
+I may not even need to give it
+
+992
+00:36:09,880 --> 00:36:12,520
+uh I may not even need to give it
+
+993
+00:36:12,520 --> 00:36:13,520
+uh
+
+994
+00:36:13,520 --> 00:36:15,240
+what
+
+995
+00:36:15,240 --> 00:36:18,280
+they called the original file.
+
+996
+00:36:18,280 --> 00:36:20,120
+Since it's just a purely syntactical
+
+997
+00:36:20,120 --> 00:36:21,880
+error approach.
+
+998
+00:36:21,880 --> 00:36:23,240
+What's nice about this
+
+999
+00:36:23,240 --> 00:36:24,400
+like
+
+1000
+00:36:24,400 --> 00:36:26,400
+validate it again or something.
+
+1001
+00:36:26,400 --> 00:36:27,800
+What's nice about this method is that
+
+1002
+00:36:27,800 --> 00:36:30,440
+this fix error method
+
+1003
+00:36:30,440 --> 00:36:35,230
+I'm going to try drawing a curvy arrow.
+
+1004
+00:36:38,470 --> 00:36:38,480
+The fix error method could really be a
+
+1005
+00:36:38,480 --> 00:36:39,720
+thing.
+
+1006
+00:36:39,720 --> 00:36:41,560
+Ooh, I tried. Uh could really be a thing
+
+1007
+00:36:41,560 --> 00:36:43,880
+that goes back to my update files with
+
+1008
+00:36:43,880 --> 00:36:46,280
+just a single file with a very specific
+
+1009
+00:36:46,280 --> 00:36:48,480
+instruction that I have hardcoded to
+
+1010
+00:36:48,480 --> 00:36:52,190
+help it analyze the errors.
+
+1011
+00:36:53,830 --> 00:36:53,840
+So, it could technically go back into my
+
+1012
+00:36:53,840 --> 00:36:55,440
+rebel loop
+
+1013
+00:36:55,440 --> 00:36:56,720
+and that I'm building out here and have
+
+1014
+00:36:56,720 --> 00:36:58,359
+it go generate this.
+
+1015
+00:36:58,359 --> 00:36:59,840
+And it could be like a version of this
+
+1016
+00:36:59,840 --> 00:37:01,440
+method that doesn't actually need to go
+
+1017
+00:37:01,440 --> 00:37:04,000
+run in terms of like um in terms of run
+
+1018
+00:37:04,000 --> 00:37:05,160
+the code. It just needs to go make it
+
+1019
+00:37:05,160 --> 00:37:06,960
+syntactically valid.
+
+1020
+00:37:06,960 --> 00:37:08,040
+So, rather than the errors, you would
+
+1021
+00:37:08,040 --> 00:37:09,400
+actually have kind of like some kind of
+
+1022
+00:37:09,400 --> 00:37:11,080
+new instructions here. Exactly. And
+
+1023
+00:37:11,080 --> 00:37:12,520
+you're kind of recursively you're
+
+1024
+00:37:12,520 --> 00:37:13,800
+recursing. And then what's the exit
+
+1025
+00:37:13,800 --> 00:37:15,400
+condition of this while loop? Is it
+
+1026
+00:37:15,400 --> 00:37:16,560
+like, you know,
+
+1027
+00:37:16,560 --> 00:37:19,080
+if not errors, break?
+
+1028
+00:37:19,080 --> 00:37:26,710
+Yeah, exactly.
+
+1029
+00:37:27,790 --> 00:37:27,800
+Cool.
+
+1030
+00:37:27,800 --> 00:37:29,560
+That's exactly it.
+
+1031
+00:37:29,560 --> 00:37:31,000
+Cool. And I can do something a little
+
+1032
+00:37:31,000 --> 00:37:32,359
+bit more sophisticated where like if I
+
+1033
+00:37:32,359 --> 00:37:34,440
+have like 50 errors or like 20 if like
+
+1034
+00:37:34,440 --> 00:37:36,160
+I've done this loop like five times, I
+
+1035
+00:37:36,160 --> 00:37:38,520
+break anyway.
+
+1036
+00:37:38,520 --> 00:37:41,200
+Yeah. Um but this kind of gets me there
+
+1037
+00:37:41,200 --> 00:37:42,680
+kind of most of the way there. And this
+
+1038
+00:37:42,680 --> 00:37:44,359
+is the same thing. I generate a diff, I
+
+1039
+00:37:44,359 --> 00:37:45,760
+go apply the diff, and I run this in a
+
+1040
+00:37:45,760 --> 00:37:46,760
+loop.
+
+1041
+00:37:46,760 --> 00:37:48,720
+It's pretty similar, but it's defined
+
+1042
+00:37:48,720 --> 00:37:50,200
+it's breaking down the problem in a way
+
+1043
+00:37:50,200 --> 00:37:52,240
+where the only goal of the thing when
+
+1044
+00:37:52,240 --> 00:37:54,400
+the only goal of the update file when it
+
+1045
+00:37:54,400 --> 00:37:57,120
+enters from the fix errors context
+
+1046
+00:37:57,120 --> 00:38:01,550
+is to just fix these errors.
+
+1047
+00:38:06,990 --> 00:38:07,000
+Cool. Following. Yeah, this is uh this
+
+1048
+00:38:07,000 --> 00:38:08,680
+is starting to feel like a an ambitious
+
+1049
+00:38:08,680 --> 00:38:11,880
+topic to try to cover in an hour, but um
+
+1050
+00:38:11,880 --> 00:38:13,840
+I think this is super interesting. The
+
+1051
+00:38:13,840 --> 00:38:15,440
+next thing that we really want to go do
+
+1052
+00:38:15,440 --> 00:38:17,160
+is actually find all the imports. And
+
+1053
+00:38:17,160 --> 00:38:19,520
+again, we can leverage the AST
+
+1054
+00:38:19,520 --> 00:38:29,110
+to go do this.
+
+1055
+00:38:30,670 --> 00:38:30,680
+So, we don't actually have to use an LLM
+
+1056
+00:38:30,680 --> 00:38:32,560
+to go do this. I mean, we could, but we
+
+1057
+00:38:32,560 --> 00:38:34,120
+can also just use the AST in the Python
+
+1058
+00:38:34,120 --> 00:38:36,000
+library to tell us what are all the
+
+1059
+00:38:36,000 --> 00:38:37,440
+imports that are imported into this
+
+1060
+00:38:37,440 --> 00:38:38,720
+file.
+
+1061
+00:38:38,720 --> 00:38:44,270
+And any new imports that are done,
+
+1062
+00:38:45,349 --> 00:38:45,359
+we can just
+
+1063
+00:38:45,359 --> 00:38:47,280
+import them.
+
+1064
+00:38:47,280 --> 00:38:48,520
+It turns out that this is a pretty
+
+1065
+00:38:48,520 --> 00:38:49,960
+straightforward task as long as you have
+
+1066
+00:38:49,960 --> 00:38:51,840
+all imports provided to you. So, if you
+
+1067
+00:38:51,840 --> 00:38:54,040
+see any files that are local files, we
+
+1068
+00:38:54,040 --> 00:38:55,200
+can know the difference between those
+
+1069
+00:38:55,200 --> 00:38:56,720
+because we can detect which are local
+
+1070
+00:38:56,720 --> 00:38:58,480
+files because we have access to all the
+
+1071
+00:38:58,480 --> 00:38:59,800
+source code.
+
+1072
+00:38:59,800 --> 00:39:01,400
+And we can just update the environment
+
+1073
+00:39:01,400 --> 00:39:03,520
+to import everything uh
+
+1074
+00:39:03,520 --> 00:39:05,080
+relative here.
+
+1075
+00:39:05,080 --> 00:39:08,400
+If we run into any errors,
+
+1076
+00:39:08,400 --> 00:39:18,870
+we do the same thing over here.
+
+1077
+00:39:21,990 --> 00:39:22,000
+Uh now, this one gets a little bit more
+
+1078
+00:39:22,000 --> 00:39:23,480
+um sophisticated in terms of how you
+
+1079
+00:39:23,480 --> 00:39:24,640
+would have to deal with these kinds of
+
+1080
+00:39:24,640 --> 00:39:25,880
+errors.
+
+1081
+00:39:25,880 --> 00:39:27,080
+And the reason for that is there's a
+
+1082
+00:39:27,080 --> 00:39:28,400
+couple of different types of errors that
+
+1083
+00:39:28,400 --> 00:39:30,560
+we can imagine that the system has.
+
+1084
+00:39:30,560 --> 00:39:31,760
+One of the types of errors that the
+
+1085
+00:39:31,760 --> 00:39:33,680
+system could end up having
+
+1086
+00:39:33,680 --> 00:39:35,440
+is the fact that
+
+1087
+00:39:35,440 --> 00:39:37,920
+stuff just doesn't exist. It's a made-up
+
+1088
+00:39:37,920 --> 00:39:39,320
+repository.
+
+1089
+00:39:39,320 --> 00:39:41,120
+In that case, there's no amount of
+
+1090
+00:39:41,120 --> 00:39:43,000
+install steps that we could go do to go
+
+1091
+00:39:43,000 --> 00:39:44,840
+fix this and we have to go back up to
+
+1092
+00:39:44,840 --> 00:39:47,040
+here and abort out of the system and
+
+1093
+00:39:47,040 --> 00:39:49,200
+somehow add some new observations into
+
+1094
+00:39:49,200 --> 00:39:52,560
+here that says do not use this library.
+
+1095
+00:39:52,560 --> 00:39:53,920
+The next type of error that we could
+
+1096
+00:39:53,920 --> 00:39:55,520
+really have is the fact that we just
+
+1097
+00:39:55,520 --> 00:39:57,480
+installed something incorrectly in a
+
+1098
+00:39:57,480 --> 00:39:58,560
+slightly different way. Like for
+
+1099
+00:39:58,560 --> 00:40:00,400
+example, one common mistake I make is I
+
+1100
+00:40:00,400 --> 00:40:02,160
+do pip install dot and
+
+1101
+00:40:02,160 --> 00:40:03,480
+where you have to do pip install python
+
+1102
+00:40:03,480 --> 00:40:05,280
+dash dot and.
+
+1103
+00:40:05,280 --> 00:40:07,600
+Mhm. And fixing that sort of error may
+
+1104
+00:40:07,600 --> 00:40:09,360
+require some other like there's a couple
+
+1105
+00:40:09,360 --> 00:40:12,280
+of different ways to go um inspect into
+
+1106
+00:40:12,280 --> 00:40:14,320
+that. One of them is you use like a web
+
+1107
+00:40:14,320 --> 00:40:16,240
+search agent to go and call it and say
+
+1108
+00:40:16,240 --> 00:40:17,920
+how could I fix this error?
+
+1109
+00:40:17,920 --> 00:40:20,760
+One is you go ahead and just like
+
+1110
+00:40:20,760 --> 00:40:23,000
+ask the LM how to go fix the error.
+
+1111
+00:40:23,000 --> 00:40:25,000
+And there's different approaches here,
+
+1112
+00:40:25,000 --> 00:40:29,710
+but in general you can do this.
+
+1113
+00:40:40,830 --> 00:40:40,840
+Why not both? You can do both.
+
+1114
+00:40:40,840 --> 00:40:42,080
+It's just a matter of time and
+
+1115
+00:40:42,080 --> 00:40:43,480
+expediency that you really have to think
+
+1116
+00:40:43,480 --> 00:40:47,110
+about when you build these systems.
+
+1117
+00:40:48,110 --> 00:40:48,120
+Um
+
+1118
+00:40:48,120 --> 00:40:51,910
+fix errors.
+
+1119
+00:40:54,750 --> 00:40:54,760
+Fix install errors um and I've also like
+
+1120
+00:40:54,760 --> 00:40:55,880
+fixed
+
+1121
+00:40:55,880 --> 00:40:59,440
+uh AST errors.
+
+1122
+00:40:59,440 --> 00:41:02,160
+Uh errors and then we're going to give
+
+1123
+00:41:02,160 --> 00:41:04,360
+it actually the file and we're going to
+
+1124
+00:41:04,360 --> 00:41:05,920
+do a new thing in here that we probably
+
+1125
+00:41:05,920 --> 00:41:06,920
+have to think about that I forgot to
+
+1126
+00:41:06,920 --> 00:41:09,160
+include in here which is
+
+1127
+00:41:09,160 --> 00:41:10,480
+uh you want to have some sort of
+
+1128
+00:41:10,480 --> 00:41:12,160
+observations object that you're kind of
+
+1129
+00:41:12,160 --> 00:41:14,080
+tracking over time that you're going to
+
+1130
+00:41:14,080 --> 00:41:18,270
+pass into this.
+
+1131
+00:41:19,990 --> 00:41:20,000
+The observations object needs to be a
+
+1132
+00:41:20,000 --> 00:41:21,480
+thing that is passed into every other
+
+1133
+00:41:21,480 --> 00:41:24,400
+object downstream.
+
+1134
+00:41:24,400 --> 00:41:27,040
+That you can somehow modify in some way
+
+1135
+00:41:27,040 --> 00:41:28,720
+and then go ahead and update as well. So
+
+1136
+00:41:28,720 --> 00:41:29,960
+in this case you might need to go ahead
+
+1137
+00:41:29,960 --> 00:41:34,550
+and update the observations.
+
+1138
+00:41:57,990 --> 00:41:58,000
+There we go. And then you kind of just
+
+1139
+00:41:58,000 --> 00:42:00,160
+want to abort out of this.
+
+1140
+00:42:00,160 --> 00:42:02,910
+Raise
+
+1141
+00:42:05,750 --> 00:42:05,760
+stop exception.
+
+1142
+00:42:05,760 --> 00:42:07,880
+And then
+
+1143
+00:42:07,880 --> 00:42:11,000
+on this method
+
+1144
+00:42:11,000 --> 00:42:20,190
+try
+
+1145
+00:42:22,190 --> 00:42:22,200
+catch. I can't write to the code very
+
+1146
+00:42:22,200 --> 00:42:27,870
+fast.
+
+1147
+00:42:29,510 --> 00:42:29,520
+Uh and I want to abort out of this loop
+
+1148
+00:42:29,520 --> 00:42:30,840
+and really just add some unfixable
+
+1149
+00:42:30,840 --> 00:42:32,120
+errors down here.
+
+1150
+00:42:32,120 --> 00:42:33,320
+But the whole
+
+1151
+00:42:33,320 --> 00:42:34,840
+I think the whole point of what I really
+
+1152
+00:42:34,840 --> 00:42:36,360
+wanted to cover today is that when
+
+1153
+00:42:36,360 --> 00:42:38,080
+you're trying to go build like a diffing
+
+1154
+00:42:38,080 --> 00:42:40,640
+agent the way most people apply this
+
+1155
+00:42:40,640 --> 00:42:42,760
+agent is a very simple loop of ask the
+
+1156
+00:42:42,760 --> 00:42:45,160
+LM to go fix something, if it breaks,
+
+1157
+00:42:45,160 --> 00:42:46,920
+give it the error and go build that loop
+
+1158
+00:42:46,920 --> 00:42:48,360
+forever.
+
+1159
+00:42:48,360 --> 00:42:49,800
+And when you're trying to go do that
+
+1160
+00:42:49,800 --> 00:42:51,280
+system,
+
+1161
+00:42:51,280 --> 00:42:53,040
+the problem with that is you run into a
+
+1162
+00:42:53,040 --> 00:42:55,560
+lot of brittle edge cases that the model
+
+1163
+00:42:55,560 --> 00:42:58,240
+just cannot fix.
+
+1164
+00:42:58,240 --> 00:42:59,600
+And specifically what you're running
+
+1165
+00:42:59,600 --> 00:43:01,120
+into is the same problem that we usually
+
+1166
+00:43:01,120 --> 00:43:03,840
+talk about which is context management.
+
+1167
+00:43:03,840 --> 00:43:05,680
+Which is if you're not manually building
+
+1168
+00:43:05,680 --> 00:43:08,400
+the context up out of the system
+
+1169
+00:43:08,400 --> 00:43:10,960
+it is very very hard for you to navigate
+
+1170
+00:43:10,960 --> 00:43:12,280
+and get the model to go output it
+
+1171
+00:43:12,280 --> 00:43:14,200
+correctly. For example,
+
+1172
+00:43:14,200 --> 00:43:18,280
+maybe GPT-5 or 4.1 can go do this in one
+
+1173
+00:43:18,280 --> 00:43:20,920
+shot for a lot of problems. But GPT-4O
+
+1174
+00:43:20,920 --> 00:43:23,520
+mini cannot go do this very well. It
+
+1175
+00:43:23,520 --> 00:43:25,920
+will just struggle to apply a diff. And
+
+1176
+00:43:25,920 --> 00:43:27,360
+it will struggle to
+
+1177
+00:43:27,360 --> 00:43:27,840
+perfect it.
+
+1178
+00:43:27,840 --> 00:43:30,400
+ability to actually just like understand
+
+1179
+00:43:30,400 --> 00:43:31,960
+full context when it especially as that
+
+1180
+00:43:31,960 --> 00:43:33,880
+context window gets longer with more and
+
+1181
+00:43:33,880 --> 00:43:36,800
+different kinds of errors. Um
+
+1182
+00:43:36,800 --> 00:43:38,400
+yeah you lose you kind of lose the
+
+1183
+00:43:38,400 --> 00:43:39,880
+thread and you spin out, right?
+
+1184
+00:43:39,880 --> 00:43:42,080
+Exactly. So the whole point when we
+
+1185
+00:43:42,080 --> 00:43:43,360
+talked about like the side protection
+
+1186
+00:43:43,360 --> 00:43:44,800
+generation where we're actually able to
+
+1187
+00:43:44,800 --> 00:43:46,760
+remove these two messages out of the
+
+1188
+00:43:46,760 --> 00:43:48,560
+context window and not have to have them
+
+1189
+00:43:48,560 --> 00:43:50,560
+long term and we only keep them around
+
+1190
+00:43:50,560 --> 00:43:53,520
+temporarily becomes even more important
+
+1191
+00:43:53,520 --> 00:43:54,880
+when you're doing a complex task like
+
+1192
+00:43:54,880 --> 00:43:56,280
+code generation.
+
+1193
+00:43:56,280 --> 00:43:57,960
+And the most important part to do is be
+
+1194
+00:43:57,960 --> 00:43:59,640
+able to decompose the problem to very
+
+1195
+00:43:59,640 --> 00:44:01,240
+small problems
+
+1196
+00:44:01,240 --> 00:44:03,040
+and then say all I have to do is find a
+
+1197
+00:44:03,040 --> 00:44:05,560
+match. Cool. I will take the diff. If I
+
+1198
+00:44:05,560 --> 00:44:07,600
+can find the exact string match, I'll go
+
+1199
+00:44:07,600 --> 00:44:09,120
+do it. If I can't, I'll use an LM to
+
+1200
+00:44:09,120 --> 00:44:10,600
+find the line of code that's referring
+
+1201
+00:44:10,600 --> 00:44:12,040
+to.
+
+1202
+00:44:12,040 --> 00:44:14,320
+And if none of that works
+
+1203
+00:44:14,320 --> 00:44:16,200
+then I'll literally just abort and add
+
+1204
+00:44:16,200 --> 00:44:17,960
+an observation to my system and then
+
+1205
+00:44:17,960 --> 00:44:19,920
+have it go do this. And at some point
+
+1206
+00:44:19,920 --> 00:44:22,440
+when it gets to a good state I want to
+
+1207
+00:44:22,440 --> 00:44:25,440
+go ahead and clear the observations.
+
+1208
+00:44:25,440 --> 00:44:27,359
+Cuz they're no longer interesting to the
+
+1209
+00:44:27,359 --> 00:44:28,920
+like next set of problems that we're
+
+1210
+00:44:28,920 --> 00:44:31,600
+solving or the next step back plan.
+
+1211
+00:44:31,600 --> 00:44:32,840
+Exactly.
+
+1212
+00:44:32,840 --> 00:44:34,160
+And it's kind of me tracking this
+
+1213
+00:44:34,160 --> 00:44:36,200
+history over time. And then what I
+
+1214
+00:44:36,200 --> 00:44:37,480
+really want to do is I want to go
+
+1215
+00:44:37,480 --> 00:44:39,320
+leverage existing tools that are really
+
+1216
+00:44:39,320 --> 00:44:41,400
+good for doing certain kinds of tasks.
+
+1217
+00:44:41,400 --> 00:44:43,040
+Like the LM should not to be doing
+
+1218
+00:44:43,040 --> 00:44:44,800
+syntax validation.
+
+1219
+00:44:44,800 --> 00:44:48,000
+I likely also shouldn't be using an LM
+
+1220
+00:44:48,000 --> 00:44:50,920
+to look at the whole file and tell me
+
+1221
+00:44:50,920 --> 00:44:53,160
+here's all the errors go go find out
+
+1222
+00:44:53,160 --> 00:44:55,000
+what they are and go fix them.
+
+1223
+00:44:55,000 --> 00:44:57,480
+If I instead use an AST to tell me this,
+
+1224
+00:44:57,480 --> 00:44:59,240
+then I can give it the exact pinpoint of
+
+1225
+00:44:59,240 --> 00:45:00,760
+surrounding code and say go fix the
+
+1226
+00:45:00,760 --> 00:45:03,040
+syntax.
+
+1227
+00:45:03,040 --> 00:45:04,640
+Yeah, I think Jonathan that's exactly
+
+1228
+00:45:04,640 --> 00:45:06,840
+right. And like the LM's job is to turn
+
+1229
+00:45:06,840 --> 00:45:10,040
+context into new tokens, new code. Your
+
+1230
+00:45:10,040 --> 00:45:12,000
+job of everything else is to get exactly
+
+1231
+00:45:12,000 --> 00:45:14,200
+the right most optimal context into the
+
+1232
+00:45:14,200 --> 00:45:16,200
+LM so it can do that as well as possible
+
+1233
+00:45:16,200 --> 00:45:18,640
+as cheaply as possible. Exactly. And
+
+1234
+00:45:18,640 --> 00:45:20,960
+then same with installs. Instead of
+
+1235
+00:45:20,960 --> 00:45:22,720
+asking instead of running the code and
+
+1236
+00:45:22,720 --> 00:45:24,680
+telling me what I need to install, I can
+
+1237
+00:45:24,680 --> 00:45:26,240
+just find
+
+1238
+00:45:26,240 --> 00:45:28,960
+all the imports. So like for example,
+
+1239
+00:45:28,960 --> 00:45:29,760
+there's a
+
+1240
+00:45:29,760 --> 00:45:31,040
+there's a python library in here that
+
+1241
+00:45:31,040 --> 00:45:32,800
+you can use.
+
+1242
+00:45:32,800 --> 00:45:34,400
+It's called like
+
+1243
+00:45:34,400 --> 00:45:36,160
+import
+
+1244
+00:45:36,160 --> 00:45:38,240
+AST.
+
+1245
+00:45:38,240 --> 00:45:43,160
+Def find find imports.
+
+1246
+00:45:43,160 --> 00:45:45,160
+Uh code.
+
+1247
+00:45:45,160 --> 00:45:48,720
+You can literally just call AST.parse.
+
+1248
+00:45:48,720 --> 00:45:50,240
+And you can literally just walk through
+
+1249
+00:45:50,240 --> 00:45:52,359
+this tree and find everything that's a
+
+1250
+00:45:52,359 --> 00:45:55,400
+module of AST import.
+
+1251
+00:45:55,400 --> 00:45:56,600
+And it will literally just tell you
+
+1252
+00:45:56,600 --> 00:46:03,310
+exactly what this node is.
+
+1253
+00:46:05,190 --> 00:46:05,200
+And it will actually yield out exact all
+
+1254
+00:46:05,200 --> 00:46:07,640
+the all the imports for you.
+
+1255
+00:46:07,640 --> 00:46:11,430
+You can get import from as well.
+
+1256
+00:46:12,470 --> 00:46:12,480
+Um
+
+1257
+00:46:12,480 --> 00:46:13,720
+and I believe this will do everything
+
+1258
+00:46:13,720 --> 00:46:15,160
+for you.
+
+1259
+00:46:15,160 --> 00:46:16,880
+Now this won't catch every import cuz it
+
+1260
+00:46:16,880 --> 00:46:18,520
+will miss out on some of the most like
+
+1261
+00:46:18,520 --> 00:46:21,040
+edge casey imports that you have.
+
+1262
+00:46:21,040 --> 00:46:24,000
+But you can still detect most of them
+
+1263
+00:46:24,000 --> 00:46:25,840
+from here.
+
+1264
+00:46:25,840 --> 00:46:27,880
+Um now the other thing and I can run
+
+1265
+00:46:27,880 --> 00:46:29,120
+this code if people are curious. The
+
+1266
+00:46:29,120 --> 00:46:30,400
+other thing that you're able to go do is
+
+1267
+00:46:30,400 --> 00:46:32,960
+I could also go generate this um yeah I
+
+1268
+00:46:32,960 --> 00:46:34,560
+can also go generate this from actual
+
+1269
+00:46:34,560 --> 00:46:35,960
+code as well.
+
+1270
+00:46:35,960 --> 00:46:45,310
+Function find imports.
+
+1271
+00:46:49,110 --> 00:46:49,120
+Um let's just go write this. Test.
+
+1272
+00:46:49,120 --> 00:46:53,070
+Oops.
+
+1273
+00:46:54,670 --> 00:46:54,680
+If I give it the same code that I have
+
+1274
+00:46:54,680 --> 00:47:01,550
+down below
+
+1275
+00:47:06,030 --> 00:47:06,040
+Oops.
+
+1276
+00:47:06,040 --> 00:47:06,560
+If I give it
+
+1277
+00:47:06,560 --> 00:47:08,920
+Should be LM parse out all the imports.
+
+1278
+00:47:08,920 --> 00:47:10,560
+And then I can just find LM parse out
+
+1279
+00:47:10,560 --> 00:47:18,230
+all the imports. Um
+
+1280
+00:47:25,110 --> 00:47:25,120
+And it will probably respond fine.
+
+1281
+00:47:25,120 --> 00:47:26,040
+And it says the only import is
+
+1282
+00:47:26,040 --> 00:47:27,640
+operations.
+
+1283
+00:47:27,640 --> 00:47:29,560
+Which if I look at the code is actually
+
+1284
+00:47:29,560 --> 00:47:32,030
+true.
+
+1285
+00:47:39,990 --> 00:47:40,000
+it will pull it out. And the beauty of
+
+1286
+00:47:40,000 --> 00:47:41,800
+this thing is there's like this art to
+
+1287
+00:47:41,800 --> 00:47:43,040
+kind of figure out what kind of model
+
+1288
+00:47:43,040 --> 00:47:44,200
+you want to go use for these kinds of
+
+1289
+00:47:44,200 --> 00:47:45,160
+things.
+
+1290
+00:47:45,160 --> 00:47:46,720
+If I were someone what I would want to
+
+1291
+00:47:46,720 --> 00:47:47,720
+do is I'd want to figure out the
+
+1292
+00:47:47,720 --> 00:47:50,080
+smallest model that I can use for each
+
+1293
+00:47:50,080 --> 00:47:51,400
+task.
+
+1294
+00:47:51,400 --> 00:47:53,120
+And in this case finding imports is a
+
+1295
+00:47:53,120 --> 00:47:54,359
+pretty small task so I could probably
+
+1296
+00:47:54,359 --> 00:47:55,680
+throw GPT-4O mini at it. I could
+
+1297
+00:47:55,680 --> 00:47:57,000
+probably throw like a deep sequel or
+
+1298
+00:47:57,000 --> 00:47:58,760
+even like I don't know. Probably like
+
+1299
+00:47:58,760 --> 00:47:59,720
+something.
+
+1300
+00:47:59,720 --> 00:48:02,160
+Like maybe even like a llama
+
+1301
+00:48:02,160 --> 00:48:19,150
+8B.
+
+1302
+00:48:21,590 --> 00:48:21,600
+Oh, that's pretty good.
+
+1303
+00:48:21,600 --> 00:48:24,200
+If you put it out, I think I have llama
+
+1304
+00:48:24,200 --> 00:48:25,520
+uh latest.
+
+1305
+00:48:25,520 --> 00:48:30,349
+I think I have a llama running.
+
+1306
+00:48:32,070 --> 00:48:32,080
+I do not.
+
+1307
+00:48:32,080 --> 00:48:33,000
+Um I can start
+
+1308
+00:48:33,000 --> 00:48:35,480
+know if you need the latest tag, do you?
+
+1309
+00:48:35,480 --> 00:48:39,960
+Uh llama PS. O LS.
+
+1310
+00:48:39,960 --> 00:48:45,150
+O llama LS.
+
+1311
+00:48:48,310 --> 00:48:48,320
+Do I have any of these?
+
+1312
+00:48:48,320 --> 00:48:49,840
+Yeah, you kind of do need the latest
+
+1313
+00:48:49,840 --> 00:48:52,240
+tag. It's kind of annoying.
+
+1314
+00:48:52,240 --> 00:48:54,520
+Uh do you want latest?
+
+1315
+00:48:54,520 --> 00:48:55,600
+Uh
+
+1316
+00:48:55,600 --> 00:48:58,160
+V1.
+
+1317
+00:48:58,160 --> 00:48:59,760
+Um I'll figure out why. I'm probably
+
+1318
+00:48:59,760 --> 00:49:01,160
+missing some
+
+1319
+00:49:01,160 --> 00:49:02,760
+really parameter here.
+
+1320
+00:49:02,760 --> 00:49:04,120
+Um
+
+1321
+00:49:04,120 --> 00:49:05,680
+so I'm going to go do that.
+
+1322
+00:49:05,680 --> 00:49:07,680
+But really determining what model you
+
+1323
+00:49:07,680 --> 00:49:08,880
+have to go use can make a huge
+
+1324
+00:49:08,880 --> 00:49:10,160
+difference. So in this case what I
+
+1325
+00:49:10,160 --> 00:49:11,800
+really want is if I all I want to do is
+
+1326
+00:49:11,800 --> 00:49:13,040
+find imports and I don't want to write
+
+1327
+00:49:13,040 --> 00:49:15,120
+the AST code over here
+
+1328
+00:49:15,120 --> 00:49:17,640
+I can literally just use O llama to go
+
+1329
+00:49:17,640 --> 00:49:18,960
+leverage instead because I know this is
+
+1330
+00:49:18,960 --> 00:49:21,760
+a small enough task. And if 90% of my
+
+1331
+00:49:21,760 --> 00:49:23,520
+system that I'm that I'm writing over
+
+1332
+00:49:23,520 --> 00:49:24,440
+here
+
+1333
+00:49:24,440 --> 00:49:27,080
+ends up using mostly a small small
+
+1334
+00:49:27,080 --> 00:49:29,760
+model, but then some of it ends up using
+
+1335
+00:49:29,760 --> 00:49:32,400
+like let's say GPT-4O, I can get a lot
+
+1336
+00:49:32,400 --> 00:49:33,960
+of value
+
+1337
+00:49:33,960 --> 00:49:35,920
+just by reducing the amount of cost that
+
+1338
+00:49:35,920 --> 00:49:37,720
+I have to go do in in terms of latency
+
+1339
+00:49:37,720 --> 00:49:40,040
+and in terms of accuracy.
+
+1340
+00:49:40,040 --> 00:49:41,840
+Because the most important part I want
+
+1341
+00:49:41,840 --> 00:49:43,840
+to do the hard part as much as possible
+
+1342
+00:49:43,840 --> 00:49:46,120
+with a big model. I want to do this I
+
+1343
+00:49:46,120 --> 00:49:48,840
+want to do the small parts
+
+1344
+00:49:48,840 --> 00:49:51,320
+uh with smaller models.
+
+1345
+00:49:51,320 --> 00:49:53,280
+Um and because when I'm going to go run
+
+1346
+00:49:53,280 --> 00:49:54,520
+this
+
+1347
+00:49:54,520 --> 00:49:55,960
+I run into this problem where like
+
+1348
+00:49:55,960 --> 00:49:58,000
+generate diffs, especially if I'm on day
+
+1349
+00:49:58,000 --> 00:50:00,400
+zero of my system, I do not want to go
+
+1350
+00:50:00,400 --> 00:50:03,680
+ahead and like get all of this down
+
+1351
+00:50:03,680 --> 00:50:05,240
+in terms of the cost and accuracy. I
+
+1352
+00:50:05,240 --> 00:50:06,600
+just want the accuracy to be high and I
+
+1353
+00:50:06,600 --> 00:50:08,560
+don't care about cost. I'll throw this
+
+1354
+00:50:08,560 --> 00:50:10,000
+at GPT-4o.
+
+1355
+00:50:10,000 --> 00:50:12,120
+And because I've spent more time on on
+
+1356
+00:50:12,120 --> 00:50:14,200
+applied diffs, more of this will be
+
+1357
+00:50:14,200 --> 00:50:16,160
+smaller models. And what you do is you
+
+1358
+00:50:16,160 --> 00:50:18,120
+incrementally replace parts of your
+
+1359
+00:50:18,120 --> 00:50:19,840
+pipeline with smaller and smaller
+
+1360
+00:50:19,840 --> 00:50:22,560
+models. And as you add smaller models,
+
+1361
+00:50:22,560 --> 00:50:24,200
+the real work around to make smaller
+
+1362
+00:50:24,200 --> 00:50:26,680
+models better is one some of the prompt
+
+1363
+00:50:26,680 --> 00:50:28,600
+engineering stuff that you end up doing.
+
+1364
+00:50:28,600 --> 00:50:30,440
+But the real thing is really about like
+
+1365
+00:50:30,440 --> 00:50:33,960
+adding supporting systems around them.
+
+1366
+00:50:33,960 --> 00:50:35,920
+So you can actually go ahead and make
+
+1367
+00:50:35,920 --> 00:50:37,440
+them better. So in this case, leveraging
+
+1368
+00:50:37,440 --> 00:50:40,280
+the AST allows me to use a smaller model
+
+1369
+00:50:40,280 --> 00:50:41,960
+because the goal of the smaller model is
+
+1370
+00:50:41,960 --> 00:50:44,320
+no longer generate perfect code and fix
+
+1371
+00:50:44,320 --> 00:50:46,600
+all of your errors. The goal is generate
+
+1372
+00:50:46,600 --> 00:50:48,280
+something that's pretty close to correct
+
+1373
+00:50:48,280 --> 00:50:51,880
+and be able to fix syntactical errors.
+
+1374
+00:50:51,880 --> 00:50:53,720
+It doesn't have to fix logical errors.
+
+1375
+00:50:53,720 --> 00:50:56,560
+It only has to fix syntactical errors.
+
+1376
+00:50:56,560 --> 00:50:58,800
+And then when I go to validate, I live
+
+1377
+00:50:58,800 --> 00:51:00,560
+in this world where I'm again validating
+
+1378
+00:51:00,560 --> 00:51:02,400
+large running code.
+
+1379
+00:51:02,400 --> 00:51:04,720
+And I might have even something detect
+
+1380
+00:51:04,720 --> 00:51:06,440
+what kind of error this is. If it's a
+
+1381
+00:51:06,440 --> 00:51:08,320
+simple error, I'll toss it at a smaller
+
+1382
+00:51:08,320 --> 00:51:10,640
+model. If it's a more complex error,
+
+1383
+00:51:10,640 --> 00:51:14,040
+I'll toss it at GPT-4o or 4.1.
+
+1384
+00:51:14,040 --> 00:51:14,320
+And
+
+1385
+00:51:14,320 --> 00:51:15,880
+And so you're just constantly adding new
+
+1386
+00:51:15,880 --> 00:51:17,760
+probes and knobs and dials on your
+
+1387
+00:51:17,760 --> 00:51:19,920
+pipeline that you can make changes and
+
+1388
+00:51:19,920 --> 00:51:21,320
+you can swap out a bigger slightly
+
+1389
+00:51:21,320 --> 00:51:23,800
+bigger model slightly smaller model etc.
+
+1390
+00:51:23,800 --> 00:51:25,840
+Exactly. And in the end all of this is
+
+1391
+00:51:25,840 --> 00:51:27,560
+really about a distribution play, right?
+
+1392
+00:51:27,560 --> 00:51:29,160
+We have a distri- oops.
+
+1393
+00:51:29,160 --> 00:51:31,520
+How do I draw a line?
+
+1394
+00:51:31,520 --> 00:51:32,640
+Uh
+
+1395
+00:51:32,640 --> 00:51:35,280
+up here. Yeah. Draw a line. Okay. All I
+
+1396
+00:51:35,280 --> 00:51:37,240
+really want is I want a distribution
+
+1397
+00:51:37,240 --> 00:51:39,160
+where the majority of my users fall
+
+1398
+00:51:39,160 --> 00:51:41,160
+under this and I have some long tail of
+
+1399
+00:51:41,160 --> 00:51:42,720
+this and where this is like dollars
+
+1400
+00:51:42,720 --> 00:51:45,680
+going up higher.
+
+1401
+00:51:45,680 --> 00:51:46,880
+I just want I want to make sure that
+
+1402
+00:51:46,880 --> 00:51:50,000
+most of my users fall under this domain.
+
+1403
+00:51:50,000 --> 00:51:52,040
+If like 5% of my users are extremely
+
+1404
+00:51:52,040 --> 00:51:54,560
+expensive, that doesn't really matter
+
+1405
+00:51:54,560 --> 00:51:57,040
+for most use cases. If 5% is really
+
+1406
+00:51:57,040 --> 00:51:58,840
+slow, it doesn't really matter. It is
+
+1407
+00:51:58,840 --> 00:52:00,560
+going to be really really hard for
+
+1408
+00:52:00,560 --> 00:52:02,080
+someone to build an AI pipeline that
+
+1409
+00:52:02,080 --> 00:52:04,640
+looks like this
+
+1410
+00:52:04,640 --> 00:52:06,640
+while having good accuracy. That's just
+
+1411
+00:52:06,640 --> 00:52:08,040
+not the way AI pipelines can work
+
+1412
+00:52:08,040 --> 00:52:09,840
+because of the nature of problems that
+
+1413
+00:52:09,840 --> 00:52:12,880
+users will constantly ask you to go do.
+
+1414
+00:52:12,880 --> 00:52:14,800
+So one way to deal with this, especially
+
+1415
+00:52:14,800 --> 00:52:16,920
+when your problem is very very expansive
+
+1416
+00:52:16,920 --> 00:52:19,040
+like generating code, is you design your
+
+1417
+00:52:19,040 --> 00:52:20,760
+pipeline from the very beginning to kind
+
+1418
+00:52:20,760 --> 00:52:23,000
+of follow this sort of distribution.
+
+1419
+00:52:23,000 --> 00:52:25,560
+And the whole point is your pipeline Oh,
+
+1420
+00:52:25,560 --> 00:52:27,400
+how do I make this thinner? I hate this.
+
+1421
+00:52:27,400 --> 00:52:28,720
+Okay.
+
+1422
+00:52:28,720 --> 00:52:30,200
+Your pipeline starts off at a
+
+1423
+00:52:30,200 --> 00:52:32,200
+distribution that looks like this. It's
+
+1424
+00:52:32,200 --> 00:52:34,800
+very expensive. Right. You're using big
+
+1425
+00:52:34,800 --> 00:52:36,200
+model. This is like what you keep the
+
+1426
+00:52:36,200 --> 00:52:38,000
+kind of the recurring point is like
+
+1427
+00:52:38,000 --> 00:52:39,960
+start with a big model that can do a
+
+1428
+00:52:39,960 --> 00:52:41,680
+bunch of things pretty well and then
+
+1429
+00:52:41,680 --> 00:52:44,800
+slowly over time like as you say, oh,
+
+1430
+00:52:44,800 --> 00:52:45,960
+this is worth building. This is
+
+1431
+00:52:45,960 --> 00:52:47,200
+valuable. We want to invest more
+
+1432
+00:52:47,200 --> 00:52:48,360
+engineering time on this. You're
+
+1433
+00:52:48,360 --> 00:52:50,440
+constantly shifting that code that that
+
+1434
+00:52:50,440 --> 00:52:52,160
+curve to the left and making it kind of
+
+1435
+00:52:52,160 --> 00:52:52,280
+better.
+
+1436
+00:52:52,280 --> 00:52:54,720
+Exactly. So like what I what I can do by
+
+1437
+00:52:54,720 --> 00:52:56,640
+swapping just applied diff section cuz
+
+1438
+00:52:56,640 --> 00:52:58,400
+applied diff is almost definitely the
+
+1439
+00:52:58,400 --> 00:53:00,640
+most expensive part of my pipeline cuz
+
+1440
+00:53:00,640 --> 00:53:01,400
+that's where it's going to make
+
+1441
+00:53:01,400 --> 00:53:02,800
+mistakes. I have to re-correct them and
+
+1442
+00:53:02,800 --> 00:53:03,960
+I have to loop in that forever. It's
+
+1443
+00:53:03,960 --> 00:53:05,680
+probably not in generating diff. It's
+
+1444
+00:53:05,680 --> 00:53:07,440
+probably in applied diff.
+
+1445
+00:53:07,440 --> 00:53:09,280
+By shifting applied diff to be better, I
+
+1446
+00:53:09,280 --> 00:53:10,600
+probably just shift my pipeline to the
+
+1447
+00:53:10,600 --> 00:53:13,080
+whole very much to the left.
+
+1448
+00:53:13,080 --> 00:53:14,560
+And then eventually what I can do is I
+
+1449
+00:53:14,560 --> 00:53:15,960
+can work on generating things that are
+
+1450
+00:53:15,960 --> 00:53:17,400
+really really good for Python and maybe
+
+1451
+00:53:17,400 --> 00:53:19,640
+even fine-tune a tiny model for that and
+
+1452
+00:53:19,640 --> 00:53:21,760
+slowly just over time shift my pipeline
+
+1453
+00:53:21,760 --> 00:53:24,160
+over. But this is the whole point of
+
+1454
+00:53:24,160 --> 00:53:26,640
+where you move your pipeline over is all
+
+1455
+00:53:26,640 --> 00:53:28,240
+about
+
+1456
+00:53:28,240 --> 00:53:30,480
+moving it to the left and adding
+
+1457
+00:53:30,480 --> 00:53:33,320
+engineering over here. What we're really
+
+1458
+00:53:33,320 --> 00:53:34,800
+doing is we're applying engineering to
+
+1459
+00:53:34,800 --> 00:53:36,920
+make it cheaper, faster, more accurate
+
+1460
+00:53:36,920 --> 00:53:38,200
+by taking a better control of the
+
+1461
+00:53:38,200 --> 00:53:39,400
+system.
+
+1462
+00:53:39,400 --> 00:53:40,880
+Does that describe the high-level thing
+
+1463
+00:53:40,880 --> 00:53:42,160
+of what we were trying to do in today's
+
+1464
+00:53:42,160 --> 00:53:43,800
+conversation? It was a It was pretty
+
+1465
+00:53:43,800 --> 00:53:45,160
+ambitious, I guess, to take all of this
+
+1466
+00:53:45,160 --> 00:53:46,280
+and go implement all of this from
+
+1467
+00:53:46,280 --> 00:53:47,640
+scratch.
+
+1468
+00:53:47,640 --> 00:53:49,200
+Yeah, there's a lot of requests for
+
+1469
+00:53:49,200 --> 00:53:50,800
+people want to get working code for all
+
+1470
+00:53:50,800 --> 00:53:52,480
+of this. So maybe maybe we'll have a
+
+1471
+00:53:52,480 --> 00:53:53,720
+hack day this weekend and
+
+1472
+00:53:53,720 --> 00:53:54,920
+Yeah. Yeah, we'll go do that. We'll go
+
+1473
+00:53:54,920 --> 00:53:56,080
+to hack day and we'll give you like
+
+1474
+00:53:56,080 --> 00:53:57,520
+working code from this sample and get
+
+1475
+00:53:57,520 --> 00:54:00,000
+this out. Um no, this is good and I I I
+
+1476
+00:54:00,000 --> 00:54:01,520
+think what's also like what what wasn't
+
+1477
+00:54:01,520 --> 00:54:03,120
+explicitly mentioned but is really
+
+1478
+00:54:03,120 --> 00:54:05,280
+really important to keep in mind is like
+
+1479
+00:54:05,280 --> 00:54:06,960
+every single one of these techniques
+
+1480
+00:54:06,960 --> 00:54:08,400
+that is like, oh, cool. We'll take a big
+
+1481
+00:54:08,400 --> 00:54:09,600
+model and then we'll make it cheaper,
+
+1482
+00:54:09,600 --> 00:54:11,640
+smaller, faster, better. You could take
+
+1483
+00:54:11,640 --> 00:54:14,320
+all of those techniques and just drop in
+
+1484
+00:54:14,320 --> 00:54:17,480
+a big model again and suddenly because
+
+1485
+00:54:17,480 --> 00:54:19,040
+you're doing these accuracy techniques,
+
+1486
+00:54:19,040 --> 00:54:20,680
+your big model is going to perform a lot
+
+1487
+00:54:20,680 --> 00:54:23,080
+better than just a naively single shot
+
+1488
+00:54:23,080 --> 00:54:25,440
+single prompted big model.
+
+1489
+00:54:25,440 --> 00:54:27,960
+Yeah. Exactly. Exactly.
+
+1490
+00:54:27,960 --> 00:54:29,160
+I think what we should really do, Dax,
+
+1491
+00:54:29,160 --> 00:54:30,480
+is we should take this code and actually
+
+1492
+00:54:30,480 --> 00:54:31,760
+just turn this into real code cuz I
+
+1493
+00:54:31,760 --> 00:54:33,040
+don't think I could have pseudo coded
+
+1494
+00:54:33,040 --> 00:54:35,080
+and written the code in real time.
+
+1495
+00:54:35,080 --> 00:54:36,480
+Yeah. Are we going to build an AI to
+
+1496
+00:54:36,480 --> 00:54:37,840
+clone this weekend? I'm doing a I'm
+
+1497
+00:54:37,840 --> 00:54:39,840
+doing a hack day on Friday, dude. Maybe
+
+1498
+00:54:39,840 --> 00:54:41,800
+we'll have you join remote. Yeah. We'll
+
+1499
+00:54:41,800 --> 00:54:43,200
+go do that. So we'll probably send out
+
+1500
+00:54:43,200 --> 00:54:44,680
+an email slightly later with today's
+
+1501
+00:54:44,680 --> 00:54:47,359
+session with the working code. Uh expect
+
+1502
+00:54:47,359 --> 00:54:49,080
+it probably around the weekend.
+
+1503
+00:54:49,080 --> 00:54:51,480
+Um are there questions that people have?
+
+1504
+00:54:51,480 --> 00:54:52,480
+I know there were a couple that were
+
+1505
+00:54:52,480 --> 00:54:57,310
+asked as we were going on.
+
+1506
+00:54:58,990 --> 00:54:59,000
+Yeah, feel free to come off mute mute
+
+1507
+00:54:59,000 --> 00:55:00,840
+and shout and tell us what you liked or
+
+1508
+00:55:00,840 --> 00:55:02,600
+what was confusing still or drop it in
+
+1509
+00:55:02,600 --> 00:55:05,120
+the chat. Hey hey Vaibhav. Hey Dax.
+
+1510
+00:55:05,120 --> 00:55:06,680
+Thanks thanks for the great session. Um
+
+1511
+00:55:06,680 --> 00:55:07,680
+so this
+
+1512
+00:55:07,680 --> 00:55:10,920
+this was super great for the problem of,
+
+1513
+00:55:10,920 --> 00:55:12,359
+you know, making targeted changes in
+
+1514
+00:55:12,359 --> 00:55:14,080
+code. I'm curious if you guys have any
+
+1515
+00:55:14,080 --> 00:55:16,560
+thoughts of, you know, how how how the
+
+1516
+00:55:16,560 --> 00:55:18,080
+problem kind of changes when we're
+
+1517
+00:55:18,080 --> 00:55:19,080
+thinking of, you know, building
+
+1518
+00:55:19,080 --> 00:55:20,440
+something from scratch, right? So like
+
+1519
+00:55:20,440 --> 00:55:22,640
+if I were to go to, you know, StackBlitz
+
+1520
+00:55:22,640 --> 00:55:24,800
+or V0 or whatever, I just I want to get
+
+1521
+00:55:24,800 --> 00:55:26,400
+a whole bunch right off the initial
+
+1522
+00:55:26,400 --> 00:55:28,120
+prompt. How do you guys think about that
+
+1523
+00:55:28,120 --> 00:55:29,560
+that problem?
+
+1524
+00:55:29,560 --> 00:55:31,520
+I view that as a totally separate
+
+1525
+00:55:31,520 --> 00:55:34,480
+problem as updating existing code. So if
+
+1526
+00:55:34,480 --> 00:55:36,000
+I were building a system that were going
+
+1527
+00:55:36,000 --> 00:55:37,600
+to go do this, and again, it's all about
+
+1528
+00:55:37,600 --> 00:55:39,760
+like this left-to-right movement, Yep.
+
+1529
+00:55:39,760 --> 00:55:41,400
+the way I'd move this system from left
+
+1530
+00:55:41,400 --> 00:55:43,680
+to right,
+
+1531
+00:55:43,680 --> 00:55:44,800
+uh
+
+1532
+00:55:44,800 --> 00:55:45,960
+the way I'd move this system from left
+
+1533
+00:55:45,960 --> 00:55:48,720
+to right is I'd first build a system
+
+1534
+00:55:48,720 --> 00:55:52,000
+uh that is able to like I'd build two
+
+1535
+00:55:52,000 --> 00:55:57,230
+separate systems like generate new code
+
+1536
+00:55:58,270 --> 00:55:58,280
+and
+
+1537
+00:55:58,280 --> 00:56:01,950
+update existing code.
+
+1538
+00:56:03,630 --> 00:56:03,640
+And really just build a router between
+
+1539
+00:56:03,640 --> 00:56:05,400
+them
+
+1540
+00:56:05,400 --> 00:56:07,280
+that decides which one I'm going to. And
+
+1541
+00:56:07,280 --> 00:56:08,800
+I'd treat them as two totally totally
+
+1542
+00:56:08,800 --> 00:56:11,400
+separate systems.
+
+1543
+00:56:11,400 --> 00:56:14,760
+Um and that's why V0 is so freaking good
+
+1544
+00:56:14,760 --> 00:56:16,840
+at giving you a UI out of the box, but
+
+1545
+00:56:16,840 --> 00:56:19,800
+it's so bad at updating code eventually
+
+1546
+00:56:19,800 --> 00:56:21,280
+because at least what I run into is like
+
+1547
+00:56:21,280 --> 00:56:23,960
+I get amazing draft one. Chat message
+
+1548
+00:56:23,960 --> 00:56:25,359
+one, beautiful. Chat message two,
+
+1549
+00:56:25,359 --> 00:56:28,080
+amazing. Chat message like 25, I'm like,
+
+1550
+00:56:28,080 --> 00:56:29,359
+oh my god, I'm ripping my hair out
+
+1551
+00:56:29,359 --> 00:56:30,280
+trying to get it to do the thing I
+
+1552
+00:56:30,280 --> 00:56:32,480
+wanted to go do.
+
+1553
+00:56:32,480 --> 00:56:35,320
+Because it's just not as um
+
+1554
+00:56:35,320 --> 00:56:37,320
+it's just not as precise.
+
+1555
+00:56:37,320 --> 00:56:39,440
+And it's just this balance that you end
+
+1556
+00:56:39,440 --> 00:56:41,280
+up having to go do for now given today's
+
+1557
+00:56:41,280 --> 00:56:42,960
+models. Does that answer your question,
+
+1558
+00:56:42,960 --> 00:56:43,920
+Tal?
+
+1559
+00:56:43,920 --> 00:56:46,040
+Yeah, I I I guess I'm I'm curious how
+
+1560
+00:56:46,040 --> 00:56:48,400
+you how feasible you think it is for
+
+1561
+00:56:48,400 --> 00:56:50,520
+something like V0, maybe like what what
+
+1562
+00:56:50,520 --> 00:56:52,400
+the time and this is a you know, a very
+
+1563
+00:56:52,400 --> 00:56:54,480
+loaded question like what the time frame
+
+1564
+00:56:54,480 --> 00:56:55,960
+might be where something like that could
+
+1565
+00:56:55,960 --> 00:56:57,040
+be commoditized.
+
+1566
+00:56:57,040 --> 00:56:58,880
+think I think a lot of getting this
+
+1567
+00:56:58,880 --> 00:57:00,520
+working is actually not about getting it
+
+1568
+00:57:00,520 --> 00:57:01,920
+working but also giving people really
+
+1569
+00:57:01,920 --> 00:57:03,760
+good tools. So V0 has started to go do
+
+1570
+00:57:03,760 --> 00:57:05,440
+this. But one of the things that you'll
+
+1571
+00:57:05,440 --> 00:57:07,160
+notice like Cursor do, so like I'm in my
+
+1572
+00:57:07,160 --> 00:57:09,600
+I'm in my I'm in my Rust code base,
+
+1573
+00:57:09,600 --> 00:57:11,359
+is Cursor will actually let me like
+
+1574
+00:57:11,359 --> 00:57:14,120
+refer to actual code right in here.
+
+1575
+00:57:14,120 --> 00:57:15,680
+Yep. And the reason they do that is
+
+1576
+00:57:15,680 --> 00:57:17,760
+because it turns out this problem that I
+
+1577
+00:57:17,760 --> 00:57:19,240
+saw at the very beginning of finding the
+
+1578
+00:57:19,240 --> 00:57:21,040
+right context is really really really
+
+1579
+00:57:21,040 --> 00:57:22,280
+hard.
+
+1580
+00:57:22,280 --> 00:57:24,160
+I get a lot of value by the user just
+
+1581
+00:57:24,160 --> 00:57:27,760
+telling me what they want me to pass in.
+
+1582
+00:57:27,760 --> 00:57:29,600
+So instead of having to build this out
+
+1583
+00:57:29,600 --> 00:57:32,920
+directly from scratch, V0 likely has to
+
+1584
+00:57:32,920 --> 00:57:34,600
+build some sort of tooling to make this
+
+1585
+00:57:34,600 --> 00:57:35,600
+better. So I'll show you some of the
+
+1586
+00:57:35,600 --> 00:57:36,640
+tooling that they've built out that I
+
+1587
+00:57:36,640 --> 00:57:37,920
+think is headed in this direction and
+
+1588
+00:57:37,920 --> 00:57:40,240
+shows this point very directly.
+
+1589
+00:57:40,240 --> 00:57:41,920
+So like um
+
+1590
+00:57:41,920 --> 00:57:43,080
+I'll just open this floating bubbles,
+
+1591
+00:57:43,080 --> 00:57:44,400
+whatever.
+
+1592
+00:57:44,400 --> 00:57:46,480
+Right? Um and look at what they can do
+
+1593
+00:57:46,480 --> 00:57:47,640
+here. They actually allow you to now
+
+1594
+00:57:47,640 --> 00:57:49,640
+select these elements very directly and
+
+1595
+00:57:49,640 --> 00:57:51,880
+apply quick changes. Why are they doing
+
+1596
+00:57:51,880 --> 00:57:53,160
+that?
+
+1597
+00:57:53,160 --> 00:57:56,200
+Because if you don't do this, you will
+
+1598
+00:57:56,200 --> 00:57:59,280
+not generate good code. Like they cannot
+
+1599
+00:57:59,280 --> 00:58:00,920
+do it.
+
+1600
+00:58:00,920 --> 00:58:03,400
+So a lot of these paradigms in terms of
+
+1601
+00:58:03,400 --> 00:58:05,280
+generating perfect responses will not
+
+1602
+00:58:05,280 --> 00:58:06,880
+just require
+
+1603
+00:58:06,880 --> 00:58:08,680
+uh not just require like code changes
+
+1604
+00:58:08,680 --> 00:58:10,960
+foundationally at the very bottom layer,
+
+1605
+00:58:10,960 --> 00:58:13,280
+but they also require UX workflows that
+
+1606
+00:58:13,280 --> 00:58:14,280
+are
+
+1607
+00:58:14,280 --> 00:58:16,200
+tuned perfectly to the exact way that
+
+1608
+00:58:16,200 --> 00:58:18,200
+you are currently writing that code.
+
+1609
+00:58:18,200 --> 00:58:20,920
+V0's case means point to that part of
+
+1610
+00:58:20,920 --> 00:58:23,400
+the element. Cursor's case means refer
+
+1611
+00:58:23,400 --> 00:58:25,280
+to that file. So if you are building a
+
+1612
+00:58:25,280 --> 00:58:27,600
+competitor, then what I would do is I
+
+1613
+00:58:27,600 --> 00:58:30,200
+would figure out what is the
+
+1614
+00:58:30,200 --> 00:58:32,720
+what is the most UX friendly way for the
+
+1615
+00:58:32,720 --> 00:58:34,400
+person to give you the right context?
+
+1616
+00:58:34,400 --> 00:58:35,840
+Cuz if you have the right context and
+
+1617
+00:58:35,840 --> 00:58:37,120
+you have good instructions, it is really
+
+1618
+00:58:37,120 --> 00:58:38,640
+easy to go do that.
+
+1619
+00:58:38,640 --> 00:58:40,080
+Good instructions are a lot easier to
+
+1620
+00:58:40,080 --> 00:58:42,200
+correct using a model and ask clarifying
+
+1621
+00:58:42,200 --> 00:58:44,600
+questions. Bad context is virtually
+
+1622
+00:58:44,600 --> 00:58:46,000
+impossible
+
+1623
+00:58:46,000 --> 00:58:48,760
+to correct. So just help the user give
+
+1624
+00:58:48,760 --> 00:58:50,680
+you the right piece of code.
+
+1625
+00:58:50,680 --> 00:58:53,000
+Does that answer Yeah, that's Yeah,
+
+1626
+00:58:53,000 --> 00:58:54,280
+that's that's awesome. I didn't know I
+
+1627
+00:58:54,280 --> 00:58:55,800
+didn't know that was in V0. I I have
+
+1628
+00:58:55,800 --> 00:58:57,520
+used V0 from time to time. I do think
+
+1629
+00:58:57,520 --> 00:58:58,920
+browser tools
+
+1630
+00:58:58,920 --> 00:59:00,440
+has that as well. I have I have used
+
+1631
+00:59:00,440 --> 00:59:01,920
+that functionality with the browser
+
+1632
+00:59:01,920 --> 00:59:04,080
+tools MCP via Cursor. So if anyone's
+
+1633
+00:59:04,080 --> 00:59:05,960
+using Cursor, they may want to check
+
+1634
+00:59:05,960 --> 00:59:08,920
+that out, too. But thanks.
+
+1635
+00:59:08,920 --> 00:59:10,800
+Um I don't know if there's a hand
+
+1636
+00:59:10,800 --> 00:59:13,160
+raising. I just wanted to say thank you.
+
+1637
+00:59:13,160 --> 00:59:16,359
+I love the V0. I'm using it more. Um I
+
+1638
+00:59:16,359 --> 00:59:20,720
+do a planning and task operation first
+
+1639
+00:59:20,720 --> 00:59:24,040
+and I tell V0 to write in a documents
+
+1640
+00:59:24,040 --> 00:59:26,600
+folder. It will create documents,
+
+1641
+00:59:26,600 --> 00:59:29,320
+scripts, everything else. I'll do up to
+
+1642
+00:59:29,320 --> 00:59:32,240
+20 planning and documentation steps
+
+1643
+00:59:32,240 --> 00:59:34,760
+before it actually starts to instantiate
+
+1644
+00:59:34,760 --> 00:59:37,280
+and write code. What I actually give it
+
+1645
+00:59:37,280 --> 00:59:40,560
+is a full PRD with a front end spec that
+
+1646
+00:59:40,560 --> 00:59:42,800
+I write outside. I've been able to
+
+1647
+00:59:42,800 --> 00:59:45,840
+generate up to like 200 files, half of
+
+1648
+00:59:45,840 --> 00:59:47,640
+which are docs and half of which are
+
+1649
+00:59:47,640 --> 00:59:50,760
+code with like uh
+
+1650
+00:59:50,760 --> 00:59:54,080
+like 11 different directories with only
+
+1651
+00:59:54,080 --> 00:59:56,560
+just a few errors in the final initial
+
+1652
+00:59:56,560 --> 00:59:59,760
+page generation, just as an FYI. With
+
+1653
+00:59:59,760 --> 01:00:01,880
+the right planning and having it write
+
+1654
+01:00:01,880 --> 01:00:04,240
+to its system and read it.
+
+1655
+01:00:04,240 --> 01:00:04,680
+in a week.
+
+1656
+01:00:04,680 --> 01:00:06,200
+Yeah, from what I've seen I'm pretty
+
+1657
+01:00:06,200 --> 01:00:07,960
+sure V0 is doing something special with
+
+1658
+01:00:07,960 --> 01:00:09,800
+import and stuff because they see with
+
+1659
+01:00:09,800 --> 01:00:11,720
+import detection like just from relative
+
+1660
+01:00:11,720 --> 01:00:13,200
+files.
+
+1661
+01:00:13,200 --> 01:00:15,120
+Because that's like the easiest way to
+
+1662
+01:00:15,120 --> 01:00:17,080
+go fix this and like given how technical
+
+1663
+01:00:17,080 --> 01:00:18,560
+the Next.js team is in TypeScript
+
+1664
+01:00:18,560 --> 01:00:20,680
+specifically, they have a really easy
+
+1665
+01:00:20,680 --> 01:00:22,160
+way to showcase some of these errors and
+
+1666
+01:00:22,160 --> 01:00:25,190
+go fix these bugs.
+
+1667
+01:00:26,790 --> 01:00:26,800
+I just want to say thanks. This is my
+
+1668
+01:00:26,800 --> 01:00:28,680
+second session with you. I'm new to
+
+1669
+01:00:28,680 --> 01:00:31,080
+Vercel.
+
+1670
+01:00:31,080 --> 01:00:32,800
+And absolutely brilliant everything I
+
+1671
+01:00:32,800 --> 01:00:34,600
+can. Thanks so much for today. Thanks,
+
+1672
+01:00:34,600 --> 01:00:36,320
+Derek. Awesome. Love it. Thanks for
+
+1673
+01:00:36,320 --> 01:00:37,640
+bringing your energy.
+
+1674
+01:00:37,640 --> 01:00:39,720
+Yeah. Um other questions from anyone
+
+1675
+01:00:39,720 --> 01:00:45,550
+else that's left on?
+
+1676
+01:00:48,550 --> 01:00:48,560
+Cool. Um in that case, we'll call it a
+
+1677
+01:00:48,560 --> 01:00:51,480
+good day today. Um and then Dex and I
+
+1678
+01:00:51,480 --> 01:00:54,120
+will send out working code for this
+
+1679
+01:00:54,120 --> 01:00:55,560
+uh on the calculator repo.
+
+1680
+01:00:55,560 --> 01:00:57,200
+Hey, you you committed it. That's on
+
+1681
+01:00:57,200 --> 01:00:59,360
+recording. I mean, yeah, it's recorded.
+
+1682
+01:00:59,360 --> 01:01:01,120
+It's going to happen. Um
+
+1683
+01:01:01,120 --> 01:01:03,320
+it's never hurts to write code.
+
+1684
+01:01:03,320 --> 01:01:04,920
+It'll be really fun.
+
+1685
+01:01:04,920 --> 01:01:06,560
+All right. Thank you, everyone. And
+
+1686
+01:01:06,560 --> 01:01:08,040
+thank you again, Dex. This was really
+
+1687
+01:01:08,040 --> 01:01:09,120
+fun.
+
+1688
+01:01:09,120 --> 01:01:11,360
+Yep. And last, thanks, everybody.
+
+1689
+01:01:11,360 --> 01:01:13,320
+See you guys in the next week.
+
+1690
+01:01:13,320 --> 01:01:13,960
+Catch you all later.
+
+1691
+01:01:13,960 --> 01:01:16,240
+Bye-bye. Thanks, Dex. See you.
+
+1692
+01:01:16,240 --> 01:01:19,720
+See you.

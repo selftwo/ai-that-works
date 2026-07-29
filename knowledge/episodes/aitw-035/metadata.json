@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-035",
+  "episode": 35,
+  "season": 2,
+  "title": "Multimodal Evals",
+  "source_folder": "2025-12-02-multimodal-evals",
+  "recorded_at": "2025-12-02T17:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "jzhVo0iAX_I",
+  "youtube_url": "https://www.youtube.com/watch?v=jzhVo0iAX_I",
+  "transcript_origin": "upstream timestamped transcript.md",
+  "transcript_cleanup_priority": "low",
+  "status": "curated-from-existing-transcript-and-supporting-code"
+}

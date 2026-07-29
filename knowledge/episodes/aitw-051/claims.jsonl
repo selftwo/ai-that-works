@@ -1,0 +1,7 @@
+{"kind":"observed","claim":"The proposed eval model groups cases into named, product oriented scenarios.","start":"00:13:01","end":"00:14:15","confidence":"high","source":"2026-03-31-no-vibes-march/transcript.txt"}
+{"kind":"observed","claim":"Nondeterministic behavior is evaluated with expected rates and aggregate named metrics rather than one Boolean result.","start":"00:13:44","end":"00:14:40","confidence":"high","source":"2026-03-31-no-vibes-march/transcript.txt"}
+{"kind":"observed","claim":"Test cases may be loaded dynamically from SQLite, JSON, Postgres, or another store.","start":"00:16:20","end":"00:17:03","confidence":"high","source":"2026-03-31-no-vibes-march/transcript.txt"}
+{"kind":"observed","claim":"The proposed criteria include scenario groups, aggregate metrics, and data loaded from production derived datasets.","start":"00:17:03","end":"00:17:33","confidence":"high","source":"2026-03-31-no-vibes-march/transcript.txt"}
+{"kind":"observed","claim":"The speakers distinguish testing in production from testing locally with production data.","start":"00:19:12","end":"00:19:40","confidence":"high","source":"2026-03-31-no-vibes-march/transcript.txt"}
+{"kind":"observed","claim":"The design process keeps model suggestions provisional because models tend to accept the premise in a user instruction.","start":"00:45:00","end":"00:49:00","confidence":"medium","source":"2026-03-31-no-vibes-march/transcript.txt","note":"Time span is broad because the discussion develops across the live design session."}
+

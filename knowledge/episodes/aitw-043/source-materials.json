@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-043",
+  "primary": [
+    "2026-02-03-prompting-is-becoming-a-product-surface/transcript.txt",
+    "2026-02-03-prompting-is-becoming-a-product-surface/meta.md",
+    "2026-02-03-prompting-is-becoming-a-product-surface/README.md"
+  ],
+  "supporting": [
+    "2026-02-03-prompting-is-becoming-a-product-surface/README.md",
+    "2026-02-03-prompting-is-becoming-a-product-surface/meta.md",
+    "2026-02-03-prompting-is-becoming-a-product-surface/main.py",
+    "2026-02-03-prompting-is-becoming-a-product-surface/baml_src/generate_schema.baml",
+    "2026-02-03-prompting-is-becoming-a-product-surface/baml_src/resume.baml",
+    "2026-02-03-prompting-is-becoming-a-product-surface/baml_src/transcript.baml",
+    "2026-02-03-prompting-is-becoming-a-product-surface/whiteboards.md"
+  ],
+  "notes": "Supporting artifacts provide implementation context but do not independently verify speaker claims."
+}

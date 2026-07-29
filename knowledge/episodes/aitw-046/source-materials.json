@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-046",
+  "primary": [
+    "2026-02-24-no-vibes-february/transcript.txt",
+    "2026-02-24-no-vibes-february/meta.md",
+    "2026-02-24-no-vibes-february/README.md"
+  ],
+  "supporting": [
+    "2026-02-24-no-vibes-february/README.md",
+    "2026-02-24-no-vibes-february/meta.md",
+    "2026-02-24-no-vibes-february/original_titles.json",
+    "2026-02-24-no-vibes-february/titles.json",
+    "2026-02-24-no-vibes-february/clips.json"
+  ],
+  "notes": "Supporting artifacts provide implementation context but do not independently verify speaker claims."
+}

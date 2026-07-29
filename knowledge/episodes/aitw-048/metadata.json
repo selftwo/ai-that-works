@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-048",
+  "episode": 48,
+  "season": 2,
+  "title": "Claude Agent Skills Deep Dive",
+  "source_folder": "2026-03-10-claude-agent-skills-deep-dive",
+  "recorded_at": "2026-03-10T18:00:00Z",
+  "recorded_at_provenance": "Source catalog event_date from upstream meta.md. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "b5O6gb_Zuk8",
+  "youtube_url": "https://www.youtube.com/watch?v=b5O6gb_Zuk8",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

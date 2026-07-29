@@ -1,0 +1,1509 @@
+[00:00:05.990] All right. Hello everyone. I'm Vivov.
+[00:00:06.000] Um, I work on BAML and this is AI that
+[00:00:08.960] works. And right here I have Dexter.
+[00:00:11.519] >> What's up? I'm Dex. I work on human a
+[00:00:13.759] company called Human Layer. Um, and uh,
+[00:00:16.480] this is AI that works. I know you
+[00:00:18.560] already said that, but I said it again
+[00:00:20.000] because uh, it's fun to say
+[00:00:21.439] >> it a lot better. So,
+[00:00:22.480] >> what do we do, Viv? What do we do on the
+[00:00:24.080] AI that works show? Why don't you fill
+[00:00:25.760] these fine people in?
+[00:00:26.960] >> Yes. The whole goal of this content is
+[00:00:28.880] as per usual to give everyone pieces of
+[00:00:31.199] work uh pieces of AI pipelines that
+[00:00:33.120] actually work and function beyond just
+[00:00:35.440] demo code and go in depth and talk about
+[00:00:38.000] technical stuff. Today's topic is a
+[00:00:40.960] topic that has been requested many many
+[00:00:42.640] times but I think it was related to what
+[00:00:44.879] we had talked about before with
+[00:00:46.079] interruptible agents and that inspired
+[00:00:47.920] this to come up again and that topic is
+[00:00:50.640] voice agents. How do we build voice
+[00:00:53.600] agents? We're gonna try and go ahead and
+[00:00:56.879] start off with general whiteboarding as
+[00:00:58.960] per usual. Then we'll show off some
+[00:01:00.879] code, but this episode I think is going
+[00:01:03.760] to be one of the most interactive ones.
+[00:01:05.280] So, if you guys have ever um worked on
+[00:01:07.119] voice agents, have thoughts about them,
+[00:01:08.560] have questions, keep the questions
+[00:01:10.400] coming in the chat, we will do our best
+[00:01:13.200] to make sure that we answer them in as
+[00:01:15.520] expedient of a matter as possible. If
+[00:01:17.280] you feel like we miss them, just send a
+[00:01:19.759] gesture our way using some of the emojis
+[00:01:21.600] or raise hand feature. We'll see them
+[00:01:23.280] for sure.
+[00:01:24.560] But with that, I'll let Dexter share his
+[00:01:26.479] screen and then we'll go straight into
+[00:01:29.360] whiteboarding.
+[00:01:31.759] >> Um, cool.
+[00:01:33.360] >> Cool.
+[00:01:33.759] >> It's a whiteboard. Um, cool. So, um,
+[00:01:37.759] Vib, you have the link to this, right?
+[00:01:39.439] >> Yes, I'm pulling it up right now as we
+[00:01:41.119] see.
+[00:01:41.920] >> I just don't have uh an extra monitor
+[00:01:44.079] right now, so I figured it's much better
+[00:01:45.360] if you're sharing.
+[00:01:48.560] >> Cool. Um
+[00:01:50.159] >> the question uh before you or while
+[00:01:53.520] you're doing your whiteboarding, why
+[00:01:55.920] would we build our own uh interruptible
+[00:01:59.360] agents and not use one of the uh
+[00:02:02.399] platforms that provide
+[00:02:05.920] agents, voice agents out of the box?
+[00:02:08.720] >> Well, I think I think that's a great
+[00:02:10.319] question. Like why not use a voice agent
+[00:02:11.840] out of a box? Um and I think it's the
+[00:02:13.680] same reason that you probably don't want
+[00:02:14.800] to build a voice agent. You don't want
+[00:02:16.239] to build a chatbot out of the box. While
+[00:02:18.319] you can use all these platforms to go do
+[00:02:20.319] things, I think it's it's good to be
+[00:02:23.120] able to choose to use a platform, but
+[00:02:24.800] you probably want to know what the
+[00:02:25.760] platform is doing under the hood. And
+[00:02:26.959] then if you find that what the platform
+[00:02:28.239] is doing is good for your needs, go use
+[00:02:29.840] it. It's actually great. But often
+[00:02:32.720] times, um, I think the first step is
+[00:02:35.440] often just knowing what's actually going
+[00:02:36.879] on under the hood. And that's what the
+[00:02:39.120] conversation today is about. The
+[00:02:40.640] trade-off is really product specific and
+[00:02:43.120] use case specific. So, we can talk more
+[00:02:45.920] about any specific idea after we're
+[00:02:47.680] after we discuss how a voice agent works
+[00:02:49.840] under the hood.
+[00:02:53.040] >> Thanks for asking.
+[00:02:53.840] >> Yeah, for what it's worth, they're like
+[00:02:55.440] way harder to build than chat bots
+[00:02:57.040] because there's a million more things
+[00:02:58.400] going on and the technology improved so
+[00:03:01.280] quickly. I spent like six months working
+[00:03:02.959] on voice agents and like if you build on
+[00:03:05.280] one specific platform like you're going
+[00:03:06.959] to get cooked. Um it's you're just going
+[00:03:09.599] to have a bad time. They all have
+[00:03:11.760] different weaknesses.
+[00:03:13.440] >> Yeah.
+[00:03:14.560] You're just waiting for them to catch up
+[00:03:15.920] with whatever the new tank or the new
+[00:03:17.840] model is.
+[00:03:19.280] >> Yeah. Like speech in speech out models
+[00:03:21.440] are like not good enough. They're just
+[00:03:23.120] not consistent at like structure
+[00:03:24.480] generation and tool calling. And what
+[00:03:26.400] you end up having to do is build a
+[00:03:27.760] pipeline where you have like a bunch of
+[00:03:30.319] different components including an LLM,
+[00:03:32.239] speech to text, text to speech, like
+[00:03:34.480] ideally a semantic VAD, an EOU machine
+[00:03:37.200] learning model, and it's a ton of other
+[00:03:38.720] stuff. And like you want to be able to
+[00:03:40.799] use the best for each one of those in
+[00:03:42.560] terms of like latency inconsistency and
+[00:03:44.560] pronunciation for your use cases. And
+[00:03:46.480] like no single platform is going to give
+[00:03:48.560] you the best option for all of those. So
+[00:03:50.080] you really need to like build a pipeline
+[00:03:51.680] that works for yourself.
+[00:03:53.599] >> Yeah. And this is all
+[00:03:55.280] >> sounds like Kyle is volunteering to lead
+[00:03:57.760] the follow-up episode on super advanced
+[00:04:00.239] voice agents.
+[00:04:02.640] >> And just to be really clear on this, the
+[00:04:04.239] caveat here is assuming that a voice
+[00:04:05.840] agent is critical to your business. If
+[00:04:07.439] it's not critical to your business, do
+[00:04:08.640] whatever you want. But if it is actually
+[00:04:10.000] critical to your business, like
+[00:04:11.200] everything else on AI that works,
+[00:04:13.040] understand how it works and then you can
+[00:04:15.280] do whatever you want with it. It's not
+[00:04:17.600] that hard. So the benefit a platform
+[00:04:19.519] gives you is really just time to market.
+[00:04:22.000] And if time to market comes at the cost
+[00:04:24.320] of accuracy, for some use case, that's
+[00:04:26.479] okay. But for almost everything else,
+[00:04:28.400] it's it's just not worth it.
+[00:04:31.120] Um, cool. Let's draw out the first part.
+[00:04:33.280] Oh, that is not what I meant to do.
+[00:04:36.479] Voice agents are weird and I think the
+[00:04:38.479] first weirdest thing about them is that
+[00:04:39.919] they operate on a timeline in a way that
+[00:04:41.919] very very few other systems do because
+[00:04:44.960] uh sadly voice conversations are just
+[00:04:47.440] monotonically continuing onwards and
+[00:04:49.199] they're just going to move forward in
+[00:04:50.560] time regardless of what your agent is
+[00:04:52.639] doing. And the reason that this ends up
+[00:04:54.880] happening is because if your if your
+[00:04:57.360] user talks to you at this what is going
+[00:04:59.120] on? How do I change that? Um that is not
+[00:05:02.960] a thing that I'll ever use. If your user
+[00:05:05.360] talks to you at this moment in time and
+[00:05:07.280] your voice agent later responds at this
+[00:05:10.479] moment in time. Oops. Um,
+[00:05:14.400] and your voice agent later responds at
+[00:05:16.240] this moment in time.
+[00:05:18.960] But while you're generating something,
+[00:05:21.199] the user generated a new message at some
+[00:05:24.080] time in this time period.
+[00:05:26.639] It's just not going to feel pretty for
+[00:05:27.919] the user. The other sad part about voice
+[00:05:30.160] agents is actually there's no such thing
+[00:05:32.560] as moments in time. I actually lied over
+[00:05:35.199] here. All of these are time periods.
+[00:05:39.039] Your voice, your user is going to be
+[00:05:40.960] talking for some duration. Your voice
+[00:05:43.919] agent is going to be responding for some
+[00:05:46.240] duration. Your user is going to be
+[00:05:49.440] interrupting for some duration.
+[00:05:54.080] and building in these control flows is
+[00:05:56.800] why the episode for um interrupts is
+[00:05:59.759] almost definitely the one that drove
+[00:06:02.320] this to a decision because in voice
+[00:06:05.440] agents interrupts are not optional to
+[00:06:07.759] design around. They are the primary
+[00:06:09.919] design mechanism you have to think about
+[00:06:11.919] at every single step of the way. And any
+[00:06:15.199] >> Go ahead, Dex.
+[00:06:16.160] >> Just to make that like a little more
+[00:06:17.440] concrete, like your agent would start
+[00:06:19.120] talking and then your user would start
+[00:06:20.960] talking and you'd have to detect the
+[00:06:22.720] start of this which would like create an
+[00:06:25.280] early end to this and then kind of
+[00:06:27.759] restart another agent response. And so
+[00:06:29.919] it's like you're you're like restering
+[00:06:32.639] in real time and it's not just like a a
+[00:06:35.280] singular stream of events. You kind of
+[00:06:36.960] have to moni monitor multiple streams in
+[00:06:38.960] parallel basically.
+[00:06:40.560] >> Exactly. And what you do really depends.
+[00:06:43.840] Maybe you want your agent to finish a
+[00:06:45.680] response and then pass this into the
+[00:06:47.600] user
+[00:06:48.800] >> and then respond again. Maybe you want
+[00:06:51.039] your agent to immediately stop, address
+[00:06:53.520] the user's concern, and then continue
+[00:06:55.600] onwards. But all of these things are
+[00:06:58.000] just caveats that are very important
+[00:07:00.240] design decisions that have to be made
+[00:07:02.400] because everything here is time chunks
+[00:07:04.400] and spans of time
+[00:07:07.120] and that I think makes the problem
+[00:07:08.880] infinitely harder than a simple chatbot.
+[00:07:13.360] The other problem is when you do a voice
+[00:07:15.280] agent UX is not your friend. The only UX
+[00:07:18.240] modality that most voice agents have
+[00:07:22.479] are purely voice. You can't you don't
+[00:07:26.000] have a screen. You don't have UXs where
+[00:07:27.840] you can pause input where you can like
+[00:07:30.400] gray out text boxes. You have no loading
+[00:07:32.639] spinners. You have only voice. So I
+[00:07:35.759] think in today's conversation what the
+[00:07:37.599] most important thing to talk about is
+[00:07:40.400] how are we going to
+[00:07:49.029] co-host
+[00:07:49.039] co-host mute Martin.
+[00:07:52.000] So I think today what we really want to
+[00:07:53.680] talk about is a couple of things. One,
+[00:07:55.759] how are we going to take the concepts
+[00:07:57.199] that we learned from the interrupt video
+[00:07:58.960] and apply them to voice agents? And then
+[00:08:01.680] two, how can we design UX so that it
+[00:08:05.120] doesn't feel as bad as just waiting for
+[00:08:08.639] a voice agent to go and respond with?
+[00:08:10.800] And I think those two techniques will
+[00:08:13.199] help us
+[00:08:15.039] hopefully build really, really amazing
+[00:08:17.039] voice agents along the way. And these
+[00:08:19.680] won't be the only two techniques, but I
+[00:08:21.120] think these are the two that we can
+[00:08:22.160] focus today's conversation on. The first
+[00:08:25.280] one Kyle already alluded to. Kyle's
+[00:08:27.759] already said this. Speech to speech
+[00:08:30.800] models are just not good. You can't you
+[00:08:32.719] can't do this yet. Um
+[00:08:36.399] you
+[00:08:36.880] >> Yeah, you can't context engineer them at
+[00:08:38.719] all because they're receiving like
+[00:08:41.200] >> audio tokens that Yeah. they that they
+[00:08:43.680] separate into like semantics and stuff
+[00:08:45.600] and then they generate tokens for audio.
+[00:08:48.160] Like you you have no ability to like
+[00:08:50.320] take a tool call and and transform, you
+[00:08:53.600] know, like you you just you you can't
+[00:08:56.080] own the input as well because it's it's
+[00:08:58.800] a lot more of a black box in terms of
+[00:09:00.399] how the model actually like sees the
+[00:09:01.920] prompt.
+[00:09:03.680] >> Exactly. So don't do this. It's not
+[00:09:05.680] worth your time. Um, I think you'll
+[00:09:09.120] I would wait for someone else to build
+[00:09:11.040] this out first and prove that it works
+[00:09:12.800] before you spend your time doing this is
+[00:09:15.440] the way I would describe this. Um, what
+[00:09:17.760] I would do instead is we still want to
+[00:09:20.000] have speech in, speech out, but we're
+[00:09:22.880] just going to break down this process
+[00:09:24.640] and simply
+[00:09:30.790] [Music]
+[00:09:30.800] make these much much smaller. Um, and
+[00:09:33.279] I'm doing these, by the way, by size
+[00:09:35.040] based on
+[00:09:37.839] um based on the size of the models.
+[00:09:39.920] Usually,
+[00:09:41.519] >> this is a text to speech
+[00:09:44.800] >> speech to text.
+[00:09:46.240] >> Sorry.
+[00:09:46.480] >> Yeah, it's over there. Okay.
+[00:09:49.440] >> Speech to speech models also tend to be
+[00:09:51.279] like way more expensive
+[00:09:53.519] um based on like working with GPT4's
+[00:09:56.959] real-time model or Gemini's real-time
+[00:09:59.519] model. like they tend to be an order of
+[00:10:01.519] magnitude more expensive than the
+[00:10:02.880] corresponding text model. And part of
+[00:10:04.480] that's because you need like a stateful
+[00:10:06.000] birectional communication which usually
+[00:10:08.240] looks like web RTC or websockets and
+[00:10:10.240] stuff which is harder to scale. It's
+[00:10:11.680] stateful. It's harder to recover from if
+[00:10:14.079] something breaks or the user has a
+[00:10:15.920] disconnection. And so like there's all
+[00:10:17.920] kinds of really good reasons to not do
+[00:10:19.360] it. Like you could do a whole episode
+[00:10:21.040] just why to not use these things yet
+[00:10:23.440] because they're just not good enough.
+[00:10:25.120] And
+[00:10:26.240] >> exactly. So don't do it. uh you will
+[00:10:29.440] save yourself a lot of headache. Now
+[00:10:31.440] that said, if we do use speech to text
+[00:10:33.839] with an LLM and then a text to speech at
+[00:10:35.760] the end, we'll run into other problems
+[00:10:37.040] that are very tricky, which is how the
+[00:10:39.519] heck do we make this thing actually
+[00:10:41.519] good? Because if an LLM is sending data
+[00:10:44.000] out, how do you actually do how do you
+[00:10:46.560] actually stream audio out?
+[00:10:48.640] >> Well, there's a question.
+[00:10:50.000] >> Go ahead.
+[00:10:51.279] >> Um I would be really curious. you keep
+[00:10:53.200] saying good and you finish this point,
+[00:10:54.800] but I'd love to kind of just enumerate
+[00:10:56.880] three or four things that make a voice
+[00:10:59.680] agent good. Like what what are our kind
+[00:11:01.920] of capabilities that we're after here?
+[00:11:04.000] >> That's actually a great that's a great
+[00:11:05.440] call out, Dexter. I think when I use a
+[00:11:07.680] voice agent, the number one thing that I
+[00:11:09.519] look for is really this is um
+[00:11:12.560] concreteness. I'll use very concrete
+[00:11:15.040] examples uh examples first, which is
+[00:11:17.040] latency. I just want it to say stuff to
+[00:11:19.760] me uh correctly. Like I want it to say
+[00:11:23.200] stuff to me fast so I'm not waiting for
+[00:11:25.440] it all the time. I want
+[00:11:27.279] >> the pause when I say something and then
+[00:11:29.040] there's a two second pause because the
+[00:11:31.120] language model is thinking. That sucks.
+[00:11:33.120] >> Yeah, exactly. Like that's okay on a
+[00:11:34.560] loading spinner in a chat app. It's not
+[00:11:36.160] okay when I'm talking to something
+[00:11:38.079] >> because it doesn't feel human.
+[00:11:40.079] >> It's not. It It feels worse than like
+[00:11:42.240] the control flow that I used to use with
+[00:11:44.560] like a phone pad because at least there
+[00:11:46.480] I can just press nine and eight and move
+[00:11:48.320] to the menu section I want. Here I have
+[00:11:50.640] to like wait forever. And that is like
+[00:11:53.440] if you've ever if you've ever used like
+[00:11:55.120] a phone book that says press one for
+[00:11:56.640] English, press two for Spanish and you
+[00:11:58.560] have to listen to the whole thing before
+[00:12:00.079] you can press one. That is the most
+[00:12:02.320] frustrating experience ever.
+[00:12:04.720] >> Uh and this is like prevoice models. So
+[00:12:06.959] like now it's just even longer because I
+[00:12:09.760] knew
+[00:12:10.079] >> Okay, cool. So So there's also like
+[00:12:12.320] interruptability of just like I don't
+[00:12:13.920] want to hear what the rest of you have
+[00:12:14.800] to say. Just take me to the next step.
+[00:12:16.320] >> Ex and that's kind of but I bundle all
+[00:12:18.000] that with latency because
+[00:12:19.040] interruptability is like a uh what I
+[00:12:21.680] said but I really what I want is I just
+[00:12:24.160] want latency to be really I want to feel
+[00:12:26.240] fast in how I communicate and I I
+[00:12:29.279] personally value that much more than
+[00:12:30.800] accuracy. But accuracy comes as a close
+[00:12:33.839] uh as a close um second
+[00:12:37.440] >> which is like it it's correct and high
+[00:12:39.680] quality.
+[00:12:40.880] >> Exactly. It just has to be correct and
+[00:12:42.959] high quality. And lastly, honestly, it
+[00:12:46.000] just vibes. Like when you when you use a
+[00:12:48.959] voice model, I feel like you can just
+[00:12:50.560] tell that something is really good. If
+[00:12:52.399] you've ever used
+[00:12:55.200] um if you've ever used one of those ones
+[00:12:57.519] that have gone viral online, like the
+[00:12:59.200] ones where um
+[00:13:01.760] there's this one that went viral a while
+[00:13:03.440] ago where you would text it and
+[00:13:04.959] basically you would give it access to
+[00:13:07.200] everything and it would try and just
+[00:13:08.399] like uh troll you when you spoke to it.
+[00:13:11.920] I can't remember the name of it. Uh but
+[00:13:13.680] my cousin had showed me. And when I saw
+[00:13:15.279] it, I was like, "This is kind of dumb."
+[00:13:17.360] But then when I actually used it, it
+[00:13:18.959] actually felt really good because it
+[00:13:20.399] spoke to me like a friend would be
+[00:13:23.600] speaking to me if I was 20. Um, it had
+[00:13:27.360] perfect Gen Z slang. And I don't mean
+[00:13:28.959] like the chatbt Gen Z where it adds the
+[00:13:30.800] emoji all the time, but I mean genuinely
+[00:13:32.639] spoke like friends in his phone book
+[00:13:35.920] would speak. And it did this by copying
+[00:13:37.760] his email, copying his Slack, copying
+[00:13:39.519] his um, Twitter and just getting full
+[00:13:41.920] access to it. So it just felt very, very
+[00:13:44.959] human. it felt like it had a real
+[00:13:46.639] personality to itself.
+[00:13:49.120] Um, and I think that's the last part of
+[00:13:50.800] what makes a great voice agent,
+[00:13:52.240] something with a real personality.
+[00:13:55.200] >> One of the main things that contributes
+[00:13:56.639] to vibes, too, is like how
+[00:13:58.160] conversational the agent is. And um
+[00:14:02.079] that's not just like people will think
+[00:14:03.920] that that's just like how good the text
+[00:14:05.360] to speech is and how emotive and
+[00:14:06.959] expressive it is, but like the it one of
+[00:14:10.800] I think the biggest determinance of like
+[00:14:12.480] the vibes of it. And like this will make
+[00:14:15.040] a really good agent awful or like a
+[00:14:18.399] decent one like really good is how well
+[00:14:20.560] it actually handles interruptions.
+[00:14:22.639] >> Yeah. Um, and this is like one of the
+[00:14:24.560] reasons you shouldn't use a platform,
+[00:14:26.480] um, is like a lot of speechtoext like
+[00:14:29.440] streaming transcription models like
+[00:14:31.600] Deepgram, um, will tell you, hey, the
+[00:14:34.160] user finished talking now, but they're
+[00:14:36.480] not great at it and it's really
+[00:14:37.760] unreliable. Even if your agent or your
+[00:14:40.639] like your u voice activity detection and
+[00:14:45.360] end of utterance detection are like 95%
+[00:14:48.079] accurate, that's still a really really
+[00:14:49.279] really bad user experience. And the best
+[00:14:51.279] voice agents are using custom machine
+[00:14:52.959] learning models
+[00:14:54.720] like OpenAI recently introduced semantic
+[00:14:57.040] voice activity detection that's not just
+[00:14:58.800] like looking at the audio waveform to
+[00:15:00.480] figure out is this a person talking or
+[00:15:02.079] is this a waveform
+[00:15:04.079] like a door slamming or something. Um,
+[00:15:06.480] and then for end of utterance, like you
+[00:15:08.000] want to figure out, not just, oh, did
+[00:15:09.440] the user stop talking because you could
+[00:15:11.680] look at the waveform to do that, but the
+[00:15:13.839] user might have just paused for a second
+[00:15:15.360] or two while they're thinking or while
+[00:15:17.040] they're like looking up information, you
+[00:15:19.279] know, um, like a lot of end of utterance
+[00:15:21.600] models that aren't like really good
+[00:15:23.760] semantic models will just say, "Oh, the
+[00:15:25.199] user stopped talking for half a second,
+[00:15:26.639] start generating the LLM response, and
+[00:15:28.880] that results in the LLM interrupting the
+[00:15:31.760] person in the middle of a thought." And
+[00:15:33.199] so there's really good models out there
+[00:15:35.199] now like live kit has some good
+[00:15:36.480] offtheshelf ones um that you can use for
+[00:15:38.480] end of utterance that actually like
+[00:15:39.680] semantically looks at you know not just
+[00:15:42.320] oh did the audio stop but is this
+[00:15:44.560] actually the end of an utterance or is
+[00:15:46.560] the like is this in the middle of like
+[00:15:48.800] some semantic expression like a thought
+[00:15:51.600] because that will result that makes the
+[00:15:53.360] difference between a like the model
+[00:15:56.399] thinking that it got interrupted when
+[00:15:57.920] it's just background noise and and so it
+[00:16:00.880] will stop talking in the middle of
+[00:16:02.079] saying something and the user gets
+[00:16:03.199] frustrated really quickly. And also um
+[00:16:06.480] like the difference between um you know
+[00:16:09.120] it interrupting you all the time because
+[00:16:11.199] you talk slowly or because you pause
+[00:16:13.920] sometimes or you had to go look
+[00:16:15.440] something up and it gets in a loop and
+[00:16:17.199] like it interrupts you and you weren't
+[00:16:18.720] done talking so you like
+[00:16:20.480] >> start talking before and it just gets
+[00:16:22.320] into a really bad cycle. So, like those
+[00:16:24.079] are also really key parts of the vibes
+[00:16:25.920] thing is just like does it actually
+[00:16:28.560] really really really like grock like the
+[00:16:31.920] conversation and not just like oh audio
+[00:16:34.320] started audio stopped.
+[00:16:36.560] >> Exactly.
+[00:16:37.120] >> What what was it the model that you
+[00:16:38.800] recommended Kyle? Can you drop it in the
+[00:16:40.320] chat?
+[00:16:45.430] >> Yeah, Live Kit's a platform. They have
+[00:16:45.440] some good models. There's really good
+[00:16:46.639] models for it on Hugging Face. Like I
+[00:16:48.320] don't have a specific recommendation
+[00:16:49.839] about them. I've used a couple of them.
+[00:16:52.000] Um,
+[00:16:53.279] >> all right. We'll get some we'll get some
+[00:16:54.720] links and put them in the show notes
+[00:16:55.839] afterwards so you can check them out on
+[00:16:57.040] GitHub.
+[00:16:58.800] >> Um,
+[00:16:59.680] >> perfect. All right. Bye, Bob. Back to
+[00:17:01.040] back to what we're building.
+[00:17:02.399] >> Yeah, this goes back to what what I
+[00:17:04.720] think makes a voice agent good, but
+[00:17:06.480] everyone has their own opinion. So, once
+[00:17:08.000] you can define your own opinion, you can
+[00:17:10.240] tweak rubrics accordingly. Um, but now
+[00:17:13.039] let's go back to what it actually takes
+[00:17:14.240] to make a pipeline. So, the first thing
+[00:17:15.600] is we agree that we're not going to go
+[00:17:17.120] use a speech to speech model. We're
+[00:17:18.400] going to use speech to text, LM, and
+[00:17:19.919] text to speech. Now, the problem with
+[00:17:21.600] this is this is naturally a highly
+[00:17:25.600] latent pipeline. No matter what you do,
+[00:17:27.760] you're going to add latency here. So,
+[00:17:29.600] what can we do to make this better?
+[00:17:30.960] Well, there's a couple of things. Well,
+[00:17:33.039] the first thing that we can do, and I
+[00:17:34.400] don't know if I'm not actually sure if
+[00:17:35.840] cursor does this for sure, but I
+[00:17:39.200] wouldn't actually be surprised if they
+[00:17:41.760] don't do this,
+[00:17:43.840] which is you can actually add in gaps
+[00:17:47.200] when you're when you're running stuff.
+[00:17:50.720] So the first hack to latency is actually
+[00:17:53.360] to
+[00:17:55.120] pretend like you have no latency. If any
+[00:17:57.200] of you know what uh in Instagram did
+[00:17:59.440] when they first got famous uh with their
+[00:18:01.280] image uploads, as soon as you selected
+[00:18:03.919] the image, they started uploading it to
+[00:18:05.520] their back end. And then if you chose
+[00:18:07.679] not to actually publish it, they would
+[00:18:10.160] just discard it from their back end and
+[00:18:11.520] throw it away. But if you did publish
+[00:18:13.120] it, they would actually have it and
+[00:18:14.960] they'd be like people would be like,
+[00:18:16.480] "How the heck is Instagram uploading my
+[00:18:18.080] images so fast? The magic was they just
+[00:18:20.799] started uploading data much much faster.
+[00:18:23.840] The trick to having better latency is
+[00:18:27.440] literally to start speaking before the
+[00:18:29.440] LM starts generating tokens. You will
+[00:18:32.240] have better response times no matter
+[00:18:34.000] what you do. So for example
+[00:18:41.990] >> that there's some common common phrases
+[00:18:42.000] that are pretty good. Sure, let me take
+[00:18:44.720] a look or such variants of this.
+[00:18:49.039] You could tell the LLM
+[00:18:53.679] that you are going to start, you're in
+[00:18:55.840] your prompts, you could indicate that
+[00:18:57.360] you're going to start with some phrase
+[00:18:59.440] and the phrase can be a variable of some
+[00:19:02.960] kind that you swap out between like 70
+[00:19:05.039] or 100 hard-coded phrases that you can
+[00:19:07.280] just code gen in the beginning.
+[00:19:09.760] And you just have the model go say this
+[00:19:13.039] in a pre-recorded voice ahead of time.
+[00:19:15.520] And once this is done,
+[00:19:18.160] you then tack on the rest of your text
+[00:19:21.440] with an outline.
+[00:19:22.240] >> Okay. So, in this in this case, your
+[00:19:24.000] context window might look like um you
+[00:19:27.760] have like your user message of like,
+[00:19:29.919] hey, the example I'm doing is like a a
+[00:19:32.000] voice assistant for like a a doggy
+[00:19:34.480] daycare. So, it's like, hey, I want to
+[00:19:36.880] board my dog. And then you would speak
+[00:19:40.480] this.
+[00:19:42.000] And then you would send to the LLM.
+[00:19:45.120] Sure. Let me take a look
+[00:19:52.310] as the so we'll call her assistant
+[00:19:52.320] messages and user messages.
+[00:19:54.880] And then you would send this to the LM
+[00:19:56.799] and say, "What's the next message?" And
+[00:19:58.559] then the LM would say like, "I'd be
+[00:20:00.320] happy to it looks like we have
+[00:20:02.000] availability or whatever it is." Uh
+[00:20:06.160] >> exactly.
+[00:20:11.110] and and and so and so and and I guess
+[00:20:11.120] you would send you would send this as
+[00:20:13.679] soon as the user p pasted their message
+[00:20:15.520] you would send this context window and
+[00:20:17.600] then it would speak this and so the
+[00:20:19.360] latency to first token you would wait
+[00:20:21.679] till it's done speaking this and then if
+[00:20:23.520] you started having token stream back in
+[00:20:25.520] then you could start speaking
+[00:20:26.480] immediately
+[00:20:27.520] >> exactly
+[00:20:29.440] and like this thing takes like a second
+[00:20:32.559] like one point the cool thing about
+[00:20:34.159] voice actually that I've noticed that I
+[00:20:35.760] actually find to be a interesting Plus
+[00:20:37.600] is as a medium
+[00:20:39.840] most voice takes longer than you think.
+[00:20:41.600] Sure. Let me take a look. Is like a 4 to
+[00:20:44.000] 5 second is like a 4 second utterance.
+[00:20:49.440] So what you did is you almost bought
+[00:20:51.280] yourself 4 seconds of time by default by
+[00:20:54.159] having that sentence be spoken
+[00:20:56.880] because you can say it slightly slower
+[00:20:58.159] as an agent like sure let me take a look
+[00:21:00.159] for you. Or hold on a second I'm looking
+[00:21:03.360] up some stuff. Even small phrases like
+[00:21:06.400] that have baked in latency. You don't
+[00:21:08.880] even have to pass them in as context if
+[00:21:10.240] you don't want to. It just makes it flow
+[00:21:11.760] better and the vibes gets better if you
+[00:21:13.600] do.
+[00:21:15.120] But you've now
+[00:21:16.080] >> I have a I have a quick question on
+[00:21:17.919] this. So I'm assuming you're doing this
+[00:21:20.640] in streaming mode. You're not
+[00:21:22.720] essentially waiting for the LLM to
+[00:21:24.240] complete everything and then show it
+[00:21:25.679] back to the user. One of the hardest
+[00:21:28.080] things I've found there, like I think
+[00:21:30.240] the latency hiding part makes a lot of
+[00:21:32.080] sense, but when you actually
+[00:21:35.760] set up the streaming, you kind of have
+[00:21:38.080] to define these stop words or at what
+[00:21:41.360] point should the LLM start to respond,
+[00:21:45.280] right? So, how do you set that up? I I
+[00:21:47.120] have always found that to be very
+[00:21:48.480] challenging, like should it look for
+[00:21:49.600] punctuations or some sort of words?
+[00:21:51.760] Could you speak more about that if if
+[00:21:53.760] that's on the agenda?
+[00:21:55.200] >> Yeah. Yeah. So what do you could you
+[00:21:56.640] repeat the question one more time on
+[00:21:58.240] you?
+[00:21:59.360] >> Uh sure. So um if you set uh this up in
+[00:22:03.679] streaming mode, you kind of have the
+[00:22:05.760] opportunity to define um at what point
+[00:22:09.840] should the chunking happen of the user's
+[00:22:13.440] input and there are multiple ways to do
+[00:22:16.960] that chunking. How do you recommend we
+[00:22:19.600] do that chunking?
+[00:22:21.200] >> You mean for the actual text that you're
+[00:22:23.200] sending back to the user?
+[00:22:25.440] No, no, no. For for um the when the user
+[00:22:30.480] is speaking, you could either wait till
+[00:22:34.159] the end of the users like users turning
+[00:22:37.440] over or you could chunk it up and start
+[00:22:39.840] sending it already. So, what what's your
+[00:22:42.400] recommendation there?
+[00:22:43.760] >> I think it depends on what trade-off you
+[00:22:45.679] want to make. If you don't care at all
+[00:22:47.120] about money, honestly, what I would do
+[00:22:49.360] is I would just send it like every
+[00:22:50.960] single time you get like a utterance of
+[00:22:52.640] some kind where your users made some
+[00:22:54.400] semantic statement like kind of what
+[00:22:57.200] Kyle was alluding to using those models,
+[00:22:58.799] you just send it every single time. But
+[00:23:01.120] >> okay, so then if half a second later
+[00:23:04.799] your turn detection model says, "Okay,
+[00:23:07.280] now the user is done speaking." You
+[00:23:09.520] gained half a second there because you
+[00:23:11.200] already sent the last token out.
+[00:23:13.360] >> Exactly. So you and this is again this
+[00:23:16.640] is assuming you don't care at all about
+[00:23:18.240] money. We're purely optimizing for
+[00:23:20.159] latency, accuracy, and vibes. I have not
+[00:23:22.799] I didn't say cost in that equation at
+[00:23:24.640] all. So I'm throwing that away. And but
+[00:23:27.600] the trick here is not to actually not to
+[00:23:30.799] actually um um send the response back to
+[00:23:35.520] the user at all times
+[00:23:38.640] because anytime the LM fires off, what
+[00:23:41.440] ends up happening is the user starts
+[00:23:44.080] talking and let's just assume that this
+[00:23:45.919] the entire user block and the user
+[00:23:47.679] speech pattern looks something like
+[00:23:48.799] this. There's a little pause in the
+[00:23:50.000] middle. Um and then we got we detected
+[00:23:52.880] like somewhere around here. Um somewhere
+[00:23:56.799] around here is when we detected that uh
+[00:23:59.360] hey the user ended semantically and we
+[00:24:02.080] also detected that ended semantically
+[00:24:03.760] over here and then we also detected that
+[00:24:05.360] they ended semantically around here and
+[00:24:08.320] then they rean their speech around here
+[00:24:10.720] and then we detect that there was
+[00:24:11.840] another semantic end over here.
+[00:24:15.919] So what you would gain over here is you
+[00:24:19.039] would have technically fired off an LM
+[00:24:20.880] call. Whoops.
+[00:24:26.789] You would fire one LM call on here at
+[00:24:26.799] this point. You'd fire another LM call
+[00:24:29.360] over here at this point. Fire a third
+[00:24:31.360] one here and a fourth one here.
+[00:24:35.039] And then it becomes your job to think
+[00:24:37.279] about which one of these is the most
+[00:24:38.720] semantically relevant and which one of
+[00:24:41.200] them are actually going to go ahead and
+[00:24:43.360] do a good job. So for example, it's very
+[00:24:46.240] >> So when this one when this one finishes,
+[00:24:48.400] you would say, "Oh, but we detected they
+[00:24:50.159] already started speaking again." And so
+[00:24:51.360] you like basically end up throwing all
+[00:24:52.960] three of these out and then using this
+[00:24:55.200] one, right?
+[00:24:56.240] >> Or
+[00:24:58.000] >> or what you could say is one thing that
+[00:25:00.799] you'll notice is maybe all the user said
+[00:25:04.400] at the very end was at the very end over
+[00:25:06.720] here was something very simple like okay
+[00:25:10.960] and everything in here didn't actually
+[00:25:12.880] matter. It didn't contribute in any
+[00:25:14.400] meaningful way. It just meant that it
+[00:25:17.120] was just like a culmination thing. If
+[00:25:19.520] you're able to quickly detect that the
+[00:25:21.600] thing over here didn't semantically
+[00:25:23.120] change to anything or add new
+[00:25:24.559] information, you can actually just use
+[00:25:26.159] the first one.
+[00:25:27.679] >> So the question over here like we so
+[00:25:31.039] this is the typical way of doing doing
+[00:25:33.360] this. But what if we were able to just
+[00:25:36.960] so so thinking about it as how humans
+[00:25:39.200] speak, right? So can't we just have a
+[00:25:42.559] system where the LLM once so the user is
+[00:25:46.880] talking talking now the LLM has enough
+[00:25:49.360] information or context to to reply. So I
+[00:25:54.480] mean we can just we can just start the
+[00:25:58.000] conversation there. So where so once you
+[00:26:00.640] have enough enough information to to
+[00:26:03.679] give a response back to the user and
+[00:26:06.480] also have other cues like emotion
+[00:26:10.480] detection within the voice too right
+[00:26:12.960] >> the problem that you run into there
+[00:26:14.240] Sahil is if you're a business and you're
+[00:26:16.240] running you're and you're running this
+[00:26:17.679] like the most common use case for voice
+[00:26:19.039] agents right now is like booking orders
+[00:26:20.799] of some kind or like sale support agents
+[00:26:22.960] or something the thing is all of those
+[00:26:25.200] like sales and support are very very
+[00:26:28.159] cautious roles, you really don't want
+[00:26:30.720] your support agent to be super
+[00:26:32.080] aggressive with the customer like and
+[00:26:34.320] just like be like, "Oh, did you do this?
+[00:26:36.159] Did you do this? Did you do this?"
+[00:26:37.440] That's a bad feeling. So, you'd actually
+[00:26:39.600] prefer to be more in the cautious side
+[00:26:41.919] rather than the aggressive side of pro
+[00:26:44.720] having speech happen.
+[00:26:46.960] So, while you're right, we could do a
+[00:26:48.559] background test of going to go listen,
+[00:26:50.320] we want to be as fast as possible, but
+[00:26:52.880] at the same time, we want to make sure
+[00:26:54.960] that we are not interrupting. We want to
+[00:26:58.559] minimize interruptions from the agent
+[00:27:00.400] side. We want the human to interrupt us,
+[00:27:02.080] but we don't want the agent to be
+[00:27:03.840] interrupting the human very often.
+[00:27:06.880] >> Okay. Um, we're at 30 minutes and I
+[00:27:09.360] think we got a tight hour going today.
+[00:27:10.960] So, um, I'm going to say let's let's
+[00:27:12.559] pause on questions. Drop your questions
+[00:27:13.840] in the chat. I'll keep an eye on them
+[00:27:15.360] and let's talk about the supervisor
+[00:27:17.039] threading thing and we'll say we'll have
+[00:27:18.640] at least 10 minutes to look at the code
+[00:27:19.919] and then we'll have 10 minutes at the
+[00:27:20.960] end for questions.
+[00:27:22.080] >> Exactly. So this kind of leads us into
+[00:27:23.760] the next part which is like when you're
+[00:27:25.360] going to have a voice conversation flow
+[00:27:27.200] we are going to naturally go off track.
+[00:27:28.960] So right in here in this optimistic LM
+[00:27:30.880] call thing that we saw we saw that we
+[00:27:32.799] could have started LM call the user said
+[00:27:34.720] something meaningless in the last 5
+[00:27:36.559] seconds um and therefore we have to go
+[00:27:39.440] delay and then run another call. But if
+[00:27:41.919] we ignore that, we technically could
+[00:27:43.679] have all the data we need to respond
+[00:27:44.960] with as early as possible, and we could
+[00:27:46.799] respond much much faster. We could use
+[00:27:48.960] call one instead of call two. Oops.
+[00:27:56.870] We could use call one instead of call
+[00:27:56.880] two because call two really added
+[00:27:58.559] nothing beyond the okay. So, we can
+[00:28:00.720] ignore call two. We lost some money.
+[00:28:02.559] That's okay. We just abort the call. We
+[00:28:04.080] stopped spending money on that one.
+[00:28:06.480] What's really interesting about this in
+[00:28:08.000] my opinion is the key part depends on
+[00:28:13.039] being able to detect that the part okay
+[00:28:15.120] is actually a totally meaningless thing
+[00:28:17.120] in terms of content creation. This is
+[00:28:19.520] very very very similar to exactly how
+[00:28:22.720] you want to do interrupts in longunning
+[00:28:25.039] context or longunning conversation
+[00:28:26.559] flows. What you want to do in a very
+[00:28:28.720] very longunning agent is you want to
+[00:28:31.279] have your timeline. You want to have
+[00:28:33.600] your agent talking. You want to have
+[00:28:35.279] your human talking. And maybe there's
+[00:28:36.559] some overlap. That's okay. Oops. Uh,
+[00:28:39.840] sorry, I don't have my mouse today, so
+[00:28:41.200] I'm slightly uglier on my drawings,
+[00:28:42.720] Dexter.
+[00:28:44.559] Um,
+[00:28:45.200] >> you are all you got nothing to apologize
+[00:28:47.679] for.
+[00:28:48.240] >> Human agent all the way through. And
+[00:28:50.799] there'll be some exchanges over here.
+[00:29:00.070] um and conversations will happen. But we
+[00:29:00.080] kind of want to have a separate we want
+[00:29:01.919] almost want to have a separate agent
+[00:29:03.520] that's running in the background every
+[00:29:05.760] single time the human says something or
+[00:29:07.600] at some fixed cadence
+[00:29:09.919] that is going to think for some longer
+[00:29:12.159] period of time to
+[00:29:16.240] smart agent or supervisor agent. We can
+[00:29:18.240] call it whatever makes sense. Dexter
+[00:29:20.559] >> I will call it the supervisor.
+[00:29:22.000] >> Okay,
+[00:29:22.640] >> since that's what the code says. Yeah,
+[00:29:25.039] that's basically monitoring the task to
+[00:29:27.520] help the main agent
+[00:29:30.320] actually resteer itself. And what we'll
+[00:29:33.200] do is every time the supervisor detects
+[00:29:36.000] that something is off, what it will do
+[00:29:38.799] is regardless of what the human is
+[00:29:40.320] saying, regardless of what the agent is
+[00:29:43.360] saying, if the supervisor says something
+[00:29:46.399] is off,
+[00:29:48.399] we will take the previous conversation
+[00:29:50.000] thread
+[00:29:51.520] at the snapshot point that the that the
+[00:29:54.320] uh that the supervisor agent was kicked
+[00:29:55.840] off. So in this case, it's it's right
+[00:29:58.399] after this agent call. Can I make one
+[00:30:01.840] change to this real quick? I think the
+[00:30:03.200] super agent visor agent is probably
+[00:30:05.440] reviewing what the agent says, right?
+[00:30:07.440] So, it kind of starts here.
+[00:30:09.039] >> Yeah. Sorry. Um, and for the purpose of
+[00:30:12.000] this, can we do it right uh can we can
+[00:30:16.320] we um can we do it right after the
+[00:30:19.200] second call? I think it'll be more uh
+[00:30:20.880] clear.
+[00:30:21.840] >> Okay, cool. That's fine.
+[00:30:25.039] >> So, what we're going to do is we're
+[00:30:26.799] going to delete what the human said.
+[00:30:29.840] The supervisor agent is going to say
+[00:30:31.440] something went wrong. So we're going to
+[00:30:33.600] keep our conversation history, our
+[00:30:34.960] context window built in with everything
+[00:30:36.880] up in the conversation until this
+[00:30:38.320] conversation point. Then we are going to
+[00:30:41.440] inject a a placeholder.
+[00:30:52.950] At this point,
+[00:30:52.960] >> something like, "Oh, wait. Actually," or
+[00:30:54.799] like, "Sorry, one sec." Or whatever it
+[00:30:56.399] is.
+[00:30:56.720] >> I'm so sorry. I'm so sorry. I'm sorry. I
+[00:31:00.000] think I may have may gone off track.
+[00:31:04.720] >> Yeah.
+[00:31:06.720] >> Can you give
+[00:31:09.520] me a few seconds to
+[00:31:14.240] uh confirm?
+[00:31:17.360] >> And this is basically your super advisor
+[00:31:19.360] agent when it's done is going to output
+[00:31:21.600] like either on track or off track.
+[00:31:25.520] >> Exactly.
+[00:31:28.159] And you can see how a specifically what
+[00:31:30.799] I've done here is the placeholder is
+[00:31:33.360] actually pretty long.
+[00:31:35.840] But it's also immediately gives the user
+[00:31:37.760] context on what happened, which is it
+[00:31:40.159] thinks that we made a mistake of some
+[00:31:41.679] kind. It thinks that we want to go off
+[00:31:44.559] track. Uh it thinks that we want to go
+[00:31:46.399] recollect and collect some more
+[00:31:47.760] information and it's going to go and go
+[00:31:49.760] do that. And once this happens,
+[00:31:52.880] we're going to take the information.
+[00:31:54.320] We're going to kick off another thread
+[00:31:56.000] from a larger uh model of some kind
+[00:31:58.720] which is going to take the previous
+[00:32:00.000] context. It's going to take the most
+[00:32:02.159] recent human message on top of that.
+[00:32:05.039] It's going to take all the stuff we
+[00:32:06.720] need. Uh I don't know how to build
+[00:32:10.240] arrows. I can't do arrows on my current
+[00:32:12.159] machine, Dexter. Sorry.
+[00:32:15.120] It's going to take all the thing that
+[00:32:16.320] were detected as need changes. It's
+[00:32:17.840] going to take the most recent human
+[00:32:19.279] message on top of that self
+[00:32:21.919] and then it's going to help. It's going
+[00:32:23.440] to try and produce a response of some
+[00:32:26.640] kind.
+[00:32:28.320] >> Yeah. So, that would be something like,
+[00:32:29.440] "Yeah, before I can book you, actually,
+[00:32:31.279] I need to get your email before I can
+[00:32:32.880] take any more details or whatever it
+[00:32:34.480] is."
+[00:32:35.200] >> Exactly. And we still want to have the
+[00:32:36.559] context of the most recent human message
+[00:32:38.880] that came on because that's what's going
+[00:32:41.200] to make it feel so much more natural in
+[00:32:43.519] addition to and then say and we want the
+[00:32:46.159] prompt over here to be something like
+[00:32:49.440] um the conversation seems to be slightly
+[00:32:55.279] off track
+[00:32:57.919] needs
+[00:33:00.480] changes
+[00:33:13.430] green text.
+[00:33:13.440] >> Yeah, let me I'm I'm curious because
+[00:33:16.320] this is similar to the demo that I uh
+[00:33:19.919] put together.
+[00:33:20.960] >> Um but let me let me actually pop into
+[00:33:22.480] the code and I'll show you the prompt
+[00:33:23.600] that we give the agent.
+[00:33:25.600] >> Um
+[00:33:26.159] >> that's actually probably even a better
+[00:33:27.519] thing to help people see exactly what we
+[00:33:29.039] mean because we'll pseudo code this, but
+[00:33:30.480] I have the real code so we might as well
+[00:33:31.760] show that off. Yeah, let's just look at
+[00:33:33.120] this and um it'll and then we'll pop
+[00:33:34.880] back to the whiteboard and we can
+[00:33:35.840] whiteboard out a little bit more um just
+[00:33:37.679] so you have the exact details. So we
+[00:33:39.360] have a small model which is GPTOSS
+[00:33:42.159] uh running on Cerebrris. Um the small
+[00:33:44.240] model the voice model the thing powering
+[00:33:45.840] that the most important thing there is
+[00:33:47.360] you want it to be really really fast
+[00:33:48.559] right you want it to be able to time to
+[00:33:49.919] first token fast and just generate text
+[00:33:51.840] quickly.
+[00:33:52.799] >> So um
+[00:33:53.760] >> because we want to we don't do any of
+[00:33:55.279] the latency tricks. We don't do any of
+[00:33:56.559] that stuff. Instead we just use
+[00:33:58.159] Cerebrris which is probably one of the
+[00:34:00.399] fastest time to first tokens out there
+[00:34:01.679] and we use a very small model 12B. So we
+[00:34:04.640] don't have to do latency hiding because
+[00:34:06.000] basically the only latency we have is
+[00:34:07.360] network and that's uh acceptable in
+[00:34:10.720] almost every use case.
+[00:34:12.720] >> Yep. And then we have GPT5 as our kind
+[00:34:16.000] of slower more thinky supervising model.
+[00:34:19.440] And so the actual um
+[00:34:22.240] >> functions
+[00:34:23.599] >> the actual like code oh yeah let's let's
+[00:34:25.839] go to the functions. Um so I actually
+[00:34:27.679] didn't end up using this yet. So I'm
+[00:34:28.960] going to leave this commented out. Um
+[00:34:30.560] but we have the small one. I also I had
+[00:34:32.320] to name the assistant Tony because when
+[00:34:34.159] I was pasting in this one this was this
+[00:34:36.800] was wild. Uh when I was pasting in the
+[00:34:39.679] uh the thread I was like hey this thread
+[00:34:42.159] didn't connect right and it said user
+[00:34:43.679] assistant user assistant the model
+[00:34:46.079] actually went and like claude code
+[00:34:48.000] started continuing the conversation. It
+[00:34:50.159] saw user and assistant and it was like
+[00:34:51.839] okay so the the supervisor and the uh
+[00:34:54.639] the the model's name is Tony so that it
+[00:34:56.560] said Tony instead of assistant. But
+[00:34:58.560] anyways, um the point is is say we say,
+[00:35:01.200] "Okay, be conversation helpful. Here's
+[00:35:03.119] the conversation so far and respond as
+[00:35:05.359] the assistant with your next message
+[00:35:06.720] only."
+[00:35:08.000] >> Um and the way this actually gets
+[00:35:10.880] generated out is uh I'm going to turn on
+[00:35:14.960] real quick.
+[00:35:15.280] >> Before we go run this, do before you
+[00:35:17.119] actually run this, do you want to run
+[00:35:18.240] the
+[00:35:19.359] >> do you want to show me the do you want
+[00:35:20.880] to show the prompt?
+[00:35:22.640] >> U Oh yeah, the supervisor agent prompt.
+[00:35:26.079] So this is like you're an AI supervisor
+[00:35:28.079] who picks up the phone of of Tony who
+[00:35:30.240] picks up the phones. Here's the rules,
+[00:35:31.599] right? Always get the user email address
+[00:35:33.119] before confirming any booking. If like
+[00:35:36.079] the answer must be that you have these
+[00:35:37.920] vac vaccines, never provide legal
+[00:35:40.079] advice. So these are all the things that
+[00:35:41.520] the supervisor model is going to get the
+[00:35:43.280] conversation.
+[00:35:44.800] Uh and so the prompt is you know review
+[00:35:47.359] the conversation below. So the user is
+[00:35:48.960] like here's the conversation and then
+[00:35:50.480] here's the instructions and then we give
+[00:35:52.160] it the output format. And so the prompt
+[00:35:54.079] here looks like Sorry, go ahead.
+[00:35:56.240] >> And one thing I want to call out here is
+[00:35:57.599] like we we basically do our best not to
+[00:36:00.400] spend a lot of time prompt engineering
+[00:36:02.160] this. And the reason for that is like we
+[00:36:03.920] just throw it at a bigger model. We just
+[00:36:05.520] toss GVD5. It's okay if it runs slow.
+[00:36:07.520] Who cares?
+[00:36:08.720] >> Cuz like the the main task is going to
+[00:36:10.960] run real fast. So it's okay.
+[00:36:13.359] >> Yep. And then we say either respond with
+[00:36:15.040] on track or needs adjustment with a
+[00:36:17.119] message. And then here's the schema
+[00:36:19.040] we're responding. So we have it when it
+[00:36:20.640] decides you need adjustment, it actually
+[00:36:22.079] includes the correction message right
+[00:36:24.480] there. And it always has to start with
+[00:36:26.079] like 08 actually.
+[00:36:29.040] >> Um and so
+[00:36:32.400] let's see. Um yeah, we can run this one.
+[00:36:36.079] So this was like I want to I want to
+[00:36:37.920] board my cat. So like I said, hey, like
+[00:36:41.040] I want to like where is it? One of these
+[00:36:43.920] like oh I need to board my cat. And the
+[00:36:45.200] assistant says like sure I can help you
+[00:36:46.640] board your cat. What dates are you
+[00:36:48.079] looking for? And then the supervisor is
+[00:36:50.079] supposed to say, "Actually, we only care
+[00:36:51.520] for dogs." And so this gets injected
+[00:36:53.680] into the context window as part of it.
+[00:36:58.480] Um, I can show you a little demo here.
+[00:37:00.800] Um, and I'm going to leave the BAML logs
+[00:37:02.720] on. This is just text to text. Um,
+[00:37:06.000] >> another awesome debugging thing that
+[00:37:08.240] Dexter did here is in his voice agent,
+[00:37:10.320] he actually built a text mode because it
+[00:37:12.160] is very hard to debug voice only agents.
+[00:37:16.160] So like one nice caveat about having
+[00:37:18.960] speech to text text to voice is you can
+[00:37:20.960] add the modes very easily by having
+[00:37:23.040] those models in there and you don't have
+[00:37:25.599] to always use voice.
+[00:37:28.400] >> So this says it's on track because it
+[00:37:30.079] actually did the smart thing and said we
+[00:37:31.839] don't board cats here. Um but let me
+[00:37:33.839] control C this. I'm going to turn the
+[00:37:34.880] BAML logs off so you can see a little
+[00:37:36.560] bit more
+[00:37:38.480] detail.
+[00:37:53.349] No, he's a great
+[00:37:53.359] Okay. Um,
+[00:37:55.359] >> you should tell it. You should say you
+[00:37:56.720] should say your boss.
+[00:37:59.920] Yeah, there you go.
+[00:38:02.000] >> Uh,
+[00:38:02.560] >> all model will eventually be dumb.
+[00:38:10.550] >> Um, okay. So, here is the supermodel
+[00:38:10.560] supervisor model. This one's actually a
+[00:38:11.920] little bit buggy because it only checks
+[00:38:13.200] for supervisor injections on the next
+[00:38:15.440] assistant message uh because I built
+[00:38:17.440] this in a hurry. Um but you can see it's
+[00:38:20.240] coming through and saying actually we
+[00:38:21.599] only board dogs here. Um and here's the
+[00:38:23.839] message to say. So this code is a little
+[00:38:26.560] bit janky, but if you want we can try
+[00:38:28.240] the voice mode and see see what happens.
+[00:38:31.760] >> Let's let's do that Dex. Let's just show
+[00:38:33.359] that off really fast. I want to show a
+[00:38:35.119] little bit more about how the threading
+[00:38:36.320] models work here.
+[00:38:38.079] Um, and I haven't actually tested the
+[00:38:40.640] speech to the the text to speech side of
+[00:38:43.040] this.
+[00:38:57.990] He's uh 45 pounds and he is a uh he's
+[00:38:58.000] actually not a dog. He's a cat.
+[00:39:09.349] Okay. Uh anyways, this is uh
+[00:39:09.359] we're gonna we're gonna not mess with
+[00:39:10.880] this too much.
+[00:39:11.920] >> Um but now now you have the format in
+[00:39:13.839] the prompts. Is there any other code
+[00:39:15.200] parts you want to check out?
+[00:39:17.440] >> Yeah, there's well if we go back to the
+[00:39:18.960] whiteboard, I want to talk about one or
+[00:39:20.079] two more things really fast.
+[00:39:21.440] >> Yeah.
+[00:39:22.240] >> Um I think one of the one or two of the
+[00:39:24.720] things that I really want to talk about
+[00:39:25.680] is a threading model that goes onto here
+[00:39:27.200] when you go build this out. Um, a really
+[00:39:30.560] really important part about this and we
+[00:39:32.240] touched on this again in the interrupt
+[00:39:33.760] video is really the threading of how
+[00:39:36.320] often you run the supervisor agent. So
+[00:39:38.480] the implementation that Dex was working
+[00:39:40.000] on was an implementation that runs a
+[00:39:41.599] supervisor agent on every agent message
+[00:39:44.000] that comes across.
+[00:39:46.079] You can do that. That basically is
+[00:39:47.680] infinite cost uh that scales to this
+[00:39:50.560] that is very hard to regulate um and do
+[00:39:53.359] things on. Another thing you can do is
+[00:39:56.560] you can actually instead just run the
+[00:39:58.720] supervisor agent once every 15 seconds
+[00:40:01.599] assuming that or once every 5 seconds or
+[00:40:03.760] once every 10 seconds assuming that a
+[00:40:06.160] message has happened.
+[00:40:09.040] The other thing you can do is you can
+[00:40:10.400] optionally turn on and off the
+[00:40:11.920] supervisor agent during critical parts
+[00:40:14.000] of your pipeline. So if you have a
+[00:40:16.800] pipeline that is for example doing form
+[00:40:19.119] collection that might be an area where
+[00:40:21.359] you want to turn on the supervisor
+[00:40:22.720] because you really care about the form
+[00:40:24.160] collection being perfect. Um and if the
+[00:40:26.640] form collection ever goes wrong it just
+[00:40:28.640] doesn't work in any meaningful way. So
+[00:40:30.960] um
+[00:40:31.200] >> and you could have different supervisor
+[00:40:33.119] agents right you could have one that's
+[00:40:34.640] just checking for compliance and another
+[00:40:36.560] one that is like hey make sure that
+[00:40:39.040] there are no typos in the data collected
+[00:40:41.119] and things like that and make sure the
+[00:40:42.560] email looks like a real email and all
+[00:40:44.160] that stuff. So when you go do this, I
+[00:40:46.960] think we that's why the supervisor agent
+[00:40:48.960] name somewhat kind of irks me. I was
+[00:40:51.280] just like calling it like a validation
+[00:40:53.119] agent of some kind and like each
+[00:40:55.200] validation agent has some specific kind
+[00:40:57.040] of like thing that it validates for and
+[00:40:58.640] it might have multiple things it
+[00:40:59.680] validates for at the same time. Um but
+[00:41:03.760] in general this is um this is what I
+[00:41:06.079] find works really well having like a
+[00:41:08.000] treating list like a multi-threaded
+[00:41:09.680] process where you're choosing how many
+[00:41:12.079] threads you want to run and parallel at
+[00:41:13.839] any given time on what messages you want
+[00:41:15.599] to run threads on. You can do something
+[00:41:17.760] more specific which is like hey what I
+[00:41:20.319] actually have is I have like a
+[00:41:21.440] classifier uh that runs at the very top
+[00:41:25.040] and based on the classifier I pass it on
+[00:41:26.960] to different supervisors for every
+[00:41:28.319] message that passes through
+[00:41:30.880] uh along the way. So I actually have
+[00:41:33.119] like I have my I have my like
+[00:41:37.200] legal disclaimer. I have other things
+[00:41:39.200] going on and then I pass it in
+[00:41:40.560] accordingly. And you can build this
+[00:41:42.720] system. You can instead of think of the
+[00:41:44.240] system really as a supervisor, what I
+[00:41:45.920] like to think of it as is I highly
+[00:41:49.359] highly recommend think of this as more
+[00:41:51.040] like a workflow. What all you're really
+[00:41:53.280] building here is given the status of
+[00:41:55.119] some conversation flow that is going on.
+[00:41:57.440] I want you to analyze it and determine
+[00:41:59.200] some way to define the state of this
+[00:42:01.440] conversation.
+[00:42:02.640] >> Yeah, you you're basically building out
+[00:42:04.000] a state machine and there's all these
+[00:42:05.440] different transitions whether it's like
+[00:42:07.119] supervisor interrupting or like like
+[00:42:10.000] small model correcting itself or
+[00:42:12.240] something else.
+[00:42:13.440] >> Yeah, sorry. Just to be very very
+[00:42:15.119] specific on what I was saying is what I
+[00:42:16.560] mean is once this agent human
+[00:42:18.240] conversation is being built out all a
+[00:42:21.440] supervisor thread really is
+[00:42:24.400] I'm going to copy and paste this
+[00:42:27.680] It's basically in introspection
+[00:42:31.680] into some flow of conversation happened
+[00:42:34.720] that's frozen in time. It has no updates
+[00:42:36.800] given to at any given point and whether
+[00:42:39.280] and and just you're just looking at the
+[00:42:41.040] status of this to be like what is what
+[00:42:42.960] is true about this conversation.
+[00:42:46.000] >> Okay. And then you can have you can have
+[00:42:47.839] that be like classify as one of three
+[00:42:49.680] things. You can say create a summary.
+[00:42:51.520] You can say evaluate which rules are
+[00:42:53.920] give me a list of rules that are broken.
+[00:42:55.680] whatever it is.
+[00:42:56.400] >> Exactly. And that's all a supervisor is.
+[00:42:59.359] And now what you need to decide as an
+[00:43:01.280] engineer is just how often you want to
+[00:43:02.800] run this function that takes a
+[00:43:05.200] conversation history and snaps it back.
+[00:43:08.240] And then
+[00:43:09.200] >> and in just to be extra clear, like in
+[00:43:11.520] reality, the context window we send to
+[00:43:13.119] our supervisor agent is actually like,
+[00:43:14.880] hey, you're a supervisor. There's some
+[00:43:16.400] text here. And then in one of your user
+[00:43:19.280] messages, you say, here's the
+[00:43:20.400] conversation so far.
+[00:43:21.839] >> Yeah. But it doesn't even have to be it
+[00:43:23.920] doesn't even have to be a full uh it
+[00:43:26.319] doesn't even have to be a single agent.
+[00:43:27.920] It could be like seven different agents
+[00:43:29.119] that all have different prompts that all
+[00:43:30.400] have different context. It doesn't even
+[00:43:32.160] matter.
+[00:43:33.040] >> Some you for some agents you might only
+[00:43:35.280] want to give them the last two seconds
+[00:43:36.880] of context.
+[00:43:38.160] >> For another agent, you might want to
+[00:43:39.760] give it the immediate you might want to
+[00:43:41.440] give it the whole context over the
+[00:43:42.880] lifetime of the user. And that's a thing
+[00:43:45.680] you might want to run like once every
+[00:43:47.119] minute because it takes forever to run.
+[00:43:49.440] There's so many different ways to go
+[00:43:51.119] define this that I would say that I
+[00:43:52.800] wouldn't really
+[00:43:54.800] um I wouldn't even pin the name uh
+[00:43:57.760] supervisor to it because that implies
+[00:43:59.200] that's a single function that's running.
+[00:44:01.200] You might I would view this as a very
+[00:44:03.040] complex pipeline that you will build
+[00:44:04.800] over time and I think a lot of people
+[00:44:07.280] say eval are their secret sauce. I think
+[00:44:09.599] for voice agents this part of your
+[00:44:11.520] pipeline is your secret sauce. This is
+[00:44:14.240] the secret sauce for every single voice
+[00:44:15.680] agent. How well can you steer the
+[00:44:17.680] conversation on the fly? And then
+[00:44:20.720] depending on how you represent state at
+[00:44:23.040] this time. So like Dextra has a thing
+[00:44:24.800] that represents one type of state is
+[00:44:26.880] like on track versus needs changes
+[00:44:32.160] and then there's like a string attached
+[00:44:33.680] to this possibly of like what changes it
+[00:44:35.440] needs. That's one type of uh status that
+[00:44:38.319] we have. You could have tons of other
+[00:44:40.240] statuses of like what is this user
+[00:44:41.839] doing? what what is this what is going
+[00:44:43.520] on in this conversation at any given
+[00:44:45.680] time and then you as an engineering team
+[00:44:49.760] could actually build a real-time
+[00:44:51.280] dashboard that actually shows you the
+[00:44:54.000] flow of a conversation over time. So
+[00:44:56.160] what I really would want to see if I was
+[00:44:57.920] building this type of voice agent is not
+[00:45:00.079] a lot of people build like DX on like
+[00:45:01.680] what is a voice agent along the way.
+[00:45:03.200] They say the conversation none of that
+[00:45:05.119] matters. What I really want to see is I
+[00:45:07.200] want to see snapshots of in Dex's case
+[00:45:09.920] what I would love to see snapshots of
+[00:45:12.000] the supervisor agent showing me the
+[00:45:14.480] conversation
+[00:45:16.640] and literally showing me the points in
+[00:45:18.400] time when it went from green. How do I
+[00:45:22.400] fill this in? green
+[00:45:24.960] to red where it went off track. And I
+[00:45:27.200] just want to see a timeline of how often
+[00:45:28.880] this happens. And the KPI that I would
+[00:45:30.720] be tracking
+[00:45:33.200] is
+[00:45:34.800] how much of the time is a supervisor
+[00:45:36.800] agent spending on time versus off off
+[00:45:38.720] task. And that is the KPI that I should
+[00:45:41.280] be tracking from my voice agents. And if
+[00:45:43.280] I can do that,
+[00:45:43.760] >> so you're sending this chunk and then
+[00:45:45.200] you're sending this chunk and then
+[00:45:46.560] you're sending this chunk. And basically
+[00:45:48.640] just like when whenever whenever it gets
+[00:45:50.960] back on track and that's your that's
+[00:45:52.160] your eval. your KPI of like how good is
+[00:45:54.640] this agent at at least at following the
+[00:45:57.280] rules, right? The making the experience
+[00:45:58.880] for the user good is like that's our
+[00:46:01.599] like optimization as far as like how do
+[00:46:03.359] we build a good product, but our KPI is
+[00:46:05.599] like we need to make the user the
+[00:46:06.800] experience for the user as good as
+[00:46:08.079] possible without like giving people
+[00:46:10.400] medical advice when we shouldn't be.
+[00:46:12.640] >> Exactly. And then I might want to have
+[00:46:14.079] metrics on like what kind of things does
+[00:46:15.440] it go off track on? does it go off track
+[00:46:17.200] on legal issues by giving legal advice
+[00:46:18.960] and that's why my supervisor agent
+[00:46:20.640] triggers and once I can figure out what
+[00:46:22.560] stuff is triggering then I can go ahead
+[00:46:26.079] and like minimize some of those and say
+[00:46:28.640] okay I definitely don't want the main
+[00:46:30.079] agent to going on legal stuff so let me
+[00:46:32.000] go modify my main agent's prompt to go
+[00:46:34.560] emphasize that it shouldn't go on legal
+[00:46:36.480] tangents because it seems to be doing
+[00:46:37.839] that a lot definitely shouldn't be
+[00:46:40.079] directly scheduling because it didn't
+[00:46:41.520] call the tool call correctly well in
+[00:46:43.760] that scenario great let me go fix that
+[00:46:46.160] problem and you and actually make sure
+[00:46:48.480] that instead of scheduling this tool
+[00:46:52.960] anytime scheduling gets anytime the main
+[00:46:55.760] agent tries to schedule anything I have
+[00:46:58.319] a really lightweight supervisor agent
+[00:47:00.640] perhaps another 120B model that's
+[00:47:02.800] running or even a 20B model that's
+[00:47:04.800] running to see is it scheduling without
+[00:47:07.280] calling a is it scheduling without
+[00:47:09.200] calling a scheduling tool call
+[00:47:11.920] >> right instead of having all of those
+[00:47:13.520] like here's 10 rules tell me yes or no.
+[00:47:16.800] It's like cool. Classify each of those
+[00:47:18.480] rules in a separate parallel call to a
+[00:47:20.400] really small LLM of just like is the
+[00:47:22.240] model giving medical advice? Is the
+[00:47:23.839] model XYZ? Is it okay?
+[00:47:25.440] >> Exactly. But I don't want to go do that
+[00:47:27.200] on day one because then it's going to
+[00:47:28.400] make my system very heavyweight. So I'm
+[00:47:30.640] going to I'm going to slowly
+[00:47:31.680] incrementally build that up from day z
+[00:47:34.079] from day zero. And I would do exactly
+[00:47:36.160] what Dexter did, which is have one agent
+[00:47:39.760] in the beginning and that one supervisor
+[00:47:43.599] agent that has a bunch of promps
+[00:47:49.349] that I'm gonna have one giant
+[00:47:49.359] scheduleuler uh supervisor agent with a
+[00:47:52.000] giant prompt and then I want to build a
+[00:47:54.319] dashboard for my team to look at every
+[00:47:56.560] conversation in a timeline view with
+[00:47:58.319] colors just to know how off track and
+[00:48:00.560] how on track it went
+[00:48:04.160] and then the minute that that happens I
+[00:48:06.720] want to go ahead and just go and
+[00:48:08.400] optimize accordingly based on real data
+[00:48:10.720] real conversations because there's no
+[00:48:12.960] prompt optimizations you can do by just
+[00:48:14.960] listen to the whole conversation. If any
+[00:48:16.560] of you have ever looked at post hog like
+[00:48:18.480] screen recordings for your website or
+[00:48:20.560] any other system, the most useful part
+[00:48:23.440] in those screen recordings is actually
+[00:48:24.800] not the screen recording. It's the part
+[00:48:26.800] where they skip the eight hours of
+[00:48:28.160] inactivity.
+[00:48:29.839] Like you need to go and find the events
+[00:48:32.240] in your voice agent to go build them
+[00:48:33.920] out. The rest of the actual stuff of
+[00:48:35.920] like writing this code out is like super
+[00:48:38.000] super easy. The actual code is like we
+[00:48:40.480] all know how to write a function. Can
+[00:48:41.920] you scroll up Dexter?
+[00:48:43.599] >> Yep.
+[00:48:44.800] We all know how to write a function that
+[00:48:46.880] says where one of the inputs is a
+[00:48:48.640] conversation of some kind and I want to
+[00:48:50.240] go figure out what like describe this
+[00:48:52.319] conversation status to me. That's a data
+[00:48:53.920] extraction problem. You write a class
+[00:48:55.920] model that says I want to know the shape
+[00:48:58.000] of this data in terms of how on track is
+[00:49:00.000] it? Does it give legal advice? Does it
+[00:49:01.760] do XYZ?
+[00:49:04.079] But and that's just an LM prompt. We can
+[00:49:06.240] go do that. We might want to use like
+[00:49:08.000] maybe with some old classical
+[00:49:09.359] techniques. Maybe we use like keywords
+[00:49:11.520] to be like, "Hey, is the model shouting
+[00:49:13.119] obscenities just by looking at it?" And
+[00:49:15.520] any
+[00:49:15.920] >> that's I mean that's what we do in old
+[00:49:17.359] like automated phone trees, right? If
+[00:49:18.880] the user is swearing, we immediately
+[00:49:20.640] divert you to a human.
+[00:49:22.240] >> Exactly. So you can do all sorts of
+[00:49:23.839] things like this along the way. But that
+[00:49:27.280] stuff is just standard code. You don't
+[00:49:29.040] have to learn anything new. The key part
+[00:49:30.800] to a voice agent is the threading model
+[00:49:32.480] that you need to think about and just
+[00:49:33.760] spin it off in a background thread and
+[00:49:35.359] build an interrupt workflow that takes
+[00:49:37.680] the learnings from this state and
+[00:49:39.760] somehow resets the context window with
+[00:49:42.079] something like I'm sorry I have to go
+[00:49:43.599] off track and generates a new message so
+[00:49:46.960] that you can go back on track to what
+[00:49:48.640] the user might want and two learn how to
+[00:49:51.920] build evals for voice agents which is
+[00:49:53.920] really can you scroll down which is
+[00:49:56.559] really more about understanding the
+[00:49:58.880] highle level flow of a conversation. And
+[00:50:02.079] sadly, there's no shortcut there. You
+[00:50:04.559] you just have to go build out like a a
+[00:50:08.400] colorized view of your timeline almost.
+[00:50:11.119] Um, and most people don't actually build
+[00:50:12.640] the colors. Most people have no idea how
+[00:50:14.319] often they get off track. They use and
+[00:50:17.680] vibes are really, really good when
+[00:50:19.040] you're listening to one or two
+[00:50:20.240] conversations.
+[00:50:22.000] But like, if you're lucky enough to
+[00:50:23.440] actually have like over 100, 200 real
+[00:50:25.440] customer conversations, just plot it.
+[00:50:27.760] And the minute you have over 100, 200,
+[00:50:29.599] plotting is going to do way better work
+[00:50:31.280] for you than anything else can.
+[00:50:34.160] >> Yep.
+[00:50:35.760] >> Um, lot of comments, not a lot of
+[00:50:37.760] questions here. Um, can we use similar
+[00:50:40.160] supervisor to compact the context so
+[00:50:41.839] when the conversation goes really really
+[00:50:43.040] long, we don't need to pass in all the
+[00:50:44.319] messages. Great question.
+[00:50:46.079] >> Yes, the answer is yes, you can. And you
+[00:50:48.640] definitely should be doing that. Um, but
+[00:50:52.319] you can think of it like a form filling
+[00:50:54.400] question if you've ever done that. Have
+[00:50:56.880] have have you ever written a form
+[00:50:58.400] filling agent of your menu?
+[00:51:03.430] >> Yeah. Yeah. Sure.
+[00:51:03.440] >> Yeah. So, it's the same thing. Once you
+[00:51:05.040] have a form filling agent, you're kind
+[00:51:06.480] of instead of even having the whole
+[00:51:07.760] conversation, you can just replace a lot
+[00:51:09.280] of the previous messages with just the
+[00:51:11.520] current form is this, what is the next
+[00:51:14.480] form? And that's kind of like compaction
+[00:51:16.079] in some sense. A
+[00:51:17.520] >> kind of almost a better compaction than
+[00:51:19.440] anything you could have.
+[00:51:22.000] >> It's
+[00:51:23.520] Go ahead. No, I was just saying like in
+[00:51:25.839] cases where it's very clear what that
+[00:51:28.400] artifact is that you're trying to get
+[00:51:29.839] out of the conversation, it's very
+[00:51:31.440] simple. That's the artifact that gets
+[00:51:33.040] preserved throughout the conversation
+[00:51:34.559] and nothing else.
+[00:51:35.680] >> Yeah. The the harder part is when you
+[00:51:38.079] have a more ambiguous artifact. What I
+[00:51:40.240] recommend in those scenarios is see if
+[00:51:41.920] you can have the user guided through
+[00:51:43.920] some checkpoints. I think the mistake
+[00:51:45.920] that people make with voice agents is
+[00:51:47.440] the same is very similar to what they do
+[00:51:48.640] with chat aid bots. If you have a
+[00:51:51.119] >> one prompt for the whole conversation
+[00:51:53.119] instead of having like phased like
+[00:51:55.040] different LM based prompts for different
+[00:51:56.880] like parts of the conversation and
+[00:51:58.240] checkpoints.
+[00:51:59.200] >> Exactly. So as long as you can have some
+[00:52:00.559] sort of checkpoints in your conversation
+[00:52:02.000] of some kind and you can always have
+[00:52:03.359] some like save point that you can always
+[00:52:05.040] revert back to if something goes
+[00:52:06.240] horribly wrong and I find that to be
+[00:52:08.720] very very useful
+[00:52:09.920] >> for any
+[00:52:10.559] >> So this would take you to like a
+[00:52:12.000] structured output.
+[00:52:13.760] >> Yeah. And often
+[00:52:15.280] >> and this becomes part of the input to
+[00:52:17.040] the second agent which has like a new
+[00:52:18.640] prompt. Yeah. And often I wouldn't say
+[00:52:20.960] every tool call is a good point for a
+[00:52:22.960] structured output or like a checkpoint,
+[00:52:24.800] but some specific tool calls are great
+[00:52:27.680] um like uh checkpoints. So for example,
+[00:52:31.520] like if you're booking an appointment,
+[00:52:33.200] collecting information, doing all that
+[00:52:34.880] stuff is not a great checkpoint, but the
+[00:52:37.359] minute you've booked an appointment or
+[00:52:39.040] like the minute you're going to confirm
+[00:52:40.559] with the user whether or not they want
+[00:52:41.680] to book an appointment, that is a great
+[00:52:43.520] checkpoint.
+[00:52:45.119] So like you could naturally think about
+[00:52:46.960] this based on the flow of your
+[00:52:48.319] conversation of what what you would do
+[00:52:49.920] here. Uh and then build that out. Uh the
+[00:52:53.520] second part that I would think about
+[00:52:55.119] when you go do this is actually about
+[00:52:57.680] UX. I actually I think sometimes people
+[00:53:01.920] expect uh their users to have no
+[00:53:03.920] tolerance for anything. But honestly, if
+[00:53:06.319] I've been on the call for like five
+[00:53:07.760] minutes with an agent for a long time,
+[00:53:10.240] and five minutes isn't that long, but
+[00:53:11.839] even fi at five or 10 minutes, and then
+[00:53:14.400] you as an agent told me, "Hey, this
+[00:53:16.960] conversation's actually getting quite
+[00:53:18.480] long, we're going to use a slightly long
+[00:53:20.400] bigger model, so you may have slightly
+[00:53:22.160] slower response times from now on, I
+[00:53:24.640] think I would forgive you as a as a
+[00:53:26.559] software, not be upset at you at doing
+[00:53:28.240] that. But if you didn't tell me that and
+[00:53:30.720] you suddenly started taking a lot
+[00:53:32.000] longer, I would be very annoyed." Um, so
+[00:53:34.800] I think having transparency with your
+[00:53:36.400] users is a great way to solve that
+[00:53:39.760] problem as well. Uh, if you don't want
+[00:53:42.079] to compact the window.
+[00:53:57.030] Amazing. Y'all, this was super fun.
+[00:53:57.040] We'll get this posted. Uh, thank you,
+[00:53:58.400] Vibb, for calling in from Berlin. I know
+[00:54:00.240] it's late there. Um, appreciate all of
+[00:54:02.960] you all. The code is already live. We're
+[00:54:04.640] going to clean up the GitHub repo. We'll
+[00:54:05.920] get the uh video and stuff pushed out by
+[00:54:08.319] uh ideally I think probably sometime
+[00:54:09.760] tomorrow.
+[00:54:10.960] >> Yes. Um it might not be tomorrow, but it
+[00:54:13.359] might be the day after, but it will be
+[00:54:14.720] live soon. Uh oh, Germany time, but I
+[00:54:17.359] guess maybe tomorrow PST time. Um and
+[00:54:20.640] then uh we'll probably get another
+[00:54:22.880] sample set of some of the more uh fun
+[00:54:25.280] stuff with actual interrupting and
+[00:54:26.960] everything uh when I'm back from back in
+[00:54:29.440] the States and we do another episode on
+[00:54:30.960] it. Um, and hopefully we'll have more
+[00:54:33.680] writing code available then as well.
+[00:54:36.640] >> Yeah. Um, sounds great. All right, dude.
+[00:54:39.119] Thank you. Thanks everybody. See y'all
+[00:54:40.880] next week.
+[00:54:42.720] >> Adios, everyone. See you.

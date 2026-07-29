@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-042",
+  "primary": [
+    "2026-01-27-no-vibes-allowed/transcript.txt",
+    "2026-01-27-no-vibes-allowed/meta.md",
+    "2026-01-27-no-vibes-allowed/README.md"
+  ],
+  "supporting": [
+    "2026-01-27-no-vibes-allowed/README.md",
+    "2026-01-27-no-vibes-allowed/meta.md",
+    "2026-01-27-no-vibes-allowed/whiteboards.md",
+    "2026-01-27-no-vibes-allowed/clips.json"
+  ],
+  "notes": "Supporting artifacts provide implementation context but do not independently verify speaker claims."
+}

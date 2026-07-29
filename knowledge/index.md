@@ -1,0 +1,69 @@
+# AI That Works Knowledge Index
+
+Reviewed episode packets: 63
+
+Timestamped claims: 426
+
+- [aitw-064: Agent Observability](episodes/aitw-064/README.md) | 2026-07-07T18:00:00Z | 9 claims
+- [aitw-063: Software Factory for Agent Tools](episodes/aitw-063/README.md) | 2026-06-23T18:00:00Z | 9 claims
+- [aitw-062: Product Specs with AI](episodes/aitw-062/README.md) | 2026-06-16T18:00:00Z | 8 claims
+- [aitw-061: Hands-on with Fable 5](episodes/aitw-061/README.md) | 2026-06-09T18:00:00Z | 7 claims
+- [aitw-060: How to Build AI Agents that Work in Any Language](episodes/aitw-060/README.md) | 2026-06-02T18:00:00Z | 8 claims
+- [aitw-059: No Vibes Allowed: Performance Engineering](episodes/aitw-059/README.md) | 2026-05-26T18:00:00Z | 6 claims
+- [aitw-058: How AI Agents Can Safely Ship Code to Production](episodes/aitw-058/README.md) | 2026-05-19T18:00:00Z | 6 claims
+- [aitw-057: Code Mode Deep Dive](episodes/aitw-057/README.md) | 2026-05-12T18:00:00Z | 7 claims
+- [aitw-056: OpenAI Tells You Not to Build Your Own Harness](episodes/aitw-056/README.md) | 2026-05-05T18:00:00Z | 6 claims
+- [aitw-055: No Vibes Allowed: Building Design Docs with AI](episodes/aitw-055/README.md) | 2026-04-28T18:00:00Z | 7 claims
+- [aitw-054: Harness Engineering Without the Hype](episodes/aitw-054/README.md) | 2026-04-21T18:00:00Z | 6 claims
+- [aitw-053: Agentic Coding for Frontend Apps](episodes/aitw-053/README.md) | 2026-04-14T18:00:00Z | 6 claims
+- [aitw-052: SSE Streaming](episodes/aitw-052/README.md) | 2026-04-07T18:00:00Z | 6 claims
+- [aitw-051: No Vibes Allowed March Edition](episodes/aitw-051/README.md) | 2026-03-31T18:00:00Z | 6 claims
+- [aitw-050: MCP is Dead?](episodes/aitw-050/README.md) | 2026-03-24T18:00:00Z | 6 claims
+- [aitw-049: Prompt Injections and Guardrails](episodes/aitw-049/README.md) | 2026-03-17T18:00:00Z | 6 claims
+- [aitw-048: Claude Agent Skills Deep Dive](episodes/aitw-048/README.md) | 2026-03-10T18:00:00Z | 6 claims
+- [aitw-047: PII Redaction and Sensitive Data Scrubbing](episodes/aitw-047/README.md) | 2026-03-03T18:15:00Z | 6 claims
+- [aitw-046: No Vibes Allowed February](episodes/aitw-046/README.md) | 2026-02-24T18:00:00Z | 6 claims
+- [aitw-045: AI Content Pipeline Revisited](episodes/aitw-045/README.md) | 2026-02-17T18:00:00Z | 6 claims
+- [aitw-044: Agentic Backpressure Deep Dive](episodes/aitw-044/README.md) | 2026-02-10T18:00:00Z | 6 claims
+- [aitw-043: Prompting Is Becoming a Product Surface](episodes/aitw-043/README.md) | 2026-02-03T18:00:00Z | 7 claims
+- [aitw-042: No Vibes Allowed](episodes/aitw-042/README.md) | 2026-01-27T18:00:00Z | 6 claims
+- [aitw-041: Email is All You Need](episodes/aitw-041/README.md) | 2026-01-20T18:00:00Z | 9 claims
+- [aitw-040: Applying 12-Factor Principles to Coding Agent SDKs](episodes/aitw-040/README.md) | 2026-01-13T18:00:00Z | 9 claims
+- [aitw-039: Understanding Latency in AI Applications](episodes/aitw-039/README.md) | 2026-01-06T18:00:00Z | 9 claims
+- [aitw-038: Founding Boundary: Vaibhav's Journey](episodes/aitw-038/README.md) | 2025-12-30T18:00:00Z | 9 claims
+- [aitw-037: Founding HumanLayer: Dex's Journey](episodes/aitw-037/README.md) | 2025-12-23T18:00:00Z | 9 claims
+- [aitw-036: Building a Prompt Optimizer](episodes/aitw-036/README.md) | 2025-12-16T18:00:00Z | 9 claims
+- [aitw-034: Git Worktrees for AI Coding Agents](episodes/aitw-034/README.md) | 2025-12-09T18:00:00Z | 9 claims
+- [aitw-035: Multimodal Evals](episodes/aitw-035/README.md) | 2025-12-02T17:00:00Z | 9 claims
+- [aitw-033: No Vibes Allowed: Using CodeLayer to Build CodeLayer](episodes/aitw-033/README.md) | 2025-11-25T18:00:00Z | 6 claims
+- [aitw-032: Building an Animation Pipeline](episodes/aitw-032/README.md) | 2025-11-18T18:00:00Z | 6 claims
+- [aitw-031: Dates, Times, and LLMs](episodes/aitw-031/README.md) | 2025-11-11T18:00:00Z | 9 claims
+- [aitw-030: Event-driven agentic loops](episodes/aitw-030/README.md) | 2025-11-04T18:00:00.000Z | 8 claims
+- [aitw-029: Ralph Wiggum under the hood: Coding Agent Power Tools](episodes/aitw-029/README.md) | 2025-10-28T18:00:00Z | 8 claims
+- [aitw-028: Agentic RAG + Context Engineering](episodes/aitw-028/README.md) | 2025-10-21T18:00:00Z | 8 claims
+- [aitw-027: No Vibes Allowed - Live Coding with AI Agents](episodes/aitw-027/README.md) | 2025-10-14T17:00:00Z | 6 claims
+- [aitw-026: Anthropic Post Mortem](episodes/aitw-026/README.md) | 2025-10-07T18:00:00Z | 6 claims
+- [aitw-025: Dynamic Schemas](episodes/aitw-025/README.md) | 2025-09-30T18:00:00Z | 5 claims
+- [aitw-024: Evals for Classification](episodes/aitw-024/README.md) | 2025-09-23T18:00:00Z | 6 claims
+- [aitw-023: Bash vs. MCP: Token Efficient Coding Agent Tooling](episodes/aitw-023/README.md) | 2025-09-16T18:00:00Z | 6 claims
+- [aitw-022: Generative UIs and Structured Streaming](episodes/aitw-022/README.md) | 2025-09-09T18:00:00Z | 6 claims
+- [aitw-021: Voice Agents and Supervisor Threading](episodes/aitw-021/README.md) | 2025-09-02T18:00:00Z | 6 claims
+- [aitw-020: Claude for Non-Code Tasks](episodes/aitw-020/README.md) | 2025-08-26T18:00:00Z | 6 claims
+- [aitw-019: Interruptible Agents](episodes/aitw-019/README.md) | 2025-08-19T18:00:00Z | 6 claims
+- [aitw-018: Decoding Context Engineering Lessons from Manus](episodes/aitw-018/README.md) | 2025-08-12T18:00:00Z | 6 claims
+- [aitw-017: Context Engineering for Coding Agents](episodes/aitw-017/README.md) | 2025-08-05T18:00:00Z | 6 claims
+- [aitw-016: Evaluating Prompts Across Models](episodes/aitw-016/README.md) | 2025-07-29T18:00:00Z | 6 claims
+- [aitw-015: PDFs, Multimodality, Vision Models](episodes/aitw-015/README.md) | 2025-07-22T18:00:00Z | 5 claims
+- [aitw-014: Implementing Decaying-Resolution Memory](episodes/aitw-014/README.md) | 2025-07-15T18:00:00Z | 6 claims
+- [aitw-013: Building AI with Memory & Context](episodes/aitw-013/README.md) | 2025-07-08T18:00:00Z | 6 claims
+- [aitw-012: Boosting AI Output Quality](episodes/aitw-012/README.md) | 2025-07-01T18:00:00Z | 5 claims
+- [aitw-011: Building an AI Content Pipeline](episodes/aitw-011/README.md) | 2025-06-24T18:00:00Z | 5 claims
+- [aitw-010: Entity Resolution: Extraction, Deduping, and Enriching](episodes/aitw-010/README.md) | 2025-06-17T18:00:00Z | 6 claims
+- [aitw-009: Cracking the Prompting Interview](episodes/aitw-009/README.md) | 2025-06-10T18:00:00Z | 5 claims
+- [aitw-008: Humans as Tools: Async Agents and Durable Execution](episodes/aitw-008/README.md) | 2025-06-03T18:00:00Z | 7 claims
+- [aitw-007: 12-factor agents: selecting from thousands of MCP tools](episodes/aitw-007/README.md) | 2025-05-27T18:00:00Z | 7 claims
+- [aitw-006: Policy to Prompt: Evaluating with the Enron Emails Dataset](episodes/aitw-006/README.md) | 2025-05-20T18:00:00Z | 7 claims
+- [aitw-005: Designing Evals](episodes/aitw-005/README.md) | 2025-05-13T18:00:00Z | 7 claims
+- [aitw-004: Twelve Factor Agents](episodes/aitw-004/README.md) | 2025-04-22T18:00:00Z | 6 claims
+- [aitw-003: Code Generation with Small Models](episodes/aitw-003/README.md) | 2025-04-15T18:00:00Z | 7 claims
+- [aitw-001: Large Scale Classification](episodes/aitw-001/README.md) | 2025-03-31T18:00:00Z | 7 claims

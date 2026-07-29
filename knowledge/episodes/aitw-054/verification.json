@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID gX9WpYY61xA",
+  "transcript_path": "2026-04-21-harness-engineering-without-the-hype/trasncript.txt",
+  "transcript_range": "00:00.254 to 01:00:35.605",
+  "timestamp_order": "verified by knowledge/scripts/verify_transcript.py",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "all timestamped claim spans"
+  ],
+  "timestamped_claim_count": 6,
+  "source_duration_check": "not run: source media was not downloaded",
+  "remaining_uncertainty": [
+    "transcript provenance and ASR model",
+    "exact recording start",
+    "speaker attribution",
+    "screen only evidence"
+  ]
+}
+

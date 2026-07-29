@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-037",
+  "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
+  "materials": [
+    {"path": "2025-12-23-founding-humanlayer/README.md", "role": "upstream episode overview and links", "sha256": "d225728d17837a2f2b9b6dfb14e42023e98760c7f5a0d0e3ed37beb9c51e3844"},
+    {"path": "2025-12-23-founding-humanlayer/meta.md", "role": "upstream episode identity, event time, and media metadata", "sha256": "ab25ac7e021f4b72af0bdb639c6996df649e8efc99285ea8541b08af884cbb41"},
+    {"path": "2025-12-23-founding-humanlayer/transcript.md", "role": "primary timestamped evidence", "sha256": "ae648769ab360368cf07939c5615f19fb3338d22410a15ffa04ea6cd471d7ac1"}
+  ],
+  "supporting_files": [],
+  "external_links": [
+    {"url": "https://www.youtube.com/watch?v=LEOA19Ss9lc", "role": "source video, not downloaded or independently checked"},
+    {"url": "https://lu.ma/baml", "role": "event series link"}
+  ],
+  "note": "The source folder contains no supporting code or diagrams. Companies, products, talks, and future plans mentioned in the transcript were not externally verified."
+}

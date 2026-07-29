@@ -1,0 +1,5161 @@
+WEBVTT
+
+00:00:05.030 --> 00:00:05.040
+All right. How's it going everyone?
+
+00:00:05.040 --> 00:00:07.440
+Welcome. Today you will see a new face
+
+00:00:07.440 --> 00:00:10.240
+than what you normally see. Uh we'll
+
+00:00:10.240 --> 00:00:11.679
+give it a couple minutes and we'll kick
+
+00:00:11.679 --> 00:00:14.290
+it off right away.
+
+00:00:14.290 --> 00:00:16.400
+[Music]
+
+00:00:16.400 --> 00:00:18.080
+I'm going to do one thing. Put up some
+
+00:00:18.080 --> 00:00:21.199
+text. Boop.
+
+00:00:21.199 --> 00:00:23.519
+And Aaron, I think your audio and
+
+00:00:23.519 --> 00:00:25.680
+everything should be working just fine.
+
+00:00:25.680 --> 00:00:40.630
+>> Yeah, I think so.
+
+00:00:42.389 --> 00:00:42.399
+All right. Are we good to go, Aaron?
+
+00:00:42.399 --> 00:00:45.520
+>> Yeah. Let's start this.
+
+00:00:45.520 --> 00:00:47.600
+>> I don't know if I can hear you.
+
+00:00:47.600 --> 00:00:49.440
+>> You can't hear me?
+
+00:00:49.440 --> 00:00:51.600
+>> Um,
+
+00:00:51.600 --> 00:00:55.110
+>> hello. Hello.
+
+00:00:59.349 --> 00:00:59.359
+You can't hear me? Hello?
+
+00:00:59.359 --> 00:01:01.440
+Maybe it's my audio, but I I can't hear
+
+00:01:01.440 --> 00:01:03.760
+you.
+
+00:01:03.760 --> 00:01:05.119
+>> Do you guys Are you guys able to hear
+
+00:01:05.119 --> 00:01:10.550
+Aaron? Oh, you do. Um,
+
+00:01:12.310 --> 00:01:12.320
+let me figure something out really fast
+
+00:01:12.320 --> 00:01:14.880
+cuz I cannot hear him. Can you try
+
+00:01:14.880 --> 00:01:15.600
+again, Aaron?
+
+00:01:15.600 --> 00:01:17.520
+>> Hello.
+
+00:01:17.520 --> 00:01:19.920
+>> Let me get some headphones.
+
+00:01:19.920 --> 00:01:23.439
+Try one more thing.
+
+00:01:23.439 --> 00:01:24.880
+All right. Thank you guys for reporting
+
+00:01:24.880 --> 00:01:32.149
+the issue that it's purely on my side.
+
+00:01:33.990 --> 00:01:34.000
+All right. Uh, can you try one last
+
+00:01:34.000 --> 00:01:34.640
+time, Aaron?
+
+00:01:34.640 --> 00:01:36.799
+>> Hello. Hello. Hello.
+
+00:01:36.799 --> 00:01:41.600
+>> Oh, all right. We are good to go.
+
+00:01:41.600 --> 00:01:43.360
+>> All right. Thank you everyone for
+
+00:01:43.360 --> 00:01:45.840
+patiently waiting. Um, we've got our new
+
+00:01:45.840 --> 00:01:49.200
+episode of AI that works today. And, um,
+
+00:01:49.200 --> 00:01:51.040
+I think one of the things that we really
+
+00:01:51.040 --> 00:01:53.360
+wanted to talk about today was a couple
+
+00:01:53.360 --> 00:01:55.600
+of new things. One is Enthropic had a
+
+00:01:55.600 --> 00:01:57.360
+great article about how they went down
+
+00:01:57.360 --> 00:01:59.759
+recently and I think it's just worth
+
+00:01:59.759 --> 00:02:01.920
+diving deep into that to go understand
+
+00:02:01.920 --> 00:02:03.600
+what happened, how does it impact you
+
+00:02:03.600 --> 00:02:05.360
+and like how can we understand if that
+
+00:02:05.360 --> 00:02:06.799
+sort of stuff is going to impact us
+
+00:02:06.799 --> 00:02:09.200
+downstream in the future uh now that we
+
+00:02:09.200 --> 00:02:10.720
+have these runtime dependencies on these
+
+00:02:10.720 --> 00:02:12.000
+models
+
+00:02:12.000 --> 00:02:13.920
+>> and then there's bunch of stuff that
+
+00:02:13.920 --> 00:02:17.280
+happened on AI uh on open dev day and I
+
+00:02:17.280 --> 00:02:18.319
+think there's some interesting stuff to
+
+00:02:18.319 --> 00:02:20.560
+talk about there as well.
+
+00:02:20.560 --> 00:02:22.080
+>> So I'm Vivoth. I'm one of your co-hosts
+
+00:02:22.080 --> 00:02:24.239
+for AI that works. And normally I have
+
+00:02:24.239 --> 00:02:26.640
+Dexter with me. Dexter has some really
+
+00:02:26.640 --> 00:02:27.840
+cool things going on that I can't talk
+
+00:02:27.840 --> 00:02:29.120
+about yet. So hopefully he'll talk about
+
+00:02:29.120 --> 00:02:31.760
+it next week, but I was able to rope in
+
+00:02:31.760 --> 00:02:34.160
+my co-founder Aaron who I think is just
+
+00:02:34.160 --> 00:02:36.000
+as pleasant. Probably the show should
+
+00:02:36.000 --> 00:02:38.160
+just be him and uh Dexter on instead of
+
+00:02:38.160 --> 00:02:41.040
+me. But Aaron, you can give a brief uh
+
+00:02:41.040 --> 00:02:42.959
+intro and background if you want.
+
+00:02:42.959 --> 00:02:45.680
+>> Yeah, thank you. Um yeah, so VB and I
+
+00:02:45.680 --> 00:02:48.560
+met seven years ago. Now we're doing a
+
+00:02:48.560 --> 00:02:51.200
+company together. And before that I used
+
+00:02:51.200 --> 00:02:54.959
+to work at AWS in EC2 and then in Prime
+
+00:02:54.959 --> 00:02:56.879
+Video and I worked at Amazon for like
+
+00:02:56.879 --> 00:02:59.120
+seven years and then I was like all
+
+00:02:59.120 --> 00:03:01.280
+right I need to do a startup now and
+
+00:03:01.280 --> 00:03:03.280
+here I am now making a programming
+
+00:03:03.280 --> 00:03:04.800
+language song
+
+00:03:04.800 --> 00:03:06.159
+>> which we all know is a great startup
+
+00:03:06.159 --> 00:03:06.720
+idea.
+
+00:03:06.720 --> 00:03:09.440
+>> Yeah, exactly. So happy to be here.
+
+00:03:09.440 --> 00:03:11.599
+>> Cool. Um I guess let's get right into
+
+00:03:11.599 --> 00:03:14.800
+it. Uh let's start off with um with the
+
+00:03:14.800 --> 00:03:17.120
+entropic uh piece right away. So, I'll
+
+00:03:17.120 --> 00:03:18.319
+I'll go ahead and screen share and we'll
+
+00:03:18.319 --> 00:03:20.800
+kind of walk through it together.
+
+00:03:20.800 --> 00:03:23.920
+Uh, let me get the screen share going.
+
+00:03:23.920 --> 00:03:25.519
+Oh, yes. We'll talk about prompt
+
+00:03:25.519 --> 00:03:27.120
+optimizers, too. I think we'll have a
+
+00:03:27.120 --> 00:03:30.080
+fun time today.
+
+00:03:30.080 --> 00:03:32.480
+Screen.
+
+00:03:32.480 --> 00:03:33.920
+So, I think the first thing I want to go
+
+00:03:33.920 --> 00:03:40.550
+talk about is this one.
+
+00:03:43.350 --> 00:03:43.360
+So, many of you probably have seen this
+
+00:03:43.360 --> 00:03:46.480
+uh which is Oh, interesting.
+
+00:03:46.480 --> 00:03:48.319
+which is this article that Enthropic
+
+00:03:48.319 --> 00:03:50.080
+wrote or maybe you haven't which was
+
+00:03:50.080 --> 00:03:53.840
+Enthropic uh recently had a downtime or
+
+00:03:53.840 --> 00:03:56.560
+like I guess regress quality issues in
+
+00:03:56.560 --> 00:03:58.560
+their models and they had like three
+
+00:03:58.560 --> 00:04:00.560
+unique bugs that I thought were really
+
+00:04:00.560 --> 00:04:04.000
+fascinating and talked about how almost
+
+00:04:04.000 --> 00:04:05.599
+sensitive these models are the things
+
+00:04:05.599 --> 00:04:07.760
+that are both incredibly technical and
+
+00:04:07.760 --> 00:04:10.799
+also really hard to understand.
+
+00:04:10.799 --> 00:04:12.640
+So, we figured let's just talk about it.
+
+00:04:12.640 --> 00:04:14.159
+If someone in the audience has thoughts
+
+00:04:14.159 --> 00:04:15.519
+or questions that they want to bring up
+
+00:04:15.519 --> 00:04:17.280
+along the way, please do that as per
+
+00:04:17.280 --> 00:04:20.160
+normal. Uh, because we love having
+
+00:04:20.160 --> 00:04:21.840
+>> that kind of conversation. Yes. Let me
+
+00:04:21.840 --> 00:04:22.880
+zoom in.
+
+00:04:22.880 --> 00:04:24.880
+>> Yeah, there we go. Perfect.
+
+00:04:24.880 --> 00:04:27.440
+>> Um, and like one second, I'm going to
+
+00:04:27.440 --> 00:04:29.280
+adjust my screen. I'm on a new screen
+
+00:04:29.280 --> 00:04:31.680
+today, so it's sadly not as efficient I
+
+00:04:31.680 --> 00:04:33.600
+normally am.
+
+00:04:33.600 --> 00:04:36.240
+All right. Uh, is a co is the rule for a
+
+00:04:36.240 --> 00:04:38.560
+co-host that they must have a mustache?
+
+00:04:38.560 --> 00:04:39.040
+Um,
+
+00:04:39.040 --> 00:04:42.080
+>> I think so. Sadly, I can't grow one. So,
+
+00:04:42.080 --> 00:04:43.600
+I've got to I've got to find other
+
+00:04:43.600 --> 00:04:47.919
+people that are uh that can do it.
+
+00:04:47.919 --> 00:04:49.759
+Um, and let's just go right into the
+
+00:04:49.759 --> 00:04:51.680
+first one. So, the really the problems
+
+00:04:51.680 --> 00:04:54.320
+that these happen uh is that they happen
+
+00:04:54.320 --> 00:04:56.639
+mostly at large scale systems. If you're
+
+00:04:56.639 --> 00:04:58.240
+running a tiny model or tiny information
+
+00:04:58.240 --> 00:04:59.680
+provider, you likely will never run into
+
+00:04:59.680 --> 00:05:01.280
+these. But anytime we depend on these
+
+00:05:01.280 --> 00:05:03.840
+cloud systems, our business and our
+
+00:05:03.840 --> 00:05:06.960
+impact of quality can have a huge impact
+
+00:05:06.960 --> 00:05:09.440
+based on exactly what these model
+
+00:05:09.440 --> 00:05:10.960
+providers do. And the more that we can
+
+00:05:10.960 --> 00:05:12.880
+deeply understand them, the better we
+
+00:05:12.880 --> 00:05:14.880
+can report. Like say we see a bunch of
+
+00:05:14.880 --> 00:05:16.800
+issues on Twitter, which I thought was
+
+00:05:16.800 --> 00:05:18.400
+one of the most fascinating things about
+
+00:05:18.400 --> 00:05:20.560
+what anthropic reporter here, which is
+
+00:05:20.560 --> 00:05:22.080
+that the more issues that we see, the
+
+00:05:22.080 --> 00:05:23.280
+better we can understand is it a
+
+00:05:23.280 --> 00:05:24.479
+prompting issue, is it a model
+
+00:05:24.479 --> 00:05:26.080
+versioning issue, or is it a core infra
+
+00:05:26.080 --> 00:05:28.080
+issue under the hood? or once we know
+
+00:05:28.080 --> 00:05:29.360
+what to diagn
+
+00:05:29.360 --> 00:05:32.000
+>> the worst case it's a compiler issue.
+
+00:05:32.000 --> 00:05:33.600
+>> Yeah, the worst case a compiler issue
+
+00:05:33.600 --> 00:05:36.320
+which is like really only not only is it
+
+00:05:36.320 --> 00:05:37.520
+not found in the model company but based
+
+00:05:37.520 --> 00:05:40.080
+on the core compiler to go fix as well.
+
+00:05:40.080 --> 00:05:41.600
+But before we go into the issues, I
+
+00:05:41.600 --> 00:05:42.720
+actually want to talk about a really
+
+00:05:42.720 --> 00:05:43.919
+important segment that they talked about
+
+00:05:43.919 --> 00:05:46.240
+at the very bottom
+
+00:05:46.240 --> 00:05:48.080
+which is I think they have it somewhere
+
+00:05:48.080 --> 00:05:52.240
+down here. Um this part and I think this
+
+00:05:52.240 --> 00:05:53.759
+is going to be more and more true and
+
+00:05:53.759 --> 00:05:55.440
+really applicable to every single person
+
+00:05:55.440 --> 00:05:58.400
+being AI pipelines. Enthropic doesn't
+
+00:05:58.400 --> 00:06:00.560
+really have too many like eval
+
+00:06:00.560 --> 00:06:02.320
+fundamentally on their system. What they
+
+00:06:02.320 --> 00:06:04.080
+really do is they scan for noise across
+
+00:06:04.080 --> 00:06:05.520
+Twitter because they're so popular. they
+
+00:06:05.520 --> 00:06:07.840
+can go do that and they're like what is
+
+00:06:07.840 --> 00:06:09.600
+the general sentiment of vibes that is
+
+00:06:09.600 --> 00:06:11.680
+happening when we release a new model
+
+00:06:11.680 --> 00:06:13.840
+and if anything is going off in a really
+
+00:06:13.840 --> 00:06:16.720
+anomal way they know for sure that they
+
+00:06:16.720 --> 00:06:19.520
+have an issue and that's I think when
+
+00:06:19.520 --> 00:06:20.800
+all of us think about building AI
+
+00:06:20.800 --> 00:06:23.039
+pipelines of any kind this is one of the
+
+00:06:23.039 --> 00:06:24.639
+most useful kind of things for all of us
+
+00:06:24.639 --> 00:06:26.400
+to think about which is like how can we
+
+00:06:26.400 --> 00:06:28.240
+get a latent signal here that allows us
+
+00:06:28.240 --> 00:06:29.919
+to go track this and what's really
+
+00:06:29.919 --> 00:06:32.800
+fascinating here is that this worked for
+
+00:06:32.800 --> 00:06:35.759
+years for them this is the that work and
+
+00:06:35.759 --> 00:06:39.120
+now at this current skill that they have
+
+00:06:39.120 --> 00:06:41.919
+now it really failed because they were
+
+00:06:41.919 --> 00:06:43.520
+able they there's some sensitive issues
+
+00:06:43.520 --> 00:06:45.919
+that almost like conflated together at
+
+00:06:45.919 --> 00:06:46.960
+the wrong time
+
+00:06:46.960 --> 00:06:47.919
+>> to make it not work.
+
+00:06:47.919 --> 00:06:51.120
+>> Part of it is really just looking at um
+
+00:06:51.120 --> 00:06:54.080
+like at tweets and just general traffic
+
+00:06:54.080 --> 00:06:56.400
+on social media at Amazon for example we
+
+00:06:56.400 --> 00:06:58.479
+would just listen to like mentions of
+
+00:06:58.479 --> 00:06:59.520
+like what are people saying
+
+00:06:59.520 --> 00:07:00.240
+>> really?
+
+00:07:00.240 --> 00:07:01.680
+>> Yeah. And that was that was the way that
+
+00:07:01.680 --> 00:07:04.720
+we like measured how good the product
+
+00:07:04.720 --> 00:07:06.080
+like obviously there were other metrics
+
+00:07:06.080 --> 00:07:08.319
+like how how long people um stay and
+
+00:07:08.319 --> 00:07:11.039
+like watch movies and stuff but um a big
+
+00:07:11.039 --> 00:07:12.400
+part is just like what are the customers
+
+00:07:12.400 --> 00:07:16.479
+saying and for this specific instance
+
+00:07:16.479 --> 00:07:19.199
+only8% of traffic was impacted in some
+
+00:07:19.199 --> 00:07:20.960
+cases. So you can imagine like how
+
+00:07:20.960 --> 00:07:23.599
+difficult it must have been to find that
+
+00:07:23.599 --> 00:07:27.919
+there was an issue. Um, and yeah, we uh
+
+00:07:27.919 --> 00:07:29.759
+we can chat about the actual things that
+
+00:07:29.759 --> 00:07:31.039
+happened here.
+
+00:07:31.039 --> 00:07:32.319
+>> Cool. Let's start off with the first
+
+00:07:32.319 --> 00:07:33.840
+one. Um, and like for people that want
+
+00:07:33.840 --> 00:07:35.199
+to go read this whole thing, definitely
+
+00:07:35.199 --> 00:07:36.639
+we'll link it. Uh, let me link it. Uh,
+
+00:07:36.639 --> 00:07:38.800
+I'll link it in the email and also I
+
+00:07:38.800 --> 00:07:39.919
+think it's in the description of the
+
+00:07:39.919 --> 00:07:41.120
+event, but for anyone that doesn't have
+
+00:07:41.120 --> 00:07:43.840
+it, I'll post it in the message as well.
+
+00:07:43.840 --> 00:07:48.080
+Um, I posted in the chat thread. Um, but
+
+00:07:48.080 --> 00:07:49.680
+the first one I thought was fascinating
+
+00:07:49.680 --> 00:07:51.120
+was actually about like context window
+
+00:07:51.120 --> 00:07:52.560
+routing. And a lot of people talk about
+
+00:07:52.560 --> 00:07:53.759
+large context windows. They're like,
+
+00:07:53.759 --> 00:07:56.160
+"Oh, let's use a million token model uh
+
+00:07:56.160 --> 00:07:59.919
+at all times." But surprisingly, the
+
+00:07:59.919 --> 00:08:01.360
+fundamental issue that they had here was
+
+00:08:01.360 --> 00:08:02.800
+actually the fact that like when they
+
+00:08:02.800 --> 00:08:05.039
+used a million million context window
+
+00:08:05.039 --> 00:08:06.960
+for like uh I think what they said was
+
+00:08:06.960 --> 00:08:08.800
+like smaller context requests, it
+
+00:08:08.800 --> 00:08:11.759
+actually led to degraded performance.
+
+00:08:11.759 --> 00:08:14.000
+Now, this is very against what a lot of
+
+00:08:14.000 --> 00:08:15.199
+people tell you, which is like toss
+
+00:08:15.199 --> 00:08:16.879
+everything at the biggest model at all
+
+00:08:16.879 --> 00:08:19.440
+times.
+
+00:08:19.440 --> 00:08:21.919
+That is not always going to lead to good
+
+00:08:21.919 --> 00:08:24.000
+results. And I can tell you at least my
+
+00:08:24.000 --> 00:08:26.800
+intuition about why that is the case,
+
+00:08:26.800 --> 00:08:28.319
+but I always like to think of it in the
+
+00:08:28.319 --> 00:08:30.400
+in the form of like software engineers.
+
+00:08:30.400 --> 00:08:32.000
+Aaron is an amazing software engineer. I
+
+00:08:32.000 --> 00:08:34.159
+get the pleasure of working with. But
+
+00:08:34.159 --> 00:08:37.839
+like if I toss Aaron a bunch of nonsense
+
+00:08:37.839 --> 00:08:39.760
+information and then with along with the
+
+00:08:39.760 --> 00:08:41.279
+actual information that I want him to go
+
+00:08:41.279 --> 00:08:42.959
+do, no matter how good he is,
+
+00:08:42.959 --> 00:08:45.519
+fundamentally he has to do work to both
+
+00:08:45.519 --> 00:08:50.080
+process the information out and also
+
+00:08:50.080 --> 00:08:52.240
+deal with the issue of like figuring out
+
+00:08:52.240 --> 00:08:54.720
+exactly what has to happen. So, in that
+
+00:08:54.720 --> 00:08:56.800
+world, it would it would just be better
+
+00:08:56.800 --> 00:08:58.240
+for him to for me to tell him exactly
+
+00:08:58.240 --> 00:09:00.000
+what I want him to do, and he'll likely
+
+00:09:00.000 --> 00:09:02.480
+produce a better output that I would be
+
+00:09:02.480 --> 00:09:04.080
+super happy with at the end, no matter
+
+00:09:04.080 --> 00:09:06.720
+how good he is.
+
+00:09:06.720 --> 00:09:10.000
+>> Yeah, it's uh it's just like yeah, you
+
+00:09:10.000 --> 00:09:11.839
+just have like a bigger bigger model
+
+00:09:11.839 --> 00:09:14.720
+with a bigger context window. Um and we
+
+00:09:14.720 --> 00:09:16.800
+can talk about exactly like the
+
+00:09:16.800 --> 00:09:18.640
+mechanism by which people scale out
+
+00:09:18.640 --> 00:09:20.160
+these models.
+
+00:09:20.160 --> 00:09:22.080
+>> Oh, you want to talk about scale? Sure,
+
+00:09:22.080 --> 00:09:23.600
+we can do that. So, like, okay, let's
+
+00:09:23.600 --> 00:09:25.519
+talk about why why this ends up being
+
+00:09:25.519 --> 00:09:28.240
+true. So, scallet draw. One second. I'm
+
+00:09:28.240 --> 00:09:31.360
+going to make a little
+
+00:09:31.360 --> 00:09:33.920
+uh let's see. Can you guys see my
+
+00:09:33.920 --> 00:09:36.240
+scallet draw? All right, Aaron, I'm
+
+00:09:36.240 --> 00:09:40.080
+going to send you a link to this
+
+00:09:40.080 --> 00:09:44.320
+uh session. Copy link and I will send
+
+00:09:44.320 --> 00:09:48.710
+this to Aaron only.
+
+00:09:51.110 --> 00:09:51.120
+Cool.
+
+00:09:51.120 --> 00:09:52.720
+Cool. Aaron shoveling.
+
+00:09:52.720 --> 00:09:54.480
+>> So like why why does this kind of model
+
+00:09:54.480 --> 00:09:56.480
+run into those kind of issues? Well,
+
+00:09:56.480 --> 00:09:58.080
+>> let's talk about how one second. I got
+
+00:09:58.080 --> 00:10:02.150
+to switch the chat.
+
+00:10:03.269 --> 00:10:03.279
+>> Well, let's think about what the
+
+00:10:03.279 --> 00:10:04.560
+mechanism doing under the hood. Like
+
+00:10:04.560 --> 00:10:06.000
+this is at least my understanding of how
+
+00:10:06.000 --> 00:10:08.399
+I think uh transformers work. I might be
+
+00:10:08.399 --> 00:10:09.680
+wrong and if I am, please correct me
+
+00:10:09.680 --> 00:10:11.200
+along the way uh for anyone that's
+
+00:10:11.200 --> 00:10:13.120
+watching.
+
+00:10:13.120 --> 00:10:14.880
+Fundamentally, what you do is you write
+
+00:10:14.880 --> 00:10:19.110
+a word like the
+
+00:10:27.990 --> 00:10:28.000
+soccer. Oops, can't spell soccer.
+
+00:10:28.000 --> 00:10:35.750
+Soccer.
+
+00:10:38.870 --> 00:10:38.880
+the bad soccer
+
+00:10:38.880 --> 00:10:42.870
+player
+
+00:10:44.230 --> 00:10:44.240
+is.
+
+00:10:44.240 --> 00:10:45.680
+>> Yeah, I mean that's pretty good. That's
+
+00:10:45.680 --> 00:10:46.560
+pretty good.
+
+00:10:46.560 --> 00:10:48.880
+>> Okay, cool. Um, but like when you go do
+
+00:10:48.880 --> 00:10:51.519
+this, what ends up happening is all the
+
+00:10:51.519 --> 00:10:52.959
+mechanism is doing is it's taking
+
+00:10:52.959 --> 00:10:54.880
+information
+
+00:10:54.880 --> 00:10:57.920
+from this word and somehow trying to
+
+00:10:57.920 --> 00:11:00.880
+bridge it all the way over into
+
+00:11:00.880 --> 00:11:02.640
+like this word and said we're going to
+
+00:11:02.640 --> 00:11:05.680
+move information about like best over
+
+00:11:05.680 --> 00:11:09.120
+into soccer. And somehow this vector now
+
+00:11:09.120 --> 00:11:10.640
+doesn't just represent soccer, it
+
+00:11:10.640 --> 00:11:12.640
+represents both the concept of best and
+
+00:11:12.640 --> 00:11:14.800
+soccer.
+
+00:11:14.800 --> 00:11:16.320
+And then it's going to say then it's
+
+00:11:16.320 --> 00:11:17.360
+going to want to translate some
+
+00:11:17.360 --> 00:11:19.600
+information from soccer and player and
+
+00:11:19.600 --> 00:11:21.519
+eventually
+
+00:11:21.519 --> 00:11:24.320
+best and player also into here. So at
+
+00:11:24.320 --> 00:11:25.920
+some point the vector represents not
+
+00:11:25.920 --> 00:11:28.079
+just player and soccer not just best but
+
+00:11:28.079 --> 00:11:30.720
+the idea is soccer best soccer players
+
+00:11:30.720 --> 00:11:33.040
+represented. And as you go down this
+
+00:11:33.040 --> 00:11:35.279
+world, the whole point is the mechanism
+
+00:11:35.279 --> 00:11:37.360
+is just moving information between these
+
+00:11:37.360 --> 00:11:40.000
+bridges into each other in various
+
+00:11:40.000 --> 00:11:42.000
+birectional ways. So that at some point
+
+00:11:42.000 --> 00:11:43.120
+the vectors represent something
+
+00:11:43.120 --> 00:11:45.360
+meaningful. And when you decide what
+
+00:11:45.360 --> 00:11:47.200
+token you want to generate next here,
+
+00:11:47.200 --> 00:11:49.279
+and anyone that disagrees with this is
+
+00:11:49.279 --> 00:11:51.920
+wrong, but um when you generate what
+
+00:11:51.920 --> 00:11:54.160
+token you want to go generate here, you
+
+00:11:54.160 --> 00:11:55.519
+basically are just moving information
+
+00:11:55.519 --> 00:11:58.079
+around. So what does long context mean?
+
+00:11:58.079 --> 00:12:00.399
+Well, this bridging is happening across
+
+00:12:00.399 --> 00:12:03.839
+many token channels along the way.
+
+00:12:03.839 --> 00:12:06.560
+And as you increase the context window,
+
+00:12:06.560 --> 00:12:08.639
+the amount of effort it takes the model
+
+00:12:08.639 --> 00:12:10.560
+to go learn how to move information
+
+00:12:10.560 --> 00:12:14.320
+across all these vectors is different.
+
+00:12:14.320 --> 00:12:16.079
+And it's not the same as learning what
+
+00:12:16.079 --> 00:12:18.480
+it means to move across 10 tokens versus
+
+00:12:18.480 --> 00:12:21.040
+moving across a million tokens. So just
+
+00:12:21.040 --> 00:12:23.040
+because a model is capable of taking a
+
+00:12:23.040 --> 00:12:24.880
+million tokens doesn't mean that you
+
+00:12:24.880 --> 00:12:26.560
+actually want to go implement the full
+
+00:12:26.560 --> 00:12:29.360
+million tokens every single time. It
+
+00:12:29.360 --> 00:12:30.720
+might mean you still actually want to
+
+00:12:30.720 --> 00:12:32.000
+tell the model it's like hey I want you
+
+00:12:32.000 --> 00:12:34.000
+to ignore these parts of a do token
+
+00:12:34.000 --> 00:12:35.120
+channel and only move information
+
+00:12:35.120 --> 00:12:37.120
+between these vectors.
+
+00:12:37.120 --> 00:12:39.120
+>> So I suspect what enthropic does under
+
+00:12:39.120 --> 00:12:41.200
+the hood and I don't know this for sure
+
+00:12:41.200 --> 00:12:42.959
+um is I suspect they have different
+
+00:12:42.959 --> 00:12:44.880
+variants of their model. Some of which
+
+00:12:44.880 --> 00:12:46.480
+that have the full million contacts some
+
+00:12:46.480 --> 00:12:48.160
+of which that have shorter contacts. And
+
+00:12:48.160 --> 00:12:50.000
+if they know what it can route to, then
+
+00:12:50.000 --> 00:12:51.360
+they'll prefer sending to the shorter
+
+00:12:51.360 --> 00:12:53.440
+context one if they can. Otherwise,
+
+00:12:53.440 --> 00:12:54.800
+they'll send to a longer context one. I
+
+00:12:54.800 --> 00:12:55.600
+suspect they have some sort of
+
+00:12:55.600 --> 00:12:58.560
+distributed system here. Does that kind
+
+00:12:58.560 --> 00:13:00.320
+of make sense with how you understand
+
+00:13:00.320 --> 00:13:01.360
+these systems?
+
+00:13:01.360 --> 00:13:03.200
+>> Basically, you um I what I'm
+
+00:13:03.200 --> 00:13:04.880
+understanding is also that like you take
+
+00:13:04.880 --> 00:13:06.880
+this initial context that you trained
+
+00:13:06.880 --> 00:13:09.519
+on. So, let's say it's like 1 2 3 4 5 6
+
+00:13:09.519 --> 00:13:11.120
+7 8 9 10, right?
+
+00:13:11.120 --> 00:13:13.519
+>> Yeah. And then they're like, "Okay, each
+
+00:13:13.519 --> 00:13:15.680
+um vector has like each token has a
+
+00:13:15.680 --> 00:13:17.760
+position encoding essentially."
+
+00:13:17.760 --> 00:13:18.320
+>> Y
+
+00:13:18.320 --> 00:13:21.200
+>> and when you expand this into 1 million
+
+00:13:21.200 --> 00:13:24.240
+tokens, you're basically taking this
+
+00:13:24.240 --> 00:13:26.639
+expanding it all the way. And then
+
+00:13:26.639 --> 00:13:31.920
+basically um you you shortened the uh
+
+00:13:31.920 --> 00:13:33.440
+the positions here. So instead of one,
+
+00:13:33.440 --> 00:13:37.839
+you do like one 1.5, right? And then two
+
+00:13:37.839 --> 00:13:41.440
+2.5 3.5 etc. And so like the spaces are
+
+00:13:41.440 --> 00:13:44.000
+exactly so it's rope. Um
+
+00:13:44.000 --> 00:13:46.399
+>> for those of you that know it's exactly
+
+00:13:46.399 --> 00:13:48.160
+so you can look into this and this you
+
+00:13:48.160 --> 00:13:49.600
+want to look at how rope scaling works
+
+00:13:49.600 --> 00:13:50.720
+if you're curious.
+
+00:13:50.720 --> 00:13:51.040
+>> Yeah.
+
+00:13:51.040 --> 00:13:53.440
+>> But fundamentally the point is like it's
+
+00:13:53.440 --> 00:13:55.760
+not zero cost to go and make the context
+
+00:13:55.760 --> 00:13:57.760
+window bigger. It comes at a different
+
+00:13:57.760 --> 00:14:00.240
+trade-off. It enables new things like
+
+00:14:00.240 --> 00:14:01.839
+you can recognize you can give it the
+
+00:14:01.839 --> 00:14:03.839
+whole word. You can give it like all of
+
+00:14:03.839 --> 00:14:05.360
+Charles Dickens and say what is the one
+
+00:14:05.360 --> 00:14:06.560
+word that is flipped
+
+00:14:06.560 --> 00:14:08.160
+>> and it can go build that relationship
+
+00:14:08.160 --> 00:14:09.760
+with itself.
+
+00:14:09.760 --> 00:14:12.079
+But fundamentally what it's really doing
+
+00:14:12.079 --> 00:14:13.360
+is like you're also coming at a
+
+00:14:13.360 --> 00:14:15.120
+trade-off over here. So if your context
+
+00:14:15.120 --> 00:14:17.440
+can be expressed really tursly, a
+
+00:14:17.440 --> 00:14:22.160
+smaller model or a smaller encoding
+
+00:14:22.160 --> 00:14:24.959
+space can do a better job of actually
+
+00:14:24.959 --> 00:14:26.399
+understanding what you're trying to do
+
+00:14:26.399 --> 00:14:28.000
+with less precision loss.
+
+00:14:28.000 --> 00:14:30.560
+>> So TLDDR if you get anything out of this
+
+00:14:30.560 --> 00:14:34.079
+just use less context and less context.
+
+00:14:34.079 --> 00:14:34.240
+I
+
+00:14:34.240 --> 00:14:36.800
+>> promise you your pipel pipelines will uh
+
+00:14:36.800 --> 00:14:39.199
+be more accurate. Yeah. And that's not
+
+00:14:39.199 --> 00:14:42.000
+to say
+
+00:14:42.000 --> 00:14:47.279
+that's not to say um uh specifically um
+
+00:14:47.279 --> 00:14:49.040
+like artificially reduce your context.
+
+00:14:49.040 --> 00:14:51.279
+Use the least amount of tokens you need
+
+00:14:51.279 --> 00:14:52.959
+to represent your problem. That doesn't
+
+00:14:52.959 --> 00:14:55.120
+mean it's small amount of context. It
+
+00:14:55.120 --> 00:14:56.959
+just means the least possible way to
+
+00:14:56.959 --> 00:14:58.399
+represent your problem is the best way
+
+00:14:58.399 --> 00:14:59.440
+to represent it.
+
+00:14:59.440 --> 00:15:01.440
+>> Yeah.
+
+00:15:01.440 --> 00:15:04.639
+Okay. So yeah, we had 30% of cloud code
+
+00:15:04.639 --> 00:15:06.560
+users that were impacted and that's why
+
+00:15:06.560 --> 00:15:09.120
+people were like oh this model is is you
+
+00:15:09.120 --> 00:15:11.279
+know bad now
+
+00:15:11.279 --> 00:15:12.720
+and I feel like this is happening with
+
+00:15:12.720 --> 00:15:15.199
+every coding agent. Um maybe people get
+
+00:15:15.199 --> 00:15:17.760
+used to it but in this case it was funny
+
+00:15:17.760 --> 00:15:19.839
+cuz in the past people get used to the
+
+00:15:19.839 --> 00:15:21.519
+model being good and they're like oh it
+
+00:15:21.519 --> 00:15:23.440
+can't solve these problems anymore but
+
+00:15:23.440 --> 00:15:25.360
+in this case it was literally the model
+
+00:15:25.360 --> 00:15:27.360
+being worse.
+
+00:15:27.360 --> 00:15:30.480
+So it's like no, it's actually just like
+
+00:15:30.480 --> 00:15:33.600
+spewing garbage in in some cases.
+
+00:15:33.600 --> 00:15:34.240
+>> Oh.
+
+00:15:34.240 --> 00:15:34.720
+>> Um
+
+00:15:34.720 --> 00:15:35.760
+>> Charles said something really
+
+00:15:35.760 --> 00:15:37.360
+fascinating. The big models are all now
+
+00:15:37.360 --> 00:15:39.519
+pure decoders and not encoders. I did
+
+00:15:39.519 --> 00:15:41.600
+not know that. Uh I can't verify that.
+
+00:15:41.600 --> 00:15:43.199
+If that is true, that is true. But I did
+
+00:15:43.199 --> 00:15:44.160
+not know that.
+
+00:15:44.160 --> 00:15:44.880
+>> Interesting.
+
+00:15:44.880 --> 00:15:47.040
+>> Um Josh asked an interesting question
+
+00:15:47.040 --> 00:15:48.560
+that I think we can come to in a second,
+
+00:15:48.560 --> 00:15:50.399
+which is like is this really talking
+
+00:15:50.399 --> 00:15:51.839
+about generation steps? Are we talking
+
+00:15:51.839 --> 00:15:53.440
+about uh reading context inputs as
+
+00:15:53.440 --> 00:15:56.160
+tokenizers? Uh
+
+00:15:56.160 --> 00:15:57.920
+uh the tricky part here Josh is like
+
+00:15:57.920 --> 00:15:59.920
+this stuff like every generation you
+
+00:15:59.920 --> 00:16:01.440
+basically have to go read all the
+
+00:16:01.440 --> 00:16:02.800
+previous tokens. So even if you add a
+
+00:16:02.800 --> 00:16:04.800
+new tokens
+
+00:16:04.800 --> 00:16:06.560
+um like once you generate messy you
+
+00:16:06.560 --> 00:16:08.160
+still have to go do the same thing again
+
+00:16:08.160 --> 00:16:09.360
+and then you have to generate the next
+
+00:16:09.360 --> 00:16:11.360
+token. So I don't maybe I'm
+
+00:16:11.360 --> 00:16:13.600
+misunderstanding the question but like
+
+00:16:13.600 --> 00:16:16.800
+uh like for example word here might be
+
+00:16:16.800 --> 00:16:18.560
+or might be the best word if someone
+
+00:16:18.560 --> 00:16:19.839
+really if the model is trained to
+
+00:16:19.839 --> 00:16:22.240
+believe that and now once messy
+
+00:16:22.240 --> 00:16:23.680
+generated it basically behaves like all
+
+00:16:23.680 --> 00:16:24.959
+the previous words and now you need to
+
+00:16:24.959 --> 00:16:27.120
+move mechanisms around. So I'm not
+
+00:16:27.120 --> 00:16:29.920
+understanding the question fully.
+
+00:16:29.920 --> 00:16:31.839
+Um let's talk about the second one
+
+00:16:31.839 --> 00:16:34.880
+output corruption. Um, these are just
+
+00:16:34.880 --> 00:16:37.040
+bugs like this. There's nothing fancy
+
+00:16:37.040 --> 00:16:38.800
+here. Just like at some point they just
+
+00:16:38.800 --> 00:16:41.440
+had a they just had the they had a bug
+
+00:16:41.440 --> 00:16:44.639
+in how they were assigning high
+
+00:16:44.639 --> 00:16:45.920
+probabilities and like a random token
+
+00:16:45.920 --> 00:16:47.360
+would just get high probabilities.
+
+00:16:47.360 --> 00:16:49.040
+>> I think there's an underlying thing in
+
+00:16:49.040 --> 00:16:52.639
+this whole article about GPU scarcity
+
+00:16:52.639 --> 00:16:54.480
+and you'll see this from the first start
+
+00:16:54.480 --> 00:16:56.959
+in the in the document where it says we
+
+00:16:56.959 --> 00:16:58.880
+use three or four different providers
+
+00:16:58.880 --> 00:17:00.639
+and different ways of like serving these
+
+00:17:00.639 --> 00:17:04.240
+models. They use like AWS tranium. Um I
+
+00:17:04.240 --> 00:17:06.240
+don't know if you scroll up all the way
+
+00:17:06.240 --> 00:17:08.079
+by
+
+00:17:08.079 --> 00:17:10.400
+uh all the way all the way. It literally
+
+00:17:10.400 --> 00:17:13.760
+it says uh it's like on the next section
+
+00:17:13.760 --> 00:17:16.640
+how we serve cloud code scale. Yeah. So
+
+00:17:16.640 --> 00:17:18.880
+um yeah they have like Amazon bed raw
+
+00:17:18.880 --> 00:17:20.640
+Google cloud vertex AI. So they're
+
+00:17:20.640 --> 00:17:22.000
+spread across all these different
+
+00:17:22.000 --> 00:17:24.720
+providers serving like cloud models and
+
+00:17:24.720 --> 00:17:26.880
+then they have like AWS trainium etc.
+
+00:17:26.880 --> 00:17:28.400
+Each of them has their own sort of
+
+00:17:28.400 --> 00:17:30.000
+architecture. So they have to like
+
+00:17:30.000 --> 00:17:32.960
+manage these at scale which is nuts. So
+
+00:17:32.960 --> 00:17:35.200
+they are trying to squeeze every single
+
+00:17:35.200 --> 00:17:37.919
+performance that they can in here. So
+
+00:17:37.919 --> 00:17:41.120
+that just leads to bugs and uh at the
+
+00:17:41.120 --> 00:17:42.480
+end of this article they said we
+
+00:17:42.480 --> 00:17:43.840
+actually just stopped using these
+
+00:17:43.840 --> 00:17:46.559
+performance optimizations because
+
+00:17:46.559 --> 00:17:48.480
+quality is better than just having these
+
+00:17:48.480 --> 00:17:50.960
+random bugs happen. Yeah, I can at least
+
+00:17:50.960 --> 00:17:53.600
+say like I did a lot of high performance
+
+00:17:53.600 --> 00:17:55.200
+work in the past and like every like we
+
+00:17:55.200 --> 00:17:56.480
+did a lot of work where we take certain
+
+00:17:56.480 --> 00:17:57.679
+parts of the algorithm and write in pure
+
+00:17:57.679 --> 00:17:59.120
+assembly to make it really good and like
+
+00:17:59.120 --> 00:18:01.200
+do a lot of SIMD work and that does
+
+00:18:01.200 --> 00:18:03.280
+basically make the code what I call uh
+
+00:18:03.280 --> 00:18:06.080
+write once read never. Uh it's actually
+
+00:18:06.080 --> 00:18:07.919
+worse than readonly access. You can't
+
+00:18:07.919 --> 00:18:09.360
+read it. You can only write to the file
+
+00:18:09.360 --> 00:18:11.440
+because you can only mutate it um
+
+00:18:11.440 --> 00:18:12.799
+because every other variant is
+
+00:18:12.799 --> 00:18:14.640
+pointless. And I think what they're
+
+00:18:14.640 --> 00:18:16.160
+doing here is run into very very similar
+
+00:18:16.160 --> 00:18:18.000
+problems where the work here is just
+
+00:18:18.000 --> 00:18:20.240
+like and the performance optimization
+
+00:18:20.240 --> 00:18:21.440
+bug I think is kind of related to the
+
+00:18:21.440 --> 00:18:23.679
+next thing that we'll talk about. Uh but
+
+00:18:23.679 --> 00:18:25.520
+like basically like if they pick the
+
+00:18:25.520 --> 00:18:27.520
+wrong token at the output you get total
+
+00:18:27.520 --> 00:18:28.559
+nonsense.
+
+00:18:28.559 --> 00:18:30.400
+>> Yeah I think this one
+
+00:18:30.400 --> 00:18:32.799
+>> easier easier to detect for sure. It's
+
+00:18:32.799 --> 00:18:33.919
+just like oh
+
+00:18:33.919 --> 00:18:35.679
+>> nonsensical. I mean they just added some
+
+00:18:35.679 --> 00:18:37.039
+detection for like unexpected
+
+00:18:37.039 --> 00:18:38.160
+characters. I believe they just have
+
+00:18:38.160 --> 00:18:39.679
+some other model that they train to be
+
+00:18:39.679 --> 00:18:41.280
+like or like even some uristics that are
+
+00:18:41.280 --> 00:18:42.960
+like hey if you're producing ASI and you
+
+00:18:42.960 --> 00:18:45.039
+suddenly stop producing ASI or produce
+
+00:18:45.039 --> 00:18:47.679
+some really esoteric ASI tokens
+
+00:18:47.679 --> 00:18:49.520
+>> can you detect that and that's probably
+
+00:18:49.520 --> 00:18:52.559
+an easy thing to go get
+
+00:18:52.559 --> 00:18:54.880
+um I thought this one was actually the
+
+00:18:54.880 --> 00:18:56.799
+where they spent the bulk of their time
+
+00:18:56.799 --> 00:18:59.600
+and it's fascinating because like um
+
+00:18:59.600 --> 00:19:01.760
+very interesting like compiler layer
+
+00:19:01.760 --> 00:19:04.880
+misconfiguration that they had and it
+
+00:19:04.880 --> 00:19:07.600
+this I think digs into a lot of various
+
+00:19:07.600 --> 00:19:09.520
+topics
+
+00:19:09.520 --> 00:19:13.280
+uh that I thought are um
+
+00:19:13.280 --> 00:19:16.480
+almost how do I describe it very very
+
+00:19:16.480 --> 00:19:17.840
+nuance so we'll see if this is
+
+00:19:17.840 --> 00:19:20.160
+interesting to folks um and if it's not
+
+00:19:20.160 --> 00:19:21.919
+too interesting we'll go we'll go faster
+
+00:19:21.919 --> 00:19:22.960
+with the agent stuff if it is
+
+00:19:22.960 --> 00:19:24.799
+interesting we'll talk more about it but
+
+00:19:24.799 --> 00:19:26.799
+at a very very high level I kind of want
+
+00:19:26.799 --> 00:19:28.160
+some people to have a good understanding
+
+00:19:28.160 --> 00:19:30.000
+of how these top p sampling works and
+
+00:19:30.000 --> 00:19:32.000
+how the models pick these tokens because
+
+00:19:32.000 --> 00:19:34.320
+I think that fundamentally once you
+
+00:19:34.320 --> 00:19:35.440
+understand that then you can understand
+
+00:19:35.440 --> 00:19:36.960
+how these bugs can appear and how
+
+00:19:36.960 --> 00:19:38.480
+complicated these systems are to go
+
+00:19:38.480 --> 00:19:42.559
+build. So,
+
+00:19:42.559 --> 00:19:43.840
+okay, we've talked about this in the
+
+00:19:43.840 --> 00:19:45.600
+past. We're like, how does a model pick?
+
+00:19:45.600 --> 00:19:47.120
+Well, once these tokens are done, how
+
+00:19:47.120 --> 00:19:48.320
+does it actually pick this last token?
+
+00:19:48.320 --> 00:19:50.240
+It goes through the whole uh transformer
+
+00:19:50.240 --> 00:19:52.000
+architecture and at some point it spits
+
+00:19:52.000 --> 00:19:54.000
+out a giant list of probabilities. It
+
+00:19:54.000 --> 00:19:55.520
+spits out a probability for like every
+
+00:19:55.520 --> 00:19:57.039
+single token you have. So, if you have
+
+00:19:57.039 --> 00:19:59.120
+like a two million two million token
+
+00:19:59.120 --> 00:20:01.360
+vocabulary, it basically spits out 2
+
+00:20:01.360 --> 00:20:03.840
+million probabilities.
+
+00:20:03.840 --> 00:20:07.039
+um down here. And when it spits out two
+
+00:20:07.039 --> 00:20:08.559
+million probabilities, it basically says
+
+00:20:08.559 --> 00:20:10.880
+that
+
+00:20:10.880 --> 00:20:12.880
+sorry, oh sorry, I'm seeing the wrong
+
+00:20:12.880 --> 00:20:15.200
+thing. When it spits out 2 million
+
+00:20:15.200 --> 00:20:16.480
+probabilities, it basically says for
+
+00:20:16.480 --> 00:20:17.840
+every single token in the token
+
+00:20:17.840 --> 00:20:19.760
+vocabulary, what is the probability for
+
+00:20:19.760 --> 00:20:21.919
+it given the sentence here? So if messy
+
+00:20:21.919 --> 00:20:23.280
+is a token in the vocabulary, it will
+
+00:20:23.280 --> 00:20:24.240
+tell you the probability of the word
+
+00:20:24.240 --> 00:20:27.600
+messy in the sentence. If or is a word
+
+00:20:27.600 --> 00:20:28.640
+in the vocabulary, it tell you the
+
+00:20:28.640 --> 00:20:30.640
+probability of or. If M is a word, a
+
+00:20:30.640 --> 00:20:32.320
+letter in the vocabulary and these all
+
+00:20:32.320 --> 00:20:35.600
+are I think at least for opening eye.
+
+00:20:35.600 --> 00:20:36.559
+>> Yeah.
+
+00:20:36.559 --> 00:20:38.400
+>> The main point is also that you have all
+
+00:20:38.400 --> 00:20:40.080
+this giant vocabulary and you're
+
+00:20:40.080 --> 00:20:42.640
+actually trying to speed up inference.
+
+00:20:42.640 --> 00:20:42.960
+>> Yes.
+
+00:20:42.960 --> 00:20:44.720
+>> So you actually calculate these
+
+00:20:44.720 --> 00:20:46.240
+probabilities in different chips
+
+00:20:46.240 --> 00:20:49.120
+altogether
+
+00:20:49.120 --> 00:20:51.200
+which um I just want to give people an
+
+00:20:51.200 --> 00:20:53.039
+idea of what that means. So like in this
+
+00:20:53.039 --> 00:20:55.120
+world if I wanted to generate messy
+
+00:20:55.120 --> 00:20:57.679
+>> Oh, you can't I will pro Oh, I'm the
+
+00:20:57.679 --> 00:20:59.360
+wrong screen. Whoops.
+
+00:20:59.360 --> 00:21:01.280
+If I wanted to generate the word messy,
+
+00:21:01.280 --> 00:21:02.960
+what I will end up having is I literally
+
+00:21:02.960 --> 00:21:04.559
+have token probabilities for each of
+
+00:21:04.559 --> 00:21:05.600
+these things. I'll have a token
+
+00:21:05.600 --> 00:21:07.039
+probability for M, a token probability
+
+00:21:07.039 --> 00:21:09.600
+for ME, token probability for ME, token
+
+00:21:09.600 --> 00:21:12.320
+probability for MESS, and then and then
+
+00:21:12.320 --> 00:21:14.159
+I messy is not a single token. So I will
+
+00:21:14.159 --> 00:21:16.559
+not get that. So the whole point is when
+
+00:21:16.559 --> 00:21:18.240
+these models are generating actual token
+
+00:21:18.240 --> 00:21:19.679
+probabilities, I'm getting for every
+
+00:21:19.679 --> 00:21:22.159
+single token along the way. And what I
+
+00:21:22.159 --> 00:21:23.600
+really need to do,
+
+00:21:23.600 --> 00:21:24.640
+>> oh yeah, zoom in more
+
+00:21:24.640 --> 00:21:26.159
+>> over here is when I go generate these
+
+00:21:26.159 --> 00:21:27.760
+tokens,
+
+00:21:27.760 --> 00:21:29.280
+Aaron, can you help me write in here and
+
+00:21:29.280 --> 00:21:31.679
+like get the M and the and the messy all
+
+00:21:31.679 --> 00:21:33.919
+the way down. What I really need to do
+
+00:21:33.919 --> 00:21:35.840
+here is somehow I need to go pick what
+
+00:21:35.840 --> 00:21:37.840
+token I need to go pick. Uh what token
+
+00:21:37.840 --> 00:21:39.280
+is going to go next? Because once I have
+
+00:21:39.280 --> 00:21:41.360
+all those tokens, then I can decide
+
+00:21:41.360 --> 00:21:42.880
+which is the best to go. And there's a
+
+00:21:42.880 --> 00:21:44.400
+lot of valid candidates. Even if I want
+
+00:21:44.400 --> 00:21:46.799
+to produce Messi, I could produce M and
+
+00:21:46.799 --> 00:21:49.919
+then E SSI. I could produce me and then
+
+00:21:49.919 --> 00:21:52.240
+SSI. I could produce mess and then a
+
+00:21:52.240 --> 00:21:54.799
+separate token for I and all these are
+
+00:21:54.799 --> 00:21:56.880
+valid ways to produce the right answer.
+
+00:21:56.880 --> 00:21:58.240
+So even though it's a human we just see
+
+00:21:58.240 --> 00:22:00.559
+the word messy to the model is actually
+
+00:22:00.559 --> 00:22:03.200
+picking some other
+
+00:22:03.200 --> 00:22:05.440
+uh it could pick many sequences and come
+
+00:22:05.440 --> 00:22:07.600
+to the same conclusion of messy without
+
+00:22:07.600 --> 00:22:09.600
+there being a right one. So all we get
+
+00:22:09.600 --> 00:22:11.679
+are token probabilities. Now the problem
+
+00:22:11.679 --> 00:22:12.960
+is how do you pick the best token
+
+00:22:12.960 --> 00:22:15.120
+probability? Well model providers do a
+
+00:22:15.120 --> 00:22:16.159
+variety of different things. What
+
+00:22:16.159 --> 00:22:18.320
+Enthropic says that they do is they
+
+00:22:18.320 --> 00:22:20.240
+actually cut they take the sum of all
+
+00:22:20.240 --> 00:22:21.760
+tokens
+
+00:22:21.760 --> 00:22:24.080
+that exist and they basically chop off
+
+00:22:24.080 --> 00:22:26.559
+everything that falls below like a sum
+
+00:22:26.559 --> 00:22:28.159
+of
+
+00:22:28.159 --> 00:22:31.760
+0.99 or 99. And why do they do that?
+
+00:22:31.760 --> 00:22:34.640
+Well, as many of you might have heard us
+
+00:22:34.640 --> 00:22:36.480
+say before,
+
+00:22:36.480 --> 00:22:38.799
+um, oh, let me zoom in even more. As
+
+00:22:38.799 --> 00:22:42.559
+many of you might have heard before, uh,
+
+00:22:42.559 --> 00:22:44.080
+floatingoint arithmetic is really,
+
+00:22:44.080 --> 00:22:46.159
+really hard. So rather than dealing with
+
+00:22:46.159 --> 00:22:47.919
+really really small values that are
+
+00:22:47.919 --> 00:22:50.480
+completely nonlinear you just you just
+
+00:22:50.480 --> 00:22:52.400
+say if I will take instead of adding up
+
+00:22:52.400 --> 00:22:54.320
+to kilo sum of one which is what
+
+00:22:54.320 --> 00:22:55.360
+everything should add up to after
+
+00:22:55.360 --> 00:22:57.600
+softmax we'll take the probabilities
+
+00:22:57.600 --> 00:23:00.640
+that add up to.99 and everything else we
+
+00:23:00.640 --> 00:23:03.440
+just trash like nothing else matters.
+
+00:23:03.440 --> 00:23:06.880
+So, if there's one token that adds up to
+
+00:23:06.880 --> 00:23:09.919
+like 0.51 and another token that adds up
+
+00:23:09.919 --> 00:23:13.919
+to 0 48, we'll take these two tokens and
+
+00:23:13.919 --> 00:23:15.200
+nothing else. We'll just trash
+
+00:23:15.200 --> 00:23:16.400
+everything else. Well, I guess
+
+00:23:16.400 --> 00:23:18.400
+technically in this phase, we'll allow
+
+00:23:18.400 --> 00:23:20.240
+we'll allow the any other tokens we take
+
+00:23:20.240 --> 00:23:22.720
+up to take up to like 0.99.
+
+00:23:22.720 --> 00:23:24.640
+And now we will only allow these tokens
+
+00:23:24.640 --> 00:23:26.559
+in and every other token is ignored. And
+
+00:23:26.559 --> 00:23:28.000
+that allows you to not get nonsense
+
+00:23:28.000 --> 00:23:29.919
+characters by accident when you go do
+
+00:23:29.919 --> 00:23:32.640
+this because what is temperature zero
+
+00:23:32.640 --> 00:23:34.799
+doing? Well, temperature zero says given
+
+00:23:34.799 --> 00:23:36.559
+all of these tokens, take the one with
+
+00:23:36.559 --> 00:23:37.840
+the highest probability and basically
+
+00:23:37.840 --> 00:23:42.880
+turn this into one. Oops.
+
+00:23:42.880 --> 00:23:44.320
+And every other token probability
+
+00:23:44.320 --> 00:23:46.320
+basically becomes
+
+00:23:46.320 --> 00:23:48.880
+zero. You basically build a filter at
+
+00:23:48.880 --> 00:23:50.080
+temperature zero that basically makes
+
+00:23:50.080 --> 00:23:52.559
+everything else not matter. And all the
+
+00:23:52.559 --> 00:23:54.159
+way at temperature one, we keep
+
+00:23:54.159 --> 00:23:55.360
+everything to be the same probability.
+
+00:23:55.360 --> 00:23:58.320
+And at temperature I think uh two, it
+
+00:23:58.320 --> 00:23:59.760
+does some inverse distribution of it. So
+
+00:23:59.760 --> 00:24:01.360
+it basically reduces the value of the
+
+00:24:01.360 --> 00:24:03.120
+highest probability and makes it more
+
+00:24:03.120 --> 00:24:06.000
+akin to uniform distribution.
+
+00:24:06.000 --> 00:24:07.760
+>> Yeah. So they keep all these like
+
+00:24:07.760 --> 00:24:10.559
+different hacks and stuff to uh account
+
+00:24:10.559 --> 00:24:13.760
+for various um problems with like
+
+00:24:13.760 --> 00:24:16.080
+floating point math, right? So in one
+
+00:24:16.080 --> 00:24:18.559
+case in December 2024 in the article
+
+00:24:18.559 --> 00:24:19.840
+they mentioned that
+
+00:24:19.840 --> 00:24:22.080
+>> they had another bug that caused a
+
+00:24:22.080 --> 00:24:24.000
+performance regression where the top
+
+00:24:24.000 --> 00:24:27.360
+token was not chosen. So if we if you
+
+00:24:27.360 --> 00:24:29.600
+were using cloud like for whatever
+
+00:24:29.600 --> 00:24:33.360
+reason uh for whatever like task um I
+
+00:24:33.360 --> 00:24:34.640
+would I would have expected the
+
+00:24:34.640 --> 00:24:36.240
+performance to be like atrocious cuz
+
+00:24:36.240 --> 00:24:37.840
+it's just not choosing that top token
+
+00:24:37.840 --> 00:24:38.880
+ever.
+
+00:24:38.880 --> 00:24:40.960
+>> Well sometimes it wasn't ever. I think
+
+00:24:40.960 --> 00:24:41.679
+it was sometimes.
+
+00:24:41.679 --> 00:24:42.480
+>> Oh I see.
+
+00:24:42.480 --> 00:24:44.880
+>> But I want to describe one more element
+
+00:24:44.880 --> 00:24:46.240
+of this like how does this 2 million
+
+00:24:46.240 --> 00:24:47.600
+probability thing actually work? Cuz
+
+00:24:47.600 --> 00:24:49.440
+like the problem is if you actually ever
+
+00:24:49.440 --> 00:24:51.440
+toss this at a GPU and your token
+
+00:24:51.440 --> 00:24:52.799
+vocabulary is large you can't actually
+
+00:24:52.799 --> 00:24:55.520
+do this on a single GPU machine. So what
+
+00:24:55.520 --> 00:24:56.960
+the further thing that makes this even
+
+00:24:56.960 --> 00:24:58.159
+more complicated is not just that we
+
+00:24:58.159 --> 00:24:58.880
+have to produce these token
+
+00:24:58.880 --> 00:25:00.799
+probabilities and make it work. We have
+
+00:25:00.799 --> 00:25:02.640
+to do this in a distributed manner. So
+
+00:25:02.640 --> 00:25:05.360
+what you end up actually doing is you
+
+00:25:05.360 --> 00:25:06.799
+end up saying that I don't actually know
+
+00:25:06.799 --> 00:25:09.039
+if any token token vocabulary is
+
+00:25:09.039 --> 00:25:10.799
+actually 2 million tokens. So just
+
+00:25:10.799 --> 00:25:12.400
+please keep that in mind
+
+00:25:12.400 --> 00:25:14.000
+>> but I don't actually know what the token
+
+00:25:14.000 --> 00:25:16.559
+size is on that but I'm just using an
+
+00:25:16.559 --> 00:25:18.400
+arbitrary number to describe the
+
+00:25:18.400 --> 00:25:20.880
+vocabulary. I think like
+
+00:25:20.880 --> 00:25:22.480
+what they will actually do is they will
+
+00:25:22.480 --> 00:25:24.320
+actually run this in a batch process
+
+00:25:24.320 --> 00:25:26.400
+where like machine one will basically
+
+00:25:26.400 --> 00:25:29.200
+run token zero to like 32 thou,000 or
+
+00:25:29.200 --> 00:25:34.789
+like technically like
+
+00:25:36.950 --> 00:25:36.960
+32k.
+
+00:25:36.960 --> 00:25:38.799
+Oops.
+
+00:25:38.799 --> 00:25:41.279
+And then machine 2 will take the next 32
+
+00:25:41.279 --> 00:25:46.310
+take tokens
+
+00:25:48.870 --> 00:25:48.880
+64 uh and so on. And what ends up
+
+00:25:48.880 --> 00:25:50.320
+happening now is now that you have
+
+00:25:50.320 --> 00:25:51.679
+totally different token probabilities
+
+00:25:51.679 --> 00:25:52.720
+being produced across different
+
+00:25:52.720 --> 00:25:54.880
+machines, what you need to go do now is
+
+00:25:54.880 --> 00:25:56.480
+how do you actually pick the top token?
+
+00:25:56.480 --> 00:25:58.880
+Well, on each of these machines, you
+
+00:25:58.880 --> 00:26:01.520
+need to go pick a relative top token. So
+
+00:26:01.520 --> 00:26:03.279
+instead of saying instead of giving the
+
+00:26:03.279 --> 00:26:04.960
+central machine every single token,
+
+00:26:04.960 --> 00:26:07.200
+well, one way you could do it is you
+
+00:26:07.200 --> 00:26:09.200
+could tell a central machine, here's all
+
+00:26:09.200 --> 00:26:11.760
+my token probabilities and now pick the
+
+00:26:11.760 --> 00:26:15.279
+best. Pick best from all. And that's one
+
+00:26:15.279 --> 00:26:17.520
+way to do it. But an other mechanism
+
+00:26:17.520 --> 00:26:20.400
+that is really useful is you ask every
+
+00:26:20.400 --> 00:26:22.799
+machine what are your uh what candidates
+
+00:26:22.799 --> 00:26:24.960
+do you want to propose
+
+00:26:24.960 --> 00:26:26.799
+and if every m once and every machine
+
+00:26:26.799 --> 00:26:28.720
+picks their provides their candidates so
+
+00:26:28.720 --> 00:26:30.080
+not all of them but a subset of them
+
+00:26:30.080 --> 00:26:33.440
+then you do a central uh pick max and
+
+00:26:33.440 --> 00:26:35.279
+the bug that enthropic had in this
+
+00:26:35.279 --> 00:26:37.679
+scenario was that they didn't actually
+
+00:26:37.679 --> 00:26:39.520
+pick the candidate correctly from each
+
+00:26:39.520 --> 00:26:42.400
+of these individual machines due to the
+
+00:26:42.400 --> 00:26:43.840
+and we'll talk about what the real bug
+
+00:26:43.840 --> 00:26:46.880
+was but what the bug led to was each of
+
+00:26:46.880 --> 00:26:49.120
+these batches wasn't always picking the
+
+00:26:49.120 --> 00:26:53.600
+right candidate and that led to the
+
+00:26:53.600 --> 00:26:55.760
+right actual top global what I would
+
+00:26:55.760 --> 00:26:58.320
+call the global top P not being
+
+00:26:58.320 --> 00:27:00.559
+available or top token not being
+
+00:27:00.559 --> 00:27:02.240
+available in the candidates array. So
+
+00:27:02.240 --> 00:27:03.760
+then when you actually pick the best the
+
+00:27:03.760 --> 00:27:06.720
+top token was just not missing. Now why
+
+00:27:06.720 --> 00:27:08.960
+does this stuff happen? This stuff is
+
+00:27:08.960 --> 00:27:10.559
+where it gets really really wild, at
+
+00:27:10.559 --> 00:27:12.240
+least for me,
+
+00:27:12.240 --> 00:27:14.400
+>> which is
+
+00:27:14.400 --> 00:27:14.799
+>> Yeah,
+
+00:27:14.799 --> 00:27:15.760
+>> it turns out
+
+00:27:15.760 --> 00:27:17.919
+>> the code. Yeah, there we go.
+
+00:27:17.919 --> 00:27:19.600
+>> It turns out Oh, this is the hack that
+
+00:27:19.600 --> 00:27:21.039
+they did for actually like propagating
+
+00:27:21.039 --> 00:27:22.240
+stuff down.
+
+00:27:22.240 --> 00:27:24.559
+>> It turns out um we're back to
+
+00:27:24.559 --> 00:27:27.039
+floatingoint precision. So what ended up
+
+00:27:27.039 --> 00:27:29.039
+happening is they use 16 bit
+
+00:27:29.039 --> 00:27:31.760
+floatingoint precision most of the time
+
+00:27:31.760 --> 00:27:34.080
+but sometimes a TPU compiler optimized
+
+00:27:34.080 --> 00:27:36.480
+using 32-bit optimization and it never
+
+00:27:36.480 --> 00:27:38.159
+made a distinction of exactly when it
+
+00:27:38.159 --> 00:27:40.559
+just did it sometimes.
+
+00:27:40.559 --> 00:27:42.880
+And what that means is the way that they
+
+00:27:42.880 --> 00:27:46.799
+were doing comparisons was really really
+
+00:27:46.799 --> 00:27:48.320
+um
+
+00:27:48.320 --> 00:27:51.600
+unlikely to be stable because for those
+
+00:27:51.600 --> 00:27:52.799
+of you that have ever multiplied two
+
+00:27:52.799 --> 00:27:55.279
+floatingoint numbers together like yeah
+
+00:27:55.279 --> 00:27:57.520
+a time uh I have to go back here. I
+
+00:27:57.520 --> 00:27:59.919
+can't type. Oops.
+
+00:27:59.919 --> 00:28:02.799
+In floating point oh in floatingoint
+
+00:28:02.799 --> 00:28:06.399
+math a * b * c
+
+00:28:06.399 --> 00:28:09.120
+is not equal to
+
+00:28:09.120 --> 00:28:13.200
+uh c * b * a like it it is very order
+
+00:28:13.200 --> 00:28:15.520
+dependent. And now what ends up
+
+00:28:15.520 --> 00:28:17.679
+happening is not only is this true, but
+
+00:28:17.679 --> 00:28:21.600
+if you do f floating point 32 versions
+
+00:28:21.600 --> 00:28:24.880
+of this one times
+
+00:28:24.880 --> 00:28:28.159
+floating point a * b * c assuming
+
+00:28:28.159 --> 00:28:29.760
+everything is a floatingoint 16 bit
+
+00:28:29.760 --> 00:28:31.840
+integer instead of a 32-bit integer.
+
+00:28:31.840 --> 00:28:33.279
+These are not guaranteed to be equal
+
+00:28:33.279 --> 00:28:35.679
+even if the order is the same. And like
+
+00:28:35.679 --> 00:28:36.960
+if you're curious about why this is
+
+00:28:36.960 --> 00:28:38.320
+true, you can go into looking at how
+
+00:28:38.320 --> 00:28:39.679
+floatingoint numbers are represented in
+
+00:28:39.679 --> 00:28:41.039
+a very nonlinear way. And when you
+
+00:28:41.039 --> 00:28:43.679
+multiply them, small numbers just don't
+
+00:28:43.679 --> 00:28:46.080
+behave in the way that numbers,
+
+00:28:46.080 --> 00:28:48.799
+>> we model numbers to behave in our heads.
+
+00:28:48.799 --> 00:28:49.919
+>> So then what ends up happening
+
+00:28:49.919 --> 00:28:51.679
+fundamentally is just you get a
+
+00:28:51.679 --> 00:28:54.320
+comparison that said token A was uh like
+
+00:28:54.320 --> 00:28:56.559
+token A was better than token B just
+
+00:28:56.559 --> 00:28:59.039
+flipped because it was really close to
+
+00:28:59.039 --> 00:29:00.240
+their boundary condition. It was like
+
+00:29:00.240 --> 00:29:06.000
+40. It was like 0.59 versus like 0501
+
+00:29:06.000 --> 00:29:09.200
+or 0509. And like you flip one
+
+00:29:09.200 --> 00:29:10.880
+floatingoint operation and then which
+
+00:29:10.880 --> 00:29:13.200
+one is better flipped. So then the
+
+00:29:13.200 --> 00:29:15.600
+candidate that it this one suggested was
+
+00:29:15.600 --> 00:29:17.520
+like this one instead of this one or
+
+00:29:17.520 --> 00:29:18.880
+this one instead of this one because of
+
+00:29:18.880 --> 00:29:20.799
+simple floatingoint uh maths around
+
+00:29:20.799 --> 00:29:21.520
+this.
+
+00:29:21.520 --> 00:29:23.440
+>> Yeah, I highly recommend this paper as
+
+00:29:23.440 --> 00:29:27.360
+well from thinking machines that AJ has
+
+00:29:27.360 --> 00:29:31.120
+uh shared. We won't go into detail on it
+
+00:29:31.120 --> 00:29:33.279
+but uh it also talks about other causes
+
+00:29:33.279 --> 00:29:35.120
+for nondeterminism
+
+00:29:35.120 --> 00:29:37.279
+and uh it talks about how sometimes it's
+
+00:29:37.279 --> 00:29:38.880
+not the floating point arithmetic but
+
+00:29:38.880 --> 00:29:41.679
+like the batches that you run on the GPU
+
+00:29:41.679 --> 00:29:44.720
+and how they are processed. Um but yeah
+
+00:29:44.720 --> 00:29:46.559
+this is gets more like nitty-gritty into
+
+00:29:46.559 --> 00:29:47.200
+the details.
+
+00:29:47.200 --> 00:29:48.960
+>> Yeah, this is a really really good paper
+
+00:29:48.960 --> 00:29:50.559
+for anyone that wants to go super deep
+
+00:29:50.559 --> 00:29:51.679
+into it. Yeah,
+
+00:29:51.679 --> 00:29:53.440
+>> but fundamentally I think the real
+
+00:29:53.440 --> 00:29:55.600
+takeaway here is that like we're all
+
+00:29:55.600 --> 00:29:57.760
+building these systems on top of systems
+
+00:29:57.760 --> 00:30:00.080
+that we have even less control over in
+
+00:30:00.080 --> 00:30:02.480
+any previous way we've had. So it's
+
+00:30:02.480 --> 00:30:03.919
+really important to really be able to
+
+00:30:03.919 --> 00:30:06.240
+quickly diagnose what are the areas of
+
+00:30:06.240 --> 00:30:08.720
+the system that we want to go build. My
+
+00:30:08.720 --> 00:30:10.880
+personal opinion is and Aaron I'd love
+
+00:30:10.880 --> 00:30:12.399
+to know your thoughts on this but like a
+
+00:30:12.399 --> 00:30:14.000
+big takeaway that I had from this is
+
+00:30:14.000 --> 00:30:17.520
+like one sometimes the model did get
+
+00:30:17.520 --> 00:30:20.000
+worse. Sometimes it's not in your head
+
+00:30:20.000 --> 00:30:24.000
+and it did get worse. And any sort of
+
+00:30:24.000 --> 00:30:26.399
+system you build needs to have some sort
+
+00:30:26.399 --> 00:30:28.000
+of vibe check for you to have you need
+
+00:30:28.000 --> 00:30:29.679
+some signal for you to really quickly
+
+00:30:29.679 --> 00:30:31.120
+detect that this is actually happening
+
+00:30:31.120 --> 00:30:32.480
+and you need to decide how actionable
+
+00:30:32.480 --> 00:30:35.200
+that this is going to be. So in our in
+
+00:30:35.200 --> 00:30:37.039
+in throic scenario they use Twitter and
+
+00:30:37.039 --> 00:30:39.440
+I guess Aaron used Twitter or like other
+
+00:30:39.440 --> 00:30:42.320
+verbal mentions of AWS to know if the
+
+00:30:42.320 --> 00:30:43.919
+systems are down for a while
+
+00:30:43.919 --> 00:30:45.600
+>> and as you guys build products you
+
+00:30:45.600 --> 00:30:46.559
+probably want to build some sort of
+
+00:30:46.559 --> 00:30:47.840
+indicator like that into your product
+
+00:30:47.840 --> 00:30:49.760
+pipeline where you have like some lossy
+
+00:30:49.760 --> 00:30:51.679
+signal that is really noisy
+
+00:30:51.679 --> 00:30:53.919
+>> but it alone is not enough. I think the
+
+00:30:53.919 --> 00:30:55.600
+interesting part is that for every
+
+00:30:55.600 --> 00:30:57.760
+engineer that is new to the AI world in
+
+00:30:57.760 --> 00:31:00.240
+this non-determinism world, you're used
+
+00:31:00.240 --> 00:31:01.520
+to maybe working with distributed
+
+00:31:01.520 --> 00:31:03.600
+systems where like distributed systems
+
+00:31:03.600 --> 00:31:05.120
+are always in a constant state of
+
+00:31:05.120 --> 00:31:07.600
+failure, right? That's why when you call
+
+00:31:07.600 --> 00:31:09.760
+an HT when you do an HTTP request
+
+00:31:09.760 --> 00:31:11.440
+anywhere, you should expect it to fail
+
+00:31:11.440 --> 00:31:13.679
+at some point. So you can just expect to
+
+00:31:13.679 --> 00:31:15.520
+have like a try catch or whatever of
+
+00:31:15.520 --> 00:31:18.399
+some sort. with these models the failure
+
+00:31:18.399 --> 00:31:21.919
+is like so subtle that we need new
+
+00:31:21.919 --> 00:31:24.880
+mechanisms to observe these failures and
+
+00:31:24.880 --> 00:31:26.720
+so observability is even more important
+
+00:31:26.720 --> 00:31:29.520
+than before uh you just won't get an
+
+00:31:29.520 --> 00:31:32.000
+maybe the endpoint itself like it's down
+
+00:31:32.000 --> 00:31:33.679
+like whatever you get a 500 from the
+
+00:31:33.679 --> 00:31:35.919
+entropic API but there could be other
+
+00:31:35.919 --> 00:31:37.760
+bugs just related to the actual model
+
+00:31:37.760 --> 00:31:40.480
+outputs that um you need to be able to
+
+00:31:40.480 --> 00:31:42.320
+catch
+
+00:31:42.320 --> 00:31:43.919
+>> yeah I think that's really and like
+
+00:31:43.919 --> 00:31:45.679
+what's I think like anthropic highlights
+
+00:31:45.679 --> 00:31:47.440
+that too is They're not going to stop
+
+00:31:47.440 --> 00:31:49.200
+doing the Twitter analysis. Like that is
+
+00:31:49.200 --> 00:31:50.480
+really good for them to know if things
+
+00:31:50.480 --> 00:31:52.559
+are totally busted.
+
+00:31:52.559 --> 00:31:54.320
+But I think one of the more things like
+
+00:31:54.320 --> 00:31:55.919
+one you just add more inspection. I
+
+00:31:55.919 --> 00:31:56.960
+don't think most people should do that
+
+00:31:56.960 --> 00:31:58.640
+for their pipelines. It's too much work.
+
+00:31:58.640 --> 00:32:00.080
+Like you should definitely unit test the
+
+00:32:00.080 --> 00:32:01.279
+most important parts of the pipeline,
+
+00:32:01.279 --> 00:32:04.159
+not the whole pipeline. Not worth it. Um
+
+00:32:04.159 --> 00:32:06.240
+because enthropic is so widely used in
+
+00:32:06.240 --> 00:32:07.760
+so many different scenarios and their
+
+00:32:07.760 --> 00:32:09.120
+use case is different. They just need to
+
+00:32:09.120 --> 00:32:10.640
+increase their eval pipeline. I think
+
+00:32:10.640 --> 00:32:11.840
+for anyone that's doing bespoke
+
+00:32:11.840 --> 00:32:14.480
+workflows, they don't need like hundreds
+
+00:32:14.480 --> 00:32:16.080
+of eval. They just need to look at their
+
+00:32:16.080 --> 00:32:17.440
+systems a lot more carefully. Like do
+
+00:32:17.440 --> 00:32:19.519
+the do the stuff Enthropic did before
+
+00:32:19.519 --> 00:32:21.840
+all this stuff. But I think one stuff
+
+00:32:21.840 --> 00:32:23.600
+that is probably definitely shared that
+
+00:32:23.600 --> 00:32:25.760
+everyone should do is this. You want
+
+00:32:25.760 --> 00:32:27.200
+faster debugging tool. Like what Aaron
+
+00:32:27.200 --> 00:32:28.559
+says like you really need to be able to
+
+00:32:28.559 --> 00:32:30.320
+introspect your system as quickly as
+
+00:32:30.320 --> 00:32:32.159
+possible because the minute a customer
+
+00:32:32.159 --> 00:32:34.240
+reports an issue, you want to know one
+
+00:32:34.240 --> 00:32:37.840
+of three things. Is it a is it really a
+
+00:32:37.840 --> 00:32:39.919
+failure from the perspective of your
+
+00:32:39.919 --> 00:32:42.320
+infrastructure? Is it a failure on the
+
+00:32:42.320 --> 00:32:44.480
+perspective of your prompt? or is it a
+
+00:32:44.480 --> 00:32:46.159
+failure from the perspective of like the
+
+00:32:46.159 --> 00:32:46.960
+model?
+
+00:32:46.960 --> 00:32:48.559
+>> And if you don't know which of those
+
+00:32:48.559 --> 00:32:50.480
+three things is or if it takes you like
+
+00:32:50.480 --> 00:32:52.640
+three hours to determine which which of
+
+00:32:52.640 --> 00:32:54.960
+those three things it is,
+
+00:32:54.960 --> 00:32:56.720
+>> like it's going to be hard for you as a
+
+00:32:56.720 --> 00:32:57.440
+team.
+
+00:32:57.440 --> 00:32:59.840
+>> Oh, I'm sorry. I'll close Discord. Uh
+
+00:32:59.840 --> 00:33:01.840
+thank you for noting that. Uh my Discord
+
+00:33:01.840 --> 00:33:04.000
+is running at all times.
+
+00:33:04.000 --> 00:33:05.519
+um
+
+00:33:05.519 --> 00:33:06.960
+it's going to be really really hard for
+
+00:33:06.960 --> 00:33:09.600
+you as a team to make your system better
+
+00:33:09.600 --> 00:33:10.880
+because your feedback loop is
+
+00:33:10.880 --> 00:33:12.960
+fundamentally the only thing you have to
+
+00:33:12.960 --> 00:33:15.200
+ship a really really good product.
+
+00:33:15.200 --> 00:33:18.880
+>> Yeah, I think um in general you just go
+
+00:33:18.880 --> 00:33:20.720
+a when you deploy stuff you should just
+
+00:33:20.720 --> 00:33:22.559
+deploy like slowly like this is some
+
+00:33:22.559 --> 00:33:24.480
+stuff that it's like the golden rule at
+
+00:33:24.480 --> 00:33:27.519
+a AWS when I was at AWS like you don't
+
+00:33:27.519 --> 00:33:29.679
+deploy worldwide at the same time. I
+
+00:33:29.679 --> 00:33:31.120
+know a lot of people have startups and
+
+00:33:31.120 --> 00:33:33.039
+they just like push to prod immediately.
+
+00:33:33.039 --> 00:33:35.679
+If you can't help it, don't do that.
+
+00:33:35.679 --> 00:33:37.200
+>> So, can I ask you a question? When do
+
+00:33:37.200 --> 00:33:38.720
+you think someone should deploy to prod
+
+00:33:38.720 --> 00:33:40.480
+or like like what how do you think about
+
+00:33:40.480 --> 00:33:42.399
+this as a startup? Like we're a startup.
+
+00:33:42.399 --> 00:33:42.720
+>> Yeah.
+
+00:33:42.720 --> 00:33:43.840
+>> How do you think we should think about
+
+00:33:43.840 --> 00:33:45.120
+this? Like should we roll out our
+
+00:33:45.120 --> 00:33:46.880
+changes all the time?
+
+00:33:46.880 --> 00:33:48.640
+>> You should. So, if you're a startup, you
+
+00:33:48.640 --> 00:33:50.240
+don't have the bandwidth to like set up
+
+00:33:50.240 --> 00:33:52.159
+all these like hosts and like, oh, you
+
+00:33:52.159 --> 00:33:53.919
+have a one box deployment and then it
+
+00:33:53.919 --> 00:33:55.519
+goes to all this stuff. And you could
+
+00:33:55.519 --> 00:33:57.679
+also be running stuff in serverless. I
+
+00:33:57.679 --> 00:33:59.360
+think using feature flags is a good way
+
+00:33:59.360 --> 00:34:01.840
+to do it. Um where you can just kind of
+
+00:34:01.840 --> 00:34:04.159
+like roll back instantly or deploy to
+
+00:34:04.159 --> 00:34:05.679
+services that let you roll back
+
+00:34:05.679 --> 00:34:07.679
+instantly. So for example, I don't know
+
+00:34:07.679 --> 00:34:09.119
+if you're using Verscell, you can like
+
+00:34:09.119 --> 00:34:11.919
+oneclick roll back in like two seconds,
+
+00:34:11.919 --> 00:34:14.560
+right? So that's very helpful to to do
+
+00:34:14.560 --> 00:34:17.200
+in these situations. Um and sometimes
+
+00:34:17.200 --> 00:34:18.639
+when you're testing whether like it's a
+
+00:34:18.639 --> 00:34:20.879
+prompt or is it a hallucination or is it
+
+00:34:20.879 --> 00:34:22.720
+a model issue, the first thing you
+
+00:34:22.720 --> 00:34:24.320
+should just do is roll back. That was
+
+00:34:24.320 --> 00:34:26.800
+actually one of the slogans at AWS. It
+
+00:34:26.800 --> 00:34:28.480
+was literally like, "Don't be a hero.
+
+00:34:28.480 --> 00:34:31.599
+Roll back."
+
+00:34:31.599 --> 00:34:33.919
+Like, you don't need to find out exactly
+
+00:34:33.919 --> 00:34:35.839
+what it is and like patch a fix or
+
+00:34:35.839 --> 00:34:37.200
+whatever. Like, don't ask questions.
+
+00:34:37.200 --> 00:34:39.599
+Just roll it back. Who cares if you roll
+
+00:34:39.599 --> 00:34:41.359
+it back to like the day before, it
+
+00:34:41.359 --> 00:34:42.560
+doesn't matter.
+
+00:34:42.560 --> 00:34:43.440
+>> Um,
+
+00:34:43.440 --> 00:34:45.919
+>> actually really I like that framing.
+
+00:34:45.919 --> 00:34:47.040
+>> I think that's actually the right way
+
+00:34:47.040 --> 00:34:48.800
+for a lot of these AI pipelines. If your
+
+00:34:48.800 --> 00:34:50.399
+system has been working for the last 3
+
+00:34:50.399 --> 00:34:52.320
+weeks and suddenly you see like five
+
+00:34:52.320 --> 00:34:54.159
+pings from users that have been using
+
+00:34:54.159 --> 00:34:56.000
+your product already and expect it to
+
+00:34:56.000 --> 00:34:57.040
+work,
+
+00:34:57.040 --> 00:34:58.560
+>> something probably went wrong no matter
+
+00:34:58.560 --> 00:34:59.440
+what it is.
+
+00:34:59.440 --> 00:35:00.960
+>> If you roll back and you still see the
+
+00:35:00.960 --> 00:35:02.800
+issue, then like maybe it is the model,
+
+00:35:02.800 --> 00:35:04.480
+>> maybe it is maybe it is the
+
+00:35:04.480 --> 00:35:05.440
+infrastructure,
+
+00:35:05.440 --> 00:35:06.960
+>> right? Exactly. So if you roll back and
+
+00:35:06.960 --> 00:35:08.880
+it's still broken, you know, you've
+
+00:35:08.880 --> 00:35:10.720
+already eliminated one variable. So then
+
+00:35:10.720 --> 00:35:12.240
+you can be like, "Oh, it's a model.
+
+00:35:12.240 --> 00:35:13.839
+Let's let's switch models now. Let's
+
+00:35:13.839 --> 00:35:15.440
+roll forward and switch to a different
+
+00:35:15.440 --> 00:35:18.560
+model." But uh yeah uh I think
+
+00:35:18.560 --> 00:35:19.520
+>> I want to talk about one more question
+
+00:35:19.520 --> 00:35:20.800
+that I thought Josh asked brought up
+
+00:35:20.800 --> 00:35:21.680
+that was fascinating.
+
+00:35:21.680 --> 00:35:24.079
+>> Then we workflows.
+
+00:35:24.079 --> 00:35:24.720
+>> Yeah.
+
+00:35:24.720 --> 00:35:26.240
+>> How do you differentiate if it's a
+
+00:35:26.240 --> 00:35:29.599
+failure or hallucination?
+
+00:35:29.599 --> 00:35:30.000
+>> Um
+
+00:35:30.000 --> 00:35:30.960
+>> what are your thoughts there?
+
+00:35:30.960 --> 00:35:32.160
+>> Yeah. So if it's a failure or
+
+00:35:32.160 --> 00:35:34.000
+hallucination
+
+00:35:34.000 --> 00:35:36.400
+um
+
+00:35:36.400 --> 00:35:38.800
+you can sort it depends on what task
+
+00:35:38.800 --> 00:35:40.640
+you're trying to do like always like
+
+00:35:40.640 --> 00:35:43.599
+senior engineer it depends. Um so for
+
+00:35:43.599 --> 00:35:45.680
+example if you're like extracting data
+
+00:35:45.680 --> 00:35:48.560
+from bank statements right and uh like
+
+00:35:48.560 --> 00:35:51.359
+all of a sudden it hallucinated that the
+
+00:35:51.359 --> 00:35:53.760
+sum is some different number you can
+
+00:35:53.760 --> 00:35:55.440
+actually calculate this programmatically
+
+00:35:55.440 --> 00:35:56.960
+and you can be like hey do all these
+
+00:35:56.960 --> 00:35:59.359
+line items add up to the sum and if they
+
+00:35:59.359 --> 00:36:00.400
+don't you know that there's a
+
+00:36:00.400 --> 00:36:03.040
+hallucination. So there's like systems
+
+00:36:03.040 --> 00:36:05.040
+you can build around LLMs and around
+
+00:36:05.040 --> 00:36:06.720
+data extraction to make sure that it's
+
+00:36:06.720 --> 00:36:08.800
+not hallucinating. But I know a lot of
+
+00:36:08.800 --> 00:36:11.200
+cases are literally just like plain text
+
+00:36:11.200 --> 00:36:13.920
+like qualitative data like it just spit
+
+00:36:13.920 --> 00:36:15.359
+a sentence and you're not sure if it's
+
+00:36:15.359 --> 00:36:17.599
+hallucinating. I think having customer
+
+00:36:17.599 --> 00:36:21.359
+feedback is a really good uh start on
+
+00:36:21.359 --> 00:36:23.040
+just like tell like having users tell
+
+00:36:23.040 --> 00:36:25.280
+you if it's actually good or bad. And
+
+00:36:25.280 --> 00:36:27.440
+you'll see this in literally every AI
+
+00:36:27.440 --> 00:36:29.680
+product out there. There's like a thumbs
+
+00:36:29.680 --> 00:36:31.680
+down or thumbs up button. And even
+
+00:36:31.680 --> 00:36:34.000
+OpenAI is asking people to do thumbs. If
+
+00:36:34.000 --> 00:36:35.760
+you cloud code,
+
+00:36:35.760 --> 00:36:37.200
+>> if you've been pinged by cloud code,
+
+00:36:37.200 --> 00:36:39.040
+whether it's good or bad, it's like, is
+
+00:36:39.040 --> 00:36:41.359
+this good? Like they're asking people
+
+00:36:41.359 --> 00:36:43.280
+constantly, like everyone. They're
+
+00:36:43.280 --> 00:36:45.680
+asking literally everyone constantly all
+
+00:36:45.680 --> 00:36:48.720
+the time if it's actually working. Um,
+
+00:36:48.720 --> 00:36:51.119
+so you should do something similar in
+
+00:36:51.119 --> 00:36:52.320
+your app.
+
+00:36:52.320 --> 00:36:56.640
+>> I um I have a question about this. How I
+
+00:36:56.640 --> 00:36:58.000
+guess like most people never click
+
+00:36:58.000 --> 00:36:59.760
+thumbs up, thumbs down.
+
+00:36:59.760 --> 00:37:00.720
+I don't know if
+
+00:37:00.720 --> 00:37:02.079
+>> you how many times have you clicked it?
+
+00:37:02.079 --> 00:37:04.560
+>> You only need a small subset of users.
+
+00:37:04.560 --> 00:37:06.880
+And also like the
+
+00:37:06.880 --> 00:37:08.800
+you'll click for example the the the
+
+00:37:08.800 --> 00:37:10.720
+times where I do say it's not good is
+
+00:37:10.720 --> 00:37:12.000
+when it's not good, right? When I'm
+
+00:37:12.000 --> 00:37:13.520
+unhappy.
+
+00:37:13.520 --> 00:37:15.440
+So I think what the most unhappy people
+
+00:37:15.440 --> 00:37:17.359
+will always like kind of like try and
+
+00:37:17.359 --> 00:37:19.119
+give you some sort of feedback.
+
+00:37:19.119 --> 00:37:21.599
+>> I also uh on the topic of like is it a
+
+00:37:21.599 --> 00:37:23.280
+failure or hallucination, I'll tell you
+
+00:37:23.280 --> 00:37:24.480
+like one thing that I was thinking about
+
+00:37:24.480 --> 00:37:26.240
+is like I think people don't really have
+
+00:37:26.240 --> 00:37:27.599
+a good definition for hallucination. I
+
+00:37:27.599 --> 00:37:29.119
+think it's a catch-all thing for like ah
+
+00:37:29.119 --> 00:37:31.119
+something's not working and I'll tell
+
+00:37:31.119 --> 00:37:32.880
+you why. Technically, if you define
+
+00:37:32.880 --> 00:37:34.800
+hallucination as things that are not des
+
+00:37:34.800 --> 00:37:36.720
+that are not backed by context you've
+
+00:37:36.720 --> 00:37:38.800
+given it. Every time I ask a question
+
+00:37:38.800 --> 00:37:40.160
+it's technically hallucinating. It
+
+00:37:40.160 --> 00:37:41.920
+happens to align with how I perceive the
+
+00:37:41.920 --> 00:37:43.680
+world and I I believe it. So I don't
+
+00:37:43.680 --> 00:37:46.400
+classify it as such. And I think it's
+
+00:37:46.400 --> 00:37:48.800
+really really hard to define that word.
+
+00:37:48.800 --> 00:37:50.160
+So I think what the first thing I would
+
+00:37:50.160 --> 00:37:51.280
+do is I would just go back to your
+
+00:37:51.280 --> 00:37:53.040
+product and like be more concrete of
+
+00:37:53.040 --> 00:37:56.640
+like what is is it factually incorrect
+
+00:37:56.640 --> 00:37:58.960
+uh things where like I have cont I have
+
+00:37:58.960 --> 00:38:01.760
+context that it is rejecting or not
+
+00:38:01.760 --> 00:38:04.720
+taking advantage of is it because I'm
+
+00:38:04.720 --> 00:38:06.480
+>> every time it disagrees with me I'm sure
+
+00:38:06.480 --> 00:38:09.520
+it's a hallucination.
+
+00:38:09.520 --> 00:38:12.320
+>> Yeah, exactly. Um so it's really hard to
+
+00:38:12.320 --> 00:38:14.800
+go vibe that in my opinion of describing
+
+00:38:14.800 --> 00:38:16.960
+hallucinations. That's like I would just
+
+00:38:16.960 --> 00:38:18.480
+define that more concretely and then you
+
+00:38:18.480 --> 00:38:19.440
+can know if it's a failure or
+
+00:38:19.440 --> 00:38:20.720
+hallucation more clearly because a
+
+00:38:20.720 --> 00:38:23.440
+failure is like the model is
+
+00:38:23.440 --> 00:38:26.880
+of let me read Josh's thing but the
+
+00:38:26.880 --> 00:38:31.190
+anthropic failure cause
+
+00:38:33.190 --> 00:38:33.200
+um I think Josh I see I see which
+
+00:38:33.200 --> 00:38:35.200
+question you're trying to ask now um
+
+00:38:35.200 --> 00:38:36.960
+which is like in the case of enthropics
+
+00:38:36.960 --> 00:38:38.800
+failure it's like the model is
+
+00:38:38.800 --> 00:38:41.760
+inherently just picking not the model
+
+00:38:41.760 --> 00:38:43.920
+enthropic is picking the wrong token
+
+00:38:43.920 --> 00:38:45.599
+with their algorithm for selecting the
+
+00:38:45.599 --> 00:38:47.119
+right token. So like how do you know
+
+00:38:47.119 --> 00:38:48.720
+that that is going wrong versus your
+
+00:38:48.720 --> 00:38:50.800
+prompting strategy?
+
+00:38:50.800 --> 00:38:52.640
+Generally what I think here is like it's
+
+00:38:52.640 --> 00:38:54.320
+really just about testing really fast.
+
+00:38:54.320 --> 00:38:56.800
+You just if you if you build a gut model
+
+00:38:56.800 --> 00:38:58.800
+for like hey the model the prompt isn't
+
+00:38:58.800 --> 00:39:01.200
+working in the way you want it to work
+
+00:39:01.200 --> 00:39:02.880
+and you have some business metrics that
+
+00:39:02.880 --> 00:39:04.400
+you can tie to it. So like either users
+
+00:39:04.400 --> 00:39:06.960
+are leaving more the chat threads are uh
+
+00:39:06.960 --> 00:39:09.520
+either increasing or decreasing in like
+
+00:39:09.520 --> 00:39:11.599
+number of messages exchanged depending
+
+00:39:11.599 --> 00:39:12.800
+on what kind of application you're
+
+00:39:12.800 --> 00:39:16.160
+building. Um what I would say is you
+
+00:39:16.160 --> 00:39:17.599
+probably can build a proxy for like
+
+00:39:17.599 --> 00:39:19.760
+product quality went down. Once you know
+
+00:39:19.760 --> 00:39:22.079
+product quality went down then you can
+
+00:39:22.079 --> 00:39:23.520
+figure out what went wrong. And what I
+
+00:39:23.520 --> 00:39:25.280
+usually do in this scenario when a model
+
+00:39:25.280 --> 00:39:27.599
+fails is yeah like if anthropic is not
+
+00:39:27.599 --> 00:39:29.440
+working I usually just talk to the GD5
+
+00:39:29.440 --> 00:39:31.920
+or the equivalent GPT model and I just
+
+00:39:31.920 --> 00:39:34.560
+see is that one working cuz well usually
+
+00:39:34.560 --> 00:39:36.160
+I stay with the same models and I bump
+
+00:39:36.160 --> 00:39:38.880
+up to the bigger bigger model and then
+
+00:39:38.880 --> 00:39:40.880
+after that if that is still not working
+
+00:39:40.880 --> 00:39:42.400
+I actually don't spend too long on the
+
+00:39:42.400 --> 00:39:44.640
+prop. I just swap to a different model
+
+00:39:44.640 --> 00:39:46.640
+and a different model provider and if
+
+00:39:46.640 --> 00:39:48.400
+that doesn't work then I do a little bit
+
+00:39:48.400 --> 00:39:49.680
+of prompt engineering to see like oh
+
+00:39:49.680 --> 00:39:51.520
+what can I do to actually make this work
+
+00:39:51.520 --> 00:39:52.880
+and I think you kind of have to build
+
+00:39:52.880 --> 00:39:54.560
+the right thing and it's really hard to
+
+00:39:54.560 --> 00:39:55.920
+know if it's an actual infrastructure
+
+00:39:55.920 --> 00:39:58.240
+and model failure. Um, John brought up
+
+00:39:58.240 --> 00:39:59.280
+one interesting point of like, can we
+
+00:39:59.280 --> 00:40:01.280
+not just set up experiments?
+
+00:40:01.280 --> 00:40:03.119
+>> In theory, I think this is the promised
+
+00:40:03.119 --> 00:40:04.960
+land that everyone wants, which is like
+
+00:40:04.960 --> 00:40:06.320
+the promised land is like we have some
+
+00:40:06.320 --> 00:40:08.000
+data set and then we run the data set
+
+00:40:08.000 --> 00:40:09.920
+with a bunch of prompts and it tells us
+
+00:40:09.920 --> 00:40:14.160
+good or bad and then we say yay.
+
+00:40:14.160 --> 00:40:15.440
+>> In practice, I don't think it's that
+
+00:40:15.440 --> 00:40:16.960
+easy because I don't I think most
+
+00:40:16.960 --> 00:40:18.880
+problems don't have a definition of good
+
+00:40:18.880 --> 00:40:19.520
+or bad.
+
+00:40:19.520 --> 00:40:21.520
+>> How many of you have like a hundred
+
+00:40:21.520 --> 00:40:24.160
+samples of your problem? How many of you
+
+00:40:24.160 --> 00:40:26.079
+have built a hundred different test
+
+00:40:26.079 --> 00:40:28.800
+cases for whatever prompt you have? I'm
+
+00:40:28.800 --> 00:40:31.119
+sure that some have, but most people
+
+00:40:31.119 --> 00:40:32.320
+probably haven't.
+
+00:40:32.320 --> 00:40:33.839
+>> The magic number is 30.
+
+00:40:33.839 --> 00:40:37.760
+>> Entropics error rate was8%.
+
+00:40:37.760 --> 00:40:39.680
+So, they definitely need like a ton,
+
+00:40:39.680 --> 00:40:41.040
+right? But this is Entropic. Obviously,
+
+00:40:41.040 --> 00:40:44.400
+they have like thousands. Um, but if you
+
+00:40:44.400 --> 00:40:46.240
+have maybe 1% of your users being
+
+00:40:46.240 --> 00:40:48.079
+affected by something, like you just
+
+00:40:48.079 --> 00:40:53.040
+need way more evals. Um, and you need
+
+00:40:53.040 --> 00:40:54.800
+>> the thing is it's not like this is
+
+00:40:54.800 --> 00:40:56.079
+another good question like the theory is
+
+00:40:56.079 --> 00:40:58.240
+like wouldn't good eval. The problem
+
+00:40:58.240 --> 00:41:00.800
+here isn't just like you want good eval.
+
+00:41:00.800 --> 00:41:02.560
+The problem is you need evals that span
+
+00:41:02.560 --> 00:41:04.480
+the distribution of the behavior your
+
+00:41:04.480 --> 00:41:05.599
+users have.
+
+00:41:05.599 --> 00:41:07.599
+>> So it's not it's quantity isn't the
+
+00:41:07.599 --> 00:41:09.680
+thing and good is such a subjective term
+
+00:41:09.680 --> 00:41:11.760
+it's hard to define. So I worked on Face
+
+00:41:11.760 --> 00:41:15.280
+ID at Google. We have so many ta data
+
+00:41:15.280 --> 00:41:17.040
+sets of people, the same person with
+
+00:41:17.040 --> 00:41:18.480
+glasses, without glasses, with a
+
+00:41:18.480 --> 00:41:20.800
+mustache, with a different haircut,
+
+00:41:20.800 --> 00:41:23.200
+twins, siblings. You really need to
+
+00:41:23.200 --> 00:41:24.720
+really quickly understand every
+
+00:41:24.720 --> 00:41:26.319
+parameter. And I'll talk to you guys
+
+00:41:26.319 --> 00:41:28.079
+something really weird. None of you
+
+00:41:28.079 --> 00:41:29.680
+probably expect that face ID worked
+
+00:41:29.680 --> 00:41:32.079
+worse in Phoenix. And actually, this is
+
+00:41:32.079 --> 00:41:33.200
+true for a lot of things. A lot of
+
+00:41:33.200 --> 00:41:37.520
+things work worse in Phoenix.
+
+00:41:37.520 --> 00:41:39.520
+Anyone know why? Aaron, what's your
+
+00:41:39.520 --> 00:41:42.079
+guess? Uh, well, you've already told me,
+
+00:41:42.079 --> 00:41:42.319
+so
+
+00:41:42.319 --> 00:41:44.160
+>> Oh, [ __ ] I told you. Uh, this is not as
+
+00:41:44.160 --> 00:41:46.880
+fun. But for everyone else, um, it turns
+
+00:41:46.880 --> 00:41:49.520
+out the temperature variation affects
+
+00:41:49.520 --> 00:41:51.599
+how cameras calibrate in Phoenix because
+
+00:41:51.599 --> 00:41:53.119
+it's so hot. In fact, a lot of things
+
+00:41:53.119 --> 00:41:54.720
+get messed up because of how hot Phoenix
+
+00:41:54.720 --> 00:41:55.119
+is.
+
+00:41:55.119 --> 00:41:57.359
+>> Yeah. The materials expand this.
+
+00:41:57.359 --> 00:41:59.760
+>> Exactly. So, the calibration you store
+
+00:41:59.760 --> 00:42:01.920
+that tells you how how the camera is
+
+00:42:01.920 --> 00:42:05.280
+perceiving the world is wrong. So now
+
+00:42:05.280 --> 00:42:07.200
+your face ID is like it your face is
+
+00:42:07.200 --> 00:42:09.280
+basically distorted and like a like a
+
+00:42:09.280 --> 00:42:10.640
+funky mirror house. So it doesn't work
+
+00:42:10.640 --> 00:42:12.560
+anymore. And you would never know that
+
+00:42:12.560 --> 00:42:15.280
+if you didn't understand Face ID has
+
+00:42:15.280 --> 00:42:16.560
+that thing that you have to go deal with
+
+00:42:16.560 --> 00:42:18.560
+in Phoenix, Arizona. And if you've never
+
+00:42:18.560 --> 00:42:19.839
+dealt with Phoenix, Arizona, you
+
+00:42:19.839 --> 00:42:21.200
+probably would know and very sely
+
+00:42:21.200 --> 00:42:23.119
+wouldn't predict that to happen.
+
+00:42:23.119 --> 00:42:26.560
+>> Yeah. Um what Charles says is I think is
+
+00:42:26.560 --> 00:42:29.119
+the best thing which is
+
+00:42:29.119 --> 00:42:31.200
+>> you use real what you do is you ship
+
+00:42:31.200 --> 00:42:33.440
+data to prod you collect that data and
+
+00:42:33.440 --> 00:42:35.040
+you turn that into
+
+00:42:35.040 --> 00:42:36.800
+>> you turn a subset of that into eval data
+
+00:42:36.800 --> 00:42:38.800
+set that is the only answer
+
+00:42:38.800 --> 00:42:41.040
+>> and that is a rolling it's not a onetime
+
+00:42:41.040 --> 00:42:44.000
+task that is a thing that you do forever
+
+00:42:44.000 --> 00:42:45.839
+because you have to constantly span how
+
+00:42:45.839 --> 00:42:48.160
+your behavior is changing over time
+
+00:42:48.160 --> 00:42:49.839
+>> exactly
+
+00:42:49.839 --> 00:42:52.480
+um so yeah I think this is a good
+
+00:42:52.480 --> 00:42:52.880
+summary
+
+00:42:52.880 --> 00:42:54.880
+>> a fun think
+
+00:42:54.880 --> 00:42:55.760
+uh TLDDR
+
+00:42:55.760 --> 00:42:58.640
+>> do a quick
+
+00:42:58.640 --> 00:43:00.560
+>> let's yeah I'll give a quick TDR and
+
+00:43:00.560 --> 00:43:01.680
+let's talk about the other stuff that I
+
+00:43:01.680 --> 00:43:03.680
+think I'm really I we'll see if we can I
+
+00:43:03.680 --> 00:43:04.880
+can say a little over and we can keep
+
+00:43:04.880 --> 00:43:06.319
+talking
+
+00:43:06.319 --> 00:43:09.520
+>> um the TLDDR here is like
+
+00:43:09.520 --> 00:43:11.359
+basically go and try and build a product
+
+00:43:11.359 --> 00:43:13.520
+metric to your system build a really
+
+00:43:13.520 --> 00:43:15.280
+really good debugging loop so it's not
+
+00:43:15.280 --> 00:43:17.839
+hard for you to actually go and like
+
+00:43:17.839 --> 00:43:19.760
+determine where the problem is and I
+
+00:43:19.760 --> 00:43:21.680
+guess what Aaron says is don't be a hero
+
+00:43:21.680 --> 00:43:24.480
+and roll back like go do that if you
+
+00:43:24.480 --> 00:43:26.880
+need to.
+
+00:43:26.880 --> 00:43:28.160
+>> Yeah.
+
+00:43:28.160 --> 00:43:30.000
+>> Um cool. Let's talk about the next thing
+
+00:43:30.000 --> 00:43:32.000
+which I thought was one of the most
+
+00:43:32.000 --> 00:43:33.760
+interesting topics. Before I do that,
+
+00:43:33.760 --> 00:43:35.040
+for anyone that's watching and is
+
+00:43:35.040 --> 00:43:37.200
+interested, uh we do this uh
+
+00:43:37.200 --> 00:43:38.880
+conversation every single Tuesday at 10
+
+00:43:38.880 --> 00:43:41.839
+a.m. PST. It's uh myself, Aaron, and I
+
+00:43:41.839 --> 00:43:44.319
+guess now Dexter as well. Uh it's called
+
+00:43:44.319 --> 00:43:46.400
+AI that works. The whole point is to
+
+00:43:46.400 --> 00:43:48.319
+talk about real in production scenarios.
+
+00:43:48.319 --> 00:43:49.920
+Generally, we try and show some live
+
+00:43:49.920 --> 00:43:52.800
+code along the way whenever possible.
+
+00:43:52.800 --> 00:43:54.400
+Today's episode I thought was just like
+
+00:43:54.400 --> 00:43:56.000
+more conceptually talking about some of
+
+00:43:56.000 --> 00:43:57.200
+the work that Anthropic did that I
+
+00:43:57.200 --> 00:43:59.359
+thought was relevant. So, no code today,
+
+00:43:59.359 --> 00:44:00.960
+but we'll send out email summaries and
+
+00:44:00.960 --> 00:44:02.160
+then we have all the blog post and
+
+00:44:02.160 --> 00:44:04.720
+podcast recorded live. So, hopefully you
+
+00:44:04.720 --> 00:44:06.000
+keep enjoying this content. Please give
+
+00:44:06.000 --> 00:44:07.359
+us feedback about what we can do to make
+
+00:44:07.359 --> 00:44:10.240
+it better along the way.
+
+00:44:10.240 --> 00:44:12.319
+Um,
+
+00:44:12.319 --> 00:44:14.720
+let's talk about uh the next thing, the
+
+00:44:14.720 --> 00:44:16.800
+agent builder.
+
+00:44:16.800 --> 00:44:18.880
+So open released some stuff.
+
+00:44:18.880 --> 00:44:20.640
+>> Viva, why do you think everyone is
+
+00:44:20.640 --> 00:44:23.520
+building these? 11 Labs literally
+
+00:44:23.520 --> 00:44:25.119
+released their own agent building
+
+00:44:25.119 --> 00:44:25.680
+builder.
+
+00:44:25.680 --> 00:44:27.040
+>> So do you want to screen share and talk
+
+00:44:27.040 --> 00:44:28.079
+about your what we're talking about
+
+00:44:28.079 --> 00:44:29.119
+first?
+
+00:44:29.119 --> 00:44:30.480
+>> Just so everyone knows. And let's catch
+
+00:44:30.480 --> 00:44:31.200
+everyone up.
+
+00:44:31.200 --> 00:44:33.520
+>> Yeah. One sec.
+
+00:44:33.520 --> 00:44:35.119
+>> While you pull that up, how often should
+
+00:44:35.119 --> 00:44:38.880
+you run evals in prod? Um daily, weekly?
+
+00:44:38.880 --> 00:44:41.440
+Honestly, depends on your use case. Uh
+
+00:44:41.440 --> 00:44:45.040
+there's no specific um there's no global
+
+00:44:45.040 --> 00:44:51.829
+answer for this.
+
+00:44:58.230 --> 00:44:58.240
+>> Yeah. So, here's one agent builder. Uh,
+
+00:44:58.240 --> 00:44:59.920
+I don't know if this will actually play
+
+00:44:59.920 --> 00:45:02.640
+anything. Oh, yeah. This kind of stuff,
+
+00:45:02.640 --> 00:45:03.680
+right?
+
+00:45:03.680 --> 00:45:04.000
+>> Yeah.
+
+00:45:04.000 --> 00:45:06.079
+>> So, you have a start, you hand off to an
+
+00:45:06.079 --> 00:45:10.160
+agent, there's a conversation, etc. Um,
+
+00:45:10.160 --> 00:45:10.800
+this is
+
+00:45:10.800 --> 00:45:12.240
+>> like we've all seen this in like NAD,
+
+00:45:12.240 --> 00:45:13.599
+but like OpenI released one too, I
+
+00:45:13.599 --> 00:45:15.599
+think, recently, right? Yeah, there's n
+
+00:45:15.599 --> 00:45:18.319
+there's open AI agent
+
+00:45:18.319 --> 00:45:20.560
+builder.
+
+00:45:20.560 --> 00:45:22.240
+>> Yeah. Agent kit or whatever they called
+
+00:45:22.240 --> 00:45:23.280
+it.
+
+00:45:23.280 --> 00:45:23.920
+>> Yeah. So there
+
+00:45:23.920 --> 00:45:26.000
+>> and you want to zoom in on that image.
+
+00:45:26.000 --> 00:45:28.000
+>> Yeah.
+
+00:45:28.000 --> 00:45:29.440
+>> Yeah. Um many of you might have seen
+
+00:45:29.440 --> 00:45:30.960
+this like open releases thing. They
+
+00:45:30.960 --> 00:45:32.480
+released prompt optimizers a bunch of
+
+00:45:32.480 --> 00:45:35.040
+other things.
+
+00:45:35.040 --> 00:45:36.480
+>> We just had a fun conversation about it.
+
+00:45:36.480 --> 00:45:39.760
+What are your thoughts, Aaron? Um, so
+
+00:45:39.760 --> 00:45:41.839
+one I think I think this is just like a
+
+00:45:41.839 --> 00:45:44.400
+push to have nontechnical users build
+
+00:45:44.400 --> 00:45:46.960
+these agent workflows, right? Because
+
+00:45:46.960 --> 00:45:48.720
+code is scary, right?
+
+00:45:48.720 --> 00:45:49.599
+>> Yeah.
+
+00:45:49.599 --> 00:45:51.760
+>> Which is also interesting because code
+
+00:45:51.760 --> 00:45:54.319
+is easier for people to write now
+
+00:45:54.319 --> 00:45:55.680
+because you can just write a prompt and
+
+00:45:55.680 --> 00:45:57.599
+like it'll write a bunch of code. But I
+
+00:45:57.599 --> 00:45:58.960
+think if you're in this kind of closed
+
+00:45:58.960 --> 00:46:00.880
+environment where hey, you can just drag
+
+00:46:00.880 --> 00:46:02.960
+and drop these nodes and build
+
+00:46:02.960 --> 00:46:05.440
+something, it makes it more manageable
+
+00:46:05.440 --> 00:46:09.760
+and less scary. Um, another big part of
+
+00:46:09.760 --> 00:46:11.920
+this is just like integrations. So maybe
+
+00:46:11.920 --> 00:46:13.440
+there's a node that allows you to like
+
+00:46:13.440 --> 00:46:15.040
+integrate your Google Docs or Google
+
+00:46:15.040 --> 00:46:16.880
+Drive and you can just create a little
+
+00:46:16.880 --> 00:46:19.200
+workflow and like boom, everything is
+
+00:46:19.200 --> 00:46:22.000
+kind of working. Um,
+
+00:46:22.000 --> 00:46:23.520
+>> I think one thing that I think that
+
+00:46:23.520 --> 00:46:24.960
+integration point is under super
+
+00:46:24.960 --> 00:46:26.880
+undervalued because like if I'm a
+
+00:46:26.880 --> 00:46:29.119
+non-technical user, think about how hard
+
+00:46:29.119 --> 00:46:30.720
+it would be even if I had to use cloud
+
+00:46:30.720 --> 00:46:31.920
+code or something and I can magically
+
+00:46:31.920 --> 00:46:34.160
+vibe code to say that in the end I want
+
+00:46:34.160 --> 00:46:35.520
+you to produce a Google doc as an
+
+00:46:35.520 --> 00:46:37.119
+artifact because Google doc is a thing
+
+00:46:37.119 --> 00:46:39.359
+I'm used to or PDF is a output that I'm
+
+00:46:39.359 --> 00:46:42.160
+used to. And I think what's really
+
+00:46:42.160 --> 00:46:44.560
+useful there is it's something I don't
+
+00:46:44.560 --> 00:46:46.480
+have to think about anymore. It's like I
+
+00:46:46.480 --> 00:46:48.640
+just draw a little line to a thing that
+
+00:46:48.640 --> 00:46:50.640
+says write a Google Drive file and it
+
+00:46:50.640 --> 00:46:54.319
+mostly works. Now the problem is the
+
+00:46:54.319 --> 00:46:55.599
+minute I realize that I actually need
+
+00:46:55.599 --> 00:46:57.119
+like very specific folder names and all
+
+00:46:57.119 --> 00:46:58.240
+the other stuff then you're like oh
+
+00:46:58.240 --> 00:46:59.599
+shoot I'm basically writing code in the
+
+00:46:59.599 --> 00:47:01.119
+UI builder.
+
+00:47:01.119 --> 00:47:01.520
+>> Yeah.
+
+00:47:01.520 --> 00:47:02.880
+>> And I think it's like
+
+00:47:02.880 --> 00:47:04.319
+>> are you still screen sharing?
+
+00:47:04.319 --> 00:47:07.520
+>> Yeah, I am screen sharing this. So this
+
+00:47:07.520 --> 00:47:09.599
+is an interesting part. So you you start
+
+00:47:09.599 --> 00:47:11.280
+out building these agent builders but
+
+00:47:11.280 --> 00:47:12.240
+eventually you're going to need
+
+00:47:12.240 --> 00:47:13.680
+structure outputs, right?
+
+00:47:13.680 --> 00:47:17.119
+>> Yeah. Because you the way to to have
+
+00:47:17.119 --> 00:47:19.040
+unstructured data like a user's message
+
+00:47:19.040 --> 00:47:21.839
+talk to your actual program and logic uh
+
+00:47:21.839 --> 00:47:23.200
+to do that you need to transform
+
+00:47:23.200 --> 00:47:25.040
+unstructured data to structured data.
+
+00:47:25.040 --> 00:47:28.160
+You need a schema. So whenever you start
+
+00:47:28.160 --> 00:47:30.240
+designing your schema, that's where the
+
+00:47:30.240 --> 00:47:32.240
+problem begins with a lot of these agent
+
+00:47:32.240 --> 00:47:34.720
+workflow UIs because like just take a
+
+00:47:34.720 --> 00:47:36.880
+look at this. Like, oh my god. Like,
+
+00:47:36.880 --> 00:47:38.800
+imagine someone trying to explain to you
+
+00:47:38.800 --> 00:47:43.680
+their their schema and not having then
+
+00:47:43.680 --> 00:47:45.280
+you use these outputs in like other
+
+00:47:45.280 --> 00:47:46.720
+fields and like you don't have type
+
+00:47:46.720 --> 00:47:48.480
+safety and all that kind of stuff and
+
+00:47:48.480 --> 00:47:51.440
+it's just like oh my god it this is it's
+
+00:47:51.440 --> 00:47:52.640
+>> I think it's really interesting though
+
+00:47:52.640 --> 00:47:54.800
+cuz like while this part is super
+
+00:47:54.800 --> 00:47:56.240
+horrific here if you go back to the
+
+00:47:56.240 --> 00:47:58.079
+other one version
+
+00:47:58.079 --> 00:48:00.079
+>> that is really beautiful
+
+00:48:00.079 --> 00:48:02.160
+>> like I look at that and I'm like that is
+
+00:48:02.160 --> 00:48:04.240
+high and I can see why openi did this
+
+00:48:04.240 --> 00:48:05.520
+because they're like
+
+00:48:05.520 --> 00:48:08.000
+Like lovable is out here making people
+
+00:48:08.000 --> 00:48:09.680
+make a lot of money and like why does
+
+00:48:09.680 --> 00:48:11.119
+lovable need to make that money? We can
+
+00:48:11.119 --> 00:48:12.160
+make that money.
+
+00:48:12.160 --> 00:48:12.880
+>> Yeah.
+
+00:48:12.880 --> 00:48:14.560
+>> Right. And like you can imagine OpenAI
+
+00:48:14.560 --> 00:48:16.640
+says why don't you just write a box here
+
+00:48:16.640 --> 00:48:19.200
+on this box that says this is a prompt
+
+00:48:19.200 --> 00:48:20.800
+and we'll generate some code that meets
+
+00:48:20.800 --> 00:48:23.520
+that prompt under the hood and they just
+
+00:48:23.520 --> 00:48:25.200
+do the codegen over there with GPD
+
+00:48:25.200 --> 00:48:27.359
+codeex or something and it spits
+
+00:48:27.359 --> 00:48:29.200
+something out. But I think the point
+
+00:48:29.200 --> 00:48:31.520
+that you're making here is like while
+
+00:48:31.520 --> 00:48:32.960
+this is really easy with a true and
+
+00:48:32.960 --> 00:48:35.040
+false thing for it to go read and a
+
+00:48:35.040 --> 00:48:36.480
+human can go figure out like roughly
+
+00:48:36.480 --> 00:48:37.680
+what's happening here.
+
+00:48:37.680 --> 00:48:39.200
+>> Mhm.
+
+00:48:39.200 --> 00:48:41.359
+>> The more complex this gets like think
+
+00:48:41.359 --> 00:48:43.599
+about what what is a function? Like a
+
+00:48:43.599 --> 00:48:45.040
+lot of us on listen on the call are all
+
+00:48:45.040 --> 00:48:47.119
+engineers. A function is basically a
+
+00:48:47.119 --> 00:48:51.040
+repeatable version of a block here
+
+00:48:51.040 --> 00:48:54.800
+um that basically you repeat two times
+
+00:48:54.800 --> 00:48:56.640
+because like two other places use it.
+
+00:48:56.640 --> 00:48:58.640
+merely a readability artifact because
+
+00:48:58.640 --> 00:48:59.680
+technically you could just like
+
+00:48:59.680 --> 00:49:02.319
+duplicate the code over and over again.
+
+00:49:02.319 --> 00:49:03.520
+But one thing I'm always confused about
+
+00:49:03.520 --> 00:49:04.880
+these agent builders is how do you build
+
+00:49:04.880 --> 00:49:07.359
+a function? Like how do I build a
+
+00:49:07.359 --> 00:49:09.280
+repeatable unit of work that I can reuse
+
+00:49:09.280 --> 00:49:11.760
+over and over again? And that's and I
+
+00:49:11.760 --> 00:49:12.720
+know that they have some sort of
+
+00:49:12.720 --> 00:49:14.720
+composition stuff that you can go do but
+
+00:49:14.720 --> 00:49:16.640
+the ergonomics of that are something I'm
+
+00:49:16.640 --> 00:49:18.160
+always fascinated about like how do you
+
+00:49:18.160 --> 00:49:20.000
+go do that?
+
+00:49:20.000 --> 00:49:22.240
+>> The other interesting part about this is
+
+00:49:22.240 --> 00:49:25.520
+uh the naming of it. So, it's agent kit.
+
+00:49:25.520 --> 00:49:27.760
+But, uh, and then here you have like a
+
+00:49:27.760 --> 00:49:29.680
+workflow with some agents as well
+
+00:49:29.680 --> 00:49:30.800
+interled.
+
+00:49:30.800 --> 00:49:32.079
+>> I thought that was cool.
+
+00:49:32.079 --> 00:49:35.119
+>> Yeah, it's cool. Um, and in this case, I
+
+00:49:35.119 --> 00:49:36.400
+mean, the these agents are probably
+
+00:49:36.400 --> 00:49:38.640
+doing like a bunch of stuff or maybe
+
+00:49:38.640 --> 00:49:39.440
+just a prompt.
+
+00:49:39.440 --> 00:49:41.119
+>> Let me ask you as a founder.
+
+00:49:41.119 --> 00:49:41.359
+>> Yeah.
+
+00:49:41.359 --> 00:49:43.040
+>> Um, as a founder when you see this and
+
+00:49:43.040 --> 00:49:44.400
+you see literally every company in the
+
+00:49:44.400 --> 00:49:45.680
+world releasing this.
+
+00:49:45.680 --> 00:49:46.000
+>> Yeah.
+
+00:49:46.000 --> 00:49:48.079
+>> What's the alpha here?
+
+00:49:48.079 --> 00:49:49.680
+>> Like what company has alpha in building
+
+00:49:49.680 --> 00:49:51.280
+this? Cuz like I think this isn't like a
+
+00:49:51.280 --> 00:49:53.040
+dead space. It seems somewhat useful. I
+
+00:49:53.040 --> 00:49:55.119
+mean, OpenAI said they spent six weeks
+
+00:49:55.119 --> 00:49:56.960
+to build this, right? Um,
+
+00:49:56.960 --> 00:49:58.880
+>> okay. So,
+
+00:49:58.880 --> 00:50:00.160
+>> that's literally what they said. They
+
+00:50:00.160 --> 00:50:02.160
+they spent six weeks, they just launched
+
+00:50:02.160 --> 00:50:05.599
+this. Uh, they use codecs to build it.
+
+00:50:05.599 --> 00:50:08.400
+So, there's really no mode right now in
+
+00:50:08.400 --> 00:50:09.599
+like just building these.
+
+00:50:09.599 --> 00:50:10.880
+>> But what is the mode though?
+
+00:50:10.880 --> 00:50:13.839
+>> These AI uh I think for for OpenAI is
+
+00:50:13.839 --> 00:50:14.960
+just the integrations with their
+
+00:50:14.960 --> 00:50:17.200
+existing models. Like for example, they
+
+00:50:17.200 --> 00:50:19.440
+could have a model that's only usable in
+
+00:50:19.440 --> 00:50:20.880
+this platform.
+
+00:50:20.880 --> 00:50:21.520
+>> Oh,
+
+00:50:21.520 --> 00:50:22.319
+>> that you can't use.
+
+00:50:22.319 --> 00:50:23.520
+>> That is interesting.
+
+00:50:23.520 --> 00:50:24.960
+>> And actually that's what they did with
+
+00:50:24.960 --> 00:50:26.720
+Codex initially. Like Codex was not
+
+00:50:26.720 --> 00:50:28.960
+available in cursor. You had to download
+
+00:50:28.960 --> 00:50:32.160
+the codec CLI and then many days later
+
+00:50:32.160 --> 00:50:34.720
+it was available in cursor. But that's
+
+00:50:34.720 --> 00:50:36.720
+kind of how you start building some sort
+
+00:50:36.720 --> 00:50:40.079
+of mode. The responses API is also a way
+
+00:50:40.079 --> 00:50:42.800
+to build mode. Why? Because it's just so
+
+00:50:42.800 --> 00:50:45.280
+different from the chat completions API.
+
+00:50:45.280 --> 00:50:47.119
+and uh they can just own more of the
+
+00:50:47.119 --> 00:50:48.640
+agentic loop. I think it's a better
+
+00:50:48.640 --> 00:50:51.760
+design API to be honest. Uh but it is
+
+00:50:51.760 --> 00:50:53.520
+another way that you start building some
+
+00:50:53.520 --> 00:50:53.920
+modes.
+
+00:50:53.920 --> 00:50:55.680
+>> That is true because now if someone uses
+
+00:50:55.680 --> 00:50:57.520
+a responses API, they need to conform to
+
+00:50:57.520 --> 00:50:58.800
+like supporting web search and all those
+
+00:50:58.800 --> 00:51:00.160
+other stuff that OpenAI now supports
+
+00:51:00.160 --> 00:51:01.520
+that people work.
+
+00:51:01.520 --> 00:51:03.119
+>> Exly. It's like how will that even work?
+
+00:51:03.119 --> 00:51:05.359
+If I switch every time you use a model
+
+00:51:05.359 --> 00:51:08.559
+specific tool, by the way, you're
+
+00:51:08.559 --> 00:51:10.720
+basically entrenching yourself into that
+
+00:51:10.720 --> 00:51:12.319
+provider's mode,
+
+00:51:12.319 --> 00:51:13.920
+>> which is not necessarily a bad it's kind
+
+00:51:13.920 --> 00:51:15.599
+of what happened with CL with cloud,
+
+00:51:15.599 --> 00:51:17.440
+right? It's like I think Terraform was
+
+00:51:17.440 --> 00:51:19.359
+kind of this aspirational world in which
+
+00:51:19.359 --> 00:51:22.319
+like hey we don't need to care about
+
+00:51:22.319 --> 00:51:24.079
+cloud specific and like for some stuff
+
+00:51:24.079 --> 00:51:25.760
+that is true but it turned out like at
+
+00:51:25.760 --> 00:51:28.720
+some scale like the cost of moving
+
+00:51:28.720 --> 00:51:31.839
+between clouds is so like the cost of
+
+00:51:31.839 --> 00:51:34.640
+moving between clouds is so so hard.
+
+00:51:34.640 --> 00:51:35.040
+>> Yeah.
+
+00:51:35.040 --> 00:51:37.839
+>> That you would never actually do that.
+
+00:51:37.839 --> 00:51:40.480
+>> Yeah. Like AWS works pretty well. Um
+
+00:51:40.480 --> 00:51:42.000
+people use it and they're like yeah
+
+00:51:42.000 --> 00:51:43.520
+screw this. Like I'll just I'll just be
+
+00:51:43.520 --> 00:51:45.440
+in AWS. doesn't matter if they have a
+
+00:51:45.440 --> 00:51:46.240
+service that's only
+
+00:51:46.240 --> 00:51:47.920
+>> and then the value of like Terraform
+
+00:51:47.920 --> 00:51:50.000
+goes down a little bit because it's not
+
+00:51:50.000 --> 00:51:52.640
+as useful because you just use ads CDK.
+
+00:51:52.640 --> 00:51:53.040
+>> Yeah.
+
+00:51:53.040 --> 00:51:54.800
+>> And like what I wonder is in this model
+
+00:51:54.800 --> 00:51:56.800
+world how does that pan out? My at least
+
+00:51:56.800 --> 00:51:58.559
+my thoughts and obviously I'm biased and
+
+00:51:58.559 --> 00:51:59.760
+I'm sure you are too and I'm everyone
+
+00:51:59.760 --> 00:52:00.800
+knows that
+
+00:52:00.800 --> 00:52:03.280
+>> like I feel like the model itself is
+
+00:52:03.280 --> 00:52:05.440
+doing inference. The inference part is
+
+00:52:05.440 --> 00:52:06.960
+probably the least interesting and
+
+00:52:06.960 --> 00:52:09.040
+unique part now of building most
+
+00:52:09.040 --> 00:52:10.240
+pipelines.
+
+00:52:10.240 --> 00:52:12.160
+>> Mhm. I really think it's about how it
+
+00:52:12.160 --> 00:52:14.079
+composes with the rest of your stack
+
+00:52:14.079 --> 00:52:15.920
+where the value is.
+
+00:52:15.920 --> 00:52:18.480
+>> Yeah. Yeah. I think um
+
+00:52:18.480 --> 00:52:20.800
+>> and like this lets OpenAI kind of
+
+00:52:20.800 --> 00:52:23.839
+explore that version of the stack.
+
+00:52:23.839 --> 00:52:25.359
+>> Yeah. But like you're saying how does
+
+00:52:25.359 --> 00:52:27.680
+this plug into your existing code or
+
+00:52:27.680 --> 00:52:29.040
+>> maybe it doesn't need to cuz you're like
+
+00:52:29.040 --> 00:52:30.640
+Zapier is like makes money and like
+
+00:52:30.640 --> 00:52:32.240
+maybe this is just like kill Zapier. I'm
+
+00:52:32.240 --> 00:52:34.720
+like yeah screw it.
+
+00:52:34.720 --> 00:52:37.520
+I think it's very hard for
+
+00:52:37.520 --> 00:52:39.920
+right now a single provider to take like
+
+00:52:39.920 --> 00:52:42.400
+everything. It's just like the winds of
+
+00:52:42.400 --> 00:52:45.760
+intelligence change all the time. Like
+
+00:52:45.760 --> 00:52:47.599
+there's like yesterday it's cloud,
+
+00:52:47.599 --> 00:52:50.000
+tomorrow it's codeex that there there's
+
+00:52:50.000 --> 00:52:53.359
+like no um loyalty to any of these
+
+00:52:53.359 --> 00:52:55.520
+providers and there's still a lot of
+
+00:52:55.520 --> 00:52:57.119
+room to build something that works with
+
+00:52:57.119 --> 00:53:00.800
+anything in my view.
+
+00:53:00.800 --> 00:53:02.160
+>> I think so.
+
+00:53:02.160 --> 00:53:04.319
+So yeah, I think uh it's an interesting
+
+00:53:04.319 --> 00:53:05.920
+concept. I think it definitely helps a
+
+00:53:05.920 --> 00:53:08.079
+lot of people that are nontechnical and
+
+00:53:08.079 --> 00:53:09.520
+we'll see what kind of things people
+
+00:53:09.520 --> 00:53:11.520
+build, but I have seen some complicated
+
+00:53:11.520 --> 00:53:14.559
+pipelines and this kind of UI just does
+
+00:53:14.559 --> 00:53:18.240
+not work if if you have more than like
+
+00:53:18.240 --> 00:53:20.640
+maybe 10 15 notes here. You're just like
+
+00:53:20.640 --> 00:53:24.480
+what is happening? Um so yeah, sure.
+
+00:53:24.480 --> 00:53:25.920
+>> Well, yeah. And like maybe there's
+
+00:53:25.920 --> 00:53:27.280
+enough workflows in the future that are
+
+00:53:27.280 --> 00:53:28.960
+really really simple and it's okay.
+
+00:53:28.960 --> 00:53:31.760
+>> Yeah, I agree.
+
+00:53:31.760 --> 00:53:33.839
+Um, well, with that, we'll take a couple
+
+00:53:33.839 --> 00:53:35.040
+more questions if people have some
+
+00:53:35.040 --> 00:53:36.400
+questions about any topic while we're
+
+00:53:36.400 --> 00:53:37.359
+on.
+
+00:53:37.359 --> 00:53:39.599
+>> Um, but otherwise, we'll probably close
+
+00:53:39.599 --> 00:53:41.040
+it out here and then talk about
+
+00:53:41.040 --> 00:53:42.960
+interesting things.
+
+00:53:42.960 --> 00:53:44.960
+>> Erin, what was your first thoughts? Uh,
+
+00:53:44.960 --> 00:53:47.359
+back to your live streaming days.
+
+00:53:47.359 --> 00:53:49.280
+>> Back to my live streaming days. Um,
+
+00:53:49.280 --> 00:53:53.040
+dude, it's all good. All good.
+
+00:53:53.040 --> 00:53:55.599
+Let's see. Um, see what models. What do
+
+00:53:55.599 --> 00:54:00.150
+we have in the chat?
+
+00:54:01.670 --> 00:54:01.680
+Cool. Um
+
+00:54:01.680 --> 00:54:03.680
+>> yeah, I think that's it for now.
+
+00:54:03.680 --> 00:54:06.480
+>> Uh yes, there's this interesting do we
+
+00:54:06.480 --> 00:54:08.559
+use Dex? So Dexter should talk about a
+
+00:54:08.559 --> 00:54:10.240
+research plan implement workflow that we
+
+00:54:10.240 --> 00:54:12.720
+used in the past. Um I I think we can
+
+00:54:12.720 --> 00:54:14.160
+both give our perspective on it and see
+
+00:54:14.160 --> 00:54:17.839
+how well it works. Um my perspective is
+
+00:54:17.839 --> 00:54:19.760
+I have found that it is useful for
+
+00:54:19.760 --> 00:54:21.440
+really really hard tasks when I want to
+
+00:54:21.440 --> 00:54:23.760
+go do it, but for easy tasks it
+
+00:54:23.760 --> 00:54:26.160
+sometimes feels like more overhead. It's
+
+00:54:26.160 --> 00:54:27.839
+like I think it's like any process that
+
+00:54:27.839 --> 00:54:29.920
+you do as a software engineer. It's like
+
+00:54:29.920 --> 00:54:32.000
+any amount of process I hate and I will
+
+00:54:32.000 --> 00:54:33.440
+do the minimum amount of process I need
+
+00:54:33.440 --> 00:54:35.520
+to to get the outcome I want. So like
+
+00:54:35.520 --> 00:54:37.680
+when I was at Google I freaking hated
+
+00:54:37.680 --> 00:54:39.200
+writing some design docs because I was
+
+00:54:39.200 --> 00:54:41.359
+like why do we have to write a PRD then
+
+00:54:41.359 --> 00:54:43.040
+a design doc and then go ship it like
+
+00:54:43.040 --> 00:54:44.319
+when we all know what the right answer
+
+00:54:44.319 --> 00:54:46.079
+is. We've all talked about this before.
+
+00:54:46.079 --> 00:54:47.599
+We know the algorithm. Let's go and do
+
+00:54:47.599 --> 00:54:50.720
+it. And sometimes it's like holy cow's a
+
+00:54:50.720 --> 00:54:52.160
+really ambiguous problem. there's like
+
+00:54:52.160 --> 00:54:53.440
+seven different things that this might
+
+00:54:53.440 --> 00:54:54.960
+touch that we that many of us aren't
+
+00:54:54.960 --> 00:54:56.800
+familiar with and the process of writing
+
+00:54:56.800 --> 00:55:00.160
+the doc is useful. What about you Aaron?
+
+00:55:00.160 --> 00:55:04.079
+>> Um so for me in um in the research plan
+
+00:55:04.079 --> 00:55:07.359
+implements I I have like my own
+
+00:55:07.359 --> 00:55:10.000
+template. I haven't used like Dex's one
+
+00:55:10.000 --> 00:55:12.400
+specifically, but I do go through like
+
+00:55:12.400 --> 00:55:14.559
+the approach of like, hey, create a
+
+00:55:14.559 --> 00:55:16.960
+markdown doc, like let's review it
+
+00:55:16.960 --> 00:55:19.760
+together, and then after it's done in a
+
+00:55:19.760 --> 00:55:22.079
+good way, then I'll start like coding.
+
+00:55:22.079 --> 00:55:24.559
+Um, and then go from there. And if I
+
+00:55:24.559 --> 00:55:26.079
+don't like it, I'll just redo the whole
+
+00:55:26.079 --> 00:55:27.280
+thing. It's funny because we were
+
+00:55:27.280 --> 00:55:28.720
+talking about this and there was a tweet
+
+00:55:28.720 --> 00:55:31.280
+about this where someone was like, "It's
+
+00:55:31.280 --> 00:55:33.760
+funny that I can literally just have
+
+00:55:33.760 --> 00:55:36.319
+like when I see a PR, if I don't like
+
+00:55:36.319 --> 00:55:37.920
+something, I can just ask the LLM to
+
+00:55:37.920 --> 00:55:39.680
+like redo the whole thing. Even if it's
+
+00:55:39.680 --> 00:55:41.280
+like a thousand lines of code, it's just
+
+00:55:41.280 --> 00:55:42.720
+like redo the whole thing. I don't like
+
+00:55:42.720 --> 00:55:45.040
+this approach." But if it's a human's
+
+00:55:45.040 --> 00:55:47.280
+PR, you can't really do that because
+
+00:55:47.280 --> 00:55:50.079
+they'll get mad at you. So, you kind of
+
+00:55:50.079 --> 00:55:51.760
+just have to push the code and like live
+
+00:55:51.760 --> 00:55:54.160
+with that forever.
+
+00:55:54.160 --> 00:55:56.160
+and you can push hard and like redo it,
+
+00:55:56.160 --> 00:55:57.440
+but at some point there's like a
+
+00:55:57.440 --> 00:55:59.520
+limitation of like the human limitation
+
+00:55:59.520 --> 00:56:01.760
+of just like how people feel about their
+
+00:56:01.760 --> 00:56:04.240
+code. Um, so I thought that was
+
+00:56:04.240 --> 00:56:04.799
+interesting.
+
+00:56:04.799 --> 00:56:06.240
+>> What stuff are you using to write code
+
+00:56:06.240 --> 00:56:07.760
+now?
+
+00:56:07.760 --> 00:56:12.480
+>> Um, me myself, I'm using um Claude a
+
+00:56:12.480 --> 00:56:15.599
+bunch set for 4.5. I think I'm like
+
+00:56:15.599 --> 00:56:18.160
+flying with that. And then sometimes for
+
+00:56:18.160 --> 00:56:20.240
+like tricky problems, I do fall back to
+
+00:56:20.240 --> 00:56:22.480
+like Codex Codex CLI. But I do feel
+
+00:56:22.480 --> 00:56:24.400
+>> why not use Codex all the time?
+
+00:56:24.400 --> 00:56:26.720
+>> Uh it just takes too long. It just takes
+
+00:56:26.720 --> 00:56:29.280
+too long thinking through things. Um I
+
+00:56:29.280 --> 00:56:31.440
+feel like I just go faster with Claude
+
+00:56:31.440 --> 00:56:32.480
+and
+
+00:56:32.480 --> 00:56:34.640
+>> I get similar
+
+00:56:34.640 --> 00:56:36.880
+similar outputs in a way.
+
+00:56:36.880 --> 00:56:38.640
+>> The other thing that I've noticed Aaron
+
+00:56:38.640 --> 00:56:40.240
+does um I don't know I don't know if you
+
+00:56:40.240 --> 00:56:41.359
+noticed this is like we have a Slack
+
+00:56:41.359 --> 00:56:44.160
+channel where he added a bunch of uh
+
+00:56:44.160 --> 00:56:46.319
+where we added a bunch of uh what's it
+
+00:56:46.319 --> 00:56:48.160
+called? coding bots to it
+
+00:56:48.160 --> 00:56:50.400
+>> and we just keep tagging cursor or like
+
+00:56:50.400 --> 00:56:52.720
+claw in it with like random tickets
+
+00:56:52.720 --> 00:56:54.160
+>> and we don't actually like consider it.
+
+00:56:54.160 --> 00:56:55.359
+We just look at it. We're like, "Oh, did
+
+00:56:55.359 --> 00:56:56.720
+this one actually work?" Cool. We'll
+
+00:56:56.720 --> 00:56:58.400
+merge it and we'll go read that code.
+
+00:56:58.400 --> 00:57:00.640
+It's like almost like we burn tokens for
+
+00:57:00.640 --> 00:57:02.400
+an opportunity cost of it might solve
+
+00:57:02.400 --> 00:57:03.359
+the issue.
+
+00:57:03.359 --> 00:57:04.720
+>> And if it does, great. If it doesn't,
+
+00:57:04.720 --> 00:57:05.680
+trash it.
+
+00:57:05.680 --> 00:57:07.520
+>> Yeah, it is interesting that there is an
+
+00:57:07.520 --> 00:57:09.040
+overhead though of doing that where like
+
+00:57:09.040 --> 00:57:10.480
+now we have to go back into all these
+
+00:57:10.480 --> 00:57:12.240
+PRs. If you go to our repo, there's like
+
+00:57:12.240 --> 00:57:13.599
+a bunch of pers that are open that are
+
+00:57:13.599 --> 00:57:16.720
+like just like stranded in there that we
+
+00:57:16.720 --> 00:57:19.520
+need to triage um because we still need
+
+00:57:19.520 --> 00:57:21.839
+to test them out.
+
+00:57:21.839 --> 00:57:22.240
+>> Cool.
+
+00:57:22.240 --> 00:57:24.319
+>> I that's an interesting question. Are
+
+00:57:24.319 --> 00:57:26.319
+people saving BAML to databases and
+
+00:57:26.319 --> 00:57:27.920
+allowing users to edit and update BML
+
+00:57:27.920 --> 00:57:30.559
+code? We have a type called dynamic type
+
+00:57:30.559 --> 00:57:32.559
+in BAML which a lot of people do use
+
+00:57:32.559 --> 00:57:34.160
+like we have where they can control
+
+00:57:34.160 --> 00:57:36.480
+parts of the schema. We also do have a
+
+00:57:36.480 --> 00:57:39.520
+way to run BAML dynamically. I know one
+
+00:57:39.520 --> 00:57:41.680
+team that does that. Most people just
+
+00:57:41.680 --> 00:57:43.040
+use Titebuilder and the dynamic
+
+00:57:43.040 --> 00:57:44.160
+interface around it.
+
+00:57:44.160 --> 00:57:44.640
+>> Yeah.
+
+00:57:44.640 --> 00:57:45.760
+>> That said, we've been thinking about
+
+00:57:45.760 --> 00:57:46.960
+this because like I think the world of
+
+00:57:46.960 --> 00:57:48.480
+software is really changing cuz like you
+
+00:57:48.480 --> 00:57:50.720
+do want not like the UI builders are so
+
+00:57:50.720 --> 00:57:52.559
+fascinating cuz like non-engineers can
+
+00:57:52.559 --> 00:57:54.000
+actually engineer.
+
+00:57:54.000 --> 00:57:55.359
+>> Yeah.
+
+00:57:55.359 --> 00:57:56.960
+>> But I think what we really want to live
+
+00:57:56.960 --> 00:57:58.480
+in is in a world where like our
+
+00:57:58.480 --> 00:58:00.079
+engineers write kind of like the
+
+00:58:00.079 --> 00:58:03.119
+contracts that we want to abide by and
+
+00:58:03.119 --> 00:58:04.640
+we want our non-engineers to be able to
+
+00:58:04.640 --> 00:58:07.599
+edit all the stuff but the contracts. In
+
+00:58:07.599 --> 00:58:09.280
+some ways, the type system is like the
+
+00:58:09.280 --> 00:58:10.880
+contract. So, our engineers define the
+
+00:58:10.880 --> 00:58:12.720
+type system and what if like
+
+00:58:12.720 --> 00:58:14.559
+non-engineers could edit everything but
+
+00:58:14.559 --> 00:58:16.480
+the type system. I think that's a really
+
+00:58:16.480 --> 00:58:18.160
+fascinating perspective that we've been
+
+00:58:18.160 --> 00:58:19.119
+thinking about.
+
+00:58:19.119 --> 00:58:22.640
+>> Yeah. Uh, all right. I think it's uh
+
+00:58:22.640 --> 00:58:23.839
+about time.
+
+00:58:23.839 --> 00:58:25.599
+>> Yeah, we should head out. Um, but
+
+00:58:25.599 --> 00:58:27.040
+everyone, thank you for joining. Uh,
+
+00:58:27.040 --> 00:58:30.000
+we're going to have a another u session
+
+00:58:30.000 --> 00:58:31.520
+next week. I think next week is going to
+
+00:58:31.520 --> 00:58:33.520
+be a fun one. Dex and I have been
+
+00:58:33.520 --> 00:58:35.040
+planning. It's going to be about
+
+00:58:35.040 --> 00:58:36.559
+actually like live coding. We're going
+
+00:58:36.559 --> 00:58:38.319
+to vibe code a new feature from scratch
+
+00:58:38.319 --> 00:58:40.400
+in the BAML project using Texas's
+
+00:58:40.400 --> 00:58:42.559
+approach. So, it'll be a slightly longer
+
+00:58:42.559 --> 00:58:44.319
+session, three to four hours, and you'll
+
+00:58:44.319 --> 00:58:46.240
+literally watch us code on the fly and
+
+00:58:46.240 --> 00:58:47.680
+just see how we collaborate and get
+
+00:58:47.680 --> 00:58:50.960
+stuff done. Um, but really looking
+
+00:58:50.960 --> 00:58:53.599
+forward to stuff is fun. Check us out.
+
+00:58:53.599 --> 00:58:55.680
+Uh, you can sign up over here for the
+
+00:58:55.680 --> 00:58:58.400
+next event and always join the discord
+
+00:58:58.400 --> 00:59:00.880
+for the human boundary and all the links
+
+00:59:00.880 --> 00:59:02.319
+should be in the email and the post
+
+00:59:02.319 --> 00:59:04.000
+notes that we submit.
+
+00:59:04.000 --> 00:59:04.319
+>> All right.
+
+00:59:04.319 --> 00:59:06.400
+>> All right, everyone. Thanks for coming.
+
+00:59:06.400 --> 00:59:07.280
+Thanks for joining.
+
+00:59:07.280 --> 00:59:10.280
+>> Bye.

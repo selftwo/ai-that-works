@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-030",
+  "video_id": "_VB9TT1Vus4",
+  "source_url": "https://www.youtube.com/watch?v=_VB9TT1Vus4",
+  "input_fingerprint": "d9402047237ef4d9845e625318cd22c928b64624a1bb05d6249b571885eb83ec",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:20:07.293862+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 3487.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-030/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-030/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 1631,
+      "first_seconds": 3.03,
+      "last_seconds": 3488.319,
+      "source_duration_seconds": 3487.0,
+      "duration_delta_seconds": 1.31899999999996,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:20:13.441175+00:00"
+}

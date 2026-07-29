@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-050",
+  "episode": 50,
+  "season": 2,
+  "title": "MCP is Dead?",
+  "source_folder": "2026-03-24-mcp-is-dead",
+  "recorded_at": "2026-03-24T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "z5inaSXkiTU",
+  "youtube_url": "https://www.youtube.com/watch?v=z5inaSXkiTU",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}
+

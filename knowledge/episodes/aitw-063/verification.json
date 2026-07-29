@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID 485FGIq8LKM",
+  "transcript_range": "00:00.113 to 53:19.342",
+  "timestamp_order": "verified by knowledge/scripts/verify_transcript.py",
+  "spot_checks": ["opening", "middle", "ending", "negative number bug", "deduplication", "max turns", "CI timing", "arena", "stale issue pruning"],
+  "timestamped_claim_count": 9,
+  "source_duration_check": "not run: source media was not downloaded in Pilot A",
+  "rerun_check": "inventory catalog hashes were identical across two consecutive runs",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "speaker attribution", "screen-only evidence"]
+}

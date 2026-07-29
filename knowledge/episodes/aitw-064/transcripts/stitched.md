@@ -1,0 +1,3167 @@
+# agent observability
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:01.590] We live in a world where we don't read
+
+[00:00:01.600] the code anymore. The only way to really
+
+[00:00:03.360] combat that is to have some
+
+[00:00:05.040] understanding of what the code does post
+
+[00:00:06.799] execution. [music] Everyone is giving
+
+[00:00:08.400] you different levels of observability.
+
+[00:00:10.160] Your job as an engineer is to go figure
+
+[00:00:12.080] out what works for you. So your agents
+
+[00:00:13.920] can understand what actually happened.
+
+[00:00:15.839] Does all of this eventually loop back
+
+[00:00:17.920] and now Claude can actually close the
+
+[00:00:19.600] loop and you can build a better and
+
+[00:00:21.279] better system so you can have alignment
+
+[00:00:23.279] in what you expected versus what
+
+[00:00:25.039] happened. Hey everyone, today's episode
+
+[00:00:26.960] is going to be about observability. And
+
+[00:00:28.960] the thing I find most fascinating about
+
+[00:00:31.039] observability is how we actually went
+
+[00:00:33.280] through and we're able to go and build
+
+[00:00:35.920] these black boxes now with code that we
+
+[00:00:37.840] either don't read or are
+
+[00:00:38.960] non-deterministic because they use LMS
+
+[00:00:41.840] and therefore have some level of
+
+[00:00:44.079] expected failure and hit rates. And the
+
+[00:00:46.239] most close analogy that we really relate
+
+[00:00:47.760] to is distributed systems and how we
+
+[00:00:49.440] actually built distributed systems. we
+
+[00:00:51.280] go a little bit into the history of how
+
+[00:00:52.719] we did metrics, wide logs, um, and user
+
+[00:00:55.760] expectations to eventually build a fully
+
+[00:00:58.079] probing system. One of the cool things
+
+[00:00:59.920] that we'll talk about is how to actually
+
+[00:01:01.199] build full tracing execution and what an
+
+[00:01:03.760] example of that looks like so that you
+
+[00:01:05.040] can get full call stacks and really
+
+[00:01:06.720] deeply have both you and Claude
+
+[00:01:08.159] introspect your code traces. But the
+
+[00:01:10.400] most important part is the value of
+
+[00:01:12.159] tracing, which is how you can go from
+
+[00:01:13.840] design to code to post execution and
+
+[00:01:16.400] build a closed loop system that helps
+
+[00:01:18.080] you better align with your agents. Let's
+
+[00:01:20.479] get started.
+
+[00:01:21.520] >> Let's do it, baby. Welcome to the AI
+
+[00:01:23.840] that works show. Uh, where Vibob
+
+[00:01:26.640] definitely always shows up on time. Uh,
+
+[00:01:28.640] my name is Dex. I am the CEO and
+
+[00:01:30.880] co-founder of Human Layer. We help you
+
+[00:01:33.119] solve hard problems and complex code
+
+[00:01:34.960] bases with AI. And I am joined by Vibv,
+
+[00:01:37.680] the CEO. I guess he's just co-founder of
+
+[00:01:40.560] of Boundary ML where they make a
+
+[00:01:42.880] programming language for AI and the AI
+
+[00:01:46.159] era and for AI agents and uh yeah, what
+
+[00:01:49.920] was your biggest takeaway from AI
+
+[00:01:51.119] engineer last week?
+
+[00:01:52.240] >> I think a lot of people are extremely
+
+[00:01:54.880] stressed about the quality of their code
+
+[00:01:56.479] bases over time. It seems to be a source
+
+[00:01:58.399] of anxiety for almost every human I've
+
+[00:02:00.320] met from the best engineers to the worst
+
+[00:02:02.479] engineers.
+
+[00:02:03.439] >> I agree. Yeah, that was kind of the
+
+[00:02:05.439] whole software factory theme was like
+
+[00:02:07.840] everyone had their own solution to how
+
+[00:02:10.080] do we fight slob? How do we how do we
+
+[00:02:11.920] let how do we use AI to help us ship
+
+[00:02:14.400] code without like screwing it up? And
+
+[00:02:17.840] it's like you had the people who said
+
+[00:02:20.480] just do more code review agents. They
+
+[00:02:22.160] say just do more linting. You had you
+
+[00:02:24.400] and Eric who were both like we need new
+
+[00:02:26.720] programming languages. Eric's languages
+
+[00:02:29.120] were more like alien space languages
+
+[00:02:31.120] that Jeff Huntley predicted. Uh I think
+
+[00:02:33.440] yours is a little more sane and uh you
+
+[00:02:35.599] know continuous innovation rather than
+
+[00:02:37.280] discontinuous. But um yeah I uh I think
+
+[00:02:41.760] software 2026 is going to be the year of
+
+[00:02:43.920] no more slop by hell or high water. We
+
+[00:02:46.239] are going to figure out how to make it
+
+[00:02:47.440] happen as a as as an industry.
+
+[00:02:49.280] >> I think we're going to have something
+
+[00:02:50.800] happen. I don't know if it's going to be
+
+[00:02:52.160] no slop, but I think we're going to get
+
+[00:02:53.760] further away. And I do think a lot of
+
+[00:02:56.080] people are feeling
+
+[00:02:57.280] >> Yeah.
+
+[00:02:58.480] U I think a lot of people are feeling a
+
+[00:03:00.319] lot of the anxiety of what like
+
+[00:03:03.200] their code base are devolving into. I
+
+[00:03:05.519] have another question for you. When you
+
+[00:03:07.760] had the opportunity to go talk about
+
+[00:03:09.040] human layer at the conference, what do
+
+[00:03:11.040] you think resonated the most? I think
+
+[00:03:15.280] there's this weird like the there's this
+
+[00:03:17.599] like spectrum of people's maturity with
+
+[00:03:20.080] AI and their LM intuition and like their
+
+[00:03:23.360] their proclivity to the hype machine and
+
+[00:03:26.000] things like this of like where are you
+
+[00:03:28.400] along your journey of like oh this
+
+[00:03:30.000] really works or no it doesn't and like
+
+[00:03:31.920] it's kind of like you know the midw
+
+[00:03:33.120] curve of like no I need six t- buck
+
+[00:03:35.360] sessions and I need this and I need that
+
+[00:03:37.120] and like the end of the curve is like
+
+[00:03:38.879] nope just read the code and make good
+
+[00:03:40.560] software there's a lot ofcept acceptance
+
+[00:03:42.480] that you know I think someone came up to
+
+[00:03:44.319] me and said 70% of the people at this at
+
+[00:03:46.239] this conference are actually like early
+
+[00:03:48.640] in the journey and they're like really
+
+[00:03:50.799] excited about whatever is being hyped
+
+[00:03:52.799] right now and there's about 30% of
+
+[00:03:54.480] people who have like yep seen that tried
+
+[00:03:56.640] that been doing that for a year doesn't
+
+[00:03:58.400] work like I am I am past that and like
+
+[00:04:01.439] so I don't know the biggest takeway for
+
+[00:04:02.799] me is like there's such a broad spectrum
+
+[00:04:04.640] of of AI and AI maturity and it's I know
+
+[00:04:08.560] on this show we work really hard to kind
+
+[00:04:10.239] of like cut through the hype and give
+
+[00:04:11.920] you stuff that actually works. And I
+
+[00:04:13.599] think that's like more important now
+
+[00:04:15.120] than ever. And I don't know, it's it's
+
+[00:04:18.880] hard to both like it's the broader the
+
+[00:04:21.519] audience and the broader like the
+
+[00:04:22.960] things. This is like a teaching in
+
+[00:04:24.320] general. It's like you have to you have
+
+[00:04:25.919] to know who you're talking to and who
+
+[00:04:28.320] you're trying to serve and uh it's
+
+[00:04:30.880] getting complicated. I think I uh I just
+
+[00:04:33.759] want to shout out a few folks like um I
+
+[00:04:35.919] know a few folks came up to both me and
+
+[00:04:37.680] Dex at the conference of like you guys
+
+[00:04:39.040] have been longtime fans and like have
+
+[00:04:40.479] been tuning in. Um I was as a founder
+
+[00:04:43.199] that was so cool. That was so cool to
+
+[00:04:45.199] just experience and have you guys come
+
+[00:04:46.400] out here um and just say hi and like
+
+[00:04:49.440] it's awesome to know that it's this is a
+
+[00:04:51.360] fun conversation you guys are tuning in
+
+[00:04:52.880] to.
+
+[00:04:53.360] >> I think I got Vibb hooked. He's never
+
+[00:04:55.440] been to an AI engineer conference before
+
+[00:04:57.680] and I think we're going to get him to
+
+[00:04:58.880] come to the rest of them. So, if you
+
+[00:05:00.880] want to uh hang out with us, uh go to
+
+[00:05:04.800] the AI engineer event near we're not
+
+[00:05:06.400] going to go to every single like I'm not
+
+[00:05:07.520] going to Singapore. It's too far.
+
+[00:05:09.440] >> But if you're an AI engineer in New
+
+[00:05:11.039] York, if you're an AI engineer Miami,
+
+[00:05:12.800] we're going to try to make it to I'm I'm
+
+[00:05:14.320] going to try to make it to all of those
+
+[00:05:15.360] because I I I love the crowd and
+
+[00:05:16.880] attracts really really smart people and
+
+[00:05:18.320] I always learn a ton. So, uh if you want
+
+[00:05:20.479] to hang out with us, AI engineer,
+
+[00:05:22.639] >> I think for me, uh I had a really
+
+[00:05:24.560] interesting takeway. It's actually
+
+[00:05:25.520] related to today's topic. So, uh, when I
+
+[00:05:29.520] was talking a lot about BAML, a topic
+
+[00:05:31.919] came up pretty often, which is like
+
+[00:05:33.199] observability. And I know everyone talks
+
+[00:05:35.840] about observability, but today I kind of
+
+[00:05:37.600] want to both whiteboard a few things and
+
+[00:05:39.680] also talk about stuff from like more
+
+[00:05:42.080] like first principles around
+
+[00:05:43.280] observability.
+
+[00:05:45.520] And really the reason that observability
+
+[00:05:47.919] came up really high is because when I
+
+[00:05:50.800] think about observability in today's day
+
+[00:05:52.720] and age, I actually think of it as the
+
+[00:05:55.840] only way to understand our codebase. And
+
+[00:05:57.680] Dexter, I'd love your thoughts on this
+
+[00:05:58.880] as we chat more. But when I think about
+
+[00:06:01.039] it, it's like look, I don't read every
+
+[00:06:03.039] line of code anymore. I' I've been
+
+[00:06:04.800] saying this for a bit. I I basically
+
+[00:06:06.479] stop reading the code. I read a lot. I
+
+[00:06:08.400] read some of it. I read invariants. I
+
+[00:06:10.639] read the very low layers. I read the API
+
+[00:06:12.479] surface area, but I don't read every
+
+[00:06:13.840] line of code. It's too much pain in the
+
+[00:06:15.199] ass.
+
+[00:06:15.520] >> Do you want to see what I read?
+
+[00:06:17.520] >> You read your specs?
+
+[00:06:18.880] >> No, I read We actually We added this
+
+[00:06:20.880] thing to Human Layer recently that is
+
+[00:06:22.639] like a PR walkthrough. Have you seen
+
+[00:06:24.560] this?
+
+[00:06:26.639] Let me find uh let me find a big one.
+
+[00:06:29.680] Keep keep going. I'll I'll find you a
+
+[00:06:31.280] good one. Keep keep talking about what
+
+[00:06:32.720] you read and what you don't.
+
+[00:06:34.000] >> I think when we live in a world where we
+
+[00:06:35.840] don't read the code anymore, the only
+
+[00:06:37.600] way to really combat that in my opinion
+
+[00:06:39.360] is basically to have some understanding
+
+[00:06:41.440] of what the code does post execution.
+
+[00:06:44.400] Uh it's kind of like how if you ever
+
+[00:06:46.000] have a website, the way that you
+
+[00:06:46.960] understand how your website is working
+
+[00:06:48.319] or not is not by like reading the code
+
+[00:06:49.680] of the website. You literally just look
+
+[00:06:50.720] at the funnel. You look at engagement
+
+[00:06:52.240] rates and that tells you all the data.
+
+[00:06:54.560] But now I think we kind of have to do
+
+[00:06:56.240] that for all systems, not just u uh not
+
+[00:07:01.360] just uh AI systems.
+
+[00:07:04.160] >> Let me let me let me let me get you this
+
+[00:07:05.840] example real quick.
+
+[00:07:08.319] Um wait, where did it go? Did it just
+
+[00:07:10.319] did it literally just close the tab? God
+
+[00:07:12.240] damn it. All right. all systems, not
+
+[00:07:13.840] just AI systems.
+
+[00:07:14.880] >> So like let's say we have a block of
+
+[00:07:16.479] code here and effectively it operates as
+
+[00:07:18.479] like a black box and as long as a black
+
+[00:07:21.599] box keeps on like giving you like
+
+[00:07:23.280] correct I guess blue box as long as a
+
+[00:07:25.680] blue box keeps giving you like correct
+
+[00:07:27.280] outcomes as far as you're concerned
+
+[00:07:29.599] that's kind of all you measure. You're
+
+[00:07:30.880] basically like how many of the how many
+
+[00:07:32.800] of the outcomes that we do for like user
+
+[00:07:34.800] A user B encountering this scenario how
+
+[00:07:38.639] many of them work? And at some point you
+
+[00:07:40.960] go down this road. You're like, "Okay,
+
+[00:07:42.240] well we have 10 that are working." And
+
+[00:07:45.120] at some point some user comes along and
+
+[00:07:46.960] says, "Hey, this stuff doesn't work."
+
+[00:07:49.360] And they report some bug. And what you
+
+[00:07:51.360] really measure as an end user. Uh at
+
+[00:07:54.080] least the way I think about this is you
+
+[00:07:56.080] measure like how often is someone
+
+[00:07:57.759] getting an undesired outcome out of
+
+[00:08:00.000] this. And and
+
+[00:08:02.000] >> right this was we started with like
+
+[00:08:04.479] uptime. This was like what appex was,
+
+[00:08:07.039] right? Aptex was this proprietary metric
+
+[00:08:09.280] that now everyone has which is like just
+
+[00:08:12.000] a number from zero to 100 uh or actually
+
+[00:08:15.360] it's like 99.9 it's like two decimal
+
+[00:08:17.680] places of like how how how often are
+
+[00:08:20.960] user getting disappointing results and
+
+[00:08:22.879] it was like a com combination of
+
+[00:08:26.000] response time and error rates and all
+
+[00:08:28.560] this stuff that gave you kind of this
+
+[00:08:30.240] onelevel picture of like is it is it
+
+[00:08:33.120] good and what percent of people are not
+
+[00:08:34.719] having
+
+[00:08:35.120] >> said he stole my thunder that's why I
+
+[00:08:36.719] drew through it this way cuz my next
+
+[00:08:38.479] boss is to exactly do this. It's like
+
+[00:08:40.730] [laughter] this is exactly how we do
+
+[00:08:42.159] distributed systems. If you guys think
+
+[00:08:44.159] about this um we basically have this
+
+[00:08:46.160] metric uh because it's impossible to
+
+[00:08:47.920] know the status of a distributed system,
+
+[00:08:49.760] you can only measure it as it exists at
+
+[00:08:52.000] any given time.
+
+[00:08:53.120] >> And what you really do as you become a
+
+[00:08:55.200] bigger and bigger company is instead of
+
+[00:08:57.760] measuring one system, you actually start
+
+[00:08:59.839] measuring subsystems as well.
+
+[00:09:02.959] uh and you basically start building all
+
+[00:09:04.399] these metrics and all these things that
+
+[00:09:05.920] say like how well is your system
+
+[00:09:07.279] performing over time rather than just
+
+[00:09:09.040] like a single part of your system uh and
+
+[00:09:11.760] now all of a sudden you've built GitHub
+
+[00:09:13.360] and now you have you eventually
+
+[00:09:14.800] hopefully end up with uh five nights of
+
+[00:09:17.360] uptime though that's very hard um and
+
+[00:09:20.240] obviously as your system gets well the
+
+[00:09:23.040] problem is what ends up happening is as
+
+[00:09:24.800] your system evolves and the thing about
+
+[00:09:26.399] regular software
+
+[00:09:27.760] >> is this doesn't happen very much your
+
+[00:09:29.440] system doesn't typically evolve the way
+
+[00:09:31.360] your users use distributed system is
+
+[00:09:33.760] very generally stable and predictable
+
+[00:09:35.519] over time and we've seen exactly what
+
+[00:09:37.760] happens when it becomes unpredictable.
+
+[00:09:39.279] For example, in the case of GitHub, more
+
+[00:09:41.920] code is being pushed to GitHub than they
+
+[00:09:43.360] ever predicted at a rate that they could
+
+[00:09:46.000] not have modeled. Like you could it is
+
+[00:09:48.080] impossible to go back to 2021 and say we
+
+[00:09:50.959] are going to push this much code into
+
+[00:09:52.480] GitHub. it like it would be an insane
+
+[00:09:55.839] bet to go make that bet just like it
+
+[00:09:57.760] would be an insane bet to go back to
+
+[00:09:59.279] 2021 and say we're gonna need this much
+
+[00:10:01.440] RAM in the environment. So, we need to
+
+[00:10:03.200] start building these factories in like
+
+[00:10:04.720] 2017 or 2020 so that we have RAM today.
+
+[00:10:08.080] >> It's just not going to happen. [snorts]
+
+[00:10:10.160] >> If I if I came to you in in 20 2021 and
+
+[00:10:13.200] said I'm going to thousandx the number
+
+[00:10:14.800] of software developers by 2025, you
+
+[00:10:17.519] would have been like
+
+[00:10:18.240] >> it's just not going to happen. uh
+
+[00:10:19.600] there's like a curve and you fit the
+
+[00:10:21.200] curve and you there's some like ratio
+
+[00:10:22.640] that you go do this. So effectively what
+
+[00:10:24.560] happens is when your distributed system
+
+[00:10:26.160] no longer models your system, what ends
+
+[00:10:28.399] up happening is you basically just
+
+[00:10:29.680] suddenly start getting way worse uptime.
+
+[00:10:32.959] And if you go back um yeah I mean any
+
+[00:10:36.079] company at a trillion dollar valuation
+
+[00:10:37.519] 2020 2019 was crazy. It's just not what
+
+[00:10:40.079] you expected. Um but if you go back
+
+[00:10:44.240] >> to this kind of system and started doing
+
+[00:10:46.959] this,
+
+[00:10:48.240] >> think about how this works for agentic
+
+[00:10:49.839] systems. We kind of have the same thing.
+
+[00:10:52.000] Except the big difference here is except
+
+[00:10:56.480] your end user.
+
+[00:11:03.910] This this funny little person over here.
+
+[00:11:03.920] Um, can I draw?
+
+[00:11:06.959] How can I draw on here? Sorry.
+
+[00:11:09.440] >> You can do whatever you want, man.
+
+[00:11:12.079] >> This end user.
+
+[00:11:13.600] >> I loved the stick figures in your
+
+[00:11:15.360] presentation. This is what Excaladraw
+
+[00:11:17.360] was meant to be used for. I use JS Paint
+
+[00:11:19.680] just to be very clear. Um, this end user
+
+[00:11:22.399] over here, the only problem is, uh, this
+
+[00:11:25.760] end user is a lot more dynamic than
+
+[00:11:29.120] distributed systems are. And that makes
+
+[00:11:31.440] a huge difference because as this end
+
+[00:11:34.000] user, they're suddenly going to push in
+
+[00:11:36.240] a whole bunch of dynamic inputs into
+
+[00:11:38.480] your actual agentic system or your non
+
+[00:11:40.880] your basically your vibecoded slop that
+
+[00:11:42.880] you built over here. Um, and like I
+
+[00:11:46.320] don't say that in a bad I generally mean
+
+[00:11:47.760] this with love. I think everyone's going
+
+[00:11:49.440] to have more vibecoded slot than ever
+
+[00:11:51.040] before. And every single time this user
+
+[00:11:53.360] does this, you're going to have a lot
+
+[00:11:54.880] more reds. And the better and the better
+
+[00:11:58.000] and more capable you make your system,
+
+[00:11:59.920] ironically enough, the more reds you'll
+
+[00:12:02.160] have. And the more reds, go ahead.
+
+[00:12:05.120] >> Well,
+
+[00:12:07.760] >> well, the reason I say this is not
+
+[00:12:10.000] because your system is bad. It's because
+
+[00:12:11.839] a user is going to start building
+
+[00:12:14.079] effectively insane expectations about
+
+[00:12:16.160] what your system will do and it'll just
+
+[00:12:18.079] have more and more unmet expectations
+
+[00:12:20.160] because what you're really doing is
+
+[00:12:22.079] you're building like oh my god nope
+
+[00:12:24.320] wrong thing. You're basically building
+
+[00:12:26.000] this chart of like what the you what
+
+[00:12:28.079] your system can do and it's going like
+
+[00:12:30.079] this. But as your system gets better the
+
+[00:12:33.279] user's expectation of what your system
+
+[00:12:34.880] can do is going like this. So what's
+
+[00:12:37.519] really happening and the reason that
+
+[00:12:38.959] you're getting more reds is not because
+
+[00:12:40.240] your system is not getting better or
+
+[00:12:41.440] because the models aren't getting
+
+[00:12:42.480] better. The reason that you're happening
+
+[00:12:44.079] is this discrepancy is really what
+
+[00:12:46.160] you're really trying to like fight. It's
+
+[00:12:48.959] like what is the amount of delta that
+
+[00:12:50.800] the user is perceiving between what your
+
+[00:12:52.639] system it thinks your system can do
+
+[00:12:54.639] versus what it can actually do. And this
+
+[00:12:57.360] it's I think in the world that we're
+
+[00:12:58.880] headed towards today the user system is
+
+[00:13:00.880] going to go up.
+
+[00:13:02.880] And in this world and like my opinion is
+
+[00:13:06.320] that the only way to actually understand
+
+[00:13:08.000] the system is basically to have more and
+
+[00:13:10.560] more probing points through arbitrary
+
+[00:13:12.560] points in your software. So instead of
+
+[00:13:14.800] having a single uptime number, you
+
+[00:13:16.800] actually have many uptime numbers. You
+
+[00:13:18.560] have many implicit understandings of
+
+[00:13:22.000] exactly where your codebase is failing.
+
+[00:13:24.480] So then you can say something like oops.
+
+[00:13:34.150] So then you can say something like this.
+
+[00:13:34.160] It's like, hey, this is our uptime for
+
+[00:13:35.920] this section of the graph,
+
+[00:13:38.240] but that doesn't mean it's the same
+
+[00:13:39.839] exact uptime for this section of the
+
+[00:13:42.079] graph. And being able to introspect your
+
+[00:13:44.560] codebase at this level of granularity, I
+
+[00:13:46.399] think is the only way to truly go and go
+
+[00:13:49.120] do this. And I'll talk about a whole
+
+[00:13:50.079] bunch of like ways that we can talk
+
+[00:13:52.079] about this in a second. But I just I
+
+[00:13:54.399] first wanted to talk about like the phil
+
+[00:13:55.920] uh philosophy behind this. What are your
+
+[00:13:57.839] thoughts on this guys?
+
+[00:13:59.279] >> Yeah, this is this this is Andy Grove,
+
+[00:14:01.360] right? This Andy Grove's whole thing was
+
+[00:14:02.800] like I mean this was Intel a while ago.
+
+[00:14:04.720] This was not really about measuring
+
+[00:14:05.920] software. It was about measuring like
+
+[00:14:07.279] teams and people and processes, but it
+
+[00:14:09.360] was like treat it like a black box and
+
+[00:14:11.519] then when the black box no longer serves
+
+[00:14:13.279] you and you have to open the box like
+
+[00:14:14.639] maybe you put windows on the box, you
+
+[00:14:16.240] put little slits on where like the old
+
+[00:14:17.839] school observability is like you would
+
+[00:14:19.440] just like emit a couple metrics, right?
+
+[00:14:21.120] You would have like four numbers that
+
+[00:14:22.480] would just tell you like what's the
+
+[00:14:24.160] average time to do this? What's the
+
+[00:14:25.839] average rate of X? And so you're like
+
+[00:14:27.600] kind of poking slits in the box and then
+
+[00:14:29.600] eventually you're just like what you're
+
+[00:14:31.040] saying is like it's so complicated and
+
+[00:14:33.360] so random and so so like just the the
+
+[00:14:36.959] amount of different cases going in that
+
+[00:14:39.040] it's it's not enough to just poke slits
+
+[00:14:40.800] in. You kind of have to be able to
+
+[00:14:42.160] really look at every single thing that's
+
+[00:14:43.760] happening inside.
+
+[00:14:44.320] >> And the reason for this is like the
+
+[00:14:45.680] problem is once someone reports a bug,
+
+[00:14:47.760] as sad as it is, this metric is only
+
+[00:14:50.480] useful in hindsight. You can't have
+
+[00:14:52.959] foresight about what the problems is.
+
+[00:14:54.639] And if you did know what the foresight
+
+[00:14:55.920] is, then like great, just fix the
+
+[00:14:57.279] problem because just ask an agent, it'll
+
+[00:14:58.880] fix the solution for you. But if you
+
+[00:15:02.320] >> and this this was actually like if you
+
+[00:15:04.160] want you want to do a little more
+
+[00:15:05.199] history here
+
+[00:15:07.519] >> like so like the thing you used to have
+
+[00:15:09.519] was like here I'm gonna go off to the
+
+[00:15:10.880] right here was like you had basically
+
+[00:15:12.639] like the number the the the key the the
+
+[00:15:15.040] first thing we had was like when data
+
+[00:15:16.560] was expensive and memory was expensive
+
+[00:15:18.079] we had metrics
+
+[00:15:19.279] >> and so you literally had like one number
+
+[00:15:21.519] and you could say you know for for a
+
+[00:15:24.079] given server you know the what's the
+
+[00:15:26.720] error rate right and it would be good
+
+[00:15:28.800] and then it would pop up and then it
+
+[00:15:30.320] Come down, right? Oh my god. I can't do
+
+[00:15:32.959] the drawing thing. We're going to do
+
+[00:15:34.399] this one.
+
+[00:15:34.959] >> No, you got to have art, man. Artisal
+
+[00:15:37.519] art. Anyway, go on. Okay.
+
+[00:15:39.519] >> No. So then you could say, okay, for
+
+[00:15:42.240] server one, it looks like this. And for
+
+[00:15:43.760] server two, it looks like this. And like
+
+[00:15:45.519] you would just look at like, yeah, the
+
+[00:15:46.959] error rate for different things. Uh, and
+
+[00:15:50.480] and and you would just draw like, you
+
+[00:15:52.000] know, what is one one number per thing
+
+[00:15:54.480] you cared about and you would have like
+
+[00:15:55.920] a couple hundreds of these and you would
+
+[00:15:57.360] make dashboards with this stuff. Uh and
+
+[00:16:00.079] so your your data would basically look
+
+[00:16:01.600] like you know time stamp it was time
+
+[00:16:03.279] series right so you would have like a
+
+[00:16:04.560] time stamp and then you had you know
+
+[00:16:06.720] like 1s 2s 3s like into something I
+
+[00:16:10.959] don't know these are these are all dates
+
+[00:16:12.320] right
+
+[00:16:13.680] >> yeah exactly
+
+[00:16:16.240] >> and then you would just have like values
+
+[00:16:18.079] right and so you would say you know like
+
+[00:16:19.600] server one yeah thank you
+
+[00:16:23.120] >> yeah you'd basically just collect a
+
+[00:16:24.480] bunch of data for various servers or
+
+[00:16:26.160] various processes or various devices and
+
+[00:16:28.560] just basically try and slice and dice
+
+[00:16:30.880] them in some meaningful way.
+
+[00:16:34.720] >> Yep. Uh and so these would be like value
+
+[00:16:36.959] one.
+
+[00:16:37.759] >> Uh and then what we got to in like the
+
+[00:16:39.600] mid like basically like what Facebook
+
+[00:16:41.440] did with scuba and then charity majors
+
+[00:16:43.519] came and took and turned into like what
+
+[00:16:46.160] like they basically she coined the term
+
+[00:16:48.320] observability, right? Uh and so
+
+[00:16:51.040] observability was basically like instead
+
+[00:16:52.720] of just having metrics have what we call
+
+[00:16:55.199] like wider data like the the journey of
+
+[00:16:58.399] observability is like hardware and
+
+[00:17:00.240] storage and like software gets better
+
+[00:17:02.079] and more performant and we can store
+
+[00:17:04.240] more stuff without knowing what we want
+
+[00:17:06.160] and so you have like you can store like
+
+[00:17:08.319] user ID and you can store you know error
+
+[00:17:11.679] message and you're basically like
+
+[00:17:13.199] storing this why is this like this hold
+
+[00:17:14.880] on let me left justify this you you
+
+[00:17:17.439] start storing this like event data
+
+[00:17:19.360] basically basically where you have like
+
+[00:17:20.640] tons and tons of fields of like
+
+[00:17:23.919] team ID,
+
+[00:17:26.880] region and so like basically instead of
+
+[00:17:29.280] manually having to like decide what your
+
+[00:17:31.440] dimensions are like in this case you
+
+[00:17:32.799] store the timestamps for servers and
+
+[00:17:34.960] then you also store the time timestamps
+
+[00:17:36.960] for like you know service
+
+[00:17:40.960] service one service 2 like basically
+
+[00:17:43.840] spread ac if you have if you have uh
+
+[00:17:45.919] let's say you have like you know this
+
+[00:17:48.559] was like old old old pre-cluster days,
+
+[00:17:50.640] but you have like server one
+
+[00:17:53.280] and server two. And so the only
+
+[00:17:55.280] dimensions you have were like what
+
+[00:17:56.640] service was it? What server was it on?
+
+[00:17:58.640] And then you have like service one
+
+[00:18:00.320] running here and you have service two
+
+[00:18:03.280] running here.
+
+[00:18:03.679] >> I got something
+
+[00:18:04.960] >> and let's say you only have service one
+
+[00:18:06.720] over here. Does that make sense?
+
+[00:18:08.559] >> Talks about this and this basically just
+
+[00:18:10.240] is a great tear down of why you want
+
+[00:18:11.679] observer wide events. But like it
+
+[00:18:14.000] basically just talks about this and
+
+[00:18:15.120] talks about how you want to go get wide
+
+[00:18:16.799] events for all the unknown unknowns. And
+
+[00:18:19.280] the graphics he does here are like
+
+[00:18:21.200] >> yeah it's way easier to debug if you can
+
+[00:18:23.760] store all of the data and then go figure
+
+[00:18:25.919] out what you want later and query it
+
+[00:18:27.840] performantly and store it like without
+
+[00:18:30.160] taking up like billions of gigs of data.
+
+[00:18:32.080] >> Exactly. So this thing basically just
+
+[00:18:33.200] talks about this and says why you want
+
+[00:18:34.960] all this data. Um I'll link our linked
+
+[00:18:37.840] article. Boris is awesome. Um writes a
+
+[00:18:40.400] really good blog post about this stuff.
+
+[00:18:43.120] Why can't I send it? There you go.
+
+[00:18:44.880] >> Oh, yeah. This is better than mine.
+
+[00:18:46.880] >> Yeah, because this lets you correlate
+
+[00:18:48.799] across any dimension that you might want
+
+[00:18:51.360] to care about and you don't know what
+
+[00:18:53.520] the dimension is later. If it's like it
+
+[00:18:55.120] it makes it so much easier to find bugs
+
+[00:18:56.720] if it's like, oh, all the users that
+
+[00:18:59.039] have this thing is true, uh, that's
+
+[00:19:01.919] that's the thing that actually
+
+[00:19:03.520] correlates with the spike.
+
+[00:19:04.880] >> And and the most important thing for
+
+[00:19:06.400] everyone to really understand here is
+
+[00:19:08.480] not anything specific about this. It's
+
+[00:19:10.960] the most important thing to really
+
+[00:19:12.400] understand here is that when you do
+
+[00:19:15.679] observability of any kind,
+
+[00:19:18.480] observability is not useful at all for
+
+[00:19:21.200] things you already know. Observability
+
+[00:19:23.280] is useful in hindsight. When you like
+
+[00:19:26.000] why do we have these uptime metrics? Why
+
+[00:19:27.520] don't we just start with a standard
+
+[00:19:28.799] number and why do we break them down
+
+[00:19:30.080] more? It's because when something goes
+
+[00:19:32.240] down, you want to quickly be like, hey,
+
+[00:19:33.760] the main system is down because the
+
+[00:19:35.120] database is down. And boom. You want you
+
+[00:19:37.679] want to have that answer. You don't want
+
+[00:19:38.720] to be debugging it at that time. You
+
+[00:19:40.320] don't want your users or Dexter this
+
+[00:19:42.880] beautiful agent diagram like our users
+
+[00:19:44.799] are now not obviously just humans. So
+
+[00:19:48.240] let's write this down. We also have
+
+[00:19:49.600] agents using it. You want agents to be
+
+[00:19:51.039] able to understand the spec as well. So
+
+[00:19:53.760] the only thing you can find useful is
+
+[00:19:55.840] effectively hindsight observability.
+
+[00:19:58.480] And that's like the big that's kind of
+
+[00:20:00.400] the big argument that I want to push the
+
+[00:20:01.919] world towards more personally, which is
+
+[00:20:04.400] you want to be able to make your entire
+
+[00:20:06.080] black box observable because if you
+
+[00:20:08.080] don't make it observable, then you can't
+
+[00:20:09.440] have handset observability. And in order
+
+[00:20:12.320] to do that, you have a couple of
+
+[00:20:13.919] different options. And one of those
+
+[00:20:15.679] options just like
+
+[00:20:17.919] how do I zoom in?
+
+[00:20:20.240] one of those options like you're going
+
+[00:20:21.440] to write a bunch of code like service
+
+[00:20:24.000] API server service API
+
+[00:20:30.159] that does something who I don't know
+
+[00:20:31.919] what this router does but like uh like
+
+[00:20:35.120] hello route
+
+[00:20:37.520] uh you're going to build a bunch of
+
+[00:20:38.640] these routes as you go down this road
+
+[00:20:40.480] and as you build this route one of the
+
+[00:20:42.000] things that I recommend that you do for
+
+[00:20:43.600] all your top level API just like add
+
+[00:20:45.120] some sort of tracing on top of it it's
+
+[00:20:47.600] super lowhanging it's super trivial, but
+
+[00:20:50.159] it'll just make it so that when
+
+[00:20:51.520] something goes wrong, even if you don't
+
+[00:20:53.919] understand it, you can go do this and
+
+[00:20:55.919] just like ask an LM to go do this. Add
+
+[00:20:57.679] some llinter to guarantee this.
+
+[00:20:59.440] >> That's funny.
+
+[00:21:01.039] >> My one of my first projects that I built
+
+[00:21:03.520] uh at Sprout back in like 2015 was this
+
+[00:21:06.000] thing called instrumented where you
+
+[00:21:07.840] would like it would like take the
+
+[00:21:09.039] function name and it would emit like 15
+
+[00:21:10.960] metrics basically.
+
+[00:21:13.120] >> Uh this was based on like Kota Hail's
+
+[00:21:14.880] metrics, right? You would have like uh
+
+[00:21:16.880] you would have a meter for like you
+
+[00:21:18.960] would have like a counter for how often
+
+[00:21:20.480] it is getting called
+
+[00:21:23.280] throughput. You would have a timer for
+
+[00:21:25.600] like the histogram of like histogram of
+
+[00:21:28.480] latency.
+
+[00:21:30.364] [snorts]
+
+[00:21:30.480] >> You would have a counter for errors. Uh
+
+[00:21:34.240] and so you could do thing you could
+
+[00:21:35.760] compute things off of this like error
+
+[00:21:37.520] rate equals you know throughput over
+
+[00:21:40.000] errors or errors over throughput, right?
+
+[00:21:43.280] >> Yeah. Uh and you can look at like the
+
+[00:21:45.280] P99 and etc. And so like basically and
+
+[00:21:48.320] and and the histogram here like the the
+
+[00:21:50.159] the histogram every single thing is a
+
+[00:21:52.080] different metrics P50, P90,
+
+[00:21:55.120] P98, P99, etc.
+
+[00:21:58.799] Um and tracing is like you should talk
+
+[00:22:00.480] about what tracing really is like you
+
+[00:22:02.559] should draw a trace or do you have a do
+
+[00:22:04.159] you have a trace floating around
+
+[00:22:05.200] somewhere of like
+
+[00:22:06.640] >> I do I have a I have one that's
+
+[00:22:08.559] available right now. Yeah, because I
+
+[00:22:09.840] would say like distributed tracing was
+
+[00:22:11.280] the next hot thing after we got into
+
+[00:22:12.960] wide data sets. Like that was the thing
+
+[00:22:14.640] that people built on top of wide data
+
+[00:22:16.480] sets was like hotel traces, open
+
+[00:22:18.159] telemetry traces.
+
+[00:22:20.240] >> So I'm just going to show something
+
+[00:22:21.760] because that's probably easier.
+
+[00:22:24.960] >> You got waterfall. You got a waterfall
+
+[00:22:26.559] for me?
+
+[00:22:27.360] >> Yeah. Yeah. I'll just run this for
+
+[00:22:29.280] example. It doesn't really matter what
+
+[00:22:30.480] this pipeline does. I'm just going to
+
+[00:22:31.679] run this really fast.
+
+[00:22:32.799] >> This is like some image gen thing,
+
+[00:22:34.320] right?
+
+[00:22:35.520] >> Yeah. I mean it's called generate
+
+[00:22:36.880] images. So I really hope it generates
+
+[00:22:38.400] images. [laughter] Um otherwise it's
+
+[00:22:41.360] named poorly. But you're seeing a bunch
+
+[00:22:42.880] of functions here. This function uh
+
+[00:22:46.880] uh this function for example you can see
+
+[00:22:48.640] what it does. It basically is like it
+
+[00:22:50.559] generates an image then evaluates an
+
+[00:22:52.000] image and then while the score is low it
+
+[00:22:53.679] does that in a loop and eventually
+
+[00:22:54.880] returns the image that it finds uh if
+
+[00:22:57.039] it's less than three attempts. Do you
+
+[00:22:58.799] kind of get the gist of what the code is
+
+[00:23:00.159] doing? But uh I'm going to show you what
+
+[00:23:02.559] what we really want with tracing because
+
+[00:23:04.080] once you have tracing there's a lot of
+
+[00:23:05.600] things in here. Obviously, this is using
+
+[00:23:07.440] a lot of functions that we don't know.
+
+[00:23:08.880] We haven't read the code for any of
+
+[00:23:10.080] these. We don't know what HTTP calls
+
+[00:23:12.000] we're making. We have no almost no
+
+[00:23:13.600] introspection on any of this data.
+
+[00:23:15.120] >> Yeah. In the old days, if I wanted to in
+
+[00:23:17.280] the old days, if I wanted to debug this,
+
+[00:23:18.799] I'd be like jumping to definition and
+
+[00:23:20.640] clicking around and like, okay, let me
+
+[00:23:21.919] go read this function body to understand
+
+[00:23:23.520] what happens. Okay, let me go click into
+
+[00:23:24.960] another function to understand what
+
+[00:23:26.159] happens. And like building this all into
+
+[00:23:27.520] my head of like, okay, how do these
+
+[00:23:28.799] things fit together? Where are the slow
+
+[00:23:30.240] parts? Where are the errorprone parts,
+
+[00:23:32.080] etc.?
+
+[00:23:33.679] >> Yeah, exactly. And when I really Why is
+
+[00:23:35.840] it running so many? I have three
+
+[00:23:36.960] attempts.
+
+[00:23:38.480] Did I have a Oh, I'm dumb. I don't
+
+[00:23:41.600] increase attempts by one firstly. Like,
+
+[00:23:44.720] so I just want to show again like how do
+
+[00:23:46.159] you find bugs with tracing? Well,
+
+[00:23:47.679] >> well, this is at the very least logs.
+
+[00:23:51.520] >> This is this is tracing actually. I'm
+
+[00:23:53.440] dumping out the tracing values here. But
+
+[00:23:56.400] first things first, let's let's uh
+
+[00:23:58.559] cancel this function. Um
+
+[00:24:02.720] Oh, I'm sorry. All right, we don't have
+
+[00:24:04.400] plus+ because++ is silly. We should
+
+[00:24:07.760] probably add plus+.
+
+[00:24:10.000] Um,
+
+[00:24:11.679] as I go do this, I'm going to cancel
+
+[00:24:13.360] this.
+
+[00:24:13.679] >> Yeah, your agent tries BAML didn't find
+
+[00:24:15.360] that.
+
+[00:24:17.200] >> I didn't run this anyway. Um, so as I
+
+[00:24:21.440] run this, the first thing to notice is
+
+[00:24:23.200] like one really nice thing that you get
+
+[00:24:25.200] with really nice tracing is you can
+
+[00:24:27.360] build really nice tools like this. You
+
+[00:24:29.520] can clearly be like and watch.
+
+[00:24:31.440] >> Can we start with the trace before we go
+
+[00:24:32.960] to the UI you built on top of the trace?
+
+[00:24:35.840] >> Yeah, here we go.
+
+[00:24:38.559] >> We'll just do full screen. Let's open
+
+[00:24:40.240] the flame graph and just look at this
+
+[00:24:41.600] thing.
+
+[00:24:47.110] Uh let's go here.
+
+[00:24:47.120] >> If you scroll down, you have this
+
+[00:24:48.320] waterfall thing, right?
+
+[00:24:50.559] >> Yeah. And the waterfall thing basically
+
+[00:24:52.159] tells you exactly how much you're
+
+[00:24:53.679] spending and what things. And if you've
+
+[00:24:55.039] ever seen like a flame graph or
+
+[00:24:56.400] something like that, you can think of as
+
+[00:24:58.159] a uh sorry, I'm going to rerun this
+
+[00:25:00.559] because uh I lost the
+
+[00:25:02.880] >> Yeah, that's a big old
+
+[00:25:05.360] >> Yeah, I lost the source maps.
+
+[00:25:08.080] >> Oh, because you edited the file.
+
+[00:25:09.440] >> Uh yeah. Yeah. So, we have we'll work on
+
+[00:25:12.240] doing this. But um when this runs
+
+[00:25:16.559] this time, it's bounded to three, so it
+
+[00:25:18.400] should be faster. But like the first
+
+[00:25:20.080] value of tracing that you really get is
+
+[00:25:21.600] like the minute you start tracing,
+
+[00:25:23.039] finding bugs is so much easier because
+
+[00:25:26.320] the minute you can find bugs is how do
+
+[00:25:27.760] you find bugs? Well, even as the program
+
+[00:25:29.520] is executing without waiting for
+
+[00:25:30.880] completion, I realize that something is
+
+[00:25:32.320] off here because it should take three
+
+[00:25:33.440] attempts and boom, I can trace it very
+
+[00:25:35.520] fast. So if you think about your
+
+[00:25:37.520] production applications and users
+
+[00:25:38.960] getting un unexpected behavior, if you
+
+[00:25:41.760] can expose tracing to your users or
+
+[00:25:44.000] something like that, your users can
+
+[00:25:45.360] actually help diagnose and build the
+
+[00:25:46.880] right system automatically.
+
+[00:25:49.600] Let's go here. Uh, what is going on?
+
+[00:25:51.760] Sorry.
+
+[00:25:55.990] >> All right, we're going to run it one
+
+[00:25:56.000] more time.
+
+[00:25:57.120] >> One more time. Beta software. Um, but
+
+[00:25:59.840] and I'll talk about hotel and stuff in a
+
+[00:26:01.360] second, too. And I'll talk about LM
+
+[00:26:02.559] tracing as general because LM tracing I
+
+[00:26:04.400] think is slightly different than regular
+
+[00:26:05.760] tracing, but I think it's people are
+
+[00:26:07.440] treating as too different than regular
+
+[00:26:08.960] tracing.
+
+[00:26:10.000] >> Uh, it's different in some senses, but
+
+[00:26:11.840] most
+
+[00:26:12.240] >> how many hotel how many startups are
+
+[00:26:14.240] just hotel rappers billing themselves?
+
+[00:26:16.400] It's like, well, this is special. You
+
+[00:26:17.760] need you need to do it differently for
+
+[00:26:19.039] LLMs.
+
+[00:26:20.720] >> Yeah, it's like and I'll talk about
+
+[00:26:22.640] hotel in a second. I have a whole huge
+
+[00:26:24.159] bunch of gripes at the hotel, but it I
+
+[00:26:26.640] think the key part that you really want
+
+[00:26:27.919] to have is when you go look at this
+
+[00:26:29.600] flame graph and you go start
+
+[00:26:30.880] understanding what the code is actually
+
+[00:26:32.159] doing. You want to be able to really
+
+[00:26:34.000] quickly understand exactly where time is
+
+[00:26:36.559] being spent, where error rates are
+
+[00:26:38.000] happening, what's not happening as you
+
+[00:26:40.000] expect. Uh and like you could imagine
+
+[00:26:42.880] this is just a dimension. We Dextra
+
+[00:26:44.480] talks about wide events. If you want to
+
+[00:26:45.760] understand cost, you want to understand
+
+[00:26:47.919] how many times you call something out.
+
+[00:26:50.080] >> Well, technically technically cost and
+
+[00:26:51.840] time are metrics and the dimension is
+
+[00:26:53.760] like function name or or module or
+
+[00:26:57.039] whatever it is.
+
+[00:26:57.919] >> Yeah, sure. You want to be able to index
+
+[00:26:59.520] by function name or something else, but
+
+[00:27:01.039] like
+
+[00:27:01.600] >> obviously you're going to use packages
+
+[00:27:03.039] that you don't own. You want to be able
+
+[00:27:04.159] to understand what packages you don't
+
+[00:27:05.520] own that are being called by the system
+
+[00:27:07.360] and be able to really quickly like grab
+
+[00:27:08.960] through them
+
+[00:27:10.480] >> without having to go debug anything but
+
+[00:27:12.080] not have to look at them every single
+
+[00:27:13.440] time. But what you really want is the
+
+[00:27:16.240] minute think about how an LM works and
+
+[00:27:18.559] think about how all of you are going to
+
+[00:27:19.760] think about this code. None of you
+
+[00:27:20.880] actually know what happens under the
+
+[00:27:22.080] hood in these functions. You just know
+
+[00:27:23.919] at some point we call generate image.
+
+[00:27:26.000] But now you can actually really quickly
+
+[00:27:27.360] see what you call with generate image.
+
+[00:27:29.440] It calls it calls a thing called prompt.
+
+[00:27:32.240] It calls a thing called dot call
+
+[00:27:34.159] function. And eventually it goes to all
+
+[00:27:36.080] of this. It gets some environment
+
+[00:27:38.159] variables over here. Um, and eventually
+
+[00:27:42.480] eventually it calls HTTP.
+
+[00:27:45.760] And it makes an HTTP request. And you
+
+[00:27:48.240] can even see very fast that the bulk of
+
+[00:27:50.720] the time is actually being spent um on
+
+[00:27:53.039] like this. Oh, where'd it go? Um, on
+
+[00:27:56.000] this actual send request over here.
+
+[00:27:58.720] There's another one. Oh, waiting for
+
+[00:28:00.559] Okay, because there's an await here or
+
+[00:28:02.000] something. But the bulk of his time is
+
+[00:28:04.159] actually being spent Oh. Oh, sorry.
+
+[00:28:06.000] Sorry, the bulk of this time is actually
+
+[00:28:07.200] being sent on this like underscore send
+
+[00:28:09.279] which send calls under the hood and
+
+[00:28:12.000] without you sorry this is latency on the
+
+[00:28:13.679] right side. This is when it started.
+
+[00:28:15.360] This is like the time step when it
+
+[00:28:16.799] started and you can quickly see exactly
+
+[00:28:18.559] where it was being called without
+
+[00:28:20.320] understanding. So without any guessing
+
+[00:28:22.000] without digging through the codebase
+
+[00:28:23.600] without understanding the code ahead of
+
+[00:28:25.360] time with tracing and really in-depth
+
+[00:28:27.520] tracing you can actually go through and
+
+[00:28:28.880] figure out exactly what's happening and
+
+[00:28:30.880] where your bug might be. And I think
+
+[00:28:33.200] this is really the magic of what we want
+
+[00:28:35.679] with these sort of systems. Like when we
+
+[00:28:37.200] go back to like these total black boxes
+
+[00:28:38.799] that we don't understand, you really
+
+[00:28:41.120] want to go back in hindsight and say,
+
+[00:28:43.200] "How the heck do I understand what
+
+[00:28:44.880] happened when things went wrong?" Well,
+
+[00:28:46.399] what do you do? You pull up, you need to
+
+[00:28:48.640] pull up some sort of tracing system. And
+
+[00:28:51.200] the usefulness of this is merely a
+
+[00:28:53.520] function of how much tracing you were
+
+[00:28:55.360] able to tag on when you ship the code.
+
+[00:28:57.919] >> Yeah.
+
+[00:28:58.399] >> Does that make sense, Dexter?
+
+[00:28:59.679] >> Yeah. I I think of like the difference
+
+[00:29:01.120] between tra like what I would have done
+
+[00:29:02.320] before and like we'd spent a lot of time
+
+[00:29:04.080] in 2014 like sshing into servers and
+
+[00:29:07.200] like tailing and gpping logs for stuff
+
+[00:29:09.279] is like logs was the earliest version of
+
+[00:29:11.440] this. you had logs and then you had
+
+[00:29:13.120] metrics and then like now the like the
+
+[00:29:15.520] the story is like okay logs metrics
+
+[00:29:17.840] traces that's the full observability
+
+[00:29:19.919] story and they all have kind of
+
+[00:29:21.120] different purposes and different levels
+
+[00:29:22.559] of granularity but yeah no I remember
+
+[00:29:25.279] when we turned on New Relic in 2014 and
+
+[00:29:27.679] it was like oh now I don't have to read
+
+[00:29:29.279] the logs and put in special logging to
+
+[00:29:31.440] figure out what's slow because the trace
+
+[00:29:33.760] is just going to capture everything and
+
+[00:29:35.279] be like yep this is the bad SQL query
+
+[00:29:37.440] this request made 40 different SQL
+
+[00:29:39.279] queries and this is the one that's slow
+
+[00:29:40.960] and then you're like cool let me go fix
+
+[00:29:42.240] that.
+
+[00:29:44.240] >> Yeah, exactly. And I think that's the
+
+[00:29:45.760] general list and like every now and then
+
+[00:29:47.520] for certain types of functions you want
+
+[00:29:49.039] to capture both the inputs and the
+
+[00:29:50.399] outputs. Sometimes you only want to
+
+[00:29:52.640] capture the inputs, sometimes you only
+
+[00:29:54.399] want the outputs, sometimes you want the
+
+[00:29:55.919] error rates and everything else. And I
+
+[00:29:58.080] think this granularity of being able to
+
+[00:29:59.760] choose what you want is basically
+
+[00:30:01.520] effectively what you want to happen.
+
+[00:30:04.960] It seems like the tracing like the idea
+
+[00:30:06.880] behind tracing is like you actually want
+
+[00:30:08.799] to keep everything because the the idea
+
+[00:30:11.120] of trace is like when we run traces in
+
+[00:30:13.039] production in human layer we we do a
+
+[00:30:14.720] pretty high sample rate like the the
+
+[00:30:16.799] traces are not about like hey I need to
+
+[00:30:19.039] debug every single individual request.
+
+[00:30:21.760] It's like I need to understand the shape
+
+[00:30:23.520] of this thing and I need like a very
+
+[00:30:25.840] quick again it's all about like how do
+
+[00:30:27.360] you how do you create things that are
+
+[00:30:28.640] easy for humans to consume and
+
+[00:30:30.159] visualization is a huge part of that.
+
+[00:30:32.080] How do I make it obvious without me
+
+[00:30:33.840] having to read logs or think or read
+
+[00:30:35.919] charts and graphs and just be able to
+
+[00:30:37.600] see immediately like oh that's the thing
+
+[00:30:39.760] that's low
+
+[00:30:40.799] >> actually Kota has another really good
+
+[00:30:42.480] talk about this of like
+
+[00:30:44.159] >> how do you build tools for humans how do
+
+[00:30:45.840] you build tools where it's like I can
+
+[00:30:47.200] use my what is it like system one
+
+[00:30:48.720] thinking the thing that like looks at a
+
+[00:30:50.799] wall that is white and like knows it's
+
+[00:30:52.320] white without even having to like
+
+[00:30:53.440] process it versus like the part of my
+
+[00:30:55.600] brain if you ask me to multiply two
+
+[00:30:57.360] three-digit numbers I like turn on and
+
+[00:30:59.520] like focus and so how do you make as
+
+[00:31:02.640] possible just like obvious
+
+[00:31:06.000] analytical part of your brain until you
+
+[00:31:07.760] you want to save that energy for the
+
+[00:31:09.120] most important stuff. And if you can if
+
+[00:31:10.720] you can make it easy to tell just by
+
+[00:31:12.240] looking at something then like that's
+
+[00:31:14.320] that's a great tool for humans.
+
+[00:31:17.279] >> Yeah. And you can kind of see exactly
+
+[00:31:18.720] what's happening here. Like the inputs
+
+[00:31:20.080] the images are basically evolving over
+
+[00:31:21.840] time and it's very easy to go grasp that
+
+[00:31:24.640] without reading a single line of
+
+[00:31:25.840] tracing. But effectively all of it needs
+
+[00:31:27.600] to be powered by something that is
+
+[00:31:28.880] extremely rich. So any question an agent
+
+[00:31:31.600] asks, like you want the agent to ask
+
+[00:31:33.360] like did I call send? Did I did I make
+
+[00:31:35.520] an HTTP request? And you as a human
+
+[00:31:37.840] don't want to think about this. You
+
+[00:31:38.880] literally want the agent to be like,
+
+[00:31:40.399] hey, search through all the function
+
+[00:31:42.000] calls that I made in this call stack.
+
+[00:31:43.919] Was any of them HTTP.end
+
+[00:31:46.640] and how many times was http.send called?
+
+[00:31:49.360] >> You're talking about feeding traces to
+
+[00:31:51.039] an agent, not to a human. Basically like
+
+[00:31:53.440] less the visual part, but more the like,
+
+[00:31:55.279] okay, how do I give my agent the ability
+
+[00:31:57.039] to like, cool, here's a thing someone
+
+[00:31:58.880] complained about. go look through the
+
+[00:32:00.240] traces and figure out what the problem
+
+[00:32:01.519] is.
+
+[00:32:02.799] >> Exactly. So, like if I'm a human and I'm
+
+[00:32:05.039] looking at this, it's like this is
+
+[00:32:06.399] useless. Let's be real here. Like this
+
+[00:32:08.720] is like useless is such a strong word.
+
+[00:32:12.399] Um
+
+[00:32:15.200] I often find myself when I interact with
+
+[00:32:17.679] Claude and I have a giant document in
+
+[00:32:19.200] front of me, I'm like, "Claude, can you
+
+[00:32:20.320] please give me the last three the three
+
+[00:32:22.159] most important things I should read in
+
+[00:32:23.440] this document?" I just let Claude do a
+
+[00:32:25.279] lot of digestion for me. I think uh and
+
+[00:32:27.919] really should I read the whole document?
+
+[00:32:29.360] Yes. And for really important documents,
+
+[00:32:30.960] I do read the whole document. But same
+
+[00:32:33.440] with traces. It's impossible for me to
+
+[00:32:35.279] expect that I'm gonna I'm as a human,
+
+[00:32:36.880] I'm going to go debug this unless it's
+
+[00:32:38.320] like critical to some major thing that's
+
+[00:32:40.399] happening. Almost definitely what's
+
+[00:32:42.240] actually going to happen is I'm going to
+
+[00:32:43.360] ask Claude, "Hey Claude, can you tell me
+
+[00:32:45.519] what's going on so I can go read this I
+
+[00:32:48.159] can go read this and inspect this on my
+
+[00:32:49.760] own."
+
+[00:32:51.600] Uh, and like I want claw to like tell me
+
+[00:32:53.519] what line I should jump to, for example,
+
+[00:32:55.279] instead of reading it on my own. So when
+
+[00:32:58.159] I think about I think this is like the
+
+[00:33:00.000] big highlight that I wanted to go show
+
+[00:33:01.120] everyone is like when you think about
+
+[00:33:02.720] how to build tracing for your system,
+
+[00:33:04.720] trace every little thing, you can store
+
+[00:33:07.120] every little thing that you can get
+
+[00:33:08.559] access to. And like obviously I'm very
+
+[00:33:11.600] opinioned on this like we built the
+
+[00:33:12.960] whole thing around tracing, but even in
+
+[00:33:15.279] your own code like just do it. spend the
+
+[00:33:17.279] cost, spend the thing because like your
+
+[00:33:18.880] system is almost definitely going to
+
+[00:33:20.159] have unexpected redness on here. And if
+
+[00:33:22.960] you don't have these introspection
+
+[00:33:24.320] points, you have zero chance of being
+
+[00:33:26.559] able to debug the issue later. And we
+
+[00:33:29.440] had this really clever idea. For
+
+[00:33:30.799] example, storing values is very
+
+[00:33:33.600] expensive. It slows down the program. It
+
+[00:33:36.480] uh it does a whole bunch of stuff. If
+
+[00:33:37.840] you wanted to copy these values and copy
+
+[00:33:39.360] them somewhere, it's like
+
+[00:33:41.919] >> you may be making a you may be making a
+
+[00:33:44.080] network request to send the traces
+
+[00:33:46.080] somewhere and if you have very high
+
+[00:33:48.720] performance application then you're now
+
+[00:33:51.519] using you know some of your network IO
+
+[00:33:53.760] some of your CPU cycles just to record
+
+[00:33:57.360] the other things that that might be
+
+[00:33:59.360] slow.
+
+[00:34:00.640] >> Yeah. Or saving to disk or anything like
+
+[00:34:03.120] that. Yep. So like what you really want
+
+[00:34:04.960] to do is by default you don't want to
+
+[00:34:06.320] capture values at all and then unless
+
+[00:34:08.720] something is like extremely dynamic. So
+
+[00:34:10.480] in our case the compiler knows whenever
+
+[00:34:12.320] you're interacting with a function it
+
+[00:34:13.599] calls an LLM. Boom. As soon as you
+
+[00:34:16.399] interact with an LM we store the input
+
+[00:34:18.000] outputs.
+
+[00:34:18.879] >> And of course we do a bunch of dduping.
+
+[00:34:20.399] So if you pass the same image around we
+
+[00:34:21.760] don't like copy and paste the image like
+
+[00:34:23.200] 60 times.
+
+[00:34:24.800] >> But this is kind of how you can get
+
+[00:34:26.159] extremely fast performance without
+
+[00:34:27.839] having to worry about performance
+
+[00:34:29.280] effectively.
+
+[00:34:30.960] And that makes a huge difference. in
+
+[00:34:33.440] terms of like being able to like
+
+[00:34:34.800] introspect a program without any extra
+
+[00:34:36.960] work. We know fetch calls are like
+
+[00:34:40.399] interacting with external systems. So
+
+[00:34:42.320] fetch calls get recorded.
+
+[00:34:44.240] >> We also know headers are really risky.
+
+[00:34:46.639] So by default we don't save headers,
+
+[00:34:48.480] >> right? Because they may be authentic
+
+[00:34:50.320] stuff in there. Yeah,
+
+[00:34:51.760] >> exactly. So we just like store them. We
+
+[00:34:53.599] know environment variables are risky. So
+
+[00:34:55.119] any environment variable value gets
+
+[00:34:56.639] automatically omitted. And there's a lot
+
+[00:34:58.960] of things like that that we just do by
+
+[00:35:00.560] default to make it safe. And like if
+
+[00:35:02.400] you're using Sentry or something else,
+
+[00:35:03.680] they do the similar kinds of stuff. But
+
+[00:35:05.920] most tracing systems, I think, are built
+
+[00:35:07.599] for error handling. And most proactive
+
+[00:35:09.760] telemetry systems are built very much
+
+[00:35:11.920] like users have to opt into it. And I
+
+[00:35:14.720] think that's really the fundamental flaw
+
+[00:35:16.320] in most tracing systems, which is users
+
+[00:35:18.079] have to go write something like
+
+[00:35:20.560] for every single function, you got to
+
+[00:35:22.000] like write this thing. And if you're
+
+[00:35:23.440] writing LM's writing all your code, then
+
+[00:35:25.680] like maybe an LM will write at trace
+
+[00:35:27.680] here. But is it really also going to
+
+[00:35:29.760] write trace there? probably not. And now
+
+[00:35:32.240] you just have a missing tracing system.
+
+[00:35:35.200] >> Yep. And you could even do the the the
+
+[00:35:37.040] even the dumber if you just do at log,
+
+[00:35:38.720] right? If you just want to log like time
+
+[00:35:40.160] stamp and when the function was called
+
+[00:35:41.599] and its arguments, right? Like you could
+
+[00:35:43.760] write all of this stuff and you could
+
+[00:35:45.440] build it. But doing this in a performant
+
+[00:35:47.760] way, in a way that is like the same
+
+[00:35:51.280] across every service you run is like
+
+[00:35:53.440] there's entire platform teams. I
+
+[00:35:55.119] remember when we got we kind of like
+
+[00:35:56.560] went from pets to cattle at at at
+
+[00:35:58.640] Sprout. It was kind of like okay instead
+
+[00:36:00.240] of having a server and it runs these
+
+[00:36:01.599] four things and this server over there
+
+[00:36:02.880] runs those four things we need like a
+
+[00:36:04.800] generic servicebased thing which always
+
+[00:36:07.760] has the same metrics endpoints and
+
+[00:36:09.280] health check endpoints and emits the
+
+[00:36:11.040] same like standard set of things. I mean
+
+[00:36:12.800] this was what the Google S book was all
+
+[00:36:14.720] about was like hey look we're going to
+
+[00:36:16.720] have a team and they're going to be on
+
+[00:36:18.720] call to help you with your services and
+
+[00:36:20.720] if things go down they'll fix them for
+
+[00:36:22.240] you. It's was trying to solve the the
+
+[00:36:24.320] the you know engineers ship something
+
+[00:36:26.480] and then DevOps DevOps has to cis admins
+
+[00:36:29.599] have to maintain it. It was like cool if
+
+[00:36:32.000] you build a service you're on call for
+
+[00:36:33.680] it. The engineers have to like own the
+
+[00:36:35.839] reliability of their stuff but the S sur
+
+[00:36:38.720] team has tools and if you meet a certain
+
+[00:36:40.400] bar if you like inject all of the shared
+
+[00:36:43.440] logging patterns and tracing patterns
+
+[00:36:45.040] and you do all the things then S can
+
+[00:36:47.760] take that service over and run it for
+
+[00:36:49.200] you. Um, and doing this at scale in a
+
+[00:36:52.560] way is like there's entire there's
+
+[00:36:54.079] entire giant teams inside any large tech
+
+[00:36:57.200] company that's all their job is to like
+
+[00:36:59.200] how do we equip people with tooling to
+
+[00:37:01.280] help them make their stuff more
+
+[00:37:02.720] observable and how do we make it so that
+
+[00:37:04.400] we can actually help even if we don't
+
+[00:37:06.560] really know if we haven't read all the
+
+[00:37:08.560] code inside the service.
+
+[00:37:11.440] >> Yeah. And you kind of want to be able to
+
+[00:37:13.599] write stuff like this.
+
+[00:37:25.990] User images.generate image where
+
+[00:37:26.000] uh orgs thing.length
+
+[00:37:41.510] >> one. Yeah. uh you kind of when you
+
+[00:37:41.520] really think about what you want out of
+
+[00:37:42.800] tracing, I think this is the feature of
+
+[00:37:44.640] what we really want. We want to be able
+
+[00:37:45.839] to write questions like find me
+
+[00:37:47.680] everything where it took more than one
+
+[00:37:48.880] second where the length or like what I
+
+[00:37:50.880] really
+
+[00:37:51.839] >> thing here is the prompt, right? It's
+
+[00:37:53.119] like the thing you asked to generate,
+
+[00:37:54.560] right?
+
+[00:37:55.839] >> Yeah. Well, thing is like yeah, I guess
+
+[00:37:57.359] this is the input argument to this
+
+[00:37:58.720] function specifically.
+
+[00:37:59.839] >> Yeah, it's a it's a really good variable
+
+[00:38:02.000] name, dude. I really like it.
+
+[00:38:04.400] >> I am uh I am known for my high quality
+
+[00:38:06.720] code. [laughter]
+
+[00:38:07.920] Uh but args is just like this is just
+
+[00:38:10.079] the name of the parameter in this
+
+[00:38:11.359] function. But what you really want over
+
+[00:38:13.359] here is you want to be able to write
+
+[00:38:14.400] this kind of query and you want all of
+
+[00:38:15.920] this to be type safe. You want to be
+
+[00:38:17.200] able to say like output is always going
+
+[00:38:18.560] to be an image. So it has B 64 and you
+
+[00:38:20.880] want the SQL query to tell you that. You
+
+[00:38:22.240] want to know args has a thing called
+
+[00:38:23.839] thing has a parameter called thing and
+
+[00:38:25.680] thing is a string type because if you
+
+[00:38:28.000] can do this
+
+[00:38:28.640] >> you want type safety on your on your
+
+[00:38:30.560] queries as well. You want to be able to
+
+[00:38:32.480] kind of like have a schema to query
+
+[00:38:34.000] against where any anybody can kind of
+
+[00:38:35.599] quickly riff this out or an agent can
+
+[00:38:37.280] quickly riff this out and basically like
+
+[00:38:39.359] very instead of doing like GP or reading
+
+[00:38:41.200] whole files, you want to be able to
+
+[00:38:42.480] really just pull out the things you care
+
+[00:38:43.920] about.
+
+[00:38:45.280] >> Yeah. And you want this to look
+
+[00:38:46.800] effectively as similar to your um
+
+[00:38:51.760] as similar to your code as possible. So
+
+[00:38:54.960] like I have generate image. You want
+
+[00:38:56.400] this to basically mimic exactly what
+
+[00:38:58.000] this code is. and you want it to look
+
+[00:39:00.400] very close to your code because then if
+
+[00:39:01.920] an agent can query the codebase out of
+
+[00:39:03.680] it, then what you end up with is a way
+
+[00:39:05.680] where like telemetry actually like means
+
+[00:39:07.760] something very reasonable and then this
+
+[00:39:10.240] tight loop of when you're probing this
+
+[00:39:12.720] actually means that hey this we can find
+
+[00:39:14.640] all the red instances in the first thing
+
+[00:39:16.720] because generate image failed here so
+
+[00:39:19.119] now we know obviously everything
+
+[00:39:20.480] downstream is obviously going to fail as
+
+[00:39:22.240] well and I think that's the kind of
+
+[00:39:24.079] tight loop that you need with
+
+[00:39:25.119] observability and when I talk about
+
+[00:39:26.240] observability that's what I think people
+
+[00:39:28.240] should be building for their systems.
+
+[00:39:29.680] They should trace everything. They
+
+[00:39:31.440] should go ahead and make sure their
+
+[00:39:32.560] tracing is tied very closely to lines of
+
+[00:39:34.800] code. And now you can start measuring
+
+[00:39:37.520] everything, starting to collect stuff.
+
+[00:39:39.520] Now, I'm going to show one last thing.
+
+[00:39:41.280] You know about hotel. Everyone knows
+
+[00:39:42.640] about hotel.
+
+[00:39:44.079] >> I'm going to show you hotel.
+
+[00:39:46.960] >> Um, and I and like if you've ever seen
+
+[00:39:49.200] hotel, are we getting the hotel rant?
+
+[00:39:51.040] I've gotten a piece of this. I'm ready
+
+[00:39:52.560] for the the formalized version of it.
+
+[00:39:54.640] >> I'll show that. Yeah, I'll show it to
+
+[00:39:55.920] you. So when you do hotel firstly hotel
+
+[00:39:58.320] does something amazing which is it has
+
+[00:39:59.760] wide events thank god that's amazing
+
+[00:40:03.200] the problem with hotel however is that
+
+[00:40:05.520] when you do wide events and you start
+
+[00:40:08.079] doing tracing you start collecting all
+
+[00:40:09.520] this data hotel is not very
+
+[00:40:14.320] how do I put this rich is a nice way to
+
+[00:40:17.839] put this
+
+[00:40:18.960] >> like the the density of information is
+
+[00:40:21.359] low right you're using a lot of JSON
+
+[00:40:23.280] using a lot of keys and and like okay
+
+[00:40:25.040] yeah you have the start And you're
+
+[00:40:26.480] hoping that the person And you're hoping
+
+[00:40:28.320] that the person that wrote something
+
+[00:40:29.760] wrote it in a very standardized way.
+
+[00:40:31.760] >> Yeah. It feels like hotel is is just
+
+[00:40:33.920] like a bunch of opinions on top of wide
+
+[00:40:35.920] events, right? It's like, okay, cool.
+
+[00:40:37.440] Like yes, you're going to have arbitrary
+
+[00:40:39.040] things that you can attach to this like
+
+[00:40:40.560] attributes or properties, but also like
+
+[00:40:42.800] >> if you include these exact fields like
+
+[00:40:45.359] span and parent span and trace ID and
+
+[00:40:47.520] stuff, then you can get these like
+
+[00:40:48.880] specific specific visualizations.
+
+[00:40:51.920] >> Yeah, exactly. I know has really good
+
+[00:40:53.440] support for spans. But the real thing is
+
+[00:40:55.599] when you think about what types accepts,
+
+[00:40:58.160] this is what OTEL accepts.
+
+[00:41:00.960] String, boolean, int, float, sequence of
+
+[00:41:03.920] stir, sequence of bool, sequence of int,
+
+[00:41:06.240] sequence of float. And the fact of the
+
+[00:41:08.400] matter is because this is the type of
+
+[00:41:10.240] things that accepts, what people end up
+
+[00:41:12.880] doing most of the time is they do
+
+[00:41:15.359] >> put like B 64 JSON in there.
+
+[00:41:18.480] Literally what they do JSON I don't know
+
+[00:41:21.760] is it loads or like parse or two string
+
+[00:41:25.359] >> two string
+
+[00:41:25.839] >> don't pretend like you haven't written
+
+[00:41:27.200] Python in a while I know you know the
+
+[00:41:28.640] python it it's dumps
+
+[00:41:30.720] >> you don't know what it is
+
+[00:41:32.079] >> oh there you go dumps uh JSONd dumps for
+
+[00:41:35.359] value and now you get you basically just
+
+[00:41:37.119] store the JSON value as a string and
+
+[00:41:38.720] then you decode it on the receiving end
+
+[00:41:40.240] and hope that it's correct JSON
+
+[00:41:41.440] >> which means you can't query it
+
+[00:41:42.319] >> and what does
+
+[00:41:44.240] >> exactly which means no querying which
+
+[00:41:46.480] means that also So, um, think about how
+
+[00:41:49.119] much data you're sending across the
+
+[00:41:50.640] wire. So, we talked about performance
+
+[00:41:52.720] and like normally I hate talking about
+
+[00:41:54.480] performance
+
+[00:41:56.160] because, uh, performance is one of the
+
+[00:42:00.800] performance is not a thing that most
+
+[00:42:02.240] people should ever care about. But when
+
+[00:42:04.400] you're doing a massive amount of
+
+[00:42:05.680] observability and you want to literally
+
+[00:42:07.200] observe every single thing that you're
+
+[00:42:08.960] passing through the wire, if you're
+
+[00:42:11.200] sending like let's say you're sending
+
+[00:42:13.520] like a like a 100 bytes of actual data,
+
+[00:42:17.200] but then you JSON you turn it to a JSON
+
+[00:42:19.520] string and this blows up to about like
+
+[00:42:22.560] uh times 8 like 800 bytes.
+
+[00:42:26.640] This is strictly going to affect your
+
+[00:42:28.800] uptime. It's strictly going to affect
+
+[00:42:30.240] your performance rate of every single
+
+[00:42:31.680] piece of software. So when you blow
+
+[00:42:34.319] something up by 8x in terms of the
+
+[00:42:35.760] amount of data you're sending across the
+
+[00:42:37.040] wire, you suddenly stop being able to
+
+[00:42:38.560] trace everything and now you're making
+
+[00:42:39.760] trade-offs of [ __ ] do Iel this one or
+
+[00:42:42.720] do Iel something else and it's always a
+
+[00:42:44.880] zero sum game and what you choose to
+
+[00:42:46.640] tell and what you choose to go around
+
+[00:42:48.480] this. So when you actually think about
+
+[00:42:49.920] how you want to do high performance
+
+[00:42:51.119] telemetry there, like you said, there
+
+[00:42:52.960] are entire companies that do this. And
+
+[00:42:54.400] if you look, there's like uh if you guys
+
+[00:42:56.400] haven't seen this, EVPF is like one way
+
+[00:42:58.800] to do this
+
+[00:43:00.880] or like uh I don't know if it's on here
+
+[00:43:02.720] where basically like tracks the system
+
+[00:43:04.240] traces to know exactly what call stacks
+
+[00:43:05.920] you're using and where you're spending
+
+[00:43:07.200] time without your process being
+
+[00:43:08.880] hammered. This lets you monitor
+
+[00:43:10.640] basically without without doing SIS
+
+[00:43:12.319] calls like it lets you it lets you
+
+[00:43:14.000] understand what's happening in the
+
+[00:43:15.440] kernel stack without actually like
+
+[00:43:17.599] leaving user land.
+
+[00:43:19.839] >> Exactly. So it makes your code faster
+
+[00:43:21.599] because you do and the reason people are
+
+[00:43:23.200] trying to solve these problems from many
+
+[00:43:24.560] different angles is because in a world
+
+[00:43:26.800] of LMS where a agents write all the code
+
+[00:43:29.200] and everything is non-deterministic
+
+[00:43:30.880] tracing is the only way to understand
+
+[00:43:32.160] all the data. The problem is you also
+
+[00:43:34.640] want tracing to have a really good
+
+[00:43:36.000] understanding of your shape of data.
+
+[00:43:38.400] like you want to understand and be able
+
+[00:43:40.000] to write this kind of query. And you
+
+[00:43:41.280] can't do that unless you actually like
+
+[00:43:42.480] embed tracing into your app. So like my
+
+[00:43:45.040] whole pitch today is like go write a
+
+[00:43:46.560] [ __ ] ton of traces like in your codebase
+
+[00:43:49.280] and just vibe code the head out of it
+
+[00:43:50.960] and make it really easy for agents to go
+
+[00:43:52.960] query everything here. So if agents
+
+[00:43:55.520] can't query everything here every time
+
+[00:43:56.880] you get a re user bug, you can build a
+
+[00:43:58.640] really nice feedback loop to like ship
+
+[00:44:00.160] your updates much faster. That was the
+
+[00:44:02.560] whole point of today's conversation on
+
+[00:44:03.920] tracing observability. Uh please go do
+
+[00:44:06.640] it. Uh, and likely I suspect you should
+
+[00:44:09.040] probably not do it yourself. It's a
+
+[00:44:10.160] waste of time. Buy some vendor that
+
+[00:44:12.160] gives you tracing and just like plug it
+
+[00:44:13.839] in and make sure they're performant and
+
+[00:44:15.200] make sure they capture extremely rich
+
+[00:44:16.560] data and make sure they give you agent
+
+[00:44:18.640] uh integration on it.
+
+[00:44:21.440] >> I like it.
+
+[00:44:22.720] >> Um, I'll do one more thing. Uh, if uh
+
+[00:44:27.280] we're doing we're doing like small
+
+[00:44:28.720] onboarding sessions. I know Dexter came
+
+[00:44:30.319] to one of them. Uh, if you guys sign up
+
+[00:44:32.720] here, we can get you hooked up and uh
+
+[00:44:35.359] try it out. if you actually want to try
+
+[00:44:36.640] like the new tracing stuff that we do.
+
+[00:44:38.800] Uh we do it like roughly every Thursday.
+
+[00:44:42.319] But um we we're exploring the space a
+
+[00:44:45.040] lot. Tracing is like one of the things
+
+[00:44:46.319] I'm deeply deeply passionate about right
+
+[00:44:48.000] now. Uh because I want to make it fast
+
+[00:44:49.680] and I want to make it low memory and I
+
+[00:44:51.040] want to make it rich
+
+[00:44:52.319] >> and I want to have no tradeoffs.
+
+[00:44:53.920] >> And this comes back to that whole idea
+
+[00:44:56.800] of like what a lot of people are hacking
+
+[00:44:58.400] together. I think I saw something
+
+[00:45:00.400] probably last week of like here's how I
+
+[00:45:03.200] review code. And what I do is I let the
+
+[00:45:05.760] agent just vibe it out and riff it out.
+
+[00:45:08.000] And then I have it create an HTML file
+
+[00:45:10.640] per folder that explains the changes in
+
+[00:45:12.640] that folder at a high level in a way
+
+[00:45:14.560] that I can kind of it's like zooming out
+
+[00:45:16.240] of the code and g give me a way to
+
+[00:45:18.000] digest 2,000 lines of code in a minute.
+
+[00:45:21.599] And then if I want to drill in, I can,
+
+[00:45:23.040] but I want to get like the shape of
+
+[00:45:24.480] everything. And then they give feedback
+
+[00:45:26.000] on each report for each module or each
+
+[00:45:28.560] file and they proceed that way. And then
+
+[00:45:30.640] eventually they might dig into the code
+
+[00:45:32.000] and stuff. Um, and it seems like you're
+
+[00:45:34.800] kind of just trying to productize this
+
+[00:45:36.720] of like, hey, look, before you like you
+
+[00:45:39.040] will probably still end up reading code
+
+[00:45:40.640] sometimes in important places, but
+
+[00:45:42.960] before you go dig into the lines, how
+
+[00:45:45.040] can you be 10x or 100x more efficient
+
+[00:45:48.000] with your time and your mental energy to
+
+[00:45:51.119] get understanding of what is happening?
+
+[00:45:54.000] And I think that's where like
+
+[00:45:56.160] dynamically visualizing the code at the
+
+[00:45:58.319] programming language level is a really
+
+[00:46:00.640] like powerful idea for like okay how do
+
+[00:46:03.119] we understand what's happening uh as
+
+[00:46:05.359] quickly as possible and maintain the
+
+[00:46:07.839] ability to go drill down into the code
+
+[00:46:09.280] but also have this option to um just
+
+[00:46:12.079] kind of like cool I don't need to read
+
+[00:46:13.280] that I trust that that that's as as as
+
+[00:46:15.520] designed as expected and it's provable
+
+[00:46:17.680] it's not an LLM read something and then
+
+[00:46:20.000] decided and might have hallucinated or
+
+[00:46:21.760] might have misunderstood it's
+
+[00:46:23.520] deterministic based on the syntax that
+
+[00:46:25.520] was written.
+
+[00:46:26.160] >> Yeah. And like Dylan actually had this
+
+[00:46:27.680] great tweet.
+
+[00:46:28.319] >> I love this. This is in my presentation.
+
+[00:46:30.160] >> Yeah. Exactly. Yeah. Yeah. Exactly. Uh
+
+[00:46:31.839] Dylan had this great tweet where he's
+
+[00:46:33.119] like the way he codes now he's just he
+
+[00:46:34.960] does basically like show me the call
+
+[00:46:36.240] stack.
+
+[00:46:37.119] >> And this is basically just hoping that
+
+[00:46:38.720] cloud code gives you this. And he's
+
+[00:46:40.880] basically building a tracing system in
+
+[00:46:42.800] some ways.
+
+[00:46:43.760] >> Well, this is part of planning, right?
+
+[00:46:45.200] This is before the code is written. He's
+
+[00:46:46.800] like, cool. like okay whatever we're
+
+[00:46:48.240] going to go build I don't need to see
+
+[00:46:49.839] every line of code but I need to
+
+[00:46:51.280] understand the type signatures and the
+
+[00:46:54.079] the objects that we're making and how
+
+[00:46:56.079] all these things fits together because
+
+[00:46:57.920] there's still I mean a lot of people are
+
+[00:46:59.599] happy to look at a mermaid diagram and
+
+[00:47:01.280] say like cool this looks good and look
+
+[00:47:03.040] at sequence diagrams say this looks good
+
+[00:47:04.800] but what we're finding and I think a lot
+
+[00:47:07.119] of people are finding is that LMS are
+
+[00:47:08.800] actually like even with system
+
+[00:47:10.560] architecture defined and aligned and you
+
+[00:47:13.280] and the you and the model have made a
+
+[00:47:14.640] plan for this you can still end up with
+
+[00:47:17.760] really bad code, sloppy code, bad
+
+[00:47:19.680] interfaces, like objects that overlap
+
+[00:47:22.000] each other, all these things that make
+
+[00:47:23.200] your software harder to maintain in the
+
+[00:47:24.880] long term and make it get you to the
+
+[00:47:26.400] point where it's like, oh, if I change
+
+[00:47:27.599] something over here, it breaks something
+
+[00:47:28.800] over there and you just get like slowed
+
+[00:47:30.880] down and kneecapped by the like
+
+[00:47:33.119] deterioration in code quality. So like
+
+[00:47:35.520] this is a layer that we're working a
+
+[00:47:36.960] lot. Also in human layer, we have this a
+
+[00:47:38.400] concept called like a technical design
+
+[00:47:39.760] doc. I think we did an episode about
+
+[00:47:41.200] this a couple weeks ago of like, no, you
+
+[00:47:43.359] should get into that level of basically
+
+[00:47:45.440] anything that you can't trust the LLM to
+
+[00:47:47.119] get right 99% of the time. It is worth
+
+[00:47:49.599] your time to align at this level of
+
+[00:47:51.839] abstraction because 5 minutes or 10
+
+[00:47:54.720] minutes doing this can save you hours.
+
+[00:47:57.599] when you get to code review and you're
+
+[00:47:58.800] like, "Oh, yes, it's it's correct and it
+
+[00:48:00.720] works and I went to the website and it's
+
+[00:48:02.400] good." But I know as someone who's like
+
+[00:48:04.400] worked in large code bases for 10 years,
+
+[00:48:06.560] okay, this is actually like not going to
+
+[00:48:08.720] set us up for success in even the medium
+
+[00:48:10.800] term, not even long term, like in in
+
+[00:48:12.720] four weeks, you're probably going to
+
+[00:48:13.839] start to regret that you merged that.
+
+[00:48:15.280] And so it's like, cool, where can we
+
+[00:48:17.680] find leverage? Where can we kind of like
+
+[00:48:20.240] make it so that instead of reading code
+
+[00:48:21.760] for an hour, I can read a doc for five
+
+[00:48:23.680] minutes
+
+[00:48:25.040] >> or see a visualization?
+
+[00:48:27.680] What's really interesting about this is
+
+[00:48:29.119] it's basically just like a spectrum,
+
+[00:48:30.880] right? Like you start from
+
+[00:48:33.359] you effectively start from like a
+
+[00:48:35.119] different place depending on what you're
+
+[00:48:36.480] trying to build
+
+[00:48:39.520] and like at some point what you do is
+
+[00:48:42.000] you you have tracing during planning
+
+[00:48:45.440] then you have tracing what the heck
+
+[00:48:47.280] happened then you have tracing like
+
+[00:48:48.800] during ad during like code effectively
+
+[00:48:50.800] like while the code is while the code is
+
+[00:48:52.720] like written.
+
+[00:48:53.839] >> Yep. Um so you have tracing during
+
+[00:48:56.960] planning or design phase. Then you have
+
+[00:48:59.040] tracing during the code and then you
+
+[00:49:01.200] kind of have the last layer which is
+
+[00:49:02.559] like you kind of want tracing uh where'd
+
+[00:49:05.680] he go
+
+[00:49:08.559] pipeline.
+
+[00:49:11.280] You kind of want tracing like during
+
+[00:49:12.880] execution is the way I draw this out.
+
+[00:49:15.839] >> Yep.
+
+[00:49:17.200] >> And it's kind of like we're all
+
+[00:49:18.720] basically talking about the same thing.
+
+[00:49:21.520] You basically have this like spectrum of
+
+[00:49:23.200] tracing that we're trying to build.
+
+[00:49:24.400] >> Oh, sorry. I only see your Slack.
+
+[00:49:27.280] >> Oh, you don't see my Slack. Sorry.
+
+[00:49:30.559] Pull this up. Window. Entire screen.
+
+[00:49:33.119] There we go.
+
+[00:49:42.470] >> Yep. Okay.
+
+[00:49:42.480] >> It's like
+
+[00:49:43.200] >> this is kind of like the spectrum of
+
+[00:49:44.960] what we're doing. And the reason that
+
+[00:49:46.319] we're all doing this is really simply
+
+[00:49:48.640] because these systems are
+
+[00:49:50.880] non-deterministic. And the only way to
+
+[00:49:54.079] build like extremely rich systems is
+
+[00:49:56.960] literally to go ahead and build
+
+[00:49:58.720] different levels of introspection as you
+
+[00:50:00.319] go do this. Y
+
+[00:50:01.440] >> you need tracing design.
+
+[00:50:02.800] >> Yeah. You can't yolo it. You can't you
+
+[00:50:04.640] can't just write it without being able
+
+[00:50:06.000] to see it because like we are I mean
+
+[00:50:08.559] it's almost like a learning thing like
+
+[00:50:09.680] we're all learning what the frontier
+
+[00:50:11.040] here looks like and part of that it's
+
+[00:50:13.200] the same thing we do vibe valves, right?
+
+[00:50:14.559] It's just like just go run the thing and
+
+[00:50:16.000] see what it's like cuz you need to
+
+[00:50:17.520] develop intuition.
+
+[00:50:19.839] >> Yeah. And this is still vibe. Like
+
+[00:50:21.680] there's no way Dylan knows every line of
+
+[00:50:23.359] code that's happening in these boxes.
+
+[00:50:24.960] >> Yeah.
+
+[00:50:25.280] >> There's probably more functions than
+
+[00:50:26.800] these boxes. He's just at a high level
+
+[00:50:29.280] making sure the key parts are correct.
+
+[00:50:31.440] >> We should have Dylan on and do a do an
+
+[00:50:33.920] episode and he can talk about this and
+
+[00:50:35.760] >> Oh, I'd actually be really curious about
+
+[00:50:36.960] this. Yeah.
+
+[00:50:37.839] >> Yeah.
+
+[00:50:38.240] >> I mean, he has his own podcast about how
+
+[00:50:40.319] to do good engineering now. So, uh, you
+
+[00:50:42.800] know, I will I I will work on him.
+
+[00:50:45.785] [laughter]
+
+[00:50:46.000] >> Yeah. We did one podcast with Reese
+
+[00:50:47.920] Sullivan and suddenly he goes and is
+
+[00:50:49.839] like, "Oh, we're going to do one too
+
+[00:50:51.119] now." It's great. It's a good show. You
+
+[00:50:52.960] should go watch it. The first two
+
+[00:50:53.920] episodes are out there. They're a lot of
+
+[00:50:54.960] fun.
+
+[00:50:55.280] >> I actually really enjoy watching their
+
+[00:50:56.559] show. It's It's also a different thing.
+
+[00:50:58.319] Uh, it's Dylan. You can look him up on
+
+[00:51:00.720] Twitter. Here you go.
+
+[00:51:01.920] >> Yeah, he's a cl he's like a principal
+
+[00:51:03.200] engineer at Cloudflare. Super smart
+
+[00:51:04.640] dude.
+
+[00:51:04.960] >> Yeah, he's Yeah, I really like their
+
+[00:51:07.200] content. Uh but like effectively like
+
+[00:51:10.400] this whole episode is about
+
+[00:51:11.440] observability. Everyone is giving you
+
+[00:51:13.680] different levels of observability. Your
+
+[00:51:15.520] job as an engineer is to go figure out
+
+[00:51:17.359] what works for you and figure out how
+
+[00:51:19.440] you can add different layers. So you can
+
+[00:51:21.040] go from tracing during design, tracing
+
+[00:51:23.280] during visualizing the code and
+
+[00:51:25.040] understand your code so you don't have
+
+[00:51:26.160] to read every line of code and tracing
+
+[00:51:27.920] post execution. So your agents can
+
+[00:51:30.160] understand what actually happened and
+
+[00:51:32.079] does does all of this eventually loop
+
+[00:51:34.160] back? I don't know how to do the arrows,
+
+[00:51:35.839] Dexter.
+
+[00:51:36.480] >> Five five Click back
+
+[00:51:39.839] >> five.
+
+[00:51:40.559] >> Click.
+
+[00:51:40.960] >> Click.
+
+[00:51:42.480] >> Oh my god. I'll do it.
+
+[00:51:44.400] >> Can you do it for me? Thank you.
+
+[00:51:46.045] [laughter] So So like cuz then what you
+
+[00:51:47.760] can do is you can feed back an agent
+
+[00:51:49.359] into this loop. Uh you can't do it
+
+[00:51:51.040] either. Got them.
+
+[00:51:52.079] >> No excuse.
+
+[00:51:53.040] >> What you can do if you build this
+
+[00:51:54.000] tracing system.
+
+[00:51:56.720] >> There we go. What you can do if you
+
+[00:51:58.000] build a really nice tracing system is
+
+[00:51:59.680] you can go back and feed these logs in
+
+[00:52:01.440] and say, "Hey Claude, what's missing in
+
+[00:52:03.599] the design that made the actual trace
+
+[00:52:05.920] not be the call site you tried to draw
+
+[00:52:07.760] me?" And now Claude can actually close
+
+[00:52:10.559] the loop and you can build a better and
+
+[00:52:12.480] better system that and again it's all
+
+[00:52:14.720] about alignment. So you can have
+
+[00:52:16.079] alignment and what you expected versus
+
+[00:52:18.640] what happened.
+
+[00:52:20.480] >> It's good. I like it. That's a good
+
+[00:52:22.400] episode.

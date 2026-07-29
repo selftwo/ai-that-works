@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-030",
+  "primary_transcript": "knowledge/episodes/aitw-030/transcripts/stitched.txt",
+  "source_folder": "2025-11-05-event-driven-agents",
+  "materials": [
+    {"path": "2025-11-05-event-driven-agents/README.md", "role": "episode summary, architecture notes, and links"},
+    {"path": "2025-11-05-event-driven-agents/meta.md", "role": "episode identity and event metadata"},
+    {"path": "2025-11-05-event-driven-agents/demo/src/events.ts", "role": "event type definitions"},
+    {"path": "2025-11-05-event-driven-agents/demo/src/services/event-bus.ts", "role": "event publication and subscription implementation"},
+    {"path": "2025-11-05-event-driven-agents/demo/src/reducers/messages-reducer.ts", "role": "message and queue projection logic"},
+    {"path": "2025-11-05-event-driven-agents/demo/src/services/ui-display-state.ts", "role": "UI projection implementation"},
+    {"path": "2025-11-05-event-driven-agents/demo/src/__tests__/interrupt-and-queue.test.ts", "role": "supporting behavior tests"}
+  ],
+  "notes": [
+    "Transcript claims are grounded in timestamped automatic captions.",
+    "Supporting code establishes demo context but does not establish production performance or durability."
+  ]
+}

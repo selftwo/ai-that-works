@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-030",
+  "episode": 30,
+  "season": 2,
+  "title": "Event-driven agentic loops",
+  "source_folder": "2025-11-05-event-driven-agents",
+  "recorded_at": "2025-11-04T18:00:00.000Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "_VB9TT1Vus4",
+  "youtube_url": "https://www.youtube.com/watch?v=_VB9TT1Vus4",
+  "transcript_origin": "imported YouTube automatic captions: en",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-youtube-captions"
+}

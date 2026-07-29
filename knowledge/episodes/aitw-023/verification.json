@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID RtXpXIY4sLk",
+  "transcript_range": "00:00 to 00:53:03.440",
+  "timestamp_order": "passed with a direct HH:MM:SS.mmm parser; knowledge/scripts/verify_transcript.py does not recognize this caption timestamp format",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "The episode frames MCP as convenient packaging that can",
+    "The live token inspection shows a larger initial contex",
+    "The choice between MCP and Bash depends on how much int",
+    "A narrow Linear CLI can fetch an issue and comments wit"
+  ],
+  "timestamped_claim_count": 6,
+  "source_duration_check": "Caption end compared with the duration stated in the source README where available; source media was not downloaded.",
+  "remaining_uncertainty": [
+    "automatic caption errors",
+    "speaker attribution",
+    "screen only evidence",
+    "exact recording start"
+  ]
+}

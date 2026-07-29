@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-055",
+  "primary": [
+    {
+      "kind": "transcript",
+      "path": "2026-04-28-no-vibes-design-docs/transcript.txt",
+      "use": "Timestamped evidence for claims"
+    },
+    {
+      "kind": "metadata",
+      "path": "2026-04-28-no-vibes-design-docs/meta.md",
+      "use": "Episode number, date, title, and video mapping"
+    },
+    {
+      "kind": "episode_notes",
+      "path": "2026-04-28-no-vibes-design-docs/README.md",
+      "use": "Upstream summary, links, and supporting context"
+    }
+  ],
+  "provenance_note": "No source media was downloaded. Repository code, images, and whiteboards are supporting material and were not treated as proof of spoken claims."
+}
+

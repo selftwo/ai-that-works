@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-055",
+  "episode": 55,
+  "season": 2,
+  "title": "No Vibes Allowed: Building Design Docs with AI",
+  "source_folder": "2026-04-28-no-vibes-design-docs",
+  "recorded_at": "2026-04-28T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "KCqsoXveqiI",
+  "youtube_url": "https://www.youtube.com/watch?v=KCqsoXveqiI",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}
+

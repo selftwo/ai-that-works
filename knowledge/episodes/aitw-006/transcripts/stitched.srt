@@ -1,0 +1,7223 @@
+1
+00:00:06,710 --> 00:00:06,720
+And let's um let's kick it off. Dex, how
+
+2
+00:00:06,720 --> 00:00:10,000
+was uh how was this last weekend? Oh
+
+3
+00:00:10,000 --> 00:00:12,000
+man, what a blast. Uh we still got to do
+
+4
+00:00:12,000 --> 00:00:14,799
+the post, but um had a lot of fun. Um
+
+5
+00:00:14,799 --> 00:00:16,640
+for those of you who who missed the
+
+6
+00:00:16,640 --> 00:00:19,760
+Well, we didn't post about it. So um we
+
+7
+00:00:19,760 --> 00:00:22,480
+did a eight hour AI that works workshop
+
+8
+00:00:22,480 --> 00:00:24,240
+where we went super deep on a lot of
+
+9
+00:00:24,240 --> 00:00:26,320
+advanced prompt engineering techniques
+
+10
+00:00:26,320 --> 00:00:30,070
+and um
+
+11
+00:00:31,630 --> 00:00:31,640
+built some 12 factor agents from
+
+12
+00:00:31,640 --> 00:00:34,000
+scratch. Um I think some interesting
+
+13
+00:00:34,000 --> 00:00:35,520
+takeaways for me uh one of the biggest
+
+14
+00:00:35,520 --> 00:00:36,800
+ones is like this thing that keeps
+
+15
+00:00:36,800 --> 00:00:39,520
+coming up which is like we don't need
+
+16
+00:00:39,520 --> 00:00:41,920
+bootstrap for agents. We need shad CN
+
+17
+00:00:41,920 --> 00:00:44,320
+for agents. We need like an open box
+
+18
+00:00:44,320 --> 00:00:46,640
+that you know yes you generate all the
+
+19
+00:00:46,640 --> 00:00:48,239
+code and then I own it and there's no
+
+20
+00:00:48,239 --> 00:00:49,840
+library like it doesn't I can't just
+
+21
+00:00:49,840 --> 00:00:51,440
+like upgrade the version and get new
+
+22
+00:00:51,440 --> 00:00:53,760
+stuff. I have to do it by hand. But I
+
+23
+00:00:53,760 --> 00:00:55,600
+think I think that's what people want
+
+24
+00:00:55,600 --> 00:00:57,920
+right now.
+
+25
+00:00:57,920 --> 00:01:00,600
+What was your favorite takeaway?
+
+26
+00:01:00,600 --> 00:01:03,840
+Um, I think I was surprised that 40
+
+27
+00:01:03,840 --> 00:01:05,439
+engineers stuck around on a beautiful
+
+28
+00:01:05,439 --> 00:01:08,320
+Saturday uh afternoon with the windows
+
+29
+00:01:08,320 --> 00:01:10,159
+outside and decided to listen to us talk
+
+30
+00:01:10,159 --> 00:01:12,240
+for uh eight hours rather than go
+
+31
+00:01:12,240 --> 00:01:13,680
+outside for a walk or do anything else
+
+32
+00:01:13,680 --> 00:01:16,759
+with their time. That was quite fun.
+
+33
+00:01:16,759 --> 00:01:21,040
+Um but um I really I think I really
+
+34
+00:01:21,040 --> 00:01:22,159
+liked what some of the people were
+
+35
+00:01:22,159 --> 00:01:23,840
+saying like this analogy that they were
+
+36
+00:01:23,840 --> 00:01:26,479
+starting to gro about Chad CN as well
+
+37
+00:01:26,479 --> 00:01:28,320
+about how what where we really need is
+
+38
+00:01:28,320 --> 00:01:30,479
+prompts that we control not prompts that
+
+39
+00:01:30,479 --> 00:01:32,159
+a library controls or framework controls
+
+40
+00:01:32,159 --> 00:01:33,560
+and that being like a really good
+
+41
+00:01:33,560 --> 00:01:35,759
+booster for being able to build these
+
+42
+00:01:35,759 --> 00:01:38,280
+kinds of things.
+
+43
+00:01:38,280 --> 00:01:40,880
+Awesome. Um cool. Well, I'm really
+
+44
+00:01:40,880 --> 00:01:42,079
+excited about what we're working on
+
+45
+00:01:42,079 --> 00:01:44,400
+today. Um, I guess we wait for a couple
+
+46
+00:01:44,400 --> 00:01:45,520
+more people to You want to start at like
+
+47
+00:01:45,520 --> 00:01:47,119
+10:05? I just shot you a link to the
+
+48
+00:01:47,119 --> 00:01:50,320
+whiteboard and two links.
+
+49
+00:01:50,320 --> 00:01:52,560
+Uh, which one is first or second?
+
+50
+00:01:52,560 --> 00:01:54,079
+Usually the second one is the public
+
+51
+00:01:54,079 --> 00:01:58,870
+one. Okay.
+
+52
+00:02:00,469 --> 00:02:00,479
+Yeah. I think the one that I'm really
+
+53
+00:02:00,479 --> 00:02:02,000
+really excited about today cuz like I
+
+54
+00:02:02,000 --> 00:02:04,240
+think uh usually we end up talking about
+
+55
+00:02:04,240 --> 00:02:06,719
+theory and today we're going to do
+
+56
+00:02:06,719 --> 00:02:09,039
+something very practical uh which is
+
+57
+00:02:09,039 --> 00:02:10,399
+we're going to start from a problem from
+
+58
+00:02:10,399 --> 00:02:11,920
+scratch and we're going to write a bunch
+
+59
+00:02:11,920 --> 00:02:13,760
+of code and I think the beauty of the
+
+60
+00:02:13,760 --> 00:02:15,040
+problem that we're tackling today is
+
+61
+00:02:15,040 --> 00:02:17,879
+that it's really not that much
+
+62
+00:02:17,879 --> 00:02:20,480
+code especially once you break down the
+
+63
+00:02:20,480 --> 00:02:22,840
+problem in the right
+
+64
+00:02:22,840 --> 00:02:27,120
+way. Um but shall we kick it off?
+
+65
+00:02:27,120 --> 00:02:29,200
+Uh yeah cool. So, do you want to set the
+
+66
+00:02:29,200 --> 00:02:30,959
+stage and describe the problem in
+
+67
+00:02:30,959 --> 00:02:32,560
+general?
+
+68
+00:02:32,560 --> 00:02:34,480
+Yeah. So, let me um I can share my
+
+69
+00:02:34,480 --> 00:02:37,120
+screen and kind of um walk through some
+
+70
+00:02:37,120 --> 00:02:39,599
+of this stuff. Um so, I'm going to pause
+
+71
+00:02:39,599 --> 00:02:44,670
+for one sec and just close a bunch of
+
+72
+00:02:51,750 --> 00:02:51,760
+Um so, um what we got is everybody hear
+
+73
+00:02:51,760 --> 00:02:54,879
+me? Okay, sounds good.
+
+74
+00:02:54,879 --> 00:02:58,000
+Audio is great. Um, let me switch and
+
+75
+00:02:58,000 --> 00:03:00,640
+see if I'm pretty sure for context. I
+
+76
+00:03:00,640 --> 00:03:02,080
+think one of the most common problems
+
+77
+00:03:02,080 --> 00:03:04,959
+that exists in AI is this problem that a
+
+78
+00:03:04,959 --> 00:03:06,239
+lot of people have which is like you
+
+79
+00:03:06,239 --> 00:03:08,080
+have some guidelines that you want
+
+80
+00:03:08,080 --> 00:03:10,000
+something to follow. So then you can
+
+81
+00:03:10,000 --> 00:03:11,760
+write an AI pipeline that mimics those
+
+82
+00:03:11,760 --> 00:03:13,760
+guideline that guideline evaluation in
+
+83
+00:03:13,760 --> 00:03:16,319
+some way and that was the theme of what
+
+84
+00:03:16,319 --> 00:03:18,080
+Dexter titled this talk which is like
+
+85
+00:03:18,080 --> 00:03:20,640
+policy to prompt.
+
+86
+00:03:20,640 --> 00:03:23,280
+Yeah. So essentially like one of the
+
+87
+00:03:23,280 --> 00:03:24,480
+biggest things that I think people are
+
+88
+00:03:24,480 --> 00:03:26,080
+doing a lot on in AI and there's a lot
+
+89
+00:03:26,080 --> 00:03:28,080
+of AI startups that are doing literally
+
+90
+00:03:28,080 --> 00:03:30,640
+just this which is like taking a set of
+
+91
+00:03:30,640 --> 00:03:34,680
+policies um and so this could be things
+
+92
+00:03:34,680 --> 00:03:39,239
+like FINRA this could be things like SEC
+
+93
+00:03:39,239 --> 00:03:41,840
+guidelines this could be things like
+
+94
+00:03:41,840 --> 00:03:46,869
+accounting laws in Europe
+
+95
+00:03:48,869 --> 00:03:48,879
+um basically anything where there's like
+
+96
+00:03:48,879 --> 00:03:50,640
+a big set of documents
+
+97
+00:03:50,640 --> 00:03:52,799
+Um, and so like one of these that we're
+
+98
+00:03:52,799 --> 00:03:54,239
+going to look at today is what's called
+
+99
+00:03:54,239 --> 00:03:56,159
+Sarbain Oxley, which like there's a
+
+100
+00:03:56,159 --> 00:03:57,519
+plain text version. You can just get it
+
+101
+00:03:57,519 --> 00:03:59,360
+from Wikipedia, but it's a bunch of
+
+102
+00:03:59,360 --> 00:04:02,480
+rules about like from like the early
+
+103
+00:04:02,480 --> 00:04:05,519
+2000s, I think, about like how do
+
+104
+00:04:05,519 --> 00:04:08,239
+corporations need to operate in order to
+
+105
+00:04:08,239 --> 00:04:10,560
+kind of be held accountable and, you
+
+106
+00:04:10,560 --> 00:04:12,959
+know, to keep their um all the crazy
+
+107
+00:04:12,959 --> 00:04:14,480
+rights that they get. Um, this was
+
+108
+00:04:14,480 --> 00:04:17,120
+published by the SEC in the early 2000s.
+
+109
+00:04:17,120 --> 00:04:19,519
+So like there's big sections of plain
+
+110
+00:04:19,519 --> 00:04:21,600
+text and like what are really really
+
+111
+00:04:21,600 --> 00:04:23,440
+good at is processing giant chunks of
+
+112
+00:04:23,440 --> 00:04:24,800
+plain text and turning them into
+
+113
+00:04:24,800 --> 00:04:26,840
+structured information.
+
+114
+00:04:26,840 --> 00:04:31,199
+Um, so what um what is a really common
+
+115
+00:04:31,199 --> 00:04:32,720
+problem is like you take a set of
+
+116
+00:04:32,720 --> 00:04:34,960
+policies and then you take a bunch of
+
+117
+00:04:34,960 --> 00:04:37,199
+evidence which is just like here's
+
+118
+00:04:37,199 --> 00:04:38,800
+something that happened and this can be
+
+119
+00:04:38,800 --> 00:04:41,600
+super generic and you put them together
+
+120
+00:04:41,600 --> 00:04:44,120
+and you say like for each piece of
+
+121
+00:04:44,120 --> 00:04:49,070
+evidence was the policy
+
+122
+00:04:51,830 --> 00:04:51,840
+followed? Um and you can output
+
+123
+00:04:51,840 --> 00:04:55,360
+basically a list of like
+
+124
+00:04:55,360 --> 00:04:56,280
+um
+
+125
+00:04:56,280 --> 00:05:00,600
+results that will tell you you know for
+
+126
+00:05:00,600 --> 00:05:05,840
+policy a section two yes policy A
+
+127
+00:05:05,840 --> 00:05:07,240
+section
+
+128
+00:05:07,240 --> 00:05:10,160
+three no and of course we have LM so we
+
+129
+00:05:10,160 --> 00:05:12,160
+can have some descript description or
+
+130
+00:05:12,160 --> 00:05:14,400
+something else right
+
+131
+00:05:14,400 --> 00:05:16,240
+um super common problem I've talked to
+
+132
+00:05:16,240 --> 00:05:17,919
+tons and tons of founders doing this
+
+133
+00:05:17,919 --> 00:05:20,960
+tons and tons of companies doing this um
+
+134
+00:05:20,960 --> 00:05:22,720
+people trying to use AI to do this. I
+
+135
+00:05:22,720 --> 00:05:24,320
+know some of the company that are making
+
+136
+00:05:24,320 --> 00:05:26,639
+like seven figures doing this as a as a
+
+137
+00:05:26,639 --> 00:05:29,680
+company. Yeah. Me and Vibob like to joke
+
+138
+00:05:29,680 --> 00:05:31,759
+that we're going to create uh a thousand
+
+139
+00:05:31,759 --> 00:05:33,919
+a thousand AI companies this year just
+
+140
+00:05:33,919 --> 00:05:35,840
+by showing people how to do some simple
+
+141
+00:05:35,840 --> 00:05:38,990
+stuff that's super super
+
+142
+00:05:42,469 --> 00:05:42,479
+valuable. Um not uh not not ourselves by
+
+143
+00:05:42,479 --> 00:05:43,840
+the way. You all have to take this and
+
+144
+00:05:43,840 --> 00:05:47,830
+go make something dope with it.
+
+145
+00:05:49,909 --> 00:05:49,919
+Um I think uh Dax one thing I want to
+
+146
+00:05:49,919 --> 00:05:51,360
+highlight here is like this general
+
+147
+00:05:51,360 --> 00:05:52,720
+problem space that we have of like you
+
+148
+00:05:52,720 --> 00:05:53,840
+have some policy you have some evidence
+
+149
+00:05:53,840 --> 00:05:55,120
+and you want to take the evidence with
+
+150
+00:05:55,120 --> 00:05:56,639
+the policies and analyze if it's
+
+151
+00:05:56,639 --> 00:06:00,120
+followed or not. Yeah.
+
+152
+00:06:00,120 --> 00:06:02,320
+How I guess like the most important part
+
+153
+00:06:02,320 --> 00:06:03,440
+is like what do what do you think is the
+
+154
+00:06:03,440 --> 00:06:05,919
+hardest part about this problem? Let's
+
+155
+00:06:05,919 --> 00:06:07,120
+start with that and then let's do some
+
+156
+00:06:07,120 --> 00:06:08,160
+whiteboarding of like system
+
+157
+00:06:08,160 --> 00:06:09,520
+architecture stuff and then let's talk
+
+158
+00:06:09,520 --> 00:06:11,080
+about it.
+
+159
+00:06:11,080 --> 00:06:13,600
+Um yeah, I mean so I think like the core
+
+160
+00:06:13,600 --> 00:06:16,360
+of this is like you have a piece of
+
+161
+00:06:16,360 --> 00:06:19,120
+evidence. Uh and let's make it more
+
+162
+00:06:19,120 --> 00:06:21,360
+concrete. What do you mean by evidence?
+
+163
+00:06:21,360 --> 00:06:23,039
+Uh so like the example we're going to do
+
+164
+00:06:23,039 --> 00:06:26,080
+today is going to be um we're going to
+
+165
+00:06:26,080 --> 00:06:29,199
+use the emails from the Enron data set.
+
+166
+00:06:29,199 --> 00:06:31,039
+Um, I don't know if anyone knows
+
+167
+00:06:31,039 --> 00:06:34,120
+quickly, but the story of Enron,
+
+168
+00:06:34,120 --> 00:06:37,039
+um, is that they were a big big company
+
+169
+00:06:37,039 --> 00:06:38,560
+and it turned out they were doing a lot
+
+170
+00:06:38,560 --> 00:06:40,400
+of really shady stuff and the entire
+
+171
+00:06:40,400 --> 00:06:41,840
+company fell apart and all the
+
+172
+00:06:41,840 --> 00:06:43,520
+executives were kind of like screwing
+
+173
+00:06:43,520 --> 00:06:47,160
+everybody over. Um, and then the company
+
+174
+00:06:47,160 --> 00:06:51,360
+died. And so the idea is the Enron email
+
+175
+00:06:51,360 --> 00:06:54,080
+data set, it was published by CMU. It's
+
+176
+00:06:54,080 --> 00:06:58,479
+a giant uh 1.7 g gig archive of emails
+
+177
+00:06:58,479 --> 00:07:02,560
+from sent by people at Enron. Um and so
+
+178
+00:07:02,560 --> 00:07:04,120
+you can come and see all these sent
+
+179
+00:07:04,120 --> 00:07:06,400
+messages. Um and you can see this. So
+
+180
+00:07:06,400 --> 00:07:07,360
+what we're going to do is kind of go
+
+181
+00:07:07,360 --> 00:07:08,880
+through each of these pieces of evidence
+
+182
+00:07:08,880 --> 00:07:10,800
+and say, "Hey, did did this email break
+
+183
+00:07:10,800 --> 00:07:13,039
+any rules?"
+
+184
+00:07:13,039 --> 00:07:17,000
+Does that track? Yep.
+
+185
+00:07:17,000 --> 00:07:20,440
+Um so this will be a fun one.
+
+186
+00:07:20,440 --> 00:07:22,720
+um still kind of poking around with
+
+187
+00:07:22,720 --> 00:07:24,160
+different sets of rules. But one thing
+
+188
+00:07:24,160 --> 00:07:27,599
+that um we were messing with was this uh
+
+189
+00:07:27,599 --> 00:07:30,240
+this is a 2004 code of conduct that is
+
+190
+00:07:30,240 --> 00:07:32,400
+published by JP Morgan. It has lots of
+
+191
+00:07:32,400 --> 00:07:34,400
+rules about uh talking about the
+
+192
+00:07:34,400 --> 00:07:38,080
+business publicly about um accepting
+
+193
+00:07:38,080 --> 00:07:39,919
+gifts and things like that about
+
+194
+00:07:39,919 --> 00:07:41,840
+publicly talking about finances without
+
+195
+00:07:41,840 --> 00:07:44,160
+disclosing you're an employee. Um I'm
+
+196
+00:07:44,160 --> 00:07:45,360
+not sure we're going to get out of this
+
+197
+00:07:45,360 --> 00:07:48,000
+but um we will we will try a couple
+
+198
+00:07:48,000 --> 00:07:49,360
+different things. So we'll pump Sarbain
+
+199
+00:07:49,360 --> 00:07:50,720
+Oxley and a couple other things through
+
+200
+00:07:50,720 --> 00:07:52,960
+here. Um, and the idea is not that like
+
+201
+00:07:52,960 --> 00:07:54,639
+today we're going to build a full end to
+
+202
+00:07:54,639 --> 00:07:55,919
+end demo. We're going to kind of like
+
+203
+00:07:55,919 --> 00:07:57,840
+build the architecture and then figure
+
+204
+00:07:57,840 --> 00:07:59,520
+out how and do it really naively to
+
+205
+00:07:59,520 --> 00:08:02,000
+start. Um, and so what we want to have
+
+206
+00:08:02,000 --> 00:08:05,479
+is kind of like extracting
+
+207
+00:08:05,479 --> 00:08:08,319
+uh kind of like from the policy you're
+
+208
+00:08:08,319 --> 00:08:09,840
+basically building a set of prompts,
+
+209
+00:08:09,840 --> 00:08:14,400
+right? And so like it for each Yeah,
+
+210
+00:08:14,400 --> 00:08:17,479
+let's write some code.
+
+211
+00:08:17,479 --> 00:08:31,630
+uh find uh violations,
+
+212
+00:08:35,870 --> 00:08:35,880
+right? We'll go we'll go Pythony here.
+
+213
+00:08:35,880 --> 00:08:38,279
+Um policies list of
+
+214
+00:08:38,279 --> 00:08:41,399
+string, emails list of
+
+215
+00:08:41,399 --> 00:08:44,990
+string.
+
+216
+00:08:48,910 --> 00:08:48,920
+Um and then this will be like a list of
+
+217
+00:08:48,920 --> 00:08:58,070
+results, right? And a result will have
+
+218
+00:09:00,949 --> 00:09:00,959
+uh what goes in the result of
+
+219
+00:09:00,959 --> 00:09:03,600
+um I think before we Yeah, we can write
+
+220
+00:09:03,600 --> 00:09:05,839
+this out really fast. The source email.
+
+221
+00:09:05,839 --> 00:09:08,240
+Sure.
+
+222
+00:09:08,240 --> 00:09:11,750
+um
+
+223
+00:09:13,829 --> 00:09:13,839
+some sort of identifier of the policy,
+
+224
+00:09:13,839 --> 00:09:15,040
+right? I don't know exactly how we're
+
+225
+00:09:15,040 --> 00:09:16,560
+going to if it's a pointer or if it's
+
+226
+00:09:16,560 --> 00:09:18,399
+the content or whatever and then it's
+
+227
+00:09:18,399 --> 00:09:22,310
+like
+
+228
+00:09:24,230 --> 00:09:24,240
+something like this. Yeah, I think
+
+229
+00:09:24,240 --> 00:09:26,720
+that's a pretty good um I think that's a
+
+230
+00:09:26,720 --> 00:09:29,600
+pretty good uh start. But I think like
+
+231
+00:09:29,600 --> 00:09:31,200
+before we even go go into this, let's
+
+232
+00:09:31,200 --> 00:09:32,240
+just like try and whiteboard a little
+
+233
+00:09:32,240 --> 00:09:33,839
+bit and just say like what kind of uh
+
+234
+00:09:33,839 --> 00:09:36,160
+diagrams do we actually have? So I think
+
+235
+00:09:36,160 --> 00:09:37,760
+when I look at this data the first thing
+
+236
+00:09:37,760 --> 00:09:39,279
+that comes to my mind is like what's the
+
+237
+00:09:39,279 --> 00:09:40,320
+data that we have available to
+
+238
+00:09:40,320 --> 00:09:42,480
+ourselves. So we have like the you said
+
+239
+00:09:42,480 --> 00:09:44,320
+the what what are those docs called that
+
+240
+00:09:44,320 --> 00:09:47,360
+you talked about you had two documents
+
+241
+00:09:47,360 --> 00:09:48,800
+specifically one was a plain text
+
+242
+00:09:48,800 --> 00:09:50,560
+document and then one was the one was
+
+243
+00:09:50,560 --> 00:09:55,200
+the one was a PDF. Yeah the JP Morgan JP
+
+244
+00:09:55,200 --> 00:09:56,399
+Morgan and then what's the other
+
+245
+00:09:56,399 --> 00:10:00,399
+document here? So beans exactly and I
+
+246
+00:10:00,399 --> 00:10:01,920
+think mo there's two different ways that
+
+247
+00:10:01,920 --> 00:10:03,440
+we could do this. The most naive way is
+
+248
+00:10:03,440 --> 00:10:05,200
+we put this into some context window. We
+
+249
+00:10:05,200 --> 00:10:06,560
+put this into some context window and
+
+250
+00:10:06,560 --> 00:10:09,040
+then we just ask the LM to do the dumb
+
+251
+00:10:09,040 --> 00:10:12,959
+thing and say okay is this is this uh
+
+252
+00:10:12,959 --> 00:10:17,040
+does this match the policy break policy
+
+253
+00:10:17,040 --> 00:10:18,959
+and there's probably a word world in
+
+254
+00:10:18,959 --> 00:10:21,720
+which like um where this
+
+255
+00:10:21,720 --> 00:10:23,760
+works where like you can actually take
+
+256
+00:10:23,760 --> 00:10:25,680
+this email ask it like literally just
+
+257
+00:10:25,680 --> 00:10:27,519
+ask the LM directly does this break the
+
+258
+00:10:27,519 --> 00:10:30,640
+policy and just get a yes or no. Yeah
+
+259
+00:10:30,640 --> 00:10:32,079
+but I don't think this will work with
+
+260
+00:10:32,079 --> 00:10:34,560
+most models today yet. So, we actually
+
+261
+00:10:34,560 --> 00:10:36,079
+have to break this problem down into a
+
+262
+00:10:36,079 --> 00:10:38,000
+different problem. And I think and I
+
+263
+00:10:38,000 --> 00:10:39,519
+actually want to say like we could even
+
+264
+00:10:39,519 --> 00:10:41,440
+go even bigger and we could say all of
+
+265
+00:10:41,440 --> 00:10:43,440
+the emails tell me which emails break
+
+266
+00:10:43,440 --> 00:10:45,519
+the policy and why. But you're already
+
+267
+00:10:45,519 --> 00:10:46,959
+skipping that one, right? Yeah. Yeah. I
+
+268
+00:10:46,959 --> 00:10:48,399
+skip that one. We can't send all the
+
+269
+00:10:48,399 --> 00:10:50,320
+emails. So, we say for a single email,
+
+270
+00:10:50,320 --> 00:10:52,800
+here's the entire policy. What's the
+
+271
+00:10:52,800 --> 00:10:53,760
+email? This is what we always talk
+
+272
+00:10:53,760 --> 00:10:55,519
+about, right? is like if you can solve
+
+273
+00:10:55,519 --> 00:10:58,480
+the problem slowly and expensively at
+
+274
+00:10:58,480 --> 00:11:00,640
+the start but you know it's possible
+
+275
+00:11:00,640 --> 00:11:02,640
+then you can go grind it down and try to
+
+276
+00:11:02,640 --> 00:11:05,120
+do something more focused. Exactly. So
+
+277
+00:11:05,120 --> 00:11:07,040
+now what I would say is instead what if
+
+278
+00:11:07,040 --> 00:11:09,040
+we could break down the plain text into
+
+279
+00:11:09,040 --> 00:11:11,399
+a bunch of
+
+280
+00:11:11,399 --> 00:11:14,800
+policies and then go ask oh I see. So we
+
+281
+00:11:14,800 --> 00:11:16,160
+have the ability to go and take this
+
+282
+00:11:16,160 --> 00:11:17,440
+whole thing and break it down to a bunch
+
+283
+00:11:17,440 --> 00:11:18,720
+of unique policies and then ask
+
+284
+00:11:18,720 --> 00:11:21,399
+questions about each policy in
+
+285
+00:11:21,399 --> 00:11:24,079
+parallel. we will probably get slightly
+
+286
+00:11:24,079 --> 00:11:26,880
+better answers and even over here we can
+
+287
+00:11:26,880 --> 00:11:28,480
+actually use like a single prompt to go
+
+288
+00:11:28,480 --> 00:11:31,360
+do all this like we don't technically
+
+289
+00:11:31,360 --> 00:11:34,320
+need different prompts
+
+290
+00:11:34,320 --> 00:11:37,680
+um where we ask it for every single one
+
+291
+00:11:37,680 --> 00:11:39,360
+um and just ask it which of these did we
+
+292
+00:11:39,360 --> 00:11:40,959
+break and we kind of know exactly what's
+
+293
+00:11:40,959 --> 00:11:42,880
+going on you're talking about single
+
+294
+00:11:42,880 --> 00:11:44,880
+prompt as in like ask it to reason
+
+295
+00:11:44,880 --> 00:11:48,160
+through 20 policies first and then
+
+296
+00:11:48,160 --> 00:11:50,320
+produce it answer well once we have a
+
+297
+00:11:50,320 --> 00:11:51,760
+list of policies and doesn't really
+
+298
+00:11:51,760 --> 00:11:53,680
+matter how we did this step. I should I
+
+299
+00:11:53,680 --> 00:11:55,440
+should be clear on this. Oh, when you
+
+300
+00:11:55,440 --> 00:11:56,959
+say Yeah. When you say single prompt,
+
+301
+00:11:56,959 --> 00:11:58,640
+you mean one prompt where we just have
+
+302
+00:11:58,640 --> 00:12:00,959
+template in the policy and template in
+
+303
+00:12:00,959 --> 00:12:03,360
+the evidence. So the input to this
+
+304
+00:12:03,360 --> 00:12:05,279
+prompt is the policy description and
+
+305
+00:12:05,279 --> 00:12:07,200
+then the and the email and we just ask
+
+306
+00:12:07,200 --> 00:12:10,600
+it does this does this email break this
+
+307
+00:12:10,600 --> 00:12:13,279
+policy? So that's one thing that we
+
+308
+00:12:13,279 --> 00:12:16,000
+could go do. Uh right. So I'll break
+
+309
+00:12:16,000 --> 00:12:20,360
+this out later. um t so like defaf
+
+310
+00:12:20,360 --> 00:12:25,790
+um check policy will take
+
+311
+00:12:28,990 --> 00:12:29,000
+in we'll take in like an
+
+312
+00:12:29,000 --> 00:12:32,760
+email stir and a
+
+313
+00:12:32,760 --> 00:12:35,440
+policy stir and literally just return a
+
+314
+00:12:35,440 --> 00:12:38,639
+boolean y that's what each of these do
+
+315
+00:12:38,639 --> 00:12:40,480
+but I think that this is actually not
+
+316
+00:12:40,480 --> 00:12:42,279
+going to end up working as well for most
+
+317
+00:12:42,279 --> 00:12:45,120
+systems so instead what I would what I
+
+318
+00:12:45,120 --> 00:12:47,800
+think we could do wait why
+
+319
+00:12:47,800 --> 00:12:50,639
+um one because the nuances of the policy
+
+320
+00:12:50,639 --> 00:12:52,639
+will probably get lost on the system a
+
+321
+00:12:52,639 --> 00:12:54,880
+lot. So like for example uh we worked at
+
+322
+00:12:54,880 --> 00:12:56,639
+some fintech companies and like one of
+
+323
+00:12:56,639 --> 00:12:58,519
+the things that comes up is
+
+324
+00:12:58,519 --> 00:13:02,160
+like the word asset means something
+
+325
+00:13:02,160 --> 00:13:03,920
+completely different in the context of
+
+326
+00:13:03,920 --> 00:13:06,279
+different financial
+
+327
+00:13:06,279 --> 00:13:09,600
+companies and even extracting the
+
+328
+00:13:09,600 --> 00:13:11,600
+terminology of that word asset is really
+
+329
+00:13:11,600 --> 00:13:14,240
+really really hard.
+
+330
+00:13:14,240 --> 00:13:16,720
+Okay. Right. Because in some companies
+
+331
+00:13:16,720 --> 00:13:19,600
+like like if you're in like macro uh in
+
+332
+00:13:19,600 --> 00:13:22,000
+like doing like macro uh macro trading
+
+333
+00:13:22,000 --> 00:13:23,920
+then like assets can include like oil
+
+334
+00:13:23,920 --> 00:13:26,800
+fields or like uh like like a bond that
+
+335
+00:13:26,800 --> 00:13:28,160
+you have on an oil field or something
+
+336
+00:13:28,160 --> 00:13:31,040
+else. But if you're in like a and the
+
+337
+00:13:31,040 --> 00:13:32,880
+word crypto like what do crypto what
+
+338
+00:13:32,880 --> 00:13:34,639
+does crypto mean in the sense of assets?
+
+339
+00:13:34,639 --> 00:13:37,360
+It we really don't know. So I actually
+
+340
+00:13:37,360 --> 00:13:39,920
+think to do might actually be to go even
+
+341
+00:13:39,920 --> 00:13:42,240
+further and say in fact we're actually
+
+342
+00:13:42,240 --> 00:13:44,160
+not going to pick every policy. We're
+
+343
+00:13:44,160 --> 00:13:45,959
+only going to pick some of
+
+344
+00:13:45,959 --> 00:13:48,399
+them. And for now, instead of being
+
+345
+00:13:48,399 --> 00:13:50,279
+really good at detecting every policy
+
+346
+00:13:50,279 --> 00:13:52,880
+break, we'll pick a couple policies that
+
+347
+00:13:52,880 --> 00:13:56,800
+we know are critical and go specific
+
+348
+00:13:56,800 --> 00:13:58,560
+uh and I'm going to name these now.
+
+349
+00:13:58,560 --> 00:14:02,880
+Policy A, policy B, and go build
+
+350
+00:14:02,880 --> 00:14:07,040
+specific um pipelines for policy A and
+
+351
+00:14:07,040 --> 00:14:09,399
+policy B
+
+352
+00:14:09,399 --> 00:14:12,720
+uniquely, if that makes sense.
+
+353
+00:14:12,720 --> 00:14:14,320
+Cool. So these might have their own
+
+354
+00:14:14,320 --> 00:14:15,839
+custom prompts and it's not just
+
+355
+00:14:15,839 --> 00:14:17,920
+templating in two strings and saying
+
+356
+00:14:17,920 --> 00:14:19,839
+like does this match. Yeah. And they
+
+357
+00:14:19,839 --> 00:14:21,680
+might even have more than just a prompt.
+
+358
+00:14:21,680 --> 00:14:24,560
+They might have a whole pipeline
+
+359
+00:14:24,560 --> 00:14:28,560
+for each one if that makes sense. Cool.
+
+360
+00:14:28,560 --> 00:14:30,639
+Yeah, that makes sense. Um I'm wondering
+
+361
+00:14:30,639 --> 00:14:31,680
+if it might make sense just to
+
+362
+00:14:31,680 --> 00:14:33,440
+demonstrate kind of like really simply
+
+363
+00:14:33,440 --> 00:14:35,279
+and like testing and prompts like what
+
+364
+00:14:35,279 --> 00:14:37,519
+what this naive way looks like before we
+
+365
+00:14:37,519 --> 00:14:39,040
+go start and do the advanced stuff.
+
+366
+00:14:39,040 --> 00:14:41,920
+Yeah, let's do it. So like just just to
+
+367
+00:14:41,920 --> 00:14:43,199
+quickly just so we have something to
+
+368
+00:14:43,199 --> 00:14:46,480
+build from like let's go from like here
+
+369
+00:14:46,480 --> 00:14:50,279
+let's do like evaluate
+
+370
+00:14:50,279 --> 00:14:53,880
+policy and we would just say
+
+371
+00:14:53,880 --> 00:14:57,000
+like email
+
+372
+00:14:57,000 --> 00:15:00,880
+string policy string.
+
+373
+00:15:00,880 --> 00:15:02,720
+Um, and we actually we built another
+
+374
+00:15:02,720 --> 00:15:04,800
+pipeline already or I I was hacking on a
+
+375
+00:15:04,800 --> 00:15:06,160
+short pipeline that is basically just
+
+376
+00:15:06,160 --> 00:15:09,040
+extracting questions. And so like read
+
+377
+00:15:09,040 --> 00:15:11,360
+through a giant policy document and
+
+378
+00:15:11,360 --> 00:15:13,920
+extract a list of kind of like policies.
+
+379
+00:15:13,920 --> 00:15:15,600
+I think VIB made a really good point
+
+380
+00:15:15,600 --> 00:15:17,920
+which is like if you use a bunch of LLM
+
+381
+00:15:17,920 --> 00:15:19,440
+generated inputs, you're going to get
+
+382
+00:15:19,440 --> 00:15:21,920
+lowquality LM generated outputs. But
+
+383
+00:15:21,920 --> 00:15:23,920
+like here's an example of like what this
+
+384
+00:15:23,920 --> 00:15:26,240
+might look like. Um, so you could take
+
+385
+00:15:26,240 --> 00:15:30,320
+this question and ask, you know, of this
+
+386
+00:15:30,320 --> 00:15:33,120
+email what what what was there? Um, but
+
+387
+00:15:33,120 --> 00:15:34,639
+that's just kind of framing the shape of
+
+388
+00:15:34,639 --> 00:15:40,269
+this. Um
+
+389
+00:15:44,030 --> 00:15:44,040
+and compare them
+
+390
+00:15:44,040 --> 00:15:49,600
+to pieces of email evidence, right?
+
+391
+00:15:49,600 --> 00:15:52,240
+Yep.
+
+392
+00:15:52,240 --> 00:15:55,199
+Your goal is to determine whether the
+
+393
+00:15:55,199 --> 00:15:57,440
+email evidence violated the policy,
+
+394
+00:15:57,440 --> 00:16:01,199
+right? Yep.
+
+395
+00:16:01,199 --> 00:16:05,680
+Here's the email.
+
+396
+00:16:05,680 --> 00:16:08,199
+Say
+
+397
+00:16:08,199 --> 00:16:11,199
+email policy
+
+398
+00:16:11,199 --> 00:16:12,639
+say, you know, I would actually put the
+
+399
+00:16:12,639 --> 00:16:17,920
+policy in the system prompt. Okay, cool.
+
+400
+00:16:17,920 --> 00:16:23,430
+Um,
+
+401
+00:16:26,629 --> 00:16:26,639
+We'll just have one. Uh maybe we should
+
+402
+00:16:26,639 --> 00:16:30,790
+return an array of violations.
+
+403
+00:16:31,910 --> 00:16:31,920
+Even though we're only going to do one
+
+404
+00:16:31,920 --> 00:16:35,269
+policy.
+
+405
+00:16:37,269 --> 00:16:37,279
+Yeah, one policy at a time with a bunch
+
+406
+00:16:37,279 --> 00:16:39,040
+of
+
+407
+00:16:39,040 --> 00:16:41,920
+um and then I would also list out like
+
+408
+00:16:41,920 --> 00:16:44,600
+uh Yeah, we can do
+
+409
+00:16:44,600 --> 00:16:47,680
+that. I would put the reason before the
+
+410
+00:16:47,680 --> 00:16:50,710
+reasoning.
+
+411
+00:16:52,790 --> 00:16:52,800
+Oh, sorry. I put the result before the
+
+412
+00:16:52,800 --> 00:16:55,120
+Yeah, there you go. Okay. Why is that?
+
+413
+00:16:55,120 --> 00:16:56,639
+Well, let's let's let's just run it.
+
+414
+00:16:56,639 --> 00:16:57,680
+We'll try. We'll flip it around. We'll
+
+415
+00:16:57,680 --> 00:16:59,040
+see see how it affects the output,
+
+416
+00:16:59,040 --> 00:17:01,279
+right?
+
+417
+00:17:01,279 --> 00:17:04,240
+Um, so the email let's just grab one of
+
+418
+00:17:04,240 --> 00:17:05,839
+these. You can just grab one of these
+
+419
+00:17:05,839 --> 00:17:15,150
+and run
+
+420
+00:17:25,429 --> 00:17:25,439
+And then the policy would be something
+
+421
+00:17:25,439 --> 00:17:28,079
+like members must not accept gifts. And
+
+422
+00:17:28,079 --> 00:17:32,080
+then one more hashtag at the end. Yep.
+
+423
+00:17:32,080 --> 00:17:36,669
+Oh, other way. Swap it.
+
+424
+00:17:40,070 --> 00:17:40,080
+Oh, really? Oh, sorry. It's like this.
+
+425
+00:17:40,080 --> 00:17:41,679
+Yeah. Sorry. Since I highlighting on
+
+426
+00:17:41,679 --> 00:17:43,120
+your color scheme doesn't work for my
+
+427
+00:17:43,120 --> 00:17:47,669
+brain.
+
+428
+00:18:00,789 --> 00:18:00,799
+bull. All right, here we go.
+
+429
+00:18:00,799 --> 00:18:03,440
+Uh, just hit command. Yeah, I think if
+
+430
+00:18:03,440 --> 00:18:05,120
+you hit command S on the file, it should
+
+431
+00:18:05,120 --> 00:18:07,200
+load for you. I'll figure out why for
+
+432
+00:18:07,200 --> 00:18:08,640
+you specifically. This seems to be a
+
+433
+00:18:08,640 --> 00:18:10,160
+problem.
+
+434
+00:18:10,160 --> 00:18:13,590
+Um.
+
+435
+00:18:16,390 --> 00:18:16,400
+Oh, do I need to? No, you should. I
+
+436
+00:18:16,400 --> 00:18:17,840
+already updated this. You can just open
+
+437
+00:18:17,840 --> 00:18:20,360
+it. Can you hit run
+
+438
+00:18:20,360 --> 00:18:22,559
+test? Just say command S. Yeah, there
+
+439
+00:18:22,559 --> 00:18:26,080
+you go. Just say command S on that file.
+
+440
+00:18:26,080 --> 00:18:28,720
+Uh, this is odd. There you go. There we
+
+441
+00:18:28,720 --> 00:18:32,960
+go. All right. Here we go.
+
+442
+00:18:32,960 --> 00:18:36,880
+So result false reasoning not accept any
+
+443
+00:18:36,880 --> 00:18:38,559
+does not discuss any acceptance of gifts
+
+444
+00:18:38,559 --> 00:18:41,880
+or favors. Yeah.
+
+445
+00:18:41,880 --> 00:18:44,960
+Um okay. So that's kind of the the shape
+
+446
+00:18:44,960 --> 00:18:48,559
+of it though. Um let's write a test. Uh
+
+447
+00:18:48,559 --> 00:18:50,080
+and then I think the the thing about
+
+448
+00:18:50,080 --> 00:18:52,880
+reasoning is like um there's a couple
+
+449
+00:18:52,880 --> 00:18:57,510
+kinds of things that we could go do.
+
+450
+00:19:01,270 --> 00:19:01,280
+Uh, shouldn't you before? Um, it depends
+
+451
+00:19:01,280 --> 00:19:02,880
+on what you're trying to go do. Uh,
+
+452
+00:19:02,880 --> 00:19:04,480
+sorry, there's a couple questions uh
+
+453
+00:19:04,480 --> 00:19:06,799
+that people are asking. And I realized
+
+454
+00:19:06,799 --> 00:19:08,320
+Oh, yeah. I did not have my chat window
+
+455
+00:19:08,320 --> 00:19:11,679
+open while I was looking. Um, Kosal
+
+456
+00:19:11,679 --> 00:19:12,960
+asked, "Wouldn't you say in the system
+
+457
+00:19:12,960 --> 00:19:14,799
+prompt uh what you are working with to
+
+458
+00:19:14,799 --> 00:19:17,120
+avoid that you don't know an asset?" and
+
+459
+00:19:17,120 --> 00:19:19,679
+cush that that's that's true. But if I'm
+
+460
+00:19:19,679 --> 00:19:21,200
+building something that analyzes all of
+
+461
+00:19:21,200 --> 00:19:24,000
+the Enron data sets, then you can do
+
+462
+00:19:24,000 --> 00:19:26,600
+equal equals instead of just
+
+463
+00:19:26,600 --> 00:19:28,799
+result. Yeah. Uh if I'm analyzing
+
+464
+00:19:28,799 --> 00:19:30,559
+something that analyzes the entire Enron
+
+465
+00:19:30,559 --> 00:19:32,160
+data set and that ends up being really
+
+466
+00:19:32,160 --> 00:19:34,880
+hard because uh like well in the world
+
+467
+00:19:34,880 --> 00:19:36,960
+of Enron there is no crypto. But you can
+
+468
+00:19:36,960 --> 00:19:38,559
+imagine that in today's if I'm a large
+
+469
+00:19:38,559 --> 00:19:40,160
+asset manager that sometimes I'll have
+
+470
+00:19:40,160 --> 00:19:41,799
+crypto, sometimes I won't. It's very
+
+471
+00:19:41,799 --> 00:19:43,760
+conditional. So you can actually like
+
+472
+00:19:43,760 --> 00:19:46,480
+hardcode that in uh cursor rule files.
+
+473
+00:19:46,480 --> 00:19:49,559
+There is one I can share that in a bit.
+
+474
+00:19:49,559 --> 00:19:52,559
+Um can we do contextual aware
+
+475
+00:19:52,559 --> 00:19:54,240
+decomposition for the policies and only
+
+476
+00:19:54,240 --> 00:19:55,760
+check with relevant policies and
+
+477
+00:19:55,760 --> 00:19:59,280
+exactly? So Deborah exactly so we don't
+
+478
+00:19:59,280 --> 00:20:00,640
+actually want to go do all the policies
+
+479
+00:20:00,640 --> 00:20:01,679
+but you're still going to have to build
+
+480
+00:20:01,679 --> 00:20:03,039
+some pipeline that predicts which
+
+481
+00:20:03,039 --> 00:20:05,120
+policies are relevant to this. And
+
+482
+00:20:05,120 --> 00:20:06,480
+there's different ways that we can go do
+
+483
+00:20:06,480 --> 00:20:08,400
+this but at some point we can use an lm
+
+484
+00:20:08,400 --> 00:20:10,720
+per policy. We can do like some sort of
+
+485
+00:20:10,720 --> 00:20:12,640
+selection with some sort of embeddings.
+
+486
+00:20:12,640 --> 00:20:15,520
+We can do like the ability to turn on
+
+487
+00:20:15,520 --> 00:20:18,559
+and off policy A and B and whether we're
+
+488
+00:20:18,559 --> 00:20:20,080
+running A or B could be another
+
+489
+00:20:20,080 --> 00:20:22,880
+prefilter step that we choose to run to
+
+490
+00:20:22,880 --> 00:20:24,400
+decide which of the policies are even
+
+491
+00:20:24,400 --> 00:20:27,280
+relevant for an email. Yeah. Like this
+
+492
+00:20:27,280 --> 00:20:29,440
+break policy A doesn't have to call an
+
+493
+00:20:29,440 --> 00:20:31,919
+LLM. It could have a step that says is
+
+494
+00:20:31,919 --> 00:20:35,440
+policy A relevant for this email and if
+
+495
+00:20:35,440 --> 00:20:38,880
+it is then we'll then we'll try it out.
+
+496
+00:20:38,880 --> 00:20:41,840
+Okay. So basically in our find policy
+
+497
+00:20:41,840 --> 00:20:44,280
+violations we would first do
+
+498
+00:20:44,280 --> 00:20:46,280
+like
+
+499
+00:20:46,280 --> 00:20:53,029
+filtered policies equals filter.
+
+500
+00:20:54,710 --> 00:20:54,720
+Yeah something like that becomes an
+
+501
+00:20:54,720 --> 00:20:56,799
+option that we can go do. And then Kyle
+
+502
+00:20:56,799 --> 00:21:00,400
+asked the problem um
+
+503
+00:21:00,400 --> 00:21:02,960
+uh Kyle asked a problem for um like
+
+504
+00:21:02,960 --> 00:21:04,240
+shouldn't we put the reasoning before
+
+505
+00:21:04,240 --> 00:21:06,799
+the result? It depends on what you want
+
+506
+00:21:06,799 --> 00:21:08,640
+to go use the reasoning for. So in this
+
+507
+00:21:08,640 --> 00:21:10,400
+case, what I would want to go do is I'd
+
+508
+00:21:10,400 --> 00:21:11,679
+probably want to show the reasoning to
+
+509
+00:21:11,679 --> 00:21:13,520
+the user about like what we did. But
+
+510
+00:21:13,520 --> 00:21:15,039
+what I would actually here Can you go
+
+511
+00:21:15,039 --> 00:21:17,039
+back the other prompt? You want to go to
+
+512
+00:21:17,039 --> 00:21:19,280
+the code? Yeah. What I would do is like
+
+513
+00:21:19,280 --> 00:21:23,600
+I would add one more thing above result
+
+514
+00:21:23,600 --> 00:21:26,559
+uh above. So and then that's like uh
+
+515
+00:21:26,559 --> 00:21:30,960
+like um relevant snippets.
+
+516
+00:21:30,960 --> 00:21:34,799
+Ah yeah string array. Exactly. And
+
+517
+00:21:34,799 --> 00:21:36,480
+that's going to be snippets of the email
+
+518
+00:21:36,480 --> 00:21:39,120
+that might be relevant to the policy
+
+519
+00:21:39,120 --> 00:21:40,720
+that and then what I would say that are
+
+520
+00:21:40,720 --> 00:21:43,600
+that I would say that may be relevant
+
+521
+00:21:43,600 --> 00:21:45,360
+specifically. I'm going to use the word
+
+522
+00:21:45,360 --> 00:21:48,880
+may so it's more permissive. Yeah. And
+
+523
+00:21:48,880 --> 00:21:50,559
+then I would go run this prompt and you
+
+524
+00:21:50,559 --> 00:21:53,520
+can just see how that this works.
+
+525
+00:21:53,520 --> 00:21:56,960
+Yeah. Um cool to find a way. Do you have
+
+526
+00:21:56,960 --> 00:22:00,080
+any um any hacks on uh how we might go
+
+527
+00:22:00,080 --> 00:22:03,120
+through this seven gig 1.7 gigs of
+
+528
+00:22:03,120 --> 00:22:04,799
+emails and find some that are
+
+529
+00:22:04,799 --> 00:22:09,870
+interesting? I would grap for gift
+
+530
+00:22:12,789 --> 00:22:12,799
+That's what I would do. I I there
+
+531
+00:22:12,799 --> 00:22:16,480
+might be one which because Enron
+
+532
+00:22:16,480 --> 00:22:18,159
+um and that might be the fast way to go
+
+533
+00:22:18,159 --> 00:22:19,840
+find something or I would just make a
+
+534
+00:22:19,840 --> 00:22:21,760
+test case that like is like artificially
+
+535
+00:22:21,760 --> 00:22:23,520
+there and then eventually we can just go
+
+536
+00:22:23,520 --> 00:22:26,320
+run this in a massive AWS job.
+
+537
+00:22:26,320 --> 00:22:27,600
+Yeah, that was the other thing. I was
+
+538
+00:22:27,600 --> 00:22:28,640
+like, it would be interesting to talk
+
+539
+00:22:28,640 --> 00:22:30,080
+about kind of how do you scale this
+
+540
+00:22:30,080 --> 00:22:31,440
+thing, right? How do you actually just
+
+541
+00:22:31,440 --> 00:22:33,440
+go fan out to hundreds of emails in
+
+542
+00:22:33,440 --> 00:22:35,440
+parallel? Well, the problem you'll first
+
+543
+00:22:35,440 --> 00:22:40,520
+run into is rate limiting. Um, yeah. Oh,
+
+544
+00:22:40,520 --> 00:22:42,440
+nice. I
+
+545
+00:22:42,440 --> 00:22:47,120
+saw a gift card is what I saw.
+
+546
+00:22:47,120 --> 00:22:50,000
+There's a lot of um there's a lot of ads
+
+547
+00:22:50,000 --> 00:22:53,120
+in people's email. I think these are all
+
+548
+00:22:53,120 --> 00:22:56,559
+like spam emails selling people [ __ ]
+
+549
+00:22:56,559 --> 00:23:03,029
+I mean that's fine. Share it in gift.
+
+550
+00:23:07,990 --> 00:23:08,000
+you can just copy and paste one of
+
+551
+00:23:08,000 --> 00:23:09,200
+these. It doesn't have to be everything.
+
+552
+00:23:09,200 --> 00:23:11,360
+It just has to be part of it. I think we
+
+553
+00:23:11,360 --> 00:23:15,390
+should just go and write as much as we
+
+554
+00:23:18,710 --> 00:23:18,720
+can. Oh yes, you are a command line
+
+555
+00:23:18,720 --> 00:23:23,270
+copier which is makes sense.
+
+556
+00:23:25,430 --> 00:23:25,440
+Uh, I can't tell if you're complimenting
+
+557
+00:23:25,440 --> 00:23:42,230
+me or talking [ __ ] but I'll take it.
+
+558
+00:23:43,750 --> 00:23:43,760
+Yeah. And there's there's interesting
+
+559
+00:23:43,760 --> 00:23:45,360
+things in here, too. So, like there's
+
+560
+00:23:45,360 --> 00:23:51,549
+clearly emails that
+
+561
+00:23:53,990 --> 00:23:54,000
+um Oh, it's going to copy and paste all
+
+562
+00:23:54,000 --> 00:23:56,000
+this. I would just Yeah, using an LLM
+
+563
+00:23:56,000 --> 00:23:58,720
+for copy paste is really uh is really a
+
+564
+00:23:58,720 --> 00:24:01,039
+great is a great approach. Like write it
+
+565
+00:24:01,039 --> 00:24:03,520
+yourself.
+
+566
+00:24:03,520 --> 00:24:15,110
+Yeah.
+
+567
+00:24:16,269 --> 00:24:16,279
+it
+
+568
+00:24:16,279 --> 00:24:19,360
+doesn't cool I think you have too many
+
+569
+00:24:19,360 --> 00:24:22,559
+curies at the bottom.
+
+570
+00:24:22,559 --> 00:24:30,590
+Oh, they were already there.
+
+571
+00:24:35,190 --> 00:24:35,200
+Yeah. Let's try this one.
+
+572
+00:24:35,200 --> 00:24:37,120
+Result true.
+
+573
+00:24:37,120 --> 00:24:40,960
+Um, so it pulled the relevant snippets.
+
+574
+00:24:40,960 --> 00:24:42,320
+Result true. And then we have our
+
+575
+00:24:42,320 --> 00:24:44,799
+reasoning here. Yeah. And like we can
+
+576
+00:24:44,799 --> 00:24:46,240
+just skim this email really fast just to
+
+577
+00:24:46,240 --> 00:24:47,360
+make sure. I think it's useful to
+
+578
+00:24:47,360 --> 00:24:48,880
+actually read it because like no matter
+
+579
+00:24:48,880 --> 00:24:50,480
+what we do fundamentally at this point
+
+580
+00:24:50,480 --> 00:24:53,039
+like the LM is going to go do this.
+
+581
+00:24:53,039 --> 00:24:55,080
+Yeah. So let's read
+
+582
+00:24:55,080 --> 00:24:57,919
+this. So clearly this person did not
+
+583
+00:24:57,919 --> 00:24:59,960
+receive a
+
+584
+00:24:59,960 --> 00:25:03,120
+gift. This person sent a gift which is
+
+585
+00:25:03,120 --> 00:25:04,880
+very different than receiving a gift.
+
+586
+00:25:04,880 --> 00:25:06,320
+And this is exactly what I was talking
+
+587
+00:25:06,320 --> 00:25:09,360
+about. Having a general policy system
+
+588
+00:25:09,360 --> 00:25:11,679
+that does this won't capture the nuance
+
+589
+00:25:11,679 --> 00:25:13,679
+of the actual policy.
+
+590
+00:25:13,679 --> 00:25:15,760
+Yeah. And that's going to make it hard
+
+591
+00:25:15,760 --> 00:25:18,720
+to actually build a good pipeline.
+
+592
+00:25:18,720 --> 00:25:21,200
+Okay. Like this is like a clear example
+
+593
+00:25:21,200 --> 00:25:25,039
+of what's going on. So here's how I
+
+594
+00:25:25,039 --> 00:25:26,480
+would attack this problem in a little
+
+595
+00:25:26,480 --> 00:25:28,080
+bit. Instead of going for this directly,
+
+596
+00:25:28,080 --> 00:25:29,520
+I would say we're not going to build a
+
+597
+00:25:29,520 --> 00:25:30,799
+system that evaluates a policy. We're
+
+598
+00:25:30,799 --> 00:25:32,159
+going to build a system that evaluates a
+
+599
+00:25:32,159 --> 00:25:33,400
+gift
+
+600
+00:25:33,400 --> 00:25:36,159
+policy because I don't want to suddenly
+
+601
+00:25:36,159 --> 00:25:38,480
+flag people
+
+602
+00:25:38,480 --> 00:25:41,480
+uh for actually like not uh for not
+
+603
+00:25:41,480 --> 00:25:44,799
+actually Yeah, there you go. I don't
+
+604
+00:25:44,799 --> 00:25:48,080
+want to suddenly flag people for uh
+
+605
+00:25:48,080 --> 00:25:50,400
+giving gifts, not getting gifts. Now,
+
+606
+00:25:50,400 --> 00:25:51,880
+there might be something illegal that we
+
+607
+00:25:51,880 --> 00:25:54,960
+do evaluate gift policy is probably what
+
+608
+00:25:54,960 --> 00:25:57,600
+we want.
+
+609
+00:25:57,600 --> 00:26:00,000
+Yep.
+
+610
+00:26:00,000 --> 00:26:03,960
+Yeah, exactly. So, and what I
+
+611
+00:26:03,960 --> 00:26:06,320
+really exactly what I really want to do
+
+612
+00:26:06,320 --> 00:26:08,000
+is I might even put the text of the
+
+613
+00:26:08,000 --> 00:26:10,279
+policy in there myself if if it's
+
+614
+00:26:10,279 --> 00:26:16,350
+useful.
+
+615
+00:26:19,029 --> 00:26:19,039
+Um, yeah, there you go. Uh, we don't
+
+616
+00:26:19,039 --> 00:26:20,640
+need the policy parameter going into
+
+617
+00:26:20,640 --> 00:26:24,080
+this. Yeah. Um, and then we the
+
+618
+00:26:24,080 --> 00:26:25,279
+violation is going to be slightly
+
+619
+00:26:25,279 --> 00:26:28,240
+different. Um, so can I ask for remote
+
+620
+00:26:28,240 --> 00:26:30,360
+control? Yeah, go for
+
+621
+00:26:30,360 --> 00:26:34,240
+it. You're supposed to figure out the u
+
+622
+00:26:34,240 --> 00:26:36,640
+code remote screen sharing thing, but go
+
+623
+00:26:36,640 --> 00:26:38,720
+for it. All right, you're in. So, this
+
+624
+00:26:38,720 --> 00:26:40,159
+is kind of how I do this. Instead of a
+
+625
+00:26:40,159 --> 00:26:43,400
+violation, I'm do like class
+
+626
+00:26:43,400 --> 00:26:48,279
+email gift email
+
+627
+00:26:48,279 --> 00:26:52,360
+analysis. Uh, and I'll say like uh type
+
+628
+00:26:52,360 --> 00:26:55,710
+um
+
+629
+00:27:05,990 --> 00:27:06,000
+received gift given. Yeah,
+
+630
+00:27:06,000 --> 00:27:08,640
+um sender will be like the sender of who
+
+631
+00:27:08,640 --> 00:27:10,320
+it is. We don't actually need to see
+
+632
+00:27:10,320 --> 00:27:12,559
+this.
+
+633
+00:27:12,559 --> 00:27:18,990
+um sender
+
+634
+00:27:21,350 --> 00:27:21,360
+company and specifically what I mean to
+
+635
+00:27:21,360 --> 00:27:25,559
+say when I say sender and is like um
+
+636
+00:27:25,559 --> 00:27:29,600
+risk uh I see okay so you're kind of
+
+637
+00:27:29,600 --> 00:27:31,760
+hard coding the exact reasoning steps
+
+638
+00:27:31,760 --> 00:27:33,440
+you want the model to take into the
+
+639
+00:27:33,440 --> 00:27:37,549
+structured output
+
+640
+00:27:40,230 --> 00:27:40,240
+exactly um and then specifically what I
+
+641
+00:27:40,240 --> 00:27:44,149
+want to do is like recipient
+
+642
+00:27:45,750 --> 00:27:45,760
+Um
+
+643
+00:27:45,760 --> 00:27:49,830
+yeah.
+
+644
+00:27:53,669 --> 00:27:53,679
+Um all right, cool. Recipient. Uh what I
+
+645
+00:27:53,679 --> 00:27:56,880
+really wanted to hear is like recipient
+
+646
+00:27:56,880 --> 00:27:59,360
+uh company.
+
+647
+00:27:59,360 --> 00:28:02,159
+Yeah. What I really wanted between the
+
+648
+00:28:02,159 --> 00:28:04,520
+sender
+
+649
+00:28:04,520 --> 00:28:07,279
+and let me write this out. Oh, can you
+
+650
+00:28:07,279 --> 00:28:10,960
+do sender and the company?
+
+651
+00:28:10,960 --> 00:28:12,640
+Not company. Yeah, exactly. And then
+
+652
+00:28:12,640 --> 00:28:15,240
+same thing down
+
+653
+00:28:15,240 --> 00:28:17,679
+below. Exactly. And now make that again.
+
+654
+00:28:17,679 --> 00:28:20,000
+What is the What is the company? I feel
+
+655
+00:28:20,000 --> 00:28:22,000
+like that's gonna be Oh, yeah. But at
+
+656
+00:28:22,000 --> 00:28:23,320
+the top, put like
+
+657
+00:28:23,320 --> 00:28:25,760
+company. I I may want to pass in the
+
+658
+00:28:25,760 --> 00:28:28,480
+company as a parameter into line 13 as a
+
+659
+00:28:28,480 --> 00:28:31,360
+as a as an input. No, we may not even
+
+660
+00:28:31,360 --> 00:28:32,880
+want that. Actually, we may not want
+
+661
+00:28:32,880 --> 00:28:34,320
+that. We're going to send it like as a
+
+662
+00:28:34,320 --> 00:28:37,679
+parameter like uh the as parameter on
+
+663
+00:28:37,679 --> 00:28:40,720
+line 13. Yeah. Let's send in the company
+
+664
+00:28:40,720 --> 00:28:45,510
+name.
+
+665
+00:28:47,190 --> 00:28:47,200
+Exactly.
+
+666
+00:28:47,200 --> 00:28:49,919
+I mean, if I know is it the So, the
+
+667
+00:28:49,919 --> 00:28:52,240
+company name in this case is Enron or if
+
+668
+00:28:52,240 --> 00:28:54,360
+it's the the other party. Exactly.
+
+669
+00:28:54,360 --> 00:28:56,960
+Enron. You Okay. So if I'm doing this on
+
+670
+00:28:56,960 --> 00:28:59,440
+behalf of and on line 18 you'd say on
+
+671
+00:28:59,440 --> 00:29:05,350
+behalf of
+
+672
+00:29:09,710 --> 00:29:09,720
+uh on line 18 you're combined on behalf
+
+673
+00:29:09,720 --> 00:29:13,799
+of Yeah. Exactly. So now you
+
+674
+00:29:13,799 --> 00:29:17,990
+just exactly
+
+675
+00:29:22,310 --> 00:29:22,320
+working at Yeah. Sure. Yeah. Okay. Um,
+
+676
+00:29:22,320 --> 00:29:24,000
+so this is cool, but I want to throw
+
+677
+00:29:24,000 --> 00:29:25,440
+another sticky one your way, which is
+
+678
+00:29:25,440 --> 00:29:29,440
+like um I think what's what's probably
+
+679
+00:29:29,440 --> 00:29:31,600
+tricky is like figuring out which policy
+
+680
+00:29:31,600 --> 00:29:34,559
+this is and generating good test cases
+
+681
+00:29:34,559 --> 00:29:37,200
+with real data. Um, because what I want
+
+682
+00:29:37,200 --> 00:29:38,720
+to do before we like do any more
+
+683
+00:29:38,720 --> 00:29:40,480
+optimizations of the pipeline, I want to
+
+684
+00:29:40,480 --> 00:29:42,240
+do what we talked about last week, which
+
+685
+00:29:42,240 --> 00:29:45,200
+is build a really simple end toend eval
+
+686
+00:29:45,200 --> 00:29:47,120
+um, and kind of build out that golden
+
+687
+00:29:47,120 --> 00:29:49,520
+data set. I know I know that's kind of
+
+688
+00:29:49,520 --> 00:29:51,520
+ends up being a lot of manual work, but
+
+689
+00:29:51,520 --> 00:29:53,919
+like is there is there ways we can build
+
+690
+00:29:53,919 --> 00:29:56,240
+kind of the pre-processing pipeline to
+
+691
+00:29:56,240 --> 00:29:58,399
+kind of set up based on what we have
+
+692
+00:29:58,399 --> 00:30:01,679
+here um and kind of do a parallel search
+
+693
+00:30:01,679 --> 00:30:02,880
+through all this stuff to try to find
+
+694
+00:30:02,880 --> 00:30:04,480
+that? Well, like one of the first things
+
+695
+00:30:04,480 --> 00:30:06,080
+we said last time was the most important
+
+696
+00:30:06,080 --> 00:30:08,000
+thing to do here is going to end up
+
+697
+00:30:08,000 --> 00:30:09,200
+being like some sort of like a vibe
+
+698
+00:30:09,200 --> 00:30:11,039
+eval. So, I just want to get a feel for
+
+699
+00:30:11,039 --> 00:30:12,559
+what that was. Like you notice how it's
+
+700
+00:30:12,559 --> 00:30:14,880
+just like putting a gift in there from
+
+701
+00:30:14,880 --> 00:30:17,360
+last time when we did when we did that
+
+702
+00:30:17,360 --> 00:30:18,720
+gift email. The first thing we noticed
+
+703
+00:30:18,720 --> 00:30:21,600
+like oh this is a clear bug because
+
+704
+00:30:21,600 --> 00:30:24,960
+started happening was can can you bring
+
+705
+00:30:24,960 --> 00:30:27,200
+that test case over?
+
+706
+00:30:27,200 --> 00:30:28,559
+The first thing we noticed that this was
+
+707
+00:30:28,559 --> 00:30:32,559
+a clear bug. Oops. Uh because this was
+
+708
+00:30:32,559 --> 00:30:33,919
+the bug here wasn't actually the fact
+
+709
+00:30:33,919 --> 00:30:35,120
+that everything was wrong. It's just
+
+710
+00:30:35,120 --> 00:30:37,880
+that this is like a
+
+711
+00:30:37,880 --> 00:30:40,159
+Exactly. So now let's try running this
+
+712
+00:30:40,159 --> 00:30:41,520
+really fast. I just want to see what
+
+713
+00:30:41,520 --> 00:30:43,520
+ends up happening.
+
+714
+00:30:43,520 --> 00:30:45,919
+Yep. And just hit command S again or
+
+715
+00:30:45,919 --> 00:30:47,320
+press enter or
+
+716
+00:30:47,320 --> 00:30:52,029
+something. There you go.
+
+717
+00:30:59,350 --> 00:30:59,360
+great. That's great. So like the first
+
+718
+00:30:59,360 --> 00:31:00,640
+thing that this did is it actually was
+
+719
+00:31:00,640 --> 00:31:03,799
+able to figure out that this was a gift
+
+720
+00:31:03,799 --> 00:31:09,240
+given from Kathy to uh the third party
+
+721
+00:31:09,240 --> 00:31:12,720
+business and the risk level is medium
+
+722
+00:31:12,720 --> 00:31:16,240
+right it could be risky because Enron is
+
+723
+00:31:16,240 --> 00:31:17,840
+not Enron employees are not supposed to
+
+724
+00:31:17,840 --> 00:31:19,840
+give gifts to people and like maybe
+
+725
+00:31:19,840 --> 00:31:21,919
+that's why the previous system said true
+
+726
+00:31:21,919 --> 00:31:25,120
+but we can go into this much much better
+
+727
+00:31:25,120 --> 00:31:27,039
+um and we can figure out like why we
+
+728
+00:31:27,039 --> 00:31:28,320
+might want to go do
+
+729
+00:31:28,320 --> 00:31:30,000
+like maybe this is a charity, maybe this
+
+730
+00:31:30,000 --> 00:31:32,399
+is something else. Um, so my manual
+
+731
+00:31:32,399 --> 00:31:33,440
+thing, the first thing I would do in
+
+732
+00:31:33,440 --> 00:31:35,360
+this one is like go I'm just going to
+
+733
+00:31:35,360 --> 00:31:37,120
+throw something out for later or maybe a
+
+734
+00:31:37,120 --> 00:31:38,799
+follow-up episode, which is like we
+
+735
+00:31:38,799 --> 00:31:40,159
+could do a follow-up of like turning
+
+736
+00:31:40,159 --> 00:31:41,919
+this into something a lot more agentic,
+
+737
+00:31:41,919 --> 00:31:44,320
+which is like, hey, what what follow-up
+
+738
+00:31:44,320 --> 00:31:46,240
+research tasks might you want to make
+
+739
+00:31:46,240 --> 00:31:48,480
+before you to get all the context for
+
+740
+00:31:48,480 --> 00:31:50,559
+evaluating this? And that might be like
+
+741
+00:31:50,559 --> 00:31:52,159
+read this email and see like, oh, I want
+
+742
+00:31:52,159 --> 00:31:53,840
+to go do a web search of Kinder Morgan
+
+743
+00:31:53,840 --> 00:31:54,960
+and see who that is. Because that's what
+
+744
+00:31:54,960 --> 00:31:56,080
+I would do as a human. I would be like,
+
+745
+00:31:56,080 --> 00:31:58,919
+who the heck are these guys?
+
+746
+00:31:58,919 --> 00:32:01,120
+Exactly. So like that's one way to make
+
+747
+00:32:01,120 --> 00:32:02,559
+it super agentic where you just go and
+
+748
+00:32:02,559 --> 00:32:04,320
+scrape the data and you can go do that.
+
+749
+00:32:04,320 --> 00:32:05,919
+So what that means is we might actually
+
+750
+00:32:05,919 --> 00:32:07,600
+want what you were adding earlier which
+
+751
+00:32:07,600 --> 00:32:09,799
+is the company names into all of
+
+752
+00:32:09,799 --> 00:32:12,880
+them. So let's add company names. Uh or
+
+753
+00:32:12,880 --> 00:32:15,440
+like maybe we had a recipient type first
+
+754
+00:32:15,440 --> 00:32:17,480
+of all.
+
+755
+00:32:17,480 --> 00:32:22,000
+Yeah. recipient type uh would be like
+
+756
+00:32:22,000 --> 00:32:24,000
+what like and let's say like let's call
+
+757
+00:32:24,000 --> 00:32:27,200
+that like client supplier other let's
+
+758
+00:32:27,200 --> 00:32:31,669
+make a type called entity
+
+759
+00:32:34,070 --> 00:32:34,080
+yeah so then now we'll do entity we'll
+
+760
+00:32:34,080 --> 00:32:37,240
+make an entity type at the
+
+761
+00:32:37,240 --> 00:32:41,279
+bottom exactly like this yes
+
+762
+00:32:41,279 --> 00:32:43,600
+I would say I would say entities might
+
+763
+00:32:43,600 --> 00:32:46,590
+be like
+
+764
+00:32:49,070 --> 00:32:49,080
+individual I would I would probably say
+
+765
+00:32:49,080 --> 00:32:53,830
+individual corporation.
+
+766
+00:32:57,190 --> 00:32:57,200
+Oh, I see. Or Yeah. Okay. Right. Or like
+
+767
+00:32:57,200 --> 00:33:00,789
+charity.
+
+768
+00:33:02,549 --> 00:33:02,559
+Uh because like we know in gifts like
+
+769
+00:33:02,559 --> 00:33:03,679
+these are probably like three kinds of
+
+770
+00:33:03,679 --> 00:33:05,519
+things that are involved. And now let's
+
+771
+00:33:05,519 --> 00:33:14,590
+try test case
+
+772
+00:33:22,789 --> 00:33:22,799
+Yeah, it sounds like the um the person
+
+773
+00:33:22,799 --> 00:33:24,399
+that received it is detecting as an
+
+774
+00:33:24,399 --> 00:33:26,000
+individual, which makes sense because it
+
+775
+00:33:26,000 --> 00:33:28,480
+was given on behalf of the per Can you
+
+776
+00:33:28,480 --> 00:33:30,799
+read the email again?
+
+777
+00:33:30,799 --> 00:33:32,480
+Yeah.
+
+778
+00:33:32,480 --> 00:33:33,600
+So, what's weird is this is like a
+
+779
+00:33:33,600 --> 00:33:35,919
+multiple thread, right? This was sent to
+
+780
+00:33:35,919 --> 00:33:37,559
+a [ __ ] ton of people at
+
+781
+00:33:37,559 --> 00:33:41,720
+Enron from it was like
+
+782
+00:33:41,720 --> 00:33:46,350
+forwarded by Kathy
+
+783
+00:33:49,350 --> 00:33:49,360
+Mayfield and it looks like Bill was
+
+784
+00:33:49,360 --> 00:33:53,039
+thanking Kathy for the gift
+
+785
+00:33:53,039 --> 00:33:55,519
+and then I decided to donate he further
+
+786
+00:33:55,519 --> 00:33:58,799
+donated the gift to a different center.
+
+787
+00:33:58,799 --> 00:34:00,960
+Yes. Right. So it's like a three-way
+
+788
+00:34:00,960 --> 00:34:02,640
+hop. So what that's interesting because
+
+789
+00:34:02,640 --> 00:34:04,640
+it goes from Enron to Kinderborg which
+
+790
+00:34:04,640 --> 00:34:06,799
+then went to another children's center
+
+791
+00:34:06,799 --> 00:34:09,440
+and you could completely see how um this
+
+792
+00:34:09,440 --> 00:34:12,280
+actually will
+
+793
+00:34:12,280 --> 00:34:14,879
+um effectively require additional
+
+794
+00:34:14,879 --> 00:34:16,560
+followup to actually go and like track
+
+795
+00:34:16,560 --> 00:34:17,839
+this down and find the relationship
+
+796
+00:34:17,839 --> 00:34:20,480
+between Bill and Kathy.
+
+797
+00:34:20,480 --> 00:34:22,879
+Yep. Right. So I think the first thing
+
+798
+00:34:22,879 --> 00:34:24,639
+that I really recommend that you're
+
+799
+00:34:24,639 --> 00:34:25,760
+seeing here is like what we're doing
+
+800
+00:34:25,760 --> 00:34:26,960
+here is we're reading the email and
+
+801
+00:34:26,960 --> 00:34:28,480
+we're just analyzing the test case one
+
+802
+00:34:28,480 --> 00:34:30,480
+thing at a time. We're not trying to if
+
+803
+00:34:30,480 --> 00:34:32,159
+we go and straight build the eval, we'll
+
+804
+00:34:32,159 --> 00:34:34,879
+kind of get lost in the sauce. Yep. What
+
+805
+00:34:34,879 --> 00:34:36,320
+we really should do is just read some
+
+806
+00:34:36,320 --> 00:34:38,639
+data. And like here, I think we've
+
+807
+00:34:38,639 --> 00:34:40,399
+collected probably enough information to
+
+808
+00:34:40,399 --> 00:34:41,919
+then say like there's not much more we
+
+809
+00:34:41,919 --> 00:34:43,679
+can get out of this email. Everything
+
+810
+00:34:43,679 --> 00:34:45,280
+else that we do would be a follow-up
+
+811
+00:34:45,280 --> 00:34:46,720
+based on the reasoning that comes out of
+
+812
+00:34:46,720 --> 00:34:49,919
+it. Yeah. You might want to Can you go
+
+813
+00:34:49,919 --> 00:34:52,359
+up one more step
+
+814
+00:34:52,359 --> 00:34:55,839
+after? Yeah, we can do like next next
+
+815
+00:34:55,839 --> 00:34:59,359
+steps after reasoning.
+
+816
+00:34:59,359 --> 00:35:04,790
+string array. Yeah.
+
+817
+00:35:07,750 --> 00:35:07,760
+Or like follow-up steps, right? Yeah.
+
+818
+00:35:07,760 --> 00:35:10,000
+Follow up actions. Yeah, sure. And I
+
+819
+00:35:10,000 --> 00:35:15,030
+would put that after
+
+820
+00:35:17,910 --> 00:35:17,920
+and like action could even be like
+
+821
+00:35:17,920 --> 00:35:20,880
+basically like a this could tr turn into
+
+822
+00:35:20,880 --> 00:35:23,040
+like a list of tool calls to do.
+
+823
+00:35:23,040 --> 00:35:24,880
+Exactly. Can you put it after reason
+
+824
+00:35:24,880 --> 00:35:36,589
+though? Oh yeah. Yeah. Now press
+
+825
+00:35:39,270 --> 00:35:39,280
+play. Cool. We can do that, too. Yeah,
+
+826
+00:35:39,280 --> 00:35:49,950
+let's go
+
+827
+00:35:52,069 --> 00:35:52,079
+there. Cool. So, that looks good. And
+
+828
+00:35:52,079 --> 00:35:53,119
+then you're right, we could turn that
+
+829
+00:35:53,119 --> 00:35:54,640
+into actions that are more oriented or
+
+830
+00:35:54,640 --> 00:35:56,000
+we could pass it into a secondary agent
+
+831
+00:35:56,000 --> 00:35:58,280
+like pipeline that has to go deal with
+
+832
+00:35:58,280 --> 00:36:01,839
+that. Um, but I think this is kind of
+
+833
+00:36:01,839 --> 00:36:05,119
+where I would um stop and just say,
+
+834
+00:36:05,119 --> 00:36:06,560
+okay, now I have a thing that's pretty
+
+835
+00:36:06,560 --> 00:36:11,680
+good. Yeah. Okay. Okay. So, so, so do
+
+836
+00:36:11,680 --> 00:36:13,280
+you want to write some Python code here?
+
+837
+00:36:13,280 --> 00:36:16,040
+Write some Python code now. Okay,
+
+838
+00:36:16,040 --> 00:36:18,640
+cool. So, um, I'm going to make a new
+
+839
+00:36:18,640 --> 00:36:20,240
+file.
+
+840
+00:36:20,240 --> 00:36:21,599
+So, let's just assume what we're going
+
+841
+00:36:21,599 --> 00:36:25,829
+to get is an email input.
+
+842
+00:36:29,589 --> 00:36:29,599
+Yeah. Sorry. Let me um pop back up here.
+
+843
+00:36:29,599 --> 00:36:31,200
+Dude, you got to keep your extensions up
+
+844
+00:36:31,200 --> 00:36:33,680
+to date. Your uh rough is also out of
+
+845
+00:36:33,680 --> 00:36:37,440
+date. It's We don't use type checking in
+
+846
+00:36:37,440 --> 00:36:39,599
+this house. I'm actually going to turn
+
+847
+00:36:39,599 --> 00:36:42,000
+it off just to trigger you. Oh my god.
+
+848
+00:36:42,000 --> 00:36:43,760
+Yeah. There we go. Don't do that. Don't
+
+849
+00:36:43,760 --> 00:36:45,040
+do that, please. All right. All right.
+
+850
+00:36:45,040 --> 00:36:48,720
+All
+
+851
+00:36:48,720 --> 00:36:50,960
+right. Um, we don't even you can ignore
+
+852
+00:36:50,960 --> 00:36:52,560
+the if main or whatever. It doesn't
+
+853
+00:36:52,560 --> 00:36:55,520
+matter. Okay, cool. Um, so now that what
+
+854
+00:36:55,520 --> 00:36:57,200
+we'll do is we'll get let's assume we're
+
+855
+00:36:57,200 --> 00:37:01,349
+going to get a single email,
+
+856
+00:37:13,030 --> 00:37:13,040
+Sure. Yeah. I was in we don't even have
+
+857
+00:37:13,040 --> 00:37:14,720
+to read the email, but yes, we can do
+
+858
+00:37:14,720 --> 00:37:16,880
+that if we want.
+
+859
+00:37:16,880 --> 00:37:18,400
+Well, because I I would eventually like
+
+860
+00:37:18,400 --> 00:37:20,160
+to build up some stuff that lets us just
+
+861
+00:37:20,160 --> 00:37:21,760
+like grab a random email. Like, we're
+
+862
+00:37:21,760 --> 00:37:22,880
+not going to be able to do the whole
+
+863
+00:37:22,880 --> 00:37:31,349
+set, but Okay, that's fine. Uh, yeah.
+
+864
+00:37:45,390 --> 00:37:45,400
+mail people talking [ __ ]
+
+865
+00:37:45,400 --> 00:37:49,359
+Okay. Um,
+
+866
+00:37:49,359 --> 00:37:50,880
+or do you want to read that exact that
+
+867
+00:37:50,880 --> 00:37:52,960
+exact one with Doesn't matter. I I just
+
+868
+00:37:52,960 --> 00:37:56,720
+want something. Yeah. Yeah. Yeah. Okay.
+
+869
+00:37:56,720 --> 00:37:58,400
+Cool. Great. So, we're going to read an
+
+870
+00:37:58,400 --> 00:38:00,160
+email and then here's kind of what I
+
+871
+00:38:00,160 --> 00:38:03,280
+would do as we read these emails. Yeah.
+
+872
+00:38:03,280 --> 00:38:06,079
+So, Oh, I mean it kind of that cool. Um,
+
+873
+00:38:06,079 --> 00:38:08,640
+and then you have to import B. There you
+
+874
+00:38:08,640 --> 00:38:10,640
+go. Oh, my cursor is getting quite good.
+
+875
+00:38:10,640 --> 00:38:12,480
+Okay. So, this is actually not going to
+
+876
+00:38:12,480 --> 00:38:15,040
+work because our gift policy makes an
+
+877
+00:38:15,040 --> 00:38:16,720
+assumption that there is a gift thing
+
+878
+00:38:16,720 --> 00:38:18,800
+built into it. This was I think uh
+
+879
+00:38:18,800 --> 00:38:20,079
+someone's question earlier like
+
+880
+00:38:20,079 --> 00:38:22,240
+Deborah's question. We probably want to
+
+881
+00:38:22,240 --> 00:38:24,160
+we probably want to ask a very simple
+
+882
+00:38:24,160 --> 00:38:26,160
+question like is a gift involved? Yes or
+
+883
+00:38:26,160 --> 00:38:29,400
+no. Gotcha. On so that's right another
+
+884
+00:38:29,400 --> 00:38:32,160
+model. Sorry, you have to open. Yeah.
+
+885
+00:38:32,160 --> 00:38:34,920
+So, we can just do like
+
+886
+00:38:34,920 --> 00:38:38,000
+function mentions gift with gift
+
+887
+00:38:38,000 --> 00:38:39,839
+involved. We don't even have to like
+
+888
+00:38:39,839 --> 00:38:41,520
+mention that. We could have like rejects
+
+889
+00:38:41,520 --> 00:38:43,839
+the word gift.
+
+890
+00:38:43,839 --> 00:38:45,680
+Okay. Right. Like let's do we'll make it
+
+891
+00:38:45,680 --> 00:38:49,720
+a Python function for now. Yeah.
+
+892
+00:38:49,720 --> 00:38:52,480
+Exactly. There you go. And then we'll
+
+893
+00:38:52,480 --> 00:38:54,760
+just do
+
+894
+00:38:54,760 --> 00:38:56,680
+that.
+
+895
+00:38:56,680 --> 00:38:59,200
+Exactly. And now we have analysis on the
+
+896
+00:38:59,200 --> 00:39:00,720
+emails. And now we basically have like a
+
+897
+00:39:00,720 --> 00:39:02,720
+gift pipeline that is able to go check
+
+898
+00:39:02,720 --> 00:39:04,240
+this.
+
+899
+00:39:04,240 --> 00:39:06,800
+Gotcha. Right. Um and then you probably
+
+900
+00:39:06,800 --> 00:39:08,520
+want an else
+
+901
+00:39:08,520 --> 00:39:12,560
+statement. if else or if return. Yeah.
+
+902
+00:39:12,560 --> 00:39:16,040
+Yeah. We we'll just return. Very cool.
+
+903
+00:39:16,040 --> 00:39:18,880
+Um and this is kind of what I would do.
+
+904
+00:39:18,880 --> 00:39:20,480
+And now we have a system that is able to
+
+905
+00:39:20,480 --> 00:39:22,560
+go from like not knowing if GIFs exist
+
+906
+00:39:22,560 --> 00:39:24,000
+to where we can probably find all the
+
+907
+00:39:24,000 --> 00:39:26,640
+policies where GIFs are involved and the
+
+908
+00:39:26,640 --> 00:39:30,550
+risk is high.
+
+909
+00:39:39,270 --> 00:39:39,280
+like exactly. And I would only print out
+
+910
+00:39:39,280 --> 00:39:41,200
+those analysis and I would print out
+
+911
+00:39:41,200 --> 00:39:43,119
+like the email path for those emails. So
+
+912
+00:39:43,119 --> 00:39:44,720
+I what what that's why I was trying to
+
+913
+00:39:44,720 --> 00:39:46,000
+write the function that does this not
+
+914
+00:39:46,000 --> 00:39:47,119
+like the whole pipeline because if we
+
+915
+00:39:47,119 --> 00:39:48,079
+have a function then we can wrap it
+
+916
+00:39:48,079 --> 00:39:49,520
+around a pipeline that passes in an
+
+917
+00:39:49,520 --> 00:39:55,030
+email. Yeah. Yeah. Um
+
+918
+00:40:10,470 --> 00:40:10,480
+Uh you want to make it async then you
+
+919
+00:40:10,480 --> 00:40:14,160
+have to do uh async client on line two.
+
+920
+00:40:14,160 --> 00:40:17,040
+Oh yeah. Um
+
+921
+00:40:17,040 --> 00:40:19,079
+yeah and then
+
+922
+00:40:19,079 --> 00:40:25,790
+yeah line two needs to
+
+923
+00:40:28,950 --> 00:40:28,960
+change. Line two needs to change. Oh you
+
+924
+00:40:28,960 --> 00:40:32,480
+want to just do async. Yeah exactly.
+
+925
+00:40:32,480 --> 00:40:35,040
+Cool. Cool. Uh, and then you have to
+
+926
+00:40:35,040 --> 00:40:38,270
+import
+
+927
+00:40:41,630 --> 00:40:41,640
+async.io. Cool. Let's try
+
+928
+00:40:41,640 --> 00:40:43,920
+it. Um, all right. We'll just run it
+
+929
+00:40:43,920 --> 00:40:51,870
+from
+
+930
+00:40:58,710 --> 00:40:58,720
+wrong. Yeah, this is kind of the goal,
+
+931
+00:40:58,720 --> 00:41:00,079
+Andrew, for this time. Usually we do a
+
+932
+00:41:00,079 --> 00:41:01,359
+lot of theory but our goal this time was
+
+933
+00:41:01,359 --> 00:41:02,880
+like let's start from nothing and
+
+934
+00:41:02,880 --> 00:41:05,359
+actually build up the pipeline
+
+935
+00:41:05,359 --> 00:41:08,319
+right so while D for so one of the
+
+936
+00:41:08,319 --> 00:41:09,920
+things that email does not mention on
+
+937
+00:41:09,920 --> 00:41:11,440
+gifts cool let's put a freaking for loop
+
+938
+00:41:11,440 --> 00:41:14,079
+around it and just run it on everything
+
+939
+00:41:14,079 --> 00:41:16,480
+so before you do that this LM thing is
+
+940
+00:41:16,480 --> 00:41:17,760
+going to blow out the water so don't
+
+941
+00:41:17,760 --> 00:41:19,440
+actually like run on LM just like
+
+942
+00:41:19,440 --> 00:41:21,440
+exactly
+
+943
+00:41:21,440 --> 00:41:23,280
+iterate over every email and just go run
+
+944
+00:41:23,280 --> 00:41:25,280
+it when you go do that so I'll show you
+
+945
+00:41:25,280 --> 00:41:28,010
+how to go do can I take over
+
+946
+00:41:28,010 --> 00:41:29,880
+[Music]
+
+947
+00:41:29,880 --> 00:41:34,680
+Um, sure. Okay, go for
+
+948
+00:41:34,680 --> 00:41:47,430
+it. Want to write some cursor code.
+
+949
+00:41:49,750 --> 00:41:49,760
+That'll probably work. It's They're not
+
+950
+00:41:49,760 --> 00:41:51,839
+as star.txt. They're just like number
+
+951
+00:41:51,839 --> 00:41:54,720
+dot is the thing.
+
+952
+00:41:54,720 --> 00:41:58,079
+Um, okay. And then it was like read.
+
+953
+00:41:58,079 --> 00:42:00,960
+It's like starst star.
+
+954
+00:42:00,960 --> 00:42:02,560
+Okay. So I just asked cursor to write
+
+955
+00:42:02,560 --> 00:42:04,000
+the code then. Okay. Sorry I can't type
+
+956
+00:42:04,000 --> 00:42:10,309
+under. Yeah. Yeah.
+
+957
+00:42:12,870 --> 00:42:12,880
+Isn't it path? Isn't it just pathstar
+
+958
+00:42:12,880 --> 00:42:15,950
+slar?
+
+959
+00:42:27,190 --> 00:42:27,200
+that. Wait, I don't think it has. Oh.
+
+960
+00:42:27,200 --> 00:42:29,160
+Oh, I guess that does
+
+961
+00:42:29,160 --> 00:42:31,599
+work. Okay, then. No, then don't you?
+
+962
+00:42:31,599 --> 00:42:33,119
+No, you're passing the path already.
+
+963
+00:42:33,119 --> 00:42:34,480
+That's why that that's why it does it
+
+964
+00:42:34,480 --> 00:42:38,630
+that way.
+
+965
+00:42:40,950 --> 00:42:40,960
+Say that again. You're passing here. Let
+
+966
+00:42:40,960 --> 00:42:44,800
+me tell you. You got it.
+
+967
+00:42:44,800 --> 00:42:46,160
+Can you turn off Vin mode for me,
+
+968
+00:42:46,160 --> 00:42:47,540
+please?
+
+969
+00:42:47,540 --> 00:42:47,780
+[Music]
+
+970
+00:42:47,780 --> 00:42:54,309
+[Laughter]
+
+971
+00:42:56,589 --> 00:42:56,599
+star path. Okay,
+
+972
+00:42:56,599 --> 00:42:59,119
+great. Is file. Then we just append it.
+
+973
+00:42:59,119 --> 00:43:01,280
+We load it in.
+
+974
+00:43:01,280 --> 00:43:02,800
+That's probably going to blow up memory
+
+975
+00:43:02,800 --> 00:43:06,119
+because it's like 1.8 gigs. 1.8 gigs is
+
+976
+00:43:06,119 --> 00:43:09,599
+nothing. Uh, okay. What we'll say is
+
+977
+00:43:09,599 --> 00:43:11,680
+like I got a very old MacBook over here,
+
+978
+00:43:11,680 --> 00:43:15,839
+buddy. Okay. talking 2022
+
+979
+00:43:15,839 --> 00:43:17,160
+than
+
+980
+00:43:17,160 --> 00:43:19,240
+uh
+
+981
+00:43:19,240 --> 00:43:21,520
+10,000. Okay. How about this? Yeah.
+
+982
+00:43:21,520 --> 00:43:22,800
+Yeah, let's do that. All right. So,
+
+983
+00:43:22,800 --> 00:43:24,640
+we'll load emails from Dur and then what
+
+984
+00:43:24,640 --> 00:43:26,599
+we'll do is like we'll say
+
+985
+00:43:26,599 --> 00:43:32,430
+like
+
+986
+00:43:35,589 --> 00:43:35,599
+dev that should be easier. So I'll do is
+
+987
+00:43:35,599 --> 00:43:40,990
+for every email and
+
+988
+00:43:54,069 --> 00:43:54,079
+io check emails
+
+989
+00:43:54,079 --> 00:43:56,319
+then you don't need this anymore. Look
+
+990
+00:43:56,319 --> 00:43:58,880
+no I do I do I do need this. Oh you just
+
+991
+00:43:58,880 --> 00:44:01,760
+need the first part. Yeah. Okay, we're
+
+992
+00:44:01,760 --> 00:44:02,800
+going to do this, but I'm not going to
+
+993
+00:44:02,800 --> 00:44:04,079
+actually run this because what else I
+
+994
+00:44:04,079 --> 00:44:05,200
+want to do is this is the other thing
+
+995
+00:44:05,200 --> 00:44:08,240
+people forget to do, which is um sele
+
+996
+00:44:08,240 --> 00:44:30,109
+Four.
+
+997
+00:44:31,910 --> 00:44:31,920
+Perfect. We're going to do this. And
+
+998
+00:44:31,920 --> 00:44:33,359
+then what I'm actually going to do is
+
+999
+00:44:33,359 --> 00:44:38,550
+I'm just going to return
+
+1000
+00:44:42,150 --> 00:44:42,160
+false, right? Because you want to
+
+1001
+00:44:42,160 --> 00:44:45,280
+collect the results. Exactly. And return
+
+1002
+00:44:45,280 --> 00:44:46,560
+true. So, I'm going to return this
+
+1003
+00:44:46,560 --> 00:44:47,599
+because I don't actually want to trigger
+
+1004
+00:44:47,599 --> 00:44:49,119
+the LM yet. If I trigger the LM, I'm
+
+1005
+00:44:49,119 --> 00:44:51,000
+going to be
+
+1006
+00:44:51,000 --> 00:44:53,520
+closed. Uh, and what I want to do here
+
+1007
+00:44:53,520 --> 00:44:55,240
+is equal to
+
+1008
+00:44:55,240 --> 00:44:58,800
+results equals this. And then I want to
+
+1009
+00:44:58,800 --> 00:45:06,030
+return results or return the results.
+
+1010
+00:45:09,109 --> 00:45:09,119
+count. Oh, cool. Now that should do it.
+
+1011
+00:45:09,119 --> 00:45:11,440
+So, now I can go do this. Um, the reason
+
+1012
+00:45:11,440 --> 00:45:13,280
+I don't want to trigger the LLM shortly
+
+1013
+00:45:13,280 --> 00:45:15,599
+yet is because I am going to run 10,000
+
+1014
+00:45:15,599 --> 00:45:17,599
+emails here. We're going to be sitting
+
+1015
+00:45:17,599 --> 00:45:21,440
+here for minutes if we're in end up uh
+
+1016
+00:45:21,440 --> 00:45:22,800
+in this loop. So, I just want to get a
+
+1017
+00:45:22,800 --> 00:45:25,440
+proxy for what my data has before I go
+
+1018
+00:45:25,440 --> 00:45:28,480
+and execute it in a meaningful way. Um,
+
+1019
+00:45:28,480 --> 00:45:30,000
+this is going to run up to 10 in
+
+1020
+00:45:30,000 --> 00:45:32,640
+parallel. That's why I did async.io.
+
+1021
+00:45:32,640 --> 00:45:35,359
+Oh, 44. Pretty fast. Cool. So, that's
+
+1022
+00:45:35,359 --> 00:45:37,520
+fine. We can 44 emails. We can go
+
+1023
+00:45:37,520 --> 00:45:39,040
+process. We can use an LM for this. This
+
+1024
+00:45:39,040 --> 00:45:40,240
+isn't going to be a big deal. So, let's
+
+1025
+00:45:40,240 --> 00:45:42,000
+actually turn on the LM. But before we
+
+1026
+00:45:42,000 --> 00:45:45,119
+do that, um, so now we know that this
+
+1027
+00:45:45,119 --> 00:45:46,880
+isn't Can you Can I go back to the code
+
+1028
+00:45:46,880 --> 00:45:49,720
+again? Yep.
+
+1029
+00:45:49,720 --> 00:45:52,240
+Okay. So, this is great. And
+
+1030
+00:45:52,240 --> 00:45:53,200
+specifically, I'm going to start
+
+1031
+00:45:53,200 --> 00:45:55,119
+changing this to return a nonobject
+
+1032
+00:45:55,119 --> 00:45:56,880
+instead. Sorry, I have my Zoom. And this
+
+1033
+00:45:56,880 --> 00:45:59,040
+is like an optional of analysis that it
+
+1034
+00:45:59,040 --> 00:46:01,680
+returns. Exactly.
+
+1035
+00:46:01,680 --> 00:46:03,920
+I can do that. Uh, wait one second. It's
+
+1036
+00:46:03,920 --> 00:46:05,920
+on option on office. Let's be very
+
+1037
+00:46:05,920 --> 00:46:09,440
+clear. Uh, this is going to be I'm only
+
+1038
+00:46:09,440 --> 00:46:13,760
+going to return high risk levels. Yep.
+
+1039
+00:46:13,760 --> 00:46:15,599
+Can you can you make that uh can you
+
+1040
+00:46:15,599 --> 00:46:18,240
+return sorry can you return analysis if
+
+1041
+00:46:18,240 --> 00:46:23,430
+the risk level is high? Yes.
+
+1042
+00:46:27,910 --> 00:46:27,920
+Yeah. Otherwise return none. Exactly.
+
+1043
+00:46:27,920 --> 00:46:29,839
+And then actually can you do can you do
+
+1044
+00:46:29,839 --> 00:46:32,400
+can you can you uh you have to import
+
+1045
+00:46:32,400 --> 00:46:34,800
+it. Yeah, there you go. Can you do me
+
+1046
+00:46:34,800 --> 00:46:36,400
+another favor and it return if it's high
+
+1047
+00:46:36,400 --> 00:46:40,349
+or
+
+1048
+00:46:43,829 --> 00:46:43,839
+medium? There you go. Cool. Uh let's run
+
+1049
+00:46:43,839 --> 00:46:51,790
+the sucker.
+
+1050
+00:47:04,150 --> 00:47:04,160
+Looks like we had a validation error.
+
+1051
+00:47:04,160 --> 00:47:05,520
+Okay, so we should try catch that
+
+1052
+00:47:05,520 --> 00:47:06,560
+because this will happen at some
+
+1053
+00:47:06,560 --> 00:47:09,599
+cadence. Why did this actually go look
+
+1054
+00:47:09,599 --> 00:47:12,200
+at this? Oh, there's no there's no gift
+
+1055
+00:47:12,200 --> 00:47:14,720
+received. Um, so that's true. Sometimes
+
+1056
+00:47:14,720 --> 00:47:16,319
+there is no gift. Can you go up and read
+
+1057
+00:47:16,319 --> 00:47:21,440
+this? Oh, yeah. You can turn it on.
+
+1058
+00:47:21,440 --> 00:47:24,720
+Um, so let's take a email. It looks like
+
+1059
+00:47:24,720 --> 00:47:26,880
+the model had no gift received. The type
+
+1060
+00:47:26,880 --> 00:47:29,119
+was null because it probably to find
+
+1061
+00:47:29,119 --> 00:47:32,000
+gift received or gift given. Oh, I see.
+
+1062
+00:47:32,000 --> 00:47:33,680
+Right. It's like what did it return?
+
+1063
+00:47:33,680 --> 00:47:36,400
+Let's go down and read. It tells you.
+
+1064
+00:47:36,400 --> 00:47:38,400
+No, this is just the prompt. Yeah, but I
+
+1065
+00:47:38,400 --> 00:47:39,680
+want to read the prompt and see what it
+
+1066
+00:47:39,680 --> 00:47:42,640
+said. The model returned a null value
+
+1067
+00:47:42,640 --> 00:47:44,960
+for that. Yeah. Gift receiver gift
+
+1068
+00:47:44,960 --> 00:47:46,880
+given. Or I mean it might have returned
+
+1069
+00:47:46,880 --> 00:47:48,880
+something that doesn't match this en it
+
+1070
+00:47:48,880 --> 00:47:50,480
+said null. The model returned null. You
+
+1071
+00:47:50,480 --> 00:47:54,470
+can read it up there. Okay.
+
+1072
+00:47:57,109 --> 00:47:57,119
+See? Got null. Got null. Got null. Got
+
+1073
+00:47:57,119 --> 00:47:58,720
+all. Can you go down? Oh, here's what we
+
+1074
+00:47:58,720 --> 00:48:00,079
+responded. Okay, cool. Exactly. Can you
+
+1075
+00:48:00,079 --> 00:48:01,760
+go down? Let's just read the email
+
+1076
+00:48:01,760 --> 00:48:03,920
+really fast and skip. Um because Okay,
+
+1077
+00:48:03,920 --> 00:48:06,800
+so our gift check passed, right? We did
+
+1078
+00:48:06,800 --> 00:48:10,319
+is if if gift in email was true, but the
+
+1079
+00:48:10,319 --> 00:48:12,720
+model decided this isn't about a gift.
+
+1080
+00:48:12,720 --> 00:48:14,000
+Yeah, exactly. Which makes sense because
+
+1081
+00:48:14,000 --> 00:48:16,640
+we used the reax.
+
+1082
+00:48:16,640 --> 00:48:18,800
+I was God's gift and made sure I knew it
+
+1083
+00:48:18,800 --> 00:48:21,359
+constantly, which makes sense. Okay,
+
+1084
+00:48:21,359 --> 00:48:24,000
+cool. So, okay, let's just put a let's
+
+1085
+00:48:24,000 --> 00:48:26,480
+allow the model to say like not a gift.
+
+1086
+00:48:26,480 --> 00:48:29,040
+So, let's return two types. What was
+
+1087
+00:48:29,040 --> 00:48:32,319
+either not a gift class not a gift?
+
+1088
+00:48:32,319 --> 00:48:35,079
+Yeah.
+
+1089
+00:48:35,079 --> 00:48:39,280
+Exactly. Done. Um, and then union the
+
+1090
+00:48:39,280 --> 00:48:41,200
+result. No, we don't need that. We don't
+
+1091
+00:48:41,200 --> 00:48:45,200
+need that either. Union the result.
+
+1092
+00:48:45,200 --> 00:48:47,359
+Exactly. Now, let's go back to our code
+
+1093
+00:48:47,359 --> 00:48:49,440
+and say if should we put Should we put
+
+1094
+00:48:49,440 --> 00:48:51,040
+this one first?
+
+1095
+00:48:51,040 --> 00:48:53,520
+No, it uh yeah, sure. Yeah, actually.
+
+1096
+00:48:53,520 --> 00:48:55,040
+Yeah, it'll probably be because like
+
+1097
+00:48:55,040 --> 00:48:57,040
+it's a smaller object, right? Yeah, I
+
+1098
+00:48:57,040 --> 00:48:59,599
+agree. I agree. Let's go back and then
+
+1099
+00:48:59,599 --> 00:49:01,119
+let's go back to the code. No, we don't
+
+1100
+00:49:01,119 --> 00:49:02,119
+want to run this yet. You have to
+
+1101
+00:49:02,119 --> 00:49:06,480
+actually Yeah. Yeah. Okay. Um pipeline.
+
+1102
+00:49:06,480 --> 00:49:10,520
+So, just say like if if analysis
+
+1103
+00:49:10,520 --> 00:49:15,790
+type analysis
+
+1104
+00:49:19,910 --> 00:49:19,920
+type Yeah, exactly. Return none. Done.
+
+1105
+00:49:19,920 --> 00:49:21,599
+Cool. Now we've given the model an
+
+1106
+00:49:21,599 --> 00:49:25,839
+escape hatch. Exactly. Um, yeah. So, how
+
+1107
+00:49:25,839 --> 00:49:27,200
+long will this take? I don't know.
+
+1108
+00:49:27,200 --> 00:49:29,760
+There's like 44 emails. 44 seconds would
+
+1109
+00:49:29,760 --> 00:49:31,040
+be kind of what I estimate, but I'm
+
+1110
+00:49:31,040 --> 00:49:33,440
+running 10 in parallel. So, like I'd
+
+1111
+00:49:33,440 --> 00:49:37,200
+estimate like around like the like 10 15
+
+1112
+00:49:37,200 --> 00:49:40,000
+seconds, no more. Yeah. Okay. So,
+
+1113
+00:49:40,000 --> 00:49:42,960
+basically, we have all of our emails and
+
+1114
+00:49:42,960 --> 00:49:45,839
+then we have emails. I'll put it I'll do
+
+1115
+00:49:45,839 --> 00:49:49,040
+top to bottom. is like a much smaller
+
+1116
+00:49:49,040 --> 00:49:52,680
+set of those is like contains gift
+
+1117
+00:49:52,680 --> 00:49:55,680
+string and then some subset of those are
+
+1118
+00:49:55,680 --> 00:49:58,720
+going to be like not a gift. Yep. And
+
+1119
+00:49:58,720 --> 00:50:00,880
+then some of them are going to be, you
+
+1120
+00:50:00,880 --> 00:50:03,040
+know, analysis results. Yeah. But now
+
+1121
+00:50:03,040 --> 00:50:06,400
+while we're waiting, let's go back. And
+
+1122
+00:50:06,400 --> 00:50:08,240
+then these are going to be low, medium,
+
+1123
+00:50:08,240 --> 00:50:13,430
+high. Exactly.
+
+1124
+00:50:15,829 --> 00:50:15,839
+Oops. Oh, can we go back to our code? I
+
+1125
+00:50:15,839 --> 00:50:18,400
+didn't realize that we Hold on a sec.
+
+1126
+00:50:18,400 --> 00:50:20,880
+I'm gonna just uh obviously 44 out of
+
+1127
+00:50:20,880 --> 00:50:22,960
+10,000 is not visually described by
+
+1128
+00:50:22,960 --> 00:50:26,870
+this, but uh
+
+1129
+00:50:28,470 --> 00:50:28,480
+um yeah. Well, no, I messed up because
+
+1130
+00:50:28,480 --> 00:50:32,160
+if you go back to the code, yeah, you're
+
+1131
+00:50:32,160 --> 00:50:34,559
+sorry. If you go back to the way that we
+
+1132
+00:50:34,559 --> 00:50:36,359
+actually count it, the counter is not
+
+1133
+00:50:36,359 --> 00:50:38,880
+correct. We say if it's true. See how
+
+1134
+00:50:38,880 --> 00:50:42,599
+there's a static analysis there? Um
+
+1135
+00:50:42,599 --> 00:50:46,079
+yes. Uh exactly.
+
+1136
+00:50:46,079 --> 00:50:50,160
+Uh, exactly. And exactly. That's what
+
+1137
+00:50:50,160 --> 00:50:52,559
+you actually need to do. Uh, and this is
+
+1138
+00:50:52,559 --> 00:50:53,599
+one of the reasons that I'm really
+
+1139
+00:50:53,599 --> 00:50:55,319
+excited to go like
+
+1140
+00:50:55,319 --> 00:50:59,680
+um um this is why I'm Oh, and then I
+
+1141
+00:50:59,680 --> 00:51:02,440
+would do like lend tasks for the first
+
+1142
+00:51:02,440 --> 00:51:05,630
+one.
+
+1143
+00:51:07,589 --> 00:51:07,599
+Exactly. Oh, yeah. That's great. And
+
+1144
+00:51:07,599 --> 00:51:10,319
+then for the first one, can you do Yeah,
+
+1145
+00:51:10,319 --> 00:51:13,119
+that's great. High, medium. And then can
+
+1146
+00:51:13,119 --> 00:51:14,640
+for the first one instead of sum can you
+
+1147
+00:51:14,640 --> 00:51:19,480
+just do like len len of tasks. Yeah
+
+1148
+00:51:19,480 --> 00:51:23,440
+exactly. Um you can do not none just
+
+1149
+00:51:23,440 --> 00:51:27,109
+like len tasks
+
+1150
+00:51:29,030 --> 00:51:29,040
+Yeah because that's how many
+
+1151
+00:51:29,040 --> 00:51:32,319
+things we have.
+
+1152
+00:51:32,319 --> 00:51:34,240
+Um
+
+1153
+00:51:34,240 --> 00:51:36,559
+so that's how many mentions. Oh no
+
+1154
+00:51:36,559 --> 00:51:38,480
+you're right.
+
+1155
+00:51:38,480 --> 00:51:41,760
+I think we need to filter by none. Yeah.
+
+1156
+00:51:41,760 --> 00:51:45,790
+Yeah, you're
+
+1157
+00:51:48,630 --> 00:51:48,640
+right. What does check gift email do?
+
+1158
+00:51:48,640 --> 00:51:52,079
+Wait, what does check gift email do? Oh,
+
+1159
+00:51:52,079 --> 00:51:54,079
+gift email does the whole thing. Yeah,
+
+1160
+00:51:54,079 --> 00:51:55,599
+exactly. Okay. Yeah, you're right.
+
+1161
+00:51:55,599 --> 00:51:57,839
+Sorry, your old code was right. I'm I'm
+
+1162
+00:51:57,839 --> 00:51:59,440
+silly.
+
+1163
+00:51:59,440 --> 00:52:01,640
+Yeah, I think that's right.
+
+1164
+00:52:01,640 --> 00:52:04,079
+Cool. So, I just go run this. And like
+
+1165
+00:52:04,079 --> 00:52:06,000
+one of the things here, this is why I'm
+
+1166
+00:52:06,000 --> 00:52:07,520
+really really excited to work on caching
+
+1167
+00:52:07,520 --> 00:52:09,280
+for us is Oh, you want to turn off the
+
+1168
+00:52:09,280 --> 00:52:16,870
+logs. You do not want the logs on.
+
+1169
+00:52:17,990 --> 00:52:18,000
+One of the reasons I'm excited to work
+
+1170
+00:52:18,000 --> 00:52:19,520
+on caching is actually because of this
+
+1171
+00:52:19,520 --> 00:52:20,960
+fact where it's like you saw that the
+
+1172
+00:52:20,960 --> 00:52:22,400
+thing that we're actually modifying was
+
+1173
+00:52:22,400 --> 00:52:24,880
+actually not everything else. What else?
+
+1174
+00:52:24,880 --> 00:52:30,270
+So we got another error.
+
+1175
+00:52:32,790 --> 00:52:32,800
+Ah entity type is unknown. It's because
+
+1176
+00:52:32,800 --> 00:52:34,160
+we didn't give if you go back to the
+
+1177
+00:52:34,160 --> 00:52:35,640
+entity
+
+1178
+00:52:35,640 --> 00:52:38,480
+type data type. Ah it wants to have an
+
+1179
+00:52:38,480 --> 00:52:39,720
+unknown.
+
+1180
+00:52:39,720 --> 00:52:43,680
+Exactly. You put other, but other still
+
+1181
+00:52:43,680 --> 00:52:47,150
+implies that it's
+
+1182
+00:52:50,150 --> 00:52:50,160
+known, right? So, we might it might
+
+1183
+00:52:50,160 --> 00:52:51,680
+prefer the word unknown over anything
+
+1184
+00:52:51,680 --> 00:52:54,160
+else. Yeah. I notic this a lot with some
+
+1185
+00:52:54,160 --> 00:52:55,680
+of the other like random you use like
+
+1186
+00:52:55,680 --> 00:52:57,599
+deepseek and and quen some of them are
+
+1187
+00:52:57,599 --> 00:53:00,160
+not as good at following the exact enum
+
+1188
+00:53:00,160 --> 00:53:02,800
+instructions. Exactly.
+
+1189
+00:53:02,800 --> 00:53:04,319
+And then we might actually find that hey
+
+1190
+00:53:04,319 --> 00:53:05,920
+at some this is again something that
+
+1191
+00:53:05,920 --> 00:53:07,440
+we're doing right now but we might
+
+1192
+00:53:07,440 --> 00:53:08,640
+actually just want to put a try catch
+
+1193
+00:53:08,640 --> 00:53:09,839
+around this pipeline because it doesn't
+
+1194
+00:53:09,839 --> 00:53:11,599
+matter if we ran all of them or not. We
+
+1195
+00:53:11,599 --> 00:53:13,200
+just need to be pretty good. Oh that's
+
+1196
+00:53:13,200 --> 00:53:16,079
+kind of cool. We found four high risk,
+
+1197
+00:53:16,079 --> 00:53:19,839
+five low risk by medium risk. Yeah. By
+
+1198
+00:53:19,839 --> 00:53:21,520
+medium risk. So I think this is kind of
+
+1199
+00:53:21,520 --> 00:53:23,040
+interesting. So can we do one one thing
+
+1200
+00:53:23,040 --> 00:53:25,040
+Dexter? Do you have your API set up for
+
+1201
+00:53:25,040 --> 00:53:26,960
+your dashboard?
+
+1202
+00:53:26,960 --> 00:53:29,440
+Uh sure. Running this every single time.
+
+1203
+00:53:29,440 --> 00:53:31,760
+Um, yeah. Yeah. Fire it up and send it
+
+1204
+00:53:31,760 --> 00:53:34,640
+over to there. Yeah. Let's uh let's grab
+
+1205
+00:53:34,640 --> 00:53:37,040
+an API key because the problem that
+
+1206
+00:53:37,040 --> 00:53:38,240
+we're going to run into is we're
+
+1207
+00:53:38,240 --> 00:53:39,280
+basically going to start like running
+
+1208
+00:53:39,280 --> 00:53:40,480
+everything back and forth and I kind of
+
+1209
+00:53:40,480 --> 00:53:42,000
+just want to look at this data more and
+
+1210
+00:53:42,000 --> 00:53:44,559
+more. Yeah. Yeah. Yeah. And there's two
+
+1211
+00:53:44,559 --> 00:53:45,680
+options that you can have for this. You
+
+1212
+00:53:45,680 --> 00:53:47,200
+can actually build serialization by
+
+1213
+00:53:47,200 --> 00:53:48,640
+default. This and this is that's what I
+
+1214
+00:53:48,640 --> 00:53:50,319
+do with most of these pipelines is I'll
+
+1215
+00:53:50,319 --> 00:53:52,319
+just dump out the JSON after every step
+
+1216
+00:53:52,319 --> 00:53:54,000
+of like the collection of objects just
+
+1217
+00:53:54,000 --> 00:53:55,599
+so you could go and inspect it. But this
+
+1218
+00:53:55,599 --> 00:53:57,119
+is probably an easier way to do it. So,
+
+1219
+00:53:57,119 --> 00:53:58,319
+let me get a key real quick and then
+
+1220
+00:53:58,319 --> 00:54:00,319
+I'll start sharing again. Okay. Oh, you
+
+1221
+00:54:00,319 --> 00:54:01,520
+stopped sharing. I was wondering why it
+
+1222
+00:54:01,520 --> 00:54:06,230
+stopped. That makes sense.
+
+1223
+00:54:08,390 --> 00:54:08,400
+Yeah. And I think this is this iteration
+
+1224
+00:54:08,400 --> 00:54:09,839
+loop that we're doing right over here is
+
+1225
+00:54:09,839 --> 00:54:11,119
+really the iteration loop that I see
+
+1226
+00:54:11,119 --> 00:54:12,319
+most people doing. And at the end of
+
+1227
+00:54:12,319 --> 00:54:13,599
+this, what we'll have is we'll have a
+
+1228
+00:54:13,599 --> 00:54:15,040
+way to go through this. Oh, nice. You
+
+1229
+00:54:15,040 --> 00:54:16,640
+shared anyway. Okay. All right. We'll
+
+1230
+00:54:16,640 --> 00:54:21,030
+cycle that key. It's fine.
+
+1231
+00:54:27,990 --> 00:54:28,000
+Uh, you still have to record. Wait,
+
+1232
+00:54:28,000 --> 00:54:30,720
+control Z C. Do me a favor. Yeah, go to
+
+1233
+00:54:30,720 --> 00:54:33,200
+your code. I'm just gonna make it easier
+
+1234
+00:54:33,200 --> 00:54:36,720
+to go see. Uh, pipeline uppi. Are you in
+
+1235
+00:54:36,720 --> 00:54:39,359
+Vim mode again? Disable that sucker. Oh,
+
+1236
+00:54:39,359 --> 00:54:41,359
+you want to trace the whole thing? Yeah.
+
+1237
+00:54:41,359 --> 00:54:42,640
+So, I just want to like have that in
+
+1238
+00:54:42,640 --> 00:54:44,400
+there.
+
+1239
+00:54:44,400 --> 00:54:46,720
+It does. It works automatically though.
+
+1240
+00:54:46,720 --> 00:54:50,309
+It does.
+
+1241
+00:54:53,109 --> 00:54:53,119
+You just want to group them in a single
+
+1242
+00:54:53,119 --> 00:54:54,800
+single trace.
+
+1243
+00:54:54,800 --> 00:54:58,549
+Um, cool.
+
+1244
+00:55:00,309 --> 00:55:00,319
+Um, that's really the main thing that I
+
+1245
+00:55:00,319 --> 00:55:01,599
+wanted to do. I just want to group
+
+1246
+00:55:01,599 --> 00:55:02,640
+everything because it just makes
+
+1247
+00:55:02,640 --> 00:55:04,319
+everything way easier to read. You can
+
+1248
+00:55:04,319 --> 00:55:06,559
+just see it all in one run. Okay, cool.
+
+1249
+00:55:06,559 --> 00:55:10,430
+Done. All right, let's ship
+
+1250
+00:55:13,309 --> 00:55:13,319
+it. Let me just make sure this is
+
+1251
+00:55:13,319 --> 00:55:19,349
+working. All right, good.
+
+1252
+00:55:21,990 --> 00:55:22,000
+Yeah, it's a little bit bigger. Like
+
+1253
+00:55:22,000 --> 00:55:23,760
+caching is like one of the things that
+
+1254
+00:55:23,760 --> 00:55:25,680
+caching and mocking are one of the two
+
+1255
+00:55:25,680 --> 00:55:27,680
+key things that every LM developer will
+
+1256
+00:55:27,680 --> 00:55:30,400
+need long term because like what most
+
+1257
+00:55:30,400 --> 00:55:32,160
+people mostly notice whenever we do this
+
+1258
+00:55:32,160 --> 00:55:34,800
+is we spend very very little time
+
+1259
+00:55:34,800 --> 00:55:37,119
+actually writing the AI part. We spend
+
+1260
+00:55:37,119 --> 00:55:38,880
+most of our time writing the Python
+
+1261
+00:55:38,880 --> 00:55:41,119
+part. Right? And so what you have is
+
+1262
+00:55:41,119 --> 00:55:43,520
+like you have Python code and then you
+
+1263
+00:55:43,520 --> 00:55:47,359
+have LM LM prompts and then you have the
+
+1264
+00:55:47,359 --> 00:55:49,839
+LM, right? And what you want to do is
+
+1265
+00:55:49,839 --> 00:55:52,559
+you want to test this
+
+1266
+00:55:52,559 --> 00:55:54,000
+and say, "Okay, if I run this prompt
+
+1267
+00:55:54,000 --> 00:55:56,319
+with this data, I get this result."
+
+1268
+00:55:56,319 --> 00:55:57,760
+Exactly. And then separately, you want
+
+1269
+00:55:57,760 --> 00:56:00,160
+to test this without having to round
+
+1270
+00:56:00,160 --> 00:56:01,839
+trip to the LLM to test your Python
+
+1271
+00:56:01,839 --> 00:56:03,119
+code. Exactly. And so, you want to
+
+1272
+00:56:03,119 --> 00:56:06,640
+basically mock on this side and over
+
+1273
+00:56:06,640 --> 00:56:07,839
+here you're going to mock on this side.
+
+1274
+00:56:07,839 --> 00:56:09,200
+And you say, "Okay, here's fake data
+
+1275
+00:56:09,200 --> 00:56:11,200
+that I know is in our pipeline, and over
+
+1276
+00:56:11,200 --> 00:56:13,599
+here it's here." Yeah, exactly. And you
+
+1277
+00:56:13,599 --> 00:56:15,119
+need to make this swappable really,
+
+1278
+00:56:15,119 --> 00:56:16,799
+really easily. And ideally, I don't even
+
+1279
+00:56:16,799 --> 00:56:18,720
+want mocking. I want like record replay
+
+1280
+00:56:18,720 --> 00:56:20,559
+because most people don't have good data
+
+1281
+00:56:20,559 --> 00:56:21,680
+sets that they're going to build over
+
+1282
+00:56:21,680 --> 00:56:24,799
+time. Yep. I really want to and then be
+
+1283
+00:56:24,799 --> 00:56:26,720
+able to like immediately know when I can
+
+1284
+00:56:26,720 --> 00:56:28,160
+and cannot catch this. Okay, cool. Now
+
+1285
+00:56:28,160 --> 00:56:30,079
+the data is done. Let's go look at it.
+
+1286
+00:56:30,079 --> 00:56:35,430
+Okay, cool.
+
+1287
+00:56:40,789 --> 00:56:40,799
+Just refresh. Can you just refresh
+
+1288
+00:56:40,799 --> 00:56:43,920
+command R? Yeah. What was the pipeline
+
+1289
+00:56:43,920 --> 00:56:45,200
+called? Let me just see what Let me go
+
+1290
+00:56:45,200 --> 00:56:47,200
+see which project it's in. I don't
+
+1291
+00:56:47,200 --> 00:56:49,480
+remember which project we put it in.
+
+1292
+00:56:49,480 --> 00:56:52,720
+Yeah. All right. Good. Look at the ID
+
+1293
+00:56:52,720 --> 00:56:59,670
+7543.
+
+1294
+00:57:01,670 --> 00:57:01,680
+Do you have it? Do you want me to go do
+
+1295
+00:57:01,680 --> 00:57:11,990
+it? Hang on. I'm just going to uh
+
+1296
+00:57:14,950 --> 00:57:14,960
+I got it. Okay, so this should be the
+
+1297
+00:57:14,960 --> 00:57:17,119
+project. I'm not sure why they didn't
+
+1298
+00:57:17,119 --> 00:57:19,240
+just change the
+
+1299
+00:57:19,240 --> 00:57:21,480
+filters. That's
+
+1300
+00:57:21,480 --> 00:57:26,349
+tough. And it's like last 30 days or
+
+1301
+00:57:28,870 --> 00:57:28,880
+something. Um, did it make it through?
+
+1302
+00:57:28,880 --> 00:57:30,200
+Maybe it
+
+1303
+00:57:30,200 --> 00:57:32,480
+didn't. I set a new key and I'm running
+
+1304
+00:57:32,480 --> 00:57:35,960
+it again right now. So now we should
+
+1305
+00:57:35,960 --> 00:57:37,960
+have
+
+1306
+00:57:37,960 --> 00:57:41,990
+Huh. Oh,
+
+1307
+00:57:47,349 --> 00:57:47,359
+Yeah, we don't have this yet. Yeah,
+
+1308
+00:57:47,359 --> 00:57:50,000
+that's odd. Um, is your SAS working? I
+
+1309
+00:57:50,000 --> 00:57:51,440
+have no idea. It doesn't matter. Let's
+
+1310
+00:57:51,440 --> 00:57:53,119
+just run it with terminal really fast. I
+
+1311
+00:57:53,119 --> 00:57:54,319
+don't really care. We should We really
+
+1312
+00:57:54,319 --> 00:57:56,319
+just want to have it running. And I
+
+1313
+00:57:56,319 --> 00:57:58,160
+think that's the most important part.
+
+1314
+00:57:58,160 --> 00:58:00,040
+Yeah.
+
+1315
+00:58:00,040 --> 00:58:02,160
+Um, yeah. No, it should be sending the
+
+1316
+00:58:02,160 --> 00:58:04,160
+data up. I suspect the No, we're in the
+
+1317
+00:58:04,160 --> 00:58:05,760
+middle of migrating the old thing to the
+
+1318
+00:58:05,760 --> 00:58:08,000
+new thing. Um, but let's go ahead and
+
+1319
+00:58:08,000 --> 00:58:09,119
+just look at some of this data and just
+
+1320
+00:58:09,119 --> 00:58:10,720
+see what you want to just dump stuff out
+
+1321
+00:58:10,720 --> 00:58:13,119
+to JSON or dump it out to a file. All
+
+1322
+00:58:13,119 --> 00:58:15,839
+right, cool. That was going to be my
+
+1323
+00:58:15,839 --> 00:58:18,559
+suggestion. Anyways, um, save everything
+
+1324
+00:58:18,559 --> 00:58:25,750
+that is not none into a file.
+
+1325
+00:58:28,309 --> 00:58:28,319
+Like they're listening to you.
+
+1326
+00:58:28,319 --> 00:58:30,400
+Um, but there is one difference that I
+
+1327
+00:58:30,400 --> 00:58:31,680
+want. You'll notice that this is the
+
+1328
+00:58:31,680 --> 00:58:34,240
+part that uh Yeah, but don't do that in
+
+1329
+00:58:34,240 --> 00:58:36,400
+there. One second.
+
+1330
+00:58:36,400 --> 00:58:40,000
+Uh what is f? Oh, I see. Yeah, save save
+
+1331
+00:58:40,000 --> 00:58:41,520
+that. And then what we also want I would
+
+1332
+00:58:41,520 --> 00:58:44,480
+save every single individual email as a
+
+1333
+00:58:44,480 --> 00:58:46,680
+duplicate into that file as
+
+1334
+00:58:46,680 --> 00:58:49,440
+well. So what I this is where actually
+
+1335
+00:58:49,440 --> 00:58:50,799
+most people mess up when they go do
+
+1336
+00:58:50,799 --> 00:58:54,240
+this. So can I go do this one time?
+
+1337
+00:58:54,240 --> 00:58:58,559
+Uh I got it. Well, I I want everything
+
+1338
+00:58:58,559 --> 00:59:01,040
+to be in a unique file.
+
+1339
+00:59:01,040 --> 00:59:03,440
+Oh, every single email. Exactly. because
+
+1340
+00:59:03,440 --> 00:59:04,480
+it's going to be impossible to go read
+
+1341
+00:59:04,480 --> 00:59:05,920
+in a giant JSON blog. It's basically
+
+1342
+00:59:05,920 --> 00:59:06,880
+going to be useless. And I would
+
+1343
+00:59:06,880 --> 00:59:08,079
+specifically want them in two separate
+
+1344
+00:59:08,079 --> 00:59:10,240
+files.
+
+1345
+00:59:10,240 --> 00:59:12,160
+The email and the analysis email and
+
+1346
+00:59:12,160 --> 00:59:14,480
+analysis in a separate file uh that's
+
+1347
+00:59:14,480 --> 00:59:22,470
+just like indexed by order in some way.
+
+1348
+00:59:26,069 --> 00:59:26,079
+It's code that we don't write anymore.
+
+1349
+00:59:26,079 --> 00:59:27,480
+I don't know,
+
+1350
+00:59:27,480 --> 00:59:32,240
+man. Okay. Uh high risk.
+
+1351
+00:59:32,240 --> 00:59:33,760
+Does that look right? Let me just do
+
+1352
+00:59:33,760 --> 00:59:36,079
+this off the top of my head. It's going
+
+1353
+00:59:36,079 --> 00:59:37,599
+to put in either the high-risisk or the
+
+1354
+00:59:37,599 --> 00:59:39,599
+lowrisk folder. And then that's going to
+
+1355
+00:59:39,599 --> 00:59:41,359
+email and then the Okay, cool. That
+
+1356
+00:59:41,359 --> 00:59:44,480
+looks great. Let's go run this. Yeah.
+
+1357
+00:59:44,480 --> 00:59:46,160
+And the reason I'm doing this is for a
+
+1358
+00:59:46,160 --> 00:59:47,599
+couple of reasons, but the primary one
+
+1359
+00:59:47,599 --> 00:59:49,119
+is just that what I really want to have
+
+1360
+00:59:49,119 --> 00:59:50,720
+access to over here is I want to be able
+
+1361
+00:59:50,720 --> 00:59:52,160
+to look up this stuff really, really
+
+1362
+00:59:52,160 --> 00:59:54,559
+fast and make my iteration loop super
+
+1363
+00:59:54,559 --> 00:59:56,559
+super fast.
+
+1364
+00:59:56,559 --> 00:59:58,480
+And if I don't do this, like if I didn't
+
+1365
+00:59:58,480 --> 00:59:59,680
+do the small stuff of making this
+
+1366
+00:59:59,680 --> 01:00:01,119
+parallel, our iteration loop here
+
+1367
+01:00:01,119 --> 01:00:02,480
+wouldn't be 10 seconds. It'd be a
+
+1368
+01:00:02,480 --> 01:00:06,160
+minute. And that would Yeah. So let's go
+
+1369
+01:00:06,160 --> 01:00:08,400
+back. It's changing. I wonder if it's
+
+1370
+01:00:08,400 --> 01:00:11,200
+using a different set of emails also.
+
+1371
+01:00:11,200 --> 01:00:15,599
+No, probably not. Um but all high risk.
+
+1372
+01:00:15,599 --> 01:00:18,880
+Yeah. So So here's our email. Exactly.
+
+1373
+01:00:18,880 --> 01:00:20,720
+So we can actually see what's end ends
+
+1374
+01:00:20,720 --> 01:00:22,480
+up going on here is we actually can
+
+1375
+01:00:22,480 --> 01:00:23,920
+really quickly You saw how fast you
+
+1376
+01:00:23,920 --> 01:00:26,520
+navigated to that. Oh, this is
+
+1377
+01:00:26,520 --> 01:00:29,359
+cool. Just by picking up 10,000 random
+
+1378
+01:00:29,359 --> 01:00:32,160
+emails, we found a bunch.
+
+1379
+01:00:32,160 --> 01:00:34,119
+Yeah. And like what does it
+
+1380
+01:00:34,119 --> 01:00:36,720
+say? Well, let's go read the JSON object
+
+1381
+01:00:36,720 --> 01:00:38,240
+first. I'm back in the office today. Oh,
+
+1382
+01:00:38,240 --> 01:00:43,670
+you want to see? Yeah. So, it says
+
+1383
+01:00:50,069 --> 01:00:50,079
+Received gifts from Ron Shangle who is
+
+1384
+01:00:50,079 --> 01:00:52,160
+affiliated with NB USA, supplier,
+
+1385
+01:00:52,160 --> 01:00:57,109
+business partner of Enron.
+
+1386
+01:00:59,430 --> 01:00:59,440
+Cool. That looks like that looks like
+
+1387
+01:00:59,440 --> 01:01:00,720
+something could be done. And what's
+
+1388
+01:01:00,720 --> 01:01:01,680
+really interesting about this whole
+
+1389
+01:01:01,680 --> 01:01:03,200
+workload is we notice that from a scale
+
+1390
+01:01:03,200 --> 01:01:04,960
+of 10,000 emails, there's not that many
+
+1391
+01:01:04,960 --> 01:01:06,559
+that are high risk. So you could
+
+1392
+01:01:06,559 --> 01:01:07,920
+actually just build a loop that has a
+
+1393
+01:01:07,920 --> 01:01:09,680
+human in the loop that tells, hey, I'm
+
+1394
+01:01:09,680 --> 01:01:10,880
+going to build a dashboard that looks
+
+1395
+01:01:10,880 --> 01:01:12,559
+and filters for all of these and then a
+
+1396
+01:01:12,559 --> 01:01:14,000
+human will go and evaluate whether these
+
+1397
+01:01:14,000 --> 01:01:17,200
+actually are bad or not. And now we've
+
+1398
+01:01:17,200 --> 01:01:18,480
+Yeah. So that was that was kind of my
+
+1399
+01:01:18,480 --> 01:01:20,720
+last question. is like, okay, we found
+
+1400
+01:01:20,720 --> 01:01:22,799
+one that actually looks like the element
+
+1401
+01:01:22,799 --> 01:01:24,880
+is doing what we want. How do we bake
+
+1402
+01:01:24,880 --> 01:01:27,040
+this into our golden set so that as we
+
+1403
+01:01:27,040 --> 01:01:28,319
+change the prompt and evolve the
+
+1404
+01:01:28,319 --> 01:01:30,400
+pipelines, we can keep track of whether
+
+1405
+01:01:30,400 --> 01:01:31,920
+this one's like obviously the visually
+
+1406
+01:01:31,920 --> 01:01:34,640
+eval of what's the diff, but also just
+
+1407
+01:01:34,640 --> 01:01:36,640
+the like we should check to make sure
+
+1408
+01:01:36,640 --> 01:01:38,400
+that this email always gets a high risk
+
+1409
+01:01:38,400 --> 01:01:39,880
+level that we can just evaluate
+
+1410
+01:01:39,880 --> 01:01:42,000
+deterministically. I know we're getting
+
+1411
+01:01:42,000 --> 01:01:44,319
+close on time. Um, but like do you want
+
+1412
+01:01:44,319 --> 01:01:46,160
+to spend a minute doing that? I would
+
+1413
+01:01:46,160 --> 01:01:47,680
+just literally make a test case for this
+
+1414
+01:01:47,680 --> 01:01:49,520
+email that says that, hey, this email
+
+1415
+01:01:49,520 --> 01:01:51,200
+just does that and that's it. See, I
+
+1416
+01:01:51,200 --> 01:01:53,280
+love that. Like everyone tries to over
+
+1417
+01:01:53,280 --> 01:01:55,079
+complicate this
+
+1418
+01:01:55,079 --> 01:01:59,829
+stuff. Test pipeline.
+
+1419
+01:02:01,670 --> 01:02:01,680
+Yeah. And then you can literally write
+
+1420
+01:02:01,680 --> 01:02:05,160
+like deaf uh exactly test
+
+1421
+01:02:05,160 --> 01:02:08,079
+pipeline or like test test that specific
+
+1422
+01:02:08,079 --> 01:02:12,030
+email that you
+
+1423
+01:02:14,309 --> 01:02:14,319
+have and you can just put the path to
+
+1424
+01:02:14,319 --> 01:02:16,960
+the email. Exactly.
+
+1425
+01:02:16,960 --> 01:02:19,119
+Um, put the path for this email instead.
+
+1426
+01:02:19,119 --> 01:02:21,119
+That's what I would do. Yeah. I got to
+
+1427
+01:02:21,119 --> 01:02:22,810
+find it though.
+
+1428
+01:02:22,810 --> 01:02:25,480
+[Music]
+
+1429
+01:02:25,480 --> 01:02:28,480
+Um, there you go. I don't think it's
+
+1430
+01:02:28,480 --> 01:02:30,720
+gonna It will not grab. You'll have to
+
+1431
+01:02:30,720 --> 01:02:32,720
+grab for that.
+
+1432
+01:02:32,720 --> 01:02:36,799
+Um, just grab for the message ID.
+
+1433
+01:02:36,799 --> 01:02:38,960
+Oh, yeah. Good idea, man. All these
+
+1434
+01:02:38,960 --> 01:02:43,359
+random tips and tricks. Yeah. Like I
+
+1435
+01:02:43,359 --> 01:02:45,040
+think people highly highly underestimate
+
+1436
+01:02:45,040 --> 01:02:46,559
+how how important it is. But the most
+
+1437
+01:02:46,559 --> 01:02:47,520
+important thing that everyone needs to
+
+1438
+01:02:47,520 --> 01:02:49,920
+do is just like get really fast at this.
+
+1439
+01:02:49,920 --> 01:02:57,510
+Great. Now we have a path. Exactly.
+
+1440
+01:02:59,549 --> 01:02:59,559
+Cool. Exactly. So now you would just
+
+1441
+01:02:59,559 --> 01:03:02,559
+like for test and test cases. Exactly.
+
+1442
+01:03:02,559 --> 01:03:08,270
+Import
+
+1443
+01:03:11,829 --> 01:03:11,839
+check. Yep. Uh risk level. There you go.
+
+1444
+01:03:11,839 --> 01:03:13,520
+And if you look at the result that
+
+1445
+01:03:13,520 --> 01:03:19,150
+should be assert result is not
+
+1446
+01:03:22,190 --> 01:03:22,200
+none. Import
+
+1447
+01:03:22,200 --> 01:03:25,359
+piest. Exactly. Uh and then import
+
+1448
+01:03:25,359 --> 01:03:28,470
+piest.
+
+1449
+01:03:29,990 --> 01:03:30,000
+Yep.
+
+1450
+01:03:30,000 --> 01:03:31,280
+And really you should make a
+
+1451
+01:03:31,280 --> 01:03:32,640
+parameterized test case, but that's
+
+1452
+01:03:32,640 --> 01:03:34,640
+okay. Yeah, sure. That's fine. Just
+
+1453
+01:03:34,640 --> 01:03:35,920
+highlight it and cursor will change it
+
+1454
+01:03:35,920 --> 01:03:39,640
+for you. Yeah, there you
+
+1455
+01:03:39,640 --> 01:03:41,760
+go. Cool.
+
+1456
+01:03:41,760 --> 01:03:45,390
+Yeah. And now you just run pi
+
+1457
+01:03:47,670 --> 01:03:47,680
+test. Oh, you need to mark it. Oh,
+
+1458
+01:03:47,680 --> 01:03:50,440
+whatever. Let's see if it
+
+1459
+01:03:50,440 --> 01:04:00,150
+works. Oh. Uh,
+
+1460
+01:04:01,990 --> 01:04:02,000
+why is it I wonder if it's collecting
+
+1461
+01:04:02,000 --> 01:04:04,319
+files from all of the data. Oh yeah, C
+
+1462
+01:04:04,319 --> 01:04:06,400
+and just pass it to specific directory.
+
+1463
+01:04:06,400 --> 01:04:09,630
+Yeah.
+
+1464
+01:04:14,470 --> 01:04:14,480
+Um, Unexpected indent. Oh, tap tap.
+
+1465
+01:04:14,480 --> 01:04:19,630
+Yeah, come on.
+
+1466
+01:04:24,150 --> 01:04:24,160
+Cursor C routine object async.
+
+1467
+01:04:24,160 --> 01:04:26,559
+Yeah. And you have to import uh pi test.
+
+1468
+01:04:26,559 --> 01:04:30,119
+Oh, maybe. Yeah. A dash async.io. It's
+
+1469
+01:04:30,119 --> 01:04:33,309
+dash.
+
+1470
+01:04:35,589 --> 01:04:35,599
+Yeah. Uh you have to mark it at
+
+1471
+01:04:35,599 --> 01:04:39,829
+piest.mmark.
+
+1472
+01:04:42,390 --> 01:04:42,400
+Yeah. Yeah. Yep. Now it'll work. And
+
+1473
+01:04:42,400 --> 01:04:48,750
+then we got to await it. Oh, yeah. Oh,
+
+1474
+01:04:50,349 --> 01:04:50,359
+wait.
+
+1475
+01:04:50,359 --> 01:04:52,880
+Um Oh, you have to actually load the You
+
+1476
+01:04:52,880 --> 01:04:54,160
+loaded the path. You have to actually
+
+1477
+01:04:54,160 --> 01:04:56,119
+load the
+
+1478
+01:04:56,119 --> 01:05:00,480
+path. Think you have to load the email.
+
+1479
+01:05:00,480 --> 01:05:03,760
+Oh, is this just the text? Okay. Yeah.
+
+1480
+01:05:03,760 --> 01:05:05,079
+Like
+
+1481
+01:05:05,079 --> 01:05:07,720
+load.
+
+1482
+01:05:07,720 --> 01:05:10,240
+Yeah. There you go. And you probably
+
+1483
+01:05:10,240 --> 01:05:12,079
+have to give it data slash I think.
+
+1484
+01:05:12,079 --> 01:05:15,599
+Yeah, there you go. Yeah, tab. The data
+
+1485
+01:05:15,599 --> 01:05:28,309
+thing was also correct on line six.
+
+1486
+01:05:37,589 --> 01:05:37,599
+there you go.
+
+1487
+01:05:37,599 --> 01:05:41,789
+Let's see. Amaron
+
+1488
+01:05:54,230 --> 01:05:54,240
+cursor. Okay, so this is our
+
+1489
+01:05:54,240 --> 01:05:56,559
+deterministic eval. Can we also make a
+
+1490
+01:05:56,559 --> 01:05:59,440
+vibe eval? Exactly. Like a visualizer.
+
+1491
+01:05:59,440 --> 01:06:00,880
+Notice what we did, right? We we started
+
+1492
+01:06:00,880 --> 01:06:03,039
+off with a vibe eval. Then we got real
+
+1493
+01:06:03,039 --> 01:06:04,400
+data. When we looked at the real data,
+
+1494
+01:06:04,400 --> 01:06:06,559
+we're like, cool. This one when we
+
+1495
+01:06:06,559 --> 01:06:09,760
+looked at it should always be correct.
+
+1496
+01:06:09,760 --> 01:06:11,440
+So how are we going to do this? And we
+
+1497
+01:06:11,440 --> 01:06:12,880
+did what you did which is like okay now
+
+1498
+01:06:12,880 --> 01:06:14,319
+we did a little bit of extra work to go
+
+1499
+01:06:14,319 --> 01:06:16,400
+write this code and it takes 5 10
+
+1500
+01:06:16,400 --> 01:06:18,160
+minutes but if you keep doing this over
+
+1501
+01:06:18,160 --> 01:06:19,520
+and over again now you have better and
+
+1502
+01:06:19,520 --> 01:06:22,319
+better systems. And so there's like two
+
+1503
+01:06:22,319 --> 01:06:23,920
+dimensions that we're exploding around
+
+1504
+01:06:23,920 --> 01:06:26,240
+here. um which like I would love to chat
+
+1505
+01:06:26,240 --> 01:06:27,680
+more about like how to do this at scale
+
+1506
+01:06:27,680 --> 01:06:29,200
+but it's like there's the dimension of
+
+1507
+01:06:29,200 --> 01:06:31,760
+like finding all the test cases for this
+
+1508
+01:06:31,760 --> 01:06:34,319
+just this gift policy just one rule in
+
+1509
+01:06:34,319 --> 01:06:36,480
+our policy set and getting that really
+
+1510
+01:06:36,480 --> 01:06:38,640
+really good and then there's doing that
+
+1511
+01:06:38,640 --> 01:06:41,920
+again you know squaring the uh input
+
+1512
+01:06:41,920 --> 01:06:44,640
+space for every single policy that we
+
+1513
+01:06:44,640 --> 01:06:46,480
+might care about and that's I think
+
+1514
+01:06:46,480 --> 01:06:48,319
+probably highlights why like this is how
+
+1515
+01:06:48,319 --> 01:06:50,240
+you do it and get really good quality
+
+1516
+01:06:50,240 --> 01:06:52,319
+and that highlights probably why just
+
+1517
+01:06:52,319 --> 01:06:54,799
+like ramming out a bunch of questions
+
+1518
+01:06:54,799 --> 01:06:57,200
+from a policy document is probably less
+
+1519
+01:06:57,200 --> 01:07:00,160
+less less useful than but notice the way
+
+1520
+01:07:00,160 --> 01:07:01,839
+that we got the give policy is you ran
+
+1521
+01:07:01,839 --> 01:07:03,280
+that process already and then you're
+
+1522
+01:07:03,280 --> 01:07:04,720
+like okay this policy seems like one
+
+1523
+01:07:04,720 --> 01:07:07,440
+that we can tackle like yep and notice
+
+1524
+01:07:07,440 --> 01:07:09,200
+what I did what one of the things I
+
+1525
+01:07:09,200 --> 01:07:10,480
+forced you to do was I forced you to
+
+1526
+01:07:10,480 --> 01:07:12,079
+basically ignore all the other questions
+
+1527
+01:07:12,079 --> 01:07:13,039
+we said we're just going to talk about
+
+1528
+01:07:13,039 --> 01:07:15,520
+gifts today
+
+1529
+01:07:15,520 --> 01:07:18,319
+like we actually we just said we're only
+
+1530
+01:07:18,319 --> 01:07:19,280
+going to talk about gifts because we
+
+1531
+01:07:19,280 --> 01:07:21,039
+could have spent this whole time talking
+
+1532
+01:07:21,039 --> 01:07:22,640
+about just policies and we would have
+
+1533
+01:07:22,640 --> 01:07:26,240
+gotten no Yep. But now that we feel
+
+1534
+01:07:26,240 --> 01:07:28,160
+pretty good about that's like really
+
+1535
+01:07:28,160 --> 01:07:29,839
+good. So now let's bump it up even
+
+1536
+01:07:29,839 --> 01:07:32,240
+further. Can you go back to your code?
+
+1537
+01:07:32,240 --> 01:07:34,640
+Yeah. Where do you want to go? Let's run
+
+1538
+01:07:34,640 --> 01:07:38,400
+100,000 emails. Oh, okay. But now you'll
+
+1539
+01:07:38,400 --> 01:07:39,440
+notice that this is going to be kind of
+
+1540
+01:07:39,440 --> 01:07:40,960
+annoying. So yeah, make it 100,000. But
+
+1541
+01:07:40,960 --> 01:07:41,920
+this is going to be kind Don't run it.
+
+1542
+01:07:41,920 --> 01:07:44,400
+Don't run Don't run it. Um, this is
+
+1543
+01:07:44,400 --> 01:07:45,440
+going to be kind of annoying. So like
+
+1544
+01:07:45,440 --> 01:07:50,430
+this is another thing that I would do.
+
+1545
+01:07:54,630 --> 01:07:54,640
+Um, how do I how do I cursor? H how do I
+
+1546
+01:07:54,640 --> 01:07:58,839
+ask cursor? Uh, command K. Oh, yeah.
+
+1547
+01:07:58,839 --> 01:08:04,470
+Sorry. Use um
+
+1548
+01:08:07,190 --> 01:08:07,200
+what is TQDM?
+
+1549
+01:08:07,200 --> 01:08:13,190
+It's great.
+
+1550
+01:08:16,309 --> 01:08:16,319
+That's great. You'll see. We're use TQDM
+
+1551
+01:08:16,319 --> 01:08:20,030
+to go do this.
+
+1552
+01:08:22,630 --> 01:08:22,640
+Um, I think this will be pretty good,
+
+1553
+01:08:22,640 --> 01:08:24,000
+but I'm going to do a couple more things
+
+1554
+01:08:24,000 --> 01:08:26,560
+just to make this slightly better. Now
+
+1555
+01:08:26,560 --> 01:08:28,319
+that we're running 100,000, I'm just
+
+1556
+01:08:28,319 --> 01:08:30,319
+going to mark this
+
+1557
+01:08:30,319 --> 01:08:32,000
+as Oh, you're just going to log out the
+
+1558
+01:08:32,000 --> 01:08:34,640
+exceptions.
+
+1559
+01:08:34,640 --> 01:08:36,520
+Well, I'm just going to say
+
+1560
+01:08:36,520 --> 01:08:40,110
+like if it
+
+1561
+01:08:42,070 --> 01:08:42,080
+fails, that's okay. We want to return
+
+1562
+01:08:42,080 --> 01:08:44,560
+like gift email analysis or error or
+
+1563
+01:08:44,560 --> 01:08:47,759
+none so that we can write it to a file.
+
+1564
+01:08:47,759 --> 01:08:50,799
+Exactly. Called string or whatever.
+
+1565
+01:08:50,799 --> 01:08:52,239
+Well, do you want the error message
+
+1566
+01:08:52,239 --> 01:08:57,829
+basically? I don't really care. Okay.
+
+1567
+01:08:59,430 --> 01:08:59,440
+I'm just And I think I have to return
+
+1568
+01:08:59,440 --> 01:09:02,400
+this as well. Yeah. What I'll just
+
+1569
+01:09:02,400 --> 01:09:05,040
+return a false specifically a false.
+
+1570
+01:09:05,040 --> 01:09:06,759
+Okay.
+
+1571
+01:09:06,759 --> 01:09:09,199
+Um, and there's only one type of error
+
+1572
+01:09:09,199 --> 01:09:21,789
+that I'm actually going to catch, which
+
+1573
+01:09:24,149 --> 01:09:24,159
+is Oh, sorry. Imported from the wrong
+
+1574
+01:09:24,159 --> 01:09:37,669
+thing.
+
+1575
+01:09:39,590 --> 01:09:39,600
+I basically only want to capture like
+
+1576
+01:09:39,600 --> 01:09:44,159
+validation errors and if they happen
+
+1577
+01:09:44,159 --> 01:09:46,400
+um I basically just want to ignore them
+
+1578
+01:09:46,400 --> 01:09:48,880
+and return false.
+
+1579
+01:09:48,880 --> 01:09:50,719
+Okay, I don't want to think about it.
+
+1580
+01:09:50,719 --> 01:09:55,870
+Oh, I have to use literal
+
+1581
+01:09:58,229 --> 01:09:58,239
+false. Just return literal error is
+
+1582
+01:09:58,239 --> 01:10:00,560
+fine.
+
+1583
+01:10:00,560 --> 01:10:04,630
+Um,
+
+1584
+01:10:06,390 --> 01:10:06,400
+and then you want to log out the number
+
+1585
+01:10:06,400 --> 01:10:09,360
+that have errors here. Exactly. So I
+
+1586
+01:10:09,360 --> 01:10:11,360
+want to say like
+
+1587
+01:10:11,360 --> 01:10:22,470
+cursor should figure this out.
+
+1588
+01:10:24,790 --> 01:10:24,800
+Okay. What's TQDM? Are you going to tell
+
+1589
+01:10:24,800 --> 01:10:26,239
+us and then let's let's run this one
+
+1590
+01:10:26,239 --> 01:10:27,920
+last time and then let's do 15 minutes
+
+1591
+01:10:27,920 --> 01:10:30,120
+for questions and we'll let people go.
+
+1592
+01:10:30,120 --> 01:10:32,239
+Exactly. Run it. Run it. I think this
+
+1593
+01:10:32,239 --> 01:10:33,920
+will work. What is this? Just run it.
+
+1594
+01:10:33,920 --> 01:10:35,280
+Just run it. Trust me. All right. All
+
+1595
+01:10:35,280 --> 01:10:37,280
+right. All right. And turn off your turn
+
+1596
+01:10:37,280 --> 01:10:41,229
+off your terminal
+
+1597
+01:10:55,910 --> 01:10:55,920
+TKDM in theory. This should work. Oh,
+
+1598
+01:10:55,920 --> 01:10:58,120
+cool. It's just like a progress bar.
+
+1599
+01:10:58,120 --> 01:11:01,120
+Exactly. Why does this not work the way
+
+1600
+01:11:01,120 --> 01:11:02,800
+I thought it would? The progress bar
+
+1601
+01:11:02,800 --> 01:11:03,920
+didn't do what I was supposed to. We
+
+1602
+01:11:03,920 --> 01:11:05,239
+should cancel
+
+1603
+01:11:05,239 --> 01:11:07,520
+this. While this is cancelling, let's
+
+1604
+01:11:07,520 --> 01:11:09,440
+update the progress bar so it actually
+
+1605
+01:11:09,440 --> 01:11:10,560
+does the right thing. Can you update the
+
+1606
+01:11:10,560 --> 01:11:12,400
+progress bar so it does the right thing?
+
+1607
+01:11:12,400 --> 01:11:14,600
+Um, what I will do
+
+1608
+01:11:14,600 --> 01:11:18,120
+is So, let me write this down really
+
+1609
+01:11:18,120 --> 01:11:27,430
+fast. Go ahead.
+
+1610
+01:11:30,470 --> 01:11:30,480
+You got to like chunk it or something. I
+
+1611
+01:11:30,480 --> 01:11:34,110
+don't
+
+1612
+01:11:37,430 --> 01:11:37,440
+know. How does this work? Uh, I have to
+
+1613
+01:11:37,440 --> 01:11:43,120
+ask cursor fix this. I forgot how to
+
+1614
+01:11:43,120 --> 01:11:45,040
+the world's best prompt engineer and the
+
+1615
+01:11:45,040 --> 01:11:46,320
+only thing you know how to tell cursor
+
+1616
+01:11:46,320 --> 01:11:48,239
+is fix this and make it better. Yeah,
+
+1617
+01:11:48,239 --> 01:11:49,760
+there you go. Uh, there you go. I think
+
+1618
+01:11:49,760 --> 01:11:52,709
+this will work.
+
+1619
+01:12:00,870 --> 01:12:00,880
+There you go.
+
+1620
+01:12:00,880 --> 01:12:02,640
+Yeah. So, and and why do we do this?
+
+1621
+01:12:02,640 --> 01:12:05,199
+Like who was um who was asking this is
+
+1622
+01:12:05,199 --> 01:12:06,560
+like how do we be running this? Like
+
+1623
+01:12:06,560 --> 01:12:07,679
+Charlie was asking how long will it
+
+1624
+01:12:07,679 --> 01:12:08,960
+take? Now we have an approximate mental
+
+1625
+01:12:08,960 --> 01:12:10,239
+model of how it's going to take too.
+
+1626
+01:12:10,239 --> 01:12:12,800
+We're processing 100,000 emails
+
+1627
+01:12:12,800 --> 01:12:14,719
+um and we know roughly how long it's
+
+1628
+01:12:14,719 --> 01:12:16,560
+going to take by running this through.
+
+1629
+01:12:16,560 --> 01:12:18,159
+And this is like something that a lot of
+
+1630
+01:12:18,159 --> 01:12:19,760
+people don't do. But again, small thing
+
+1631
+01:12:19,760 --> 01:12:21,280
+like adding the progress bar makes it so
+
+1632
+01:12:21,280 --> 01:12:22,960
+we're not waiting forever. With 10,000,
+
+1633
+01:12:22,960 --> 01:12:24,239
+we're like, "Ah, it's not that bad. So,
+
+1634
+01:12:24,239 --> 01:12:27,199
+let's just go run this." With 100,000,
+
+1635
+01:12:27,199 --> 01:12:29,120
+that no longer becomes feasible. So,
+
+1636
+01:12:29,120 --> 01:12:30,400
+like I really want to have a good proxy
+
+1637
+01:12:30,400 --> 01:12:32,159
+for like how how far along are we?
+
+1638
+01:12:32,159 --> 01:12:33,199
+What's going on? What are the metrics
+
+1639
+01:12:33,199 --> 01:12:35,280
+that are happening? Um, and if you're
+
+1640
+01:12:35,280 --> 01:12:36,560
+not investing time in this kind of stuff
+
+1641
+01:12:36,560 --> 01:12:38,800
+while you're iterating, again, it feels
+
+1642
+01:12:38,800 --> 01:12:40,480
+slow in the moment, but now you see that
+
+1643
+01:12:40,480 --> 01:12:41,800
+we're moving a lot
+
+1644
+01:12:41,800 --> 01:12:43,760
+faster because like we know
+
+1645
+01:12:43,760 --> 01:12:45,120
+approximately what we're waiting on,
+
+1646
+01:12:45,120 --> 01:12:48,320
+what we're not waiting on.
+
+1647
+01:12:48,320 --> 01:12:50,640
+Cool. That's dope. Should we open it for
+
+1648
+01:12:50,640 --> 01:12:53,120
+questions? Yeah, let's wait. I I kind of
+
+1649
+01:12:53,120 --> 01:12:53,920
+want to see the results of what
+
+1650
+01:12:53,920 --> 01:12:55,040
+happened. Let's see the results. All
+
+1651
+01:12:55,040 --> 01:12:58,159
+right. Um, let's add Let's look at the
+
+1652
+01:12:58,159 --> 01:12:59,440
+results. Let's find one that's legit.
+
+1653
+01:12:59,440 --> 01:13:01,920
+And let's add one more test case. Risk
+
+1654
+01:13:01,920 --> 01:13:03,840
+level high. Financial donation to
+
+1655
+01:13:03,840 --> 01:13:05,679
+cultural arts while seeking approval.
+
+1656
+01:13:05,679 --> 01:13:07,520
+God damn, these people are all over the
+
+1657
+01:13:07,520 --> 01:13:09,120
+place. All right, we'll we'll drop this
+
+1658
+01:13:09,120 --> 01:13:12,719
+one in. Um, that's crazy. And I think
+
+1659
+01:13:12,719 --> 01:13:14,560
+this what's great about the system like
+
+1660
+01:13:14,560 --> 01:13:18,630
+yeah it did find something out.
+
+1661
+01:13:25,189 --> 01:13:25,199
+we didn't find that one.
+
+1662
+01:13:25,199 --> 01:13:27,440
+Um but this is kind of why I was saying
+
+1663
+01:13:27,440 --> 01:13:29,040
+when you save stuff to disk it's just
+
+1664
+01:13:29,040 --> 01:13:31,199
+not as good because like now capturing
+
+1665
+01:13:31,199 --> 01:13:32,719
+this whole information is very very
+
+1666
+01:13:32,719 --> 01:13:34,320
+hard.
+
+1667
+01:13:34,320 --> 01:13:36,159
+Yeah. I mean, we could just like copy
+
+1668
+01:13:36,159 --> 01:13:38,320
+this into a test cases folder probably
+
+1669
+01:13:38,320 --> 01:13:39,440
+what we would do. Like, you're not going
+
+1670
+01:13:39,440 --> 01:13:41,600
+to commit the entire set of emails or
+
+1671
+01:13:41,600 --> 01:13:43,800
+whatever, but
+
+1672
+01:13:43,800 --> 01:13:46,640
+um but yeah, this is kind of the this is
+
+1673
+01:13:46,640 --> 01:13:48,960
+kind of um the interesting stuff that we
+
+1674
+01:13:48,960 --> 01:13:50,800
+get to go do. Um any and then you can
+
+1675
+01:13:50,800 --> 01:13:52,880
+imagine a UI around this really really
+
+1676
+01:13:52,880 --> 01:13:55,520
+working really nicely. Exactly. Um cool.
+
+1677
+01:13:55,520 --> 01:13:57,120
+I'm going to stop sharing. Um we can pop
+
+1678
+01:13:57,120 --> 01:13:58,800
+back to the whiteboard if needed. But uh
+
+1679
+01:13:58,800 --> 01:14:00,560
+what questions do folks have? So
+
+1680
+01:14:00,560 --> 01:14:02,239
+question one from Andrew. This is all
+
+1681
+01:14:02,239 --> 01:14:04,560
+assumed GT40 Mini. Did you vibe consider
+
+1682
+01:14:04,560 --> 01:14:08,320
+other models? Um, I think it was 40 for
+
+1683
+01:14:08,320 --> 01:14:10,239
+the record, but yeah. Yeah, I think we
+
+1684
+01:14:10,239 --> 01:14:11,679
+could have considered any model, but
+
+1685
+01:14:11,679 --> 01:14:13,199
+honestly, it didn't matter. What we
+
+1686
+01:14:13,199 --> 01:14:14,800
+really wanted to go work on this time
+
+1687
+01:14:14,800 --> 01:14:16,480
+was just whether or not this problem
+
+1688
+01:14:16,480 --> 01:14:18,719
+could be solved. If the problem can't be
+
+1689
+01:14:18,719 --> 01:14:20,239
+solved, it doesn't matter what models
+
+1690
+01:14:20,239 --> 01:14:22,080
+can and cannot do it. So, we just want
+
+1691
+01:14:22,080 --> 01:14:24,360
+to invest time in that sort of workload
+
+1692
+01:14:24,360 --> 01:14:26,880
+first. And once we know it's good and we
+
+1693
+01:14:26,880 --> 01:14:28,239
+know it's good enough, once we get more
+
+1694
+01:14:28,239 --> 01:14:29,679
+vibes about it, then we can worry about
+
+1695
+01:14:29,679 --> 01:14:31,840
+making the model smaller. Yeah. And if
+
+1696
+01:14:31,840 --> 01:14:33,120
+we notice like, hey, the model really
+
+1697
+01:14:33,120 --> 01:14:34,880
+sucks at finding ones that really should
+
+1698
+01:14:34,880 --> 01:14:36,719
+be detected, then we'll use 03. We'll go
+
+1699
+01:14:36,719 --> 01:14:43,270
+up to a bigger model. Exactly.
+
+1700
+01:14:45,830 --> 01:14:45,840
+Uh, let me jump in, guys. Um, also
+
+1701
+01:14:45,840 --> 01:14:47,440
+awesome, by the way, to watch you two
+
+1702
+01:14:47,440 --> 01:14:49,760
+like wizarding all over the code. It's
+
+1703
+01:14:49,760 --> 01:14:52,159
+really nice today. Um, what what would
+
+1704
+01:14:52,159 --> 01:14:53,600
+be like the next steps from here? Like
+
+1705
+01:14:53,600 --> 01:14:54,960
+how how would you what would you think
+
+1706
+01:14:54,960 --> 01:14:56,880
+about doing after this? Well, the next
+
+1707
+01:14:56,880 --> 01:14:58,159
+step is really to figure out how you're
+
+1708
+01:14:58,159 --> 01:14:59,360
+going to process like five million
+
+1709
+01:14:59,360 --> 01:15:00,960
+emails because processing five million
+
+1710
+01:15:00,960 --> 01:15:02,239
+emails is not going to work with any
+
+1711
+01:15:02,239 --> 01:15:03,679
+rate limit that we have. We did some
+
+1712
+01:15:03,679 --> 01:15:06,719
+basics with parallelism on this. But
+
+1713
+01:15:06,719 --> 01:15:09,520
+what I would do is I would say probably
+
+1714
+01:15:09,520 --> 01:15:11,840
+need Amazon SQSQ or something of that
+
+1715
+01:15:11,840 --> 01:15:13,600
+order of magnitude. Go process that
+
+1716
+01:15:13,600 --> 01:15:14,960
+through and you just churn data at some
+
+1717
+01:15:14,960 --> 01:15:17,440
+cadence and then you just sample real
+
+1718
+01:15:17,440 --> 01:15:19,360
+production data like what Dex was doing
+
+1719
+01:15:19,360 --> 01:15:20,560
+where he would like would look at the
+
+1720
+01:15:20,560 --> 01:15:21,600
+file and just say like let's just look
+
+1721
+01:15:21,600 --> 01:15:22,800
+at the high data and see if it looks
+
+1722
+01:15:22,800 --> 01:15:24,400
+right. Let's look at the med medium
+
+1723
+01:15:24,400 --> 01:15:27,120
+data. See if it looks right. Let's send
+
+1724
+01:15:27,120 --> 01:15:29,760
+some random sample of the low data to
+
+1725
+01:15:29,760 --> 01:15:33,239
+GPT4 uh G3 and just see maybe it missed
+
+1726
+01:15:33,239 --> 01:15:35,520
+something. Um and it's really just like
+
+1727
+01:15:35,520 --> 01:15:37,440
+going and building a metric for the
+
+1728
+01:15:37,440 --> 01:15:40,080
+pipeline. And I wouldn't go ahead out of
+
+1729
+01:15:40,080 --> 01:15:41,679
+my personally I wouldn't go ahead out of
+
+1730
+01:15:41,679 --> 01:15:43,520
+my way to make the pipeline way way
+
+1731
+01:15:43,520 --> 01:15:45,679
+better and way perfectly more accurate.
+
+1732
+01:15:45,679 --> 01:15:47,840
+I just want to know approximately how
+
+1733
+01:15:47,840 --> 01:15:49,920
+good it is. And once you have the core
+
+1734
+01:15:49,920 --> 01:15:51,679
+of it, then I think you switch really to
+
+1735
+01:15:51,679 --> 01:15:53,440
+like a test-driven development mode
+
+1736
+01:15:53,440 --> 01:15:55,679
+where you're eyeballing stuff. And like
+
+1737
+01:15:55,679 --> 01:15:57,520
+I think what you showed last week of
+
+1738
+01:15:57,520 --> 01:16:00,239
+visualizing the diff and the drift is a
+
+1739
+01:16:00,239 --> 01:16:02,159
+great way to quickly find new things
+
+1740
+01:16:02,159 --> 01:16:04,560
+that should be test cases. And then what
+
+1741
+01:16:04,560 --> 01:16:05,760
+you do is you say, "Cool, that should be
+
+1742
+01:16:05,760 --> 01:16:07,040
+a test case that and you build a
+
+1743
+01:16:07,040 --> 01:16:08,560
+pipeline to do that and add your test
+
+1744
+01:16:08,560 --> 01:16:10,719
+cases. And then once you have more test
+
+1745
+01:16:10,719 --> 01:16:13,520
+cases that that don't pass, then you can
+
+1746
+01:16:13,520 --> 01:16:15,040
+go make the pipeline better." Or once
+
+1747
+01:16:15,040 --> 01:16:16,320
+you wake up one morning and you're
+
+1748
+01:16:16,320 --> 01:16:18,560
+spending $50 a day on open API to open
+
+1749
+01:16:18,560 --> 01:16:20,880
+AAI tokens, then you go and say cool
+
+1750
+01:16:20,880 --> 01:16:22,400
+like what's the bottleneck here? Which
+
+1751
+01:16:22,400 --> 01:16:24,560
+step is spending the most tokens? Yeah.
+
+1752
+01:16:24,560 --> 01:16:26,880
+And and really or you say this policy is
+
+1753
+01:16:26,880 --> 01:16:28,880
+good enough. Let's move on to policy the
+
+1754
+01:16:28,880 --> 01:16:30,800
+next policy.
+
+1755
+01:16:30,800 --> 01:16:32,560
+Like we spent an hour built a pretty
+
+1756
+01:16:32,560 --> 01:16:34,080
+decent giftgiving policy. Doesn't have
+
+1757
+01:16:34,080 --> 01:16:35,440
+to be perfect. It's just good enough.
+
+1758
+01:16:35,440 --> 01:16:36,960
+Caught some real scenarios that looked
+
+1759
+01:16:36,960 --> 01:16:39,120
+high risk and instead of taking the
+
+1760
+01:16:39,120 --> 01:16:41,040
+policy to like 100% I just put a human
+
+1761
+01:16:41,040 --> 01:16:42,400
+in the loop in my process and I can
+
+1762
+01:16:42,400 --> 01:16:45,199
+solve my software. Yep. And my favorite
+
+1763
+01:16:45,199 --> 01:16:46,719
+and my favorite actual takeaway of this
+
+1764
+01:16:46,719 --> 01:16:48,719
+is like most of this was not prompt
+
+1765
+01:16:48,719 --> 01:16:50,640
+engineering. Like spending a day
+
+1766
+01:16:50,640 --> 01:16:52,560
+building a perfect prompt and catching
+
+1767
+01:16:52,560 --> 01:16:54,000
+every case is actually like way less
+
+1768
+01:16:54,000 --> 01:16:56,000
+productive than setting up the rails and
+
+1769
+01:16:56,000 --> 01:16:57,120
+the pipelines and the testing
+
+1770
+01:16:57,120 --> 01:16:58,280
+infrastructure and the eval
+
+1771
+01:16:58,280 --> 01:17:00,400
+infrastructure. So that when it comes
+
+1772
+01:17:00,400 --> 01:17:02,320
+time to change your prompt, you know
+
+1773
+01:17:02,320 --> 01:17:04,159
+exactly what you're doing and why you're
+
+1774
+01:17:04,159 --> 01:17:05,679
+doing it. And you're not just vibing
+
+1775
+01:17:05,679 --> 01:17:07,120
+like, "Hey, I think we should put the
+
+1776
+01:17:07,120 --> 01:17:08,480
+things in this order instead of that
+
+1777
+01:17:08,480 --> 01:17:10,080
+order because I read it in some [ __ ]
+
+1778
+01:17:10,080 --> 01:17:15,750
+blog post.
+
+1779
+01:17:18,550 --> 01:17:18,560
+Yes. And oh, another question on today
+
+1780
+01:17:18,560 --> 01:17:20,480
+is like you were searching just on gift
+
+1781
+01:17:20,480 --> 01:17:22,480
+in the emails. Like what would be
+
+1782
+01:17:22,480 --> 01:17:24,719
+another way to do it or like the the
+
+1783
+01:17:24,719 --> 01:17:26,880
+risk is that you don't find like it's
+
+1784
+01:17:26,880 --> 01:17:28,320
+lab or it's labeled something else like
+
+1785
+01:17:28,320 --> 01:17:30,080
+what would be another way of doing that?
+
+1786
+01:17:30,080 --> 01:17:31,840
+I mean you could use embeddings are way
+
+1787
+01:17:31,840 --> 01:17:33,280
+faster than passing every single one
+
+1788
+01:17:33,280 --> 01:17:34,800
+through an LM. You could pass every
+
+1789
+01:17:34,800 --> 01:17:36,159
+single one through an LM but again
+
+1790
+01:17:36,159 --> 01:17:39,360
+that's more expensive. Um I don't know.
+
+1791
+01:17:39,360 --> 01:17:41,520
+What do you got?
+
+1792
+01:17:41,520 --> 01:17:44,000
+Um, yeah, but I think that most people
+
+1793
+01:17:44,000 --> 01:17:45,960
+should just be looking at the data
+
+1794
+01:17:45,960 --> 01:17:50,159
+first. Like just read like I I noticed
+
+1795
+01:17:50,159 --> 01:17:52,400
+Dex this time too. Like instinct until I
+
+1796
+01:17:52,400 --> 01:17:53,760
+like forced him to stop and read the
+
+1797
+01:17:53,760 --> 01:17:57,040
+email. He didn't really do it. Um, and
+
+1798
+01:17:57,040 --> 01:17:59,040
+like there's no amount of evals that we
+
+1799
+01:17:59,040 --> 01:18:00,719
+could have done on that pipeline until
+
+1800
+01:18:00,719 --> 01:18:02,360
+he just read the
+
+1801
+01:18:02,360 --> 01:18:05,719
+email. Um, it would have been useless
+
+1802
+01:18:05,719 --> 01:18:08,239
+effectively and like just slow down and
+
+1803
+01:18:08,239 --> 01:18:13,030
+read look at the freaking data. Cool.
+
+1804
+01:18:22,790 --> 01:18:22,800
+Amazing. Thanks all for hanging out. All
+
+1805
+01:18:22,800 --> 01:18:26,000
+right. Thanks everyone. Have a good one.
+
+1806
+01:18:26,000 --> 01:18:29,640
+Catch you all next week.

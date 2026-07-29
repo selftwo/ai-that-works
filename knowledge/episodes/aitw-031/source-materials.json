@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-031",
+  "primary_transcript": "knowledge/episodes/aitw-031/transcripts/stitched.txt",
+  "source_folder": "2025-11-11-dates-and-times",
+  "materials": [
+    {"path": "2025-11-11-dates-and-times/README.md", "role": "episode summary, patterns, and links"},
+    {"path": "2025-11-11-dates-and-times/meta.md", "role": "episode identity and event metadata"},
+    {"path": "2025-11-11-dates-and-times/baml_src/date-time.baml", "role": "date extraction schema and regression tests"},
+    {"path": "2025-11-11-dates-and-times/main.py", "role": "deterministic recurrence calculation example"},
+    {"path": "2025-11-11-dates-and-times/pyproject.toml", "role": "runtime dependency context"}
+  ],
+  "notes": [
+    "Transcript claims are grounded in timestamped automatic captions.",
+    "Supporting files establish demo context but do not prove guest reports about production systems."
+  ]
+}

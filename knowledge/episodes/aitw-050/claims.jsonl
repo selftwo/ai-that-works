@@ -1,0 +1,7 @@
+{"kind":"observed","claim":"MCP is presented as a plugin ecosystem for extending software, not as a replacement for tools or SDKs.","start":"00:05:21","end":"00:05:41","confidence":"high","source":"2026-03-24-mcp-is-dead/transcript.txt"}
+{"kind":"observed","claim":"The speakers report that individual GitHub or HubSpot MCP definitions had consumed roughly 50,000 to 60,000 tokens.","start":"00:16:29","end":"00:16:59","confidence":"medium","source":"2026-03-24-mcp-is-dead/transcript.txt","note":"Speaker report; catalog sizes were not independently measured."}
+{"kind":"observed","claim":"Adding an MCP that the builder does not control introduces an instruction and trust cost.","start":"00:22:47","end":"00:23:20","confidence":"high","source":"2026-03-24-mcp-is-dead/transcript.txt"}
+{"kind":"observed","claim":"Tools needed by most users should be first class integrations rather than permanent long tail plugins.","start":"00:25:34","end":"00:26:05","confidence":"high","source":"2026-03-24-mcp-is-dead/transcript.txt"}
+{"kind":"observed","claim":"A rise in use of a long tail MCP is a signal to migrate it into a supported integration.","start":"00:25:44","end":"00:26:05","confidence":"high","source":"2026-03-24-mcp-is-dead/transcript.txt"}
+{"kind":"observed","claim":"MCP clients are most useful when end users have many capabilities the application builder did not anticipate.","start":"00:42:49","end":"00:43:29","confidence":"high","source":"2026-03-24-mcp-is-dead/transcript.txt"}
+

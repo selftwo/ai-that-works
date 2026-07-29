@@ -1,0 +1,148 @@
+1
+00:00:00,000 --> 00:00:04,960
+And it shows I got a ton done, like an unbelievable amount done.
+
+2
+00:00:04,960 --> 00:00:09,360
+This is the closed PRs in Lakebed where, reminder, I'm still the only contributor.
+
+3
+00:00:09,360 --> 00:00:11,960
+I have not forced this project onto my team yet.
+
+4
+00:00:11,960 --> 00:00:13,160
+They don't deserve the slop.
+
+5
+00:00:13,160 --> 00:00:14,600
+It's cleaning up fast.
+
+6
+00:00:14,600 --> 00:00:15,600
+Thank you, Fable.
+
+7
+00:00:15,600 --> 00:00:20,360
+But all of these PRs were done in literally two to three days.
+
+8
+00:00:20,360 --> 00:00:24,600
+The sheer volume of work here, especially if you're looking at the ones that actually
+
+9
+00:00:24,600 --> 00:00:29,960
+merged, like this pile here, it's like, I think, 11 or 12 PRs that merged all
+
+10
+00:00:29,960 --> 00:00:34,880
+Well, not just in one day, but from one thread.
+
+11
+00:00:34,880 --> 00:00:39,080
+And I keep going and I'm on page two, we're still in things from two days ago, then there's
+
+12
+00:00:39,080 --> 00:00:44,800
+a four day ago, one five days ago, then a huge jump to two weeks, because I was just
+
+13
+00:00:44,800 --> 00:00:46,080
+not really feeling it.
+
+14
+00:00:46,080 --> 00:00:50,040
+When I lost access to this model, I tried to run around in circles and get the best stuff
+
+15
+00:00:50,040 --> 00:00:53,600
+I could out of Opus, but it wasn't at the bar I needed to ship.
+
+16
+00:00:53,600 --> 00:00:58,360
+It what ended up happening is in this particular project, Lakebed, I had a bunch of these PR
+
+17
+00:00:58,360 --> 00:01:03,760
+up of work that was like 50 to 80 percent complete, but I didn't like the SDK changes
+
+18
+00:01:03,760 --> 00:01:04,760
+it made.
+
+19
+00:01:04,760 --> 00:01:09,160
+I didn't really have confidence in the implementation, including it up would just take too long.
+
+20
+00:01:09,160 --> 00:01:13,000
+And the result was that I kept having ideas, I kept making PRs, and they kept sitting there
+
+21
+00:01:13,000 --> 00:01:14,000
+doing nothing.
+
+22
+00:01:14,000 --> 00:01:20,320
+I probably had 20 or 30 PRs just sitting in this repo, not moving, and the project has
+
+23
+00:01:20,320 --> 00:01:22,160
+been sitting there as a result.
+
+24
+00:01:22,160 --> 00:01:23,160
+And I don't like that.
+
+25
+00:01:23,160 --> 00:01:24,960
+I really want to ship Lakebed.
+
+26
+00:01:24,960 --> 00:01:26,760
+I've talked about what Lakebed is in some other videos.
+
+27
+00:01:26,760 --> 00:01:29,680
+I don't want to bog you down the details until I actually have it launched.
+
+28
+00:01:29,680 --> 00:01:31,200
+I haven't earned the right to market this yet.
+
+29
+00:01:31,200 --> 00:01:31,920
+I want it done.
+
+30
+00:01:32,040 --> 00:01:33,520
+So we'll do that later.
+
+31
+00:01:33,680 --> 00:01:37,600
+But I want to talk about the workflows that got me this far in the project,
+
+32
+00:01:37,640 --> 00:01:41,000
+as well as some of the cool things I'm doing on other projects that I've been working on.
+
+33
+00:01:41,320 --> 00:01:44,560
+I'm going to start in a weird place here, but I promise it will help.
+
+34
+00:01:44,560 --> 00:01:48,640
+I'm going to start with min-maxing tips and like cost reduction things in order
+
+35
+00:01:48,640 --> 00:01:52,320
+to make sure that when you adopt this workflow, you don't immediately bankrupt
+
+36
+00:01:52,320 --> 00:01:55,800
+yourself, because if you were to go to the second half of this video and skip
+
+37
+00:01:55,800 --> 00:01:59,960
+straight to that part, it will be expensive. That's what I did in the first three days.
+

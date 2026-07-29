@@ -1,0 +1,7 @@
+{"kind":"observed","claim":"The episode switches from a delayed eval demo to a live streaming implementation.","start":"00:02:03","end":"00:04:20","confidence":"high","source":"2026-04-07-sse-streaming/transcript.txt"}
+{"kind":"observed","claim":"Server sent events are selected as the server to client transport.","start":"00:19:04","end":"00:20:10","confidence":"high","source":"2026-04-07-sse-streaming/transcript.txt"}
+{"kind":"observed","claim":"The client uses separate pending, incremental, and error states so progress is visible.","start":"00:26:35","end":"00:27:42","confidence":"high","source":"2026-04-07-sse-streaming/transcript.txt"}
+{"kind":"observed","claim":"The server yields site map updates as page summaries become available.","start":"00:35:00","end":"00:43:00","confidence":"medium","source":"2026-04-07-sse-streaming/transcript.txt","note":"Exact implementation details are partly screen based."}
+{"kind":"observed","claim":"The discussion recommends limiting asynchronous concurrency instead of starting every model call together.","start":"00:39:00","end":"00:44:00","confidence":"medium","source":"2026-04-07-sse-streaming/transcript.txt","note":"The transcript and repository code should be read together for the exact limit."}
+{"kind":"observed","claim":"A plain HTML file is presented as a sufficient first client before adopting a frontend framework.","start":"00:52:30","end":"00:53:20","confidence":"high","source":"2026-04-07-sse-streaming/transcript.txt"}
+

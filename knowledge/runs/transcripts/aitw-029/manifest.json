@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-029",
+  "video_id": "fOPvAPdqgPo",
+  "source_url": "https://www.youtube.com/watch?v=fOPvAPdqgPo",
+  "input_fingerprint": "12fc1e8205a5e0d0c2574a89c1db383c113adf831444fe440af13df52225c428",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:20:00.589751+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 4687.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-029/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-029/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 2072,
+      "first_seconds": 3.51,
+      "last_seconds": 4687.76,
+      "source_duration_seconds": 4687.0,
+      "duration_delta_seconds": 0.7600000000002183,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:20:07.293019+00:00"
+}

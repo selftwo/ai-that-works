@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-045",
+  "episode": 45,
+  "season": 2,
+  "title": "AI Content Pipeline Revisited",
+  "source_folder": "2026-02-17-automating-aitw",
+  "recorded_at": "2026-02-17T18:00:00Z",
+  "recorded_at_provenance": "Source catalog event_date from upstream meta.md. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "U5Gssat8IUw",
+  "youtube_url": "https://www.youtube.com/watch?v=U5Gssat8IUw",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID adpUOpW85ns",
+  "transcript_path": "2026-04-14-agentic-coding-for-frontend-apps/transcript.txt",
+  "transcript_range": "00:00.162 to 01:03:24.37",
+  "timestamp_order": "verified by knowledge/scripts/verify_transcript.py",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "all timestamped claim spans"
+  ],
+  "timestamped_claim_count": 6,
+  "source_duration_check": "not run: source media was not downloaded",
+  "remaining_uncertainty": [
+    "transcript provenance and ASR model",
+    "exact recording start",
+    "speaker attribution",
+    "screen only evidence"
+  ]
+}
+

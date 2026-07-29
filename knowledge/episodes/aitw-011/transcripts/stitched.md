@@ -1,0 +1,5311 @@
+# S02E07 – Building an AI Content Pipeline
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:03.630] And we are
+
+[00:00:03.640] All right. Um we'll get to 10:05. Um so
+
+[00:00:07.720] welcome everyone to our next episode of
+
+[00:00:10.320] AI that works.
+
+[00:00:11.720] Our whole goal here is always the same,
+
+[00:00:14.320] write code that works and see if we can
+
+[00:00:16.880] do some incredible things with AI that
+
+[00:00:19.000] doesn't
+
+[00:00:20.000] that doesn't depend on waiting for
+
+[00:00:21.040] GPT-26.
+
+[00:00:23.040] My name is Vaibhav. I'm one of the
+
+[00:00:25.360] creators of Amel.
+
+[00:00:26.840] And my wonderful co-host is Dexter. I'll
+
+[00:00:29.240] allow him to introduce himself.
+
+[00:00:31.160] Uh I am working on uh my name is Dexter.
+
+[00:00:34.640] I build things.
+
+[00:00:36.640] Uh that's probably all you need to know.
+
+[00:00:38.480] Uh try to help people build very cool AI
+
+[00:00:40.920] stuff.
+
+[00:00:42.200] Um whether it's agents, whether it's
+
+[00:00:44.040] pipelines, whether it's full stack
+
+[00:00:45.880] applications.
+
+[00:00:47.520] Uh
+
+[00:00:48.560] Yeah, that's that's I'm not going to go
+
+[00:00:50.920] deep into it. Um real quick
+
+[00:00:53.360] announcements, just updates um for those
+
+[00:00:55.280] of y'all, I'll just say it again one
+
+[00:00:56.440] more time in the stream is like so we're
+
+[00:00:57.760] going to do these we do these every
+
+[00:00:58.560] Tuesday at 10:00 a.m. Um and then we
+
+[00:01:00.720] launched the I guess this is good
+
+[00:01:02.080] context to lead into where we're going.
+
+[00:01:03.680] Um we publish the videos Fridays at 8:00
+
+[00:01:06.440] a.m.
+
+[00:01:07.520] Um and we will push up everything in
+
+[00:01:10.640] this show will be in the GitHub repo
+
+[00:01:12.760] here. Uh I'll put it in the Zoom chat.
+
+[00:01:14.520] So all the notes from previous episodes,
+
+[00:01:16.360] everything will be live by Friday.
+
+[00:01:18.680] Um
+
+[00:01:20.120] I have a short link, but this is just
+
+[00:01:21.680] the GitHub repo. Oh, that's not right.
+
+[00:01:23.920] Sorry.
+
+[00:01:25.200] hlyr.dev/aitw.
+
+[00:01:29.710] Um that'll take you to all the previous
+
+[00:01:29.720] sessions and you can watch the
+
+[00:01:31.080] recordings. You can see the notes and
+
+[00:01:32.480] the notes from this session will be
+
+[00:01:33.480] there and any useful links and things
+
+[00:01:35.320] like that and all of the code.
+
+[00:01:38.200] Yeah. And it takes a lot of work.
+
+[00:01:40.880] The reason that we try and share all the
+
+[00:01:42.200] code is honestly because there's a lot
+
+[00:01:43.640] of people out there talking about how to
+
+[00:01:44.840] go how you can theoretically build
+
+[00:01:46.760] things.
+
+[00:01:48.520] We just want to see the code. We're all
+
+[00:01:49.800] engineers or eventually everyone will be
+
+[00:01:51.560] an engineer. Today everyone uses Excel,
+
+[00:01:53.440] tomorrow everyone's going to write code.
+
+[00:01:54.960] It's just the way it is. We might as
+
+[00:01:56.480] well share all the code and share what
+
+[00:01:57.640] we can learn along the way.
+
+[00:01:59.680] Um with that in mind, today's topic is
+
+[00:02:01.840] one that Dexter and I have
+
+[00:02:03.920] we're very very very very excited about.
+
+[00:02:06.520] Um all this work that we do every week
+
+[00:02:08.640] is really freaking annoying sometimes.
+
+[00:02:10.800] The this actual recording
+
+[00:02:12.000] Woah. We love doing it. We love doing
+
+[00:02:14.600] it.
+
+[00:02:15.520] But it's a lot of work.
+
+[00:02:17.480] Uh and I think the part that's the most
+
+[00:02:19.000] annoying is the manual part of like
+
+[00:02:20.640] downloading the videos, uploading them
+
+[00:02:22.120] to YouTube, getting the transcript,
+
+[00:02:24.280] setting up the email afterwards. And
+
+[00:02:26.320] sometimes you probably notice like four
+
+[00:02:27.680] or five episodes didn't send an email
+
+[00:02:28.840] out. That's cuz that's not what we love
+
+[00:02:30.680] doing. We just like writing code. That's
+
+[00:02:32.480] the thing that we love the most. So we
+
+[00:02:34.320] thought, why don't we actually go put
+
+[00:02:36.120] some of the practices that we've talked
+
+[00:02:37.760] about in previous episodes into practice
+
+[00:02:40.920] and build a pipeline that can go do
+
+[00:02:42.800] something.
+
+[00:02:43.959] And the thing that we thought what was
+
+[00:02:45.360] worth doing
+
+[00:02:46.760] was
+
+[00:02:48.200] really building the AI content pipeline.
+
+[00:02:50.959] So what we're going to start off with
+
+[00:02:52.200] today is
+
+[00:02:54.360] we're going to screen share. We're going
+
+[00:02:55.840] to show you a live demo of what works
+
+[00:02:57.480] today, what doesn't work today. Then
+
+[00:02:59.400] we're going to talk about the
+
+[00:03:00.080] architecture diagram on a whiteboard.
+
+[00:03:02.160] And then afterwards, we're going to go
+
+[00:03:03.440] make the pipeline better.
+
+[00:03:05.160] Cuz I think those are the steps that I
+
+[00:03:06.959] find to be personally really
+
+[00:03:08.360] interesting.
+
+[00:03:10.239] So with that, let's kick it off. Um
+
+[00:03:12.680] today's is going to be even more
+
+[00:03:14.040] interactive than normal. So if you have
+
+[00:03:15.800] questions, please hop off mute. Just
+
+[00:03:17.640] come and ask yourselves. That's why we
+
+[00:03:19.320] do this over Zoom and not a podcast
+
+[00:03:21.280] recording software or anything else
+
+[00:03:23.040] because it's just way faster when people
+
+[00:03:24.800] get to ask real questions along the way.
+
+[00:03:27.440] Um with that, let's get started.
+
+[00:03:34.830] And I will say, I am one of the least
+
+[00:03:34.840] vibe coding people out there. I don't
+
+[00:03:37.440] really vibe code. Um
+
+[00:03:40.600] but thanks to Dexter and actually uh
+
+[00:03:44.120] credit to my cousin as well.
+
+[00:03:46.880] I'm a big believer everyone should be
+
+[00:03:48.560] vibe coding uh a lot more than they
+
+[00:03:50.600] think they should. If you were vibe
+
+[00:03:52.280] coding before, you probably should buy
+
+[00:03:53.800] code more than you thought you were. And
+
+[00:03:55.840] here's what we were able to do with this
+
+[00:03:57.200] pipeline.
+
+[00:03:59.320] So, right over here, the first thing you
+
+[00:04:00.520] notice is we are able to sync with Zoom
+
+[00:04:02.560] and actually record all the previous
+
+[00:04:04.200] recordings up here.
+
+[00:04:05.640] So, we can actually see any of the
+
+[00:04:06.720] previous recordings. You can see one
+
+[00:04:08.480] right over here. This current one is
+
+[00:04:09.959] literally going on right now. We started
+
+[00:04:11.880] the recording and pops in immediately.
+
+[00:04:14.400] We can see our previous recordings and
+
+[00:04:15.920] we can just import and process them.
+
+[00:04:18.160] What happens when you import and process
+
+[00:04:19.760] a recording? I'll just kick one off.
+
+[00:04:21.799] Um
+
+[00:04:22.640] is
+
+[00:04:23.440] real quick call out. It says the title
+
+[00:04:25.120] is still says Cracking the Prompting
+
+[00:04:27.120] Interview. I think that's like inherited
+
+[00:04:28.560] from from Baml, but this is this current
+
+[00:04:30.840] episode.
+
+[00:04:32.640] Uh oh Or inherited from Luma or
+
+[00:04:35.200] whatever.
+
+[00:04:36.280] From Yeah, when Luma created the Zoom,
+
+[00:04:38.320] it left the title.
+
+[00:04:40.440] Exactly. So, we'll just start off this
+
+[00:04:42.400] one. AI that we're designing emails,
+
+[00:04:44.080] we'll create the import.
+
+[00:04:45.840] So, now you can see the video being
+
+[00:04:47.000] processed.
+
+[00:04:48.720] This is one we already did all the work
+
+[00:04:50.560] in the email for, but um the idea is you
+
+[00:04:53.400] going forward we would use this.
+
+[00:04:55.960] So, while it's processing, I'll let it
+
+[00:04:57.560] kick itself off and you can actually see
+
+[00:04:59.040] what it's doing. When When it's
+
+[00:05:01.080] processing, it's actually going ahead
+
+[00:05:02.320] and downloading the full video.
+
+[00:05:04.120] And it's going to go ahead and
+
+[00:05:04.960] eventually it'll get to a point where
+
+[00:05:06.720] once the video is downloaded, it'll
+
+[00:05:08.440] actually upload itself
+
+[00:05:10.640] to uh YouTube automatically. It'll
+
+[00:05:13.000] download the full transcript. Then it'll
+
+[00:05:15.360] start producing key points and video
+
+[00:05:17.200] summaries.
+
+[00:05:18.320] And then after it's done, it'll actually
+
+[00:05:19.640] produce like an email draft. I guess I
+
+[00:05:21.360] don't have that here.
+
+[00:05:23.000] Uh this one didn't finish. Let me
+
+[00:05:28.310] Once it's done, it'll actually produce
+
+[00:05:28.320] like an email draft of what to go send
+
+[00:05:30.200] out.
+
+[00:05:31.240] I'll produce like an X post that we can
+
+[00:05:32.919] go copy and paste and post out there and
+
+[00:05:34.800] it'll produce like LinkedIn content as
+
+[00:05:36.240] well.
+
+[00:05:37.360] So, this is what we mean by
+
+[00:05:38.280] multi-channel content. Download a
+
+[00:05:40.400] 60-minute video.
+
+[00:05:42.280] Uh go for it. Go summarize it. Get the
+
+[00:05:45.120] key topics and takeaways and go draft
+
+[00:05:46.880] things.
+
+[00:05:47.840] Now,
+
+[00:05:48.920] what you'll notice here is that this
+
+[00:05:51.400] email does read like AI still. It's
+
+[00:05:53.800] still not very
+
+[00:05:54.520] email sucks, dude.
+
+[00:05:56.360] Exactly. So, we're going to talk about
+
+[00:05:57.920] how to make it better.
+
+[00:05:58.880] Did you even look at the prompt?
+
+[00:06:01.280] No, I didn't. I've I've built the whole
+
+[00:06:03.160] thing. Because the point What I really I
+
+[00:06:05.360] think what this is the point I want to
+
+[00:06:06.240] stress today is before you can even work
+
+[00:06:08.760] on your AI part of your pipeline,
+
+[00:06:11.240] you're not even at the point where you
+
+[00:06:13.080] can start working on that. What you need
+
+[00:06:14.800] is infrastructure that you can actually
+
+[00:06:16.200] iterate on.
+
+[00:06:17.400] And if we hadn't built this whole system
+
+[00:06:19.120] up that could do the glue code,
+
+[00:06:21.320] building the AI part is completely
+
+[00:06:23.240] useless.
+
+[00:06:24.480] Because it doesn't really matter. I
+
+[00:06:26.880] still need to build the rest of it. And
+
+[00:06:28.320] the rest of it is actually critical to
+
+[00:06:29.960] my iteration loop. And we talk about
+
+[00:06:32.000] this in our eval's video a lot,
+
+[00:06:34.080] where if you don't If you're eval'ing,
+
+[00:06:35.840] you should spin up a quick little UI to
+
+[00:06:37.640] go determine if your eval's are correct
+
+[00:06:39.919] or not and go compare the differences.
+
+[00:06:42.040] If you're building a pipeline, you
+
+[00:06:43.160] should be doing the same thing.
+
+[00:06:45.000] And right here, you can see the same
+
+[00:06:46.000] thing. It actually is going ahead and
+
+[00:06:47.919] let me see if the socket connection
+
+[00:06:49.400] works. Yeah, there we go.
+
+[00:06:51.240] It's actually going to It's actually
+
+[00:06:52.400] able to also stream out the outputs if I
+
+[00:06:54.120] wanted to, which is really useful for me
+
+[00:06:56.000] to iterate a little bit faster along the
+
+[00:06:58.320] way.
+
+[00:07:00.600] I'll pause really fast. Questions so
+
+[00:07:02.880] far?
+
+[00:07:08.230] Cool.
+
+[00:07:08.240] Let's keep on going.
+
+[00:07:09.760] How long was it end to end did you say?
+
+[00:07:11.240] 3 hours or something to build this?
+
+[00:07:13.360] I logged off after 3 hours. I don't know
+
+[00:07:16.400] how late Five O'Clock was up last night.
+
+[00:07:19.160] It took a total of 6:00 p.m. to about
+
+[00:07:21.919] 2:30 a.m.
+
+[00:07:23.919] Um
+
+[00:07:24.720] combined with an hour and a half break
+
+[00:07:26.760] in the middle.
+
+[00:07:28.960] I slept Oh, Renee.
+
+[00:07:32.480] You're You're new to the session.
+
+[00:07:34.160] Renee, you got to go watch the other
+
+[00:07:35.800] episodes. We don't We don't do
+
+[00:07:37.000] frameworks here.
+
+[00:07:38.720] Um and the reason we don't do them is
+
+[00:07:40.360] more often than not, they just get in
+
+[00:07:41.640] the way and they make it harder to go do
+
+[00:07:43.400] things rather than easier.
+
+[00:07:45.240] With that, let's talk about what this
+
+[00:07:46.680] architecture diagram ends up looking
+
+[00:07:48.760] like.
+
+[00:07:49.920] Um
+
+[00:07:51.800] unless there's a couple more questions
+
+[00:07:53.240] about this itself.
+
+[00:07:55.080] Um
+
+[00:07:56.280] Yeah, let's let's uh
+
+[00:07:57.680] let's draw it out, and then let's let's
+
+[00:07:59.360] make the let's make the actual AI
+
+[00:08:01.080] generated stuff not suck.
+
+[00:08:03.560] I agree.
+
+[00:08:05.000] All right.
+
+[00:08:05.880] Pull this down.
+
+[00:08:07.920] Oops. Why is my mouse not working?
+
+[00:08:16.030] We did record the whole thing. You can
+
+[00:08:16.040] watch it at 2x speed. We'll post it.
+
+[00:08:18.080] Well, not the whole thing. Yeah, we're
+
+[00:08:19.120] going to we're going to post the
+
+[00:08:19.919] recording. I uh yeah, there's I got to
+
+[00:08:22.880] we got to edit a couple things out, but
+
+[00:08:24.280] yeah, you can you can watch the the
+
+[00:08:26.160] beginning.
+
+[00:08:28.560] All right.
+
+[00:08:29.560] So, let's talk about what the
+
+[00:08:30.280] architecture of this whole system is,
+
+[00:08:31.680] and how we actually did this. And we
+
+[00:08:33.240] will probably try and record more of our
+
+[00:08:34.880] coding sessions along the way.
+
+[00:08:37.240] Uh if people find it interesting, we can
+
+[00:08:38.719] invite you to come and watch us code in
+
+[00:08:40.479] real time as well, uh along with just uh
+
+[00:08:43.240] going to go do that.
+
+[00:08:45.520] So, there's actually there's actually
+
+[00:08:46.960] three main parts to this system.
+
+[00:08:53.150] And I think it's it's useful to draw
+
+[00:08:53.160] them out into three different systems.
+
+[00:08:55.440] This one is the database.
+
+[00:09:14.190] Okay. So, another thing that we did is
+
+[00:09:14.200] what we said is
+
+[00:09:17.000] we will actually not allow the uh front
+
+[00:09:19.560] end to really get data from the back
+
+[00:09:21.200] end. It's not allowed to. It's allowed
+
+[00:09:22.520] to issue requests to the back end, but
+
+[00:09:24.320] it can't get data from the back end.
+
+[00:09:26.680] The back end is allowed to read and
+
+[00:09:28.440] write from the database.
+
+[00:09:30.680] And the front end is allowed to read
+
+[00:09:31.960] from the database.
+
+[00:09:34.360] So, we get really, really nice queries
+
+[00:09:36.560] of how things are being built out. And
+
+[00:09:38.880] the reason that this is so important
+
+[00:09:41.320] is because if you're doing something
+
+[00:09:42.480] like streaming or interactive UIs,
+
+[00:09:45.160] building out the system to from your
+
+[00:09:47.160] back end that communicates with your
+
+[00:09:48.440] front end is a pain in the ass.
+
+[00:09:51.880] And if you're doing it on a lot of
+
+[00:09:53.240] different places all the time,
+
+[00:09:55.800] this is what real-time databases were
+
+[00:09:57.560] made for.
+
+[00:09:58.800] Just use them, and you can solve a lot
+
+[00:10:00.960] of your pain.
+
+[00:10:02.520] And you might run into a situation
+
+[00:10:03.640] basically the
+
+[00:10:05.440] the data API is just your database
+
+[00:10:07.480] schema. The front end just needs to know
+
+[00:10:09.040] the raw schema, and it can query
+
+[00:10:10.480] whatever you want to expose to it,
+
+[00:10:12.000] right?
+
+[00:10:13.680] Yes, exactly. So as long as you have
+
+[00:10:15.920] like a view in your database that is a
+
+[00:10:17.840] accessible,
+
+[00:10:19.240] uh that is read readable, and you have
+
+[00:10:21.480] like some materialized view on it that
+
+[00:10:22.840] is secure, doesn't have anything like
+
+[00:10:24.320] PII data or something along that, or at
+
+[00:10:26.000] least require like authenticated users
+
+[00:10:27.800] to access it,
+
+[00:10:29.320] then you can go ahead and go access this
+
+[00:10:31.840] along the way.
+
+[00:10:33.280] Um it does require some consideration of
+
+[00:10:35.160] exactly how you do it. The easiest way
+
+[00:10:36.480] to do it is a materialized view if you
+
+[00:10:38.120] want to do it securely on your actual
+
+[00:10:40.120] data, so you can go configure that in a
+
+[00:10:41.640] good way.
+
+[00:10:43.600] Um but once you can go do that, now
+
+[00:10:46.240] you're able to build a pipeline that is
+
+[00:10:47.720] mostly just workflows in your back end
+
+[00:10:50.320] that is issuing work at one after
+
+[00:10:52.760] another.
+
+[00:10:53.760] So for example,
+
+[00:10:54.720] And you kind of get you get rid of this
+
+[00:10:56.400] like state machiney thing where the
+
+[00:10:58.040] front end's like pushing data and then
+
+[00:10:59.600] fetching it back out of the back end.
+
+[00:11:01.080] It's kind of this unidirectional flow,
+
+[00:11:02.960] and I think a lot of like this happened
+
+[00:11:05.080] in React. We had React for like a year
+
+[00:11:06.920] and a year and a half, and then people
+
+[00:11:08.360] realized like the current back end
+
+[00:11:11.160] paradigm in React, which at the time was
+
+[00:11:12.880] things like Backbone.js and and and
+
+[00:11:14.760] things like that, just didn't work well
+
+[00:11:17.000] for the amount of complexity people were
+
+[00:11:18.839] using to add React into their apps. And
+
+[00:11:21.200] all this stuff like Flux came out, and
+
+[00:11:22.839] there was explosion of like six
+
+[00:11:24.520] different frameworks all came out that
+
+[00:11:26.200] one summer of like how do you do this
+
+[00:11:27.800] unidirectional data flow? Because it was
+
+[00:11:30.480] what worked for real-time dynamic
+
+[00:11:32.240] applications.
+
+[00:11:33.880] Yeah, and this is a pattern that we've
+
+[00:11:35.320] seen happen a lot. Like we just find it
+
+[00:11:37.320] way easier what you and this is similar
+
+[00:11:38.680] to video games and all these other
+
+[00:11:39.760] things that you might want to do. Uh
+
+[00:11:42.040] where what you really want to go do is
+
+[00:11:44.160] you have some what I would call like
+
+[00:11:45.560] state of truth that is represented here.
+
+[00:11:48.560] And all you want to do is you want to
+
+[00:11:49.880] render the truth as fast as possible to
+
+[00:11:51.960] the front end.
+
+[00:11:53.520] And it's really easy to do that
+
+[00:11:56.320] when you're able to go ahead and
+
+[00:11:58.360] actually model the truth in a way that
+
+[00:12:00.120] is representative in the way that the
+
+[00:12:02.320] front end can use it. And the challenge
+
+[00:12:03.960] then becomes building a schema that
+
+[00:12:06.080] everything else can go use correctly. So
+
+[00:12:08.640] you do have to plan that out a little
+
+[00:12:09.840] bit, but I think it pays for itself um
+
+[00:12:13.120] personally in terms of like the
+
+[00:12:14.080] developer ease and how easy this ends up
+
+[00:12:16.840] being.
+
+[00:12:18.120] This also does really nice
+
+[00:12:19.320] componentization for both like
+
+[00:12:20.880] paralyzing workflows in terms of how
+
+[00:12:22.360] many people can work on it and not just
+
+[00:12:24.520] people, but agents. It makes it way
+
+[00:12:26.720] easier for my
+
+[00:12:28.480] uh front end to actually understand what
+
+[00:12:31.000] it's rendering.
+
+[00:12:32.200] If now the one part that we run into is
+
+[00:12:35.520] in order to go do this, what you'll find
+
+[00:12:37.560] is you have data models
+
+[00:12:39.520] um
+
+[00:12:41.720] Uh sorry, I'll draw another rectangle.
+
+[00:12:44.280] You have some data models
+
+[00:12:46.600] that you're saving into your database
+
+[00:12:53.070] into here and these data models both
+
+[00:12:53.080] have to be used by Python and written
+
+[00:12:54.560] from Python and then they also have to
+
+[00:12:55.960] be used and written by TypeScript.
+
+[00:12:58.560] Having some way to keep these in sync is
+
+[00:13:00.280] also really important. Otherwise you end
+
+[00:13:01.920] up again in a world of pain and that
+
+[00:13:03.880] doesn't really work.
+
+[00:13:05.760] And figuring out which side you're on is
+
+[00:13:07.720] really really important of how you go do
+
+[00:13:09.880] that, but once you can nail that down,
+
+[00:13:12.000] your iteration loop is going to be
+
+[00:13:13.320] really fast and adding new features, as
+
+[00:13:15.480] we'll see today when we add another
+
+[00:13:16.960] feature such as chapter summary into our
+
+[00:13:19.600] system, becomes a thing that you can
+
+[00:13:21.560] just write code trivially.
+
+[00:13:23.880] And you don't have to think about it
+
+[00:13:25.280] anymore uh because your agent kind of
+
+[00:13:27.280] understands the architecture of what
+
+[00:13:28.800] you're building out and it's so nicely
+
+[00:13:30.480] componentized that it doesn't have room
+
+[00:13:32.080] for making mistakes along the way.
+
+[00:13:34.680] It's like an API you've basically built
+
+[00:13:36.280] in an API contract. If your front end
+
+[00:13:38.200] was both reading and writing to the
+
+[00:13:39.720] database,
+
+[00:13:40.960] you now have a choice every the agent
+
+[00:13:43.120] now is making an implicit decision of do
+
+[00:13:44.800] I do this in the front end or do I do
+
+[00:13:46.240] this in the back end?
+
+[00:13:47.960] And that's a choice.
+
+[00:13:50.080] And it might make one choice correctly,
+
+[00:13:51.520] one choice wrong. But the more you go
+
+[00:13:53.200] along, the more choices that will be
+
+[00:13:55.360] made incorrectly just by volume and by
+
+[00:13:57.680] the nature of it happening
+
+[00:13:58.920] automatically. By doing this, we make a
+
+[00:14:00.960] very clear direction of what Dexter is
+
+[00:14:03.200] saying. It's very easy what to do. The
+
+[00:14:04.760] front end's job is to render the content
+
+[00:14:06.640] and issue new background tasks. The back
+
+[00:14:08.920] end's job is to plumb and churn on data
+
+[00:14:11.120] and eventually write updates to the
+
+[00:14:12.320] database.
+
+[00:14:13.560] The database's job is to send data out
+
+[00:14:15.320] to the front end as soon as possible.
+
+[00:14:17.360] And now it's very clear what we have to
+
+[00:14:18.720] go represent along the way.
+
+[00:14:21.800] Um
+
+[00:14:22.960] With that, let's talk about some more uh
+
+[00:14:24.840] routes. Um
+
+[00:14:27.200] I do have a very opinionated stance on
+
+[00:14:29.920] what's a great data model agnostic
+
+[00:14:31.640] libraries we'll see today. Um but we'll
+
+[00:14:34.600] show that in a second. We'll show the
+
+[00:14:35.720] full code.
+
+[00:14:37.600] Um so what's the what's the APIs that we
+
+[00:14:39.800] actually have? We have a couple APIs
+
+[00:14:41.640] that we defined. Um
+
+[00:14:44.240] We have Dexter, do you remember what
+
+[00:14:45.800] they are by
+
+[00:14:47.880] video We have one API to like submit
+
+[00:14:55.750] a new request. Uh did you push the
+
+[00:14:55.760] latest code? I can pull it down and and
+
+[00:14:57.360] pull that out real quick.
+
+[00:14:58.960] Um yeah, let me do that actually. I
+
+[00:15:00.520] don't think I did.
+
+[00:15:07.270] Um oh, I might have.
+
+[00:15:07.280] I guess I did.
+
+[00:15:16.390] Uh cool. I will get the API endpoints.
+
+[00:15:16.400] Turns out there's uh AI is pretty good
+
+[00:15:18.600] at generating a list of API endpoints.
+
+[00:15:21.560] Provide feedback.
+
+[00:15:23.120] Um
+
+[00:15:24.280] and then we What we do is we submit a
+
+[00:15:25.840] new request, provide feedback, um
+
+[00:15:28.400] get list of videos. So, there are some
+
+[00:15:30.880] things that we do from the back end.
+
+[00:15:33.280] Um
+
+[00:15:34.560] yeah, list of videos, provide feedback.
+
+[00:15:36.200] And then what's the other stuff? I think
+
+[00:15:37.440] there's one more, get title. Oh, there
+
+[00:15:39.080] we go.
+
+[00:15:40.320] I don't know why I didn't do that.
+
+[00:15:45.950] Okay.
+
+[00:15:45.960] So, these are basically all the APIs
+
+[00:15:47.320] that we have.
+
+[00:15:48.440] Um we did have to build one integration
+
+[00:15:50.040] cuz the way we get actual Zoom API
+
+[00:15:51.560] calls, we don't want to do that in a
+
+[00:15:52.680] real-time database. We want the back end
+
+[00:15:54.200] to have access. So, this is something
+
+[00:15:55.640] that the front end queries from
+
+[00:15:56.600] directly.
+
+[00:15:58.080] This is the way to add feedback to a
+
+[00:15:59.400] draft. So, if you don't like an email,
+
+[00:16:01.360] um what we're able to do
+
+[00:16:03.840] is we can just go through and say like,
+
+[00:16:06.080] "Oh,
+
+[00:16:07.440] um I can just leave feedback and say,
+
+[00:16:09.840] 'Eh,
+
+[00:16:11.040] this
+
+[00:16:12.200] is
+
+[00:16:14.760] not long enough
+
+[00:16:18.000] Dude, you got to make it more uh gen
+
+[00:16:19.600] alpha.
+
+[00:16:20.880] enough
+
+[00:16:22.120] uh emojis.'
+
+[00:16:24.800] And I'll just refine the email. And what
+
+[00:16:26.480] this will do is this will commit a task,
+
+[00:16:28.480] and eventually the email will get
+
+[00:16:29.720] refined along the way.
+
+[00:16:31.920] Uh and I did not actually
+
+[00:16:33.200] I don't know
+
+[00:16:34.320] Well, I don't know if you're planning on
+
+[00:16:35.960] um getting to this, but I think it'd be
+
+[00:16:37.080] really helpful to kind of see the
+
+[00:16:38.120] sequence diagram or the flowchart of
+
+[00:16:39.960] like how how stuff flows through the
+
+[00:16:42.760] system.
+
+[00:16:44.360] Yeah, I was going to get to that once I
+
+[00:16:45.560] show all the routes. Okay, cool. Cool.
+
+[00:16:48.800] So, and then we basically have all these
+
+[00:16:50.160] routes. So, let's um let's look at what
+
+[00:16:51.960] this actually ends up looking like in a
+
+[00:16:53.760] sequence flow in that case. So, we have
+
+[00:16:55.960] all these things. So, the first thing
+
+[00:16:57.320] that we have is Oops, I can't draw it
+
+[00:16:59.240] there.
+
+[00:17:06.270] I will try and do this side by side. I'm
+
+[00:17:06.280] missing a couple endpoints. One sec. Oh,
+
+[00:17:08.520] you are? Okay, that's what I thought. It
+
+[00:17:09.839] looks like you don't have the
+
+[00:17:10.839] yeah.
+
+[00:17:12.400] Okay.
+
+[00:17:16.189] Yeah, the first five were actually the
+
+[00:17:16.199] most important.
+
+[00:17:22.270] When did I lose this?
+
+[00:17:22.280] Oh, sorry.
+
+[00:17:23.680] I have to adjust my Okay, there we go.
+
+[00:17:26.520] Um so, what we have here looks like
+
+[00:17:29.120] this.
+
+[00:17:29.960] The first step that happens is the back
+
+[00:17:31.600] end submits a task to say like I want to
+
+[00:17:33.480] process this specific meeting ID.
+
+[00:17:38.830] Uh the front end submits a task to
+
+[00:17:38.840] submit I want to process meeting ID. The
+
+[00:17:40.800] back end then gets all the data submits
+
+[00:17:42.520] a background task, so it responds very,
+
+[00:17:44.720] very fast to the front end saying,
+
+[00:17:46.160] "Cool, I got you."
+
+[00:17:48.280] And then the background task will go
+
+[00:17:49.720] ahead and kick off and then say
+
+[00:17:51.800] something like
+
+[00:17:54.000] the following. Where it will say
+
+[00:17:55.840] something like um
+
+[00:17:57.840] download
+
+[00:18:00.160] download video plus transcript.
+
+[00:18:03.080] Um finding the video was a little bit
+
+[00:18:04.640] more complicated than I presume because
+
+[00:18:06.520] not all Zoom videos don't only have one
+
+[00:18:08.240] video, so they sometimes have multiple
+
+[00:18:09.600] because people start and stop the
+
+[00:18:10.720] recording and other things along the
+
+[00:18:11.960] way.
+
+[00:18:13.040] So, we have to go do that.
+
+[00:18:15.480] Then we will kick off a couple jobs in
+
+[00:18:17.600] parallel. One of them is upload
+
+[00:18:21.120] to YouTube.
+
+[00:18:26.230] And then simultaneously
+
+[00:18:26.240] we also kick off the
+
+[00:18:29.480] summarize uh summarize task.
+
+[00:18:32.680] Once the summarize task is done
+
+[00:18:35.040] we kick off three tasks in parallel
+
+[00:18:36.600] again.
+
+[00:18:38.520] Uh draft email
+
+[00:18:55.710] Does the summarize task also output the
+
+[00:18:55.720] like key points and stuff like that?
+
+[00:18:57.680] Exactly. That's what it outputs. It
+
+[00:18:59.160] outputs like a general summary of
+
+[00:19:00.240] everything.
+
+[00:19:01.800] Um
+
+[00:19:02.760] So, the database updates from each of
+
+[00:19:04.560] these is like basically like
+
+[00:19:08.120] mark uploaded in DB.
+
+[00:19:11.240] Exactly.
+
+[00:19:13.080] And then this is like uh add summary
+
+[00:19:15.840] points to DB.
+
+[00:19:17.960] Exactly. And actually this one streams
+
+[00:19:20.240] in, so I actually like save the whole
+
+[00:19:21.680] thing on every update of the tick of the
+
+[00:19:23.360] stream.
+
+[00:19:24.880] Yep. Um
+
+[00:19:32.350] Exactly. Um and technically there's a
+
+[00:19:32.360] special thing that I Oops.
+
+[00:19:35.480] There's one last thing that I do over
+
+[00:19:36.920] here, which is like
+
+[00:19:38.960] uh Oops.
+
+[00:19:45.270] I I mark I I mark the database as it's
+
+[00:19:45.280] done summarizing.
+
+[00:19:47.800] It's important that I can like mark the
+
+[00:19:49.120] state at any single one of them and
+
+[00:19:50.680] that's uh that that's something else I
+
+[00:19:52.280] had to do. Cuz once it was done
+
+[00:19:53.720] summarizing
+
+[00:19:54.200] actually
+
+[00:19:55.840] I I think that's actually worth maybe
+
+[00:19:57.360] taking a sec to drill into is just kind
+
+[00:19:58.960] of like having your kind of job system
+
+[00:20:02.360] just be a table with a bunch of nullable
+
+[00:20:04.640] columns and you can tell what's been
+
+[00:20:06.120] done just by what's set in the database
+
+[00:20:08.440] and in that way I mean it's it's not as
+
+[00:20:10.760] like robust as something like big and
+
+[00:20:13.200] like chunky like Temporal or something
+
+[00:20:15.080] like that, but it is honestly probably
+
+[00:20:18.120] good enough, especially if you're
+
+[00:20:19.080] building like internal tools for
+
+[00:20:20.560] yourself, um which is
+
+[00:20:23.040] uh
+
+[00:20:23.800] super super high leverage I think these
+
+[00:20:25.920] days. Um
+
+[00:20:27.600] just that idea of like a really simple
+
+[00:20:29.080] job system.
+
+[00:20:31.160] The problem that I ran into when I was
+
+[00:20:32.840] doing purely nullable fields is that it
+
+[00:20:35.000] wasn't I wasn't doing JSON parsing. Uh
+
+[00:20:37.600] sorry, like once I was streaming I had
+
+[00:20:39.800] something in there when I wasn't done.
+
+[00:20:42.120] So I actually needed to keep a status of
+
+[00:20:43.880] it. A little bit more.
+
+[00:20:45.440] I see.
+
+[00:20:46.960] Because like I needed to know the status
+
+[00:20:48.360] of like is it started? Is it streaming
+
+[00:20:51.040] or is it done?
+
+[00:20:52.880] And the status was really important.
+
+[00:20:56.440] Uh
+
+[00:20:57.080] and having it available was important to
+
+[00:20:58.920] actually show the UI there.
+
+[00:21:00.840] Um and then the other thing that I did
+
+[00:21:02.600] was I got bored, so I added one last
+
+[00:21:04.520] thing. I added uh while I was at it, I
+
+[00:21:06.360] was like, "Okay, let's just
+
+[00:21:07.920] Why not? We did all these three things."
+
+[00:21:09.240] So, I just asked it to
+
+[00:21:11.160] literally follow this example along the
+
+[00:21:12.760] way, and I said, "Draft a title for me."
+
+[00:21:16.920] after you're done.
+
+[00:21:19.160] Uh so, that became the next thing that
+
+[00:21:20.440] we did. So, now we had four pipelines
+
+[00:21:22.880] that could trigger and process.
+
+[00:21:24.920] Once this was done, I have another thing
+
+[00:21:26.960] I could do, which was a user
+
+[00:21:29.240] a favor.
+
+[00:21:30.640] Yeah. Sorry, do me a favor real quick.
+
+[00:21:32.320] Hit five.
+
+[00:21:37.070] And just change the arrow to this one
+
+[00:21:37.080] over here.
+
+[00:21:38.920] Cuz those macaroni Those mac macaroni
+
+[00:21:41.240] arrows arrows suck.
+
+[00:21:43.600] I agree. Oh, so you got to Yeah, if you
+
+[00:21:45.320] hit five twice, I think it cycles
+
+[00:21:47.000] through. It used to happen to me all the
+
+[00:21:48.200] time. Still happens to me all the time.
+
+[00:21:51.280] Thank you. This is why I'm really bad at
+
+[00:21:52.880] Excel raw.
+
+[00:21:54.200] Um then we get another So, this
+
+[00:21:56.040] pretty [ __ ] good, dude.
+
+[00:21:59.360] Now we have another request that the
+
+[00:22:00.960] user can do once all these are done. And
+
+[00:22:02.640] remember, all this is streaming to the
+
+[00:22:04.240] real-time database.
+
+[00:22:05.800] So, it's very, very easy for my front
+
+[00:22:08.320] end to render this because it's just
+
+[00:22:10.080] rendering a blob of JSON that is
+
+[00:22:12.040] strongly typed, and I know how to render
+
+[00:22:13.640] it, so it becomes trivial for me to go
+
+[00:22:15.200] render. I just build React components
+
+[00:22:17.040] for all those types.
+
+[00:22:19.440] Then I built the second part of the
+
+[00:22:20.640] pipeline,
+
+[00:22:22.000] which said like if the use user would
+
+[00:22:24.200] make like a draft ID,
+
+[00:22:26.800] content type,
+
+[00:22:29.400] and then their feedback. So, the user
+
+[00:22:31.840] wants to commit feedback to one of these
+
+[00:22:33.840] emails. So, I have each of these drafts
+
+[00:22:36.040] as an ID, they have a version history
+
+[00:22:37.480] and everything attached to it. There is
+
+[00:22:39.320] different content types and mediums, so
+
+[00:22:41.160] like email, X, and LinkedIn.
+
+[00:22:45.040] And once this happens, we do the same
+
+[00:22:46.720] exact thing that we were doing before.
+
+[00:22:48.680] Oops.
+
+[00:22:54.230] Where this time,
+
+[00:22:54.240] instead of our normal background, we
+
+[00:22:56.640] kick up another background process.
+
+[00:22:59.440] And this background process, again,
+
+[00:23:01.120] responds very, very fast to the LLM
+
+[00:23:04.240] saying, "Okay, cool. I'll I'll take care
+
+[00:23:05.880] of that for you."
+
+[00:23:08.120] And once that is done, it goes to
+
+[00:23:09.720] real-time database,
+
+[00:23:11.400] pulls out the draft,
+
+[00:23:14.000] pulls out the transcript,
+
+[00:23:17.200] uh
+
+[00:23:18.760] draft,
+
+[00:23:20.600] transcript,
+
+[00:23:23.000] and then issues that to a prompt,
+
+[00:23:25.320] saves a new version,
+
+[00:23:27.520] and then writes that to the database.
+
+[00:23:29.920] And that's all this pipeline is.
+
+[00:23:32.120] There's nothing fancy about this.
+
+[00:23:34.560] It's really just kicking off background
+
+[00:23:36.360] workers constantly to go do work for me
+
+[00:23:39.560] while I go and allow myself to iterate
+
+[00:23:41.560] fast
+
+[00:23:42.600] along the way.
+
+[00:23:44.680] Does this give everyone a good idea of
+
+[00:23:45.920] what the background pipeline looks like?
+
+[00:23:48.080] And how we're able to go and iterate on
+
+[00:23:50.040] this pipeline along the way?
+
+[00:24:02.230] So, in the first instance, when you
+
+[00:24:02.240] created the draft, did you use the
+
+[00:24:04.720] transcript or did you use the summary of
+
+[00:24:07.200] the transcript?
+
+[00:24:08.840] I just use I I I
+
+[00:24:10.840] At the time, I didn't actually think
+
+[00:24:12.160] about using the transcript, so I just
+
+[00:24:13.160] used the transcript. We can update that
+
+[00:24:14.840] to go use the transcript as well.
+
+[00:24:16.840] This is why the draft
+
+[00:24:17.920] summary?
+
+[00:24:19.160] Got it. Yeah, I only use the summary,
+
+[00:24:20.920] not the transcript. Sorry.
+
+[00:24:22.840] Uh this is why the these initial drafts
+
+[00:24:25.440] are bad.
+
+[00:24:30.230] That's uh so, like, when we go with
+
+[00:24:30.240] this, and we actually look at the UI on
+
+[00:24:31.840] here, uh where'd it go?
+
+[00:24:57.270] Okay, I guess it's here.
+
+[00:24:57.280] Um this is why the original draft was
+
+[00:24:59.040] really bad. And like now that I told it
+
+[00:25:00.800] to go and add more feedback with like
+
+[00:25:02.160] emojis, you can see it added more emojis
+
+[00:25:03.760] in this one.
+
+[00:25:05.160] But the first one didn't have any of
+
+[00:25:06.480] that. And like this it's going to be
+
+[00:25:07.600] bad. It doesn't have any of this. Like
+
+[00:25:08.920] it writes your name. I have to fill this
+
+[00:25:10.840] stuff out. It's kind of annoying.
+
+[00:25:12.880] Um, but that's because I have really
+
+[00:25:15.200] given it no context and the AI part of
+
+[00:25:17.160] this is not even close to done.
+
+[00:25:20.000] Okay, cool. So so to test this So to
+
+[00:25:22.320] test this what we're going to do is
+
+[00:25:23.360] we're going to change the prompt and
+
+[00:25:24.680] then we're going to re-import a whole
+
+[00:25:26.240] video from scratch and then we're going
+
+[00:25:28.200] to see if the drafts are better, right?
+
+[00:25:30.600] Well, we can just regenerate the
+
+[00:25:32.000] summary. But yes.
+
+[00:25:33.520] Uh, we don't actually have to regenerate
+
+[00:25:34.800] the summary.
+
+[00:25:36.240] No, that was your lead-in. You're This
+
+[00:25:38.080] is This is where we uh we go way down
+
+[00:25:40.360] into the inner loop and we say, "Hey,
+
+[00:25:41.800] okay, cool. Let's go get a real record
+
+[00:25:43.760] from the database and then like write a
+
+[00:25:45.280] test for it."
+
+[00:25:47.000] Yeah, let's go do that actually. That's
+
+[00:25:49.320] the uh that's the old way. That's how I
+
+[00:25:51.200] would have done this a year ago. It's
+
+[00:25:52.520] just kind of test the thing end-to-end,
+
+[00:25:53.920] right?
+
+[00:25:55.240] Well, I I think that's the point. Like
+
+[00:25:56.840] let's show the end-to-end testing loop
+
+[00:25:58.440] and let's show the faster loop once
+
+[00:25:59.960] we're able to go do it.
+
+[00:26:01.800] So in this case, uh does that answer
+
+[00:26:03.480] your question, Vijay?
+
+[00:26:10.030] Yes, it does. Thank you.
+
+[00:26:10.040] Perfect. Yes. So now let's go ahead and
+
+[00:26:12.680] actually go and try and make some of
+
+[00:26:14.040] this pipeline better. Now there's a
+
+[00:26:15.720] couple of questions that asked about how
+
+[00:26:17.000] do we keep all this data in sync and
+
+[00:26:18.360] everything. So I'll just show you a
+
+[00:26:19.680] little bit more of the code and what it
+
+[00:26:20.960] ends up looking like because I think it
+
+[00:26:22.200] is useful to have some dive through
+
+[00:26:24.320] before we go and change a bunch of
+
+[00:26:25.920] things.
+
+[00:26:26.880] I'm also going to show how to go make
+
+[00:26:28.520] this work with Claude code and how to go
+
+[00:26:31.000] edit it to add a new pipe part of the
+
+[00:26:32.560] pipeline. Cuz the problem that I
+
+[00:26:34.320] actually noticed the most if you
+
+[00:26:36.280] actually look at some of the prompts,
+
+[00:26:42.870] they're just long. It just like doesn't
+
+[00:26:42.880] really talk about the real part of it.
+
+[00:26:44.640] Like it adds the feedback, it dumps the
+
+[00:26:46.240] transcript in there, which is fine, but
+
+[00:26:47.800] it's like
+
+[00:26:49.560] it it it doesn't really really really
+
+[00:26:52.680] understand what I mean by actually
+
+[00:26:54.400] making the prompt better.
+
+[00:26:56.320] Uh and what makes a good email. It's
+
+[00:26:58.280] same thing with this. It's like
+
+[00:27:00.080] it doesn't really understand about what
+
+[00:27:01.680] is a good Twitter thread when it does
+
+[00:27:03.880] this along the way. Cuz I don't think
+
+[00:27:05.840] this is really
+
+[00:27:08.320] It's It's giving it instructions about
+
+[00:27:10.440] what to do, not so much about like what
+
+[00:27:13.080] looks good, like what good looks like.
+
+[00:27:15.640] Exactly. And like but we can't focus on
+
+[00:27:18.640] what good looks like until we have the
+
+[00:27:20.000] mechanics of what to do really plumbed
+
+[00:27:22.120] in because I will spend a lot more time
+
+[00:27:24.640] iterating on the infrastructure. Like I
+
+[00:27:26.080] said, this took about 8 hours of work to
+
+[00:27:28.160] go from nothing to a fully generating
+
+[00:27:30.040] SAS flow that does this.
+
+[00:27:32.080] Um and that's worth doing.
+
+[00:27:34.960] But if I just built the AI part, I
+
+[00:27:37.320] wouldn't even if I thought this was
+
+[00:27:38.840] useful, I won't Dexter and I wouldn't
+
+[00:27:40.560] actually use this app. It would be
+
+[00:27:42.120] unusable. So we need to build a flow
+
+[00:27:43.960] that made sense for us in a way and then
+
+[00:27:47.120] we can go and make the AI part better.
+
+[00:27:48.640] Otherwise, you just have a bunch of
+
+[00:27:49.720] Python scripts that you don't actually
+
+[00:27:51.560] use and now they're trash.
+
+[00:27:53.800] And that was a waste of time.
+
+[00:27:55.560] So building the whole thing out is worth
+
+[00:27:57.560] it because then you can decide how to
+
+[00:27:59.200] actually design the AI along the way.
+
+[00:28:02.040] Um with that, let's talk about some of
+
+[00:28:03.640] this stuff. So this data model is called
+
+[00:28:05.600] Twitter thread.
+
+[00:28:07.000] This is what we're rendering both in the
+
+[00:28:08.960] back end and the front end.
+
+[00:28:10.760] And I'll show you how this gets used
+
+[00:28:13.040] in the front end.
+
+[00:28:14.880] Uh and I'm just going to exclude all the
+
+[00:28:16.520] battle plan code.
+
+[00:28:21.550] Oops.
+
+[00:28:21.560] Um All we do is we just regenerate types
+
+[00:28:24.360] and we generate types for both front end
+
+[00:28:25.920] and back end types and now we just use
+
+[00:28:27.520] them here. So in this case, we have a
+
+[00:28:29.000] Twitter thread. This gets imported and
+
+[00:28:30.680] now my UI component just renders this.
+
+[00:28:33.080] So what's really nice about this is if I
+
+[00:28:35.040] tell the model to go change what it
+
+[00:28:36.480] means to be a Twitter thread, my front
+
+[00:28:38.600] end will break at compile time
+
+[00:28:40.960] and now it will go actually Claude code
+
+[00:28:42.880] can go fix it for me. So I actually get
+
+[00:28:44.960] types that are in sync perfectly along
+
+[00:28:46.840] the way
+
+[00:28:47.920] rather than anything else.
+
+[00:28:49.640] Um, and the way that I'm able to do this
+
+[00:28:52.160] is I just code gen both types. I code
+
+[00:28:54.120] gen the Python versions that my back end
+
+[00:28:55.960] uses and writes to the database.
+
+[00:28:58.400] And then I code gen the React versions
+
+[00:29:00.440] that my front end uses. And I just use
+
+[00:29:03.160] the same types to basically issue the
+
+[00:29:05.040] glue code along the way.
+
+[00:29:06.840] So, I think Joe asked the question
+
+[00:29:08.200] earlier of what I used to go do that,
+
+[00:29:09.840] and this is what I found worked for me.
+
+[00:29:12.360] Um, and then
+
+[00:29:13.080] Okay, so you have the back end the back
+
+[00:29:15.280] end is getting the transcript and then
+
+[00:29:16.880] it's passing it to methods in BAML in
+
+[00:29:19.200] Python with using Pydantic. And then
+
+[00:29:21.040] when it gets them back, it's storing
+
+[00:29:22.200] those to the database. And because it's
+
+[00:29:24.400] all generated from the same BAML kind of
+
+[00:29:26.400] contract API specification, when those
+
+[00:29:29.160] same kind of JSON objects get served to
+
+[00:29:31.600] the front end, the front end can use the
+
+[00:29:33.280] generated client uh, that that that got
+
+[00:29:36.640] made from the exact same specification
+
+[00:29:38.880] to render those things and have type
+
+[00:29:40.760] safety around them and know exactly what
+
+[00:29:42.200] they look like when they're being
+
+[00:29:43.120] rendered.
+
+[00:29:44.560] Exactly.
+
+[00:29:45.880] Exactly. Cool.
+
+[00:29:47.560] So, you get really, really convenient
+
+[00:29:48.800] type systems along the way.
+
+[00:29:51.000] Um,
+
+[00:29:52.360] with that, let's focus on actually
+
+[00:29:54.240] making some of these prompts better.
+
+[00:29:56.280] Um, so the first thing that we'll notice
+
+[00:29:58.000] is generate a custom Twitter thread.
+
+[00:30:01.360] Um,
+
+[00:30:02.840] one thing that I did not do because I
+
+[00:30:04.400] was live coding,
+
+[00:30:06.120] um,
+
+[00:30:08.120] I found this helpful writing the UI much
+
+[00:30:10.200] better.
+
+[00:30:11.400] Um, the V0 UI is okay, but the problem
+
+[00:30:14.520] is when you're actually syncing a back
+
+[00:30:16.080] end and front end together, using V0 is
+
+[00:30:18.360] a really, really
+
+[00:30:19.920] it's hard.
+
+[00:30:21.280] Uh, because what I need to do is
+
+[00:30:22.440] find a way to
+
+[00:30:24.440] Well, you have to find a way to make
+
+[00:30:25.600] sure V0 fully understands the like data
+
+[00:30:28.480] contract and the models that are
+
+[00:30:29.760] available, right?
+
+[00:30:31.440] Exactly. Otherwise, it just changes
+
+[00:30:33.120] things, and then I'm stuck in a I'm
+
+[00:30:34.760] iterating way slower.
+
+[00:30:36.640] And it's fine if your entire app is
+
+[00:30:39.240] purely built in TypeScript, but if you
+
+[00:30:40.680] have long-running workflows, it's not
+
+[00:30:42.360] going to be built purely in like your
+
+[00:30:44.520] next JS app won't define everything.
+
+[00:30:47.480] Um and like that just doesn't work.
+
+[00:30:50.040] So, that's why I had to go down this
+
+[00:30:51.680] road. And I think a lot of people are
+
+[00:30:52.800] using like non uh TypeScript backends or
+
+[00:30:55.160] they have non-TypeScript backends
+
+[00:30:56.520] already that they want to pull data
+
+[00:30:57.720] from.
+
+[00:30:59.120] And it's just useful to have one data
+
+[00:31:01.560] architecture that does this. You can
+
+[00:31:03.160] still do it in V0, but it's just the it
+
+[00:31:05.480] doesn't have the context.
+
+[00:31:07.040] And it breaks the types and my whole app
+
+[00:31:08.480] is broken, that sucks.
+
+[00:31:10.800] Um
+
+[00:31:12.480] with that, let's focus on specifically
+
+[00:31:14.800] one of it. Um I think the thing that I
+
+[00:31:16.520] dislike the most is actually the email
+
+[00:31:18.320] draft. And Dasha and I have a couple
+
+[00:31:21.280] emails that we've sent out. We like
+
+[00:31:22.920] those.
+
+[00:31:24.240] So, why don't we just do something silly
+
+[00:31:27.240] and see if we can make the email draft
+
+[00:31:29.280] better by doing the dumbest thing
+
+[00:31:31.360] possible,
+
+[00:31:32.560] which is first
+
+[00:31:33.920] Oh, wow.
+
+[00:31:35.480] Is the never use few-shot prompting guy
+
+[00:31:38.200] going to use few-shot prompting in this
+
+[00:31:40.000] episode?
+
+[00:31:41.520] I'm going to add a transcript actually
+
+[00:31:43.160] first.
+
+[00:31:44.160] Okay. Okay.
+
+[00:31:44.800] Um now this is not going to work. So,
+
+[00:31:46.600] what I'm going to do is I'm going to go
+
+[00:31:47.760] to Claude Code and I will tell it
+
+[00:31:51.400] um to um
+
+[00:31:53.880] update
+
+[00:31:55.560] the Python code that calls
+
+[00:31:59.840] email draft to pass in the transcript.
+
+[00:32:07.070] Cool.
+
+[00:32:07.080] And this is I mean, coming back to that
+
+[00:32:08.440] idea of like V0 needing more context
+
+[00:32:10.360] about all your other systems to work
+
+[00:32:12.000] well.
+
+[00:32:13.160] Um I think it becomes like your job as
+
+[00:32:15.720] the prompt engineer to or actually we'll
+
+[00:32:17.800] say context engineer, which is like to
+
+[00:32:19.480] give it a good prompt and then give it
+
+[00:32:20.760] all the context that it needs.
+
+[00:32:23.080] Uh and some of these like coding agents
+
+[00:32:24.640] that run on the CLI like Claude Code or
+
+[00:32:26.280] even Cursor agent, like they tend to be
+
+[00:32:29.600] pretty good depending on the size of the
+
+[00:32:31.200] project. Um it gets a little
+
+[00:32:33.560] uh
+
+[00:32:34.120] uh
+
+[00:32:35.520] tricky, harder, you just have to be more
+
+[00:32:37.640] thoughtful if the project's huge, but
+
+[00:32:39.600] especially for small projects, they can
+
+[00:32:40.960] be very good at finding all the right
+
+[00:32:43.080] context for you so that and kind of
+
+[00:32:44.880] taking that job of like getting all the
+
+[00:32:46.480] right files and pasting them into the
+
+[00:32:48.200] right place.
+
+[00:32:49.680] Um take that off your plate, basically.
+
+[00:32:53.280] Exactly. And now you can see it's
+
+[00:32:54.920] passing the transcript for me
+
+[00:32:56.320] automatically.
+
+[00:32:57.720] And in theory, uh you want to make
+
+[00:33:01.440] sure I don't want to ask again.
+
+[00:33:02.880] to wait.
+
+[00:33:04.400] I just gave it all the permissions.
+
+[00:33:05.720] Let's go.
+
+[00:33:10.150] Um
+
+[00:33:10.160] And now that's actually going to go
+
+[00:33:11.520] ahead and go update the transcript here.
+
+[00:33:14.240] Uh I haven't done a session on cloud
+
+[00:33:16.120] code and cursor, but we probably will at
+
+[00:33:18.480] some point. Dexter was on this yesterday
+
+[00:33:20.480] and I was not about it, but cloud code
+
+[00:33:22.640] is in my opinion much superior to
+
+[00:33:24.600] cursor's agent.
+
+[00:33:26.200] Um
+
+[00:33:27.720] relative
+
+[00:33:28.520] Yeah, we will we will do in the next
+
+[00:33:30.520] couple weeks a deep dive probably into
+
+[00:33:33.480] cloud coding. It'll It'll be a little
+
+[00:33:35.120] bit different than like the like, "Hey,
+
+[00:33:37.160] let's go let's go like really fine-tune
+
+[00:33:39.480] refine a bunch of pipelines," but I
+
+[00:33:41.000] think it could be a fun episode.
+
+[00:33:43.720] Um what do I not like about few-shot
+
+[00:33:45.440] prompting? The reason I think I
+
+[00:33:47.240] specifically say this so egregiously and
+
+[00:33:50.160] so aggressively about few-shot prompting
+
+[00:33:52.400] is a lot of people do use few-shot
+
+[00:33:53.960] prompting as like a crutch to try and
+
+[00:33:55.880] get the model to do what they want
+
+[00:33:57.440] without understanding that they're
+
+[00:33:58.680] actually injecting a lot of bias in the
+
+[00:34:00.560] model.
+
+[00:34:01.720] So, let's say you're building a
+
+[00:34:02.440] healthcare company and you're using
+
+[00:34:04.040] few-shot prompting to teach the model
+
+[00:34:05.720] how to do like um um
+
+[00:34:08.560] like detect the right verbiage from a
+
+[00:34:10.159] doctor.
+
+[00:34:11.639] That could be good or it could be
+
+[00:34:13.000] really, really bad. Like let's say for
+
+[00:34:15.399] example, you wanted to go tell the you
+
+[00:34:17.280] want to talk about like some sort of
+
+[00:34:18.800] like weird liver disease that a person
+
+[00:34:20.560] has and that's the few-shot example you
+
+[00:34:22.040] used. It's a really rare disease. One in
+
+[00:34:24.200] like a million people have it, so it's
+
+[00:34:26.040] really unlikely to impact anything. And
+
+[00:34:28.159] then a customer comes in with the same
+
+[00:34:30.120] exact name as the example in your
+
+[00:34:32.159] prompt.
+
+[00:34:33.200] Uh and your future example.
+
+[00:34:36.679] You're going to have a hard time not
+
+[00:34:39.520] telling telling the model that this is
+
+[00:34:40.800] truly an example and not an example
+
+[00:34:42.800] that's related to that customer from a
+
+[00:34:44.520] different doctor.
+
+[00:34:46.440] It's just a hard
+
+[00:34:47.560] infer meaning from things that you
+
+[00:34:50.080] didn't intend for it to like include as
+
+[00:34:52.800] part of the example. Like that people
+
+[00:34:54.600] named, you know,
+
+[00:34:56.120] people named Sarah are likely to have a
+
+[00:34:58.320] liver a rare liver condition or
+
+[00:34:59.840] something. But like Or Sarah is going to
+
+[00:35:02.040] a different doctor.
+
+[00:35:04.520] Right? Even a simpler assumption, just
+
+[00:35:06.160] the person Sarah is going to a different
+
+[00:35:07.840] is going to a different doctor now and
+
+[00:35:09.120] it's an updated conversation. You're
+
+[00:35:10.640] giving me an example, but it's also an
+
+[00:35:12.360] example about the same person.
+
+[00:35:14.440] And whether or not the model understands
+
+[00:35:15.960] that or not doesn't really matter.
+
+[00:35:19.840] It's just more so just that like
+
+[00:35:23.640] you just have to know the biases you're
+
+[00:35:25.120] injecting. In our case, we know Dexter
+
+[00:35:28.240] and I are recording these videos. We
+
+[00:35:30.200] know our tone is what we want to go and
+
+[00:35:32.000] bet. So if we put a few shot example in
+
+[00:35:34.600] here,
+
+[00:35:35.560] it's just going to do what we want
+
+[00:35:36.880] exactly cuz we're not going I'm not
+
+[00:35:38.400] going to run this on any other videos
+
+[00:35:40.200] but the AI that works videos.
+
+[00:35:42.600] Now we do recordings for our team
+
+[00:35:44.320] meetings sometimes.
+
+[00:35:45.880] If I use the same prompt in here, it
+
+[00:35:47.400] will not generate a good email.
+
+[00:35:49.520] Because I have few shot example that for
+
+[00:35:51.360] that specific scenario. So what I really
+
+[00:35:54.320] really like
+
+[00:35:56.040] is this thing that I like to call
+
+[00:35:57.400] dynamic few shot prompting. Uh
+
+[00:36:00.680] What is it? Workshop.
+
+[00:36:02.560] And that works. It's just that most
+
+[00:36:04.360] people don't do it.
+
+[00:36:06.080] Um
+
+[00:36:07.280] or like partial few shot prompting. So
+
+[00:36:08.840] like instead of actually telling the
+
+[00:36:09.840] model that like, oh,
+
+[00:36:11.480] in this case if I want the model to
+
+[00:36:12.760] really understand that engineering is
+
+[00:36:14.360] only people that actively code. So like
+
+[00:36:15.960] a VP of engineering isn't engineering
+
+[00:36:17.600] their product.
+
+[00:36:19.120] I can write that like this in my prompt
+
+[00:36:21.400] where I don't actually give the full
+
+[00:36:22.760] output in my prompt. I only tell it
+
+[00:36:24.520] like, oh,
+
+[00:36:25.760] because they don't code, the category is
+
+[00:36:27.200] product. I missed out on everything
+
+[00:36:28.680] else. I didn't add any other fields.
+
+[00:36:30.720] So, I'm letting the model really
+
+[00:36:31.920] understand this is truly an example.
+
+[00:36:34.080] It's Even if there's another person
+
+[00:36:35.680] named Vaibhav Gupta,
+
+[00:36:37.600] this even to a human would be clear that
+
+[00:36:39.960] this is an example without having to
+
+[00:36:41.920] read too much into it. The inference
+
+[00:36:44.040] that the default inference is an
+
+[00:36:45.640] example.
+
+[00:36:46.920] And also, you can do more dynamic stuff
+
+[00:36:48.480] like, for example, dynamically change
+
+[00:36:50.040] the name of the If for whatever reason I
+
+[00:36:51.840] know the person is named Vaibhav Gupta,
+
+[00:36:53.840] change this name
+
+[00:36:56.000] to be different for that example.
+
+[00:36:58.960] All right? And that's just things that
+
+[00:37:00.440] you can
+
+[00:37:01.360] you can do
+
+[00:37:02.480] to go to make your few-shot prompts a
+
+[00:37:03.800] lot better. Because because if your
+
+[00:37:05.680] prompt uses Vaibhav Gupta, and then you
+
+[00:37:07.720] pass it a new thing and the person's
+
+[00:37:09.160] name is also Vaibhav Gupta, then it
+
+[00:37:10.920] might assume that it's the same and that
+
+[00:37:12.960] follows that pattern. When really, you'd
+
+[00:37:15.080] basically want to say like, "Okay,
+
+[00:37:16.000] whatever the person's name we're testing
+
+[00:37:17.520] on, make sure the name in the few-shot
+
+[00:37:19.520] example is different before we launch
+
+[00:37:21.240] the prompt."
+
+[00:37:22.800] Exactly. So, you want to kind of find an
+
+[00:37:25.000] I I kind of make it I think the idea of
+
+[00:37:27.200] few-shot prompting is you want to
+
+[00:37:28.320] guarantee the model thinks of the thing
+
+[00:37:29.960] you're providing as an example.
+
+[00:37:32.560] And that is a
+
+[00:37:33.560] Cool tangent.
+
+[00:37:35.840] Sorry.
+
+[00:37:36.640] Uh let's uh let's test this thing.
+
+[00:37:39.880] So, let's add the tran- We added the
+
+[00:37:41.080] transcript part in there. Um and like
+
+[00:37:43.320] now re-summarize
+
+[00:37:44.200] So, the only thing we changed
+
+[00:37:46.120] So, the only thing we changed was we're
+
+[00:37:47.200] using the exact same prompt. We're just
+
+[00:37:48.640] also passing in the transcript.
+
+[00:37:51.080] Exactly.
+
+[00:37:52.360] Okay. And this is going to be really
+
+[00:37:54.320] annoying cuz it's going to it just takes
+
+[00:37:55.960] a while to go run. And while we're doing
+
+[00:37:58.320] that, I'm actually going to go add
+
+[00:37:59.720] something. And it's streaming this out,
+
+[00:38:02.000] so we'll see if this is better or worse.
+
+[00:38:04.760] So, sorry. Did you just retrigger all
+
+[00:38:06.920] the processing for all the drafts,
+
+[00:38:08.520] basically?
+
+[00:38:10.120] Resummarize.
+
+[00:38:10.520] Just for this one. Yeah, yeah, exactly.
+
+[00:38:12.400] For all the drafts and the summary. So,
+
+[00:38:14.080] now it's going to cost me a bunch of
+
+[00:38:15.160] money to run this.
+
+[00:38:16.880] Yeah. So, when you when you do
+
+[00:38:18.480] re-summarize, it's going to re-pull out
+
+[00:38:20.040] the bullet points for takeaways and key
+
+[00:38:21.840] topics, and then it's going to go
+
+[00:38:24.120] because the upstream thing changes going
+
+[00:38:25.760] to go regenerate all the drafts.
+
+[00:38:27.880] Exactly.
+
+[00:38:29.360] Um that's what I have kind of defined in
+
+[00:38:31.360] here. Um
+
+[00:38:33.400] and it just takes a while. Uh I don't
+
+[00:38:35.120] know why the models are so slow this
+
+[00:38:36.440] morning.
+
+[00:38:37.760] Uh but they are. Now, as you can see my
+
+[00:38:40.080] iteration loop here is kind of host.
+
+[00:38:42.080] It's very, very, very slow.
+
+[00:38:44.440] So, I'm going to try and make this
+
+[00:38:45.440] iteration a little bit faster by writing
+
+[00:38:47.200] some test cases.
+
+[00:38:48.560] Now, the problem is writing test cases
+
+[00:38:50.680] is actually kind of annoying cuz I don't
+
+[00:38:52.840] actually want to do this. But these
+
+[00:38:54.480] prompts are better. I actually think
+
+[00:38:56.200] these key points are better than the
+
+[00:38:57.320] previous one. Like it actually got one
+
+[00:38:58.520] of the key things we talked about last
+
+[00:38:59.800] time, which is RTFP, read the effing
+
+[00:39:01.400] prompt.
+
+[00:39:02.760] Um and it wouldn't have
+
+[00:39:04.000] Did you Did you change the summarization
+
+[00:39:07.000] as well? I thought I thought we left the
+
+[00:39:08.480] summarization itself unchanged.
+
+[00:39:11.360] Um oh, sorry. Whenever I do
+
+[00:39:13.040] re-summarize, I actually regenerate the
+
+[00:39:14.880] whole summary as well.
+
+[00:39:16.680] Not just the
+
+[00:39:17.600] Okay, so this is just a second a second
+
+[00:39:19.840] pass over the same data, right? You
+
+[00:39:21.280] didn't change the inputs to the summary.
+
+[00:39:23.840] Exactly. So, I actually I just changed
+
+[00:39:25.560] the email draft one, but I also changed
+
+[00:39:28.000] I did the re-summarize button
+
+[00:39:30.280] along the way.
+
+[00:39:30.920] Yeah. Okay, but but you're talking about
+
+[00:39:33.080] hey, these the fact that these points
+
+[00:39:34.800] are better in this case is just at this
+
+[00:39:36.760] this time the the model happened to pick
+
+[00:39:39.320] better summary points.
+
+[00:39:41.040] Okay. Yes. So, once this email is done,
+
+[00:39:43.840] take it out. And this is why I added the
+
+[00:39:45.840] re-summarize button because like
+
+[00:39:46.960] sometimes somebody's just off.
+
+[00:39:49.360] And I don't really want to think too
+
+[00:39:51.000] hard about it. Uh so, like the easiest
+
+[00:39:52.680] way to
+
+[00:39:53.080] want to try again.
+
+[00:39:54.760] I just want to try again. So, I wanted a
+
+[00:39:55.840] way to re-trigger the pipeline.
+
+[00:39:58.160] And you could do this actually in
+
+[00:39:59.640] because we wrote all the code and we
+
+[00:40:00.880] have full control over the pipeline, you
+
+[00:40:02.680] could actually do this in the code and
+
+[00:40:04.280] say like hey, just run it three times
+
+[00:40:05.800] and show three summaries and I'll just
+
+[00:40:07.240] pick one and then go do the rest of the
+
+[00:40:08.720] pipeline. Like you could you could
+
+[00:40:10.240] implement that pretty easily.
+
+[00:40:12.720] Yes.
+
+[00:40:12.960] Like Claude code could probably build
+
+[00:40:14.120] that for you in 5 minutes.
+
+[00:40:16.360] Um and then the email summary at some
+
+[00:40:18.920] point will finish up.
+
+[00:40:25.950] All the content is ready. So, I have to
+
+[00:40:25.960] refresh. This is the sinking point that
+
+[00:40:27.880] I did not get perfect.
+
+[00:40:37.110] Did this work?
+
+[00:40:37.120] Um, it did not. Let me try re-running.
+
+[00:40:41.160] I think open AI for some reason has been
+
+[00:40:43.000] not working very Oh.
+
+[00:40:52.510] I'm going to do this. Oh, Claude didn't
+
+[00:40:52.520] quite nail it.
+
+[00:40:54.120] It didn't nail it. It's fine.
+
+[00:40:55.720] Um, but while it's doing that, I'm going
+
+[00:40:57.200] to do something. I'm going to add some
+
+[00:40:58.120] observability to my pipeline so I can
+
+[00:40:59.600] actually iterate on it a little bit
+
+[00:41:00.720] faster cuz the prompt thing is going to
+
+[00:41:02.040] be so freaking slow otherwise.
+
+[00:41:04.760] Um, yeah, generated.
+
+[00:41:10.910] Um,
+
+[00:41:10.920] I'm just going to do the dump thing.
+
+[00:41:13.880] Um,
+
+[00:41:25.430] Uh, I guess it doesn't matter if you
+
+[00:41:25.440] have an API key. You can just send data
+
+[00:41:27.080] here.
+
+[00:41:28.800] With that.
+
+[00:41:36.870] The AI that works is built on trust,
+
+[00:41:36.880] folks.
+
+[00:41:38.800] Indeed it is. I will stop screen sharing
+
+[00:41:41.000] that while I edit my .env file.
+
+[00:41:47.550] We have some trust, but not infinite
+
+[00:41:47.560] trust.
+
+[00:41:49.160] Yeah. Uh,
+
+[00:41:55.950] Okay.
+
+[00:41:55.960] Okay, so what you're doing is adding the
+
+[00:41:57.680] API keys so that every every AI call is
+
+[00:42:00.640] basically going to be tracked and so we
+
+[00:42:02.280] can
+
+[00:42:02.560] Yeah, and I really What I really
+
+[00:42:04.640] the main thing I really want, to be
+
+[00:42:06.120] honest, is I just want to go see the
+
+[00:42:08.080] logs so that when it goes ahead, I can
+
+[00:42:10.680] go ahead and just like turn it into a
+
+[00:42:13.680] um Yeah, turn it into a test case.
+
+[00:42:17.840] And basically without that, what you
+
+[00:42:19.520] could do is I guess you could like
+
+[00:42:20.920] handcraft a test case by like going and
+
+[00:42:23.080] looking in the database and like
+
+[00:42:24.600] assembling the inputs yourself and then
+
+[00:42:27.160] like writing a test case by hand.
+
+[00:42:29.680] Yeah, but I don't really want to do
+
+[00:42:30.840] that. I just want to use like the real
+
+[00:42:31.960] test case along the way.
+
+[00:42:34.840] Um
+
+[00:42:36.120] yeah, there we go.
+
+[00:42:43.510] Cool.
+
+[00:42:43.520] This should I think be done now. It
+
+[00:42:45.840] should have made some diffs along the
+
+[00:42:47.120] way.
+
+[00:42:48.440] Um
+
+[00:42:50.480] Oh yeah, we forgot the blessing
+
+[00:42:51.600] transcript.
+
+[00:42:53.120] Generate email draft. Okay, cool.
+
+[00:42:56.640] Okay, now we should be able to do
+
+[00:43:00.320] I also made this other reset processing
+
+[00:43:02.040] bug because like sometimes
+
+[00:43:03.800] this button gets grayed out like
+
+[00:43:05.160] sometimes it's in a bad state like it is
+
+[00:43:06.600] right now because I restarted my server.
+
+[00:43:09.320] So it's just a lot of resetting
+
+[00:43:10.640] processing really, really fast.
+
+[00:43:14.000] And now, in theory
+
+[00:43:17.600] Oh, it just resets the state. In theory
+
+[00:43:21.600] this will work beautifully.
+
+[00:43:24.760] Well, we'll see.
+
+[00:43:26.040] Um Starting the animal summarization for
+
+[00:43:28.920] video.
+
+[00:43:29.640] we go. Here we go.
+
+[00:43:30.880] Yeah, so the summarization is happening.
+
+[00:43:32.760] Um so the real thing that I really want
+
+[00:43:34.400] to do now is what I want to do is I want
+
+[00:43:35.760] to focus on two parts. I want to make
+
+[00:43:37.000] the summary as good as possible and I
+
+[00:43:38.760] want to make the email as good as
+
+[00:43:39.840] possible. The only way I can really make
+
+[00:43:41.920] the email very good is by being a really
+
+[00:43:44.040] fast iteration loop. I'm actually
+
+[00:43:45.280] iterating on the prompt now.
+
+[00:43:46.840] Iterating on the UI layer is just too
+
+[00:43:48.400] slow. I can't do that. I I don't want to
+
+[00:43:50.320] build state management record replay on
+
+[00:43:52.160] every single aspect of this. It's just
+
+[00:43:53.520] going to be too slow. So I'm just going
+
+[00:43:55.120] to go iterate on just the email now.
+
+[00:43:57.960] I on the summary side I'll stop
+
+[00:43:59.640] same concepts to the Twitter and the
+
+[00:44:02.120] LinkedIn and all the other stuff.
+
+[00:44:04.320] And the reason that we're not seeing the
+
+[00:44:05.360] LinkedIn
+
+[00:44:05.680] take
+
+[00:44:07.120] What? Sorry, go ahead.
+
+[00:44:09.320] I was going to say the reason we have
+
+[00:44:11.480] Okay, sorry. Go ahead, Dexter.
+
+[00:44:13.720] We got a little bit of light. I just
+
+[00:44:15.160] want to note like we should take some
+
+[00:44:16.120] time at the end just to talk about like,
+
+[00:44:17.320] "Hey, what would be next for this
+
+[00:44:18.520] thing?" And like I I imagine we'll keep
+
+[00:44:20.160] working on this thing and like what
+
+[00:44:21.800] other things do we want this to do in
+
+[00:44:23.240] addition to email and Twitter? How can
+
+[00:44:24.800] we get a little more backgroundy? How
+
+[00:44:26.400] can we catch web hooks instead of like
+
+[00:44:27.960] having to come here and click on stuff?
+
+[00:44:29.440] There's a whole like next generation of
+
+[00:44:31.600] this thing.
+
+[00:44:33.400] Oh, yeah, 100%.
+
+[00:44:35.640] Um Vinay's got a question really fast.
+
+[00:44:38.320] So, we are currently building the
+
+[00:44:40.440] end-to-end pipeline to test this, but
+
+[00:44:42.800] are you also going to do the piecewise
+
+[00:44:45.080] test as well?
+
+[00:44:46.880] I'm literally about to do that right
+
+[00:44:48.240] now. Now, what I want to do for the
+
+[00:44:50.160] piecewise testing is rather than running
+
+[00:44:52.040] the piecewise testing on my own,
+
+[00:44:58.070] Oh, you got another you got another
+
+[00:44:58.080] error.
+
+[00:45:09.070] The cloud code isn't doing this right,
+
+[00:45:09.080] so I'll find this myself.
+
+[00:45:20.270] Uh
+
+[00:45:20.280] command C, command B,
+
+[00:45:23.160] backend.
+
+[00:45:45.070] script mode really fast.
+
+[00:45:45.080] And then it'll yell at me.
+
+[00:45:54.390] Why is it yelling at me?
+
+[00:45:54.400] Oh, is this not awaitable?
+
+[00:46:05.790] There you go. That's why it wasn't
+
+[00:46:05.800] working.
+
+[00:46:17.230] I wasn't calling the right code.
+
+[00:46:17.240] That's good to know.
+
+[00:46:24.510] I think where's the other one that I
+
+[00:46:24.520] changed?
+
+[00:46:26.960] Um sorry about watching me live code. Um
+
+[00:46:30.120] I was hoping to have most of this stuff
+
+[00:46:31.520] done.
+
+[00:46:42.510] But while this is done, let's talk about
+
+[00:46:42.520] what the actual thing looks like. So I
+
+[00:46:44.520] should be able to actually see the
+
+[00:46:45.440] actual test case and I should be able to
+
+[00:46:46.720] go and edit it.
+
+[00:46:48.120] There you go.
+
+[00:46:49.120] So I just Yeah, maybe we just do not the
+
+[00:46:51.200] email one, we do a different one.
+
+[00:46:53.520] Exactly. So we can just say like the
+
+[00:46:54.960] summarize for example.
+
+[00:46:56.640] And then let's just make sure that the
+
+[00:46:57.480] summary is actually good. So let's just
+
+[00:46:58.880] make this a test case. Let's work on
+
+[00:47:00.320] this and now we can go to
+
+[00:47:03.600] So that was really fast. Uh so what you
+
+[00:47:05.360] did was you took a recording of an input
+
+[00:47:08.640] output pair for one of these
+
+[00:47:11.920] calls and generated a test case so that
+
+[00:47:14.840] you can go change the prompt and see how
+
+[00:47:16.360] it affects the output basically.
+
+[00:47:18.320] Exactly.
+
+[00:47:19.280] Cuz what I'm finding now is I have the
+
+[00:47:20.720] transcript, I can go play around with
+
+[00:47:22.240] this. Like fundamentally what I really
+
+[00:47:24.160] need is I need a way to actually go see
+
+[00:47:25.840] if this is actually going to work or
+
+[00:47:26.920] not.
+
+[00:47:28.000] Um
+
+[00:47:29.080] How do I hide Without having to go run
+
+[00:47:30.600] the entire pipeline end to end.
+
+[00:47:34.080] Exactly.
+
+[00:47:35.640] So now what I'm able to do is I can go
+
+[00:47:37.840] see the pipeline, see what it's doing
+
+[00:47:39.560] and then I can just go like
+
+[00:47:41.840] First I can just see what the model did.
+
+[00:47:44.320] It's not like the model's key takeaways
+
+[00:47:45.960] are just smaller than I what I want them
+
+[00:47:47.920] to be. I want them to be like
+
+[00:47:48.720] paragraphs.
+
+[00:47:50.080] So let's just change that a little bit.
+
+[00:47:52.400] And it's not like a
+
+[00:47:54.080] Let's see what the model actually does.
+
+[00:47:59.670] It doesn't seem like the model is
+
+[00:47:59.680] actually listening to me. It feels like
+
+[00:48:01.560] what it's actually doing is jumping it
+
+[00:48:02.960] out, even though I told it to give me an
+
+[00:48:04.400] outline of a very, very dense summary.
+
+[00:48:07.840] Um in the system prompt, so let's try a
+
+[00:48:10.440] different model. Uh let's just swap out
+
+[00:48:12.440] to like Anthropic. Um
+
+[00:48:14.720] I think I have a
+
+[00:48:16.400] custom Sonnet.
+
+[00:48:18.920] Let's see if Sonnet will work.
+
+[00:48:28.870] And so basically you want it before it
+
+[00:48:28.880] starts dumping out JSON, you want it to
+
+[00:48:30.720] kind of like outline its thoughts.
+
+[00:48:33.400] Exactly. Outline a dense summary of the
+
+[00:48:35.360] video,
+
+[00:48:36.600] uh then
+
+[00:48:38.880] answer, then fill out the summary.
+
+[00:48:47.790] Um
+
+[00:48:47.800] So, example.
+
+[00:49:04.990] Um
+
+[00:49:05.000] Um schema. Sure, let's just try that.
+
+[00:49:08.240] Maybe my prompt was bad. So, let's just
+
+[00:49:10.240] iterate and see if I can get the model
+
+[00:49:11.280] to spits out.
+
+[00:49:16.150] It's really wild how slow the models
+
+[00:49:16.160] are. I feel like I'm being rate limited.
+
+[00:49:18.640] And this is Yeah, this is the um this is
+
+[00:49:21.200] that like we covered this in depth in
+
+[00:49:22.600] the reasoning topic, right? Of like how
+
+[00:49:24.160] can you get a model that kind of like
+
+[00:49:25.520] think about it before it starts
+
+[00:49:26.880] generating the data that our programs
+
+[00:49:28.440] actually going to use.
+
+[00:49:30.040] Exactly. So, now it's actually
+
+[00:49:31.480] generating a pretty good dense response
+
+[00:49:33.400] of what it wanted, and then it's
+
+[00:49:34.680] outputting the summary. And I think
+
+[00:49:36.040] we'll see if this actually better or
+
+[00:49:37.280] not. I'll try with OpenAI again to see
+
+[00:49:39.440] what it does. OpenAI parole.
+
+[00:49:45.470] And you can see how fast I'm iterating
+
+[00:49:45.480] here. And what I'm really trying to do
+
+[00:49:47.040] here is I'm trying to figure out is it
+
+[00:49:48.560] doing what I want. Ah, that looks
+
+[00:49:49.840] actually better than other things.
+
+[00:49:52.080] Um
+
+[00:49:54.160] Um
+
+[00:49:56.640] And I can even guide it para one.
+
+[00:49:59.720] Um
+
+[00:50:01.040] para two, para three. I can even make it
+
+[00:50:02.800] write multiple paragraphs by like
+
+[00:50:04.080] telling it what I want it to go do. Cuz
+
+[00:50:06.000] it this this doesn't seem very dense.
+
+[00:50:09.760] So, let's let it go do more along the
+
+[00:50:12.160] way.
+
+[00:50:14.440] Ah, this looks way It looks like it's
+
+[00:50:17.320] better on the right track. Because now
+
+[00:50:19.160] I'm telling it to do multiple
+
+[00:50:20.240] paragraphs.
+
+[00:50:25.230] And so, let's see if it actually
+
+[00:50:25.240] understood it. It still really did do
+
+[00:50:26.840] multiple paragraphs.
+
+[00:50:28.800] Um
+
+[00:50:31.000] So, let's like fill this out.
+
+[00:50:33.240] Um
+
+[00:50:35.560] topic para
+
+[00:50:37.600] Um
+
+[00:50:38.920] topic one
+
+[00:50:41.440] para
+
+[00:50:43.440] topic one
+
+[00:50:50.950] topic
+
+[00:50:50.960] two para
+
+[00:50:58.990] Since the videos are
+
+[00:50:59.000] 60 plus minutes long
+
+[00:51:02.320] try and have time ranges.
+
+[00:51:21.310] It'll Yeah, it'll it'll it'll get the
+
+[00:51:21.320] gist of what I want.
+
+[00:51:23.040] So, I'm trying to force it to basically
+
+[00:51:24.440] reason more along the way.
+
+[00:51:26.320] And reason the way that I really want it
+
+[00:51:27.880] to go do.
+
+[00:51:29.680] Nope, that didn't work at all. Um
+
+[00:51:32.560] I'll rerun this one more time.
+
+[00:51:35.160] one fast
+
+[00:51:36.960] And I think the other thing that I want
+
+[00:51:38.200] to do
+
+[00:51:40.160] is I want to see
+
+[00:51:42.560] if I can get it to actually listen to me
+
+[00:51:45.880] by making the temp I had originally
+
+[00:51:48.400] deliberately tried to keep the
+
+[00:51:49.560] temperature
+
+[00:51:51.360] uh higher for this kind of task.
+
+[00:51:54.080] But, I'm going to make the temperature
+
+[00:51:54.960] zero now and try this out one more time.
+
+[00:52:02.230] Nice.
+
+[00:52:02.240] Oh, this is sick.
+
+[00:52:03.960] Exactly.
+
+[00:52:04.320] Okay, and then what are we going to go
+
+[00:52:05.680] update the structured outputs to create
+
+[00:52:07.880] timestamps or like chapter summaries?
+
+[00:52:10.560] even need that.
+
+[00:52:11.920] I just wanted to go have this because I
+
+[00:52:13.440] wanted to use this as the summary first
+
+[00:52:15.360] before it actually goes ahead and fills
+
+[00:52:16.880] out main takeaways and everything else
+
+[00:52:18.440] here. But, we could update the
+
+[00:52:21.000] structured outputs also encode encode
+
+[00:52:22.880] time time things if you think it's
+
+[00:52:25.080] useful. So, let's go do that.
+
+[00:52:27.160] Let's change main takeaways to include
+
+[00:52:28.880] time data.
+
+[00:52:33.070] All right.
+
+[00:52:33.080] Um
+
+[00:52:34.720] Uh
+
+[00:52:35.440] I've got another field.
+
+[00:52:37.440] Um
+
+[00:52:38.880] main takeaways
+
+[00:52:40.800] uh
+
+[00:52:42.240] timed data.
+
+[00:52:45.720] timed data
+
+[00:52:55.630] Uh summary.
+
+[00:52:55.640] String array?
+
+[00:53:00.390] Well, the summary can be It can just be
+
+[00:53:00.400] one string.
+
+[00:53:01.760] All right. Okay.
+
+[00:53:06.510] And you can actually see what I was able
+
+[00:53:06.520] to do. It took me a little bit of work
+
+[00:53:08.080] to go get this. And now the model isn't
+
+[00:53:09.640] actually going to go do this cuz it's
+
+[00:53:10.760] like, "All right, I can just reason the
+
+[00:53:11.800] data model." So, it's using the
+
+[00:53:13.360] flexibility
+
+[00:53:14.960] to go do this on its own without really
+
+[00:53:17.080] having to think too hard about this.
+
+[00:53:19.600] Um but
+
+[00:53:21.080] My question I guess and I think the
+
+[00:53:22.280] answer is probably just vibes, but like
+
+[00:53:24.240] how are you deciding whether like what's
+
+[00:53:27.520] what's the real trade-off between having
+
+[00:53:29.320] it do this in the preamble versus having
+
+[00:53:31.400] it do it in the data model?
+
+[00:53:34.320] What's the real trade-off? It's a couple
+
+[00:53:36.520] of things. Um when it does in the
+
+[00:53:38.000] preamble, it's not polluting the data
+
+[00:53:39.600] model yet.
+
+[00:53:40.920] So, it allows it to like just like kind
+
+[00:53:42.280] of have like scratch work when I'm
+
+[00:53:43.680] actually doing work along the way to go
+
+[00:53:45.600] produce some of the results.
+
+[00:53:47.480] And that's the real benefit. Um what I
+
+[00:53:49.880] find is in general Anthropic listens to
+
+[00:53:51.840] instructions a little bit better with
+
+[00:53:53.640] this kind of stuff than OpenAI does. So,
+
+[00:53:55.200] like
+
+[00:53:56.520] I'm going to try to run this again with
+
+[00:53:57.480] like Anthropic.
+
+[00:54:00.240] And it should start sending the data.
+
+[00:54:02.480] Now we're on here. I think we should
+
+[00:54:03.840] have gone another one for email.
+
+[00:54:06.200] Yeah.
+
+[00:54:07.680] Where's the email stuff? Uh
+
+[00:54:09.320] oh, the email London mark. Cuz I I think
+
+[00:54:11.280] I think you probably still have an
+
+[00:54:12.200] error.
+
+[00:54:13.600] Yeah. Um so, now we're actually able to
+
+[00:54:15.480] go do this. It's generating time codes.
+
+[00:54:17.400] It's generating a little bit more
+
+[00:54:18.360] takeaways. It but it still seems a
+
+[00:54:20.120] little very one-dimensional about this,
+
+[00:54:21.680] which is okay.
+
+[00:54:23.000] I might actually be okay with like a
+
+[00:54:24.480] one-level uh summarization here. It's
+
+[00:54:27.120] not It might not be a bad thing.
+
+[00:54:29.680] But I think I got I will get slightly
+
+[00:54:32.360] better key topics and bullet points
+
+[00:54:34.680] along the way
+
+[00:54:36.360] to go do this. Now I I may not want to
+
+[00:54:37.760] call this bullet points. It's like Let's
+
+[00:54:39.240] call this like I mean you assist it like
+
+[00:54:40.720] takeaways.
+
+[00:54:42.800] Takeaways.
+
+[00:54:44.520] Um
+
+[00:54:45.640] description, action items.
+
+[00:54:47.840] Action items,
+
+[00:54:49.560] uh listeners
+
+[00:54:52.160] can Action items listeners
+
+[00:55:02.750] to improve their skills.
+
+[00:55:02.760] And you can see what this does to the
+
+[00:55:03.840] prompt. It changes it to instead of
+
+[00:55:06.040] bullet points, we now have a field
+
+[00:55:07.120] called takeaways. It's an action item
+
+[00:55:08.560] listeners can do to improve their
+
+[00:55:09.680] prompt.
+
+[00:55:10.600] Which I think in general is going to be
+
+[00:55:11.920] very very nice.
+
+[00:55:16.230] So, let's go run this up. I'm also
+
+[00:55:16.240] noticing that the the time data from
+
+[00:55:18.800] Anthropic is uh looks kind of
+
+[00:55:21.480] hallucinated. It's just doing 0 to 15,
+
+[00:55:24.240] 15 to 30, 30 to 45.
+
+[00:55:26.400] That's true. Which is probably not It's
+
+[00:55:27.880] probably not good enough.
+
+[00:55:30.360] Yeah, I agree. Um let's see if it did it
+
+[00:55:33.240] this way.
+
+[00:55:34.600] Yeah, it really just broke it down to
+
+[00:55:35.680] almost like 4-hour chunks. And it's
+
+[00:55:37.320] probably I bet what it's doing is
+
+[00:55:38.600] biasing off the 16-minute videos
+
+[00:55:42.200] are pretty long.
+
+[00:55:46.560] Right. Have time in this synced
+
+[00:55:49.800] to the transcript.
+
+[00:55:52.760] Um and this is again the thing we talk
+
+[00:55:54.320] about all the time is like a tight
+
+[00:55:55.840] iteration iteration loop of like if you
+
+[00:55:57.680] were doing this end-to-end testing or
+
+[00:55:59.080] even with pytest without like dedicated
+
+[00:56:01.200] tools, I think this probably take longer
+
+[00:56:02.800] to kind of fiddle with.
+
+[00:56:04.680] No, it sounds like it's still using
+
+[00:56:06.560] those. So, like it this might just be
+
+[00:56:08.400] like a thing Anthropic is going to do
+
+[00:56:10.600] unless I specifically break down the
+
+[00:56:12.520] transcript into like a shorter chunk.
+
+[00:56:14.880] So, we can just try that.
+
+[00:56:17.240] Oh, you want to try a separate method
+
+[00:56:18.600] that chunks the transcript?
+
+[00:56:21.440] Um
+
+[00:56:22.280] like what just like I don't know. It's
+
+[00:56:24.160] like 45 minutes. I
+
+[00:56:25.840] Well, I'm just going to do like the dumb
+
+[00:56:27.040] thing.
+
+[00:56:28.840] And just like command X.
+
+[00:56:31.720] And just run that.
+
+[00:56:33.440] Um and then see what it does.
+
+[00:56:39.670] And it sounds like a it looks like a
+
+[00:56:39.680] little bit
+
+[00:56:41.040] better
+
+[00:56:42.160] uh along the way,
+
+[00:56:44.360] uh but not too much. So, like let's just
+
+[00:56:46.280] leave it for now, and like we'll come
+
+[00:56:47.640] back to this in a second.
+
+[00:56:53.150] But I think the summarizer looks
+
+[00:56:53.160] significantly better at this point.
+
+[00:56:55.640] Um in terms of what we're going to go
+
+[00:56:57.000] get. So, now what we'll do is
+
+[00:57:00.440] update my UI to show the new
+
+[00:57:09.590] Yeah, exactly. It's kind of like if you
+
+[00:57:09.600] wanted to take do a a pre-processing
+
+[00:57:12.120] step on the transcript and really focus
+
+[00:57:14.440] on splitting it up into time chunks and
+
+[00:57:16.560] maybe like chunk it deterministically
+
+[00:57:19.000] and then pass those chunks into models,
+
+[00:57:20.760] you could do that.
+
+[00:57:22.560] Update my UI to show the new time data
+
+[00:57:24.800] in the
+
+[00:57:26.240] um
+
+[00:57:27.000] in summary.
+
+[00:57:29.320] Um cool. Let's go do this. One thing I
+
+[00:57:31.360] like to do when I go do all this stuff
+
+[00:57:32.680] is like this stuff is done. So, I'm I'm
+
+[00:57:35.040] just going to stage this
+
+[00:57:36.760] and then I'm going to go tell it to go
+
+[00:57:37.880] do this.
+
+[00:57:44.430] And now it should be able to go find
+
+[00:57:44.440] this and the time data should pop up in
+
+[00:57:46.680] there. So, I tried to guide it a little
+
+[00:57:48.280] bit along the way.
+
+[00:57:50.800] Um
+
+[00:57:55.670] and it should hopefully be able to go
+
+[00:57:55.680] ahead and see if we can find it.
+
+[00:58:04.950] Oh, this is the first stop animal. Oh,
+
+[00:58:04.960] it's too big for Claude to read it.
+
+[00:58:08.320] Yeah, because of this test case. So,
+
+[00:58:10.400] what I will do
+
+[00:58:11.120] Yeah.
+
+[00:58:12.240] I'll hold it and split a test case into
+
+[00:58:14.880] a
+
+[00:58:16.360] summarized test.bbl.
+
+[00:58:19.680] Which makes sense. Like we will have
+
+[00:58:22.040] a bunch of issues with long-term test.
+
+[00:58:24.760] Continue. I made the file
+
+[00:58:27.640] smaller.
+
+[00:58:32.310] Um so, now that I can just put my test
+
+[00:58:32.320] in here, now this file should be
+
+[00:58:33.360] actually readable. That's actually one
+
+[00:58:34.680] good thing for me to note in general
+
+[00:58:35.880] from now on because transcripts are
+
+[00:58:37.280] going to be long, I should keep all my
+
+[00:58:38.800] tests in different files. In fact, I
+
+[00:58:40.680] probably want each test to be its own
+
+[00:58:42.360] file because I know transcripts will be
+
+[00:58:44.240] long.
+
+[00:58:46.000] Um otherwise, like my AI code gen stuff
+
+[00:58:47.960] will not be able to do it very well.
+
+[00:58:50.480] Yeah, and it's like another thing that I
+
+[00:58:52.440] think would be cool for I putting up
+
+[00:58:54.600] episode is like how do you make your
+
+[00:58:56.440] code base
+
+[00:58:58.080] easy for AI to use? And there's actually
+
+[00:59:00.160] I think a really important balance
+
+[00:59:01.600] between like if you have lots of little
+
+[00:59:03.720] files, like really small files, then
+
+[00:59:06.280] you're going to end up with like the AI
+
+[00:59:07.800] has to remember to read every single
+
+[00:59:09.560] file and the prompting and the tuning is
+
+[00:59:11.560] going to set it to be a little bit kind
+
+[00:59:13.120] of like balanced in how much it reads.
+
+[00:59:15.440] But if your files are too long, it's
+
+[00:59:17.880] also trained to be a little bit
+
+[00:59:20.440] um
+
+[00:59:21.080] kind of
+
+[00:59:22.520] thrifty with how much of a file it
+
+[00:59:24.600] reads, right? The models the the agents
+
+[00:59:26.440] generally try to read like okay, if I
+
+[00:59:28.200] can find the right 100 lines, I'm just
+
+[00:59:30.320] going to read those. And that can be an
+
+[00:59:32.360] issue as well. And I think we found a
+
+[00:59:33.800] lot of success in
+
+[00:59:36.480] what we're doing is like and also is is
+
+[00:59:38.720] in prompting the model to like make sure
+
+[00:59:40.280] it always reads a thousand or 1500. If
+
+[00:59:43.320] it's a long file, read the whole file
+
+[00:59:45.120] because otherwise it ends up like I'm
+
+[00:59:46.920] sure we've seen this in five coding
+
+[00:59:48.880] where it's like re-implement a method
+
+[00:59:51.080] that already existed somewhere else just
+
+[00:59:52.680] because it didn't read enough of the
+
+[00:59:53.840] file to see that that function was
+
+[00:59:55.200] already there.
+
+[00:59:57.840] Exactly. So now I think it should be
+
+[00:59:59.360] almost done.
+
+[01:00:00.680] Um and it it regen the code which it
+
+[01:00:02.600] didn't have to but it did, that's okay.
+
+[01:00:05.120] Um and now it should be able to update
+
+[01:00:07.320] the UI as well.
+
+[01:00:15.870] Um
+
+[01:00:15.880] this is only part of my five point of
+
+[01:00:17.280] time annoying I don't I can't tell it
+
+[01:00:18.480] all the stuff. I think it's all done.
+
+[01:00:20.400] Cool.
+
+[01:00:21.560] Let's go back to the UI and see what
+
+[01:00:23.000] that
+
+[01:00:30.630] So now that we have this, now we can
+
+[01:00:30.640] just
+
+[01:00:31.400] re-summarize.
+
+[01:00:33.960] Oh, failed.
+
+[01:00:39.870] Um oh, I know how my API key burning
+
+[01:00:39.880] topic. Give me one second. Let me plug
+
+[01:00:41.880] that in really fast.
+
+[01:00:51.870] It would be quite funny if um
+
+[01:00:51.880] I did not realize but I was secretly
+
+[01:00:53.600] just sharing all my API keys anyway cuz
+
+[01:00:55.640] I had the screen up. But I think I have
+
+[01:00:57.920] my other screen.
+
+[01:01:09.670] Um
+
+[01:01:09.680] dot end.
+
+[01:01:14.150] And
+
+[01:01:14.160] my API key.
+
+[01:01:28.190] Nobody's back in again.
+
+[01:01:28.200] And now
+
+[01:01:29.400] if I have some more time
+
+[01:01:31.760] and we summarize, it is processing.
+
+[01:01:35.760] And once it's processing, we will be
+
+[01:01:38.280] able to go see everything soon.
+
+[01:01:43.670] Um
+
+[01:01:43.680] while we're going to go do this, um why
+
+[01:01:45.600] don't we use frameworks here? Um I want
+
+[01:01:47.640] to show you the code that we're actually
+
+[01:01:49.160] using to call the AI models just to tell
+
+[01:01:50.920] you an idea of why we don't use
+
+[01:01:51.920] frameworks.
+
+[01:01:53.120] Um
+
+[01:01:55.600] I actually hate this Python code.
+
+[01:01:58.720] The fact that it consumes an editor slot
+
+[01:02:00.400] is really annoying.
+
+[01:02:02.920] Um but when I go down into this
+
+[01:02:06.280] all I'm really doing here is this.
+
+[01:02:09.080] I'm just calling a method that calls
+
+[01:02:10.480] summarize video.
+
+[01:02:12.040] The summarize video is just a function
+
+[01:02:14.040] that I've already defined that takes in
+
+[01:02:15.240] a transcript, takes out a title, and
+
+[01:02:16.560] spits out a data model. The fact that
+
+[01:02:18.440] this uses an LLM doesn't really matter.
+
+[01:02:21.480] I don't really need a framework to go
+
+[01:02:23.400] deal with this.
+
+[01:02:25.040] Um in order to orchestrate it, all I do
+
+[01:02:27.720] at this point is
+
+[01:02:30.400] once the summary is done, I feed the
+
+[01:02:32.120] summary into these three things, and I
+
+[01:02:33.600] just call async io.gather it.
+
+[01:02:36.480] So, like the benefit that I'm getting
+
+[01:02:37.680] from a framework just isn't worth the
+
+[01:02:39.160] debugging headache that I would have to
+
+[01:02:40.960] deal with.
+
+[01:02:42.160] All I really want is I just want to have
+
+[01:02:43.680] functions in after one after another.
+
+[01:02:46.920] And this is one of the like the points I
+
+[01:02:48.280] think we make a lot in um in 12 factor
+
+[01:02:50.760] agents is basically the idea that like
+
+[01:02:52.400] code is already a directed graph, and if
+
+[01:02:55.320] you really like thinking in graphs, you
+
+[01:02:57.040] can use frameworks that give you kind of
+
+[01:02:58.720] this like nodes and edge edges
+
+[01:03:00.320] structure. But what you're looking at,
+
+[01:03:02.120] can you go back to that real quick?
+
+[01:03:04.440] What you're looking at on the screen
+
+[01:03:07.200] is is a DAG. It's like do this thing,
+
+[01:03:10.240] and then fan it out, and do these
+
+[01:03:11.680] things, and okay. All right, I
+
+[01:03:14.080] go back to the code real quick? You do
+
+[01:03:15.920] this thing and then
+
+[01:03:20.790] Um
+
+[01:03:20.800] You You do this thing and then you fan
+
+[01:03:22.240] it out to these three things. And then
+
+[01:03:23.720] when they're all done, then you go to
+
+[01:03:24.920] another step. Like code is already a way
+
+[01:03:26.920] of expressing directed graphs.
+
+[01:03:29.200] Um and if you are able to write code and
+
+[01:03:32.640] do the basics and get maybe get help
+
+[01:03:34.640] from a model in writing the code itself,
+
+[01:03:37.040] then um you should leave yourself open
+
+[01:03:40.080] to whatever approaches and structures
+
+[01:03:42.400] and like now because we control all this
+
+[01:03:44.480] code, if we wanted to like add another
+
+[01:03:46.120] step here that is pre-summary and then
+
+[01:03:48.160] pass the output of that in in addition
+
+[01:03:50.160] to our summary here, we have the
+
+[01:03:52.120] flexibility and the freedom to kind of
+
+[01:03:53.600] architect this however we want. And by
+
+[01:03:55.960] doing weird custom stuff, that's kind of
+
+[01:03:58.800] how you find the boundary of what the
+
+[01:04:01.000] model is capable of and kind of push the
+
+[01:04:03.400] limits of what is possible with AI. Um
+
+[01:04:06.960] if you're just kind of like using a
+
+[01:04:08.400] generic approach, you're going to be
+
+[01:04:10.280] your quality is going to be capped at,
+
+[01:04:12.080] you know, whatever everyone else using
+
+[01:04:14.080] the generic approach is able to do.
+
+[01:04:15.680] Versus if you open the box and start
+
+[01:04:17.400] tinkering with the wires, you may be
+
+[01:04:18.840] able to get better results.
+
+[01:04:21.600] Yeah, exactly. And then the other really
+
+[01:04:23.000] thing important thing to know is like
+
+[01:04:24.720] most frameworks don't actually give you
+
+[01:04:26.080] like full fundamental control of the
+
+[01:04:27.880] full full full prompt. They add some
+
+[01:04:30.240] preambles, they modify how your tools
+
+[01:04:32.760] are being presented because
+
+[01:04:34.600] part of standardizing things, like
+
+[01:04:36.280] passing between open and dropping is
+
+[01:04:37.840] standardizing something.
+
+[01:04:39.800] And while it's true that you may want to
+
+[01:04:41.440] go do that, the problem is the
+
+[01:04:43.400] fundamental thing that you're passing
+
+[01:04:44.520] into the model is these tokens. Like
+
+[01:04:46.200] these tokens Oh, it's going to take
+
+[01:04:47.200] That's going to take forever to render.
+
+[01:04:49.000] I [ __ ] up. Um
+
+[01:04:51.600] Uh running a model on tokenizer in a
+
+[01:04:53.760] browser is not a good call. Uh on very
+
+[01:04:55.920] very long text. But at some point you're
+
+[01:04:57.640] going to call the model in some way and
+
+[01:04:59.600] you're going to want a model to see
+
+[01:05:00.840] those exact tokens.
+
+[01:05:02.680] Your quality is strictly bound by the
+
+[01:05:05.080] tokens you send in and out of the model.
+
+[01:05:06.720] The only thing that configures what the
+
+[01:05:08.400] model spits out is the tokens in and
+
+[01:05:09.920] tokens out.
+
+[01:05:11.800] So, you can't control every token out
+
+[01:05:13.360] there, you can't get it. So, I think
+
+[01:05:14.400] we've had some people, for example, that
+
+[01:05:15.680] live in like other countries.
+
+[01:05:17.440] And like if they if you use a library
+
+[01:05:19.040] and they build a pipeline that's
+
+[01:05:19.920] supposed to speak, let's say, Japanese
+
+[01:05:21.560] or like um Persian or some uh or any
+
+[01:05:24.160] other language along the way, like
+
+[01:05:25.160] Hindi, anything.
+
+[01:05:26.880] If the library injects a lot of English,
+
+[01:05:29.640] the model's going to speak in English
+
+[01:05:31.800] um because it thinks it's allowed to do
+
+[01:05:34.120] that.
+
+[01:05:35.320] And it's really important that if you
+
+[01:05:36.960] have control, you can actually have that
+
+[01:05:38.680] access along the full line.
+
+[01:05:41.640] Hopefully that answered the question,
+
+[01:05:42.640] VJ.
+
+[01:05:48.070] Um and now I think I cancel this again.
+
+[01:05:48.080] Okay.
+
+[01:05:49.520] Third time's the charm.
+
+[01:05:50.040] Cool. What do we want to get through
+
+[01:05:51.200] before we kind of wrap for today and go
+
+[01:05:53.600] to questions?
+
+[01:05:58.750] Um I think we can go to questions. I'm
+
+[01:05:58.760] just going to go I showed kind of how to
+
+[01:06:00.160] make the summary summary slightly better
+
+[01:06:02.160] by going to go down this road. I'm I
+
+[01:06:04.440] want The last thing I was going to do
+
+[01:06:05.760] was actually feed in the email and the
+
+[01:06:07.240] transcript to the email to make it
+
+[01:06:08.600] slightly better, as well.
+
+[01:06:10.200] So, I'll try and get that wired up. And
+
+[01:06:11.560] if I don't get it wired up on the call,
+
+[01:06:12.920] I'll do it afterwards and go send out
+
+[01:06:14.520] the content, as well, so people can poke
+
+[01:06:15.960] around with the prompt. But you saw the
+
+[01:06:17.520] iteration loop of what I do.
+
+[01:06:19.440] I take the prompt. Once I have some
+
+[01:06:21.480] data, I literally just go ahead and like
+
+[01:06:23.240] make a test case from real data cuz I
+
+[01:06:25.360] need to run the pipeline once. I don't
+
+[01:06:27.360] want to have fake data. Fake data is the
+
+[01:06:29.160] worst thing I can do because if I use AI
+
+[01:06:31.000] synthetic data, it's it's going to work
+
+[01:06:33.360] and then it won't work for my real
+
+[01:06:34.600] problem. So, I'll just run the pipeline
+
+[01:06:36.520] once, pay the cost, download the test
+
+[01:06:38.800] case, and then I'll just iterate on the
+
+[01:06:40.280] test case alone until I'm satisfied.
+
+[01:06:43.360] Then have the AI model go fix all the
+
+[01:06:45.520] downstream uh pipelines along the way.
+
+[01:06:49.080] Yeah, and this is kind of what we did in
+
+[01:06:50.080] the emails episode, too, right? Which is
+
+[01:06:51.640] like push real data push a little bit of
+
+[01:06:53.440] real data through the pipeline and then
+
+[01:06:55.120] go look at it by hand and find, okay,
+
+[01:06:56.720] this would make a good test case or this
+
+[01:06:58.520] is a good example of something the
+
+[01:06:59.960] model's not good at. And like part of
+
+[01:07:02.080] baking golden files is about like, oh,
+
+[01:07:04.200] this is a thing it did right and I like
+
+[01:07:05.680] everything about this. Let's cement that
+
+[01:07:07.880] as a test case. So, as I change things,
+
+[01:07:09.960] I know that that one will continue to
+
+[01:07:11.560] work. And then also, hey, let me go find
+
+[01:07:13.960] a thing that doesn't work and let me go
+
+[01:07:15.720] take that down and put it on the
+
+[01:07:16.760] workbench and tinker with the prompt
+
+[01:07:18.240] generator right on it.
+
+[01:07:20.040] Exactly. And I think we might go look at
+
+[01:07:21.520] the new summaries. Like, we've generated
+
+[01:07:22.880] quite a few summaries at this point. I
+
+[01:07:24.160] think this is the most recent one.
+
+[01:07:26.280] Well, it's clearly generating time codes
+
+[01:07:27.680] and everything else. So, the fact that
+
+[01:07:29.120] the UI isn't rendering it means that
+
+[01:07:30.680] Cloud Code just messed up in the UI and
+
+[01:07:32.440] didn't render this correctly. So, I just
+
+[01:07:33.800] need to go debug that and figure this
+
+[01:07:35.280] out.
+
+[01:07:36.160] But, it's really easy for me to like,
+
+[01:07:37.200] cool, the time codes look good and this
+
+[01:07:38.920] is this might be good enough for the
+
+[01:07:40.240] next step of the pipeline.
+
+[01:07:42.440] So, it allows me to just debug really,
+
+[01:07:44.280] really quickly to see what's actually
+
+[01:07:45.840] happening under the hood.
+
+[01:07:47.880] Um with that, let's break for questions
+
+[01:07:50.080] really fast. Uh and if we don't have
+
+[01:07:51.680] any, we'll just keep eye coding for like
+
+[01:07:53.280] next 10 minutes or so.
+
+[01:08:00.670] Um
+
+[01:08:00.680] What do you think about tools like the
+
+[01:08:01.920] Vercel AI SDK that still give you all
+
+[01:08:04.600] that flexibility to do whatever you
+
+[01:08:05.880] want, but also give you tons of helpful
+
+[01:08:07.480] stuff for streaming and tools and UI and
+
+[01:08:09.400] React integration and other helpers and
+
+[01:08:11.080] utilities?
+
+[01:08:13.280] What do I personally think about the
+
+[01:08:14.760] Vercel AI SDK? Um
+
+[01:08:18.000] I think the Vercel AI SDK is okay, to be
+
+[01:08:20.520] completely honest.
+
+[01:08:22.040] Um I think the biggest problem that I
+
+[01:08:24.680] had with the Vercel AI SDK is that one,
+
+[01:08:27.720] it's too deeply tied uh to a lot of
+
+[01:08:30.040] native Vercel stuff. And two, I don't
+
+[01:08:32.279] actually think it captures the nuance of
+
+[01:08:33.880] what streaming actually is.
+
+[01:08:36.160] Um a lot of people think of streaming uh
+
+[01:08:37.920] for structured data to be trivial, uh
+
+[01:08:40.120] but it's actually a really, really,
+
+[01:08:41.759] really hard problem. And I'll show you
+
+[01:08:43.520] why it's hard.
+
+[01:08:45.080] Um and why you can't actually
+
+[01:08:46.839] why it's hard, I I wrote the tool
+
+[01:08:48.640] streaming for VL LM.
+
+[01:08:51.520] So, I like I I I'm familiar with I've
+
+[01:08:53.440] actually contributed to the streaming in
+
+[01:08:54.880] the AI SDK, too.
+
+[01:08:56.560] Um I guess like I I I've used it on
+
+[01:08:59.160] projects where I've never used Vercel at
+
+[01:09:01.040] all. Like, it doesn't force you into
+
+[01:09:02.480] Vercel's ecosystem. It's actually like
+
+[01:09:04.279] totally independent of their platform.
+
+[01:09:06.120] Yeah.
+
+[01:09:07.920] So, I was just curious like cuz it gives
+
+[01:09:09.600] you lots of great stuff for like
+
+[01:09:11.680] generating like if you're doing like
+
+[01:09:13.640] tool calls or structure generation, it
+
+[01:09:15.400] lets you stream that object to the you
+
+[01:09:18.400] know, your React app or whatever and get
+
+[01:09:19.880] a hook so that you can see okay, well,
+
+[01:09:21.400] this is this field has been generated
+
+[01:09:23.120] and now this field has been generated.
+
+[01:09:24.520] And so, you can like make your user
+
+[01:09:26.279] interface interactive as um you know,
+
+[01:09:29.240] like it for example, if you're
+
+[01:09:30.319] generating a complicated object, you can
+
+[01:09:31.960] make your time to interactivity and time
+
+[01:09:33.520] to user feedback faster. Um but I like
+
+[01:09:37.000] it's the one the one one thing it does
+
+[01:09:39.040] force you into is using Zod. Like, it's
+
+[01:09:40.759] very opinionated about using Zod for
+
+[01:09:42.839] schema definition, which is fine. Zod's
+
+[01:09:44.400] a great library. But like I love all of
+
+[01:09:47.000] the great things that BAML gives you for
+
+[01:09:48.480] that. So, I guess like my question is
+
+[01:09:50.680] like
+
+[01:09:51.720] more along the lines of like is that do
+
+[01:09:53.359] you ever see there being like some type
+
+[01:09:54.760] of integration there of of using like
+
+[01:09:56.440] BAML with
+
+[01:09:58.000] We actually have a BAML integration with
+
+[01:10:00.200] Vercel. Um
+
+[01:10:01.640] all you have to do is like So, BAML
+
+[01:10:03.760] under the hood
+
+[01:10:04.400] Next.js, right?
+
+[01:10:06.560] Yeah, we have a function like summarize
+
+[01:10:07.880] video. So, what you can do in your VS in
+
+[01:10:10.320] your code directly like let's say you
+
+[01:10:11.880] wanted to do this all in your front-end
+
+[01:10:13.080] code.
+
+[01:10:14.080] I didn't actually do this here, but I
+
+[01:10:15.240] could.
+
+[01:10:16.640] Um
+
+[01:10:18.160] we also do the thing for you where we
+
+[01:10:20.000] just give you a hook that you can just
+
+[01:10:21.360] use.
+
+[01:10:22.440] import um
+
+[01:10:25.760] uh
+
+[01:10:27.040] Let me do this.
+
+[01:10:28.120] from at
+
+[01:10:29.760] BAML client / react
+
+[01:10:32.120] / hooks.
+
+[01:10:33.840] So, we have a function here called
+
+[01:10:34.880] summarize video. So, you got to use
+
+[01:10:36.280] summarize video hook.
+
+[01:10:38.520] And then what you can do is const
+
+[01:10:42.000] equals use summarize video.
+
+[01:10:44.800] And then you can have like the data as a
+
+[01:10:47.080] summary.
+
+[01:10:48.240] Or you can have a mutate function and
+
+[01:10:50.080] all the other state associated with it
+
+[01:10:51.400] and you can just go call this with
+
+[01:10:52.720] whatever data you want.
+
+[01:10:54.600] The summary is guaranteed to be a
+
+[01:10:56.960] version of this type along the way.
+
+[01:10:59.840] So, you can do like And the
+
+[01:11:02.360] And the partial type is the thing that
+
+[01:11:04.200] has like based on your bambo code of
+
+[01:11:07.000] like what's what's nullable in a stream
+
+[01:11:09.320] basically, right?
+
+[01:11:11.280] Exactly. So, you call like mutate.
+
+[01:11:14.440] Um and when you call mutate, you get
+
+[01:11:16.120] like a stream object along this um along
+
+[01:11:18.960] the way, but the data object just
+
+[01:11:20.320] updates along the way.
+
+[01:11:21.960] So, data become like a
+
+[01:11:22.960] okay, I didn't know y'all had that. So.
+
+[01:11:26.320] So, you and and like when you do summary
+
+[01:11:28.400] dot, you get like bullet points and you
+
+[01:11:29.840] can notice that all these things get
+
+[01:11:30.960] like optionalized along the way.
+
+[01:11:33.240] But, what I could do is I could say even
+
+[01:11:35.000] during streaming, I want to guarantee
+
+[01:11:36.560] that video summary key point is going to
+
+[01:11:38.960] be
+
+[01:11:40.480] I actually want to guarantee that hey,
+
+[01:11:42.080] when I go send the video summary, I want
+
+[01:11:44.040] key points individually be stream.done.
+
+[01:11:47.240] The The key points field has to be done.
+
+[01:11:50.840] So, or I I can do like
+
+[01:11:51.880] would mean that like this the hook would
+
+[01:11:54.080] not start streaming data until the key
+
+[01:11:56.800] points were all processed and then you
+
+[01:11:58.840] would start getting the partial object
+
+[01:12:00.440] for all the rest of the fields. And the
+
+[01:12:02.240] main takeaways is not. So, the main
+
+[01:12:03.880] takeaway is becomes guaranteed to be a
+
+[01:12:05.440] string array.
+
+[01:12:07.160] Versus if you're trivially streaming,
+
+[01:12:09.120] you now have to go do this and now it
+
+[01:12:10.880] becomes like a very complicated
+
+[01:12:11.960] Everything is Now, everything everything
+
+[01:12:13.720] is nullable versus hey, I guarantee the
+
+[01:12:16.080] time data and main takeaways will always
+
+[01:12:17.960] be true before I hand it to my renderer.
+
+[01:12:20.920] When I stream just this array, this each
+
+[01:12:23.320] string should be individually streamed.
+
+[01:12:25.080] And now, you got to say a different
+
+[01:12:26.320] type, you get an array. Oh, whoops.
+
+[01:12:29.440] That's what I'm doing in a second.
+
+[01:12:31.440] You get an array of like
+
+[01:12:32.360] get an
+
+[01:12:34.280] This should actually work. I'm surprised
+
+[01:12:35.680] that this doesn't work. Maybe the code
+
+[01:12:36.840] gen is wrong for this.
+
+[01:12:38.960] Let me check one more time.
+
+[01:12:40.560] Bullet point.
+
+[01:12:41.960] We're actually in the middle like
+
+[01:12:43.040] redefining our types. Some stuff works
+
+[01:12:44.440] with go, which requires perfectly strict
+
+[01:12:46.360] types and doesn't allow for any
+
+[01:12:48.200] flexibility. So, we're just finding a
+
+[01:12:49.680] couple bugs in there.
+
+[01:12:51.080] But, the idea is like you you have when
+
+[01:12:52.640] you're streaming, you actually live in a
+
+[01:12:53.840] duality of type systems, and that is the
+
+[01:12:56.360] part that people really miss out on. You
+
+[01:12:57.960] really have two type trees you have to
+
+[01:12:59.360] navigate, which is really, really
+
+[01:13:01.160] complicated.
+
+[01:13:02.640] So, having utilities, like you can
+
+[01:13:04.320] actually use TypeScript's partial type
+
+[01:13:05.880] to go do that.
+
+[01:13:07.400] So, then when you go ahead and actually
+
+[01:13:08.520] build something out, you want to go
+
+[01:13:09.720] build like really interactive component,
+
+[01:13:13.200] doing this should be trivial.
+
+[01:13:17.830] Where I built a React component that
+
+[01:13:17.840] analyzes and does this, but you can't
+
+[01:13:19.960] really do that because this is working
+
+[01:13:21.760] off of two type trees.
+
+[01:13:23.560] And that is the hard part. And making
+
+[01:13:25.240] that easy, I think, is something that
+
+[01:13:26.720] Vercel's AI SDK doesn't actually do when
+
+[01:13:28.840] you get to real complicated AI,
+
+[01:13:31.440] real complicated JSON structures.
+
+[01:13:33.880] Because if you have recursive types, you
+
+[01:13:35.240] have nested objects, you can't define
+
+[01:13:37.240] that well in Zod. You really need two
+
+[01:13:39.320] Zod schemas to do that correctly.
+
+[01:13:42.720] Okay, thanks.
+
+[01:13:44.960] Damn.
+
+[01:13:50.630] Um that was that was that was uh welcome
+
+[01:13:50.640] that's that's why we call it advanced AI
+
+[01:13:52.240] engineering, folks.
+
+[01:13:54.640] That was sick.
+
+[01:13:56.960] Um
+
+[01:14:01.470] There's another question. Uh you want to
+
+[01:14:01.480] talk about the email optimization? Yeah,
+
+[01:14:02.960] I want to figure out why that's not
+
+[01:14:04.120] working, but like what we can do here is
+
+[01:14:05.640] like we can just make this test case
+
+[01:14:06.920] really fast. I think Abhimanyu had the
+
+[01:14:08.800] question. Do you want to summarize this
+
+[01:14:10.200] question for me, Dex, while I get this
+
+[01:14:11.480] working?
+
+[01:14:13.200] Yeah.
+
+[01:14:13.560] No, I don't think the question like when
+
+[01:14:15.480] he mentioned about the AI SDK, I felt
+
+[01:14:18.080] that we while we were stripping Bolt
+
+[01:14:20.600] new, which uses AI SDK,
+
+[01:14:23.360] we kind of
+
+[01:14:25.320] touched upon that part of the
+
+[01:14:28.520] the ecosystem, and I personally found
+
+[01:14:31.400] out that there's no way to control what
+
+[01:14:35.480] the LLM produces out when you use Vercel
+
+[01:14:38.520] SDK versus when you use BAML. So,
+
+[01:14:42.760] with Bolt new, the problem always
+
+[01:14:44.640] existed that the model the LLM could
+
+[01:14:47.640] generate anything and worse still,
+
+[01:14:49.200] there's no way to control it. Um so, I
+
+[01:14:52.560] was just want to
+
+[01:14:54.240] object generation?
+
+[01:14:56.000] What?
+
+[01:14:57.200] You mean like structured object
+
+[01:14:58.480] generation?
+
+[01:14:59.800] Like generating Yeah, it totally has
+
+[01:15:02.080] that. It's like generate object and
+
+[01:15:03.920] stream objects. You just give it a a Zod
+
+[01:15:05.720] schema and tell it generate an object.
+
+[01:15:08.160] No, but like the problem is you can't
+
+[01:15:10.080] evaluate the output of like uh
+
+[01:15:13.240] imagine you have you're generate
+
+[01:15:14.920] generating a prompt. How do you
+
+[01:15:18.080] uh
+
+[01:15:20.000] how do you make sure that the
+
+[01:15:23.960] the response is is sort of consistent as
+
+[01:15:27.360] in like um
+
+[01:15:29.680] what we did was basically try to give
+
+[01:15:32.520] examples of uh prompt engineering to the
+
+[01:15:36.800] LLM itself while using the AI SDK. I
+
+[01:15:40.680] didn't see a way of uh the SDK
+
+[01:15:43.720] controlling the response generated from
+
+[01:15:46.680] the LLM in in a way that you can do with
+
+[01:15:49.560] BAML.
+
+[01:15:51.000] Like if you if you get what I mean.
+
+[01:15:54.320] Yeah, no. The biggest I think a lot of
+
+[01:15:55.800] you asked like why can't you use
+
+[01:15:56.960] structured generation? I think that's
+
+[01:15:58.200] what Kyle's question here is, like why
+
+[01:15:59.560] doesn't that just work? The reason that
+
+[01:16:01.320] structured generation really doesn't
+
+[01:16:02.640] work fundamentally is that like for
+
+[01:16:04.400] example, check out this email. This
+
+[01:16:06.080] email that we have is literally
+
+[01:16:07.400] outputting JSON with escape characters
+
+[01:16:09.000] and new lines.
+
+[01:16:10.800] That itself is going to lead to like a
+
+[01:16:12.800] bias in the model. So, what I really
+
+[01:16:14.480] want to do
+
+[01:16:15.720] is I want to somehow tell this draft to
+
+[01:16:17.400] say uh description, use triple quote
+
+[01:16:20.640] strings
+
+[01:16:22.280] uh for multi-line strings.
+
+[01:16:28.230] And now when I go run this, it doesn't
+
+[01:16:28.240] generate escape characters anymore. The
+
+[01:16:30.120] email will just be better because
+
+[01:16:31.960] instead of sampling for the best token
+
+[01:16:33.760] that is possible, I allow the model to
+
+[01:16:35.560] output the best token it actually thinks
+
+[01:16:37.400] is the best.
+
+[01:16:39.360] And that makes a huge difference in
+
+[01:16:40.640] quality for the model. Because when
+
+[01:16:42.280] you're not doing this, Dextra had a
+
+[01:16:43.560] great great visual on this last time,
+
+[01:16:46.280] which was basically saying something
+
+[01:16:47.440] like this, which is when the model goes
+
+[01:16:49.400] and generates a this is the token it
+
+[01:16:50.720] wants it wants to generate a new line
+
+[01:16:52.360] character,
+
+[01:16:53.560] and then there are other characters that
+
+[01:16:54.920] want to go generate like oh, a backslash
+
+[01:16:57.120] or a backslash n or something else along
+
+[01:16:58.920] the way.
+
+[01:16:59.960] When you go do this, when you do
+
+[01:17:01.440] structured generation, you basically say
+
+[01:17:02.600] you are not allowed to generate the new
+
+[01:17:03.800] line character cuz you're inside of a
+
+[01:17:05.080] quotation mark. That's invalid JSON. And
+
+[01:17:07.360] you invalidate those tokens.
+
+[01:17:09.200] We did this a lot in computer vision in
+
+[01:17:10.600] the past the last 10 years where you
+
+[01:17:11.960] like tried to outsmart the model.
+
+[01:17:14.440] It turns out just like let the model do
+
+[01:17:16.040] its thing. The only reason that we have
+
+[01:17:17.920] to do structured generation with JSON is
+
+[01:17:19.800] because we don't have a better parser.
+
+[01:17:21.440] If we had a better schema that we could
+
+[01:17:22.880] go and like parse,
+
+[01:17:24.200] then it would just do the trick for us
+
+[01:17:25.480] and we could let the model do whatever
+
+[01:17:26.600] it wanted.
+
+[01:17:28.240] Yeah, JSON was like totally the wrong
+
+[01:17:29.920] decision for for structured generation
+
+[01:17:32.120] just in general. Like JSON should never
+
+[01:17:34.000] have been the primitive for that. It
+
+[01:17:35.120] should have been like Toml or YAML or
+
+[01:17:36.760] something or it's much more like
+
+[01:17:38.120] Well, those are other
+
+[01:17:39.400] XML, right?
+
+[01:17:41.640] Well, you can't parse XML.
+
+[01:17:44.120] Toml and YAML have the same problems.
+
+[01:17:45.720] Toml and YAML are basically
+
+[01:17:46.800] indiscernible for where they start and
+
+[01:17:48.760] their ambiguity as a starting point is
+
+[01:17:50.600] really really hard to misclarify. Cuz
+
+[01:17:53.240] almost every file is a valid YAML file.
+
+[01:17:56.800] So, parsing that is virtually impossible
+
+[01:17:59.000] because there's not there's not enough
+
+[01:18:00.480] constraints on it. XML has a similar
+
+[01:18:02.840] problem where you run into escape
+
+[01:18:03.920] characters with XML and like the actual
+
+[01:18:06.000] way that you do XML is so nasty. Have
+
+[01:18:08.240] you seen how JSON looks in XML? Like
+
+[01:18:10.520] type systems in XML don't really make
+
+[01:18:12.200] sense. They're too verbose.
+
+[01:18:14.000] So, it's not that there's one answer for
+
+[01:18:15.960] everything. It's just that you want the
+
+[01:18:17.520] flexibility as the app designer to
+
+[01:18:19.640] choose what you want. If your if your
+
+[01:18:21.520] goal as a developer is to generate HTML
+
+[01:18:23.520] code, XML will be a bad format for you.
+
+[01:18:26.400] Guaranteed. Definition.
+
+[01:18:27.920] All right. All right. All right. I'm
+
+[01:18:29.960] going to pause this on the structured
+
+[01:18:31.240] output. This is a dope deep dive. We
+
+[01:18:33.040] have 7 minutes left and we have some
+
+[01:18:34.520] really good questions in the chat. I we
+
+[01:18:36.760] have Derek has a hand raised.
+
+[01:18:39.840] And then I really like Sean's question
+
+[01:18:41.160] as well, which is like how do you keep
+
+[01:18:42.560] your database schemas consistent with
+
+[01:18:44.480] your Babel generated types?
+
+[01:18:46.720] I think that one is quick, right? We're
+
+[01:18:48.200] just dumping JSON B into the database
+
+[01:18:50.200] and and the front end is parsing it
+
+[01:18:51.680] using the Babel library.
+
+[01:18:54.040] But then I want to hear Derek's question
+
+[01:18:55.680] as well.
+
+[01:18:57.160] Literally the types that I save are just
+
+[01:18:59.040] text and I think I just do JSON. I think
+
+[01:19:00.800] I have to actually have a This is not
+
+[01:19:02.240] the latest table.
+
+[01:19:03.600] I had to do some migrations.
+
+[01:19:05.840] Uh where is my migrations table?
+
+[01:19:09.400] Um I added
+
+[01:19:11.840] all of these became JSON B's. They're
+
+[01:19:13.400] just JSON B's. So I just open and close
+
+[01:19:15.240] JSON B files.
+
+[01:19:16.760] Uh JSON B columns along the way. And
+
+[01:19:19.240] then I just cast it because I know it's
+
+[01:19:20.680] correct. The hard part about this is
+
+[01:19:22.440] versioning tables over time, but this is
+
+[01:19:24.160] the same problem that you'd have at
+
+[01:19:25.200] versioning at any other point in your
+
+[01:19:26.520] code base.
+
+[01:19:27.760] Um
+
+[01:19:28.520] we will have a solution for that very
+
+[01:19:29.600] soon, actually. It's going to be really
+
+[01:19:30.760] exciting. That's a separate
+
+[01:19:32.040] conversation.
+
+[01:19:33.760] Uh versioning schemas is really, really
+
+[01:19:35.360] hard.
+
+[01:19:37.680] All right, Derek, what you got?
+
+[01:19:43.310] Just a quick question. You've made me
+
+[01:19:43.320] think um earlier when you were doing the
+
+[01:19:45.320] summarize, I had put a suggestion, maybe
+
+[01:19:47.440] synthesize all of the variable names,
+
+[01:19:49.840] functions aside. Really, it's that first
+
+[01:19:51.920] sentence where you say summarize this.
+
+[01:19:54.720] But then now I was first going to ask
+
+[01:19:56.720] about evals and like an approach if you
+
+[01:19:59.240] wanted to try a few different versions
+
+[01:20:01.760] of that sentence, how would you eval it?
+
+[01:20:04.480] But then now I'm thinking it's more
+
+[01:20:06.440] complex because synthesis because of the
+
+[01:20:09.000] way you've blocked this into those time
+
+[01:20:11.520] chunks,
+
+[01:20:12.600] then it may not even, you know, like uh
+
+[01:20:14.280] synthesize across them. So if this
+
+[01:20:16.240] question's making any sense, how would
+
+[01:20:18.800] you handle that kind of eval it given
+
+[01:20:21.360] that you've taken a chunk approach?
+
+[01:20:24.960] Well, I would just accept the pipeline.
+
+[01:20:28.040] Like I think
+
+[01:20:28.760] Chunked meaning the chunked meaning the
+
+[01:20:30.520] transcript time chunks, so like now
+
+[01:20:33.000] you'd have to look across those chunks
+
+[01:20:34.880] to do a synthesis as opposed to
+
+[01:20:36.560] summarizing each one.
+
+[01:20:38.400] That that's what I meant. So I hopefully
+
+[01:20:40.200] I'm making sense with my question.
+
+[01:20:41.680] Yeah.
+
+[01:20:42.960] No, that Okay, so this was I mean we
+
+[01:20:44.320] haven't actually I don't think we've
+
+[01:20:45.120] actually done that yet. Um but the
+
+[01:20:47.120] proposal was like, "Hey, we could make
+
+[01:20:48.480] the transcript a little bit shorter."
+
+[01:20:49.800] And that may actually not be uh be the
+
+[01:20:52.200] right idea.
+
+[01:20:53.840] Um Yeah, I probably won't do it
+
+[01:20:55.840] basically have us
+
+[01:20:57.600] You basically have to have a separate
+
+[01:20:58.640] eval that is like, "Okay, based on our
+
+[01:21:00.480] chunking prompt and our chunking
+
+[01:21:02.360] algorithm and how do we take that those
+
+[01:21:04.040] chunks and pass it back in?" We're no
+
+[01:21:05.440] longer evaluating just input output
+
+[01:21:08.040] pairs. We're now evaluating kind of a
+
+[01:21:10.400] few steps of the pipeline, which is also
+
+[01:21:12.160] really important to do, right? The best
+
+[01:21:13.360] eval is the one that actually tell runs
+
+[01:21:14.880] your pipeline end to end and tells you
+
+[01:21:17.280] if it's still working. And then you can
+
+[01:21:19.360] go refine down into the smaller level
+
+[01:21:21.720] one smaller chunks of your pipeline and
+
+[01:21:23.280] then individual prompts to narrow down
+
+[01:21:25.960] like, "Okay, what's the thing that broke
+
+[01:21:27.400] this?" But um I think the answer is
+
+[01:21:30.280] like, that's probably not what we would
+
+[01:21:32.160] do.
+
+[01:21:34.400] That was just a proposal like, because
+
+[01:21:35.720] you have control of the pipeline you can
+
+[01:21:37.040] do whatever you want.
+
+[01:21:41.750] I don't know if that's a great answer.
+
+[01:21:41.760] A thumbs up. All right, we'll take it.
+
+[01:21:44.800] Well, so let's actually make the email
+
+[01:21:46.400] better really fast by the way while I'm
+
+[01:21:47.880] here.
+
+[01:21:49.480] Uh email example, we're going to do
+
+[01:21:51.680] this.
+
+[01:21:52.640] Um an example an example create email.
+
+[01:21:56.200] What's this?
+
+[01:21:58.000] So I think his question is now that we
+
+[01:21:59.280] have an automated pipeline or they are
+
+[01:22:00.920] we are they going to get the video
+
+[01:22:02.680] upload now instead of Friday?
+
+[01:22:05.200] No, um because we're going to make the
+
+[01:22:08.200] pipeline good. I think one of the things
+
+[01:22:09.640] I hate as an engineer is I
+
+[01:22:11.320] [ __ ] hate emails. I want emails to be
+
+[01:22:13.680] useful or not at all received. Uh so
+
+[01:22:15.920] Dexter and I actually do some good work
+
+[01:22:17.320] to actually go edit the pipeline to make
+
+[01:22:18.760] the emails good. So like in this case I
+
+[01:22:21.040] literally had an example of here's what
+
+[01:22:22.760] it is.
+
+[01:22:23.880] Fed in the example and it's going to go
+
+[01:22:25.800] ahead and
+
+[01:22:27.560] um
+
+[01:22:29.400] And it's going to go ahead and now read
+
+[01:22:30.360] the prompt. I actually told it a great
+
+[01:22:32.120] example a great email was this.
+
+[01:22:34.680] A great email for
+
+[01:22:37.160] a prior
+
+[01:22:43.390] uh video was this. And now I'll notice
+
+[01:22:43.400] the small things that I noticed
+
+[01:22:44.560] immediately.
+
+[01:22:46.080] Which is these bullet points are labeled
+
+[01:22:48.400] wrong. So, I want to go and like format
+
+[01:22:49.760] these better.
+
+[01:22:51.600] So, let's go do that. Or
+
+[01:22:55.240] like let's just make the prompt better.
+
+[01:22:57.560] And like that's great. I don't need to
+
+[01:22:59.600] tell I don't need to tell it that.
+
+[01:23:00.480] sick.
+
+[01:23:02.600] Um
+
+[01:23:07.070] the topic in this
+
+[01:23:07.080] Again, let's go read this. Looks good.
+
+[01:23:09.560] Main takeaways looks good.
+
+[01:23:11.640] Uh transcript complete transcript
+
+[01:23:15.720] Sick.
+
+[01:23:16.080] Full transcript.
+
+[01:23:18.840] Um we'll go do this. I will probably
+
+[01:23:20.840] move the transcript above the main
+
+[01:23:23.040] takeaways.
+
+[01:23:23.560] Above. Yep.
+
+[01:23:24.920] Because again, the model is mostly
+
+[01:23:27.400] biased by the most recent tokens. So,
+
+[01:23:28.960] I'm going to go do that. I want the main
+
+[01:23:30.280] takeaways to be last.
+
+[01:23:31.920] It's going to go do this. I'm using
+
+[01:23:33.320] GPT-4 mini. Let's just try and see what
+
+[01:23:35.160] happens.
+
+[01:23:41.550] I've heard GPT I've experimented a
+
+[01:23:41.560] little bit that GPT 4.5 is is um
+
+[01:23:45.800] very good at these sort of writing
+
+[01:23:47.080] tasks.
+
+[01:23:47.520] And a couple of things. If you notice,
+
+[01:23:49.320] it said your name. That's a a
+
+[01:23:52.320] a prior video um
+
+[01:23:54.600] create a professional announcement
+
+[01:23:56.560] on behalf
+
+[01:23:58.520] of
+
+[01:23:59.800] Fibob and Dexter. Let's tell it that.
+
+[01:24:02.440] Let's tell it that it's on behalf of us.
+
+[01:24:04.800] So, it can have more context again.
+
+[01:24:07.040] And this is why we can use a few-shot
+
+[01:24:08.680] example cuz this example's a really
+
+[01:24:10.240] really good example for what we want.
+
+[01:24:12.840] In this case, it didn't put a call to
+
+[01:24:14.040] action in the data model. The call to
+
+[01:24:15.280] action's probably done. Are you hitting
+
+[01:24:18.200] context limits on 4.0 mini maybe cuz
+
+[01:24:20.800] it's so long?
+
+[01:24:22.960] I'm not. There's no way. Okay. Okay.
+
+[01:24:27.480] Let's go do this. Let's make call to
+
+[01:24:28.720] action optional.
+
+[01:24:34.990] And it actually seems like it figured it
+
+[01:24:35.000] out. Um we can go read this really fast.
+
+[01:24:37.120] So, this is about dynamic strategies for
+
+[01:24:38.520] effective prompting.
+
+[01:24:40.360] Uh
+
+[01:24:41.400] this is weird.
+
+[01:24:42.720] Um
+
+[01:24:43.440] and last time's video title was actually
+
+[01:24:45.360] we already had a title.
+
+[01:24:46.920] The title was called
+
+[01:24:48.840] um cracking the prompting interview. So,
+
+[01:24:51.080] before I go adding parameter, I'll just
+
+[01:24:52.560] say like
+
+[01:24:53.600] let's just like assume that the title
+
+[01:24:55.080] that I passed in, I can just crack
+
+[01:24:56.480] change this in my test case.
+
+[01:25:00.000] Uh summary
+
+[01:25:02.520] Let's assume that I gave it the right
+
+[01:25:03.840] title.
+
+[01:25:05.040] Oh, at the bottom. Yeah, your title says
+
+[01:25:06.800] Zoom meeting.
+
+[01:25:08.800] Cracking the prompting interview.
+
+[01:25:11.640] So, I'll go run this.
+
+[01:25:20.590] New video really is cracking the
+
+[01:25:20.600] prompting interview. This is pretty
+
+[01:25:21.720] good. It actually got rid of the Zoom
+
+[01:25:23.360] meeting, gave us a slightly better
+
+[01:25:24.440] title.
+
+[01:25:25.520] It actually almost got the exact same
+
+[01:25:27.480] email that we actually really wanted.
+
+[01:25:30.000] Use indexes instead of relying on long
+
+[01:25:31.760] URLs. That's a great thing. Natural
+
+[01:25:33.160] output, let it go in the most natural
+
+[01:25:34.800] format instead of constraining them to
+
+[01:25:36.200] JSON, which is a thing that we should
+
+[01:25:37.640] do.
+
+[01:25:38.720] Really format the structure as you want.
+
+[01:25:40.640] Read the prompt. Balancing
+
+[01:25:42.400] effectiveness. Uh that looks like spam.
+
+[01:25:45.640] Uh real-world applications, that looks
+
+[01:25:47.680] like spam.
+
+[01:25:48.920] Um so, what we can do now is we can just
+
+[01:25:51.400] like compare this to the actual thing
+
+[01:25:52.760] that we sent out.
+
+[01:25:54.840] And we can go see
+
+[01:25:56.720] what it feels like.
+
+[01:26:01.390] And this is the one that we wrote by
+
+[01:26:01.400] hand for this one.
+
+[01:26:03.720] Uh there's a couple of things that
+
+[01:26:04.880] didn't have. Like these One of the
+
+[01:26:06.160] things that we probably like is we like
+
+[01:26:07.440] having code in the emails. Code snip
+
+[01:26:09.480] like small little code snippets in
+
+[01:26:11.280] backticks in the emails. It makes I
+
+[01:26:12.960] think makes it much more authentic.
+
+[01:26:15.480] Didn't seem to capture that.
+
+[01:26:17.640] So, let's just tell it that we like
+
+[01:26:19.680] that.
+
+[01:26:21.120] Um
+
+[01:26:22.960] Uh where did it go? We can tell it this
+
+[01:26:24.800] in the draft.
+
+[01:26:26.320] Um include
+
+[01:26:29.080] code snippets.
+
+[01:26:31.160] Include small code snippets
+
+[01:26:34.800] in the emails.
+
+[01:26:53.670] And it might actually have a hard time
+
+[01:26:53.680] including code snippets cuz it's just
+
+[01:26:55.040] from an audio snippet. So, what I might
+
+[01:26:56.960] need to do is I might actually need to
+
+[01:26:58.080] feed in the video into this as well so
+
+[01:27:00.280] it can actually have video as context
+
+[01:27:01.880] while it does this. So, we should get
+
+[01:27:03.960] the YouTube URL for the YouTube video
+
+[01:27:05.600] and just pass it into the like a Gemini
+
+[01:27:07.120] model and go past that in and that'll be
+
+[01:27:08.800] like the next thing that I'll go iterate
+
+[01:27:10.160] on along the way.
+
+[01:27:12.400] Are you guys understanding how to
+
+[01:27:13.960] iterate on this pipeline and make it
+
+[01:27:15.400] better to make it really feel like
+
+[01:27:16.960] what's good? What's good here I want you
+
+[01:27:18.920] all to notice is Dexter and I already
+
+[01:27:20.480] have done this work a few times. So, we
+
+[01:27:22.320] have a golden target in mind.
+
+[01:27:24.840] If we're working on a data set that
+
+[01:27:26.200] neither of us understands, there's no
+
+[01:27:27.840] golden target and we'll be stuck and we
+
+[01:27:29.640] won't be able to get an answer really
+
+[01:27:30.960] well.
+
+[01:27:32.640] So, we can iterate fast without an eval
+
+[01:27:34.640] set because we kind of understand the
+
+[01:27:36.240] domain of the problem.
+
+[01:27:38.840] Um
+
+[01:27:40.400] Is there any
+
+[01:27:45.110] other questions along the way?
+
+[01:27:45.120] Um
+
+[01:27:45.760] Dexter, anything else you want to
+
+[01:27:46.600] mention?
+
+[01:27:51.710] Um no, the only the other reason why we
+
+[01:27:51.720] can't send this out right away cuz Zoom
+
+[01:27:53.120] takes like 4 hours to process the video
+
+[01:27:55.040] and it creates the transcript. So, Yeah.
+
+[01:27:57.480] that's uh to answer Sudeep's other
+
+[01:27:59.200] question, we will no matter how much AI
+
+[01:28:01.360] we have, we will never send the video
+
+[01:28:03.080] immediately after the call.
+
+[01:28:05.280] Yes, because of Zoom. Um and we might be
+
+[01:28:07.760] able to get get around the one-day
+
+[01:28:09.160] turnaround as well. But again, the whole
+
+[01:28:10.760] point of this is
+
+[01:28:12.160] I I'm going to try to
+
+[01:28:13.800] go present to the AI team at Zoom? Don't
+
+[01:28:16.240] you have like influence over how they
+
+[01:28:17.920] can't you make it faster?
+
+[01:28:19.760] Yeah, let me ping them.
+
+[01:28:21.360] Um but, I think the
+
+[01:28:24.720] Um Yeah, I think the takeaway here is
+
+[01:28:27.200] like, build the tools that you need,
+
+[01:28:28.760] build the workflow first. Once you've
+
+[01:28:30.400] built the workflow, add the AI part cuz
+
+[01:28:32.240] you can decouple that development really
+
+[01:28:33.960] fast.
+
+[01:28:35.000] And whatever I have to do to generate
+
+[01:28:36.440] the email draft, my real suspicion to
+
+[01:28:38.560] make this email really good is actually
+
+[01:28:40.800] I should actually break down the
+
+[01:28:41.880] structure of this email into like
+
+[01:28:43.360] separate sections that we have.
+
+[01:28:45.520] And write a two-step pipeline where the
+
+[01:28:47.520] first step generates all the structure,
+
+[01:28:48.960] then the second step puts it into the
+
+[01:28:51.120] like the language and the floweryness of
+
+[01:28:54.160] what the email needs.
+
+[01:28:55.960] And I think that will make it a lot lot
+
+[01:28:57.680] better.
+
+[01:29:00.120] Um but, I think that's it. We went a lot
+
+[01:29:02.800] a little bit over than what we planned
+
+[01:29:04.680] on doing today.
+
+[01:29:06.120] Um but, this was tons of fun. I have
+
+[01:29:08.600] personally learned a lot building this
+
+[01:29:09.960] whole thing out, way more than I
+
+[01:29:11.360] normally do.
+
+[01:29:13.000] Um
+
+[01:29:14.040] because I learned from Dexter on Vibe
+
+[01:29:15.920] Board. It was amazing.
+
+[01:29:17.640] Um
+
+[01:29:18.560] You were You were pretty good at Vibe
+
+[01:29:20.040] coding before uh when we got started.
+
+[01:29:22.960] No, I I'm not. I think I do a My Vibe
+
+[01:29:26.200] coding is very

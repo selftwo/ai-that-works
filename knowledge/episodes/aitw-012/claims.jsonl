@@ -1,0 +1,5 @@
+{"kind":"observed","claim":"The speakers frame missing links and metadata as pipeline problems that prompts cannot repair.","start":"00:02:53","end":"00:07:12","confidence":"high","source":"knowledge/episodes/aitw-012/transcripts/stitched.txt"}
+{"kind":"observed","claim":"The content workflow separates factual extraction from prose polishing.","start":"00:11:08","end":"00:15:47","confidence":"high","source":"knowledge/episodes/aitw-012/transcripts/stitched.txt"}
+{"kind":"observed","claim":"The extraction stage produces structured facts for later generation.","start":"00:33:20","end":"00:41:18","confidence":"high","source":"knowledge/episodes/aitw-012/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Audience and channel context are supplied to the polishing stage.","start":"00:41:18","end":"00:49:44","confidence":"medium","source":"knowledge/episodes/aitw-012/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Generated output is reviewed against the transcript and source data.","start":"00:54:02","end":"01:02:11","confidence":"medium","source":"knowledge/episodes/aitw-012/transcripts/stitched.txt"}

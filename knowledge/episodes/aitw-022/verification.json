@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID RX8D5oJrV9k",
+  "transcript_range": "00:00 to 00:56:10.799",
+  "timestamp_order": "passed with a direct HH:MM:SS.mmm parser; knowledge/scripts/verify_transcript.py does not recognize this caption timestamp format",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "Streaming structured data lets the interface become int",
+    "Raw token streaming exposes broken JSON, while semantic",
+    "Fields such as numbers should be withheld until complet",
+    "Schema annotations control whether a partial field is o"
+  ],
+  "timestamped_claim_count": 6,
+  "source_duration_check": "Caption end compared with the duration stated in the source README where available; source media was not downloaded.",
+  "remaining_uncertainty": [
+    "automatic caption errors",
+    "speaker attribution",
+    "screen only evidence",
+    "exact recording start"
+  ]
+}

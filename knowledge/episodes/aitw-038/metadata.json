@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-038",
+  "episode": 38,
+  "season": 2,
+  "title": "Founding Boundary: Vaibhav's Journey",
+  "source_folder": "2025-12-30-founding-boundary",
+  "recorded_at": "2025-12-30T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "4YTl9w_bESE",
+  "youtube_url": "https://www.youtube.com/watch?v=4YTl9w_bESE",
+  "transcript_origin": "upstream timestamped transcript.md",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

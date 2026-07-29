@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md, README video link, and catalog agree on YouTube ID OpM-G3WNH4g",
+  "source_mapping_note": "README thumbnail image URL incorrectly contains episode 35 video ID jzhVo0iAX_I; the enclosing link points to the correct episode 34 video.",
+  "transcript_range": "00:01.459 to 55:02.247",
+  "timestamp_order": "passed: 232 timestamps verified by knowledge/scripts/verify_transcript.py",
+  "spot_checks": ["shared object database", "ignored file setup", "same branch restriction", "bounded parallelism", "manager merge loop", "naming and cleanup", "standardized checkpoints", "planning document tradeoff"],
+  "timestamped_claim_count": 9,
+  "supporting_artifact_check": "README links and remote image references inspected; no local demo code is present",
+  "source_duration_check": "not run: source media was not downloaded",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "screen-only demonstration correctness", "remote whiteboard contents"]
+}

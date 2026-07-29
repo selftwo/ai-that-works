@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-054",
+  "episode": 54,
+  "season": 2,
+  "title": "Harness Engineering Without the Hype",
+  "source_folder": "2026-04-21-harness-engineering-without-the-hype",
+  "recorded_at": "2026-04-21T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "gX9WpYY61xA",
+  "youtube_url": "https://www.youtube.com/watch?v=gX9WpYY61xA",
+  "transcript_origin": "upstream timestamped trasncript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}
+

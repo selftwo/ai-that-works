@@ -1,0 +1,4059 @@
+# S01E01 – Large Scale Classification
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:02.470] Cool.
+
+[00:00:02.480] And we'll we'll send a recording out to
+
+[00:00:03.680] the learner list, right?
+
+[00:00:05.280] Yeah, exactly.
+
+[00:00:10.910] Sure.
+
+[00:00:10.920] I should have a screenshot.
+
+[00:00:12.880] All right. Firstly, hello everyone.
+
+[00:00:15.160] Welcome to our first
+
+[00:00:17.120] online talk.
+
+[00:00:19.120] Um I think one of the reasons that
+
+[00:00:21.520] really inspired
+
+[00:00:24.160] I'll try again.
+
+[00:00:25.720] One of the things that really inspired
+
+[00:00:27.080] this talk for us was this whole premise
+
+[00:00:28.920] that
+
+[00:00:30.640] it's been about 2 years and the AI
+
+[00:00:32.080] models seem to just be stuck
+
+[00:00:34.320] in demo land.
+
+[00:00:35.880] And we've seen a lot of apps get
+
+[00:00:38.240] actually built and shipped to production
+
+[00:00:40.120] for some companies.
+
+[00:00:41.960] And we just figured we'd share some of
+
+[00:00:43.400] these techniques for most of April.
+
+[00:00:46.400] With exactly how some people are
+
+[00:00:48.720] addressing some of the problems that we
+
+[00:00:50.280] have.
+
+[00:00:51.360] Um as you have questions, as you have
+
+[00:00:53.440] thoughts, we'd love to make this more
+
+[00:00:54.840] engaging and actually like welcome you
+
+[00:00:57.160] to like uh ask whatever you want.
+
+[00:01:01.240] And then if you have topics that you
+
+[00:01:02.640] think are worth mentioning, mention
+
+[00:01:04.400] those as well and we'll try and cover
+
+[00:01:05.640] them.
+
+[00:01:06.480] But I'll give you a quick background on
+
+[00:01:08.280] who we are and then we'll get to the
+
+[00:01:10.000] meat of it, which hopefully is going to
+
+[00:01:11.440] be the most fun part, which is actually
+
+[00:01:12.840] coding.
+
+[00:01:14.000] And talking about scenarios and how to
+
+[00:01:15.400] make them work.
+
+[00:01:16.880] Um so I'm Vaibhav, I'm one of the
+
+[00:01:18.400] co-founders
+
+[00:01:19.760] of Boundary and we make BAML. Uh it was
+
+[00:01:22.560] uh and we'll be using that mostly for
+
+[00:01:24.320] work today, but in effect any of the
+
+[00:01:26.640] techniques we use can be done with any
+
+[00:01:28.480] of the
+
+[00:01:29.720] um
+
+[00:01:30.400] uh AI layers of your choice.
+
+[00:01:32.680] And our goal is to really just share
+
+[00:01:34.040] techniques.
+
+[00:01:36.680] Dex.
+
+[00:01:37.840] Yeah, what's up? I'm Dex. I'm the
+
+[00:01:40.280] founder of a company that spends most of
+
+[00:01:41.760] my days building tools called Human
+
+[00:01:43.520] Layer,
+
+[00:01:44.600] uh helping people deploy safer, more
+
+[00:01:47.000] reliable AI applications. Call them
+
+[00:01:50.040] agents if you if you insist, but uh I
+
+[00:01:53.360] think we're going to blur that line in
+
+[00:01:54.480] the next couple talks anyways.
+
+[00:01:57.520] Cool.
+
+[00:01:58.480] Um let's talk about a Go ahead. You're
+
+[00:02:00.600] good. I was just going to say like I I I
+
+[00:02:02.640] I think let me let me know if I read
+
+[00:02:04.280] this right, Vaibhav, but I guess the
+
+[00:02:05.400] idea is like let's do really hard
+
+[00:02:07.040] problems with tiny models to prove that
+
+[00:02:09.800] like with the right techniques and the
+
+[00:02:11.160] right prompting and the right kind of
+
+[00:02:12.720] surrounding code, you can even get small
+
+[00:02:14.640] models to do impressive things because
+
+[00:02:16.360] then go apply that to actual big like
+
+[00:02:18.760] frontier models and you'll be able to do
+
+[00:02:20.680] incredible things.
+
+[00:02:22.560] That's kind of the goal. Like if we can
+
+[00:02:23.960] do this with small models, we can
+
+[00:02:25.240] probably get away with very large very
+
+[00:02:27.440] large models doing
+
+[00:02:29.160] doing things as well.
+
+[00:02:31.200] Um and I I personally have this belief
+
+[00:02:33.520] that like GPT-3.5 honestly was already
+
+[00:02:35.560] pretty good for a lot of scenarios.
+
+[00:02:36.800] There's some scenarios where it doesn't
+
+[00:02:37.880] work for.
+
+[00:02:39.160] But I've seen people ship really
+
+[00:02:40.320] impressive pipelines. I think the only
+
+[00:02:42.640] problem that I've seen be a struggle for
+
+[00:02:44.720] a lot of models has been SVG generation.
+
+[00:02:48.800] But honestly now with the new image
+
+[00:02:50.880] model that GPT-4 released, it's possible
+
+[00:02:52.760] that that actually got a lot better.
+
+[00:02:54.800] Just because of how much cleaner the
+
+[00:02:55.880] images are getting.
+
+[00:02:57.760] But we can talk about that later.
+
+[00:03:00.520] Um let's talk about the topic at hand
+
+[00:03:02.000] today, large-scale classification. So
+
+[00:03:04.920] when we talk about large-scale
+
+[00:03:05.960] classification, there's a lot of
+
+[00:03:07.400] different applications that people have
+
+[00:03:09.440] here.
+
+[00:03:10.640] And specifically, I want to narrow down
+
+[00:03:13.600] and articulate some of these
+
+[00:03:14.680] articulations, but how many of you have
+
+[00:03:16.520] actually had
+
+[00:03:18.200] um how many of you have actually like um
+
+[00:03:21.400] dealt with needing to classify, let's
+
+[00:03:23.360] say, over 100 things in your
+
+[00:03:26.120] uh in your AI pipelines?
+
+[00:03:28.360] You can just type in the chat if you'd
+
+[00:03:29.840] like.
+
+[00:03:36.190] What
+
+[00:03:36.200] What we've seen what kind of domains
+
+[00:03:37.800] have people worked in? If you want to
+
+[00:03:39.320] share like the domains that you worked
+
+[00:03:40.640] in, that might help us um
+
+[00:03:42.800] uh make sure that we can contextualize
+
+[00:03:44.280] as much as possible for today's
+
+[00:03:45.600] conversation.
+
+[00:03:47.240] Some of the applications that we've seen
+
+[00:03:49.480] has been mostly in the medical industry.
+
+[00:03:51.960] Has been in the uh or regulatory docs
+
+[00:03:55.200] have been very very common.
+
+[00:03:57.280] Uh there's been a lot of stories in the
+
+[00:03:58.880] manufacturing space. We've seen some
+
+[00:04:00.920] spaces in the
+
+[00:04:03.040] um
+
+[00:04:04.360] uh in the world of MCP
+
+[00:04:06.640] where how do you deal with an MCP server
+
+[00:04:08.840] that has over a thousand tools?
+
+[00:04:11.520] Because LLMs are not going to produce
+
+[00:04:13.120] that very well.
+
+[00:04:14.640] And then we've also seen that really be
+
+[00:04:16.239] true in like routing agents. Cuz if you
+
+[00:04:18.840] have a routing agent with more than 20
+
+[00:04:20.880] routes that it can route to,
+
+[00:04:23.040] we sometimes see degradation of
+
+[00:04:24.320] performance where it starts to pick the
+
+[00:04:25.920] slightly wrong uh routes out there.
+
+[00:04:33.070] So let's talk about how
+
+[00:04:33.080] um how we could go and address this
+
+[00:04:34.760] problem. And I think to address this
+
+[00:04:36.080] problem, the best thing to do is just
+
+[00:04:37.320] start off with like diagrams.
+
+[00:04:40.120] The biggest thing that we often see is
+
+[00:04:43.720] Let me go ahead and
+
+[00:04:45.920] open the scalar draw.
+
+[00:04:48.440] The biggest problem with all these
+
+[00:04:49.960] systems
+
+[00:04:51.160] is that
+
+[00:04:53.040] they're often not very probable. And the
+
+[00:04:55.360] minute a system becomes non-probable, it
+
+[00:04:57.920] really becomes hard to go edit because
+
+[00:04:59.520] now you're at the mercy of the model
+
+[00:05:01.040] updating to actually give you the
+
+[00:05:02.840] results that you want.
+
+[00:05:04.440] And that just isn't uh
+
+[00:05:07.480] that's just a sad world to live in
+
+[00:05:09.080] because now you're stuck waiting for
+
+[00:05:10.640] GPT-26 to come out.
+
+[00:05:12.880] And if GPT-26 doesn't come out that
+
+[00:05:14.800] year, then you're finally just waiting
+
+[00:05:16.080] and twiddling your thumbs.
+
+[00:05:17.640] And the problem with tweaking just the
+
+[00:05:19.400] prompt is that the prompt is very
+
+[00:05:23.040] Our prompt is actually very very hard
+
+[00:05:25.920] um
+
+[00:05:26.600] to go edit yourself. I'm actually going
+
+[00:05:28.360] to get a mouse really fast. Give me 1
+
+[00:05:29.720] second. Dex,
+
+[00:05:31.880] you want to start uh
+
+[00:05:37.950] Um yeah, I can start sketching a couple
+
+[00:05:37.960] things here. So um
+
+[00:05:40.320] I think
+
+[00:05:41.920] I'm curious like when when
+
+[00:05:45.200] when when Vaibhav says probing, maybe
+
+[00:05:47.760] drop in the chat like what is what does
+
+[00:05:49.120] that mean to you? Or actually, okay,
+
+[00:05:50.480] you're back. Um also, if you give me
+
+[00:05:52.400] co-host, I can like help mute people and
+
+[00:05:54.160] stuff like that.
+
+[00:05:56.680] Yeah, let me give you co-host really
+
+[00:05:58.120] fast.
+
+[00:05:59.560] Sorry, technical technical setup stuff.
+
+[00:06:04.990] There you go. I'm added as co-host. I
+
+[00:06:05.000] didn't get to the checklist.
+
+[00:06:06.760] Okay, cool.
+
+[00:06:09.120] Okay, so I'm going to start screen
+
+[00:06:10.280] sharing really fast.
+
+[00:06:12.520] Um and talk about how this works at the
+
+[00:06:14.680] very top level. So obviously, we can do
+
+[00:06:17.160] a very simple thing where we have
+
+[00:06:19.480] some LLM and if this LLM is given a what
+
+[00:06:23.400] we do in this LLM
+
+[00:06:25.200] is we give it a prompt.
+
+[00:06:28.880] And we give it a list of categories.
+
+[00:06:39.350] And I think the solution that most
+
+[00:06:39.360] people have is somehow they add
+
+[00:06:41.520] Oops, sorry.
+
+[00:06:46.950] They take this list of categories and
+
+[00:06:46.960] then they just
+
+[00:06:48.960] uh
+
+[00:06:50.040] put this into the prompt somehow and
+
+[00:06:51.800] then they hope that the LLM
+
+[00:06:53.960] picks from these categories. I think
+
+[00:06:55.880] that's like the most naive solution that
+
+[00:06:57.320] we can do.
+
+[00:06:59.120] Now, you can do a little bit better
+
+[00:07:14.550] Where you then
+
+[00:07:14.560] um
+
+[00:07:15.320] where you then go ahead and instead of
+
+[00:07:17.560] putting it directly in the prompt,
+
+[00:07:18.680] you're kind of putting it in the prompt,
+
+[00:07:19.720] but like there's a special part of the
+
+[00:07:21.040] prompt
+
+[00:07:23.040] um that is
+
+[00:07:31.550] the schema. And specifically, you add
+
+[00:07:31.560] the categories to the schema.
+
+[00:07:33.760] And like the the opening highway of
+
+[00:07:35.120] doing this, right, is like it it
+
+[00:07:36.480] basically is injecting JSON schema-ish
+
+[00:07:39.360] things into the system prompt in a
+
+[00:07:41.280] special way, right?
+
+[00:07:43.120] Exactly.
+
+[00:07:44.920] So I got to one way to do it. Obviously,
+
+[00:07:46.480] you can do this in BAML as well. But the
+
+[00:07:48.400] problem that you run into when you go do
+
+[00:07:49.880] this is you're still not really able to
+
+[00:07:52.160] probe. The only thing you can really
+
+[00:07:53.600] probe is this category list.
+
+[00:07:56.480] And that I think is the most naive
+
+[00:07:57.840] solution that we can do.
+
+[00:07:58.920] sorry, when you say probe, you mean like
+
+[00:08:00.400] make small changes and see how they
+
+[00:08:02.400] affect the outputs, right?
+
+[00:08:04.640] Like what do you mean by probe?
+
+[00:08:05.400] Yeah, I I think um I come from like an
+
+[00:08:08.160] electrical engineering background, so
+
+[00:08:09.640] perhaps that's where my brain is going.
+
+[00:08:11.040] But the hardest part about like
+
+[00:08:12.320] circuits, whenever you do circuit design
+
+[00:08:14.200] on any chip, is you obviously once the
+
+[00:08:16.000] chips get really small, you can't really
+
+[00:08:17.640] introspect them in any way.
+
+[00:08:19.520] So often points, what you'll do is
+
+[00:08:21.720] you'll build like little detection
+
+[00:08:23.400] points
+
+[00:08:24.720] um where like you can actually go ahead
+
+[00:08:26.640] and like go and measure and like
+
+[00:08:28.600] manipulate the inputs or measure the
+
+[00:08:30.080] input at certain points.
+
+[00:08:31.840] The problem with LLMs
+
+[00:08:33.840] it yeah, exactly. Jonathan got it. The
+
+[00:08:36.680] problem with AI pipelines is we don't
+
+[00:08:39.080] really get these probing points and we
+
+[00:08:40.760] don't really get an area to manipulate
+
+[00:08:42.320] this. Right now, the only real point
+
+[00:08:44.159] that we have to manipulate these is the
+
+[00:08:45.920] category list.
+
+[00:08:47.880] But if the category list is like
+
+[00:08:50.240] massive,
+
+[00:08:51.960] how do you get LLMs to actually do what
+
+[00:08:53.680] you do? So let's talk about the most
+
+[00:08:54.880] trivial solutions that people have might
+
+[00:08:56.840] have seen before.
+
+[00:08:58.800] But option one, once your category list
+
+[00:09:01.000] gets really massive, is
+
+[00:09:04.160] you take your category list
+
+[00:09:06.760] Oops.
+
+[00:09:08.840] And instead of putting it into here,
+
+[00:09:11.000] you actually put it into a
+
+[00:09:13.120] um
+
+[00:09:15.160] Oh.
+
+[00:09:16.080] Sorry. You put it into a
+
+[00:09:19.240] uh vector database.
+
+[00:09:26.230] And I'll talk about why a vector
+
+[00:09:26.240] database in a second. It doesn't
+
+[00:09:27.320] actually have to be a vector database.
+
+[00:09:29.680] So you push your category list into
+
+[00:09:30.960] here.
+
+[00:09:33.320] And once your category list lives in a
+
+[00:09:34.760] vector database, then what you have is
+
+[00:09:37.960] instead of
+
+[00:09:40.320] your query
+
+[00:09:42.400] instead of your user query coming in and
+
+[00:09:44.920] immediately taking the entire category
+
+[00:09:46.800] list and going with it,
+
+[00:09:48.560] what we do instead is we draw
+
+[00:09:51.920] into here and then we set down a smaller
+
+[00:09:54.360] list of categories.
+
+[00:10:06.270] And then we go into and then we only
+
+[00:10:06.280] pass those in instead.
+
+[00:10:08.760] And this can do a couple of nice things
+
+[00:10:10.160] for us.
+
+[00:10:11.800] But instead of all the categories I've
+
+[00:10:13.520] selected, now we're able to prune this
+
+[00:10:14.760] down to whatever count the LLM can go
+
+[00:10:17.160] deal with.
+
+[00:10:18.800] Um
+
+[00:10:20.200] So hierarchical categories and multiple
+
+[00:10:22.000] prompts is um
+
+[00:10:24.520] is often what people think about, but
+
+[00:10:26.480] often what I find is that actually leads
+
+[00:10:29.200] to a lot more confusion.
+
+[00:10:31.160] And the reason that leads to a lot more
+
+[00:10:32.520] confusion with hierarchical categories
+
+[00:10:34.840] is because most people don't have clear
+
+[00:10:38.120] definitions of hierarchies and
+
+[00:10:39.480] hierarchies end up bleeding over a lot
+
+[00:10:41.000] more.
+
+[00:10:42.040] So it ends up being a little bit more
+
+[00:10:43.440] troublesome. And I'll talk about a
+
+[00:10:44.680] technique of how you can use
+
+[00:10:46.280] hierarchical categorization
+
+[00:10:48.200] with this vector database technique to
+
+[00:10:50.560] get way better results.
+
+[00:10:52.520] But I think the general rule of thumb is
+
+[00:10:54.400] every single LLM, no matter which one
+
+[00:10:56.040] you use, operates really well on some
+
+[00:10:58.360] count of categories.
+
+[00:11:00.680] But I think the way that you think about
+
+[00:11:02.600] which count of categories, like how many
+
+[00:11:04.240] categories it's able to selectively
+
+[00:11:05.880] select from
+
+[00:11:07.520] really varies based on the categories
+
+[00:11:09.920] themselves.
+
+[00:11:11.400] And I think this is another part that a
+
+[00:11:12.920] lot of people overlook. Um and I
+
+[00:11:14.800] apologize for not writing code right up
+
+[00:11:16.400] front, but I think it will help to have
+
+[00:11:18.360] some framing of diagrams before we go
+
+[00:11:20.160] and code it up.
+
+[00:11:22.680] Um but let's say I have category A and
+
+[00:11:25.040] category B
+
+[00:11:26.480] over here. And if category A and
+
+[00:11:28.120] category B are completely disjoint, I
+
+[00:11:30.280] can have a lot more of these categories.
+
+[00:11:32.240] Like I can have up to Z if they're all
+
+[00:11:33.720] totally disjoint. But the minute I start
+
+[00:11:35.760] having category A and category B overlap
+
+[00:11:38.080] with each other
+
+[00:11:39.520] it becomes really hard for an LLM to
+
+[00:11:41.400] pick the right ones.
+
+[00:11:43.120] So if I have like um
+
+[00:11:46.320] if I have
+
+[00:11:47.480] um
+
+[00:11:48.880] if I have like five categories, I
+
+[00:11:51.760] but they're all really really closely
+
+[00:11:53.200] overlapped with like very very small
+
+[00:11:54.760] nuances differences
+
+[00:11:56.839] it's just not going to perform very well
+
+[00:11:59.400] on an LLM scenario. I probably need a
+
+[00:12:00.960] smaller prompt that is really good at
+
+[00:12:03.080] disjointing only these two categories
+
+[00:12:05.160] separately from each other to identify
+
+[00:12:07.200] when it's one or the other or could be
+
+[00:12:09.160] either one.
+
+[00:12:10.760] But if I have categories that are
+
+[00:12:12.400] totally separate
+
+[00:12:14.160] then it doesn't really matter.
+
+[00:12:15.960] Then we can get away with a lot more
+
+[00:12:18.360] categories in the same prompt. In the
+
+[00:12:19.800] case of like MCP tools
+
+[00:12:22.200] most MCP tools are very very disjoint
+
+[00:12:24.760] from each other.
+
+[00:12:26.200] Uh sometimes there's overlap, but most
+
+[00:12:28.320] of the time they're very disjoint, so we
+
+[00:12:29.800] can get away with having a lot more. In
+
+[00:12:31.760] the case of like hierarchical categories
+
+[00:12:33.520] and hierarchical organization there's
+
+[00:12:35.320] actually a technique that we found works
+
+[00:12:36.920] really well.
+
+[00:12:38.240] Um at least anecdotally um in production
+
+[00:12:41.440] that seems to work.
+
+[00:12:43.839] But let's talk about what is nice about
+
+[00:12:45.520] this approach.
+
+[00:12:47.000] Now
+
+[00:12:48.400] there's this thing here that we all made
+
+[00:12:50.080] an assumption of
+
+[00:12:52.040] in our current approach
+
+[00:12:54.360] where the things going into the vector
+
+[00:12:56.000] database
+
+[00:12:57.200] are going to be exactly the categories
+
+[00:12:59.240] and we just apply an embedding on the
+
+[00:13:00.520] categories and we put them in.
+
+[00:13:02.839] But again, we don't really have any
+
+[00:13:04.760] probe points in the system.
+
+[00:13:06.560] We have a couple of probe points. We
+
+[00:13:07.880] added another one, which is we can
+
+[00:13:09.680] control how many
+
+[00:13:11.560] like exactly how we can control the
+
+[00:13:13.280] count of these categories.
+
+[00:13:15.760] We can control
+
+[00:13:18.200] in your vector search. Yeah. Exactly.
+
+[00:13:21.240] It's your top K in your vector search.
+
+[00:13:23.920] So we get one control point. You want to
+
+[00:13:25.520] label that, Dex?
+
+[00:13:27.320] And then we get another control point,
+
+[00:13:29.560] which is like we can choose what
+
+[00:13:30.880] embedding system
+
+[00:13:32.440] what embeddings model we use.
+
+[00:13:35.400] So now we have two control
+
+[00:13:36.839] too, right? Like can would you embed
+
+[00:13:38.720] like a description of the category with
+
+[00:13:40.640] the actual like if it's like Apple,
+
+[00:13:42.280] orange, banana, would you describe that
+
+[00:13:44.560] as well, put it in the embedding? So
+
+[00:13:47.160] exactly. So that's where I would say
+
+[00:13:49.120] like there's like a separate option here
+
+[00:13:51.000] that I'm going to draw out where a lot
+
+[00:13:53.120] of people I think overlook this concept
+
+[00:13:55.240] as a whole
+
+[00:13:56.480] which is the naive thing to do
+
+[00:13:59.120] is to just put this category directly
+
+[00:14:01.600] into here.
+
+[00:14:03.400] But there's this more sophisticated
+
+[00:14:04.880] thing that we can all do
+
+[00:14:06.600] that can really give us a lot of control
+
+[00:14:08.680] into the system
+
+[00:14:10.280] which is
+
+[00:14:12.200] we apply um
+
+[00:14:14.360] category
+
+[00:14:16.520] function category
+
+[00:14:20.320] to the string.
+
+[00:14:23.040] Let's see how well writing code works in
+
+[00:14:24.360] here.
+
+[00:14:34.150] Embedding text.
+
+[00:14:34.160] Where you actually like return a custom
+
+[00:14:36.040] text for every single category that you
+
+[00:14:37.920] pass in. And that's the thing that you
+
+[00:14:39.320] embed.
+
+[00:14:40.920] And surprisingly, this becomes a really
+
+[00:14:44.000] really nice control point for us.
+
+[00:14:46.560] Because now whenever the model doesn't
+
+[00:14:49.160] return something, doesn't select the
+
+[00:14:51.280] right category, we have two areas to
+
+[00:14:53.760] probe at.
+
+[00:14:55.160] We can see one, did the model select the
+
+[00:14:57.480] right category?
+
+[00:14:59.320] If it did
+
+[00:15:01.800] then okay, that means that this part of
+
+[00:15:04.440] the system is good. If it didn't, then
+
+[00:15:07.040] we know that we have to change the
+
+[00:15:08.120] embedding text of either that category
+
+[00:15:10.240] or the one that it selected in favor of
+
+[00:15:12.880] itself. So now you have a probe points
+
+[00:15:15.320] that you can actually sit on that aren't
+
+[00:15:16.720] your whole system.
+
+[00:15:18.760] It becomes a special probe point
+
+[00:15:21.040] just either for that system. Yourself.
+
+[00:15:24.160] So if you have a category like that's
+
+[00:15:25.440] like
+
+[00:15:26.320] like for an MCP tool for like Slack and
+
+[00:15:29.000] an MC tool tool for calendars and it's
+
+[00:15:31.520] picking Slack actions when it should be
+
+[00:15:33.160] picking calendar actions
+
+[00:15:35.320] we can do different types of embedding
+
+[00:15:37.600] text as the thing that we actually
+
+[00:15:39.120] embed.
+
+[00:15:41.400] And that can be a huge unlock in terms
+
+[00:15:43.560] of your iteration loop.
+
+[00:15:45.600] Now the last thing you can do
+
+[00:15:48.400] um
+
+[00:15:49.640] the last probe point that I really want
+
+[00:15:51.200] to talk about is up here. Now once again
+
+[00:15:54.079] people often make the assumption that
+
+[00:15:56.360] the embedding text that you put into
+
+[00:15:57.839] here has to be the same embedding text
+
+[00:15:59.560] that you put into your prompt.
+
+[00:16:01.320] That's what they naively do.
+
+[00:16:03.360] But the minute that you stop doing that,
+
+[00:16:05.160] you end up in a really really nice
+
+[00:16:06.360] world. Where you no longer have to think
+
+[00:16:09.400] about it that way.
+
+[00:16:10.959] You can apply selected categories
+
+[00:16:13.480] and go through another function.
+
+[00:16:16.720] Oops.
+
+[00:16:19.000] Sorry.
+
+[00:16:21.079] The selected categories can go through
+
+[00:16:22.320] another function, which is
+
+[00:16:28.790] LLM text.
+
+[00:16:28.800] Which actually tells you how to put the
+
+[00:16:30.600] text into the prompt or the structured
+
+[00:16:32.400] output or anything that you want for the
+
+[00:16:33.600] model.
+
+[00:16:34.600] So now you we all have like two really
+
+[00:16:37.079] key
+
+[00:16:39.120] uh we have three key points that we can
+
+[00:16:41.400] go manipulate really really easily that
+
+[00:16:43.720] we can go introspect into our system.
+
+[00:16:46.160] One point becomes the text that we put
+
+[00:16:48.320] in for embeddings.
+
+[00:16:49.800] Another point becomes the number of K's
+
+[00:16:52.560] that we select
+
+[00:16:54.280] out of the vector database.
+
+[00:16:56.040] And a third point becomes the actual way
+
+[00:16:58.000] that we serialize the categories into
+
+[00:17:00.200] our prompt.
+
+[00:17:02.720] And obviously you can add more and more
+
+[00:17:04.520] sophisticated algorithms here
+
+[00:17:07.000] um in this system.
+
+[00:17:09.040] But just with these three points, we can
+
+[00:17:11.520] really make our system not really be as
+
+[00:17:13.240] much of a black box that just happens to
+
+[00:17:15.040] go do things
+
+[00:17:16.360] but make it a lot more controllable.
+
+[00:17:19.560] I'm going to pause for a little bit.
+
+[00:17:21.640] Dex, go ahead.
+
+[00:17:23.079] I got I got a question and you can
+
+[00:17:24.439] totally tell me like, yes, we'll do that
+
+[00:17:26.800] in 20 minutes or whatever and we're
+
+[00:17:28.199] getting there, but I'm curious like are
+
+[00:17:30.679] there established kind of like
+
+[00:17:33.360] structures for doing kind of end-to-end
+
+[00:17:35.679] testing on this kind of stuff so I can
+
+[00:17:37.240] change my probe or is this a thing that
+
+[00:17:39.120] people are mostly kind of hand-rolling
+
+[00:17:40.720] themselves and building a big table of
+
+[00:17:42.400] evals for every single every single
+
+[00:17:44.280] thing they they hit in production?
+
+[00:17:46.440] Well, actually you kind of have an eval
+
+[00:17:48.120] built in.
+
+[00:17:49.320] Remember like in the end what we're
+
+[00:17:50.520] passing in is we're passing the user
+
+[00:17:51.800] query as an input
+
+[00:17:53.679] and expecting some category as an
+
+[00:17:55.720] output.
+
+[00:17:57.400] Yeah.
+
+[00:17:59.520] Right. Okay, so your prompt is basically
+
+[00:18:01.600] some instructions on how to behave. It's
+
+[00:18:04.360] the user query, which is like here's the
+
+[00:18:06.280] actual thing you're classifying, and
+
+[00:18:08.640] then it's a bunch of data about like
+
+[00:18:11.760] what are what are valid what are valid
+
+[00:18:13.520] input what are valid output categories.
+
+[00:18:16.040] Exactly. And again, we can add another
+
+[00:18:18.920] probe here.
+
+[00:18:20.160] Where it's like what if the LLM doesn't
+
+[00:18:22.480] we don't we allow the LLM to pick
+
+[00:18:23.880] multiple categories?
+
+[00:18:30.390] And then we apply another method
+
+[00:18:30.400] after the fact
+
+[00:18:35.390] to pick
+
+[00:18:35.400] a single category.
+
+[00:18:41.669] So we can do multiple levels of pruning
+
+[00:18:41.679] as well. We don't actually have to pick
+
+[00:18:43.080] one. This this idea of going from many
+
+[00:18:45.560] categories to one in this scenario we
+
+[00:18:48.080] used a vector database.
+
+[00:18:50.760] But if your system is truly truly
+
+[00:18:52.440] complex
+
+[00:18:54.159] we could have the LLM pick multiple
+
+[00:18:56.320] categories and it might be really
+
+[00:18:57.760] complex cuz your categories have a lot
+
+[00:18:59.159] of overlap.
+
+[00:19:01.840] So we allow the LLM to pick all valid
+
+[00:19:04.000] categories and then we use perhaps
+
+[00:19:06.159] another LLM if we want
+
+[00:19:12.470] to actually go ahead and turn it from a
+
+[00:19:12.480] single category into multiple and from
+
+[00:19:14.520] multiple categories into a single
+
+[00:19:15.760] category.
+
+[00:19:17.520] Okay, so you could have a basically a
+
+[00:19:18.840] function there in between the category
+
+[00:19:20.640] list and the single category that is
+
+[00:19:22.200] either deterministic or
+
+[00:19:23.440] non-deterministic depending on what gets
+
+[00:19:25.600] you the best results. But having that
+
+[00:19:27.200] step there gives you it's like the the
+
+[00:19:29.720] right place to manipulate and and and
+
+[00:19:32.360] change and kind of be able to do yeah.
+
+[00:19:34.800] And this actually
+
+[00:19:36.280] this this layer here becomes really easy
+
+[00:19:38.640] to like unit test in isolation, right?
+
+[00:19:40.560] You could just say like, hey, if the
+
+[00:19:41.600] model returns these four categories and
+
+[00:19:43.840] here was the input, we should almost
+
+[00:19:45.200] always we should always be returning
+
+[00:19:46.400] this one.
+
+[00:19:47.760] Exactly. And actually this I think
+
+[00:19:49.600] that's that's the whole thing about this
+
+[00:19:51.320] whole layer.
+
+[00:19:52.480] If you If you really think about this
+
+[00:19:53.960] whole system that I built, all we all
+
+[00:19:56.080] we're doing
+
+[00:19:57.600] in reality is we're writing a function
+
+[00:20:00.320] that says pick category
+
+[00:20:07.790] or some text or some input
+
+[00:20:07.800] and we're returning a category type.
+
+[00:20:09.800] That's all we're doing. We're writing a
+
+[00:20:10.880] function that does that.
+
+[00:20:12.480] And every single technique that we
+
+[00:20:13.880] described from beginning to end
+
+[00:20:17.760] every single one of these techniques
+
+[00:20:19.000] that we described in the most simple one
+
+[00:20:20.520] of just an LLM using structured output
+
+[00:20:22.400] using a vector database to pick a
+
+[00:20:23.800] category doesn't really matter. All of
+
+[00:20:25.840] them are just implementations of this
+
+[00:20:27.640] function.
+
+[00:20:28.760] Pick category.
+
+[00:20:30.480] We just have different implementations
+
+[00:20:32.000] of this function where we add more and
+
+[00:20:33.560] more sophistication
+
+[00:20:35.680] because if we if this whole thing is
+
+[00:20:37.440] done by an LLM, then we know the only
+
+[00:20:39.840] point of input we have is a prompt.
+
+[00:20:42.120] But if we change this function, how do I
+
+[00:20:44.000] change Can you change this to mono text?
+
+[00:20:45.600] Oh, there we go. There you go.
+
+[00:20:47.440] If we change this function to suddenly
+
+[00:20:49.360] be like
+
+[00:20:50.440] narrowed
+
+[00:20:52.040] narrowed
+
+[00:20:53.240] categories
+
+[00:20:55.040] equals
+
+[00:20:56.360] prune categories
+
+[00:20:59.280] input um space on the
+
+[00:21:01.440] database query.
+
+[00:21:03.520] It It could be a vector database. It
+
+[00:21:05.000] could be an LLM. It's just a thing that
+
+[00:21:06.520] reduces the number of categories from
+
+[00:21:08.040] many
+
+[00:21:09.480] to some.
+
+[00:21:11.760] But
+
+[00:21:12.840] we can we can In our example, it is a
+
+[00:21:15.280] vector database. So, I'll write that
+
+[00:21:16.320] down.
+
+[00:21:20.790] All right. So, we prune the categories
+
+[00:21:20.800] from a vector DB.
+
+[00:21:22.680] And then what we do is like we save
+
+[00:21:25.560] um
+
+[00:21:26.960] best equals
+
+[00:21:34.630] uh use LLM picker
+
+[00:21:34.640] input narrowed
+
+[00:21:37.360] categories.
+
+[00:21:39.840] And now we just return best.
+
+[00:21:41.840] That's one variation of this system.
+
+[00:21:48.630] We can We can add another one where it's
+
+[00:21:48.640] like
+
+[00:21:49.440] we can change this simply best three.
+
+[00:21:53.200] Yeah. Yeah, the same thing.
+
+[00:22:00.550] Best three and then this returns the
+
+[00:22:00.560] best
+
+[00:22:01.800] and then we go we go down there.
+
+[00:22:05.679] And we can keep on making these systems
+
+[00:22:07.480] better and better and better and just
+
+[00:22:09.440] keep on adding more steps into the
+
+[00:22:11.440] system to make it more accurate.
+
+[00:22:17.150] Is this a system that other people have
+
+[00:22:17.160] ever built before? Just out of
+
+[00:22:18.760] curiosity.
+
+[00:22:35.390] All right.
+
+[00:22:35.400] So, let's get down to
+
+[00:22:37.280] We got to kind of
+
+[00:22:38.080] to
+
+[00:22:39.600] Yeah.
+
+[00:22:40.679] Classifying for real estate.
+
+[00:22:46.710] Let's use Let's actually write this
+
+[00:22:46.720] code. I think I think the best thing to
+
+[00:22:48.600] do here is write the code um because
+
+[00:22:50.720] it's going to make things a lot
+
+[00:22:52.920] Sorry, quickly before you move on, just
+
+[00:22:54.320] a question.
+
+[00:22:55.560] Uh on the transition from user query to
+
+[00:22:57.640] the selected categories, like how are
+
+[00:22:59.760] you uh coming with the selected
+
+[00:23:01.880] categories? Are you doing a similarity
+
+[00:23:04.000] search
+
+[00:23:05.080] uh within the vector database?
+
+[00:23:06.400] can do
+
+[00:23:07.400] Exactly. So, we we can do a similarity
+
+[00:23:09.120] search from a vector database where
+
+[00:23:10.360] you'll find the top K uh out of it.
+
+[00:23:13.080] Challenges are that your user query
+
+[00:23:15.320] might not reflect the
+
+[00:23:17.840] Does it really So, so you mean to say
+
+[00:23:19.560] the semantic embeddings would fall
+
+[00:23:21.080] closer and that's how you're able to
+
+[00:23:23.320] pick it, right?
+
+[00:23:24.400] Yeah, and and if it doesn't, we can
+
+[00:23:26.280] force the semantic embeddings to get
+
+[00:23:27.920] fall closer
+
+[00:23:29.560] by changing the text of how we embed the
+
+[00:23:31.960] actual category.
+
+[00:23:34.200] So, usually what people do when they add
+
+[00:23:36.000] an embedding is they just take the raw
+
+[00:23:37.360] string and add it directly into the
+
+[00:23:38.880] vector database. They say, "Here's the
+
+[00:23:40.200] category name. Add it into the
+
+[00:23:41.440] database."
+
+[00:23:42.800] Mhm. But what if the thing that we
+
+[00:23:44.960] actually embedded into the actual
+
+[00:23:46.360] database was like this? We put the name
+
+[00:23:48.679] of the category and I'll do that over
+
+[00:23:50.200] here.
+
+[00:23:52.000] We put the name of the category like
+
+[00:23:53.440] this,
+
+[00:23:54.520] right? We put we put
+
+[00:23:57.880] uh we put the name, we put like example
+
+[00:24:00.960] uh 15 example queries that match it.
+
+[00:24:09.750] And then we put like uh another like 20
+
+[00:24:09.760] scenarios.
+
+[00:24:15.110] Um and then we put like uh like a
+
+[00:24:15.120] a list of 20 keywords.
+
+[00:24:22.590] So, now we have this ability
+
+[00:24:22.600] to almost force the embedding to be
+
+[00:24:24.880] closer to the thing that we want it to
+
+[00:24:26.600] go be into.
+
+[00:24:32.150] Mhm. Because now instead of just like
+
+[00:24:32.160] adding And how can we get these?
+
+[00:24:33.920] Literally, you can just LLM generate
+
+[00:24:35.280] these. That's what I do.
+
+[00:24:36.760] I LLM generate The initial thing I do is
+
+[00:24:39.040] I LLM generate that person.
+
+[00:24:42.240] Um
+
+[00:24:48.430] Okay. I got it. Um yeah, thank you. So,
+
+[00:24:48.440] you can actually you can actually like
+
+[00:24:50.040] LLM generate these. Or if you have a
+
+[00:24:51.640] domain expert in your company
+
+[00:24:53.920] the domain expert in your company can
+
+[00:24:55.880] actually go ahead and um go do this as
+
+[00:24:58.720] well.
+
+[00:25:03.470] And this will end up working quite well.
+
+[00:25:03.480] I've seen this work many times for many
+
+[00:25:04.880] companies that have like over 500
+
+[00:25:06.200] categories plus.
+
+[00:25:07.960] Um and the key part here is because this
+
+[00:25:10.000] becomes a thing that you control now
+
+[00:25:12.880] now you're not relying on the model to
+
+[00:25:15.120] produce the best results because the
+
+[00:25:16.920] embedding model is a black box. Neither
+
+[00:25:18.920] me or you or any of us can really
+
+[00:25:20.679] control it. Yes, we can fine-tune a
+
+[00:25:21.960] model, but like fine-tuning a model is
+
+[00:25:23.720] so painfully slow in your iteration loop
+
+[00:25:26.880] that like if you fine-tune it wrong, now
+
+[00:25:28.360] you have to go back and refine-tune the
+
+[00:25:29.679] whole
+
+[00:25:30.760] uh the whole thing.
+
+[00:25:33.120] Mhm. But if we if we have strings that
+
+[00:25:35.600] we're using to manipulate the actual
+
+[00:25:37.320] vector that we generate that we put into
+
+[00:25:39.080] the embedding system
+
+[00:25:40.760] then this becomes really really fast
+
+[00:25:43.600] to go do.
+
+[00:25:45.520] So, well,
+
+[00:25:46.560] taking an example of let's say my my
+
+[00:25:48.880] categories are a bunch of columns within
+
+[00:25:51.480] a table.
+
+[00:25:52.800] In that case, the way I'm embedding the
+
+[00:25:55.520] text here is maybe the column name and
+
+[00:25:57.840] with a bunch of description around it
+
+[00:26:00.000] and maybe a bunch of questions that it
+
+[00:26:01.600] can answer. Embedding that whole stuff
+
+[00:26:03.920] in it, is it?
+
+[00:26:05.280] Can you say that one more time? Sorry,
+
+[00:26:06.760] my headphones cut out.
+
+[00:26:08.960] Uh so, um I'm just trying to think about
+
+[00:26:11.440] an example. So, we are not going to
+
+[00:26:13.400] embed the exact text that we have.
+
+[00:26:15.800] Instead, what we are saying is describe
+
+[00:26:17.480] it in a better way, write it more
+
+[00:26:21.040] verbose maybe. I I I don't know. But
+
+[00:26:23.360] taking an example
+
+[00:26:25.160] Yeah.
+
+[00:26:26.040] Taking an example of columns column
+
+[00:26:28.280] names in an analytic SQL kind of
+
+[00:26:29.920] solution where you have to kind of
+
+[00:26:31.560] classify which columns would you use for
+
+[00:26:33.840] your SQL query.
+
+[00:26:35.480] Yeah.
+
+[00:26:35.720] In that case, multiple columns would
+
+[00:26:37.440] come and you would eventually write a
+
+[00:26:39.480] description for it. Maybe you would
+
+[00:26:41.040] write a bunch of queries that these
+
+[00:26:42.920] columns can answer and then embed that
+
+[00:26:45.640] kind of text to
+
+[00:26:47.920] here and then use that later. But in the
+
+[00:26:50.880] top if I go where you are going from
+
+[00:26:53.200] selected category categories box to the
+
+[00:26:56.200] prompt and you have this function LLM
+
+[00:26:57.880] text category in between, what is that
+
+[00:27:00.480] doing here? So, so now there's another
+
+[00:27:02.720] part. So, we have one probe that we want
+
+[00:27:04.920] to manipulate the embedding vector so we
+
+[00:27:06.520] can get more likely the categories that
+
+[00:27:08.440] we care about. Mhm.
+
+[00:27:10.800] Now there's another thing you can do,
+
+[00:27:12.679] which is the way that you put them
+
+[00:27:15.200] the text that you use to get the best
+
+[00:27:17.200] embedding out of the vector to make it
+
+[00:27:19.640] match your user query may not be the
+
+[00:27:21.600] same text that we have to do to put the
+
+[00:27:24.080] to make the LLM
+
+[00:27:25.880] pick the right category.
+
+[00:27:27.840] And recognizing that these two texts are
+
+[00:27:30.040] very different because the models under
+
+[00:27:31.800] the hood are very different
+
+[00:27:33.840] is an important distinction to hitting
+
+[00:27:35.880] really high accuracy.
+
+[00:27:38.320] Understood. Understood. So, like here,
+
+[00:27:41.000] this thing might want This thing want
+
+[00:27:43.080] might want a name
+
+[00:27:44.960] and then like a just a plain text
+
+[00:27:47.400] description
+
+[00:27:49.240] of its use.
+
+[00:27:51.920] Understood. But right, if you put in 15
+
+[00:27:54.400] examples, you're going to kind of poison
+
+[00:27:56.200] the LLM and like the do this like issue
+
+[00:27:58.520] we see in few-shot prompting where you
+
+[00:28:00.200] kind of like influence the behavior too
+
+[00:28:02.360] much.
+
+[00:28:03.400] Yeah.
+
+[00:28:05.000] Understood.
+
+[00:28:05.400] But recognize
+
+[00:28:06.679] recognize that we can have two
+
+[00:28:08.760] Now, recognize that we could use the
+
+[00:28:10.080] same function as well. It's always
+
+[00:28:11.520] possible to use the same thing. But it's
+
+[00:28:13.480] more about building probes into our
+
+[00:28:15.320] software so that when things don't work,
+
+[00:28:17.679] we have a thing to change that isn't
+
+[00:28:19.600] like praying to the prompting gods.
+
+[00:28:22.360] It's It's exactly what what I've heard
+
+[00:28:24.000] you say a bunch, which is basically is
+
+[00:28:25.159] like I don't know what the best approach
+
+[00:28:27.320] is for a given problem space, but I know
+
+[00:28:30.120] that the more control you have and the
+
+[00:28:31.960] more knobs you give yourself access to,
+
+[00:28:34.400] the faster you're going to find the best
+
+[00:28:36.679] way to solve a particular problem.
+
+[00:28:39.560] Exactly.
+
+[00:28:40.960] And what about top K here? So, I I see
+
+[00:28:44.960] me and other people struggling with the
+
+[00:28:46.640] top K value because we you are not never
+
+[00:28:49.240] sure three five. You miss it, you
+
+[00:28:53.480] under pin it and you get less
+
+[00:28:56.080] data into the context. So, is there a
+
+[00:28:58.400] way around it as well that we have
+
+[00:29:00.720] figured it out
+
+[00:29:02.120] already?
+
+[00:29:02.520] Uh pick top K.
+
+[00:29:04.960] Yeah. There's no I think that's it's
+
+[00:29:07.600] it's just a probe that you have to go
+
+[00:29:09.000] decide. And I think the best way to look
+
+[00:29:10.480] at this is now the system becomes an
+
+[00:29:12.200] introspecting system. So, if I know what
+
+[00:29:14.600] I'm expecting for a certain user query.
+
+[00:29:16.679] Let's say I'm expecting category A for a
+
+[00:29:19.080] certain user query.
+
+[00:29:20.679] And if I look at the vector database, I
+
+[00:29:22.480] see that A doesn't come out when my top
+
+[00:29:24.520] K is three.
+
+[00:29:26.480] Then then I know what I have to do is I
+
+[00:29:29.120] have two choices. I can increase top K
+
+[00:29:31.240] or I can change my embedding category
+
+[00:29:32.840] embedding text.
+
+[00:29:35.360] Or six of the other probes you have out.
+
+[00:29:38.520] Well, I do I think these are the only
+
+[00:29:40.000] ones that we can we can modify.
+
+[00:29:43.520] Can you modify LLM text? Oh, I see.
+
+[00:29:46.400] Yeah.
+
+[00:29:46.800] But it's it's it's the end-to-end thing,
+
+[00:29:48.360] right?
+
+[00:29:49.400] Well, yeah, so well, even though it's
+
+[00:29:51.760] not even if it's not coming out
+
+[00:29:53.040] end-to-end, my first approach would
+
+[00:29:54.600] actually be to see where is it failing.
+
+[00:29:56.880] Oh, you can test just between You can
+
+[00:29:59.720] test just between the user query and the
+
+[00:30:01.560] selected categories and optimize just
+
+[00:30:03.720] that loop to make sure that at least the
+
+[00:30:05.640] category that you're looking for is in
+
+[00:30:07.280] that selected batch, and then you have
+
+[00:30:09.040] fewer knobs that you have to turn. Okay.
+
+[00:30:11.560] it's not in this batch, then there's
+
+[00:30:13.080] nothing I can do about. The LLM will
+
+[00:30:14.600] never get it right.
+
+[00:30:16.400] So, at least now I have a
+
+[00:30:17.520] waterfall-based approach where I can be
+
+[00:30:19.120] like, "What It's like when I'm step
+
+[00:30:20.600] through in debugging in code."
+
+[00:30:22.600] It's like I like to know how far did I
+
+[00:30:24.360] get the right answer and when did I get
+
+[00:30:25.880] wrong. If I know that this answer has
+
+[00:30:28.360] the right system,
+
+[00:30:30.440] then I can just go work my way down and
+
+[00:30:33.080] be like, "Okay, this thing was correct,
+
+[00:30:35.360] but this thing is not correct. So, I
+
+[00:30:36.680] know I need to focus all my debugging
+
+[00:30:38.320] energy on this, not on this."
+
+[00:30:41.520] So, it allows me to know that the thing
+
+[00:30:43.040] that I should probably modify is not
+
+[00:30:44.680] embedding
+
+[00:30:46.120] text, but LLM text.
+
+[00:30:52.070] Does that answer your question, Anubha?
+
+[00:30:52.080] Yes, yes. I I think it's more around
+
+[00:30:54.280] precision K measurement kind of thing
+
+[00:30:56.520] that we do.
+
+[00:30:57.760] Yeah, and you just have to sit down and
+
+[00:30:59.360] pick the top K. Like, there's no And top
+
+[00:31:01.360] K, by the way, here is
+
+[00:31:02.920] uh is the number of vectored entries
+
+[00:31:05.520] that return from a vector database
+
+[00:31:07.000] match. Correct.
+
+[00:31:08.320] It isn't It isn't the same as top K in
+
+[00:31:10.080] an LLM, just to be very, very
+
+[00:31:11.560] particular. Yep, yep.
+
+[00:31:15.160] Any other questions from anyone?
+
+[00:31:22.350] No. Okay, let's do some code.
+
+[00:31:22.360] Um
+
+[00:31:29.270] Uh what is the disadvantage of having an
+
+[00:31:29.280] um
+
+[00:31:30.680] Can you read that question out to me,
+
+[00:31:31.960] Dax, while I set up the code? Yeah,
+
+[00:31:33.640] yeah. So, it's essentially like, you
+
+[00:31:35.320] know, what is the what is the
+
+[00:31:36.200] disadvantage of going back to zero
+
+[00:31:37.960] probes, but have two LLMs spend a few
+
+[00:31:40.640] cycles in some kind of evaluator
+
+[00:31:42.520] optimizer workflow? And then the probe
+
+[00:31:45.120] is just the stop condition for this
+
+[00:31:47.600] workflow.
+
+[00:31:49.280] Um while you're coding, I can kind of
+
+[00:31:51.400] try to tease out the question there,
+
+[00:31:54.240] Anubha, if you want to come off mute and
+
+[00:31:55.840] kind of give a little more color. Um but
+
+[00:31:57.760] it's sounds like
+
+[00:32:01.360] um I mean, I think those are just
+
+[00:32:03.480] different kinds of kinds of probes, and
+
+[00:32:06.600] your probes end up being like, "What are
+
+[00:32:08.520] the prompts, and what are the number of
+
+[00:32:10.040] cycles, and how do you have those two
+
+[00:32:12.040] LLMs collaborate with each other?" And I
+
+[00:32:14.480] think kind of the big lesson to take
+
+[00:32:15.960] away is like, maybe you don't use a
+
+[00:32:17.440] vector database. Maybe you don't use
+
+[00:32:19.200] hierarchical categories, but whatever
+
+[00:32:21.040] you use, like, how do you chunk these up
+
+[00:32:23.080] into smaller problems where you can
+
+[00:32:25.080] tweak smaller knobs and evaluate the
+
+[00:32:27.200] performance of kind of some of these
+
+[00:32:28.800] like subfunctions.
+
+[00:32:30.679] Does that sound right? Um yeah, yeah. I
+
+[00:32:34.080] think yeah, that's uh basically yeah, it
+
+[00:32:37.240] sounds right. Basically, what I'm
+
+[00:32:39.080] driving at is that I do My intuition is
+
+[00:32:42.000] that if you have a lot more probes,
+
+[00:32:45.000] yeah, it does add introspection, but
+
+[00:32:46.920] that introspection is also going to come
+
+[00:32:48.760] at a cost, right? Like, there's going to
+
+[00:32:50.600] be a cost of having one probe versus
+
+[00:32:53.440] five probes. Um
+
+[00:32:55.840] um the knobs having more knobs is going
+
+[00:32:59.240] to
+
+[00:33:00.360] also make uh
+
+[00:33:02.760] uh the debugging or introspection more
+
+[00:33:04.840] complex. That's kind of where I'm
+
+[00:33:06.760] driving at.
+
+[00:33:08.080] The only real problem Normally, I think
+
+[00:33:10.120] that's correct in software, but the diff
+
+[00:33:12.960] the big difference in the software that
+
+[00:33:14.840] I'm writing with models today is that
+
+[00:33:16.880] that ends up being way worse, because
+
+[00:33:18.720] you you actually have the worst system
+
+[00:33:20.360] right now, which is a model you cannot
+
+[00:33:22.200] modify in any meaningful way.
+
+[00:33:25.000] So, when it's a complete black box, you
+
+[00:33:26.800] have effectively no probes in the system
+
+[00:33:28.880] except the prompt. And the prompt is
+
+[00:33:30.760] just not a great
+
+[00:33:32.679] place to manipulate it when you have As
+
+[00:33:34.880] your prompts get bigger and bigger,
+
+[00:33:36.960] any individual manipulation you make
+
+[00:33:40.040] has more and more consequences.
+
+[00:33:43.160] So, if you're picking between like 100
+
+[00:33:44.800] categories
+
+[00:33:46.200] and picking between five categories,
+
+[00:33:48.679] changing the word in 100 categories is
+
+[00:33:50.960] way more likely to poison your output
+
+[00:33:53.040] than with 10 categories. And I know that
+
+[00:33:54.880] sounds a little counterintuitive.
+
+[00:33:56.920] And the reason for that is just because
+
+[00:33:58.800] you're not going to be able to
+
+[00:34:00.000] manipulate the model as quickly by
+
+[00:34:01.640] changing a word, so you'll have to
+
+[00:34:02.720] change a lot of words when you have 100
+
+[00:34:05.320] categories, and now the model will be
+
+[00:34:07.360] less likely to do what you want in other
+
+[00:34:09.280] scenarios.
+
+[00:34:10.679] So, I think the the way that I look at
+
+[00:34:13.879] this is
+
+[00:34:16.000] you end up in a scenario Sorry, my dog
+
+[00:34:17.840] is looking at me. Uh
+
+[00:34:19.640] like, when you have like less when you
+
+[00:34:20.919] have more of a model system, you basic
+
+[00:34:22.480] when you basically are like building a
+
+[00:34:24.359] really, really good Gaussian
+
+[00:34:26.440] distribution that has
+
+[00:34:28.200] really bad standard deviation. As we add
+
+[00:34:31.480] more and more probes, what we're really
+
+[00:34:33.000] doing is we're trying to we're trying to
+
+[00:34:34.679] make the curve look more like this.
+
+[00:34:37.359] We're trying to remove these soft edges
+
+[00:34:39.480] and pull the model in closer and closer.
+
+[00:34:52.710] Yeah, I mean, I I think that comes back
+
+[00:34:52.720] to kind of the core thing, right? It's
+
+[00:34:53.879] like, if you're just using LLMs and just
+
+[00:34:55.600] using prompts, like, yeah, you could
+
+[00:34:57.160] have six different prompts, and those
+
+[00:34:58.520] become knobs, and if you have smaller
+
+[00:35:00.400] Like, you could do all the vector stuff
+
+[00:35:01.960] with just, "Hey, let's loop over the
+
+[00:35:03.400] Instead of doing embeddings, I've heard
+
+[00:35:04.600] a lot of people have success and I don't
+
+[00:35:06.200] know if we'll have time to get to this
+
+[00:35:07.160] today, but like, rather than doing RAG,
+
+[00:35:09.480] just pass every single option through a
+
+[00:35:11.520] small model with a very specific prompt,
+
+[00:35:13.560] which is like, you know, "Is this
+
+[00:35:15.600] relevant to the query?" and use that to
+
+[00:35:17.440] cut the data set in half, and cut it in
+
+[00:35:19.160] half again, and do things like that.
+
+[00:35:20.800] It's like, the point is like,
+
+[00:35:22.440] the smaller and simpler the steps are,
+
+[00:35:24.480] the easier they are easier they are to
+
+[00:35:25.960] optimize, right?
+
+[00:35:27.520] Yeah, prune categories. There you go.
+
+[00:35:29.160] You nailed it, Dax. That's exactly it.
+
+[00:35:30.960] There's nothing that says that prune
+
+[00:35:32.520] categories vector DB has to be a vector
+
+[00:35:34.320] DB.
+
+[00:35:35.600] This could be a bunch of models that
+
+[00:35:37.640] take in every single category of them as
+
+[00:35:39.440] an option, like Dax said, and just
+
+[00:35:41.359] return it and select only the ones that
+
+[00:35:43.160] are relevant to the model.
+
+[00:35:44.920] Yeah. Or determine just thumbs up or
+
+[00:35:46.400] thumbs down, is this is this category
+
+[00:35:48.680] kind of relevant, or is it totally
+
+[00:35:50.920] unrelated, and just use a Boolean
+
+[00:35:52.480] classifier, right? Mhm.
+
+[00:35:55.720] All right, cool.
+
+[00:35:57.320] Um okay, let's let's I'm going to start
+
+[00:35:59.800] off writing the writing the code in very
+
+[00:36:01.840] pseudo code format, because I think it's
+
+[00:36:03.640] just going to help us know how to go
+
+[00:36:05.040] piece everything together, and then I'll
+
+[00:36:06.720] go actually go execute it and make it
+
+[00:36:08.240] work.
+
+[00:36:09.840] So, we're going to have one thing that's
+
+[00:36:11.080] going to load the categories from
+
+[00:36:12.040] somewhere. Um Dax has a bunch of
+
+[00:36:13.680] categories that we have, so we'll go
+
+[00:36:14.720] load that up in a second.
+
+[00:36:16.480] Um we're going to have a category, which
+
+[00:36:18.000] is going to have embedding text, so the
+
+[00:36:19.480] text that we use for the embedding, and
+
+[00:36:21.960] an LLM description, which is going to
+
+[00:36:23.600] use uh which we're going to use for like
+
+[00:36:25.359] the LLM.
+
+[00:36:27.480] Now, we're going to have one function
+
+[00:36:29.200] that's going to be able to narrow down
+
+[00:36:30.080] categories. So, I'm going to give it
+
+[00:36:31.080] some text and a bunch of categories, and
+
+[00:36:32.880] it should return to me some list of
+
+[00:36:34.240] categories that is here, and this
+
+[00:36:35.960] function owns everything like top K and
+
+[00:36:37.720] everything within itself. We don't
+
+[00:36:39.040] really care.
+
+[00:36:41.040] Now, what we'll do is we'll have another
+
+[00:36:42.240] function that says like
+
+[00:36:44.440] pick best category,
+
+[00:36:46.280] where we'll give it a list of
+
+[00:36:47.200] categories, and it'll pick another
+
+[00:36:48.480] category.
+
+[00:36:49.880] So, our code actually ends up looking
+
+[00:36:51.800] relatively simple.
+
+[00:36:56.510] Uh and these are all like private
+
+[00:36:56.520] functions, so
+
+[00:36:58.200] this here.
+
+[00:37:00.680] def uh
+
+[00:37:02.840] pick category. So, given a text, we
+
+[00:37:04.480] should go be able to narrow it down.
+
+[00:37:07.240] So, given some text, we're going to load
+
+[00:37:08.640] all the categories. We're going to
+
+[00:37:09.920] narrow down the categories, then we're
+
+[00:37:10.960] going to pick the best categories.
+
+[00:37:12.160] That's all this code ends up being. It's
+
+[00:37:13.920] not too complicated.
+
+[00:37:15.920] Is there Sorry, we Are we are we missing
+
+[00:37:18.760] a step that is like cuz cuz in ours it
+
+[00:37:21.400] was like
+
+[00:37:22.440] filter the list down, and then pass it
+
+[00:37:24.040] to the LLM to do the classification and
+
+[00:37:26.000] output the list.
+
+[00:37:27.840] And then Okay, that's going to go down
+
+[00:37:29.359] here.
+
+[00:37:29.760] we're not going to let the LLM pick
+
+[00:37:30.960] multiple categories right now. For now,
+
+[00:37:32.400] we're going to let the LLM We're going
+
+[00:37:33.440] to force LLM to pick just one.
+
+[00:37:35.560] Okay, cool.
+
+[00:37:36.760] So, that comes down into here.
+
+[00:37:39.320] Cool. Um and then we're going to list
+
+[00:37:41.080] that return the actual category that we
+
+[00:37:42.560] want.
+
+[00:37:43.480] Uh and specifically, let's just say like
+
+[00:37:45.840] we're going to return a string,
+
+[00:37:47.800] which is the actual name of the category
+
+[00:37:49.320] that we want. So, we'll return like
+
+[00:37:54.230] category I'm going to return
+
+[00:37:54.240] category.name, just to be a little bit
+
+[00:37:55.960] more again on what it's doing.
+
+[00:37:58.720] Um
+
+[00:38:00.600] So, now let's go ahead and go do this.
+
+[00:38:02.480] Let's implement how narrow down
+
+[00:38:03.720] categories is going to work.
+
+[00:38:05.359] So, this is going to be embeddings
+
+[00:38:08.520] equals this.
+
+[00:38:10.720] Uh
+
+[00:38:12.560] uh
+
+[00:38:18.510] Cool. That It's kind of doing this for
+
+[00:38:18.520] me.
+
+[00:38:19.480] Um
+
+[00:38:21.520] embeddings.append,
+
+[00:38:23.160] and specifically, I'm going to append
+
+[00:38:25.760] the category itself as well, so I have
+
+[00:38:27.920] access to it.
+
+[00:38:29.680] Okay, so you're a bet you're you're
+
+[00:38:30.960] appending a tuple there of of the like
+
+[00:38:33.720] the category itself becomes the label on
+
+[00:38:35.520] the embedding, right?
+
+[00:38:37.040] Exactly. So, that way I can just go look
+
+[00:38:39.040] find it really fast.
+
+[00:38:40.800] Yep.
+
+[00:38:42.520] So, then I'll embed the text, and then
+
+[00:38:44.320] I'll find like um
+
+[00:38:47.080] cosine
+
+[00:38:49.640] uh
+
+[00:38:51.560] best matches.
+
+[00:38:58.030] That's funny. It actually did it for me.
+
+[00:38:58.040] I don't know.
+
+[00:38:59.920] Um
+
+[00:39:00.840] and then this is going to return uh
+
+[00:39:02.720] sorted matches of this based on this,
+
+[00:39:04.760] and then let me just import NumPy.
+
+[00:39:17.950] All right.
+
+[00:39:17.960] So, this code is ends up being fairly
+
+[00:39:19.960] straightforward. It's just like an
+
+[00:39:21.040] embedding system, and I'm not even using
+
+[00:39:22.840] any LLM or anything. I'm I'll define
+
+[00:39:24.960] embed method later. Uh we can use any
+
+[00:39:27.400] sort of embedding system that we want.
+
+[00:39:29.880] Um
+
+[00:39:31.320] We do cosine similarity. It puts all the
+
+[00:39:33.680] categories into here. Uh and then let me
+
+[00:39:36.040] Let me make this better.
+
+[00:39:38.680] There you go.
+
+[00:39:40.200] Nice.
+
+[00:39:41.280] Um So, now we get slightly better.
+
+[00:39:43.400] Best matches.
+
+[00:39:45.560] We'll get all the best matches and then
+
+[00:39:47.520] we'll sort them and then
+
+[00:39:50.000] we'll return
+
+[00:39:58.910] What we'll do is max matches will return
+
+[00:39:58.920] like five.
+
+[00:40:08.030] So now this will actually go return
+
+[00:40:08.040] matches.
+
+[00:40:10.320] There you go. And now we're actually
+
+[00:40:11.520] going to go turn those categories.
+
+[00:40:15.840] Here.
+
+[00:40:16.920] I'm going to go turn on.
+
+[00:40:19.200] Oops. Sorry. I'm going to zoom out for a
+
+[00:40:21.080] second.
+
+[00:40:22.440] Turn on type checking mode.
+
+[00:40:25.400] For some reason Python has chosen not to
+
+[00:40:27.480] make type checking
+
+[00:40:29.000] be a thing.
+
+[00:40:30.640] By default. I mean the types are the
+
+[00:40:34.120] types are fake, right? They're all they
+
+[00:40:36.240] all disappear runtime anyways. I know,
+
+[00:40:38.560] but it's still annoys me to know it.
+
+[00:40:40.800] So now we're able to narrow down the
+
+[00:40:41.960] category.
+
+[00:40:43.080] Now I think the next part is the most
+
+[00:40:44.800] interesting interesting part, which is
+
+[00:40:46.040] how do we get an LLM to go do this for
+
+[00:40:48.160] us? Like given all this of categories,
+
+[00:40:49.680] how do we get an LLM to pick out the
+
+[00:40:50.840] right categories?
+
+[00:40:53.080] This is what I usually do.
+
+[00:40:55.240] I write a function.
+
+[00:40:56.920] Pick category.
+
+[00:41:06.830] Write a function whose job is like pick
+
+[00:41:06.840] best category. It's going to be given
+
+[00:41:09.040] some text.
+
+[00:41:10.680] And then we're going to return a
+
+[00:41:12.720] category type out of it.
+
+[00:41:14.720] And category will be an enum of
+
+[00:41:16.520] category.
+
+[00:41:18.120] But this enum is not one that's going to
+
+[00:41:20.280] be described in our BAML code. It's
+
+[00:41:22.320] actually an enum that's going to be
+
+[00:41:23.280] described dynamically at runtime.
+
+[00:41:25.920] And we'll use OpenAI
+
+[00:41:28.640] GPT-4o mini
+
+[00:41:31.000] to go do this.
+
+[00:41:32.640] Uh
+
+[00:41:37.470] Which category best describes the
+
+[00:41:37.480] following text?
+
+[00:41:46.670] So that's going to output the list of
+
+[00:41:46.680] categories that it should use
+
+[00:41:50.240] in its answer. And then as the user
+
+[00:41:52.080] message we're actually going to put in
+
+[00:41:53.200] the text. So let's just take a look at
+
+[00:41:55.280] what this prompt does really fast.
+
+[00:42:00.430] So here's what this prompt is going to
+
+[00:42:00.440] do. And I'm going to use GPT-4o mini.
+
+[00:42:02.720] Which category does this? Now there's no
+
+[00:42:04.040] categories here, so let's add the
+
+[00:42:05.360] categories at least for this test case.
+
+[00:42:08.080] Uh
+
+[00:42:09.800] type builder
+
+[00:42:12.440] dynamic
+
+[00:42:23.070] Uh and we'll write like a we'll write
+
+[00:42:23.080] like a category one
+
+[00:42:25.320] at description
+
+[00:42:27.320] for placeholder
+
+[00:42:29.480] text.
+
+[00:42:31.520] Um
+
+[00:42:35.750] Okay, cool. And that's that's being
+
+[00:42:35.760] built out kind of on the right
+
+[00:42:37.160] dynamically added to the prompt as you
+
+[00:42:38.880] add those categories. going we're
+
+[00:42:40.440] actually we're adding categories
+
+[00:42:41.720] dynamically for I don't know what is
+
+[00:42:43.760] this going to be for for
+
+[00:42:46.600] for logging.
+
+[00:42:49.720] Okay. So log levels.
+
+[00:42:53.440] So in um logs
+
+[00:42:56.560] Yep. So so when we go get our big list
+
+[00:42:59.400] of tools that we slurped up from a bunch
+
+[00:43:01.000] of MCP servers basically rather than
+
+[00:43:03.720] this category one category two category
+
+[00:43:05.560] three we'll be injecting these those
+
+[00:43:07.840] categories into the prompt like this.
+
+[00:43:09.640] Exactly. So and then if we go run this
+
+[00:43:11.320] that's what we should see that this
+
+[00:43:12.480] should in theory have picked category
+
+[00:43:14.120] one. We're good to go.
+
+[00:43:15.880] It actually said category one for
+
+[00:43:16.960] placeholder text, but we got out with
+
+[00:43:18.320] the thing we wanted, which is category
+
+[00:43:19.440] one. So I think we're good to go here.
+
+[00:43:21.520] This this function should given a bunch
+
+[00:43:23.600] of tools dynamically be able to select
+
+[00:43:25.200] this.
+
+[00:43:27.080] So now let's write this category tool.
+
+[00:43:31.200] Um So we do is
+
+[00:43:34.120] from BAML
+
+[00:43:35.760] from BAML client import
+
+[00:43:38.640] import B.
+
+[00:43:41.600] Um
+
+[00:43:42.840] Python is dumb. It needs to be reset.
+
+[00:43:50.470] Um B.pick_best_category.
+
+[00:43:50.480] We're going to pass in the text into it.
+
+[00:43:53.040] Matches. Pull this.
+
+[00:43:55.640] But now we actually have to build
+
+[00:43:58.120] build the type builder so we can
+
+[00:43:59.800] actually
+
+[00:44:02.040] dynamically pass in those categories
+
+[00:44:04.000] into it.
+
+[00:44:13.950] And what we'll do now is tb.
+
+[00:44:13.960] Uh we have our category enum that we
+
+[00:44:15.880] define programmatically in BAML.
+
+[00:44:18.240] add_value
+
+[00:44:20.480] And we're going to add a bunch of values
+
+[00:44:21.840] in here. So we'll do for category in
+
+[00:44:24.440] category categories.
+
+[00:44:31.270] Okay, cool. So at some point we're going
+
+[00:44:31.280] to need some kind of global var
+
+[00:44:32.640] somewhere to load in all the categories
+
+[00:44:34.640] from JSON or kind of just like hardcode
+
+[00:44:37.520] them in the in the source here to start,
+
+[00:44:40.160] right? Exactly.
+
+[00:44:42.960] And then what we can do is
+
+[00:44:43.880] val.description.
+
+[00:44:49.830] And we can just pass in
+
+[00:44:49.840] category.description into it.
+
+[00:44:52.640] So now that's what we that's that's our
+
+[00:44:55.320] second or third probe or whatever it was
+
+[00:44:57.359] where we customize how we describe it to
+
+[00:44:59.960] the yep, cool. Now to make sure that
+
+[00:45:02.600] that probe has really really high value,
+
+[00:45:04.880] I'm actually going to add an alias into
+
+[00:45:06.680] the system.
+
+[00:45:12.630] Where I add an alias and I use an alias
+
+[00:45:12.640] as my default one.
+
+[00:45:15.320] And what does that do exactly? I'll show
+
+[00:45:17.760] you in one second exactly what it does.
+
+[00:45:20.200] So here's what an alias does.
+
+[00:45:22.480] Let's just look at this prompt and let's
+
+[00:45:23.880] go add an alias so we can go see this.
+
+[00:45:32.190] Add alias K0 K1 K2. So it's actually
+
+[00:45:32.200] changing my prompt. It actually takes
+
+[00:45:33.600] the name of the category out of my
+
+[00:45:35.240] prompt
+
+[00:45:36.760] and only puts in
+
+[00:45:39.120] the description. That helps me in a
+
+[00:45:41.480] couple of ways. Remember we're talking
+
+[00:45:42.520] about probes. So we want to make sure
+
+[00:45:43.640] the probes we have have the most amount
+
+[00:45:45.680] of impact into our prompt.
+
+[00:45:48.760] I see. So you don't want the category
+
+[00:45:50.640] name to like cloud. You want to be
+
+[00:45:53.440] basically be like the only thing the LLM
+
+[00:45:54.840] sees is what we have selected to be the
+
+[00:45:56.720] thing that the LLM sees. And the
+
+[00:45:58.320] category name can be whatever we want
+
+[00:46:00.200] that makes it easiest to write the best
+
+[00:46:01.880] cleanest code, but that when we pass
+
+[00:46:04.200] things in the LLM we want complete
+
+[00:46:05.560] control over what the LLM sees. Exactly.
+
+[00:46:08.200] So the LLM saw K0 for placeholder text
+
+[00:46:10.840] and it was able to like it it basically
+
+[00:46:12.520] takes none of its attention metric and
+
+[00:46:14.480] puts it onto K0. It puts all of its
+
+[00:46:16.840] attention metric onto the description
+
+[00:46:18.560] that we want and it recognized that K0
+
+[00:46:20.880] is purely an identifier.
+
+[00:46:22.960] And now that it knows K0 is an
+
+[00:46:24.560] identifier it can go and like spend all
+
+[00:46:26.400] its We don't have to worry about the
+
+[00:46:27.520] nuances of words overlapping. Cuz what
+
+[00:46:31.040] if you have a category called account
+
+[00:46:32.440] issue and technical issue? And the
+
+[00:46:34.440] descriptions are very unique, but the
+
+[00:46:36.480] names kind of overlap. And single word
+
+[00:46:39.000] names tend to overlap by default. So
+
+[00:46:41.280] when you have a lot of categories, alias
+
+[00:46:43.560] can give you a lot of power building.
+
+[00:46:45.440] You can like remove the concept of
+
+[00:46:48.960] whatever that whatever like subtext the
+
+[00:46:51.080] name comes with and purely add it into
+
+[00:46:53.560] category and like let it focus on just
+
+[00:46:55.520] the category itself.
+
+[00:46:57.720] Um oh yeah. And our our example data set
+
+[00:46:59.840] has a lot of tools with very similar
+
+[00:47:01.600] names or like the same different MCP
+
+[00:47:03.840] servers have tools with the same name in
+
+[00:47:05.720] them. Exactly. And now I have a bunch of
+
+[00:47:08.359] matches and now I have to do something
+
+[00:47:09.800] slightly inefficient, which is I have to
+
+[00:47:12.120] go and like
+
+[00:47:13.840] for uh
+
+[00:47:15.520] I think that I thought it only returns
+
+[00:47:17.000] one match.
+
+[00:47:18.160] Yeah, oh sorry. But I can't use the
+
+[00:47:19.840] match keyword cuz that's the word.
+
+[00:47:22.160] Select it.
+
+[00:47:24.040] Uh category.
+
+[00:47:26.240] Uh so it has to select a category and I
+
+[00:47:28.200] do for category in categories. Return
+
+[00:47:31.600] this and then I just do this.
+
+[00:47:33.440] And this should be impossible to happen
+
+[00:47:35.440] because BAML will guarantee that this
+
+[00:47:37.800] will return one of the categories in the
+
+[00:47:39.480] list.
+
+[00:47:40.680] So this is just like triple checking
+
+[00:47:43.040] that the LLM returned something that's
+
+[00:47:45.280] in our list. Well, this is returning the
+
+[00:47:48.600] This is specifically trying to return
+
+[00:47:49.920] the type that we returned here. Ah,
+
+[00:47:52.400] you're just you're just looking up out
+
+[00:47:54.000] of our list. Yeah, okay. Yeah, I
+
+[00:47:56.240] cuz yeah, exactly. Cuz this list is
+
+[00:47:57.960] different than like the string that this
+
+[00:47:59.800] is returning.
+
+[00:48:01.400] Right. You want to return our like
+
+[00:48:03.080] native category object by matching on
+
+[00:48:04.960] the name.
+
+[00:48:05.960] Exactly. So I want to return our native
+
+[00:48:07.960] data model object for matching on name.
+
+[00:48:10.000] This is all the code is here. That's all
+
+[00:48:11.680] we have to do. And now there's clearly
+
+[00:48:13.440] things that we can do here to manipulate
+
+[00:48:15.480] both of these.
+
+[00:48:18.080] And let's can we throw in like a const
+
+[00:48:20.480] just like global list of a couple
+
+[00:48:21.960] categories? Oh yeah, here we go. Okay.
+
+[00:48:24.680] Wow, it's like cursor is listening to me
+
+[00:48:26.560] over the zoom.
+
+[00:48:32.950] Uh and right now you're clearly seeing
+
+[00:48:32.960] what I'm doing. I'm passing this in as
+
+[00:48:34.320] is.
+
+[00:48:35.359] Um
+
+[00:48:36.640] And there's no real difference here.
+
+[00:48:39.640] Um and then let me get an embedding API
+
+[00:48:42.520] really fast.
+
+[00:48:54.910] How come?
+
+[00:48:54.920] This seems like it's
+
+[00:48:57.520] installed upside down.
+
+[00:49:06.349] But yet this holds the grill.
+
+[00:49:06.359] Okay, I'm going to go and make executive
+
+[00:49:08.240] decision that's not about our uh our
+
+[00:49:10.560] problem here.
+
+[00:49:11.840] All right.
+
+[00:49:13.320] For a second I heard installed upside
+
+[00:49:15.000] down. I was like is that a comment on
+
+[00:49:16.640] the on the on the code we're building? I
+
+[00:49:18.640] also did doubt my own coding skills for
+
+[00:49:20.600] a few seconds there.
+
+[00:49:23.480] Uh okay. He's actually a plant. I I
+
+[00:49:26.240] figured we would we would give you some
+
+[00:49:28.200] self-doubt
+
+[00:49:29.640] in the middle of this this year
+
+[00:49:31.560] this year surprise challenge. Hey, look
+
+[00:49:33.800] at that.
+
+[00:49:35.720] Does it do that?
+
+[00:49:42.910] Why is it not auto completing?
+
+[00:49:42.920] There's something wrong with it, I
+
+[00:49:43.960] think.
+
+[00:49:46.240] Uh do you need to add the types for it?
+
+[00:49:56.470] Well, it's in there.
+
+[00:49:56.480] Uh maybe it's just it's just a little
+
+[00:49:58.040] slow.
+
+[00:50:05.150] Um Sorry, are you getting an error?
+
+[00:50:05.160] Uh it just says unknown and I get very
+
+[00:50:07.720] uh angsty whenever I get unknown text.
+
+[00:50:11.040] Um
+
+[00:50:12.480] of any kind. Uh and then I think
+
+[00:50:16.040] Well, I think this will work. Uh and
+
+[00:50:17.960] this was the trick.
+
+[00:50:19.360] Let's do it really fast. Let's run this
+
+[00:50:20.680] code.
+
+[00:50:22.200] Ship it.
+
+[00:50:33.950] Uh and I have my open AI key already
+
+[00:50:33.960] plugged in.
+
+[00:50:36.040] Uh UV run hello.py.
+
+[00:50:43.590] Oh.
+
+[00:50:43.600] Wrecked. Import .env.
+
+[00:50:59.670] Um can you do me a favor and just uh cat
+
+[00:50:59.680] your .env file for me just so I can make
+
+[00:51:01.680] sure you've uh set it up right?
+
+[00:51:04.120] Yeah, of course.
+
+[00:51:17.510] Oh, I didn't actually feed in the
+
+[00:51:17.520] categories. Um that was a bug.
+
+[00:51:20.200] Um I actually never fed in the
+
+[00:51:21.760] categories into my system. I actually
+
+[00:51:23.280] have to tell this function that I'm
+
+[00:51:24.520] passing in a type builder object into
+
+[00:51:27.280] it.
+
+[00:51:28.560] Oh, nice.
+
+[00:51:34.310] And we actually see exactly what this
+
+[00:51:34.320] does.
+
+[00:51:39.550] So now you can see it and it picked the
+
+[00:51:39.560] debug category. Let's add a bunch more
+
+[00:51:41.080] tools. So I'm just going to cursor to
+
+[00:51:42.920] add like
+
+[00:51:44.840] um
+
+[00:51:51.350] uh I
+
+[00:51:51.360] add 15 tools
+
+[00:51:55.200] categories here that describe user
+
+[00:51:58.680] intent
+
+[00:52:00.040] on a e-commerce
+
+[00:52:08.630] on an e-commerce
+
+[00:52:08.640] site.
+
+[00:52:15.230] This new cursor thing is annoying me to
+
+[00:52:15.240] no end. I don't know why the auto mode
+
+[00:52:16.680] never works.
+
+[00:52:29.510] Um we're almost at time, but I'm happy
+
+[00:52:29.520] to run over for a little bit if you want
+
+[00:52:31.200] to try to do this like thousands of
+
+[00:52:33.040] tools list. Yeah, let's do it right
+
+[00:52:35.240] here. So I added like I let's do let's
+
+[00:52:37.480] do this one really fast. Yeah. Um and
+
+[00:52:40.560] send you the JSON file. You can just
+
+[00:52:42.320] paste that into cursor probably and it
+
+[00:52:44.120] will generate everything you need.
+
+[00:52:46.280] So I put here I I want to buy a new
+
+[00:52:47.880] phone. We can see our like little
+
+[00:52:50.360] um
+
+[00:52:51.920] We see our little text over here and
+
+[00:52:53.480] we'll just see what this does.
+
+[00:53:05.390] How many categories I added? I only got
+
+[00:53:05.400] to pick five. So you can see what I was
+
+[00:53:07.120] able to do. It actually did search
+
+[00:53:08.640] products. I want to buy a new phone.
+
+[00:53:10.960] And now I can go and see exactly what
+
+[00:53:12.800] happened and where it happened.
+
+[00:53:15.160] So the first thing I noted is user wants
+
+[00:53:18.240] is looking for deals or discounts,
+
+[00:53:19.720] looking to search a product, looking to
+
+[00:53:21.480] add a product to their shopping cart, or
+
+[00:53:23.000] wants to sign up for an account.
+
+[00:53:25.080] Um it looked
+
+[00:53:26.200] Oh, okay. So you actually this is the
+
+[00:53:28.160] narrowed categories that came back after
+
+[00:53:30.320] the cosine comparison. Exactly. I want
+
+[00:53:33.200] to buy a new phone.
+
+[00:53:34.800] And like that looks about right if I had
+
+[00:53:37.680] to really pick one.
+
+[00:53:39.840] Uh where it's actually able to go ahead
+
+[00:53:41.800] and say
+
+[00:53:43.560] um
+
+[00:53:44.200] uh that the user wants to go pick a
+
+[00:53:46.000] product. Now, it's possible that I had a
+
+[00:53:48.600] thing in here called let's add one.
+
+[00:53:51.400] Buy
+
+[00:53:53.000] product.
+
+[00:53:55.080] Let's add that in there and let's see
+
+[00:53:56.280] what happens when I start running the
+
+[00:53:57.880] same script again.
+
+[00:54:00.120] And I can start to see kind of what's
+
+[00:54:01.560] going on.
+
+[00:54:02.760] And obviously you can do things like
+
+[00:54:03.880] cache these embeddings so everything
+
+[00:54:05.080] just for like the purpose of expediency
+
+[00:54:06.520] I'm trying to do it right here.
+
+[00:54:08.200] So the first thing here is like we can
+
+[00:54:10.000] see that now this popped up in my
+
+[00:54:11.920] embeddings list so it's actually able to
+
+[00:54:13.280] go select it. But if it didn't pop up
+
+[00:54:15.520] into my embedding list then I know what
+
+[00:54:17.000] I have to go modify. All I have to do is
+
+[00:54:18.600] modify the embedding text of the buy
+
+[00:54:20.800] product category.
+
+[00:54:22.480] Like um
+
+[00:54:24.240] do something with money. Like I'll I'll
+
+[00:54:26.800] change my category right now
+
+[00:54:28.920] to do something with money for my
+
+[00:54:30.240] embedding text.
+
+[00:54:36.910] And what we should be able to see is
+
+[00:54:36.920] it didn't pop up. So like of course the
+
+[00:54:38.760] model won't be able to select it because
+
+[00:54:40.240] it's not even one of the categories
+
+[00:54:41.560] that's available to the model to buy.
+
+[00:54:44.880] So it gives me a really nice way to go
+
+[00:54:46.720] probe it and go manipulate the system
+
+[00:54:49.000] that doesn't affect my whole system
+
+[00:54:50.920] holistically in every other outcome as
+
+[00:54:52.960] much. It allows me to tweak just the
+
+[00:54:54.840] parts that I really care about and now I
+
+[00:54:56.480] can get really fine grain control on
+
+[00:54:57.800] certain category systems.
+
+[00:55:00.480] Uh I know we're about 2 minutes left to
+
+[00:55:02.320] go.
+
+[00:55:03.280] Um I'm going to pause really fast.
+
+[00:55:06.600] Any questions from anyone?
+
+[00:55:18.270] Oh man, I got that reminder, too.
+
+[00:55:18.280] But is it
+
+[00:55:19.520] Um is is uh is LM description the thing
+
+[00:55:23.000] So you're asking is LM description the
+
+[00:55:24.400] thing it is. Let's look at what LM
+
+[00:55:26.040] description does. All I use LM
+
+[00:55:28.320] description for is
+
+[00:55:30.680] it's actually going to head and adding
+
+[00:55:32.480] text. Whenever I add the Whenever I add
+
+[00:55:35.240] the category into the LM, I'm adding
+
+[00:55:37.359] some context associated with it.
+
+[00:55:40.560] So the category often has context. And
+
+[00:55:43.000] now I can go ahead and actually add
+
+[00:55:44.440] context on exactly what this category
+
+[00:55:46.440] is.
+
+[00:55:47.600] And that's what the description is doing
+
+[00:55:49.240] for me. It's the text of the description
+
+[00:55:51.520] for that category. So the model kind of
+
+[00:55:53.560] knows what that category is used for in
+
+[00:55:55.200] context. And that text is very different
+
+[00:55:57.320] than the embedding text
+
+[00:55:59.200] because I may want to manipulate in
+
+[00:56:00.520] different ways.
+
+[00:56:03.160] And all this code will be pushed to
+
+[00:56:04.920] GitHub. I'll send the GitHub repo out
+
+[00:56:06.480] right afterwards.
+
+[00:56:07.880] Um
+
+[00:56:08.560] So all those functions we wrote as
+
+[00:56:10.480] probes of like, you know, embedding text
+
+[00:56:12.600] and we're really just encapsulating that
+
+[00:56:14.359] as fields on the class basically.
+
+[00:56:16.560] Exactly.
+
+[00:56:18.040] Yeah.
+
+[00:56:18.359] Um and like we can do different things.
+
+[00:56:20.400] We can have them saved in a database. We
+
+[00:56:21.800] can have them living in a live database
+
+[00:56:23.520] that we're constantly editing with our
+
+[00:56:25.040] users. And for example, like our users
+
+[00:56:27.440] can be given this context.
+
+[00:56:29.520] Um but that's kind of the goal here.
+
+[00:56:32.200] Question.
+
+[00:56:33.800] Yes.
+
+[00:56:34.200] You can is a video uh recording of this
+
+[00:56:37.240] going to be sent out to afterwards? Yes,
+
+[00:56:39.320] the video recording and the um and the
+
+[00:56:42.840] live code will be sent out afterwards.
+
+[00:56:44.920] And if you'd like, I'll give you some
+
+[00:56:46.120] homework uh as well to go play around
+
+[00:56:48.240] with it with the data set.
+
+[00:56:50.840] Yes. Love homework.
+
+[00:56:51.840] Yeah, there you go.
+
+[00:56:56.590] Um if you guys found this to be really
+
+[00:56:56.600] useful, we'd love for you to just go uh
+
+[00:56:58.920] give us a give us a like on LinkedIn
+
+[00:57:01.040] when you see the next one. If it sound
+
+[00:57:02.960] useful, star the GitHub repo for BAML
+
+[00:57:04.880] Human Layer. Always have to ask, it's
+
+[00:57:06.920] part of our job as founders. Um but uh
+
+[00:57:10.160] we hope that you if you send out more
+
+[00:57:11.880] questions or more topics that you'd like
+
+[00:57:13.640] us to cover next time, we'd be glad to
+
+[00:57:15.960] go do that. And then we'll stay on for
+
+[00:57:17.480] an extra 10-15 minutes answering any
+
+[00:57:18.920] questions if people have them.
+
+[00:57:21.800] Perfect. Hey, thanks everybody. And uh
+
+[00:57:23.600] y'all be hanging out as well. Yeah,
+
+[00:57:25.280] now's the extra time if anyone wants it.
+
+[00:57:28.200] So
+
+[00:57:29.440] quick question.
+
+[00:57:31.800] I'm also You have dynamic Yeah, go
+
+[00:57:33.880] ahead.
+
+[00:57:35.400] dynamic enum. So what is the purpose of
+
+[00:57:38.280] that since like
+
+[00:57:40.640] of that existing cuz at least the way
+
+[00:57:42.120] you had the example you were putting,
+
+[00:57:44.080] you know, putting all these enums in
+
+[00:57:45.920] there. So that presumes
+
+[00:57:49.520] that because it's linking to
+
+[00:57:51.800] The whole reason that this exists is for
+
+[00:57:53.840] a couple of reasons. Um so one of the
+
+[00:57:56.120] biggest reasons is as we know, the LM is
+
+[00:57:58.280] not always going to spit out the same
+
+[00:57:59.800] text every single time. Sometimes it
+
+[00:58:01.200] spits out K0.
+
+[00:58:02.800] Sometimes it'll spit out like um
+
+[00:58:05.160] like it'll say text like this, category
+
+[00:58:07.160] dash dash dash dash K0. Like this is
+
+[00:58:09.320] garbage. You if you we relied on the LM
+
+[00:58:11.760] to do this then you'd have to do a lot
+
+[00:58:12.960] of parsing. BAML is able to say that
+
+[00:58:15.800] based on the data that you gave it about
+
+[00:58:17.560] the enum. In this case we know that we
+
+[00:58:19.960] have these categories in here. We know
+
+[00:58:21.680] that the user is expecting only a
+
+[00:58:23.520] category object.
+
+[00:58:25.840] So we can run all the algorithms that
+
+[00:58:27.800] BAML runs for you and spit out just the
+
+[00:58:29.640] category under the hood.
+
+[00:58:31.680] So you are guaranteed, no matter what,
+
+[00:58:34.359] when you call this function in your
+
+[00:58:35.960] Python code,
+
+[00:58:37.560] um
+
+[00:58:39.640] this this function over here for uh pick
+
+[00:58:42.680] best category, you are guaranteed that
+
+[00:58:44.800] selected category will match one of the
+
+[00:58:46.800] enums coming out of dynamic out of the
+
+[00:58:49.480] ones that you set into here.
+
+[00:58:51.640] Got it. It helps you provide a
+
+[00:58:53.600] guarantee. And because these things are
+
+[00:58:55.080] set dynamically,
+
+[00:58:56.880] um yeah, thanks if you can put the
+
+[00:58:58.800] LinkedIn uh the LinkedIn post today's uh
+
+[00:59:01.800] session that'd be great.
+
+[00:59:03.440] If you could
+
+[00:59:04.680] um
+
+[00:59:05.720] uh if you could basically have this
+
+[00:59:07.600] guarantee then you know that this
+
+[00:59:10.080] is now a reliable pipeline that will
+
+[00:59:11.720] return one of these. So now this for
+
+[00:59:13.920] loop will always work and then
+
+[00:59:15.920] this is just uh impossible.
+
+[00:59:34.710] Yeah,
+
+[00:59:34.720] uh I think the gap was just in sort of
+
+[00:59:36.360] the
+
+[00:59:37.320] interplay between the LLM and the text
+
+[00:59:39.240] that it's injecting and what you're
+
+[00:59:41.680] playing back. And then you you literally
+
+[00:59:43.760] said it. I'm like, yeah, obvious, duh.
+
+[00:59:46.440] Okay. No, it's not obvious. I probably
+
+[00:59:48.320] said it like way too fast. I should have
+
+[00:59:50.000] slowed down. So.
+
+[00:59:52.160] Um any other questions?
+
+[00:59:59.190] Uh I have a question about latency.
+
+[00:59:59.200] Yes.
+
+[00:59:59.560] So, um you mentioned about the you know
+
+[01:00:01.720] Excalidraw diagram that you could have
+
+[01:00:03.360] like three to four different stages
+
+[01:00:04.840] where you probe. Uh so, what what is the
+
+[01:00:07.720] implication of this? I know I know
+
+[01:00:08.920] people are using open source models to
+
+[01:00:10.400] bring down costs for a lot of these
+
+[01:00:11.800] things, but they're slow. And then if
+
+[01:00:14.040] you don't use the open source models,
+
+[01:00:15.480] and you have I don't know hundreds and
+
+[01:00:16.600] thousands of API calls, that adds both
+
+[01:00:18.760] cost and latency, right? So,
+
+[01:00:20.960] uh there's a trade-off between doing too
+
+[01:00:23.440] many of those versus
+
+[01:00:25.200] increasing your application's response
+
+[01:00:26.680] time.
+
+[01:00:27.960] This approach actually ends up being way
+
+[01:00:29.880] faster from a latency perspective.
+
+[01:00:32.400] Cuz narrowing down your categories is
+
+[01:00:33.840] really fast. We're using vector
+
+[01:00:35.040] databases.
+
+[01:00:35.600] Okay.
+
+[01:00:36.160] Okay.
+
+[01:00:37.040] really really fast. Right? And I'm
+
+[01:00:39.600] running this locally. You can have a
+
+[01:00:40.720] vector Most people have less than like
+
+[01:00:43.040] 100,000 categories. You can run that in
+
+[01:00:46.400] memory in your machine without any other
+
+[01:00:48.960] software. You don't need to actually use
+
+[01:00:50.160] a vector database. Like you saw that I
+
+[01:00:52.200] just ran this local I I just did this.
+
+[01:00:53.960] And you just cache the vector You cache
+
+[01:00:55.960] the database file on some like random
+
+[01:00:57.960] pickle object on your system. And
+
+[01:01:00.240] obviously you can do this in TypeScript
+
+[01:01:01.440] or anything else you want as well.
+
+[01:01:03.400] But you cache
+
+[01:01:03.960] Adam, do you have the Excalidraw window
+
+[01:01:06.040] open? Could you go back to that again?
+
+[01:01:07.960] Yes, I do. The the the vector database
+
+[01:01:09.800] part I get, but the parts downstream
+
+[01:01:11.760] that part.
+
+[01:01:13.240] Yes, this part. Yeah. So, it turns out
+
+[01:01:16.000] that because the number of categories
+
+[01:01:17.760] you're sending into the LLM itself is
+
+[01:01:19.360] way less than your original kind of
+
+[01:01:20.680] categories, you also get way less way
+
+[01:01:22.920] better speed up. Because imagine you're
+
+[01:01:25.040] passing the LLM like 500 categories
+
+[01:01:27.200] versus 20 categories.
+
+[01:01:29.280] The LLM will respond faster with 20 LLM
+
+[01:01:32.200] LLMs are quadratic in nature. I mean,
+
+[01:01:34.200] exponent
+
+[01:01:35.280] like non-linear based on the number of
+
+[01:01:37.160] input tokens you have. Mhm. So, if you
+
+[01:01:39.160] have fewer input tokens, they will be a
+
+[01:01:41.080] lot faster.
+
+[01:01:43.600] Awesome. Yeah, makes sense.
+
+[01:01:44.840] And if if we change this function to
+
+[01:01:47.000] like
+
+[01:01:48.040] uh if we let's say we change this
+
+[01:01:49.520] function, and we say instead of pick
+
+[01:01:51.200] best category, we want to write the same
+
+[01:01:52.640] thing.
+
+[01:01:54.200] Uh pick best categories.
+
+[01:01:57.120] Count.
+
+[01:01:58.520] And then we return an array which cat
+
+[01:02:01.680] which
+
+[01:02:10.390] best describe the following text. And
+
+[01:02:10.400] now we can now return multiple from
+
+[01:02:12.680] multiple categories out of this system.
+
+[01:02:19.630] Uh and then we can run another narrowing
+
+[01:02:19.640] search that says given those categories,
+
+[01:02:21.680] now pick now prune it down and add more
+
+[01:02:24.000] categories into it.
+
+[01:02:25.520] If that makes sense.
+
+[01:02:31.950] Yeah, yeah, makes sense. Right? So, we
+
+[01:02:31.960] can write another function in Python
+
+[01:02:33.520] that says like pick multiple categories
+
+[01:02:35.200] and call pick best category from only
+
+[01:02:36.960] those categories. Like narrowing the
+
+[01:02:39.560] categories just happens to be a thing
+
+[01:02:41.400] that we're doing with a vector database.
+
+[01:02:43.120] You can easily call def
+
+[01:02:45.600] narrow down categories
+
+[01:02:48.400] LLM.
+
+[01:03:03.750] Oops, selected
+
+[01:03:03.760] categories.
+
+[01:03:05.520] And then I guess it did this for me.
+
+[01:03:11.070] And then let's say I want to return like
+
+[01:03:11.080] three categories.
+
+[01:03:17.270] Now I'm returning three categories from
+
+[01:03:17.280] the ones that the LLM picked. And then
+
+[01:03:18.840] I'm calling this down.
+
+[01:03:20.560] And now my pipeline
+
+[01:03:23.640] can do this.
+
+[01:03:29.590] So, I'm kind of choosing where where I
+
+[01:03:29.600] where I take in the paths of my system.
+
+[01:03:32.000] I can easily I don't have to do this
+
+[01:03:44.830] Yeah, I think um a really natural
+
+[01:03:44.840] follow-up to all of this would be like
+
+[01:03:46.760] how do you write like unit tests and
+
+[01:03:49.120] end-to-end tests on all this stuff? I
+
+[01:03:50.680] mean, I I might even be down to like on
+
+[01:03:52.920] our We have a I think we have another
+
+[01:03:54.200] topic for the next session, but we
+
+[01:03:55.359] should find some time to just like, hey,
+
+[01:03:57.359] how do you make this all the way to like
+
+[01:03:59.480] production grade engineering rigor of
+
+[01:04:01.720] like in terms of testing each individual
+
+[01:04:03.840] part and then testing the whole pipeline
+
+[01:04:05.680] end-to-end and building building up your
+
+[01:04:08.040] eval set for for how this like how we
+
+[01:04:10.359] want this to work.
+
+[01:04:12.040] Yeah, that's a good point. We should
+
+[01:04:13.359] probably consider a topic on that on how
+
+[01:04:15.240] how do you go from this to like an eval
+
+[01:04:17.120] pipeline that you can actually go and
+
+[01:04:18.280] test.
+
+[01:04:19.200] Cuz that's a whole different workflow.
+
+[01:04:21.640] You can every time the model gets
+
+[01:04:22.960] something wrong, you can quickly spin
+
+[01:04:24.560] out new tests at the like like probe
+
+[01:04:27.560] layer and at the end-to-end layer. Um
+
+[01:04:30.080] and then go iterate on your prompts or
+
+[01:04:31.640] your embedding algorithms or your top K
+
+[01:04:34.040] or whatever it is.
+
+[01:04:35.680] You want to see how I do that? I can do
+
+[01:04:37.160] that really fast.
+
+[01:04:43.550] I'll go do it really fast. Um
+
+[01:04:43.560] it this this ends up being like way
+
+[01:04:45.280] faster than most people expect.
+
+[01:04:51.470] So,
+
+[01:04:51.480] Oh, here it comes. Here it comes.
+
+[01:04:58.190] Um
+
+[01:04:58.200] let's do a little test.
+
+[01:05:14.349] I'll go do this, and in theory, let's
+
+[01:05:14.359] see if this works.
+
+[01:05:16.560] I'm going to API key.
+
+[01:05:27.190] Um Fine, I will I will ro- I will follow
+
+[01:05:27.200] up and remind you to rotate that key
+
+[01:05:30.480] before we share the recording.
+
+[01:05:32.720] Oh, yeah, that's okay.
+
+[01:05:35.680] It's okay. I already took three
+
+[01:05:36.520] screenshots. And
+
+[01:05:38.840] uh sharing options, which is
+
+[01:05:41.120] how do I stop screen sharing for like 1
+
+[01:05:42.800] second?
+
+[01:05:43.880] Uh cuz now I actually do
+
+[01:05:45.800] I think you can pause screen share, and
+
+[01:05:47.760] it will keep everything, but just like
+
+[01:05:49.920] Oh, that's great.
+
+[01:05:51.200] for a sec.
+
+[01:05:52.480] Thank you.
+
+[01:05:54.800] Um I do need to check my dot env file.
+
+[01:06:18.670] Um I'll play again.
+
+[01:06:18.680] So, here's how I do it usually.
+
+[01:06:20.960] Um
+
+[01:06:24.670] And this will give us some nice little
+
+[01:06:24.680] probes.
+
+[01:06:34.670] And what I want to do is I want to trace
+
+[01:06:34.680] this catego- this method.
+
+[01:06:37.080] And then I want to trace this method.
+
+[01:06:40.400] And then uh that one will trace for me
+
+[01:06:42.720] automatically.
+
+[01:06:44.240] Um then also trace this method
+
+[01:06:47.400] as well.
+
+[01:06:49.200] Um no, I don't need to.
+
+[01:06:51.600] Okay.
+
+[01:06:55.750] So, now I'm going to go rerun the same
+
+[01:06:55.760] thing here.
+
+[01:07:01.430] In theory,
+
+[01:07:01.440] um this should pop up and go do
+
+[01:07:03.400] something. So, we see that I want to buy
+
+[01:07:04.760] a new phone.
+
+[01:07:05.920] So, it returned search products. And
+
+[01:07:07.760] what I can go do when I go debug, and I
+
+[01:07:10.000] do this for all my eval sets
+
+[01:07:14.550] is
+
+[01:07:14.560] This is great. This is a great preview.
+
+[01:07:17.080] See the system I'm able to get, and I
+
+[01:07:18.440] can see, okay, what did narrow down
+
+[01:07:19.720] categories do? It actually returned some
+
+[01:07:21.359] of these categories. Oh, I need to
+
+[01:07:22.480] change this to our object here. The new
+
+[01:07:24.120] system does that slightly better.
+
+[01:07:25.920] And you can see exactly what the LLM
+
+[01:07:27.280] actually picked out of. And then what
+
+[01:07:28.400] you do is you can debug and say, was the
+
+[01:07:30.440] problem the fact that this didn't have
+
+[01:07:31.920] the right categories, and it didn't pick
+
+[01:07:33.480] the right thing?
+
+[01:07:34.760] And in this case, I can clearly see that
+
+[01:07:36.359] it's the case. Like I don't have the
+
+[01:07:38.320] ability to buy a product. It So, it had
+
+[01:07:40.560] to click search a product. So, clearly
+
+[01:07:42.800] something went wrong in here. So, then I
+
+[01:07:44.280] can go ahead and go and update just my
+
+[01:07:45.680] category. Then I know I have to go and
+
+[01:07:47.040] debug my iteration loop on only the only
+
+[01:07:50.040] the embedding text.
+
+[01:07:51.920] Um and really nothing else. So, I go So,
+
+[01:07:54.040] then I go and just update my embedding
+
+[01:07:55.520] text.
+
+[01:07:57.000] I think if I do it like I update it if I
+
+[01:07:58.320] make this a base model,
+
+[01:08:01.359] um
+
+[01:08:02.680] I'll play that with base model, and I
+
+[01:08:04.200] think it's slightly better. Then this
+
+[01:08:05.480] should work a little bit better.
+
+[01:08:07.240] Oops.
+
+[01:08:09.280] There we go.
+
+[01:08:14.790] Is this not working Pydantic?
+
+[01:08:14.800] You have to put You have to use the
+
+[01:08:16.000] keyword args. You can't use positional
+
+[01:08:17.839] args. I think it's also you can use data
+
+[01:08:19.560] classes. But anyway.
+
+[01:08:23.040] Oh, okay. That probably explains it. But
+
+[01:08:25.319] that's okay. I have AI to help me write
+
+[01:08:26.960] my code faster and better.
+
+[01:08:29.520] Um and then you'll basically get the
+
+[01:08:31.359] category object bumped up.
+
+[01:08:34.120] Uh and that will kind of give you more
+
+[01:08:35.960] data. And this I find to be a really
+
+[01:08:37.560] fast introspection way for me to really
+
+[01:08:39.880] quickly just understand where my system
+
+[01:08:41.560] is broken and like where it's actually
+
+[01:08:43.160] not working.
+
+[01:08:44.759] Um
+
+[01:08:46.200] And then if I rerun this again,
+
+[01:08:53.630] um oh, category has no field. This is
+
+[01:08:53.640] not a Pydantic object.
+
+[01:08:56.400] Um I may have a bug in my code
+
+[01:08:58.480] somewhere.
+
+[01:09:00.000] Cool.
+
+[01:09:01.040] Uh I'll figure out what the bug in my
+
+[01:09:02.240] code is, and I'll go update it when I go
+
+[01:09:03.640] update it. But that's the debugging flow
+
+[01:09:05.240] of being able to introspect and see
+
+[01:09:06.480] exactly which part of my pipeline messed
+
+[01:09:08.400] up is really the eval set. And really
+
+[01:09:10.680] the best eval you can have is yes, you
+
+[01:09:12.480] write down like 50 pie tests yourself,
+
+[01:09:14.799] and you call this function, you write
+
+[01:09:15.960] asserts on them.
+
+[01:09:17.799] But the best thing you can do is
+
+[01:09:19.640] actually
+
+[01:09:21.000] to let your to ship this product into
+
+[01:09:23.080] the user database and actually go and
+
+[01:09:25.200] collect this data off your real user
+
+[01:09:26.960] queries, and then go and evaluate the
+
+[01:09:28.799] pipeline and see where it's going wrong.
+
+[01:09:31.160] And if you can somehow associate that
+
+[01:09:32.640] the user intent didn't match the thing
+
+[01:09:34.560] that they did. So, if you suggested an
+
+[01:09:36.600] action based on what category you picked
+
+[01:09:39.240] and the user user said nah
+
+[01:09:41.680] on that action,
+
+[01:09:43.160] then you can always go back and say,
+
+[01:09:45.240] "Okay, then I know something is wrong.
+
+[01:09:46.680] Let me go introspect as a developer and
+
+[01:09:48.960] go see what went wrong." And I can see
+
+[01:09:51.359] was it in the narrowing down or was it
+
+[01:09:53.560] in the actually picking?
+
+[01:09:55.160] And that can help me navigate this
+
+[01:09:56.920] faster.
+
+[01:09:58.480] Yeah, and that's the thing I think in
+
+[01:09:59.560] like product dev in general is like
+
+[01:10:01.320] having having engineers have direct
+
+[01:10:03.480] access to user feedback on what LLMs are
+
+[01:10:06.160] doing. Um
+
+[01:10:07.560] super super important to like have that
+
+[01:10:10.320] tightest possible iteration loop.
+
+[01:10:13.880] Cool.
+
+[01:10:15.600] Other questions?
+
+[01:10:22.430] Available is this uh
+
+[01:10:22.440] the observability tool that we have? Is
+
+[01:10:24.760] it currently available to be on trends
+
+[01:10:27.440] as well?
+
+[01:10:28.680] Um
+
+[01:10:30.360] that will be available in about 4 weeks,
+
+[01:10:33.160] I believe. Uh and then yes, it is.
+
+[01:10:35.760] Uh we have a couple customers that are
+
+[01:10:37.800] asking for on prem, so we've been
+
+[01:10:38.880] working on that.
+
+[01:10:40.760] Okay. Okay.
+
+[01:10:43.880] And is the sign up still free? I thought
+
+[01:10:45.960] it was for school users.
+
+[01:10:47.480] it is uh it's going to be free for about
+
+[01:10:50.280] 2 more weeks.
+
+[01:10:51.680] Uh
+
+[01:10:52.320] and then in 2 more weeks uh well, there
+
+[01:10:54.760] will it will no longer be free. So, use
+
+[01:10:56.720] it while you can.
+
+[01:10:58.040] Okay. Uh but we have a new version
+
+[01:10:59.800] that's even better and uh it'll have a
+
+[01:11:01.680] freemium
+
+[01:11:02.840] option on it for people that don't have
+
+[01:11:04.520] high volume of data.
+
+[01:11:06.760] Okay.
+
+[01:11:16.870] Cool. I think next week's topic is going
+
+[01:11:16.880] to be really fun. I'm really excited to
+
+[01:11:18.280] talk about the difference between like
+
+[01:11:19.480] reasoning models and like versus
+
+[01:11:21.560] reasoning prompts. Me and Dax talk about
+
+[01:11:23.240] that quite a lot.
+
+[01:11:24.680] Cuz like now these reasoning models are
+
+[01:11:26.720] coming out, the question is
+
+[01:11:28.440] is it better to offload some of the work
+
+[01:11:30.680] to the model and let it do its own
+
+[01:11:32.240] reasoning or is it better for me to
+
+[01:11:33.960] control the reasoning in my prompt like
+
+[01:11:35.400] we did today?
+
+[01:11:36.680] And
+
+[01:11:37.920] like in all things in ML,
+
+[01:11:39.640] the real answer is my favorite little
+
+[01:11:41.640] meme.
+
+[01:11:42.800] Um
+
+[01:11:51.710] Oh, they don't have it?
+
+[01:11:51.720] It depends.
+
+[01:11:52.960] Uh and we'll talk about when and where
+
+[01:11:54.600] next week and we'll have a lot of fun
+
+[01:11:56.400] and I hope uh we get to see you all
+
+[01:11:58.400] again.
+
+[01:12:00.400] Absolutely. Thanks everybody. Thanks, my
+
+[01:12:01.800] Bob. Get you all in the next one.
+
+[01:12:03.240] everyone. Dax, this was really fun.
+
+[01:12:05.320] Thank you for joining me.
+
+[01:12:06.880] Super dope. Next time you're going to
+
+[01:12:08.080] have to let me write write write some
+
+[01:12:09.400] code, too.
+
+[01:12:10.520] Yeah, we'll do it. Next time we'll have
+
+[01:12:11.800] you write the code.
+
+[01:12:13.280] Oh god. All right. I love I love it when
+
+[01:12:15.240] Vi Bob yells at me while I'm writing
+
+[01:12:16.680] code. It's one of my favorite
+
+[01:12:17.960] experiences.
+
+[01:12:23.270] Um have a great week, everybody. Catch
+
+[01:12:23.280] you all later.
+
+[01:12:23.680] Bye. Bye.

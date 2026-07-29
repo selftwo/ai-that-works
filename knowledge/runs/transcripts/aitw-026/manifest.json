@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-026",
+  "video_id": "bLx-UlRTiEw",
+  "source_url": "https://www.youtube.com/watch?v=bLx-UlRTiEw",
+  "input_fingerprint": "4d5b66acd819e67bc1579e9ca96204303c11cadc6697e23bda6224f0151c6af2",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:19:28.532743+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 3551.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-026/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-026/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 1720,
+      "first_seconds": 5.03,
+      "last_seconds": 3550.28,
+      "source_duration_seconds": 3551.0,
+      "duration_delta_seconds": 0.7199999999997999,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:19:40.257164+00:00"
+}

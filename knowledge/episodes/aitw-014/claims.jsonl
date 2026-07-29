@@ -1,0 +1,6 @@
+{"kind":"observed","claim":"The memory design rolls detailed events into daily, weekly, and monthly summaries.","start":"00:03:14","end":"00:12:46","confidence":"high","source":"knowledge/episodes/aitw-014/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Event dates are used to assign information to summary periods.","start":"00:18:02","end":"00:27:30","confidence":"medium","source":"knowledge/episodes/aitw-014/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Prior memory context is provided while producing a new summary.","start":"00:31:42","end":"00:41:09","confidence":"high","source":"knowledge/episodes/aitw-014/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Summaries retain source identifiers and covered date ranges.","start":"00:44:15","end":"00:52:22","confidence":"medium","source":"knowledge/episodes/aitw-014/transcripts/stitched.txt"}
+{"kind":"observed","claim":"The implementation includes a PII redaction step for conversation data.","start":"00:57:04","end":"01:04:18","confidence":"high","source":"knowledge/episodes/aitw-014/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Intermediate data is inspected while the compaction pipeline is built.","start":"01:06:11","end":"01:16:32","confidence":"medium","source":"knowledge/episodes/aitw-014/transcripts/stitched.txt"}

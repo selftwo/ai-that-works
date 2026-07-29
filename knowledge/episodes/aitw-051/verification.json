@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID 0rMG-3iiilc",
+  "transcript_path": "2026-03-31-no-vibes-march/transcript.txt",
+  "transcript_range": "00:01.64 to 01:05:38.047",
+  "timestamp_order": "verified by knowledge/scripts/verify_transcript.py",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "all timestamped claim spans"
+  ],
+  "timestamped_claim_count": 6,
+  "source_duration_check": "not run: source media was not downloaded",
+  "remaining_uncertainty": [
+    "transcript provenance and ASR model",
+    "exact recording start",
+    "speaker attribution",
+    "screen only evidence"
+  ]
+}
+

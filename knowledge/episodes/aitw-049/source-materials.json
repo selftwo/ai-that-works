@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-049",
+  "primary": [
+    "2026-03-17-prompt-injections-guardrails/transcript.txt",
+    "2026-03-17-prompt-injections-guardrails/meta.md",
+    "2026-03-17-prompt-injections-guardrails/README.md"
+  ],
+  "supporting": [
+    "2026-03-17-prompt-injections-guardrails/README.md",
+    "2026-03-17-prompt-injections-guardrails/meta.md",
+    "2026-03-17-prompt-injections-guardrails/main.py",
+    "2026-03-17-prompt-injections-guardrails/baml_src/event.baml",
+    "2026-03-17-prompt-injections-guardrails/whiteboards.md"
+  ],
+  "notes": "Supporting artifacts provide implementation context but do not independently verify speaker claims."
+}

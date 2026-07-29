@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-016",
+  "video_id": "OawyQOrlubM",
+  "source_url": "https://www.youtube.com/watch?v=OawyQOrlubM",
+  "input_fingerprint": "b5c2305e38ebd581500188a7b45e89501d5ace02924bf895492a2d3659de579c",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:16:57.548151+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 4803.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-016/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-016/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 2146,
+      "first_seconds": 3.03,
+      "last_seconds": 4804.04,
+      "source_duration_seconds": 4803.0,
+      "duration_delta_seconds": 1.0399999999999636,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:17:03.712486+00:00"
+}

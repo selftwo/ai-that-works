@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID zpfXzk-3Yxw",
+  "transcript_range": "00:01.878 to 01:00:22.919",
+  "timestamp_order": "passed: 353 timestamps verified as monotonic by knowledge/scripts/verify_transcript.py",
+  "spot_checks": ["email as delegation", "typed webhook", "authentication headers", "failed extraction route", "queue ingress", "events and actions", "per-thread serialization", "verify before write", "irreversible action context"],
+  "timestamped_claim_count": 9,
+  "source_duration_check": "not run: source media was not downloaded",
+  "supporting_material_check": "README.md, meta.md, transcript.txt, email.md, and raw_email.json were inspected",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "product name transcription", "screen-only evidence", "whiteboard design was not implemented locally", "promised source code is absent", "external link availability"]
+}

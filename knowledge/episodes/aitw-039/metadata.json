@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-039",
+  "episode": 39,
+  "season": 2,
+  "title": "Understanding Latency in AI Applications",
+  "source_folder": "2026-01-06-latency",
+  "recorded_at": "2026-01-06T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "wadVIkJnjQE",
+  "youtube_url": "https://www.youtube.com/watch?v=wadVIkJnjQE",
+  "transcript_origin": "upstream timestamped transcript.md",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

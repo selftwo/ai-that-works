@@ -1,0 +1,4205 @@
+# S02E05 – Cracking the Prompting Interview
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:02.950] you we've seen this in like SQL
+
+[00:00:02.960] generation or maybe this is a tactic we
+
+[00:00:04.400] can talk about today like we've seen it
+
+[00:00:05.839] like SQL generation okay have the model
+
+[00:00:07.839] generate a JSON object that can be
+
+[00:00:09.840] determined turned into a SQL query for
+
+[00:00:12.320] SVGs the TL draw guy was talking about
+
+[00:00:14.400] this at AI engineer last week have the
+
+[00:00:16.480] model generate a structured object that
+
+[00:00:18.320] it's good at writing that then
+
+[00:00:19.840] deterministic code can turn into an SVG
+
+[00:00:22.320] and I think have the model generate code
+
+[00:00:25.439] that then you can like bake it's like
+
+[00:00:27.279] creating different views of the same
+
+[00:00:29.359] thing. Um, and then once that's baked,
+
+[00:00:31.920] then you can deterministically execute
+
+[00:00:33.760] that code with a programming runtime.
+
+[00:00:36.559] Yeah. All right. Well, with that, let's
+
+[00:00:39.360] get started. Um, my name is Byov. This
+
+[00:00:42.399] is Dexter. We've been doing this every
+
+[00:00:44.559] week for the last few weeks now. Um,
+
+[00:00:47.600] it's been months. We started in March,
+
+[00:00:49.200] dude. Oh, wow. Yes. But we took a break,
+
+[00:00:51.600] so I don't know if that counts. The
+
+[00:00:52.879] break is where I define the line. Um,
+
+[00:00:55.440] okay. But regardless, uh, the whole
+
+[00:00:57.920] point of this these episodes with AI
+
+[00:00:59.440] that works is to talk about real
+
+[00:01:00.879] practical AI applications where we don't
+
+[00:01:03.359] just talk about highle stuff, but really
+
+[00:01:04.879] try and show the code behind how things
+
+[00:01:07.280] work. Uh, we've talked about a bunch of
+
+[00:01:09.520] things in the past from MCP servers with
+
+[00:01:11.119] 10,000 plus tools to 12 factor agents by
+
+[00:01:13.760] Dexter all the way to human learn how to
+
+[00:01:16.000] use humans as tools and then just really
+
+[00:01:18.320] how to think about prompts. But today, I
+
+[00:01:20.880] think we want to do something that was
+
+[00:01:22.240] different. It's going to be a lot more
+
+[00:01:24.000] varied in conversation than our previous
+
+[00:01:26.400] conversations which are all about
+
+[00:01:28.000] focusing on one depth thing. Today we
+
+[00:01:30.320] want to talk about just prompting as a
+
+[00:01:31.920] whole. Nothing fancy, just plain old
+
+[00:01:34.960] prompting. And many of you
+
+[00:01:38.400] uh and actually Dexter, do you want to
+
+[00:01:40.000] give a little precursor while I get the
+
+[00:01:42.159] screen recording up? Well, I think like
+
+[00:01:44.400] many of the things that we end up
+
+[00:01:45.759] talking about, you can take like what is
+
+[00:01:47.600] a really simple problem that folks kind
+
+[00:01:49.920] of can look at and just say, "Oh, that's
+
+[00:01:51.439] solved." like like classification. It's
+
+[00:01:53.040] like, okay, I know how to pass the LM a
+
+[00:01:54.720] list of labels and get it to output one
+
+[00:01:56.880] of those labels with structured outputs
+
+[00:01:58.320] or something like that. And then you go
+
+[00:01:59.920] and you look under the hood and it's
+
+[00:02:00.960] like, oh, like actually there's a lot of
+
+[00:02:03.600] room where I thought the ceiling was of
+
+[00:02:05.920] like, okay, here's the techniques.
+
+[00:02:07.040] Here's how you do it. There's so much
+
+[00:02:09.280] more room to basically open up the box
+
+[00:02:13.040] and rip out all the wires and redo
+
+[00:02:15.120] everything and like engineer it to get
+
+[00:02:18.160] much better results. And I think like
+
+[00:02:19.920] the core of that is always prompting.
+
+[00:02:21.760] Um, and so I'm really excited today to
+
+[00:02:24.560] learn about both like just some basic
+
+[00:02:26.800] techniques framed in terms of certain
+
+[00:02:28.959] types of problems. Um, and and I think
+
+[00:02:31.920] today one of the things that it will be
+
+[00:02:33.519] cool is um, we're not going to talk as
+
+[00:02:35.360] much about like one big overarching
+
+[00:02:37.200] problem like we usually do. We're just
+
+[00:02:39.040] going to give you a grab bag of um small
+
+[00:02:42.160] tips and tricks that are reusable across
+
+[00:02:44.080] problem spaces and like lower level
+
+[00:02:46.080] advice that you can apply to lots of
+
+[00:02:48.000] problems. And I think hopefully uh if
+
+[00:02:50.400] folks are down, I think we put a thread
+
+[00:02:51.760] in in the Boundary Discord. Um if anyone
+
+[00:02:54.879] wants to share their prompts, uh the
+
+[00:02:56.800] most I've ever learned about prompt
+
+[00:02:58.239] engineering is showing Fib AI
+
+[00:03:00.080] applications that I've written and
+
+[00:03:02.239] having him roast my prompt and tell me
+
+[00:03:04.400] what we're doing wrong.
+
+[00:03:06.720] Um actually with that what I'll do is in
+
+[00:03:09.440] the thing in here I will actually just
+
+[00:03:11.280] post a link to this thread copy thread
+
+[00:03:16.319] and I'll post this in chat if uh anyone
+
+[00:03:20.080] wants they're welcome to post their
+
+[00:03:21.599] prompts that they want to share. This
+
+[00:03:22.959] will be recorded
+
+[00:03:24.800] um and like just post it on here. We'll
+
+[00:03:27.760] fix your prompts at the end and we'll
+
+[00:03:29.200] just show you how we would think about
+
+[00:03:30.239] them. Doesn't mean that they'll
+
+[00:03:31.040] necessarily get better. It might just
+
+[00:03:32.159] give you another technique or two. But
+
+[00:03:34.560] with that, let's go into the topic.
+
+[00:03:36.159] Cracking the prompting interview. I
+
+[00:03:38.080] think prompting is literally like
+
+[00:03:39.599] software engineering. And we're just
+
+[00:03:41.200] going to use the same techniques to do a
+
+[00:03:42.799] couple of things off the bat. So, let's
+
+[00:03:45.120] start off with a very common problem
+
+[00:03:46.400] that I always see, which is always the
+
+[00:03:50.319] first one that I'm going to talk about,
+
+[00:03:51.519] which is like labels.
+
+[00:03:54.640] And this I think the most common example
+
+[00:03:57.120] of this problem that I see is citations.
+
+[00:03:59.439] So, imagine that I have a prompt. My
+
+[00:04:01.680] prompt will have a bunch of text that I
+
+[00:04:03.519] refer to it in for the context of rag.
+
+[00:04:05.920] With the rag, I will have it give me
+
+[00:04:07.680] like the URL or something attached to it
+
+[00:04:11.200] and I will have a bunch of these
+
+[00:04:13.920] along the way. So I have like a URL with
+
+[00:04:15.760] some data and then I want to go get that
+
+[00:04:18.079] and somehow in my answer I want the LM
+
+[00:04:20.799] to give me out the URL.
+
+[00:04:23.280] Uh this is this a problem that I
+
+[00:04:26.560] resonates with this couple people. Does
+
+[00:04:27.919] anyone have ideas for how we could make
+
+[00:04:29.360] this better?
+
+[00:04:37.030] If not, we'll just go right into it. Uh,
+
+[00:04:37.040] if today's session is going to be Are
+
+[00:04:38.800] you gonna are you going to replace the
+
+[00:04:40.400] URL with a sentinel token?
+
+[00:04:43.919] Kind of. Yeah, exactly. Because what I
+
+[00:04:45.680] want is I want the answer that over here
+
+[00:04:48.400] to be an answer, but I want to include
+
+[00:04:50.479] the citations that that remap to that
+
+[00:04:52.800] specific thing. Now, the problem is, as
+
+[00:04:55.199] we all know, URLs can be really really
+
+[00:04:56.720] funky. like just the URL for this
+
+[00:04:58.080] Excalad draw is I don't know let me see
+
+[00:05:00.880] if I can share one um like if I go to
+
+[00:05:03.919] like I don't know the random browser
+
+[00:05:05.440] page I probably have something open
+
+[00:05:12.070] where' it go
+
+[00:05:12.080] sorry
+
+[00:05:14.960] if I just go to like for example our
+
+[00:05:16.320] YouTube channel let me just show some of
+
+[00:05:17.600] these videos the these URLs are
+
+[00:05:20.560] basically you I could have this as the
+
+[00:05:22.160] citation URL for my model and let's just
+
+[00:05:24.560] take a look at what it would mean for
+
+[00:05:25.680] the model to generate this.
+
+[00:05:28.560] Let's just go look at the tokenizer
+
+[00:05:30.080] because I think this is the most
+
+[00:05:31.120] important thing to think about if a
+
+[00:05:32.479] model can generate something accurately
+
+[00:05:33.759] or not. This is what the model has to
+
+[00:05:36.240] generate. There's a bunch of tokens. So
+
+[00:05:38.560] these tokens make sense. It can probably
+
+[00:05:40.479] do this. YouTube is a single token. A
+
+[00:05:42.560] YouTube is a single token. That's kind
+
+[00:05:43.759] of interesting actually. Um I learned
+
+[00:05:45.759] that today. Uh watch is a single token.
+
+[00:05:48.000] We're good. Question mark V is a single
+
+[00:05:49.520] token which also probably makes sense
+
+[00:05:51.280] because YouTube probably is a
+
+[00:05:52.479] predominant force in the tokenizer for
+
+[00:05:54.240] some reason. But everything else here
+
+[00:05:56.160] breaks down. This ends up and this is
+
+[00:05:59.919] there's like models can generate a
+
+[00:06:01.440] string. If you type in that string, you
+
+[00:06:02.800] say, "Hey, model make this string for
+
+[00:06:04.479] me." It's going to make it. But your
+
+[00:06:06.639] point is basically that like the more
+
+[00:06:09.520] tokens that you're asking the model to
+
+[00:06:11.440] generate accurately, the more kind of
+
+[00:06:13.680] effort it has to put on that and the the
+
+[00:06:15.919] less likely it's going to get it right.
+
+[00:06:18.160] Exactly. So in order for the model to
+
+[00:06:19.600] get this part of the URL correct
+
+[00:06:22.000] specifically, it has to generate 10
+
+[00:06:23.680] tokens perfectly. If we remove this
+
+[00:06:25.919] part, let's assume it'll get question
+
+[00:06:27.199] mark V correct. It has to get eight
+
+[00:06:29.199] tokens perfectly correct. If it messes
+
+[00:06:31.360] up in any of these, it becomes a useless
+
+[00:06:33.360] link.
+
+[00:06:34.880] So how can we change that? Well, we can
+
+[00:06:36.560] do something really, really simple. And
+
+[00:06:38.800] I will just use YouTube along the way.
+
+[00:06:42.000] And I'll write a basic prompt that does
+
+[00:06:43.840] this and tries to go about this.
+
+[00:06:48.880] Oops.
+
+[00:06:50.720] So, we're going to write a question new
+
+[00:06:53.120] file like uh labels.baml.
+
+[00:06:57.360] I'm going to have a function that's
+
+[00:06:58.479] going to say given uh like answer
+
+[00:07:01.440] question. I'm going to say here's a
+
+[00:07:03.919] question. I'm going to give it a list of
+
+[00:07:05.599] links
+
+[00:07:07.360] or content.
+
+[00:07:18.070] I'll say like this will have like a URL
+
+[00:07:18.080] which will be a string and then content
+
+[00:07:20.720] which will be a string and then
+
+[00:07:24.400] what we'll return here is some answer
+
+[00:07:32.710] and then citations
+
+[00:07:32.720] string array at definition
+
+[00:07:36.240] list of URLs
+
+[00:07:39.599] that are relevant. Okay.
+
+[00:07:48.790] Open AI GPT40.
+
+[00:07:48.800] Great.
+
+[00:07:50.479] And um ctx
+
+[00:07:54.000] output format.
+
+[00:07:56.879] Sorry, I'm on a live prompt, so I'm
+
+[00:07:58.400] going to try and be as fast as possible.
+
+[00:08:02.080] Full user question.
+
+[00:08:04.960] Okay. So output format is you're telling
+
+[00:08:06.879] it how to output the uh answer.
+
+[00:08:12.639] Exactly. And you're and you're putting
+
+[00:08:15.199] the output format and the relevant
+
+[00:08:16.879] content into the system prompt and then
+
+[00:08:19.680] we're putting the user the question of
+
+[00:08:21.199] the user prompt.
+
+[00:08:23.199] Exactly. So I'm going to do this. So now
+
+[00:08:26.319] this my prompt um and I will literally
+
+[00:08:29.919] just ask cursor to
+
+[00:08:32.320] generate me a test case for this rag use
+
+[00:08:36.640] case
+
+[00:08:38.240] use
+
+[00:08:47.990] They're all the same file. They're all
+
+[00:08:48.000] going to have a test case in them. I'm
+
+[00:08:50.080] going to move this use.l as uh
+
+[00:08:55.279] as a reference for how works. So, I'll
+
+[00:08:59.839] just have it generate a test case really
+
+[00:09:01.200] fast and then it'll just go do something
+
+[00:09:03.839] for me. But we can see how like um and
+
+[00:09:07.040] then this takes a little bit, but we can
+
+[00:09:09.440] see how like the model might struggle to
+
+[00:09:11.440] go do something. Great. Accept. Cool.
+
+[00:09:15.120] Let's go do this. Um, and oh man, are
+
+[00:09:17.279] you going to make these URLs really
+
+[00:09:18.800] freaking crazy and then uh see if we can
+
+[00:09:21.760] actually get the model to screw it up.
+
+[00:09:23.360] We're just going to use this.
+
+[00:09:26.320] So, this is one YouTube URL
+
+[00:09:29.200] and I will copy another YouTube URL from
+
+[00:09:31.440] a different video
+
+[00:09:38.710] and I will point this out. It's not even
+
+[00:09:38.720] a matter of like the model will screw
+
+[00:09:39.920] this up. It the the point here is it
+
+[00:09:42.240] doesn't matter if the model does this
+
+[00:09:43.760] perfectly or not. The point that matters
+
+[00:09:46.560] is the model might screw it up.
+
+[00:09:50.560] And if it screws it up, I have no
+
+[00:09:52.640] guarantee on this end. So there's small
+
+[00:09:55.360] things that I can do. So now that I have
+
+[00:09:57.519] some citation thing in here, I can do
+
+[00:09:59.760] something nice in my Python code to help
+
+[00:10:01.360] reduce some of these errors.
+
+[00:10:05.040] Oh, you can put like a guard. This is
+
+[00:10:06.560] from the eval thing. You can put a
+
+[00:10:07.760] runtime guard of like, hey, if it
+
+[00:10:09.120] outputs a URL that wasn't in our input
+
+[00:10:10.959] set, bounce it back and tell it to try
+
+[00:10:13.120] again. actually open just this one
+
+[00:10:15.200] folder really fast. Uh
+
+[00:10:18.880] that way it's gonna be a little bit
+
+[00:10:20.079] cleaner. There we go. Uh otherwise
+
+[00:10:23.200] Python versions don't work for monor
+
+[00:10:25.360] repos which is the worst sin that Python
+
+[00:10:27.279] have committed. We're getting there. I
+
+[00:10:30.000] think the uv.python stuff might actually
+
+[00:10:32.640] eventually fix it. I really hope so.
+
+[00:10:41.509] one thing I can do is I can literally
+
+[00:10:41.519] just get the answer equals this and then
+
+[00:10:44.399] I can say like for URL in answer uh
+
+[00:10:50.079] answer citations I somehow assert that
+
+[00:10:53.200] the URL starts with this. I could like
+
+[00:10:55.040] build some small search. I could I could
+
+[00:10:57.120] assert that the URLs are actually in the
+
+[00:10:58.640] actual content array that comes in
+
+[00:11:00.240] there.
+
+[00:11:02.160] Um,
+
+[00:11:07.750] oh,
+
+[00:11:07.760] I got it. I'll I'll I'll get the link.
+
+[00:11:10.800] Um, so we can actually go build this
+
+[00:11:12.560] URL, right, for us. Now, we can actually
+
+[00:11:14.560] go further. The problem is right over
+
+[00:11:16.640] here, the URLs, as we saw, have a
+
+[00:11:18.880] problem with how the model is going to
+
+[00:11:20.399] generate them.
+
+[00:11:22.480] So, let's go fix that actually. And
+
+[00:11:25.120] let's say this is our actual URLs.
+
+[00:11:33.430] uh
+
+[00:11:33.440] from BAML client.types
+
+[00:11:41.910] import content. Cool. Now what I can do
+
+[00:11:41.920] here is instead of actually putting this
+
+[00:11:44.000] URL as is I could literally put a I
+
+[00:11:47.360] could first change this completely and
+
+[00:11:50.160] say what I actually want to do is I
+
+[00:11:52.240] won't list a return of citations. I will
+
+[00:11:54.160] actually list an index
+
+[00:11:57.279] index of the content.
+
+[00:12:01.839] And now that this returns an index of
+
+[00:12:03.440] the content, what I will do here is
+
+[00:12:04.880] literally just print this out. Content
+
+[00:12:09.200] loop.index0
+
+[00:12:10.880] content idx. And now my prompt looks
+
+[00:12:14.560] like this. Instead of actually dumping
+
+[00:12:16.880] the actual URL, I just say content idx00
+
+[00:12:19.519] 0. I can actually put like dashes here
+
+[00:12:21.200] separators. I can put them beforehand
+
+[00:12:23.440] because that might actually better
+
+[00:12:29.829] content.
+
+[00:12:29.839] I can do this. Um, and now it's actually
+
+[00:12:32.480] called content content one content zero.
+
+[00:12:34.800] And now I just remove the idea of the
+
+[00:12:36.399] URL completely from the model. And the
+
+[00:12:38.800] model will not do this. And when I go
+
+[00:12:40.959] run this,
+
+[00:12:43.519] what we'll find is great, we get zero
+
+[00:12:45.279] and one because those are relevant
+
+[00:12:46.399] indexes. And like let's make up a third
+
+[00:12:47.920] one that doesn't matter.
+
+[00:12:51.279] Um,
+
+[00:12:53.200] Europe
+
+[00:12:54.800] is pretty cool and has great pasta
+
+[00:13:03.110] and ideally it shouldn't pick up the
+
+[00:13:03.120] right content. It should only pick up
+
+[00:13:04.399] zero and one. And now what I can do in
+
+[00:13:06.000] my code instead of doing it in the model
+
+[00:13:08.079] is I can convert the URL into the actual
+
+[00:13:12.720] citation. So now I can just say like
+
+[00:13:15.680] content of URL dot um what is it
+
+[00:13:19.680] contents of URL
+
+[00:13:22.000] URL or the actual URL that I actually
+
+[00:13:24.480] want. So it becomes an index based
+
+[00:13:25.760] lookup instead of a real one. So the
+
+[00:13:27.519] idea is you really don't you really want
+
+[00:13:29.360] to do your best to not rely on models
+
+[00:13:33.360] generating long sequences of tokens that
+
+[00:13:36.240] don't make sense for the model to
+
+[00:13:37.760] actually intuitively think about sim.
+
+[00:13:40.240] There's no meaning. There's no meaning
+
+[00:13:41.920] baked into that random string of
+
+[00:13:43.360] characters. It's just a pointer.
+
+[00:13:45.839] Exactly. And if you can go further and
+
+[00:13:49.120] if you go back to our content about
+
+[00:13:50.639] dynamic enums, you could, for example,
+
+[00:13:52.720] make this a dynamic enum that then has
+
+[00:13:54.639] an alias that gets mapped back to the
+
+[00:13:56.720] actual value. I was going to say we
+
+[00:13:58.320] could go into all of the fancy BAML
+
+[00:14:00.160] features that make this even easier. Um,
+
+[00:14:02.160] I'm going to say we are 20 minutes in.
+
+[00:14:03.760] So, if you if you want to move on to the
+
+[00:14:05.279] next tip or do you want to wrap this one
+
+[00:14:06.720] up or or do you have more on the label
+
+[00:14:08.639] stuff? Perfect.
+
+[00:14:10.880] It's don't use sequence of tokens that
+
+[00:14:12.560] don't make sense for the model. Go
+
+[00:14:14.240] update it on your own. We got one
+
+[00:14:16.480] question. Symbol simple tuning also
+
+[00:14:18.880] applies here. Exactly. Symbol tuning is
+
+[00:14:21.760] the exact same thing. Docs will cover
+
+[00:14:23.519] that. Can't talk about that right now
+
+[00:14:25.199] because of time constraints. We're going
+
+[00:14:27.360] to do another one. Diorization.
+
+[00:14:29.600] So, we've all seen diorization examples.
+
+[00:14:31.680] We're like, um, do this. Make a make a
+
+[00:14:35.360] transcript.
+
+[00:14:37.519] to diorization
+
+[00:14:40.240] diorization
+
+[00:14:45.350] function
+
+[00:14:45.360] use
+
+[00:14:47.360] labels of ammo as an example.
+
+[00:14:50.480] Do you want to do a quick uh whiteboard
+
+[00:14:52.399] on like what what do we mean by
+
+[00:14:53.839] diorization while it's working? Fine. I
+
+[00:14:57.040] will go do this. I'll describe some
+
+[00:14:58.560] words over here. So let's talk about
+
+[00:15:01.040] diorization.
+
+[00:15:02.720] Diorization. Diorization. Diorization is
+
+[00:15:05.680] this idea that we have audio coming in
+
+[00:15:08.480] and we want to turn the audio snippets
+
+[00:15:10.800] into like a
+
+[00:15:14.000] speaker plus transcript uh section. So
+
+[00:15:17.519] each of these will always have a speaker
+
+[00:15:18.959] and each of these will and then
+
+[00:15:20.240] transform into like who said what. So
+
+[00:15:22.320] the idea is most of these sequences come
+
+[00:15:24.399] from
+
+[00:15:26.560] and mo what most of these will do is
+
+[00:15:28.800] they'll basically say l literally say
+
+[00:15:30.880] speaker zero speaker one speaker zero
+
+[00:15:32.800] speaker one
+
+[00:15:34.959] um and you might actually want to go do
+
+[00:15:37.120] something more than that because you
+
+[00:15:38.560] might be having a conversation between a
+
+[00:15:40.160] nurse and a patient. So you might
+
+[00:15:41.600] actually want to say speaker one is a
+
+[00:15:43.040] nurse, speaker two is a patient and
+
+[00:15:45.199] transform your transcript to that. I'm
+
+[00:15:48.800] going to show you a prompting trip that
+
+[00:15:50.399] is going to reduce the amount of um text
+
+[00:15:55.279] that we might have to generate by an
+
+[00:15:56.800] order of magnitude to solve this
+
+[00:15:58.560] problem. Because if I want to go from
+
+[00:16:00.240] person one to
+
+[00:16:03.759] uh speaker, I like nurse
+
+[00:16:07.360] versus patient
+
+[00:16:16.150] versus like other cuz maybe their
+
+[00:16:16.160] husband or wife spoke up into it in the
+
+[00:16:18.399] middle of it. I want to know exactly who
+
+[00:16:20.240] these personas are. So, let's go do
+
+[00:16:23.120] that.
+
+[00:16:24.240] re real quick. Um, is there is does it
+
+[00:16:27.120] is I imagine this is probably equivalent
+
+[00:16:29.839] whether you're doing audio or raw just
+
+[00:16:32.079] like a raw transcript of a conversation,
+
+[00:16:34.399] right? Yes. So, I'm going to assume that
+
+[00:16:36.720] the transcript is going to have a
+
+[00:16:38.639] speaker. Uh, let's just say the
+
+[00:16:40.959] transcript is on, let's simplify this a
+
+[00:16:42.880] little bit. Let's say the transcript is
+
+[00:16:44.560] literally just a string.
+
+[00:16:47.440] And what I want to do is I want to
+
+[00:16:48.959] identify the speakers that exist for
+
+[00:16:50.480] each of these, right? So the transcript
+
+[00:16:53.440] is literally just going to be a string
+
+[00:16:55.519] and I I have um no other information
+
+[00:16:58.240] about it.
+
+[00:17:00.480] Uh transcript will turn into that. And
+
+[00:17:02.399] then what I want is I want to return a
+
+[00:17:03.839] di transcript which is going to be a
+
+[00:17:05.760] bunch of speaker segments. Don't need
+
+[00:17:07.439] this. And this will just have
+
+[00:17:11.520] speaker string uh text. And you might
+
+[00:17:14.000] even say that this is like nurse
+
+[00:17:16.959] doctor patient or other. Uh so let's
+
+[00:17:20.240] let's like write it like here.
+
+[00:17:22.400] Cool. Um,
+
+[00:17:36.470] output format
+
+[00:17:36.480] and then
+
+[00:17:38.640] roll user.
+
+[00:17:41.440] Okay, cool. That's probably good enough.
+
+[00:17:43.520] Oh, that's actually pretty cool.
+
+[00:17:46.160] Um,
+
+[00:17:48.240] let's change this. But you actually just
+
+[00:17:49.520] want the raw text, right? Yeah. So I
+
+[00:17:52.160] will Oh yeah, that's true. Thank you for
+
+[00:17:53.760] identifying that, Dexter.
+
+[00:17:56.559] Actually, I think our test case is
+
+[00:17:57.919] converted correctly. Uh
+
+[00:18:12.470] are you I'm hurt.
+
+[00:18:12.480] My knee
+
+[00:18:14.400] hurts.
+
+[00:18:16.240] I'm sorry.
+
+[00:18:18.480] Sorry. So, so this is
+
+[00:18:21.280] already has the speakers identified
+
+[00:18:23.919] though, right? Like, but it doesn't tell
+
+[00:18:26.160] me who's who.
+
+[00:18:29.600] Okay. Is so would this technique work?
+
+[00:18:33.200] Like is this applicable also to just a
+
+[00:18:37.039] like non like if I just have a a stream
+
+[00:18:40.240] of text and I don't it's not already
+
+[00:18:42.320] split up by speaker.
+
+[00:18:45.039] I guess this Okay, so this just assumes
+
+[00:18:47.039] you have turn detection but not
+
+[00:18:49.200] necessarily um let's say we don't know
+
+[00:18:52.080] who the speaker is. We don't know
+
+[00:18:53.200] anything about this. What we really want
+
+[00:18:54.480] to do is we want to go and convert this
+
+[00:18:56.240] in a really quick way. Um so I'm going
+
+[00:18:59.120] to go change it's been hurting for three
+
+[00:19:00.480] days now. Uh fix um he's been
+
+[00:19:04.320] complaining about it for a while. So
+
+[00:19:07.600] this is interesting because there might
+
+[00:19:08.960] be a lot of other content here. So let's
+
+[00:19:11.280] just see firstly what the what the what
+
+[00:19:13.919] the raw thing ends up being.
+
+[00:19:17.200] Yeah. And cool. This this seems kind of
+
+[00:19:21.280] interesting. It's like cool. It has
+
+[00:19:22.720] other it has all these other things in
+
+[00:19:24.160] here. Let's try and make this better
+
+[00:19:26.720] really fast. Um and I'm going to combine
+
+[00:19:29.679] like two or three different of the
+
+[00:19:30.960] prompting tips right in one as I go. So,
+
+[00:19:33.840] the first thing I want to notice is,
+
+[00:19:36.000] hey, this is probably not very useful.
+
+[00:19:42.160] So, let's try and just like fix this.
+
+[00:19:44.240] Well, part of it is not useful. Well,
+
+[00:19:46.080] one, I'm outputting the whole transcript
+
+[00:19:47.679] over and over again. That sounds bad. I
+
+[00:19:50.799] see. Let's see if we can do this in a
+
+[00:19:52.640] slightly better way. Um, so what I'm
+
+[00:19:55.919] going to do is I'm going to say
+
+[00:19:58.480] dialogue
+
+[00:20:00.240] index int. So, I'm going to give it give
+
+[00:20:03.679] it the dialog index. And here, I'm just
+
+[00:20:05.919] going to like write this in my prompt
+
+[00:20:07.440] really fast so I don't have to think
+
+[00:20:10.000] about this. But, uh, the right way to do
+
+[00:20:13.760] this is honestly to just make this thing
+
+[00:20:16.240] an array.
+
+[00:20:31.110] I love cursor. And we'll make this an
+
+[00:20:31.120] array. And now instead of dumping the
+
+[00:20:33.760] transcript out as we are, what we'll do
+
+[00:20:35.600] is we'll say for line and transcript
+
+[00:20:38.000] print out the line. And now what we'll
+
+[00:20:40.320] also say is this loop.index0
+
+[00:20:43.679] dialogue
+
+[00:20:49.590] this. We'll add an extra space in there
+
+[00:20:49.600] and then we'll add that in. So now this
+
+[00:20:53.200] is an assumption that the the script is
+
+[00:20:57.760] already an array or are we just
+
+[00:21:00.480] converting the script into an array like
+
+[00:21:02.880] well you can just split by you can just
+
+[00:21:04.559] split by I'm assuming if you have some
+
+[00:21:06.240] way have a speaker colon here you have a
+
+[00:21:08.240] way to convert this into an array of
+
+[00:21:09.679] some kind. Okay. Right. Yeah. I think I
+
+[00:21:12.400] think in yeah I think the questions that
+
+[00:21:13.840] a lot of people are asking is kind of
+
+[00:21:15.440] the like the real time actual speech to
+
+[00:21:18.000] text use case is you don't have those
+
+[00:21:21.120] like separators unless you're using like
+
+[00:21:23.200] a separate like turn detection model
+
+[00:21:25.120] basically. Yes, but most people should
+
+[00:21:27.919] be using a turn detection model. So I'm
+
+[00:21:29.360] assuming that you have that right now.
+
+[00:21:30.480] You're analyzing a transcript in post.
+
+[00:21:32.559] We can remove the speaker labels as well
+
+[00:21:34.240] so it's like a little bit more clear.
+
+[00:21:35.600] It's like we just have all the
+
+[00:21:36.640] statements that are literally speech to
+
+[00:21:38.159] text per line of some kind. I'm going to
+
+[00:21:41.120] go run this now. Now, you'll notice the
+
+[00:21:44.400] model's actually really really good at
+
+[00:21:46.080] just spitting out the dialogue index and
+
+[00:21:47.760] who the who the speaker is in each of
+
+[00:21:49.520] these scenarios. Oh, so it doesn't have
+
+[00:21:52.000] to reoutput the actual text itself.
+
+[00:21:54.240] Exactly. Order of magnit you can imagine
+
+[00:21:57.039] for long transcripts, this is an order
+
+[00:21:58.960] of magnitude
+
+[00:22:00.799] cheaper in terms of how much text it has
+
+[00:22:03.760] to output. And we can reduce this even
+
+[00:22:05.520] further and just like alias this to like
+
+[00:22:08.159] alias idx.
+
+[00:22:11.520] And then it'll be a lot shorter. And now
+
+[00:22:13.200] it's just now it's just outputting the
+
+[00:22:14.640] index in the speaker.
+
+[00:22:17.120] I'm a little curious what would happen
+
+[00:22:19.360] if you just put it all as one big
+
+[00:22:20.960] string. What do you mean? Oh, like like
+
+[00:22:24.559] if you didn't split them out. I imagine
+
+[00:22:26.799] it's probably not going to work as well.
+
+[00:22:28.240] But it it the reason that this works a
+
+[00:22:31.280] lot better is twofold. one I'm actually
+
+[00:22:33.600] telling the model what the index is. So
+
+[00:22:35.760] the model has to go back and say I'm
+
+[00:22:38.480] let's look at what the model does turn
+
+[00:22:39.840] by turn. It's going to in first output
+
+[00:22:41.919] idx0.
+
+[00:22:43.440] Then all it has to do is in its token
+
+[00:22:45.840] during the attention mechanism the model
+
+[00:22:48.240] goes back into its tokenizer. So it
+
+[00:22:50.240] literally will go back through all the
+
+[00:22:51.360] tokens and just say okay what tokens do
+
+[00:22:53.520] I want to look at? I want to look at
+
+[00:22:54.559] next zero. It's going to go and just say
+
+[00:22:55.840] okay I need to understand this part of
+
+[00:22:57.280] this this part of the segment. It's
+
+[00:22:59.520] easier for it to focus. So even though
+
+[00:23:02.080] it's a little redundant, it helps the
+
+[00:23:04.000] model be a little bit more focused on
+
+[00:23:06.480] its part. Now it's like, okay, what who
+
+[00:23:08.400] likely said this?
+
+[00:23:10.799] And then it's like and then it goes out
+
+[00:23:12.320] and starts spitting out the next token,
+
+[00:23:13.600] spits out idx. So at the point of idx,
+
+[00:23:16.480] now it says, oh, what's the next idx I
+
+[00:23:18.400] need? Oh, let me go back a couple tokens
+
+[00:23:20.320] here. It's like that was zero. I
+
+[00:23:22.320] probably need one next. We're reducing
+
+[00:23:24.720] the burden on the model. That's the main
+
+[00:23:28.480] that's the main leverage here. the model
+
+[00:23:31.120] at any point is able to do way less work
+
+[00:23:33.440] and then therefore output more. Does
+
+[00:23:35.360] that make sense, Dexter? Yeah, I got
+
+[00:23:37.840] you. Cool. Cool.
+
+[00:23:40.720] Now, the thing is we may not actually
+
+[00:23:43.520] know exactly who's talking here. Like
+
+[00:23:45.679] this other thing, we might have made a
+
+[00:23:47.120] bug and not actually introduced other.
+
+[00:23:50.320] And in this scenario, what we'll find is
+
+[00:23:52.720] likely the model
+
+[00:23:55.919] will do something just output to nurse.
+
+[00:23:58.240] it kind of hallucinated on its own. So
+
+[00:24:01.360] we can actually just add other as a
+
+[00:24:04.320] fallback. So we the model doesn't tend
+
+[00:24:06.320] to hallucinate. We want to prevent
+
+[00:24:07.760] hallucinations when possible. And we do
+
+[00:24:09.200] that by giving the model an out. That's
+
+[00:24:11.279] another and this is the same with all
+
+[00:24:13.279] the all the classifier examples that
+
+[00:24:15.279] that we talk about, right? is like
+
+[00:24:17.279] classify the things you know you are
+
+[00:24:18.880] good at classifying in the fastest,
+
+[00:24:20.799] cheapest, most efficient way and then
+
+[00:24:23.440] allow the model to have an escape hatch
+
+[00:24:25.600] in which case you'll handle it in a
+
+[00:24:27.679] different way either by sending it to a
+
+[00:24:29.279] human to classify or sending it to a
+
+[00:24:30.960] bigger smarter model or whatever it is.
+
+[00:24:33.840] Exactly. But now let's do another thing.
+
+[00:24:36.240] Let's do another thing. Clues. Let's add
+
+[00:24:38.960] some clues here. So I'm going to help
+
+[00:24:41.679] model things that I'm Exactly. So I'm
+
+[00:24:43.760] going to help the model think about what
+
+[00:24:45.279] it is. And it's literally just like
+
+[00:24:48.000] it's literally just dumping the text
+
+[00:24:49.520] here.
+
+[00:24:51.919] Um, and like this is not very useful.
+
+[00:24:53.679] Add description things that help
+
+[00:24:57.279] uh uh inference to
+
+[00:25:01.760] let's just add a little bit more
+
+[00:25:02.880] dialogue here and we'll see what it
+
+[00:25:04.000] does.
+
+[00:25:06.400] um
+
+[00:25:08.720] uh let's say uh
+
+[00:25:11.840] what uh might
+
+[00:25:15.039] uh relevant. So let's so we're noticing
+
+[00:25:17.840] that what it's doing is just outputting
+
+[00:25:19.440] all the clues but a lot of the times
+
+[00:25:20.880] it's kind of obvious who the speaker is.
+
+[00:25:23.039] So let's just do this only if not
+
+[00:25:25.600] obvious
+
+[00:25:28.559] uh list out facts that uh help us
+
+[00:25:34.799] um identify help us analyze yeah John's
+
+[00:25:39.279] suggesting deductive reasoning steps
+
+[00:25:41.679] which I think is gets a little towards
+
+[00:25:44.559] some of the stuff we've done in the past
+
+[00:25:45.600] around like structured reasoning stuff.
+
+[00:25:53.909] Oh, a speaker. Maybe I had a much better
+
+[00:25:53.919] test case pulled up earlier.
+
+[00:25:56.559] So, and now you're noticing over here
+
+[00:26:00.080] now something a lot more interesting.
+
+[00:26:03.200] It says speaker zero other because they
+
+[00:26:05.200] don't know yet. Speaker one uses
+
+[00:26:06.960] personal pronouns indicating injury.
+
+[00:26:08.880] That means that they're probably a
+
+[00:26:10.159] patient.
+
+[00:26:11.679] Speaking about the patient, so probably
+
+[00:26:13.840] other
+
+[00:26:15.440] along the way.
+
+[00:26:18.640] So, it's actually a lot more useful to
+
+[00:26:21.279] actually go do this. And now we can have
+
+[00:26:22.480] a lot more com confidence behind what's
+
+[00:26:24.559] happening. But it's also it's it's
+
+[00:26:27.120] gotten it's it's gotten worse at picking
+
+[00:26:29.440] the ones where it was the doctor. The
+
+[00:26:31.120] doctor the doctor and nurse are worse.
+
+[00:26:33.840] Yes. But that might be because when you
+
+[00:26:37.600] really think about it, doctor and nurse
+
+[00:26:39.840] are actually confusing because how does
+
+[00:26:42.799] it actually identify correctly between
+
+[00:26:44.240] the doctor and the nurse?
+
+[00:26:46.880] And we can go about this one more time.
+
+[00:26:49.039] And if we actually go look at this, if I
+
+[00:26:51.440] were to read this transcript, there is
+
+[00:26:53.200] no freaking way I as the human would
+
+[00:26:55.600] actually be able to know if it's
+
+[00:26:56.640] actually a doctor or pat doctor or not
+
+[00:27:00.400] without knowing how many people are in
+
+[00:27:02.000] the room.
+
+[00:27:04.080] Very true. I could be talking to my
+
+[00:27:06.480] brother. Exactly. Exactly. And that's
+
+[00:27:09.440] the point. This could be my uncle
+
+[00:27:10.720] talking
+
+[00:27:12.480] Uh so whenever some when you said doctor
+
+[00:27:14.799] and patient got nurse you're right we
+
+[00:27:16.799] intuitively felt that way but remember
+
+[00:27:19.039] the model has no context around this so
+
+[00:27:21.440] let's add some more cont sorry could you
+
+[00:27:23.360] go to so before you clear this out could
+
+[00:27:24.720] you go to the third index index number
+
+[00:27:26.480] two
+
+[00:27:28.080] yeah this this time it seems to have
+
+[00:27:30.240] gotten it because it's making
+
+[00:27:32.400] assumptions yeah yeah about it right
+
+[00:27:35.520] it's make but now it's taking more from
+
+[00:27:37.840] the prompt itself like the actual output
+
+[00:27:40.480] format Right. Exactly. It's literally
+
+[00:27:42.559] just like ah you're probably either a
+
+[00:27:44.000] doctor or a patient. Like there's no
+
+[00:27:45.679] there's no way around this. But now that
+
+[00:27:47.120] we forced the model to be like who uh if
+
+[00:27:50.640] not only if not obvious go list out
+
+[00:27:52.640] facts.
+
+[00:27:54.320] And in fact the obvious answer for
+
+[00:27:56.559] identifying speakers maybe other in all
+
+[00:27:59.039] scenarios.
+
+[00:28:01.200] And that's what I would do if I had I
+
+[00:28:03.039] would unlabel everything. But then I
+
+[00:28:05.360] would say, "Oh,
+
+[00:28:07.520] but now we know for sure that this one
+
+[00:28:09.360] is a patient because it has been
+
+[00:28:11.520] nonobviously stated."
+
+[00:28:14.080] But we can go further. We can make this
+
+[00:28:15.679] a little bit better.
+
+[00:28:18.960] There
+
+[00:28:20.480] there were four people in the room.
+
+[00:28:26.640] Doctor Josh,
+
+[00:28:35.269] uh, nurse
+
+[00:28:35.279] off
+
+[00:28:45.830] uh uh friend
+
+[00:28:45.840] unidentified.
+
+[00:28:48.559] So we can go do this because maybe for
+
+[00:28:50.480] my EMR I know exactly who visited
+
+[00:28:53.440] but I don't know I don't have any
+
+[00:28:54.799] information on the other person at all.
+
+[00:28:58.000] So now let's add this in here
+
+[00:29:19.190] And now what we find is that the model
+
+[00:29:19.200] gets a lot better.
+
+[00:29:21.840] Right? So you could you could look at
+
+[00:29:24.080] like if you want to do this for a random
+
+[00:29:25.679] event, you could go get the people off
+
+[00:29:27.919] the Google calendar event and just
+
+[00:29:29.440] inject that at the top be like here's
+
+[00:29:30.880] the people and here's their domains and
+
+[00:29:32.480] here's you know two sentences of deep
+
+[00:29:34.960] research about who this person is.
+
+[00:29:37.279] Exactly. And this this mechanism of how
+
+[00:29:40.799] we felt like it got more inaccurate and
+
+[00:29:43.679] might have diverted us from actually
+
+[00:29:45.200] exploring this prompt further is
+
+[00:29:46.960] actually important to understand why the
+
+[00:29:48.399] model did this. step back, rethink, and
+
+[00:29:51.120] remember that the model did this because
+
+[00:29:53.440] if I were to be completely objective,
+
+[00:29:55.200] show this to a random person and tell
+
+[00:29:56.720] them to identify speakers, they also
+
+[00:29:58.559] would likely pick other. If they had to
+
+[00:30:01.279] be like if the choice would be wrong or
+
+[00:30:03.440] be correct, I too would prefer to be not
+
+[00:30:07.279] wrong and just pick other because other
+
+[00:30:09.279] is never wrong.
+
+[00:30:11.679] Cool. Um, are we going to do triple back
+
+[00:30:15.039] takes today? I'll do that in a second.
+
+[00:30:17.120] That's tip number two where we use
+
+[00:30:19.279] diorization.
+
+[00:30:20.880] And I want to show one last ver variant
+
+[00:30:23.760] of this trick which is these clues.
+
+[00:30:27.360] So instead of outputting clues, we can
+
+[00:30:29.520] just do this description
+
+[00:30:33.760] uh as a precursor
+
+[00:30:37.679] to the comment.
+
+[00:30:40.320] As a precursor
+
+[00:30:43.279] comment to this field.
+
+[00:30:46.960] So sometimes we want
+
+[00:30:50.159] but we don't want it to do reasoning as
+
+[00:30:52.480] a data field. I don't want to deal with
+
+[00:30:54.080] that. I just want to like output
+
+[00:30:55.440] something and I want to show you what
+
+[00:30:57.919] happens here.
+
+[00:30:59.840] Um if this works
+
+[00:31:07.909] uh example. Okay. So this is getting
+
+[00:31:07.919] into like how do we how do we this is a
+
+[00:31:09.760] great leeway. This is like how do we get
+
+[00:31:11.279] the model to output busted JSON in a way
+
+[00:31:15.840] that like actually helps it get better
+
+[00:31:17.919] answers.
+
+[00:31:25.510] Like comments in JSON are technically
+
+[00:31:25.520] not valid.
+
+[00:31:28.240] Yeah. Let's see if I can force it to do
+
+[00:31:29.600] this. I have to actually read the prompt
+
+[00:31:30.960] and see what it's doing.
+
+[00:31:33.919] Uh
+
+[00:31:36.320] use
+
+[00:31:42.710] As
+
+[00:31:42.720] if
+
+[00:31:44.480] if not if speaker is ambiguous.
+
+[00:32:01.830] to help narrow
+
+[00:32:01.840] help
+
+[00:32:10.070] down
+
+[00:32:10.080] uh
+
+[00:32:12.880] to help narrow down um the
+
+[00:32:36.310] I'm going to go run this and see what
+
+[00:32:36.320] the model does.
+
+[00:32:38.399] Okay, I can't get it to do it. Let me
+
+[00:32:39.840] try and put this out.
+
+[00:32:46.549] This is like the weirdest trick that
+
+[00:32:46.559] I've learned and
+
+[00:32:58.310] uh so not directly in the generated
+
+[00:32:58.320] output format but just in the prompt
+
+[00:33:02.559] and
+
+[00:33:04.399] use for and had
+
+[00:33:11.750] and then
+
+[00:33:11.760] accident.
+
+[00:33:14.240] Okay. So, you always tell me not to use
+
+[00:33:16.480] a few shot prompting.
+
+[00:33:18.799] I do
+
+[00:33:21.440] because this is more about the structure
+
+[00:33:24.480] of the response, not about the actual
+
+[00:33:26.799] like learning from examples basically.
+
+[00:33:29.360] Exactly. So, let's see if I can get the
+
+[00:33:31.760] model to output this. And sometimes I
+
+[00:33:33.519] can't. Sometimes the model doesn't
+
+[00:33:34.720] really listen. Um, and just dump that
+
+[00:33:37.200] info as another field. So, let's do
+
+[00:33:39.039] another last thing. prefix equals answer
+
+[00:33:43.600] with this. I noticed OpenAI has been
+
+[00:33:47.840] doing this.
+
+[00:33:49.440] Oh, where like I think for whatever
+
+[00:33:52.399] reason whenever you use the word JSON,
+
+[00:33:54.000] they trigger something special in the
+
+[00:33:55.600] prompt that goes to like some other
+
+[00:33:56.799] model or something
+
+[00:33:59.120] or like secretly turns on. Oh, there you
+
+[00:34:01.840] go. Yes, exactly.
+
+[00:34:09.909] And now the model's actually um uh
+
+[00:34:09.919] writing some more comments but it's
+
+[00:34:10.960] writing the comments be after um
+
+[00:34:15.440] if list relevant facts on speaker before
+
+[00:34:19.359] the speaker field
+
+[00:34:21.839] the reasoning before the output. Yeah.
+
+[00:34:25.839] Uh question. So the reason to do this is
+
+[00:34:29.200] to save the tokens on writing clue every
+
+[00:34:32.960] single time or it is it's not always
+
+[00:34:36.240] about that. It's just like the model
+
+[00:34:38.320] might just it's just another tool in
+
+[00:34:40.560] your toolbox for how you can get the
+
+[00:34:42.240] model to output what you want. Clues is
+
+[00:34:45.040] one way to do it.
+
+[00:34:47.359] But and you can also do the thing we do.
+
+[00:34:48.800] It's like put the reasoning at the top
+
+[00:34:50.800] and then dump the JSON. And it sounds
+
+[00:34:52.960] like this is just like, okay, if we want
+
+[00:34:54.399] really targeted reasoning on each field.
+
+[00:34:57.040] Exactly. And maybe like this is way more
+
+[00:34:59.599] token efficient than having it output a
+
+[00:35:01.680] bunch of extra JSON.
+
+[00:35:04.079] Exactly. And you'll notice you saw me
+
+[00:35:06.640] iterate a little bit on this prompt over
+
+[00:35:08.240] here. Like I did a couple of things to
+
+[00:35:10.079] go do this, but this goes into the very
+
+[00:35:13.200] next tip that I want to really talk
+
+[00:35:14.720] about, which is one,
+
+[00:35:18.640] it's called RTFP. Um, for those of you
+
+[00:35:21.599] that don't know RTFM, it means read the
+
+[00:35:23.680] manual. RTFP means read the
+
+[00:35:26.160] prompt. Um, and I say that with
+
+[00:35:28.560] a lot of love because most people don't
+
+[00:35:30.480] actually read the prompt. And you saw
+
+[00:35:31.920] what I did when this didn't work over
+
+[00:35:33.839] here. I just read the prompt. I was
+
+[00:35:35.839] like, "Oh, the if I go back to the add
+
+[00:35:38.320] description mechanism, let me give you a
+
+[00:35:40.079] little bit more of a description of why
+
+[00:35:42.800] I didn't like this."
+
+[00:35:45.359] When I go read this, I'm like, "Oh, this
+
+[00:35:47.760] thing over here. Maybe it's getting
+
+[00:35:49.280] confused by the double comments.
+
+[00:35:52.800] And you can see how that might be
+
+[00:35:54.320] confusing to the model. So since I'm
+
+[00:35:56.400] using comments like nested comments in
+
+[00:35:58.720] comments, I'm like, okay, let me just
+
+[00:36:00.560] try and simplify this problem for the
+
+[00:36:02.320] model and give it that in a place where
+
+[00:36:06.240] it can't be confused. And that was the
+
+[00:36:08.960] intuition that I had out here.
+
+[00:36:12.720] Um, so it really just boils down to
+
+[00:36:14.400] reading the prompt because if we can
+
+[00:36:15.599] read the prompt, then we can see what
+
+[00:36:16.720] the model might be doing. And of course,
+
+[00:36:18.079] we can never actually know what's
+
+[00:36:19.680] actually happening,
+
+[00:36:21.920] but it allows us to actually know what
+
+[00:36:24.400] it allows us to iterate a little bit
+
+[00:36:25.920] faster and then we can say, "Oh, that
+
+[00:36:27.280] isn't working. Let me go fix that."
+
+[00:36:29.200] There's a question about why not use fot
+
+[00:36:31.119] prompting. There's a couple reasons.
+
+[00:36:33.119] Typically, the way to have done fot
+
+[00:36:34.720] prompting in this example would have
+
+[00:36:36.720] been me to actually go and write an
+
+[00:36:38.960] example and then write out the answer.
+
+[00:36:41.040] But that's not what I wanted. I just
+
+[00:36:42.880] wanted the model to understand that it
+
+[00:36:44.480] has the ability to go do this. it has
+
+[00:36:46.960] the ability to list out facts before it
+
+[00:36:49.760] actually spits out the speaker field. So
+
+[00:36:52.480] I just wanted to give it the structure
+
+[00:36:53.839] so it understands the thing it has to
+
+[00:36:55.839] mimic. I don't it's not the
+
+[00:36:59.200] Go ahead, Dexter. Yeah. And and all this
+
+[00:37:01.760] is again is like okay cool like yeah
+
+[00:37:04.160] probably just outputting JSON is good
+
+[00:37:05.920] enough. Outputting reasoning first is a
+
+[00:37:07.839] little bit better. Having reasoning in
+
+[00:37:09.440] your JSON fields is probably a little
+
+[00:37:11.119] bit better. But if you're running this
+
+[00:37:12.960] kind of thing a h 100,000 times a day,
+
+[00:37:16.079] then a tiny half a percent improvement
+
+[00:37:18.400] either in efficiency or in speed or in
+
+[00:37:20.880] token efficiency or in accuracy is
+
+[00:37:24.320] massively valuable. And this is what we
+
+[00:37:26.800] talk about every week on this show like
+
+[00:37:28.160] how do you how do you unlock those like
+
+[00:37:30.240] near the top of the accuracy range? How
+
+[00:37:32.400] do you push things even further? Yeah.
+
+[00:37:35.040] How do you get another half a percent?
+
+[00:37:37.359] And this isn't again remember this isn't
+
+[00:37:39.440] say that this technique will work always
+
+[00:37:42.480] but it is another technique that you
+
+[00:37:44.240] have available to yourself just like we
+
+[00:37:46.240] use this other technique to not spit out
+
+[00:37:47.680] the entire dialogue but rather only spit
+
+[00:37:50.079] out the index
+
+[00:37:52.720] and we use this other technique to say
+
+[00:37:54.640] oh dialogue index is actually a lot more
+
+[00:37:56.480] tokens let's use purely the word index
+
+[00:37:59.680] instead so it spits out the output
+
+[00:38:01.680] tokens are way less
+
+[00:38:04.480] it's small things that can make a
+
+[00:38:06.079] difference and And if I actually were to
+
+[00:38:07.280] look at this, my hunch actually says
+
+[00:38:11.440] index itself. Where'd it go? Index is
+
+[00:38:14.000] probably wrong. I should actually
+
+[00:38:15.839] probably use like index
+
+[00:38:18.160] because this is just a more popular
+
+[00:38:19.839] token that the model will have
+
+[00:38:21.359] understandings of or rather than idx.
+
+[00:38:23.359] Even though idx is a single token, it's
+
+[00:38:25.440] just more commonly understood
+
+[00:38:28.079] existing processes. Um, cool.
+
+[00:38:32.400] Question. Quick question. So we do this
+
+[00:38:34.320] actually hundreds and thousands of times
+
+[00:38:36.480] a day where we put out um um reasoning
+
+[00:38:41.280] and we use the reasoning as um eval um
+
+[00:38:45.359] for another model. So is there a way to
+
+[00:38:48.640] achieve or make it a bit more efficient.
+
+[00:38:51.599] Um so we literally spit out clues and
+
+[00:38:54.240] these are at least a a long sentence.
+
+[00:38:57.920] Um, so any any tips or tricks to make it
+
+[00:39:03.200] more One way is like if you really
+
+[00:39:04.720] wanted if you really wanted like um uh
+
+[00:39:07.200] if you really wanted that I would
+
+[00:39:08.400] actually put your reasoning afterwards
+
+[00:39:10.880] like assessment.
+
+[00:39:16.230] So if you want to do an eval thing right
+
+[00:39:16.240] over here description
+
+[00:39:20.560] final assessment
+
+[00:39:23.680] of the speaker
+
+[00:39:26.880] uh given any clues prior uh clues in
+
+[00:39:32.400] comments
+
+[00:39:34.000] I just do this
+
+[00:39:37.520] um and just like let the model spit it
+
+[00:39:40.240] out. Now you can use assessment as a
+
+[00:39:41.680] thing. But now you'll see that
+
+[00:39:42.960] assessment is actually kind of big. So
+
+[00:39:45.119] what I'll do is like use phrases
+
+[00:39:56.390] uh not complete sentences. And then I
+
+[00:39:56.400] would also add into here.
+
+[00:40:05.990] So now I'll notice over here what it's
+
+[00:40:06.000] doing and it will just spit something
+
+[00:40:07.440] out. And I would probably have to tweak
+
+[00:40:08.880] this model. So sometimes GT4 is not very
+
+[00:40:10.560] good. So let me try anthropic.
+
+[00:40:13.599] Is that the right model? We'll find out.
+
+[00:40:16.000] Oh, that is not the right model. Uh
+
+[00:40:18.480] dude, I think it's 1020.
+
+[00:40:25.829] Uh 2024 1020.
+
+[00:40:25.839] Custom Sonic. There you go.
+
+[00:40:29.839] Oh, I don't have an API key. One second.
+
+[00:40:31.760] Um I will not be sharing my API key this
+
+[00:40:33.599] time around.
+
+[00:40:35.359] Oh, that's why I come here every week.
+
+[00:40:38.480] It's because you always you always leak
+
+[00:40:40.000] at least one key. I also forget to
+
+[00:40:42.160] deactivate it.
+
+[00:40:45.520] Um
+
+[00:40:47.359] okay,
+
+[00:40:49.359] let me um
+
+[00:40:55.030] yeah, and just uh answering while he's
+
+[00:40:55.040] doing that, answering the question from
+
+[00:40:56.079] the thread. Um
+
+[00:40:58.800] uh why not use fuchsia prompting? Um, we
+
+[00:41:01.280] talked about this a little bit, but um,
+
+[00:41:03.200] it's basically uh, the content of the
+
+[00:41:06.480] examples uh, tends to greatly steer the
+
+[00:41:10.400] model's response.
+
+[00:41:12.720] And
+
+[00:41:14.400] so like you can get you can get the
+
+[00:41:16.800] right structural results without
+
+[00:41:19.200] actually putting content in your
+
+[00:41:20.640] examples.
+
+[00:41:22.319] Yes. Um, so there we go. Uh so now you
+
+[00:41:25.839] can see over here when I switch this
+
+[00:41:27.359] cloud I actually get really nice things
+
+[00:41:29.200] where it's assessment comes with this
+
+[00:41:30.640] and now you could plug this into your
+
+[00:41:32.000] evals. We got a way less tokens out
+
+[00:41:34.079] here. It's way it's way shorter
+
+[00:41:38.880] u because we're not using complete
+
+[00:41:40.160] sentences. So if you really care about
+
+[00:41:41.440] evals and want to like you want to store
+
+[00:41:43.119] the data anyway go do that. But honestly
+
+[00:41:45.040] if it were up to me I wouldn't do any of
+
+[00:41:46.640] this eval stuff online. I would have a
+
+[00:41:49.520] separate process that pulls all my data
+
+[00:41:51.440] down and runs a separate eval including
+
+[00:41:53.119] the assessment for each of these
+
+[00:41:54.400] segments off the raw data itself and
+
+[00:41:57.599] just run a completely separate process.
+
+[00:41:59.280] It's going to be way cheaper, way faster
+
+[00:42:00.720] because don't add more latency to a
+
+[00:42:02.160] pipeline that has this. Each of these
+
+[00:42:03.599] things that you're generating here is
+
+[00:42:04.800] latency. So a very latency sensitive
+
+[00:42:06.800] pipeline generally for speech to text.
+
+[00:42:10.319] Cool.
+
+[00:42:11.839] Um cool. Let's talk about uh so at this
+
+[00:42:15.520] point we've covered labels. Don't use
+
+[00:42:17.040] UIDs. Don't use URLs. Use like indexes
+
+[00:42:19.920] whenever possible and remap them
+
+[00:42:21.359] programmatically to the right thing.
+
+[00:42:23.440] We've talked about diorization. Don't
+
+[00:42:25.119] emit the full transcript. Have the again
+
+[00:42:27.280] have the index have the model represent
+
+[00:42:29.040] something that is way better than the
+
+[00:42:30.720] full transcript. In this case, an index
+
+[00:42:32.480] of transcript. We've talked about using
+
+[00:42:34.960] inline comments to guide reasoning of
+
+[00:42:37.440] sorts. We've talked about read RTF.
+
+[00:42:40.640] Reading the prompt. Read it always,
+
+[00:42:42.640] especially when you get stuck. Instead
+
+[00:42:44.160] of trying to keep prompting more, just
+
+[00:42:45.680] keep reading it. We've talked about
+
+[00:42:47.680] fuchsia prompting with structure, not
+
+[00:42:50.160] with actual content, and how we can
+
+[00:42:51.680] leverage that along the way. And I think
+
+[00:42:54.400] the next thing I want to talk about is
+
+[00:42:55.599] something that we've mentioned a few
+
+[00:42:56.880] times. Um, but it's all about codegen.
+
+[00:43:00.240] So, I'm going to go ahead and pull up a
+
+[00:43:02.240] random uh
+
+[00:43:05.680] file. Hey, Webhub Anup here. Before you
+
+[00:43:09.599] move forward, I in my mind I'm still
+
+[00:43:12.319] confused about using this technique
+
+[00:43:14.319] where you somehow use ginger to get an
+
+[00:43:17.599] index on that array.
+
+[00:43:20.400] I
+
+[00:43:22.079] go ahead versus using symbol tuning
+
+[00:43:26.079] thing. So when to use
+
+[00:43:28.660] [Music]
+
+[00:43:30.720] Okay, so just for context, let me just
+
+[00:43:32.400] pull up a symbol example. So then I we
+
+[00:43:34.720] can just talk about it.
+
+[00:43:37.599] Um
+
+[00:43:46.069] uh I have symbol tuning right here. So
+
+[00:43:46.079] the idea of symbol tuning is I want to
+
+[00:43:48.160] do a classification example. I guess
+
+[00:43:50.640] I'll do this
+
+[00:43:52.720] symbol
+
+[00:43:55.040] tuning.
+
+[00:44:09.430] Okay. Uh, I have a classification
+
+[00:44:09.440] prompt. Instead of actually classifying
+
+[00:44:11.040] the prompt, I want the model to spit out
+
+[00:44:12.720] one of these categories. And I have a
+
+[00:44:14.720] couple different ways I can go do this.
+
+[00:44:16.160] Oh, that's interesting. Um, I have a
+
+[00:44:19.359] couple different ways that I can go do
+
+[00:44:20.640] this. But one of the ways is like
+
+[00:44:23.599] instead of the model actually spitting
+
+[00:44:25.119] out
+
+[00:44:26.720] um all of my um classes I can and
+
+[00:44:31.040] instead of actually writing like the
+
+[00:44:32.319] word refund in the prompt I can write
+
+[00:44:34.079] just the symbol K1 and when the model
+
+[00:44:36.960] runs this it will spit out K4 which then
+
+[00:44:40.640] gets remapped to account issue for me
+
+[00:44:42.400] automatically. The benefit of this
+
+[00:44:44.400] approach is the model again it's same
+
+[00:44:46.160] it's the exact same thing as a YouTube
+
+[00:44:47.599] URL thing where the model when it sees
+
+[00:44:50.560] the word account issue it associates
+
+[00:44:53.280] these tokens with something semantically
+
+[00:44:55.359] meaningful and what I want to do is my
+
+[00:44:58.560] meaning of an account issue is actually
+
+[00:45:00.000] encoded in my description way better
+
+[00:45:01.839] than natural you want to say zero
+
+[00:45:04.319] attention on the label name because
+
+[00:45:06.160] that's for the coders and the program
+
+[00:45:08.000] that's consuming this all attention on
+
+[00:45:10.319] the description so that I can control
+
+[00:45:12.240] exactly what the LM is going to output.
+
+[00:45:15.359] Exactly. Exactly. It's about reducing
+
+[00:45:18.240] the number of variability in the
+
+[00:45:19.680] problem. Dexter said it beautifully and
+
+[00:45:22.640] symbol tuning is a technique lets me do
+
+[00:45:24.480] this. The thing that we're talking about
+
+[00:45:26.000] with diorization where we output
+
+[00:45:28.800] um where we actually output like the
+
+[00:45:30.480] actual index here that's basically the
+
+[00:45:32.319] same thing. Instead of the model
+
+[00:45:34.079] outputting the actual text of the line,
+
+[00:45:36.160] it's outputting the index of the line in
+
+[00:45:39.200] the conversation.
+
+[00:45:40.880] And instead of letting the model infer
+
+[00:45:42.880] the index, because I could do that. I
+
+[00:45:44.640] don't actually have to write this. I
+
+[00:45:45.599] could just let the model infer the index
+
+[00:45:47.599] by writing something like this instead.
+
+[00:45:51.280] Just like a break. Yeah, model could
+
+[00:45:53.680] count. But why make the life harder for
+
+[00:45:56.960] the model? Like this is Yeah. Now you're
+
+[00:45:58.560] asking the model to count Are you
+
+[00:46:00.160] kidding me? That's terrifying. It's like
+
+[00:46:01.680] it's like uh you know when you do these
+
+[00:46:03.280] coding agents and you have like no line
+
+[00:46:06.000] numbers in the file versus every time
+
+[00:46:07.599] you give it to the model give it line
+
+[00:46:08.960] numbers and suddenly it can do these
+
+[00:46:10.319] edits way better. Right. Exactly. And it
+
+[00:46:13.200] this goes back to RTFP. If I if I read
+
+[00:46:15.839] this prompt even as a human I know
+
+[00:46:18.000] exactly what index this is without
+
+[00:46:19.440] having to spend any time about it.
+
+[00:46:22.079] But if I don't have these lines in there
+
+[00:46:24.079] that becomes a lot harder for me to go
+
+[00:46:25.680] do. And I think it's small things like
+
+[00:46:28.000] this that actually dramatically change
+
+[00:46:29.599] the quality uh of your outputs in a way
+
+[00:46:32.319] that I think um can make a huge
+
+[00:46:34.240] difference. So Anov, I hope I related uh
+
+[00:46:36.960] the questions uh across across the board
+
+[00:46:40.319] for the one of how simulting relates to
+
+[00:46:42.640] diorization and the examples. And I we
+
+[00:46:46.480] won't go into this today, I think, but
+
+[00:46:47.680] like again, take all the advice from the
+
+[00:46:49.119] evals chapter and like don't go just
+
+[00:46:51.119] applying all this stuff willy-nilly.
+
+[00:46:52.880] Like get a real set, understand what how
+
+[00:46:55.280] your performance is today. Try changing
+
+[00:46:57.359] these small things, you know, whether
+
+[00:46:59.200] it's like, oh, I found a bug from
+
+[00:47:00.560] production. Let me drop it in as a test
+
+[00:47:02.319] case and just change the prompt until I
+
+[00:47:04.480] fix this one without breaking all the
+
+[00:47:06.079] other ones. or even having a bigger eval
+
+[00:47:08.560] set which is like hey our accuracy is
+
+[00:47:09.920] 84% and if I make this change and run
+
+[00:47:12.319] the exact same data through the pipeline
+
+[00:47:14.480] now it's 88%.
+
+[00:47:16.640] Exactly. Exactly.
+
+[00:47:19.520] Um
+
+[00:47:21.040] let's start with the last part code
+
+[00:47:22.160] genen. Um this is something we showed a
+
+[00:47:23.760] couple times and this is kind of
+
+[00:47:26.800] related.
+
+[00:47:28.319] Well yeah this directly leads from the
+
+[00:47:30.000] other one because it's again it's like
+
+[00:47:31.200] how do we get the model to create
+
+[00:47:33.359] invalid JSON for good? like how how can
+
+[00:47:36.800] by getting the model to create broken
+
+[00:47:38.640] JSON you can actually get way better
+
+[00:47:40.880] performance and we'll talk about like
+
+[00:47:42.240] why that works by looking like under the
+
+[00:47:44.079] hood at like samplers and stuff right
+
+[00:47:46.400] yeah let's do that that's actually a
+
+[00:47:47.599] good idea um so in this case I want some
+
+[00:47:51.119] code and I'll say uh a binary search
+
+[00:47:55.040] tree with actually no let's do this a
+
+[00:47:58.880] sorting algorithm
+
+[00:48:07.510] with merge sort All right, cool. That's
+
+[00:48:07.520] redundant. Um, so let's do this firstly.
+
+[00:48:11.680] And it's going to output this. And
+
+[00:48:13.119] again, if I have a chat app, this is
+
+[00:48:15.280] excellent.
+
+[00:48:17.680] Um, this is really, really excellent. I
+
+[00:48:20.480] could show this to the user. They'll be
+
+[00:48:22.240] pretty happy. And we'll see the quality
+
+[00:48:23.920] of the code right here. It looks pretty
+
+[00:48:25.920] good. Uh, it has some comments and stuff
+
+[00:48:27.839] in it. It looks generally useful.
+
+[00:48:30.800] But the minute that this is the way
+
+[00:48:32.240] models want to write code by the way.
+
+[00:48:33.839] Like this is if you if you just want to
+
+[00:48:35.760] get the very best code performance, let
+
+[00:48:38.079] it write it between markdown back ticks
+
+[00:48:40.000] because that is what is the majority
+
+[00:48:42.640] present in the training set. Yeah. Now
+
+[00:48:45.599] I'm going to change this to actually
+
+[00:48:46.720] return a data model because hey, I want
+
+[00:48:48.319] the code so I can go find it. I don't
+
+[00:48:49.839] want to do some parsing. I want to
+
+[00:48:50.880] render it just the code part without all
+
+[00:48:52.559] those prefix or maybe I want to go run
+
+[00:48:53.920] it and go do something, right? You don't
+
+[00:48:55.520] want to have to write code to strip out
+
+[00:48:57.040] that like Python back tick thing cuz
+
+[00:48:58.880] you're just going to turn around and run
+
+[00:49:00.000] it. Maybe. And now we got this. And I
+
+[00:49:03.839] don't actually know the quality of this
+
+[00:49:05.119] code, but we'll see. All I do know is it
+
+[00:49:08.800] did output a lot of things. And I want
+
+[00:49:11.200] everyone to note something very, very
+
+[00:49:12.559] important here. This is actually what
+
+[00:49:14.559] the model output. This is raw. I just
+
+[00:49:16.800] copied directly the string the model
+
+[00:49:18.319] came out with. If I go back to the
+
+[00:49:19.920] tokenizer, I'll show you. I want to show
+
+[00:49:21.680] everyone what this means.
+
+[00:49:24.720] We can see what it did. Yo, slash and n
+
+[00:49:27.760] are two different tokens.
+
+[00:49:29.680] Yeah, exactly. So, it's actually
+
+[00:49:32.960] N. It's outputting a bunch of space
+
+[00:49:35.040] characters. It's It's not actually
+
+[00:49:36.800] outputting code. It's outputting
+
+[00:49:38.640] something slightly different. It's
+
+[00:49:40.000] something that looks like code. Will you
+
+[00:49:42.480] Sorry. Can I screenshot that and then
+
+[00:49:44.160] can you drop the other output into the
+
+[00:49:46.079] tokenizer as well? Sorry. Pop back and
+
+[00:49:49.440] let me get a screenshot real quick.
+
+[00:49:52.880] Yeah, I'll put it side by side. How
+
+[00:49:54.319] about that? Okay. Yeah.
+
+[00:49:57.599] Because I think this is really
+
+[00:49:58.720] important.
+
+[00:50:11.349] So, if you get rid of the back ticks and
+
+[00:50:11.359] the actual like preamble and stuff, how
+
+[00:50:13.839] do the tokens compare? I'll I'll leave
+
+[00:50:16.319] that in there actually. Okay. Uh because
+
+[00:50:18.079] I think it's important. And this one has
+
+[00:50:20.079] like a Java example as well. So, why
+
+[00:50:21.599] don't I get rid of the Java example?
+
+[00:50:24.000] Yeah. uh just to like keep it in. Um
+
+[00:50:29.280] there's something in here.
+
+[00:50:36.630] And this seems to have a print example
+
+[00:50:36.640] as well. So we leave that in there. What
+
+[00:50:39.119] we'll notice here is not it's not really
+
+[00:50:41.440] about the token counter in the O. What's
+
+[00:50:43.200] really important here is like the
+
+[00:50:44.319] quality of the code that's being
+
+[00:50:45.359] generated. First thing that we notice up
+
+[00:50:47.520] front is recursively sort both halves.
+
+[00:50:50.480] So this comes out and then if we go look
+
+[00:50:52.400] at this all these backslash ends are
+
+[00:50:55.359] actually having to be forcefully
+
+[00:50:57.119] generated by the model to be correctly
+
+[00:50:58.800] syntactical JSON out of here because you
+
+[00:51:02.480] can't have new lines in JSON. You have
+
+[00:51:04.240] to have escaped new lines. Exactly.
+
+[00:51:06.720] Instead of letting the model just do
+
+[00:51:07.920] escape new lines. So what if we just
+
+[00:51:09.680] told the model to go do that instead?
+
+[00:51:11.920] What we'll find is code description use
+
+[00:51:17.839] use triple use back tick use triple back
+
+[00:51:21.200] ticks to format code
+
+[00:51:32.309] Now let's go read the prompt. Let's see
+
+[00:51:32.319] what the prompt looks like. This is what
+
+[00:51:33.680] the prompt looks like. Use triple back
+
+[00:51:36.160] to read the prompt.
+
+[00:51:38.079] Um,
+
+[00:51:39.760] and now when I go run this, what I get
+
+[00:51:43.200] is the model will output code exactly
+
+[00:51:45.040] how it was outputting before,
+
+[00:51:48.640] but in a way that still allows me to do
+
+[00:51:50.319] structured prompting. So this is not
+
+[00:51:52.640] valid JSON. And like the subtle thing
+
+[00:51:54.720] here is like and this is kind of like I
+
+[00:51:56.480] think we were having a conversation
+
+[00:51:57.280] yesterday about like one of the cool
+
+[00:51:58.559] things you can do with BAML and why
+
+[00:51:59.839] having a parser that is separate from
+
+[00:52:01.760] the that is outside of the model itself
+
+[00:52:04.079] is really powerful is because you can
+
+[00:52:05.599] let the model use regular new lines and
+
+[00:52:08.240] it's output and then turn them back into
+
+[00:52:10.640] J like regular like JSON that works.
+
+[00:52:14.559] Yes. Um so now let's go do this. Now I
+
+[00:52:17.839] want to make this as a lesson plan for
+
+[00:52:20.480] the following input as a lesson with
+
+[00:52:23.760] diffs.
+
+[00:52:26.559] So now what I'm going to do is I'm going
+
+[00:52:28.319] to output an array of code snippets,
+
+[00:52:31.040] not one
+
+[00:52:33.200] but multiple arrays. And then I'm going
+
+[00:52:35.599] to say make a plan um to for to go do
+
+[00:52:38.640] this example
+
+[00:52:44.870] section one blah blah blah section two
+
+[00:52:44.880] blah blah blah blah blah. Cool.
+
+[00:52:51.910] And again, we're using Fuse Shop the
+
+[00:52:51.920] example of using comments as guiding
+
+[00:52:54.400] principles. We're going to do the same
+
+[00:52:55.680] thing here. Uh, and then we'll add a
+
+[00:52:58.160] little title here. String.
+
+[00:53:01.839] Um, this is funny. This is what I
+
+[00:53:03.440] actually did for a workshop a couple
+
+[00:53:04.800] weeks ago was we had said, "Hey, here's
+
+[00:53:06.800] the final product. Output it as sections
+
+[00:53:09.359] in a lesson plan."
+
+[00:53:12.319] So, now we're going to do the same
+
+[00:53:13.440] thing.
+
+[00:53:15.920] And now what the model is I'm fixing
+
+[00:53:17.680] this bug. I mean this is cool but uh why
+
+[00:53:20.559] why would you want to do it this way?
+
+[00:53:22.319] Why would you want to do this? I guess
+
+[00:53:24.400] I'll show you the output because I think
+
+[00:53:25.599] the output will make it more clear. So
+
+[00:53:26.800] the first thing is I wanted to build a
+
+[00:53:28.079] lesson plan of so I did reasoning for
+
+[00:53:30.079] like what lesson plan I wanted to go do.
+
+[00:53:32.160] So it said we're going to go do this.
+
+[00:53:34.720] Then it's going to actually output the
+
+[00:53:36.079] code and create a merge function that
+
+[00:53:38.559] combines two sorted arrays. Great.
+
+[00:53:40.400] Create a basic merge sort function with
+
+[00:53:42.160] recursion. So it's actually incrementing
+
+[00:53:44.079] it. Now you can imagine that I walk
+
+[00:53:45.760] someone through the code one by one,
+
+[00:53:50.160] right? And now it's intending create a
+
+[00:53:52.160] sort with array splitting recursive
+
+[00:53:53.839] calls. So now it's incrementally going
+
+[00:53:55.599] to do this. Now I can build a UI on top
+
+[00:53:57.359] of this that literally has step one,
+
+[00:53:58.800] step two, step three and teach someone
+
+[00:54:00.240] merge sort with this benefit along the
+
+[00:54:02.720] way,
+
+[00:54:04.800] right? And along the whole time, if I
+
+[00:54:07.200] get rid of this section, I will I will
+
+[00:54:08.960] literally just comment this part out.
+
+[00:54:12.000] I'll show you how much harder it becomes
+
+[00:54:13.520] for the model to actually generate this.
+
+[00:54:22.950] like this is now like uh becoming
+
+[00:54:22.960] significantly harder for the model to
+
+[00:54:25.599] actually keep track of its own code
+
+[00:54:27.839] because even as a developer this would
+
+[00:54:30.559] be very very hard for me to even unread
+
+[00:54:33.839] and understand this and most of the
+
+[00:54:35.760] training data in the model's codegen
+
+[00:54:37.920] doesn't actually have backslash ends as
+
+[00:54:40.480] this. It has it as the actual back
+
+[00:54:42.160] slashn. So the code quality that you're
+
+[00:54:44.720] getting is going to be way worse. So
+
+[00:54:46.319] when we go to like a harder problem,
+
+[00:54:48.000] let's go into a harder problem because
+
+[00:54:49.119] merge sort is something that we all know
+
+[00:54:50.559] like even the basic models can go do.
+
+[00:54:53.839] Um create a what is it? What's a harder
+
+[00:54:57.200] problem next? Uh Kubernetes operator to
+
+[00:55:01.440] spin up RDS instances in Golang.
+
+[00:55:12.950] To spin up RDS spin up Yeah. instances
+
+[00:55:12.960] in Golang.
+
+[00:55:15.119] I have no idea.
+
+[00:55:18.800] I have no idea what half those words
+
+[00:55:20.240] mean because sadly I work in algorithms
+
+[00:55:21.920] land. Um, and we're seeing what the
+
+[00:55:24.640] model did. So, I want you to Oh, it made
+
+[00:55:25.920] a diff. Yeah, model made a diff. I also
+
+[00:55:30.240] want us to notice a couple other things.
+
+[00:55:31.680] The model actually intuitively just put
+
+[00:55:33.599] out back tick new lines anyway. It
+
+[00:55:35.520] actually was like, you know what? I am
+
+[00:55:37.599] not going to put out backslash ends. I'm
+
+[00:55:39.760] just going to spit out this. So, the
+
+[00:55:41.680] model intuitively did this for us.
+
+[00:55:45.119] without us even having to prompt it at
+
+[00:55:46.720] that. And that just goes to show that
+
+[00:55:48.160] the model's intuitive behavior
+
+[00:55:50.880] is not to spit out
+
+[00:55:54.400] uh escaped JSON. And the reason it
+
+[00:55:56.400] probably did this is because Go is just
+
+[00:55:59.680] a lot more technical than Python or
+
+[00:56:02.160] TypeScript and other things. So the
+
+[00:56:03.839] minute it got to like a hard mode
+
+[00:56:05.280] problem, it did the most basic things
+
+[00:56:07.359] for itself.
+
+[00:56:09.440] Yeah. Um, you want to pop back to the
+
+[00:56:11.520] whiteboard for really quick and just
+
+[00:56:12.799] highlight I I I want to highlight the
+
+[00:56:14.720] sampling part of this. Um, you have it
+
+[00:56:18.720] too. Yeah. Yeah.
+
+[00:56:21.760] Um,
+
+[00:56:24.319] there you go. So, okay. So, you got that
+
+[00:56:26.000] up. Scroll down a little bit. Um so
+
+[00:56:28.559] basically like if if if you know how
+
+[00:56:30.720] samplers work essentially you have um at
+
+[00:56:33.440] any given point you have you know the
+
+[00:56:35.599] model is writing code and it's writing
+
+[00:56:37.119] like you know code import OS and then at
+
+[00:56:41.359] any given point it's it's we're at let's
+
+[00:56:43.359] say we're right here and we're
+
+[00:56:45.359] generating like the we're asking what's
+
+[00:56:47.520] the next token at this moment there is
+
+[00:56:51.040] you know an a distribution of what the
+
+[00:56:53.920] next token's going to be right and in
+
+[00:56:56.319] this case It's almost always going to be
+
+[00:56:57.920] like new line, kind of classic new line,
+
+[00:57:01.200] and then there's going to be a long tail
+
+[00:57:03.680] of other characters that might be next,
+
+[00:57:06.000] right? You might have, you know,
+
+[00:57:07.200] semicolon here.
+
+[00:57:10.240] Um, because maybe some code has like
+
+[00:57:12.559] import OS, semicolon, and then another
+
+[00:57:14.319] import. Maybe if it's red code
+
+[00:57:16.960] serialized in JSON, maybe there is a
+
+[00:57:18.799] backslash here which is going to lead it
+
+[00:57:20.559] to correctly type the slashn. And maybe
+
+[00:57:23.040] there's some other characters here
+
+[00:57:24.640] defined by your temperature, right, of
+
+[00:57:26.319] like different probabilities of that
+
+[00:57:28.319] that's the next token. Does this make
+
+[00:57:30.799] sense? Yep. So when you put on strict
+
+[00:57:35.119] mode or strict JSON mode, and even in
+
+[00:57:37.280] some of the more like old school
+
+[00:57:38.480] function calling modes, they're starting
+
+[00:57:39.839] to enforce this. Basically,
+
+[00:57:42.960] that is going to when the model gets to
+
+[00:57:45.359] its like time to do the correct output,
+
+[00:57:48.319] it's just going to X out anything that
+
+[00:57:51.040] would break the JSON schema. Which means
+
+[00:57:53.520] that a new line is not a valid character
+
+[00:57:55.680] because a new line is not valid JSON.
+
+[00:57:58.160] And this is why when people say like uh
+
+[00:58:01.680] you know using strict mode reduces the
+
+[00:58:04.799] accuracy of your outputs, it's because
+
+[00:58:06.720] now you're removing the big one and you
+
+[00:58:08.880] have a very very like tight distribution
+
+[00:58:12.880] of the other things. Now these
+
+[00:58:14.640] probabilities get balanced out and you
+
+[00:58:17.119] have a bunch of things that are like
+
+[00:58:18.240] probably next but like not clear. And so
+
+[00:58:21.280] you're likely to get weird janky code
+
+[00:58:23.040] with like semicolons in it instead of
+
+[00:58:24.799] backslashes or even like invalid syntax
+
+[00:58:27.200] because you're not letting the model
+
+[00:58:28.480] write code in the way that it's been
+
+[00:58:29.599] trained to write code. Yeah. And this
+
+[00:58:32.400] applies not just for codegen, but it
+
+[00:58:34.079] applies to any domain where anytime
+
+[00:58:35.839] you're having the model not pick its
+
+[00:58:37.599] best token. You're basically telling the
+
+[00:58:40.000] model you know better than the model,
+
+[00:58:41.520] which may be true in some scenarios. I
+
+[00:58:43.119] want to articulate that. But most of the
+
+[00:58:46.160] time in machine learning, what we've
+
+[00:58:48.079] learned is let the model do what it does
+
+[00:58:49.760] best. and just let it output the best
+
+[00:58:51.920] token. Uh and in computer vision we had
+
+[00:58:53.680] this problem all the time where we'd
+
+[00:58:54.960] always let the model like we trying to
+
+[00:58:56.880] be very clever about the model where we
+
+[00:58:59.119] do oh let's do this pre-processing let's
+
+[00:59:00.720] do this post-processing it turned out
+
+[00:59:02.400] the best answer as all the VLM have
+
+[00:59:04.799] showed is literally just give it all to
+
+[00:59:07.920] the model let it decide and I think the
+
+[00:59:09.520] same thing is true with token generation
+
+[00:59:10.799] or everything else too like don't try
+
+[00:59:12.400] and be clever with token generation just
+
+[00:59:14.000] let the model pick the best token
+
+[00:59:17.200] um I think that's all we have time for
+
+[00:59:19.440] today in terms of actual topics and
+
+[00:59:21.280] prompting techniques techniques. Um, I
+
+[00:59:23.599] hope that this was incredibly useful for
+
+[00:59:25.680] everyone else. Um, what we'll do for the
+
+[00:59:28.000] next 15 20 minutes is I'll go to the
+
+[00:59:29.920] Discord and I'll see what prompts that
+
+[00:59:32.720] we have submitted, if we have any at
+
+[00:59:34.400] all. And there's a couple in here. Oh,
+
+[00:59:37.680] there are. Oh, that's actually more than
+
+[00:59:39.280] I expected. All right. Uh, there's two.
+
+[00:59:42.000] Exact. That's more than I expected. Um,
+
+[00:59:44.960] what I will do here is I will go do
+
+[00:59:46.960] this. Uh, let's just bring this one up.
+
+[00:59:51.440] I use this prompt to evaluate LMS on
+
+[00:59:53.599] their ability to make sense of LM
+
+[00:59:55.119] generated uh events. But before we go
+
+[00:59:57.760] into this, does anyone have questions
+
+[00:59:59.760] while I go read this prompt that people
+
+[01:00:01.440] want to go ask for? Feel free to come
+
+[01:00:03.520] off mute and just ask if you after you
+
+[01:00:05.520] raise your hand and um come on in.
+
+[01:00:13.829] So I do have a question about that code
+
+[01:00:13.839] gen
+
+[01:00:15.680] because like when we're talk I do agree
+
+[01:00:18.400] that like letting the code gen do its
+
+[01:00:22.079] thing is much better uh and produces a
+
+[01:00:24.960] lot better results. But on the other
+
+[01:00:27.839] hand um like when you're working in an
+
+[01:00:30.720] established codebase usually it has its
+
+[01:00:33.839] own like style and things like that. Um,
+
+[01:00:38.079] how do you resolve that problem?
+
+[01:00:41.920] Yeah, my uh Dex might have his own
+
+[01:00:44.319] opinions. My answer for all of that is
+
+[01:00:46.960] always the same thing, which is just add
+
+[01:00:48.559] more software on top of it. If you want
+
+[01:00:50.480] stuff to be formatted in a good way,
+
+[01:00:52.240] literally just run a llinter on the
+
+[01:00:53.680] generated code. It will be formatted
+
+[01:00:55.520] exactly how you want it to be formatted.
+
+[01:00:58.079] If you don't have a llinter with an
+
+[01:00:59.359] opinionated formatting, it's probably
+
+[01:01:00.880] not mimicking that. If you if you feel
+
+[01:01:03.040] like you don't have the llinter rules,
+
+[01:01:05.040] go write a quick LM prompt to look at
+
+[01:01:06.960] your existing code, generate lint rules
+
+[01:01:08.720] off of that, and then go run the
+
+[01:01:10.000] formatter. Um, but oh, because what I've
+
+[01:01:13.920] seen in coding agents is a lot of like,
+
+[01:01:15.680] okay, cool, read a couple like the like
+
+[01:01:17.760] using cloud code or something, it reads
+
+[01:01:19.040] a couple files and then what it's read
+
+[01:01:21.040] in the codebase already kind of
+
+[01:01:22.400] propagates down to the next code it
+
+[01:01:23.920] generates. But it almost sounds like
+
+[01:01:25.520] what would be much more efficient would
+
+[01:01:26.880] be like take a couple of the files and
+
+[01:01:29.040] have the model generate either like
+
+[01:01:30.640] hardcore lint because not all style can
+
+[01:01:32.240] be enforced by a llinter, right? The
+
+[01:01:33.520] llinters are getting better but not
+
+[01:01:34.720] everything. But like either create a
+
+[01:01:37.040] biome rule set or an eslint rule set or
+
+[01:01:38.960] whatever it is or even just create a
+
+[01:01:41.680] prompt that is like here's a bunch of
+
+[01:01:43.200] examples of how we write code that so
+
+[01:01:44.640] the model doesn't have to read entire
+
+[01:01:45.920] files but you capture it succinctly.
+
+[01:01:47.760] Exactly. Yeah. And like do a little bit
+
+[01:01:50.000] of extra leg work to find the models
+
+[01:01:51.680] that represent it. And I think this is
+
+[01:01:53.280] the same way if you think about like
+
+[01:01:54.400] just hiring a new developer. There's
+
+[01:01:56.640] ways to build your dev team where you're
+
+[01:01:57.920] like ah people on my dev team will just
+
+[01:01:59.280] figure out some coding format and
+
+[01:02:00.960] alignment. But if you really care about
+
+[01:02:02.960] code quality and want it to be
+
+[01:02:04.079] consistent then you add a llinter. You
+
+[01:02:07.280] add a formatter and then it becomes
+
+[01:02:08.880] uniform automatically. So like and the
+
+[01:02:11.680] most ultimate way to do this is to end
+
+[01:02:13.359] up using some language like go which
+
+[01:02:14.799] like forces like if you want to export
+
+[01:02:16.319] things that has to be capital like
+
+[01:02:18.160] developers don't even get a choice or
+
+[01:02:19.680] use black which is like a very
+
+[01:02:21.440] opinionated python formatter which says
+
+[01:02:23.440] no configuration it's just the way it is
+
+[01:02:25.839] and I think the same things apply for
+
+[01:02:27.280] like stylistic guidelines.
+
+[01:02:30.640] Um does that make sense?
+
+[01:02:34.160] Uh yeah I think um there's also like in
+
+[01:02:37.119] cursor for example there are also cursor
+
+[01:02:39.200] rules. Um, yeah. Uh, which I think also
+
+[01:02:43.280] help with this. Although I haven't
+
+[01:02:44.880] really explored a lot of cursor rules.
+
+[01:02:48.640] Yeah. Yeah. Cursor rules are a great way
+
+[01:02:50.240] to go do that as well. But I think like
+
+[01:02:52.160] if you're building an app that generates
+
+[01:02:53.680] code, then you can't use cursor rules.
+
+[01:02:55.359] So then you have to build your own
+
+[01:02:56.400] equivalent of cursor rules.
+
+[01:02:59.040] Um, that's really if you're using
+
+[01:03:02.319] cursor, then cursor rules should
+
+[01:03:03.839] hopefully just fix that for you. Why
+
+[01:03:05.599] cursor does this since cursor has built
+
+[01:03:07.599] a system like this. They basically added
+
+[01:03:09.599] a lot of software on top of their
+
+[01:03:11.359] codegen to make their codegen more in
+
+[01:03:14.160] line with your codebase.
+
+[01:03:17.200] Cool. That makes sense.
+
+[01:03:19.839] All right. Thank you. All right. Thanks,
+
+[01:03:21.839] Jonathan. Uh, one last question and then
+
+[01:03:23.680] I'm going to go into this prompt now
+
+[01:03:25.039] that I've actually read it.
+
+[01:03:32.950] Cool. Going once, going twice. All
+
+[01:03:32.960] right. Hack night at GitHub. Okay. So,
+
+[01:03:37.039] this was a prompt where it seems to be
+
+[01:03:38.559] like someone wants to look at an LM and
+
+[01:03:40.319] come up with like some sort of like a
+
+[01:03:42.160] plan for the most of this event. I mean,
+
+[01:03:44.960] it looks like the the prompt is
+
+[01:03:47.359] basically come up with a plan and the
+
+[01:03:49.200] rest of it is just input context, right?
+
+[01:03:51.440] Yeah, exactly. So, the first thing I'll
+
+[01:03:54.319] notice is like let's just go back and
+
+[01:03:56.079] write this prompt.
+
+[01:03:59.039] Um, and actually, oh yeah, plan.baml
+
+[01:04:03.119] family
+
+[01:04:10.710] function make event. Well, actually, I'm
+
+[01:04:10.720] not gonna actually do this. I don't want
+
+[01:04:12.559] this,
+
+[01:04:13.780] [Laughter]
+
+[01:04:15.839] right?
+
+[01:04:24.390] And this thing will uh make uh this a
+
+[01:04:24.400] better function.
+
+[01:04:27.200] Okay. So, the first thing I'll notice
+
+[01:04:28.960] about this is Oh, what the heck? Did I
+
+[01:04:32.160] not pay? Oh, that's so funny. We have a
+
+[01:04:34.240] bug. We have a
+
+[01:04:37.440] That's so funny. We have a bug where uh
+
+[01:04:40.079] com is it come as like markdown front
+
+[01:04:42.720] matter or something. It's like d-
+
+[01:04:45.039] comments. I think we strip it out. Uh
+
+[01:04:47.520] that's so funny.
+
+[01:04:49.760] Um fascinating. So like the first thing
+
+[01:04:52.319] when it comes to So let's let's catch
+
+[01:04:53.920] everyone else on what this prompt is.
+
+[01:04:56.400] This prompt is pretty simple. does come
+
+[01:04:57.920] up with a plan to make the most of this
+
+[01:04:59.359] event and then you dump the actual event
+
+[01:05:00.880] from like Luma or something else out
+
+[01:05:02.400] there. Now, the most intuitive way is to
+
+[01:05:05.280] just send that to the prompt and like we
+
+[01:05:07.280] send the chat GPT it will go do
+
+[01:05:08.799] something. So, like if I have this, by
+
+[01:05:11.680] the way, if whoever wrote that prompt is
+
+[01:05:13.520] is here, feel free to come off mute and
+
+[01:05:15.359] give a little more context around what
+
+[01:05:16.720] this is and what you use it for. Yeah.
+
+[01:05:18.400] Um, so I'm the one who posted it. This
+
+[01:05:20.960] is how I, you know, Luma has like a
+
+[01:05:22.960] hundred events a month in San Francisco
+
+[01:05:25.680] and I don't read them all manually at
+
+[01:05:27.760] first. So I use something like this to
+
+[01:05:29.440] try to surface the ones I want to go to.
+
+[01:05:31.599] And this is how I found out about BAML.
+
+[01:05:33.520] So you know, a pretty crude version
+
+[01:05:35.760] works for me and I just want to make it
+
+[01:05:37.680] a little more comprehensive, systemic,
+
+[01:05:40.000] and all that. And you know, I just don't
+
+[01:05:42.640] have an actual process for it, but I
+
+[01:05:44.240] know it kind of it works for me to make
+
+[01:05:45.839] the sense of San Francisco tech scene.
+
+[01:05:49.359] And I think I could do more with it.
+
+[01:05:51.680] Yeah. So over here you can see what it
+
+[01:05:53.280] come up with. And this is typically what
+
+[01:05:54.640] you'd expect out of this sort of thing.
+
+[01:05:56.799] That said, what I actually want is and
+
+[01:05:59.680] this is step number one. Literally just
+
+[01:06:01.359] stop asking the model to actually go do
+
+[01:06:04.000] like spit out the plan as a string. Have
+
+[01:06:05.839] the model actually spit out a
+
+[01:06:07.200] preparation sub for you of like what to
+
+[01:06:10.160] go do. And when you actually go do this,
+
+[01:06:12.160] let's actually paste. I'll just copy and
+
+[01:06:14.160] paste this in myself.
+
+[01:06:17.200] I think I copied and pasted this example
+
+[01:06:18.960] as well. So, I'll make this a test case.
+
+[01:06:22.880] Uh, I like the Discord only let you copy
+
+[01:06:25.200] one time. I know. That's so funny.
+
+[01:06:30.640] Cool.
+
+[01:06:32.559] Great. So, I have this test case now.
+
+[01:06:34.720] And when I go run this, instead of the
+
+[01:06:36.079] model actually spitting this stuff up
+
+[01:06:37.839] here, it's actually giving me something
+
+[01:06:39.039] a little bit better of like what I can
+
+[01:06:41.680] go talk to. And in this case, I have a
+
+[01:06:44.480] way better experience of like who I
+
+[01:06:46.079] actually should go meet. I can make this
+
+[01:06:47.760] more targeted by simply just changing my
+
+[01:06:49.599] schema class networking
+
+[01:06:54.000] uh
+
+[01:06:55.599] uh class networking
+
+[01:06:59.599] opportunity.
+
+[01:07:07.270] Okay. name
+
+[01:07:07.280] season
+
+[01:07:09.440] value
+
+[01:07:11.119] uh value high medium low description how
+
+[01:07:16.720] valuable
+
+[01:07:18.400] how yeah we we'll push all this code
+
+[01:07:20.000] John the person
+
+[01:07:22.640] is to myself
+
+[01:07:25.280] and my career
+
+[01:07:28.559] goals yeah the other thing I think would
+
+[01:07:31.039] benefit a lot here is like a lot more
+
+[01:07:33.440] context about me and who I am although I
+
+[01:07:35.359] guess if you're probably pasting this
+
+[01:07:36.319] into chat GPT, then you have your memory
+
+[01:07:38.400] and stuff at play to kind of like give
+
+[01:07:41.200] that grounding. So the main thing that
+
+[01:07:44.400] you'll notice here is I I'm actually
+
+[01:07:45.680] going to change this. I'm going to make
+
+[01:07:46.960] this a lot better. I'm going to say that
+
+[01:07:48.480] this is I want to meet these people
+
+[01:07:50.720] value and then it's going to dump out
+
+[01:07:52.240] the reason for why. And you notice that
+
+[01:07:54.400] actually changed out a lot of the more
+
+[01:07:56.240] general generally specific ones. Like
+
+[01:07:58.319] this was very
+
+[01:08:00.319] like random, but this is a lot more
+
+[01:08:02.400] pointed oriented. I can go act on this.
+
+[01:08:04.880] What else I can do here is I can say
+
+[01:08:06.640] like I can actually change this and like
+
+[01:08:09.119] entity
+
+[01:08:15.750] class
+
+[01:08:15.760] company type
+
+[01:08:18.960] company
+
+[01:08:20.719] name
+
+[01:08:23.120] class person
+
+[01:08:25.920] type
+
+[01:08:27.440] empty
+
+[01:08:29.520] equals this. And now when I go run this,
+
+[01:08:32.960] it should actually spit out what I
+
+[01:08:34.480] actually want. So now I can actually go
+
+[01:08:36.480] like specifically look these up and I
+
+[01:08:38.319] can build a small little UI around this,
+
+[01:08:39.920] like a React component that actually
+
+[01:08:41.199] renders these in with like LinkedIn
+
+[01:08:43.279] searches and follow-up sequences on top
+
+[01:08:45.199] of that. So then I can just go ahead and
+
+[01:08:47.920] say, "Oh, here's a link to the company's
+
+[01:08:49.440] URL. Here's who they are, and here's how
+
+[01:08:51.279] they are." And this is just like a IML
+
+[01:08:53.040] speakers. Cool. No one specific was
+
+[01:08:54.480] highlighted on there. So I don't
+
+[01:08:55.440] actually have like anyone ambiguous.
+
+[01:08:57.600] People are ambiguous there. But if you
+
+[01:08:59.920] put first name, last name, you could
+
+[01:09:01.359] also probably force it to like it. It
+
+[01:09:03.040] wouldn't even output that, right? Like
+
+[01:09:04.239] if you want to if you want to drive the
+
+[01:09:05.839] output to the point where it's like,
+
+[01:09:07.839] okay, I only want things that are
+
+[01:09:09.359] actually useful. I don't want this kind
+
+[01:09:10.560] of like hallucinating sloppy like talk
+
+[01:09:12.560] to a IML speakers. Like, okay, that's
+
+[01:09:14.239] Like I I only want like you to
+
+[01:09:16.239] pull out people with actual names. So I
+
+[01:09:18.159] was like, if there was a speaker name in
+
+[01:09:19.520] the description of like this person will
+
+[01:09:21.040] be speaking, then it could go tell you
+
+[01:09:22.640] some things about them.
+
+[01:09:29.910] And we can guarantee that at least the
+
+[01:09:29.920] first name or the last name exist and
+
+[01:09:32.719] then all other entities will just get
+
+[01:09:34.319] dropped.
+
+[01:09:36.640] So we still get these but then we they
+
+[01:09:39.759] actually just get dropped from our final
+
+[01:09:41.920] parsing because like it doesn't meet the
+
+[01:09:43.520] constraint that we need which is first
+
+[01:09:44.799] and last name need to actually exist. So
+
+[01:09:46.799] all even if that all generates it you
+
+[01:09:48.480] can drop it. But the whole point of this
+
+[01:09:50.159] is instead of actually having the model
+
+[01:09:51.600] spit out a string, what I really did is
+
+[01:09:53.520] I focused on what I care about, what I
+
+[01:09:55.679] want to see, and what I want to
+
+[01:09:57.440] personally derive out of this prompt,
+
+[01:09:58.719] which is I think what John, you're
+
+[01:10:00.239] trying to do is like see if things are
+
+[01:10:01.440] going to help you like grow out of these
+
+[01:10:03.920] events. So then I would just focus the
+
+[01:10:07.520] specific stuff on here to say like focus
+
+[01:10:10.480] on how it helps me and myself it is to
+
+[01:10:12.880] myself and my career goals. Yeah. Guide
+
+[01:10:15.840] the reasoning with as much context as
+
+[01:10:17.840] possible. And I bet if you took this
+
+[01:10:19.120] JSON object and dropped it into V 0, you
+
+[01:10:21.040] could make a nice UI for this in, you
+
+[01:10:22.800] know, 60 seconds. Oh yeah, I bet. Uh,
+
+[01:10:27.679] this is
+
+[01:10:29.520] same in line with this. make a UI for
+
+[01:10:45.270] I'll probably go do something
+
+[01:10:45.280] um and I'll go build some out some UI
+
+[01:10:47.440] for me and now we have a full app that
+
+[01:10:49.600] we can just go use directly without
+
+[01:10:51.760] thinking about it
+
+[01:10:54.400] with small little rendering stuff as
+
+[01:10:56.080] well. Come on, this takes a while. And
+
+[01:10:59.840] then you can do one more.
+
+[01:11:03.440] Uh, we got time for one more prompt.
+
+[01:11:12.630] I saw someone else typing in
+
+[01:11:12.640] or sorry, go ahead. Can I just drop the
+
+[01:11:14.960] prompt in the chat or should I? Uh,
+
+[01:11:17.120] it'll probably be too long, but you will
+
+[01:11:19.520] have to do it in the Discord sadly. Oh,
+
+[01:11:20.960] yeah. Yeah. Yeah. Okay, cool. Brashant
+
+[01:11:22.560] had another one as well that was uh
+
+[01:11:24.800] answering questions with like verbosity
+
+[01:11:27.199] and things like that. Yeah. So, so
+
+[01:11:29.120] actually you kind of answered many of
+
+[01:11:30.640] these in the previous example.
+
+[01:11:33.360] Yeah. Okay.
+
+[01:11:36.159] Um, and then we'll do the last one
+
+[01:11:37.920] really fast. Um, while we're out here
+
+[01:11:39.679] and let's while while Vzero is loading,
+
+[01:11:43.679] I hate this. I This is the part I hate
+
+[01:11:45.280] the most about Vzero. It takes so long.
+
+[01:11:49.440] Okay. While a lot of uh deterministic
+
+[01:11:51.440] code,
+
+[01:11:53.440] you are tasked with a video editing
+
+[01:11:55.600] plan. Okay.
+
+[01:11:57.360] I'm gonna This is sick. Okay, I'm just
+
+[01:12:00.080] gonna
+
+[01:12:02.960] do this. All right, so right over here,
+
+[01:12:04.480] by the way, we can see this.
+
+[01:12:06.880] So now it has a fun little UI for me to
+
+[01:12:09.120] go do build this in. Uh not to not to
+
+[01:12:11.840] edit, just to view the final outcome.
+
+[01:12:24.390] Oh, do you find the frowny face makes
+
+[01:12:24.400] Verscell make better content? No, I was
+
+[01:12:26.960] just annoyed that it did the wrong
+
+[01:12:28.239] thing.
+
+[01:12:30.400] Video. Uh, well, maybe if you went and
+
+[01:12:32.480] read your prompt.
+
+[01:12:35.360] That's Well, I can't read the visor
+
+[01:12:37.120] prompt. Um, so it's a little bit harder.
+
+[01:12:40.159] Um, insert script expert here. What is
+
+[01:12:42.400] this trying to do? Do you have your Do
+
+[01:12:44.000] you have your data models and everything
+
+[01:12:45.280] else on here?
+
+[01:12:48.480] If you don't, then I I can try, but it's
+
+[01:12:51.520] harder to do without like actual
+
+[01:12:52.960] function types because this prompt is a
+
+[01:12:54.719] little bit more complex. But let me just
+
+[01:12:56.480] give you some general guidelines that I
+
+[01:12:58.159] see right off this right off my right
+
+[01:13:00.000] off the top of my head when I read this
+
+[01:13:02.719] prompt. The first thing that I see is
+
+[01:13:07.360] I don't actually think you need all this
+
+[01:13:08.960] data. Like this is a lot more redundant.
+
+[01:13:12.320] you're uh I'm not sure if this is all a
+
+[01:13:14.320] system prompt or a user prompt, but when
+
+[01:13:17.040] I go look at this, the first thing that
+
+[01:13:18.800] I see is that this is not uh it's like
+
+[01:13:21.360] mixing and matching both the content and
+
+[01:13:24.480] the instructions all over the place
+
+[01:13:26.800] because like you're listing out your you
+
+[01:13:28.800] have instructions, content,
+
+[01:13:31.040] instructions, content, instructions,
+
+[01:13:35.440] instructions. It looks like more
+
+[01:13:37.520] content. Oh, that's uh this is the
+
+[01:13:39.760] output schema. Oh, this is the output
+
+[01:13:41.440] format. Yeah. So, it looks like you're
+
+[01:13:44.000] But then there's more instructions.
+
+[01:13:45.440] Yeah. It just feels like you're we're
+
+[01:13:46.719] mixing a lot of instructions and it
+
+[01:13:48.239] doesn't read um in the way that I would
+
+[01:13:51.600] write this if I were a human. And we're
+
+[01:13:54.000] also writing a lot of things. It's like
+
+[01:13:55.440] you are a blah blah blah blah blah. Like
+
+[01:13:57.520] the model doesn't care who it is. It
+
+[01:13:59.120] just has to know the job it wants to do.
+
+[01:14:01.120] You don't need to tell it this is my
+
+[01:14:02.320] role. If you notice in any of the
+
+[01:14:03.280] prompts, I didn't I didn't like I wasn't
+
+[01:14:05.199] like you're a senior engineer that does
+
+[01:14:06.480] blah blah blah blah blah. I just like
+
+[01:14:08.000] write the code um from this prompt.
+
+[01:14:11.360] That's like the first thing I would do.
+
+[01:14:12.719] So, let's just like there we go. And by
+
+[01:14:15.199] the way, for people generating this now,
+
+[01:14:16.560] you can generate this kind of UI
+
+[01:14:17.760] automatically from here. And this would
+
+[01:14:20.159] be super super easy for me to go code
+
+[01:14:21.920] gen. And then I could put buttons on
+
+[01:14:23.679] here that I'll call like enrich which
+
+[01:14:25.760] calls another LM function that finds all
+
+[01:14:27.520] the data about that company using like a
+
+[01:14:29.600] research thing that I go built. Sorry, I
+
+[01:14:31.679] context switch really fast.
+
+[01:14:34.400] Um, but let me go back really fast and
+
+[01:14:37.040] start a new chat thing.
+
+[01:14:39.440] Uh, make this prompt better and no XML.
+
+[01:14:48.950] Um, and the error markdown is the thing
+
+[01:14:48.960] that hopefully we'll fix in. Yeah,
+
+[01:14:51.520] Pashant the the you are we were just
+
+[01:14:53.360] talking about this before the episode
+
+[01:14:54.480] that like asking models to adopt a role
+
+[01:14:57.760] is uh I think I think the best prompt
+
+[01:15:00.480] engineers out there have been talking
+
+[01:15:01.920] for months about if not longer about how
+
+[01:15:04.400] that doesn't really work very well or
+
+[01:15:05.840] like it doesn't have that much effect on
+
+[01:15:08.239] the output. The funny thing is that um
+
+[01:15:12.080] uh this comes right out of uh clawed ROM
+
+[01:15:15.760] generation as well. Yeah,
+
+[01:15:19.520] I bet this just because there's a lot of
+
+[01:15:21.840] data in the training set doesn't mean
+
+[01:15:23.360] it's correct or good data. Yeah, just
+
+[01:15:26.000] like the most code out there is kind of
+
+[01:15:27.520] You probably shouldn't follow most
+
+[01:15:29.360] code. Uh but um a lot of code is still
+
+[01:15:34.560] very good and you should follow that,
+
+[01:15:35.760] but it's all about finding the right
+
+[01:15:36.880] segments. So in this case, the first
+
+[01:15:38.640] thing I do is like get rid of this.
+
+[01:15:42.640] Create a segmentation plan for the
+
+[01:15:43.920] following script. Break in logical for
+
+[01:15:45.679] each segment. Ensure it contains
+
+[01:15:46.880] complete thought or idea. Estimate a
+
+[01:15:48.960] reasonable time. Consider the pacing.
+
+[01:15:51.120] Um, and it's important to kind of like
+
+[01:15:53.520] describe what these mean because it
+
+[01:15:56.480] probably doesn't actually know and I I
+
+[01:15:57.920] have no idea what it actually means for
+
+[01:15:59.360] fast, slow, or medium. Like I'm just it
+
+[01:16:01.199] just made stuff up. You need to go and
+
+[01:16:02.719] actually understand your own uh thing
+
+[01:16:05.040] for that. Uh, and like if you you could
+
+[01:16:08.239] even force it in the schema, right? You
+
+[01:16:09.920] could be like, "Okay, cool. I know how
+
+[01:16:11.199] long this is and I can say I know I want
+
+[01:16:13.360] exactly, you know, do it in code and say
+
+[01:16:15.360] I want exactly 40 cuts because I want 30
+
+[01:16:17.920] to 40 cuts versus something else. I want
+
+[01:16:21.760] a
+
+[01:16:23.280] because then we're not making the model
+
+[01:16:25.199] count.
+
+[01:16:36.870] There you go. And instead of actually
+
+[01:16:36.880] outputting all the stuff,
+
+[01:16:39.440] I will actually just literally tell the
+
+[01:16:40.880] model to go do this. I will literally
+
+[01:16:43.199] tell it exactly what I want the pacing
+
+[01:16:44.960] to be. Instead of describing all the
+
+[01:16:46.480] pacings, I will specifically only emit
+
+[01:16:48.719] the pacing that's actually relevant to
+
+[01:16:50.000] the model. And that's the same thing.
+
+[01:16:51.840] The user and the program see a single
+
+[01:16:53.920] word fast, but then you translate that
+
+[01:16:56.480] into more verbose instructions, but only
+
+[01:16:58.960] the LM sees that part. And the LM is not
+
+[01:17:02.000] seeing everything else. So if I change
+
+[01:17:03.520] this from slow to fast, it sees this
+
+[01:17:05.040] one. Whereas in this one, it sees slow,
+
+[01:17:09.040] right? So now it's able to actually go
+
+[01:17:10.719] do this along the way. Um, and now when
+
+[01:17:14.560] I go, you can run it. Why not? Yeah, why
+
+[01:17:17.120] not?
+
+[01:17:22.550] And I don't even know what transition
+
+[01:17:22.560] is. Like if transitions have a separate
+
+[01:17:24.560] cut, like sure, let's do this.
+
+[01:17:28.960] Let's let's just run it this way.
+
+[01:17:34.870] and it's able to go do this. Now,
+
+[01:17:34.880] duration is kind of uh is kind of
+
+[01:17:36.560] misleading and the description is kind
+
+[01:17:38.159] of uh uh seconds. I'm going to change
+
+[01:17:43.360] this
+
+[01:17:46.239] uh
+
+[01:17:55.110] I don't think we need duration because
+
+[01:17:55.120] the duration is essentially the content.
+
+[01:17:57.679] So, we can skip it. Yes. But um you
+
+[01:18:02.400] might benefit from actually having uh
+
+[01:18:04.960] duration in there just so that a model
+
+[01:18:06.719] can like plan for each segment. It's the
+
+[01:18:10.480] same thing expected duration kind of
+
+[01:18:12.880] right cuz you have you have a thing in
+
+[01:18:15.760] there where you're thinking about uh
+
+[01:18:17.840] prompting but you want the model to also
+
+[01:18:19.679] be thinking about duration like the
+
+[01:18:21.360] amount of inference it has it's about
+
+[01:18:23.120] the amount caches why do we have a
+
+[01:18:24.800] reddis cache not because we can't go to
+
+[01:18:26.239] the database because we don't want to go
+
+[01:18:27.760] to the database all the time why are we
+
+[01:18:29.679] putting duration here so the model can
+
+[01:18:31.440] just like kind of think about this now
+
+[01:18:33.920] we see that this content is like pretty
+
+[01:18:36.400] uh short form which is totally fine but
+
+[01:18:39.120] if we want this be full content. Then we
+
+[01:18:41.760] can just do this. We can we can guide
+
+[01:18:44.480] the model to generating more text. Use
+
+[01:18:46.960] Well, I think your input test case is
+
+[01:18:48.640] really is really um small. I think this
+
+[01:18:51.440] is actually the right the right text
+
+[01:18:53.360] straight from the input thing. So like
+
+[01:18:55.120] we need like a way longer script to
+
+[01:18:56.719] really test this. Anyways, so drop in a
+
+[01:18:59.840] can I drop in a script? I have one.
+
+[01:19:01.840] Yeah, drop in a script. Yes, send a
+
+[01:19:03.199] script. Yeah.
+
+[01:19:05.520] yeah.
+
+[01:19:07.440] On the AI that works. There you
+
+[01:19:09.520] go. This proof of computing.
+
+[01:19:13.600] I like this. We should do this more. We
+
+[01:19:15.520] should uh we should take people's real
+
+[01:19:17.840] problems and solve them. Let's run it.
+
+[01:19:28.310] Right.
+
+[01:19:28.320] So, you can actually see what it did. It
+
+[01:19:30.480] actually spit out all the content as a
+
+[01:19:32.320] line,
+
+[01:19:34.560] but the duration seconds is 60 for
+
+[01:19:36.719] everything. No. Do you still want it to
+
+[01:19:38.800] be a list by Bob or do you want it just
+
+[01:19:40.239] be a single string? Uh, we can Oh,
+
+[01:19:42.800] sorry. Yes.
+
+[01:19:45.760] Estimated
+
+[01:19:51.110] seconds. Um, let's give it some
+
+[01:19:51.120] description like what how how do you
+
+[01:19:52.880] estimate duration?
+
+[01:20:01.430] Uh, let's say every 1,00 characters is
+
+[01:20:01.440] um a minute or 60 seconds or
+
+[01:20:05.679] something like that. Oh, are we going to
+
+[01:20:07.199] make the model count characters
+
+[01:20:10.000] every like let's try this a 1,00 every
+
+[01:20:13.679] uh so typically every 120 words per
+
+[01:20:17.440] minute so uh you can count words or
+
+[01:20:21.280] characters I don't know words per minute
+
+[01:20:24.560] uh what is average
+
+[01:20:30.470] right and we might actually find that
+
+[01:20:30.480] like hey if we do this it's actually
+
+[01:20:32.880] when we do slower pacing it's going to
+
+[01:20:34.320] be a little bit it's about 100 words per
+
+[01:20:35.920] minute.
+
+[01:20:38.320] If we do this, it's going to be like 120
+
+[01:20:40.880] and we do fast, it's going to be like
+
+[01:20:43.199] 150. So, you might actually like find
+
+[01:20:45.760] that it's useful to actually guide the
+
+[01:20:47.199] model appropriately for the different
+
+[01:20:48.480] use cases because that's what I would
+
+[01:20:49.679] do. I would I would have a slightly talk
+
+[01:20:51.520] faster voice in general, not just like
+
+[01:20:53.040] the pacing.
+
+[01:20:58.870] It would be interesting to also have
+
+[01:20:58.880] this like start suggesting like, hey,
+
+[01:21:00.719] what do you want to show on the screen
+
+[01:21:02.159] during this cut? Right. Exactly. And
+
+[01:21:05.600] then you do like a image search and pull
+
+[01:21:07.440] that in um background image. So let's do
+
+[01:21:10.640] that.
+
+[01:21:12.719] This would be a fun building like an
+
+[01:21:14.400] example of this end to end of like how
+
+[01:21:16.239] to just like generate automated video
+
+[01:21:18.159] content from little scripts an end toend
+
+[01:21:20.640] content pipeline
+
+[01:21:23.679] to make you can come help me build my my
+
+[01:21:26.480] company. I was going to say yeah we have
+
+[01:21:28.400] to be careful not to build a open source
+
+[01:21:30.480] competitor to Sahill.
+
+[01:21:32.880] I would love for that.
+
+[01:21:39.910] Um uh a description
+
+[01:21:39.920] description
+
+[01:21:42.159] that is that is so I have a I have a
+
+[01:21:45.920] couple of questions over here. So
+
+[01:21:47.360] earlier in the example you were you were
+
+[01:21:49.199] showing how we can create indexes and to
+
+[01:21:52.239] to make sure that we are not spitting
+
+[01:21:54.000] out so much uh text and saving tokens. I
+
+[01:21:57.520] know like obviously this is a slightly
+
+[01:22:01.360] different case where we have to spit out
+
+[01:22:03.120] the text. Are there any tips or tricks
+
+[01:22:05.360] we could use to
+
+[01:22:08.239] do that index thing in here in any way,
+
+[01:22:11.360] shape or form? Well, I don't actually
+
+[01:22:13.679] know if you have to spit out the text in
+
+[01:22:15.040] form. Like honestly, you could just make
+
+[01:22:16.639] this a lookup table based on strings.
+
+[01:22:18.400] Like you just spit out every line, every
+
+[01:22:20.239] sentence into itself
+
+[01:22:22.560] as like a thing. And then you could have
+
+[01:22:23.920] the model spit out like a span
+
+[01:22:26.960] of like from dialog one to dialog 7 do
+
+[01:22:29.440] this dialog one to three and it'll
+
+[01:22:31.840] naturally find break points in the
+
+[01:22:34.639] dialogue and now you can go do that. You
+
+[01:22:37.360] can ask you can build a separate
+
+[01:22:38.719] pipeline that says if you really care
+
+[01:22:40.159] about like cost and latency I would
+
+[01:22:42.639] build a separate pipeline that says
+
+[01:22:43.840] given all these dialogues what is the
+
+[01:22:45.600] most intuitive break points to inject
+
+[01:22:48.080] into here and then you go generate the
+
+[01:22:50.960] background image and everything off of
+
+[01:22:52.080] that.
+
+[01:22:53.360] So you can solve this problem in many
+
+[01:22:54.800] different ways but it's more about
+
+[01:22:55.840] identifying the indexes of where the
+
+[01:22:57.120] break point should be for where
+
+[01:22:58.239] transition should happen.
+
+[01:23:00.480] Oh, so becomes similar to kind of almost
+
+[01:23:02.960] the diorization where maybe you just
+
+[01:23:04.480] wanted to output like the first like the
+
+[01:23:06.560] the biggest like the smallest unique
+
+[01:23:08.080] chunk that like offsets the text there.
+
+[01:23:11.040] Exactly. Exactly. Where would you go in
+
+[01:23:13.520] that?
+
+[01:23:15.360] Cool. Uh we're 90 minutes. We should
+
+[01:23:17.040] probably wrap it up. Uh this was super
+
+[01:23:18.960] fun y'all. Thank you so much Vib for
+
+[01:23:20.560] sharing your prompting wisdom. For those
+
+[01:23:22.400] of you who made it to the very end,
+
+[01:23:23.760] congrats. We'll uh there's no prize
+
+[01:23:26.080] except that you got to learn more. And
+
+[01:23:28.560] uh we will push all the code and the
+
+[01:23:30.480] video and we'll send out a blast and uh
+
+[01:23:33.360] come catch us next week and um we should
+
+[01:23:36.239] figure out what we're going to do next
+
+[01:23:37.360] week. We have a we have a we have a long
+
+[01:23:39.040] backlog of things, but we're going to
+
+[01:23:40.159] figure it out and we'll we'll we'll
+
+[01:23:41.600] update y'all with uh what's coming next.
+
+[01:23:43.280] So, thanks everybody.
+
+[01:23:45.360] Thanks. Awesome. Thanks y'all. See you.

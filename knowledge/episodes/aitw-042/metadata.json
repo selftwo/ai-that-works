@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-042",
+  "episode": 42,
+  "season": 2,
+  "title": "No Vibes Allowed",
+  "source_folder": "2026-01-27-no-vibes-allowed",
+  "recorded_at": "2026-01-27T18:00:00Z",
+  "recorded_at_provenance": "Source catalog event_date from upstream meta.md. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "Xq8VxnGVStg",
+  "youtube_url": "https://www.youtube.com/watch?v=Xq8VxnGVStg",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

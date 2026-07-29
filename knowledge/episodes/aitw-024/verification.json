@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID 5Fy0hBzyduU",
+  "transcript_range": "00:00 to 01:09:00.920",
+  "timestamp_order": "passed with a direct HH:MM:SS.mmm parser; knowledge/scripts/verify_transcript.py does not recognize this caption timestamp format",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "The demonstrated pipeline uses embeddings to narrow a l",
+    "The UI separates narrowing failures from final selectio",
+    "Classification correctness is subjective when labels di",
+    "A table based review UI makes individual failures and e"
+  ],
+  "timestamped_claim_count": 6,
+  "source_duration_check": "Caption end compared with the duration stated in the source README where available; source media was not downloaded.",
+  "remaining_uncertainty": [
+    "automatic caption errors",
+    "speaker attribution",
+    "screen only evidence",
+    "exact recording start"
+  ]
+}

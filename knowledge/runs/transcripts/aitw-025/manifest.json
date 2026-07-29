@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-025",
+  "video_id": "bak7-C--azc",
+  "source_url": "https://www.youtube.com/watch?v=bak7-C--azc",
+  "input_fingerprint": "5eee24ded4087217d85d656b99b5922d1e1a67cc817bd3ab2851fc33e187c7b7",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:18:56.384375+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 3631.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-025/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-025/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 1923,
+      "first_seconds": 1.27,
+      "last_seconds": 3632.84,
+      "source_duration_seconds": 3631.0,
+      "duration_delta_seconds": 1.8400000000001455,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:19:28.531984+00:00"
+}

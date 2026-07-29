@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-036",
+  "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
+  "materials": [
+    {"path": "2025-12-16-prompt-optimizer/README.md", "role": "upstream episode overview and links", "sha256": "d66456fb57fe8c9a232f182054d0ca0504d167153c82c5c9f1a8483e66e4fb64"},
+    {"path": "2025-12-16-prompt-optimizer/meta.md", "role": "upstream episode identity, event time, and media metadata", "sha256": "78bd5939c0a335732b9a80170c5f1c3d43a67fe56c88342a5fd3e088e726bb81"},
+    {"path": "2025-12-16-prompt-optimizer/transcript.md", "role": "primary timestamped evidence", "sha256": "3bf4cc761af42aaf4254245de181350f9e096e49f46588249b1d63ec6bcc90d6"}
+  ],
+  "supporting_files": [],
+  "external_links": [
+    {"url": "https://www.youtube.com/watch?v=IkSEXg6f4KY", "role": "source video, not downloaded or independently checked"},
+    {"url": "https://lu.ma/baml", "role": "event series link"}
+  ],
+  "note": "The source folder contains no code or whiteboard files despite the live product demonstration. External research and product documentation mentioned in the transcript were not verified."
+}

@@ -1,0 +1,7549 @@
+WEBVTT
+
+00:00:04.150 --> 00:00:04.160
+All right. Hello, hello, hello.
+
+00:00:04.160 --> 00:00:06.400
+We're gonna go right into it today.
+
+00:00:06.400 --> 00:00:08.480
+We're going to go start talking about
+
+00:00:08.480 --> 00:00:11.599
+agentic rag and talk about if we can get
+
+00:00:11.599 --> 00:00:13.280
+to work, how you would might want to go
+
+00:00:13.280 --> 00:00:16.080
+do it, and exactly what we want to do.
+
+00:00:16.080 --> 00:00:16.960
+Before we get started,
+
+00:00:16.960 --> 00:00:18.400
+>> this is
+
+00:00:18.400 --> 00:00:19.760
+>> Go ahead, do the intro. You're doing the
+
+00:00:19.760 --> 00:00:21.119
+intro. Go for it.
+
+00:00:21.119 --> 00:00:22.640
+>> All right. This AI that works. Every
+
+00:00:22.640 --> 00:00:24.560
+week, Dexter and I get together and we
+
+00:00:24.560 --> 00:00:26.160
+talk about building real pipelines that
+
+00:00:26.160 --> 00:00:28.080
+actually work.
+
+00:00:28.080 --> 00:00:30.800
+If uh if you can think it, you can build
+
+00:00:30.800 --> 00:00:33.120
+it. That's the whole idea. And my name
+
+00:00:33.120 --> 00:00:35.760
+is Vivov. I work on BAML, which is a new
+
+00:00:35.760 --> 00:00:36.559
+programming language.
+
+00:00:36.559 --> 00:00:39.680
+>> I'm stacks. I work on uh lots of things,
+
+00:00:39.680 --> 00:00:41.600
+including code layer, which is a new ADE
+
+00:00:41.600 --> 00:00:43.760
+to get coding agents to solve hard
+
+00:00:43.760 --> 00:00:46.320
+problems and complex code bases.
+
+00:00:46.320 --> 00:00:48.879
+>> And I'm super excited to get into it.
+
+00:00:48.879 --> 00:00:50.879
+This is going to be I have a feeling we
+
+00:00:50.879 --> 00:00:52.320
+were thinking about this episode before
+
+00:00:52.320 --> 00:00:55.120
+we got on. And uh I have a feeling
+
+00:00:55.120 --> 00:00:56.800
+there's going to be some spicy takes and
+
+00:00:56.800 --> 00:00:58.480
+some back and forth. So my favorite
+
+00:00:58.480 --> 00:01:00.160
+episodes are when me and Vibv actually
+
+00:01:00.160 --> 00:01:01.920
+don't fully agree on stuff. So we might
+
+00:01:01.920 --> 00:01:03.039
+get a little bit of that today, but I'm
+
+00:01:03.039 --> 00:01:04.080
+going to let him get into the demo. Show
+
+00:01:04.080 --> 00:01:06.080
+them what we're building and uh looking
+
+00:01:06.080 --> 00:01:07.119
+forward to it.
+
+00:01:07.119 --> 00:01:09.439
+>> Okay. So as many of you probably know, a
+
+00:01:09.439 --> 00:01:12.400
+rag system is not an aentic system like
+
+00:01:12.400 --> 00:01:13.680
+cloud code or something is not something
+
+00:01:13.680 --> 00:01:16.000
+you can really build um in let's say
+
+00:01:16.000 --> 00:01:19.600
+like within 1 hour. So, I did something
+
+00:01:19.600 --> 00:01:22.720
+else, which is I built this thing um
+
+00:01:22.720 --> 00:01:25.439
+mostly uh last night just to show you
+
+00:01:25.439 --> 00:01:27.360
+what it could do. But I want to just
+
+00:01:27.360 --> 00:01:28.799
+start with the demo and show you exactly
+
+00:01:28.799 --> 00:01:30.640
+what it is and then based on what it
+
+00:01:30.640 --> 00:01:32.720
+works, we can then talk about how it
+
+00:01:32.720 --> 00:01:35.439
+works. So, I'll just make the terminal
+
+00:01:35.439 --> 00:01:37.600
+the whole thing. Uh can you see? All
+
+00:01:37.600 --> 00:01:38.799
+right, Dexter.
+
+00:01:38.799 --> 00:01:40.159
+>> Yeah, it looks good. That's a that's a
+
+00:01:40.159 --> 00:01:40.960
+good zoom.
+
+00:01:40.960 --> 00:01:42.479
+>> Okay, then I'll leave it at the zoom
+
+00:01:42.479 --> 00:01:45.520
+level. Um I'm just going to run this
+
+00:01:45.520 --> 00:01:48.560
+thing. Uh we're what this thing is I
+
+00:01:48.560 --> 00:01:50.000
+gave it a directory. I'm in the BAML
+
+00:01:50.000 --> 00:01:50.960
+directory right now and I'm just going
+
+00:01:50.960 --> 00:01:52.799
+to ask it what does the form fern folder
+
+00:01:52.799 --> 00:01:54.880
+do and you'll notice what this agent
+
+00:01:54.880 --> 00:01:56.880
+does. It actually has the ability to go
+
+00:01:56.880 --> 00:01:58.159
+ahead and set some stuff. So it's going
+
+00:01:58.159 --> 00:02:00.320
+to take the user query. I'm using GD5
+
+00:02:00.320 --> 00:02:01.840
+for now because I don't want to think
+
+00:02:01.840 --> 00:02:03.520
+about model stuff. So I just used the
+
+00:02:03.520 --> 00:02:05.040
+best model I could on the market.
+
+00:02:05.040 --> 00:02:06.640
+>> Did you just did you build a coding
+
+00:02:06.640 --> 00:02:07.759
+agent?
+
+00:02:07.759 --> 00:02:08.879
+>> Yeah, I built a coding.
+
+00:02:08.879 --> 00:02:09.840
+>> Is that what this is?
+
+00:02:09.840 --> 00:02:11.280
+>> From scratch. Um
+
+00:02:11.280 --> 00:02:11.599
+>> Okay.
+
+00:02:11.599 --> 00:02:13.760
+>> It took me a net of about 3 hours. So it
+
+00:02:13.760 --> 00:02:15.120
+actually went through it did a glob
+
+00:02:15.120 --> 00:02:16.239
+looked through the firm folder and I was
+
+00:02:16.239 --> 00:02:17.680
+like cool this worked.
+
+00:02:17.680 --> 00:02:20.319
+>> Um I'll ask it question using these
+
+00:02:20.319 --> 00:02:21.840
+docs.
+
+00:02:21.840 --> 00:02:26.239
+How does how do I use the Gemini models
+
+00:02:26.239 --> 00:02:27.760
+with BAML? Cool.
+
+00:02:27.760 --> 00:02:30.640
+>> It should in theory take this agent and
+
+00:02:30.640 --> 00:02:32.560
+there's my user query. It'll go ahead
+
+00:02:32.560 --> 00:02:35.440
+and probably glob some stuff. Um make
+
+00:02:35.440 --> 00:02:37.360
+some other GP. It has a GP tool that it
+
+00:02:37.360 --> 00:02:40.000
+looked into. It's going to go take the
+
+00:02:40.000 --> 00:02:41.680
+results. And I don't stream the thinking
+
+00:02:41.680 --> 00:02:42.959
+tokens yet. I haven't built full
+
+00:02:42.959 --> 00:02:45.599
+streaming into this yet. That'll
+
+00:02:45.599 --> 00:02:46.800
+probably take another two or three hours
+
+00:02:46.800 --> 00:02:50.160
+to get working. Uh file
+
+00:02:50.160 --> 00:02:51.840
+>> and then what will it do? Let's just
+
+00:02:51.840 --> 00:02:52.959
+keep seeing what it does.
+
+00:02:52.959 --> 00:02:54.000
+>> I got a question.
+
+00:02:54.000 --> 00:02:55.040
+>> Yes.
+
+00:02:55.040 --> 00:02:58.480
+>> Um where you're snipping that result at
+
+00:02:58.480 --> 00:03:00.879
+the end where it says 4,300 cars total.
+
+00:03:00.879 --> 00:03:02.720
+Is that also being snipped for the model
+
+00:03:02.720 --> 00:03:03.680
+or is that just being
+
+00:03:03.680 --> 00:03:05.840
+>> trimmed? The model sees the full 4,000
+
+00:03:05.840 --> 00:03:06.560
+characters.
+
+00:03:06.560 --> 00:03:07.200
+>> Okay.
+
+00:03:07.200 --> 00:03:08.800
+>> Um cool. It actually gave me an example
+
+00:03:08.800 --> 00:03:11.760
+of how to do this. Um, can you check
+
+00:03:11.760 --> 00:03:14.560
+against the Google Docs if Gemini 2.5
+
+00:03:14.560 --> 00:03:16.239
+Pro is the latest model or not? Or are
+
+00:03:16.239 --> 00:03:18.159
+there newer ones?
+
+00:03:18.159 --> 00:03:20.400
+>> Did you also give it web search?
+
+00:03:20.400 --> 00:03:23.599
+>> And while this thing runs, like I guess
+
+00:03:23.599 --> 00:03:25.440
+a really really important part to think
+
+00:03:25.440 --> 00:03:29.519
+about here is what exactly are we trying
+
+00:03:29.519 --> 00:03:31.840
+to do with agentic rag? I know there's
+
+00:03:31.840 --> 00:03:33.599
+quite a few people who probably have an
+
+00:03:33.599 --> 00:03:35.840
+idea of what agentic rag is. What is
+
+00:03:35.840 --> 00:03:38.239
+your definition of it, Dexter?
+
+00:03:38.239 --> 00:03:39.680
+Um, and I think it's probably worth
+
+00:03:39.680 --> 00:03:41.040
+zooming out a little bit now that we've
+
+00:03:41.040 --> 00:03:44.239
+kind of seen the demo. Um because I
+
+00:03:44.239 --> 00:03:48.640
+think for me agentic rag is basically um
+
+00:03:48.640 --> 00:03:52.799
+to be to be like counterposed with um
+
+00:03:52.799 --> 00:03:54.959
+traditional rag which is a little bit
+
+00:03:54.959 --> 00:03:57.519
+more actually aligned with what we might
+
+00:03:57.519 --> 00:03:59.840
+describe as context engineering which is
+
+00:03:59.840 --> 00:04:03.519
+you know uh some query comes in I do a
+
+00:04:03.519 --> 00:04:05.519
+bunch of deterministic code to fetch
+
+00:04:05.519 --> 00:04:08.319
+data related to that query whether it is
+
+00:04:08.319 --> 00:04:11.360
+doing a search on an API like linear or
+
+00:04:11.360 --> 00:04:13.599
+notion or something like that or whether
+
+00:04:13.599 --> 00:04:15.599
+it's like pulling things out of a vector
+
+00:04:15.599 --> 00:04:18.639
+database. Like for me like
+
+00:04:18.639 --> 00:04:20.320
+retrieval augmented generation doesn't
+
+00:04:20.320 --> 00:04:21.600
+have to use vectors. It doesn't have to
+
+00:04:21.600 --> 00:04:24.400
+use search. It's just based on what the
+
+00:04:24.400 --> 00:04:27.120
+user asked or based on some logic that I
+
+00:04:27.120 --> 00:04:28.639
+know in my business application. We're
+
+00:04:28.639 --> 00:04:30.320
+going to retrieve data and give it to
+
+00:04:30.320 --> 00:04:32.320
+the model deterministically every single
+
+00:04:32.320 --> 00:04:34.160
+time. So when the model gets the user's
+
+00:04:34.160 --> 00:04:37.759
+question or query or task or whatever it
+
+00:04:37.759 --> 00:04:40.080
+is, you are always going to be injecting
+
+00:04:40.080 --> 00:04:41.600
+some set of and it's probably not the
+
+00:04:41.600 --> 00:04:43.360
+same every time, but it's deterministic
+
+00:04:43.360 --> 00:04:45.360
+code mostly that defines what goes in
+
+00:04:45.360 --> 00:04:46.639
+there. And maybe there's searches and
+
+00:04:46.639 --> 00:04:48.400
+lookups and XG boost and vectors and
+
+00:04:48.400 --> 00:04:50.080
+things like that, but that's kind of
+
+00:04:50.080 --> 00:04:53.600
+basic like your code decides the logic.
+
+00:04:53.600 --> 00:04:56.080
+And so with agentic rag, it's it's kind
+
+00:04:56.080 --> 00:04:57.600
+of a little bit more open-ended. It's
+
+00:04:57.600 --> 00:05:00.080
+this just agent calls tools in a loop.
+
+00:05:00.080 --> 00:05:03.199
+And so it's the agent's job to define
+
+00:05:03.199 --> 00:05:04.800
+what context gets pulled into the
+
+00:05:04.800 --> 00:05:06.560
+context window. And sometimes if the
+
+00:05:06.560 --> 00:05:08.000
+context is bad, it's still in the
+
+00:05:08.000 --> 00:05:09.680
+context window, but it's the agent's job
+
+00:05:09.680 --> 00:05:12.560
+to call tools to try to get the enough
+
+00:05:12.560 --> 00:05:15.440
+information to resolve the user's query.
+
+00:05:15.440 --> 00:05:16.960
+>> Yeah, I I'll tell you how I think about
+
+00:05:16.960 --> 00:05:18.639
+it. And probably it's probably slightly
+
+00:05:18.639 --> 00:05:20.560
+different, but slightly aligned as well.
+
+00:05:20.560 --> 00:05:22.240
+Um
+
+00:05:22.240 --> 00:05:24.720
+my theory is
+
+00:05:24.720 --> 00:05:27.120
+I think agentic rag the whole purpose of
+
+00:05:27.120 --> 00:05:29.919
+it is it's actually not a definition of
+
+00:05:29.919 --> 00:05:31.360
+how you implement it. It's actually more
+
+00:05:31.360 --> 00:05:33.039
+of a definition of what the goal of the
+
+00:05:33.039 --> 00:05:35.440
+problem is. So when I think about the
+
+00:05:35.440 --> 00:05:38.479
+world, I think about a rag system as a
+
+00:05:38.479 --> 00:05:40.479
+much narrower system. And this might be
+
+00:05:40.479 --> 00:05:42.880
+exactly what you're saying. But when I
+
+00:05:42.880 --> 00:05:45.360
+think about um in the sense of like a
+
+00:05:45.360 --> 00:05:47.440
+narrow system, what I mean by that is
+
+00:05:47.440 --> 00:05:49.919
+you have a you as a developer have an
+
+00:05:49.919 --> 00:05:51.680
+understanding of the scope of the
+
+00:05:51.680 --> 00:05:54.240
+problem that the user is asking. And an
+
+00:05:54.240 --> 00:05:56.639
+agentic rag pipeline is designed to go
+
+00:05:56.639 --> 00:05:58.880
+solve for a problem where you as a
+
+00:05:58.880 --> 00:06:00.479
+developer don't have a scope for knowing
+
+00:06:00.479 --> 00:06:02.639
+what the user is asking. Well, and this
+
+00:06:02.639 --> 00:06:04.319
+is what we always talk about is the the
+
+00:06:04.319 --> 00:06:06.240
+kind of spectrum between the kind of
+
+00:06:06.240 --> 00:06:08.800
+full open-ended yolo just call tools in
+
+00:06:08.800 --> 00:06:13.120
+a loop versus the specific pipeline. And
+
+00:06:13.120 --> 00:06:14.479
+so when you write the pipeline, you have
+
+00:06:14.479 --> 00:06:17.520
+more deterministic code. You have less
+
+00:06:17.520 --> 00:06:20.800
+like the problem space you can solve is
+
+00:06:20.800 --> 00:06:23.759
+smaller. But the idea is by by being
+
+00:06:23.759 --> 00:06:25.280
+deterministic about the things you know
+
+00:06:25.280 --> 00:06:26.720
+are always going to work in a certain
+
+00:06:26.720 --> 00:06:29.199
+way, then you can actually solve that
+
+00:06:29.199 --> 00:06:30.960
+problem better. like the open-ended
+
+00:06:30.960 --> 00:06:33.360
+agent can do more things, but if you
+
+00:06:33.360 --> 00:06:34.960
+want accuracy, you actually want to say,
+
+00:06:34.960 --> 00:06:36.080
+"Well, we're always going to do these
+
+00:06:36.080 --> 00:06:37.520
+three steps in this order. Why are we
+
+00:06:37.520 --> 00:06:39.360
+going to prompt the agent to call those
+
+00:06:39.360 --> 00:06:40.800
+three tools? Just we'll just call those
+
+00:06:40.800 --> 00:06:42.560
+APIs and inject it every time."
+
+00:06:42.560 --> 00:06:45.360
+>> Yeah, exactly. So, here's the thing. I I
+
+00:06:45.360 --> 00:06:46.639
+want to talk through the code that we
+
+00:06:46.639 --> 00:06:48.800
+built today, but I think one of the most
+
+00:06:48.800 --> 00:06:49.919
+important things that I really want to
+
+00:06:49.919 --> 00:06:51.840
+talk about is
+
+00:06:51.840 --> 00:06:54.080
+I I had a hot take that I built while
+
+00:06:54.080 --> 00:06:56.319
+building the system. I think
+
+00:06:56.319 --> 00:06:57.680
+>> you you learned something new by
+
+00:06:57.680 --> 00:06:58.479
+building.
+
+00:06:58.479 --> 00:07:00.160
+>> Yeah. Uh well,
+
+00:07:00.160 --> 00:07:01.599
+If you are deciding whether or not you
+
+00:07:01.599 --> 00:07:03.199
+should build an agentic rag system or
+
+00:07:03.199 --> 00:07:05.199
+not, um you should just build one. It's
+
+00:07:05.199 --> 00:07:06.479
+way easier than you think. I built the
+
+00:07:06.479 --> 00:07:07.840
+whole thing, like I said, in 3 hours
+
+00:07:07.840 --> 00:07:10.479
+using cloud code. Um I wrote I wrote
+
+00:07:10.479 --> 00:07:13.840
+probably around um I think I wrote about
+
+00:07:13.840 --> 00:07:16.800
+30% of the code by hand and 70% of it is
+
+00:07:16.800 --> 00:07:18.479
+AI generated. I don't think I could have
+
+00:07:18.479 --> 00:07:21.440
+done 100% uh by AI generated personally
+
+00:07:21.440 --> 00:07:22.960
+uh just because of how nuanced and like
+
+00:07:22.960 --> 00:07:24.880
+some of the decisions were, but like 70%
+
+00:07:24.880 --> 00:07:27.199
+of the code is actually all UI code.
+
+00:07:27.199 --> 00:07:28.800
+very little of it is actually agentic
+
+00:07:28.800 --> 00:07:32.000
+code. Almost all of it is pure UI UI
+
+00:07:32.000 --> 00:07:35.199
+stuff I have to build. But I think one
+
+00:07:35.199 --> 00:07:36.319
+of the first things that I realized
+
+00:07:36.319 --> 00:07:37.520
+while building this is actually that
+
+00:07:37.520 --> 00:07:40.639
+most people should not build
+
+00:07:40.639 --> 00:07:42.880
+rag aentic rag systems for their
+
+00:07:42.880 --> 00:07:44.880
+workflows. If you're building a software
+
+00:07:44.880 --> 00:07:48.319
+stack, most problems are not so wide
+
+00:07:48.319 --> 00:07:51.599
+that you need an agentic rag system.
+
+00:07:51.599 --> 00:07:54.879
+And the reason I felt this was because
+
+00:07:54.879 --> 00:07:57.759
+it turns out it's it's very similar to
+
+00:07:57.759 --> 00:08:01.120
+different kinds of problems. But the way
+
+00:08:01.120 --> 00:08:03.120
+if you have an Excalibur, let's do some
+
+00:08:03.120 --> 00:08:03.440
+drawing.
+
+00:08:03.440 --> 00:08:04.639
+>> I'll send it to you on Slack.
+
+00:08:04.639 --> 00:08:06.080
+>> I'll show you exactly why I came to that
+
+00:08:06.080 --> 00:08:08.319
+conclusion after building this. And you
+
+00:08:08.319 --> 00:08:10.160
+might disagree.
+
+00:08:10.160 --> 00:08:12.319
+I did not use the cloud agent SDK. I
+
+00:08:12.319 --> 00:08:13.759
+actually specifically whenever I really
+
+00:08:13.759 --> 00:08:15.759
+want to go learn something, one of the
+
+00:08:15.759 --> 00:08:18.319
+first things that I try and do is I
+
+00:08:18.319 --> 00:08:19.599
+really want to learn it from first
+
+00:08:19.599 --> 00:08:21.680
+principles and I just find personally
+
+00:08:21.680 --> 00:08:23.440
+for myself writing the code helps me
+
+00:08:23.440 --> 00:08:24.720
+understand how it works. If I use the
+
+00:08:24.720 --> 00:08:26.879
+cloud agents SDK, I don't actually
+
+00:08:26.879 --> 00:08:31.199
+understand how like what a system is
+
+00:08:31.199 --> 00:08:33.680
+doing. And by actually writing the code,
+
+00:08:33.680 --> 00:08:36.159
+I now just I can tell you every little
+
+00:08:36.159 --> 00:08:37.760
+bit of a system design decision that you
+
+00:08:37.760 --> 00:08:39.039
+might make trade-offs for and like where
+
+00:08:39.039 --> 00:08:40.719
+the cloud agent SDK might be useful and
+
+00:08:40.719 --> 00:08:43.120
+where it might not. But honestly, I
+
+00:08:43.120 --> 00:08:44.560
+don't think I would have won any more
+
+00:08:44.560 --> 00:08:47.360
+time by using the cloud agent SDK. I
+
+00:08:47.360 --> 00:08:48.720
+think it would have actually like cost
+
+00:08:48.720 --> 00:08:50.080
+me probably more time because certain
+
+00:08:50.080 --> 00:08:51.200
+things would have been harder and other
+
+00:08:51.200 --> 00:08:54.399
+things would have been easier.
+
+00:08:54.399 --> 00:08:56.160
+>> Code in a second.
+
+00:08:56.160 --> 00:08:58.240
+>> Yeah. And I I would love to talk through
+
+00:08:58.240 --> 00:09:00.640
+also like the implications for like
+
+00:09:00.640 --> 00:09:04.640
+building the SDK when you are also
+
+00:09:04.640 --> 00:09:06.800
+working at the lab that creates the
+
+00:09:06.800 --> 00:09:08.240
+model because it gives you some
+
+00:09:08.240 --> 00:09:09.760
+interesting other unlocks that we can
+
+00:09:09.760 --> 00:09:11.279
+dig into and we'll look into some of the
+
+00:09:11.279 --> 00:09:13.040
+stuff under the hood in cloud code that
+
+00:09:13.040 --> 00:09:15.600
+that that you can see if you look at the
+
+00:09:15.600 --> 00:09:17.920
+full tool responses.
+
+00:09:17.920 --> 00:09:19.600
+>> So I'm going to go share my screen and
+
+00:09:19.600 --> 00:09:22.320
+show you the whiteboard.
+
+00:09:22.320 --> 00:09:22.720
+>> Amazing.
+
+00:09:22.720 --> 00:09:25.920
+>> Uh share screen. Um,
+
+00:09:25.920 --> 00:09:28.000
+all right. We're going to talk about
+
+00:09:28.000 --> 00:09:29.120
+this and we're going to talk about
+
+00:09:29.120 --> 00:09:31.680
+agents and how how I at least learned
+
+00:09:31.680 --> 00:09:34.959
+about it. Oh, that was not a good ink.
+
+00:09:34.959 --> 00:09:37.200
+Uh, whatever. We're going to do it. Um,
+
+00:09:37.200 --> 00:09:38.240
+so I think the first thing that I
+
+00:09:38.240 --> 00:09:40.160
+learned was actually the fact that what
+
+00:09:40.160 --> 00:09:42.399
+is it? What is this agentic rag system
+
+00:09:42.399 --> 00:09:44.000
+that we have? So, there's actually two
+
+00:09:44.000 --> 00:09:45.600
+parts here that are really interesting.
+
+00:09:45.600 --> 00:09:47.680
+The first part is we're going to have a
+
+00:09:47.680 --> 00:09:49.839
+user query come in and then we're going
+
+00:09:49.839 --> 00:09:51.120
+to have a we're going to have a response
+
+00:09:51.120 --> 00:09:52.640
+come out like a user is going to send us
+
+00:09:52.640 --> 00:09:54.000
+a message like what I've said like what
+
+00:09:54.000 --> 00:09:55.440
+does the Fern folder do or how do I use
+
+00:09:55.440 --> 00:09:57.600
+a Gemini API at some point I'm going to
+
+00:09:57.600 --> 00:09:59.040
+get some sort of reply from the user
+
+00:09:59.040 --> 00:10:00.800
+that is like something friendly for the
+
+00:10:00.800 --> 00:10:03.279
+user to go do. Now there's a whole bunch
+
+00:10:03.279 --> 00:10:04.800
+of hoopla that's going to happen in here
+
+00:10:04.800 --> 00:10:06.560
+as well that I probably want to deal
+
+00:10:06.560 --> 00:10:09.839
+with at some point. Uh that is probably
+
+00:10:09.839 --> 00:10:12.800
+some agent stuff but for now as far as
+
+00:10:12.800 --> 00:10:14.000
+the user is concerned they're going to
+
+00:10:14.000 --> 00:10:15.200
+send a query. they're going to get a
+
+00:10:15.200 --> 00:10:17.440
+response and then after that what I'm
+
+00:10:17.440 --> 00:10:18.480
+going to do is I'm going to I'm
+
+00:10:18.480 --> 00:10:20.399
+basically just going to build blocks of
+
+00:10:20.399 --> 00:10:23.600
+this over and over again in sequence and
+
+00:10:23.600 --> 00:10:25.680
+that is what builds this agentic system
+
+00:10:25.680 --> 00:10:27.519
+and I think that is the first insight
+
+00:10:27.519 --> 00:10:30.160
+that I had which was like what is this
+
+00:10:30.160 --> 00:10:32.079
+stuff a user query comes in a bunch of
+
+00:10:32.079 --> 00:10:33.600
+stuff has to happen here and the model
+
+00:10:33.600 --> 00:10:35.200
+is deciding what is going to happen in
+
+00:10:35.200 --> 00:10:37.360
+here and at some point the respond comes
+
+00:10:37.360 --> 00:10:39.040
+out and then I go in that is the key
+
+00:10:39.040 --> 00:10:40.560
+part that made it agentic for me and
+
+00:10:40.560 --> 00:10:41.920
+then I decided what are all the tools
+
+00:10:41.920 --> 00:10:43.440
+that I want to give it over here so I
+
+00:10:43.440 --> 00:10:46.480
+just came over the list of tools.
+
+00:10:46.480 --> 00:10:49.200
+Um, and come up is a is a bad term. What
+
+00:10:49.200 --> 00:10:50.720
+I really did is I just took the list of
+
+00:10:50.720 --> 00:10:52.399
+tools that cloud code has and I built
+
+00:10:52.399 --> 00:10:56.880
+all of them. Uh, GP, uh, I had GP, I had
+
+00:10:56.880 --> 00:11:00.240
+Glob, I had ls,
+
+00:11:00.240 --> 00:11:01.839
+and then I built these in along with
+
+00:11:01.839 --> 00:11:03.120
+like a bunch of other tools and I'll
+
+00:11:03.120 --> 00:11:04.240
+show you every single tool I have in
+
+00:11:04.240 --> 00:11:05.279
+there. And like I said, all the code is
+
+00:11:05.279 --> 00:11:06.240
+completely open source so you can
+
+00:11:06.240 --> 00:11:08.160
+actually go read it really easily. And I
+
+00:11:08.160 --> 00:11:09.839
+built all these tools out and I even
+
+00:11:09.839 --> 00:11:11.200
+have like an agents tool that actually
+
+00:11:11.200 --> 00:11:13.760
+allows you to spawn sub agents. I didn't
+
+00:11:13.760 --> 00:11:14.560
+show that off. I'll show
+
+00:11:14.560 --> 00:11:15.680
+>> you build sub agents.
+
+00:11:15.680 --> 00:11:17.120
+>> I built sub agents too. Sorry. I built
+
+00:11:17.120 --> 00:11:17.440
+the whole
+
+00:11:17.440 --> 00:11:18.240
+>> of course.
+
+00:11:18.240 --> 00:11:19.839
+>> I mean subtasker is like actually
+
+00:11:19.839 --> 00:11:21.839
+conceptually not that complicated. We've
+
+00:11:21.839 --> 00:11:23.120
+talked about it a lot. It's just new
+
+00:11:23.120 --> 00:11:24.000
+context window.
+
+00:11:24.000 --> 00:11:25.920
+>> Most of the time actually came from UI
+
+00:11:25.920 --> 00:11:28.560
+time, not from anything else.
+
+00:11:28.560 --> 00:11:29.680
+>> And I just wanted to build this
+
+00:11:29.680 --> 00:11:31.440
+workflow. And once this thing completed,
+
+00:11:31.440 --> 00:11:33.040
+I then wanted to get the response from
+
+00:11:33.040 --> 00:11:34.480
+the user. And then once the response
+
+00:11:34.480 --> 00:11:35.920
+came in, the user could send another
+
+00:11:35.920 --> 00:11:37.200
+message. And then I just do this over
+
+00:11:37.200 --> 00:11:39.519
+and over again. So for for terminology
+
+00:11:39.519 --> 00:11:40.560
+just because we're kind of talking about
+
+00:11:40.560 --> 00:11:42.240
+a lot of things. I think you called
+
+00:11:42.240 --> 00:11:44.720
+these like the internal things in one of
+
+00:11:44.720 --> 00:11:46.160
+these blocks is you have like n
+
+00:11:46.160 --> 00:11:48.079
+iterations. You name calling them
+
+00:11:48.079 --> 00:11:49.760
+iterations through the tools.
+
+00:11:49.760 --> 00:11:50.079
+>> Yes.
+
+00:11:50.079 --> 00:11:51.760
+>> And then I would call one of these like
+
+00:11:51.760 --> 00:11:53.279
+a turn.
+
+00:11:53.279 --> 00:11:55.200
+>> Sure. Yeah. We let's we can call that. I
+
+00:11:55.200 --> 00:11:56.560
+think that's a good that's a good
+
+00:11:56.560 --> 00:11:58.720
+nomenclature. Uh it's going to make it a
+
+00:11:58.720 --> 00:12:00.160
+lot easier. I I did come up with a name
+
+00:12:00.160 --> 00:12:01.279
+for the internal thing cuz I was like
+
+00:12:01.279 --> 00:12:02.800
+getting confused.
+
+00:12:02.800 --> 00:12:04.800
+>> What did you call it? I just called it
+
+00:12:04.800 --> 00:12:07.360
+iterations uh because I needed a word
+
+00:12:07.360 --> 00:12:09.920
+and that was the word that existed and
+
+00:12:09.920 --> 00:12:11.279
+I'll post some screenshots just so you
+
+00:12:11.279 --> 00:12:12.720
+guys have an idea of what that means.
+
+00:12:12.720 --> 00:12:16.320
+This is Google Chrome is hiding my so
+
+00:12:16.320 --> 00:12:18.000
+when I go over here this is kind of what
+
+00:12:18.000 --> 00:12:19.279
+it looks like. I do the same thing. So
+
+00:12:19.279 --> 00:12:21.279
+like an iteration over here is an
+
+00:12:21.279 --> 00:12:23.680
+iteration I call a tool and it's
+
+00:12:23.680 --> 00:12:25.519
+basically a tool transaction list that
+
+00:12:25.519 --> 00:12:28.000
+runs forever until it basically decides
+
+00:12:28.000 --> 00:12:29.760
+the only tool that I choose to terminate
+
+00:12:29.760 --> 00:12:32.959
+on is a tool that replies to a user.
+
+00:12:32.959 --> 00:12:34.880
+Now, because this can go off spinning
+
+00:12:34.880 --> 00:12:36.399
+into a loop forever, I actually have to
+
+00:12:36.399 --> 00:12:38.000
+do some work to just set max iterations
+
+00:12:38.000 --> 00:12:39.600
+as well. So, like at some max iteration
+
+00:12:39.600 --> 00:12:42.000
+loop, I just stop it. Uh because I don't
+
+00:12:42.000 --> 00:12:44.959
+want it to spin forever um and just burn
+
+00:12:44.959 --> 00:12:47.920
+money. Uh but in theory, I didn't have
+
+00:12:47.920 --> 00:12:49.680
+to do that. Uh I just needed that. Uh
+
+00:12:49.680 --> 00:12:51.600
+but now that this worked, what was the
+
+00:12:51.600 --> 00:12:52.959
+hard part about this? Like why do I
+
+00:12:52.959 --> 00:12:54.880
+think that most people should not build
+
+00:12:54.880 --> 00:12:57.600
+this system? Well, it turned out that
+
+00:12:57.600 --> 00:12:59.519
+the number one problem with this system,
+
+00:12:59.519 --> 00:13:01.200
+I wonder if anyone can guess. Dexter,
+
+00:13:01.200 --> 00:13:02.160
+what's your guess about what you think
+
+00:13:02.160 --> 00:13:03.440
+the hardest part about this whole system
+
+00:13:03.440 --> 00:13:03.920
+is?
+
+00:13:03.920 --> 00:13:06.480
+>> Designing the tool prompts and the tool
+
+00:13:06.480 --> 00:13:10.079
+responses to be usable by the model and
+
+00:13:10.079 --> 00:13:13.120
+context efficient for the model.
+
+00:13:13.120 --> 00:13:15.200
+>> Um, tool prompts was actually the I
+
+00:13:15.200 --> 00:13:16.800
+actually never touched the tool prompts
+
+00:13:16.800 --> 00:13:19.120
+after the first time of writing them.
+
+00:13:19.120 --> 00:13:20.639
+>> Did you just steal the cloud ones or did
+
+00:13:20.639 --> 00:13:22.160
+you write them yourself?
+
+00:13:22.160 --> 00:13:23.279
+>> I you asked
+
+00:13:23.279 --> 00:13:24.160
+>> Claude wrote them.
+
+00:13:24.160 --> 00:13:25.680
+>> I just asked cursor to write it.
+
+00:13:25.680 --> 00:13:27.440
+Actually, oh, sorry. I said Claude. I
+
+00:13:27.440 --> 00:13:28.720
+actually used cursor this whole time. I
+
+00:13:28.720 --> 00:13:29.680
+just wanted to try new age agent. I
+
+00:13:29.680 --> 00:13:31.200
+actually used cursor the whole time. It
+
+00:13:31.200 --> 00:13:33.360
+was 70% cursor, 30% me.
+
+00:13:33.360 --> 00:13:33.680
+>> Um,
+
+00:13:33.680 --> 00:13:35.519
+>> how was how was the cursor agent?
+
+00:13:35.519 --> 00:13:36.800
+>> I told you I built the whole thing. If
+
+00:13:36.800 --> 00:13:38.000
+you think this agent is cool, I built
+
+00:13:38.000 --> 00:13:39.519
+the whole thing up there.
+
+00:13:39.519 --> 00:13:39.839
+>> Okay.
+
+00:13:39.839 --> 00:13:41.360
+>> Um,
+
+00:13:41.360 --> 00:13:44.480
+so I did that. Um, I also did a couple
+
+00:13:44.480 --> 00:13:46.880
+more things while I did this. Um, what
+
+00:13:46.880 --> 00:13:48.560
+what I found was the hardest, sorry,
+
+00:13:48.560 --> 00:13:50.000
+I'll talk about that in a second. What I
+
+00:13:50.000 --> 00:13:51.600
+found the hardest part about here wasn't
+
+00:13:51.600 --> 00:13:54.240
+actually the tool definitions. It was
+
+00:13:54.240 --> 00:13:55.600
+actually the implementation of the
+
+00:13:55.600 --> 00:13:58.480
+tools. And when I noticed agent quality,
+
+00:13:58.480 --> 00:14:00.320
+what's surprising is when I tried this
+
+00:14:00.320 --> 00:14:02.560
+thing uh with even the best models, the
+
+00:14:02.560 --> 00:14:04.240
+key difference to making this work was
+
+00:14:04.240 --> 00:14:05.839
+actually how I changed how the tools
+
+00:14:05.839 --> 00:14:08.639
+were implemented. Everything else made
+
+00:14:08.639 --> 00:14:11.279
+zero impact or negligible impact on the
+
+00:14:11.279 --> 00:14:12.560
+quality of the agent based on the kinds
+
+00:14:12.560 --> 00:14:14.639
+of tasks that I was doing and the way
+
+00:14:14.639 --> 00:14:17.040
+>> that's the that's the promise of agents.
+
+00:14:17.040 --> 00:14:18.480
+That was the promise of agents a year
+
+00:14:18.480 --> 00:14:20.720
+ago, right? which is like use use a
+
+00:14:20.720 --> 00:14:22.639
+framework, use the loop and then just
+
+00:14:22.639 --> 00:14:25.199
+bring your own tools and you control
+
+00:14:25.199 --> 00:14:27.600
+kind of your own destiny by just like as
+
+00:14:27.600 --> 00:14:28.959
+long as you build good tools and you
+
+00:14:28.959 --> 00:14:30.560
+implement them well the agent can do
+
+00:14:30.560 --> 00:14:31.519
+anything
+
+00:14:31.519 --> 00:14:33.680
+>> kind of but effectively what I found was
+
+00:14:33.680 --> 00:14:35.920
+if I need if I define my tools well then
+
+00:14:35.920 --> 00:14:37.760
+it did work but the other problem that I
+
+00:14:37.760 --> 00:14:39.680
+did have to do was I did need to have my
+
+00:14:39.680 --> 00:14:42.639
+tool def my prompt was semi- tied to my
+
+00:14:42.639 --> 00:14:44.399
+tools and that part was very tricky to
+
+00:14:44.399 --> 00:14:46.079
+go do right
+
+00:14:46.079 --> 00:14:47.519
+>> yeah I've seen that a lot I've seen a
+
+00:14:47.519 --> 00:14:48.880
+lot of people building coding agents
+
+00:14:48.880 --> 00:14:51.040
+They have it in the system message and
+
+00:14:51.040 --> 00:14:52.880
+in the tool definitions and then
+
+00:14:52.880 --> 00:14:54.800
+sometimes even injected to the end of
+
+00:14:54.800 --> 00:14:56.480
+the user message as well.
+
+00:14:56.480 --> 00:14:58.240
+>> Conniey's got a very interesting comment
+
+00:14:58.240 --> 00:15:00.959
+about like testing and evals. Um yes,
+
+00:15:00.959 --> 00:15:02.320
+while I was building this whole thing, I
+
+00:15:02.320 --> 00:15:03.760
+was actually constantly testing. So my
+
+00:15:03.760 --> 00:15:05.279
+iteration loop for running this was
+
+00:15:05.279 --> 00:15:07.199
+actually one of the first things I did
+
+00:15:07.199 --> 00:15:10.240
+as I actually built a really really good
+
+00:15:10.240 --> 00:15:12.720
+CLI tool that was pretty good. And as
+
+00:15:12.720 --> 00:15:14.320
+soon as I built a CLI tool, I actually
+
+00:15:14.320 --> 00:15:18.000
+built a TUI because the CLI tool quickly
+
+00:15:18.000 --> 00:15:20.079
+became unusable
+
+00:15:20.079 --> 00:15:22.000
+because of how printing stuff came out
+
+00:15:22.000 --> 00:15:23.760
+to be. And I needed something to
+
+00:15:23.760 --> 00:15:25.600
+actually
+
+00:15:25.600 --> 00:15:27.839
+uh I actually needed something to make
+
+00:15:27.839 --> 00:15:29.839
+my problem be a lot easier to
+
+00:15:29.839 --> 00:15:31.920
+understand. So, for example, when I get
+
+00:15:31.920 --> 00:15:33.680
+the GP tool, when I had a giant log
+
+00:15:33.680 --> 00:15:35.440
+system here, I needed to see the
+
+00:15:35.440 --> 00:15:37.120
+difference between one tool versus the
+
+00:15:37.120 --> 00:15:39.600
+next tool very clearly and I needed to
+
+00:15:39.600 --> 00:15:42.320
+not override my 2E when I was actually
+
+00:15:42.320 --> 00:15:44.800
+like writing stuff and typing stuff out
+
+00:15:44.800 --> 00:15:46.800
+into the terminal and that was really
+
+00:15:46.800 --> 00:15:48.720
+hard to do with just a pure CLI. So, I
+
+00:15:48.720 --> 00:15:50.079
+found it to be very useful to actually
+
+00:15:50.079 --> 00:15:51.440
+just build a TUI and just tell the model
+
+00:15:51.440 --> 00:15:53.920
+to do that. And once I did that, funnily
+
+00:15:53.920 --> 00:15:56.079
+enough, cursor actually built the right
+
+00:15:56.079 --> 00:15:57.759
+abstraction layer for my agent as well,
+
+00:15:57.759 --> 00:15:59.680
+which was it was an agent that ran that
+
+00:15:59.680 --> 00:16:01.680
+had hooks for every interaction that
+
+00:16:01.680 --> 00:16:02.880
+happened. Then I could just like observe
+
+00:16:02.880 --> 00:16:05.600
+it with different states. And that's the
+
+00:16:05.600 --> 00:16:07.279
+exact UI I wanted. So the CLI and the
+
+00:16:07.279 --> 00:16:08.880
+TUI both interface the same thing. And I
+
+00:16:08.880 --> 00:16:10.240
+could have built a web UI that
+
+00:16:10.240 --> 00:16:11.920
+interfaces the same thing because it's
+
+00:16:11.920 --> 00:16:12.240
+all
+
+00:16:12.240 --> 00:16:14.320
+>> so it just emits events and then there's
+
+00:16:14.320 --> 00:16:16.240
+an out like the interface to it is you
+
+00:16:16.240 --> 00:16:18.240
+just render the events as they happen
+
+00:16:18.240 --> 00:16:19.519
+>> basically. Yes.
+
+00:16:19.519 --> 00:16:19.839
+>> Okay.
+
+00:16:19.839 --> 00:16:21.920
+>> Uh along the way. So
+
+00:16:21.920 --> 00:16:24.880
+UI UI loop was really hard designing it.
+
+00:16:24.880 --> 00:16:26.639
+And then once I designed the UIUI loop
+
+00:16:26.639 --> 00:16:28.639
+for actually iterating on the tools and
+
+00:16:28.639 --> 00:16:30.320
+then I could actually go ahead and try a
+
+00:16:30.320 --> 00:16:31.440
+bunch of prompts. So I actually tried
+
+00:16:31.440 --> 00:16:32.880
+the Fern thing over and over again until
+
+00:16:32.880 --> 00:16:34.560
+I finally made it work. And the first
+
+00:16:34.560 --> 00:16:37.440
+version of this system did not work. The
+
+00:16:37.440 --> 00:16:40.720
+second version of um the second version
+
+00:16:40.720 --> 00:16:42.720
+of the system
+
+00:16:42.720 --> 00:16:44.399
+also didn't work. And eventually I just
+
+00:16:44.399 --> 00:16:46.480
+annealed it closer and closer to finally
+
+00:16:46.480 --> 00:16:48.000
+make it work. And I think what I really
+
+00:16:48.000 --> 00:16:50.240
+want to share today is one the coding
+
+00:16:50.240 --> 00:16:51.839
+architecture of how I had to go do this.
+
+00:16:51.839 --> 00:16:52.800
+So let's talk about the tool
+
+00:16:52.800 --> 00:16:54.880
+definitions. The second thing I want to
+
+00:16:54.880 --> 00:16:57.199
+talk about is what I did to actually
+
+00:16:57.199 --> 00:16:59.440
+make the tools better. And the third
+
+00:16:59.440 --> 00:17:01.040
+thing I want to talk about
+
+00:17:01.040 --> 00:17:02.800
+>> is what I would do to make this even
+
+00:17:02.800 --> 00:17:04.720
+better going forward.
+
+00:17:04.720 --> 00:17:07.120
+>> Cool. So I I I would love to hear more
+
+00:17:07.120 --> 00:17:09.120
+about kind of what you had in the tools
+
+00:17:09.120 --> 00:17:10.720
+before you changed them and what you
+
+00:17:10.720 --> 00:17:12.319
+learned about like what works well and
+
+00:17:12.319 --> 00:17:13.039
+what didn't.
+
+00:17:13.039 --> 00:17:15.760
+>> I will I will gladly do that. So let's
+
+00:17:15.760 --> 00:17:17.520
+get into this. Uh, Dexter, I won't be
+
+00:17:17.520 --> 00:17:19.360
+watching the chat at all. Uh, so if you
+
+00:17:19.360 --> 00:17:20.959
+see stuff on the chat, that is worth it.
+
+00:17:20.959 --> 00:17:22.799
+I'll let you track it. And I'm just
+
+00:17:22.799 --> 00:17:25.280
+going to walk straight through um
+
+00:17:25.280 --> 00:17:28.000
+straight through the code.
+
+00:17:28.000 --> 00:17:29.840
+Um, I'm going to share my whole screen.
+
+00:17:29.840 --> 00:17:31.280
+Again, if you guys see something I'm not
+
+00:17:31.280 --> 00:17:32.720
+supposed to, please flag in the chat so
+
+00:17:32.720 --> 00:17:35.600
+we can cut it out of the stream um
+
+00:17:35.600 --> 00:17:36.320
+eventually.
+
+00:17:36.320 --> 00:17:38.720
+>> Careful. We're now live on on Twitter.
+
+00:17:38.720 --> 00:17:39.840
+So, uh,
+
+00:17:39.840 --> 00:17:42.000
+>> shoot, this is forever. Um, let's start
+
+00:17:42.000 --> 00:17:43.679
+with the code architecture now that this
+
+00:17:43.679 --> 00:17:45.760
+thing works. Uh, I can show sub agents
+
+00:17:45.760 --> 00:17:46.880
+if you want, but I'll do that at the end
+
+00:17:46.880 --> 00:17:47.840
+because I think that's the least
+
+00:17:47.840 --> 00:17:49.919
+interesting part about this. So, I'm
+
+00:17:49.919 --> 00:17:50.880
+just going to start with the tool
+
+00:17:50.880 --> 00:17:52.080
+definitions because I think that's the
+
+00:17:52.080 --> 00:17:54.480
+best entry point to the system. So, I
+
+00:17:54.480 --> 00:17:57.840
+have two systems that I built. I built
+
+00:17:57.840 --> 00:17:59.760
+an agent loop that just takes a state.
+
+00:17:59.760 --> 00:18:01.520
+It has a giant prompt in here. I don't I
+
+00:18:01.520 --> 00:18:02.559
+don't even think this prompt makes a
+
+00:18:02.559 --> 00:18:04.160
+difference. I just wrote a cursor wrote
+
+00:18:04.160 --> 00:18:06.000
+and I just like, okay, leave it as as it
+
+00:18:06.000 --> 00:18:08.400
+is. Uh, and I just dump out the state
+
+00:18:08.400 --> 00:18:10.400
+into the prompt and I let it run. And
+
+00:18:10.400 --> 00:18:11.840
+then I have a separate function for sub
+
+00:18:11.840 --> 00:18:13.520
+aent loop. And the main reason I have
+
+00:18:13.520 --> 00:18:15.840
+this is because uh and I don't like this
+
+00:18:15.840 --> 00:18:18.080
+about BAML. I had to go fix this u once
+
+00:18:18.080 --> 00:18:20.320
+I discovered this is I have a bunch of
+
+00:18:20.320 --> 00:18:22.480
+tool definitions. But one second before
+
+00:18:22.480 --> 00:18:24.160
+I show the tool definition, remember all
+
+00:18:24.160 --> 00:18:25.760
+this agent can do is it can either reply
+
+00:18:25.760 --> 00:18:27.760
+with one of the tools or a response to a
+
+00:18:27.760 --> 00:18:29.600
+user to render something. That's it.
+
+00:18:29.600 --> 00:18:31.840
+Nothing else is allowed to happen. Same
+
+00:18:31.840 --> 00:18:33.120
+with this agent. It can either pick one
+
+00:18:33.120 --> 00:18:34.720
+of the sub aent tools or reply to a
+
+00:18:34.720 --> 00:18:36.320
+user. Now what are the tools that I
+
+00:18:36.320 --> 00:18:38.640
+allow? An agent tools are basically the
+
+00:18:38.640 --> 00:18:40.640
+sub aent tools plus the agent tool.
+
+00:18:40.640 --> 00:18:43.039
+That's it. That's so the agent tool is
+
+00:18:43.039 --> 00:18:45.120
+actually call a new agent basically.
+
+00:18:45.120 --> 00:18:47.120
+>> Exactly. It spawns a new agent. I can go
+
+00:18:47.120 --> 00:18:48.240
+read this if you want. This is what it
+
+00:18:48.240 --> 00:18:49.600
+does. Launch a new agent that has access
+
+00:18:49.600 --> 00:18:51.760
+to any of this stuff.
+
+00:18:51.760 --> 00:18:52.480
+>> And there's a bunch.
+
+00:18:52.480 --> 00:18:54.640
+>> This looks like the claw code prompt.
+
+00:18:54.640 --> 00:18:56.240
+>> I literally just copied the and pasted
+
+00:18:56.240 --> 00:18:57.280
+most of it.
+
+00:18:57.280 --> 00:18:57.919
+>> Okay.
+
+00:18:57.919 --> 00:18:59.440
+>> And then what I did, it's just a
+
+00:18:59.440 --> 00:19:01.520
+description plus a prompt like nothing
+
+00:19:01.520 --> 00:19:03.360
+special. It just kind of plumped it
+
+00:19:03.360 --> 00:19:05.760
+through. Then the sub aent tools are
+
+00:19:05.760 --> 00:19:07.440
+basically I have a batch tool, a glob
+
+00:19:07.440 --> 00:19:09.440
+tool, grab tool, less tool, exit plan
+
+00:19:09.440 --> 00:19:11.760
+mode, read tool, write, web fetch,
+
+00:19:11.760 --> 00:19:13.919
+to-do, to-do, write, and web search. Web
+
+00:19:13.919 --> 00:19:16.320
+fetch and web uh search are slightly
+
+00:19:16.320 --> 00:19:18.000
+different. This uses search API. This
+
+00:19:18.000 --> 00:19:20.559
+uses actually only the like a fetch to
+
+00:19:20.559 --> 00:19:22.320
+get a specific URL along the way.
+
+00:19:22.320 --> 00:19:24.320
+>> Can you can you zoom in a little bit?
+
+00:19:24.320 --> 00:19:25.360
+>> Yes, I can.
+
+00:19:25.360 --> 00:19:27.039
+>> Yep. And then the other question from
+
+00:19:27.039 --> 00:19:29.200
+John was, is it on is the code on GitHub
+
+00:19:29.200 --> 00:19:30.240
+yet? I think we're going to push it
+
+00:19:30.240 --> 00:19:31.760
+after this. So, we'll send out an email
+
+00:19:31.760 --> 00:19:33.360
+after the episode with all the code.
+
+00:19:33.360 --> 00:19:35.520
+Exactly. So I just want to look at some
+
+00:19:35.520 --> 00:19:37.200
+of these tools and I this what I want to
+
+00:19:37.200 --> 00:19:38.480
+talk about is like I actually never
+
+00:19:38.480 --> 00:19:40.240
+changed these definitions at all. Once I
+
+00:19:40.240 --> 00:19:43.360
+wrote them it just works. Um and the
+
+00:19:43.360 --> 00:19:44.960
+only key part to every tool is every
+
+00:19:44.960 --> 00:19:47.520
+tool has a field called action called
+
+00:19:47.520 --> 00:19:50.160
+glob action with the name of the action
+
+00:19:50.160 --> 00:19:51.840
+itself and then the actual pattern that
+
+00:19:51.840 --> 00:19:54.000
+it rendered. uh and then all the
+
+00:19:54.000 --> 00:19:55.760
+parameters that came with it and some
+
+00:19:55.760 --> 00:19:57.679
+and that why I use the action key is
+
+00:19:57.679 --> 00:19:58.960
+because it makes it a really cool
+
+00:19:58.960 --> 00:20:01.280
+discriminator for any sort of stuff I do
+
+00:20:01.280 --> 00:20:02.880
+afterwards to make sure what is actually
+
+00:20:02.880 --> 00:20:04.400
+happening.
+
+00:20:04.400 --> 00:20:07.760
+Now this was the easy part. Writing the
+
+00:20:07.760 --> 00:20:09.039
+actual system was actually quite easy
+
+00:20:09.039 --> 00:20:11.520
+and once I actually wrote this I think I
+
+00:20:11.520 --> 00:20:13.440
+have a test case somewhere here. I might
+
+00:20:13.440 --> 00:20:16.400
+not uh
+
+00:20:16.400 --> 00:20:18.720
+one second
+
+00:20:18.720 --> 00:20:20.640
+restart.
+
+00:20:20.640 --> 00:20:22.640
+There we go. Okay. Once I actually wrote
+
+00:20:22.640 --> 00:20:23.919
+this, I actually read the prompt and I
+
+00:20:23.919 --> 00:20:25.200
+think it's worth reading the prompt a
+
+00:20:25.200 --> 00:20:27.360
+little bit. Uh the model can basically
+
+00:20:27.360 --> 00:20:30.720
+answer one of these. Uh it just lists
+
+00:20:30.720 --> 00:20:32.080
+this down and says, "Okay, one of the
+
+00:20:32.080 --> 00:20:33.679
+actions is bash, tells describes that
+
+00:20:33.679 --> 00:20:35.200
+one." It then lists the glob action and
+
+00:20:35.200 --> 00:20:37.440
+then lists all of these. Um funny
+
+00:20:37.440 --> 00:20:40.320
+enough, I actually only read this prompt
+
+00:20:40.320 --> 00:20:42.400
+at certain points, which was when a tool
+
+00:20:42.400 --> 00:20:44.320
+failed. So I actually started off not
+
+00:20:44.320 --> 00:20:46.720
+reading the prompts at all. Uh and then
+
+00:20:46.720 --> 00:20:48.400
+I just let it vibe. And the reason I did
+
+00:20:48.400 --> 00:20:50.159
+that is because I know Cloud Code works.
+
+00:20:50.159 --> 00:20:51.919
+I know a lot of these tools are probably
+
+00:20:51.919 --> 00:20:54.000
+based off of cloud code directly. So I
+
+00:20:54.000 --> 00:20:55.440
+kind of had a good intuition that this
+
+00:20:55.440 --> 00:20:57.600
+was going to work up front.
+
+00:20:57.600 --> 00:21:00.000
+Um what I did do however that I think
+
+00:21:00.000 --> 00:21:02.400
+was not ob what I did do pretty much on
+
+00:21:02.400 --> 00:21:04.480
+within the first iteration is I I listed
+
+00:21:04.480 --> 00:21:06.720
+some scary tools. Edit tool, multi-edit
+
+00:21:06.720 --> 00:21:08.880
+tool, write tool, uh notebook edit tool.
+
+00:21:08.880 --> 00:21:10.000
+I just didn't want it to write to the
+
+00:21:10.000 --> 00:21:12.799
+file system. So I just plum these out. I
+
+00:21:12.799 --> 00:21:13.200
+just
+
+00:21:13.200 --> 00:21:16.080
+>> I love using scary tools. I was I've
+
+00:21:16.080 --> 00:21:17.760
+been using the word scary tools since
+
+00:21:17.760 --> 00:21:19.440
+since we did all this human layer stuff
+
+00:21:19.440 --> 00:21:20.640
+for human in the loop. What are the
+
+00:21:20.640 --> 00:21:21.919
+things you want to get approval on?
+
+00:21:21.919 --> 00:21:22.240
+Right.
+
+00:21:22.240 --> 00:21:23.919
+>> And really bash tool should also be in
+
+00:21:23.919 --> 00:21:25.679
+scary tool, but bash is too useful. So I
+
+00:21:25.679 --> 00:21:29.120
+kind of left it.
+
+00:21:29.120 --> 00:21:32.080
+>> Scary but not as not as uh as uh plus
+
+00:21:32.080 --> 00:21:33.120
+EV, I guess.
+
+00:21:33.120 --> 00:21:34.720
+>> Yeah, I really just didn't want to
+
+00:21:34.720 --> 00:21:35.919
+change the file system because this was
+
+00:21:35.919 --> 00:21:37.440
+a reader agent mostly. It's like
+
+00:21:37.440 --> 00:21:39.600
+supposed to answer questions about docs.
+
+00:21:39.600 --> 00:21:41.120
+>> One one question in the chat that I
+
+00:21:41.120 --> 00:21:42.240
+think we should make sure we get to is
+
+00:21:42.240 --> 00:21:44.159
+like um how did you eval these tools?
+
+00:21:44.159 --> 00:21:45.840
+How did you score? How did you know that
+
+00:21:45.840 --> 00:21:47.360
+new definitions were better than old
+
+00:21:47.360 --> 00:21:49.520
+ones? Was it just vibes or do you have a
+
+00:21:49.520 --> 00:21:50.400
+testing harness?
+
+00:21:50.400 --> 00:21:52.400
+>> I just kept on running the tool over and
+
+00:21:52.400 --> 00:21:53.840
+over again and rather than doing
+
+00:21:53.840 --> 00:21:55.600
+anything else. And the reason I did that
+
+00:21:55.600 --> 00:21:58.000
+is because like when I'm in the flow
+
+00:21:58.000 --> 00:21:59.440
+when I'm in like flow state and I'm
+
+00:21:59.440 --> 00:22:00.799
+trying to just make it something that
+
+00:22:00.799 --> 00:22:02.400
+works
+
+00:22:02.400 --> 00:22:05.120
+running an eval system and like like
+
+00:22:05.120 --> 00:22:06.880
+okay, I'll show you guys what what the
+
+00:22:06.880 --> 00:22:08.320
+actual chat log looks like so you guys
+
+00:22:08.320 --> 00:22:08.799
+can get an idea.
+
+00:22:08.799 --> 00:22:11.440
+>> I mean, you did you did make an eval. It
+
+00:22:11.440 --> 00:22:14.799
+was just you uh you picked a a test case
+
+00:22:14.799 --> 00:22:16.559
+and you ran the same case over and over
+
+00:22:16.559 --> 00:22:18.720
+again live test case looks like for this
+
+00:22:18.720 --> 00:22:20.720
+eval right like at at iteration loop
+
+00:22:20.720 --> 00:22:22.880
+number at iteration loop number seven I
+
+00:22:22.880 --> 00:22:24.559
+just have a giant message array that I
+
+00:22:24.559 --> 00:22:27.760
+have to deal with and like how do I eval
+
+00:22:27.760 --> 00:22:29.360
+this thing in a way that's reasonable I
+
+00:22:29.360 --> 00:22:30.960
+can't I can't actually go read it. So I
+
+00:22:30.960 --> 00:22:32.240
+started doing instead is I would just
+
+00:22:32.240 --> 00:22:33.760
+run the loop and I just look at what
+
+00:22:33.760 --> 00:22:35.120
+sequence of tools were called in what
+
+00:22:35.120 --> 00:22:37.120
+order and once I knew what sequence of
+
+00:22:37.120 --> 00:22:38.960
+tools the parameters I would look at
+
+00:22:38.960 --> 00:22:40.480
+sometimes cuz the parameters rarely
+
+00:22:40.480 --> 00:22:41.679
+mattered. I just need to look at the
+
+00:22:41.679 --> 00:22:43.039
+sequence of tools and there's different
+
+00:22:43.039 --> 00:22:44.159
+ways I could have done that. I could
+
+00:22:44.159 --> 00:22:45.600
+have looked at it here. I could have
+
+00:22:45.600 --> 00:22:47.679
+looked at it in the terminal UI. It
+
+00:22:47.679 --> 00:22:48.159
+really doesn't
+
+00:22:48.159 --> 00:22:50.640
+>> what's the chronology here is the the
+
+00:22:50.640 --> 00:22:52.559
+read is the last one is at the top
+
+00:22:52.559 --> 00:22:52.880
+right.
+
+00:22:52.880 --> 00:22:54.000
+>> The top one is the most recent time
+
+00:22:54.000 --> 00:22:54.880
+stamp right here.
+
+00:22:54.880 --> 00:22:56.559
+>> What's this red? Why is it red? What
+
+00:22:56.559 --> 00:22:57.120
+does that mean?
+
+00:22:57.120 --> 00:22:58.559
+>> So I'll talk about this stuff. It turns
+
+00:22:58.559 --> 00:23:00.080
+out models don't always follow tool
+
+00:23:00.080 --> 00:23:02.480
+calling uh in a lot of scenarios. So
+
+00:23:02.480 --> 00:23:03.760
+I'll talk about hacks that I had to do
+
+00:23:03.760 --> 00:23:05.440
+to make it actually work like super
+
+00:23:05.440 --> 00:23:06.720
+reliably.
+
+00:23:06.720 --> 00:23:08.240
+>> Did it like output a tool that wasn't
+
+00:23:08.240 --> 00:23:09.840
+valid or like blew up the parser or
+
+00:23:09.840 --> 00:23:10.240
+something?
+
+00:23:10.240 --> 00:23:11.840
+>> Yeah, exactly. It would just make up
+
+00:23:11.840 --> 00:23:13.919
+tools sometimes. And even if it didn't
+
+00:23:13.919 --> 00:23:15.360
+make up tools, sometimes it would reply
+
+00:23:15.360 --> 00:23:17.360
+to a user with some interesting code.
+
+00:23:17.360 --> 00:23:17.679
+>> So
+
+00:23:17.679 --> 00:23:19.520
+>> that's uh I read that in the crew AI
+
+00:23:19.520 --> 00:23:21.200
+prompt a long time ago was like do not
+
+00:23:21.200 --> 00:23:23.039
+hallucinate tools. Do not make up any
+
+00:23:23.039 --> 00:23:25.280
+tools. They even built a feed feedback
+
+00:23:25.280 --> 00:23:27.120
+system in to like if the tool was
+
+00:23:27.120 --> 00:23:28.559
+unknown, it would feed that error back
+
+00:23:28.559 --> 00:23:29.840
+into the model and be like you picked a
+
+00:23:29.840 --> 00:23:31.440
+tool that doesn't exist, try again.
+
+00:23:31.440 --> 00:23:33.600
+>> Yeah. So that that is not that is kind
+
+00:23:33.600 --> 00:23:35.760
+of pointless. So I didn't do that, but I
+
+00:23:35.760 --> 00:23:37.120
+did do something else that I think made
+
+00:23:37.120 --> 00:23:39.440
+it a lot better. So what do I do? I
+
+00:23:39.440 --> 00:23:40.720
+basically have a run loop system where
+
+00:23:40.720 --> 00:23:42.799
+you take in a user message and as a user
+
+00:23:42.799 --> 00:23:44.159
+message comes in you just basically run
+
+00:23:44.159 --> 00:23:46.159
+the iteration loop and then you just go
+
+00:23:46.159 --> 00:23:48.320
+exit out and then you wait for another
+
+00:23:48.320 --> 00:23:50.320
+user message
+
+00:23:50.320 --> 00:23:52.159
+and once a new user message comes in
+
+00:23:52.159 --> 00:23:53.520
+then you just keep on going again. So
+
+00:23:53.520 --> 00:23:54.720
+basically as soon as the user gives you
+
+00:23:54.720 --> 00:23:56.159
+a new message you just run this loop
+
+00:23:56.159 --> 00:23:58.559
+over and over again. Why do I have two
+
+00:23:58.559 --> 00:24:00.880
+loops here? Well one I just want to run
+
+00:24:00.880 --> 00:24:02.240
+an n number of iterations. So you can
+
+00:24:02.240 --> 00:24:03.919
+think of this as a turn. Dexter calls it
+
+00:24:03.919 --> 00:24:04.960
+a turn. I
+
+00:24:04.960 --> 00:24:07.360
+>> call this the the inner loop versus the
+
+00:24:07.360 --> 00:24:09.280
+outer loop is what we'll talk about when
+
+00:24:09.280 --> 00:24:10.799
+we talk about 12 factor agents
+
+00:24:10.799 --> 00:24:12.559
+>> and I called iteration like this was
+
+00:24:12.559 --> 00:24:15.520
+kind of how I thought about it and then
+
+00:24:15.520 --> 00:24:17.360
+the all the iterations themselves ran
+
+00:24:17.360 --> 00:24:19.200
+inside of this and what each iteration
+
+00:24:19.200 --> 00:24:21.919
+did was something really simple um it
+
+00:24:21.919 --> 00:24:23.520
+basically took the iteration it called
+
+00:24:23.520 --> 00:24:25.039
+the agent loop function that I had over
+
+00:24:25.039 --> 00:24:27.120
+here uh which is defined over here which
+
+00:24:27.120 --> 00:24:30.000
+is the agent tools which had all the sub
+
+00:24:30.000 --> 00:24:31.760
+aent tools and the agent tool described
+
+00:24:31.760 --> 00:24:34.400
+into it um and then I got the response
+
+00:24:34.400 --> 00:24:35.600
+and ignore all this stuff. Ignore the
+
+00:24:35.600 --> 00:24:36.880
+retry logic over here. I'll talk about
+
+00:24:36.880 --> 00:24:38.880
+that in a second. But once the response
+
+00:24:38.880 --> 00:24:40.480
+came in, I basically just checked if
+
+00:24:40.480 --> 00:24:42.240
+it's a reply to the user, I basically
+
+00:24:42.240 --> 00:24:44.320
+just called the call back for reply to a
+
+00:24:44.320 --> 00:24:46.000
+user which was rendered on the screen.
+
+00:24:46.000 --> 00:24:47.600
+And then I exit out of the loop and then
+
+00:24:47.600 --> 00:24:50.159
+I kept on going. So that iteration has
+
+00:24:50.159 --> 00:24:52.559
+ended at that point. Uh this iteration
+
+00:24:52.559 --> 00:24:54.400
+also told me a couple more things. It
+
+00:24:54.400 --> 00:24:57.120
+was telling me whether or not I should
+
+00:24:57.120 --> 00:25:00.880
+exit the exit this um whether or not I
+
+00:25:00.880 --> 00:25:02.320
+should exit the iteration. So what this
+
+00:25:02.320 --> 00:25:05.200
+thing returns is it returns is complete.
+
+00:25:05.200 --> 00:25:07.919
+If it tells me I am ready then I return
+
+00:25:07.919 --> 00:25:10.240
+the result to the outer loop. Otherwise
+
+00:25:10.240 --> 00:25:12.320
+I just keep going in this loop. And
+
+00:25:12.320 --> 00:25:13.919
+that's how I manage the system cuz this
+
+00:25:13.919 --> 00:25:17.200
+system had was a single iteration.
+
+00:25:17.200 --> 00:25:19.200
+Now once the once the instance came
+
+00:25:19.200 --> 00:25:21.679
+through I basically checked the um I
+
+00:25:21.679 --> 00:25:23.360
+didn't need to do this response adder.
+
+00:25:23.360 --> 00:25:25.520
+It's guaranteed to have it. But I I
+
+00:25:25.520 --> 00:25:28.080
+guess Claude the cursor wrote that code.
+
+00:25:28.080 --> 00:25:30.080
+Once it actually wrote this, I did some
+
+00:25:30.080 --> 00:25:31.679
+hook stuff over here.
+
+00:25:31.679 --> 00:25:33.440
+>> I checked for interruptions because I
+
+00:25:33.440 --> 00:25:34.799
+wanted to be able to interrupt it with
+
+00:25:34.799 --> 00:25:37.120
+control X and other stuff along the way.
+
+00:25:37.120 --> 00:25:38.640
+So, I was only able to check for
+
+00:25:38.640 --> 00:25:40.080
+interruptions. Basically, if an action
+
+00:25:40.080 --> 00:25:41.679
+tool came in, if other tools came in, I
+
+00:25:41.679 --> 00:25:43.279
+didn't. I checked right beforehand. And
+
+00:25:43.279 --> 00:25:45.200
+then again, uh cuz it's like
+
+00:25:45.200 --> 00:25:47.679
+multi-threading, I guess.
+
+00:25:47.679 --> 00:25:50.159
+I sent a hook to the front end to say I
+
+00:25:50.159 --> 00:25:52.480
+have a tool call that I'm making. And
+
+00:25:52.480 --> 00:25:54.720
+then I actually go ahead
+
+00:25:54.720 --> 00:25:57.200
+and uh where'd it go? Then I go ahead
+
+00:25:57.200 --> 00:26:00.080
+and execute the tool. Now this was again
+
+00:26:00.080 --> 00:26:01.440
+most of it. So there's very important
+
+00:26:01.440 --> 00:26:03.200
+thing. If the tool was a sub aent then
+
+00:26:03.200 --> 00:26:05.200
+the sub aent we know spawns another
+
+00:26:05.200 --> 00:26:07.200
+loop. So it would just it actually had
+
+00:26:07.200 --> 00:26:08.640
+to be handled slightly differently and
+
+00:26:08.640 --> 00:26:10.880
+it just wrote the re it rewrote the loop
+
+00:26:10.880 --> 00:26:13.279
+in here with some duplicate code which I
+
+00:26:13.279 --> 00:26:15.200
+really didn't like but that's okay. It
+
+00:26:15.200 --> 00:26:16.960
+did the work and then it does it. And
+
+00:26:16.960 --> 00:26:18.799
+remember sub agent can't spawn other sub
+
+00:26:18.799 --> 00:26:20.799
+aents. Um so I didn't have to worry
+
+00:26:20.799 --> 00:26:22.320
+about it calling this over and over
+
+00:26:22.320 --> 00:26:23.600
+again. It was kind of guaranteed to be
+
+00:26:23.600 --> 00:26:25.600
+safe. It could originally call sub
+
+00:26:25.600 --> 00:26:26.960
+agents and that was one of the key
+
+00:26:26.960 --> 00:26:29.039
+things that I had to stop it from doing.
+
+00:26:29.039 --> 00:26:29.840
+>> Question.
+
+00:26:29.840 --> 00:26:30.880
+>> Go ahead.
+
+00:26:30.880 --> 00:26:32.960
+>> How much of the outer loop passes along
+
+00:26:32.960 --> 00:26:34.720
+context and history or does it start
+
+00:26:34.720 --> 00:26:36.000
+fresh on every iteration?
+
+00:26:36.000 --> 00:26:38.320
+>> Every sub agent starts fresh
+
+00:26:38.320 --> 00:26:39.840
+>> but uh the outer loop in general.
+
+00:26:39.840 --> 00:26:42.159
+>> The outer loop preserves the history.
+
+00:26:42.159 --> 00:26:43.679
+>> Cool. Because you have that array of
+
+00:26:43.679 --> 00:26:45.279
+messages and so you're just keeping all
+
+00:26:45.279 --> 00:26:47.440
+of the message objects. So like if I
+
+00:26:47.440 --> 00:26:50.000
+send another message object here uh if I
+
+00:26:50.000 --> 00:26:52.880
+actually show what okay if I actually
+
+00:26:52.880 --> 00:26:54.559
+I'll refresh this page again. If I
+
+00:26:54.559 --> 00:26:56.240
+actually show my messages object here so
+
+00:26:56.240 --> 00:26:58.240
+you can get an idea like every single
+
+00:26:58.240 --> 00:27:00.480
+time I ran this it actually just kept on
+
+00:27:00.480 --> 00:27:03.440
+building into it or it just built more
+
+00:27:03.440 --> 00:27:04.480
+and more into it. And you can actually
+
+00:27:04.480 --> 00:27:05.679
+just read the full prompt and I'll go to
+
+00:27:05.679 --> 00:27:08.000
+the bottom so you can see these get
+
+00:27:08.000 --> 00:27:10.080
+really long. It just like when I did
+
+00:27:10.080 --> 00:27:11.600
+extract the latest announcements from
+
+00:27:11.600 --> 00:27:14.480
+Gemini, it actually like go did this and
+
+00:27:14.480 --> 00:27:15.840
+it would just like render this for me
+
+00:27:15.840 --> 00:27:17.360
+and let me know if it was going on if
+
+00:27:17.360 --> 00:27:17.760
+that makes
+
+00:27:17.760 --> 00:27:19.440
+>> sense. So I just stacked everything. I
+
+00:27:19.440 --> 00:27:20.720
+didn't I did not clear the context
+
+00:27:20.720 --> 00:27:21.760
+window at all.
+
+00:27:21.760 --> 00:27:23.760
+>> So two more questions. What is this eval
+
+00:27:23.760 --> 00:27:25.200
+tool you're using?
+
+00:27:25.200 --> 00:27:28.799
+>> Um this is a thing for boundary studio
+
+00:27:28.799 --> 00:27:30.159
+but I'll talk about that later.
+
+00:27:30.159 --> 00:27:32.159
+>> Uh this wasn't really uh we'll talk
+
+00:27:32.159 --> 00:27:34.320
+about this separately.
+
+00:27:34.320 --> 00:27:35.600
+>> Uh what I really want to talk about is
+
+00:27:35.600 --> 00:27:36.960
+how the agent works. So how does the
+
+00:27:36.960 --> 00:27:37.679
+agent actually work?
+
+00:27:37.679 --> 00:27:39.440
+>> Keep going. So, we have the sub agent.
+
+00:27:39.440 --> 00:27:41.120
+We're able to execute tools. Let's look
+
+00:27:41.120 --> 00:27:42.799
+at some of these tools. So, what's cool
+
+00:27:42.799 --> 00:27:44.159
+about this is I actually just did this
+
+00:27:44.159 --> 00:27:46.000
+and I just said tool.action. I rendered
+
+00:27:46.000 --> 00:27:47.520
+this. What's really nice is you guys
+
+00:27:47.520 --> 00:27:49.520
+remember how my certain tools were scary
+
+00:27:49.520 --> 00:27:51.200
+tools and they're not included in here.
+
+00:27:51.200 --> 00:27:53.679
+I can actually see that because it knows
+
+00:27:53.679 --> 00:27:54.880
+that even though these tools exist,
+
+00:27:54.880 --> 00:27:56.080
+it'll actually never get called cuz
+
+00:27:56.080 --> 00:27:57.440
+action is not allowed to be any of those
+
+00:27:57.440 --> 00:27:59.360
+types. So, you get really nice type
+
+00:27:59.360 --> 00:28:00.559
+safety of knowing what tools you're
+
+00:28:00.559 --> 00:28:02.720
+using. But now that we're doing this,
+
+00:28:02.720 --> 00:28:04.080
+what is actually happening? Let's look
+
+00:28:04.080 --> 00:28:06.000
+at one of these tools.
+
+00:28:06.000 --> 00:28:10.080
+I think LS is a good No, not LS.
+
+00:28:10.080 --> 00:28:10.960
+LS is not a good
+
+00:28:10.960 --> 00:28:12.960
+>> I'd like to see like Glob or Grap or
+
+00:28:12.960 --> 00:28:13.360
+something.
+
+00:28:13.360 --> 00:28:15.440
+>> Let's look at Glob. Glob is actually I
+
+00:28:15.440 --> 00:28:18.000
+think a good example. No, Glob is also
+
+00:28:18.000 --> 00:28:20.240
+not a good example. I Glob actually I
+
+00:28:20.240 --> 00:28:21.360
+didn't have to do much with to make it
+
+00:28:21.360 --> 00:28:23.600
+work. I just did the GP was the one that
+
+00:28:23.600 --> 00:28:25.679
+I had to do. GP was actually really
+
+00:28:25.679 --> 00:28:27.840
+challenging to get right. And there's a
+
+00:28:27.840 --> 00:28:29.440
+couple things. The first thing is the
+
+00:28:29.440 --> 00:28:30.720
+first bug I had is I wasn't actually
+
+00:28:30.720 --> 00:28:32.240
+passing the working directory into the
+
+00:28:32.240 --> 00:28:34.080
+system. So I had to manage state for the
+
+00:28:34.080 --> 00:28:35.360
+working directory. That was very
+
+00:28:35.360 --> 00:28:37.760
+annoying. Um, once I got that working,
+
+00:28:37.760 --> 00:28:39.279
+it was much better. This is also why
+
+00:28:39.279 --> 00:28:41.840
+cloud code has a CD tool. It's because
+
+00:28:41.840 --> 00:28:44.240
+when it does the CD tool, it's able to m
+
+00:28:44.240 --> 00:28:45.840
+it's able to change its own working
+
+00:28:45.840 --> 00:28:47.120
+directory and its own state
+
+00:28:47.120 --> 00:28:48.640
+representation
+
+00:28:48.640 --> 00:28:50.399
+as it's running. And when it's doing
+
+00:28:50.399 --> 00:28:52.240
+that, what it can do now is it can
+
+00:28:52.240 --> 00:28:54.000
+actually have it can pass in better
+
+00:28:54.000 --> 00:28:56.080
+context into the model. If you just call
+
+00:28:56.080 --> 00:28:59.120
+CD via GP or via bash tool, the model
+
+00:28:59.120 --> 00:29:01.200
+can't detect that. So what I would do if
+
+00:29:01.200 --> 00:29:03.039
+I were running the bash tool is I would
+
+00:29:03.039 --> 00:29:04.880
+at the end of the bash tools execution
+
+00:29:04.880 --> 00:29:06.640
+loop I would actually grab the current
+
+00:29:06.640 --> 00:29:08.559
+directory and pass that in. So the
+
+00:29:08.559 --> 00:29:10.880
+current directory is always relatively
+
+00:29:10.880 --> 00:29:14.080
+correct for the agent agent.
+
+00:29:14.080 --> 00:29:15.919
+>> Sorry I want to I want to double down. I
+
+00:29:15.919 --> 00:29:17.520
+know we have a lot to cover but um
+
+00:29:17.520 --> 00:29:19.760
+you're saying that if cla in if the
+
+00:29:19.760 --> 00:29:22.399
+model while running commands includes a
+
+00:29:22.399 --> 00:29:24.799
+change directory you want to preserve
+
+00:29:24.799 --> 00:29:26.799
+that directory and leave the agent in
+
+00:29:26.799 --> 00:29:28.720
+that directory going forward.
+
+00:29:28.720 --> 00:29:30.960
+>> Exactly. I think that's trash. I hate
+
+00:29:30.960 --> 00:29:32.559
+that. I actually there's a there's a
+
+00:29:32.559 --> 00:29:34.000
+flag and claude code where you can
+
+00:29:34.000 --> 00:29:36.559
+disable that behavior where like when it
+
+00:29:36.559 --> 00:29:38.640
+runs bash and changes directories
+
+00:29:38.640 --> 00:29:40.799
+afterwards it will always put the agent
+
+00:29:40.799 --> 00:29:43.039
+back in the directory it was in. And I
+
+00:29:43.039 --> 00:29:45.200
+find I get so many better results that
+
+00:29:45.200 --> 00:29:46.720
+way. And I can I can tell you why if you
+
+00:29:46.720 --> 00:29:47.919
+want, but I know we have a lot more to
+
+00:29:47.919 --> 00:29:50.159
+go through. I'll tell you actually we
+
+00:29:50.159 --> 00:29:51.120
+should talk about this. I'll tell you
+
+00:29:51.120 --> 00:29:53.120
+why I found it to be better for my agent
+
+00:29:53.120 --> 00:29:55.360
+specifically because my agent preserves
+
+00:29:55.360 --> 00:29:58.000
+the entire call stack. the model thinks
+
+00:29:58.000 --> 00:29:59.279
+it's in that directory.
+
+00:29:59.279 --> 00:30:00.720
+>> Yeah. But also, can we go back to the
+
+00:30:00.720 --> 00:30:01.520
+whiteboard?
+
+00:30:01.520 --> 00:30:03.440
+>> Yes, we can.
+
+00:30:03.440 --> 00:30:06.080
+>> Um, so here's the here's the problem I
+
+00:30:06.080 --> 00:30:08.960
+always hit with that is um Claude's
+
+00:30:08.960 --> 00:30:10.159
+let's say Claude's trying to run the
+
+00:30:10.159 --> 00:30:13.039
+test, right? And so you go and it runs
+
+00:30:13.039 --> 00:30:17.200
+this command like, you know, cd uh hld
+
+00:30:17.200 --> 00:30:20.640
+and go test dot dot dot, right?
+
+00:30:20.640 --> 00:30:23.600
+>> And then it gets the results back. uh it
+
+00:30:23.600 --> 00:30:25.520
+makes some changes
+
+00:30:25.520 --> 00:30:27.600
+and then it tries to run that again and
+
+00:30:27.600 --> 00:30:29.840
+it so it's it's fshot prompted itself
+
+00:30:29.840 --> 00:30:32.000
+that the way to run the test is do this
+
+00:30:32.000 --> 00:30:34.320
+cd and go test dot dot dot but the
+
+00:30:34.320 --> 00:30:35.600
+problem is is that if you keep the
+
+00:30:35.600 --> 00:30:38.480
+directory this then fails and so you get
+
+00:30:38.480 --> 00:30:41.279
+an error and then it has to like think
+
+00:30:41.279 --> 00:30:43.679
+about like oh I'm actually
+
+00:30:43.679 --> 00:30:45.360
+>> and like reason about what directory
+
+00:30:45.360 --> 00:30:47.520
+it's in and then it has to run go test
+
+00:30:47.520 --> 00:30:50.080
+again or it needs to like cd do
+
+00:30:50.080 --> 00:30:52.320
+>> I I do my comp which I actually tell it
+
+00:30:52.320 --> 00:30:53.600
+that the directory change.
+
+00:30:53.600 --> 00:30:54.559
+>> Ah okay.
+
+00:30:54.559 --> 00:30:56.720
+>> So see so it makes a s
+
+00:30:56.720 --> 00:30:58.640
+>> tell it the current working directory in
+
+00:30:58.640 --> 00:31:00.320
+the prompt so that it knows where it is
+
+00:31:00.320 --> 00:31:01.600
+and it can think of things.
+
+00:31:01.600 --> 00:31:02.399
+>> Exactly. Okay.
+
+00:31:02.399 --> 00:31:04.960
+>> Like if you actually go what do you go
+
+00:31:04.960 --> 00:31:06.480
+if you go read the prompt that I sent to
+
+00:31:06.480 --> 00:31:07.520
+the model.
+
+00:31:07.520 --> 00:31:07.919
+>> Yeah
+
+00:31:07.919 --> 00:31:10.720
+>> I do that and I give it the full path. I
+
+00:31:10.720 --> 00:31:12.320
+don't give relative path actually.
+
+00:31:12.320 --> 00:31:13.679
+>> Yeah. Yeah.
+
+00:31:13.679 --> 00:31:15.279
+>> I tried relative paths and that actually
+
+00:31:15.279 --> 00:31:17.440
+did not work. I had to go to full paths
+
+00:31:17.440 --> 00:31:18.000
+>> at the end.
+
+00:31:18.000 --> 00:31:19.679
+>> How did you decide to put this at the
+
+00:31:19.679 --> 00:31:21.360
+top? did you try putting this anywhere
+
+00:31:21.360 --> 00:31:22.720
+else or were you always just your
+
+00:31:22.720 --> 00:31:23.840
+instinct was to have
+
+00:31:23.840 --> 00:31:25.120
+>> queries that I was running over and over
+
+00:31:25.120 --> 00:31:26.720
+again to go test it and like it just
+
+00:31:26.720 --> 00:31:28.320
+worked. So I was like okay good enough
+
+00:31:28.320 --> 00:31:29.919
+and remember I'm using the openi
+
+00:31:29.919 --> 00:31:32.799
+responses with the GBD5 thing. So like
+
+00:31:32.799 --> 00:31:33.919
+it's possible that if I was using a
+
+00:31:33.919 --> 00:31:35.919
+shittier model like sonnet or like uh
+
+00:31:35.919 --> 00:31:37.760
+GPD4 or something it wouldn't work as
+
+00:31:37.760 --> 00:31:39.600
+well but like this worked pretty well. I
+
+00:31:39.600 --> 00:31:41.600
+know openi specifically really heavily
+
+00:31:41.600 --> 00:31:43.760
+indexes on trusting the system directory
+
+00:31:43.760 --> 00:31:46.399
+system uh stuff. What I would probably
+
+00:31:46.399 --> 00:31:49.440
+also do if I were doing this again is
+
+00:31:49.440 --> 00:31:52.559
+whenever the directory changed uh if I
+
+00:31:52.559 --> 00:31:54.080
+ran the batch to I actually built the
+
+00:31:54.080 --> 00:31:56.240
+thing that detected that in batch tool I
+
+00:31:56.240 --> 00:31:59.360
+would actually put a additional message
+
+00:31:59.360 --> 00:32:01.679
+as a part of the prompt that actually
+
+00:32:01.679 --> 00:32:02.799
+solved for that. So like what I would do
+
+00:32:02.799 --> 00:32:04.720
+is like whenever I did CD as soon as a
+
+00:32:04.720 --> 00:32:06.960
+tool happened I would actually just plum
+
+00:32:06.960 --> 00:32:08.480
+in it's like the directory changed and
+
+00:32:08.480 --> 00:32:10.320
+put that into there personally because I
+
+00:32:10.320 --> 00:32:12.000
+think that would make life a lot easier
+
+00:32:12.000 --> 00:32:13.440
+for the model.
+
+00:32:13.440 --> 00:32:15.120
+>> Okay. Um cool. Okay. Okay, so you were
+
+00:32:15.120 --> 00:32:16.320
+in the middle of explaining the GP tool
+
+00:32:16.320 --> 00:32:17.840
+and how it pulls a directory through.
+
+00:32:17.840 --> 00:32:19.039
+>> So firstly, I know there are a couple
+
+00:32:19.039 --> 00:32:20.880
+questions there. I did use RG. You
+
+00:32:20.880 --> 00:32:22.159
+should use rip grap. If you're building
+
+00:32:22.159 --> 00:32:24.399
+a grap tool and you don't use rip grap,
+
+00:32:24.399 --> 00:32:28.399
+uh, incorrect. Just use rip grap. Uh,
+
+00:32:28.399 --> 00:32:30.480
+rust is great for developer tools. Rip
+
+00:32:30.480 --> 00:32:33.360
+is rust grap built in Rust and just way
+
+00:32:33.360 --> 00:32:34.960
+better ergonomically.
+
+00:32:34.960 --> 00:32:37.679
+>> Yeah. And it used to be so the original
+
+00:32:37.679 --> 00:32:39.679
+fun trivia the original RG was based on
+
+00:32:39.679 --> 00:32:41.519
+a tool called AG which is called the
+
+00:32:41.519 --> 00:32:43.519
+silver searcher which was like written
+
+00:32:43.519 --> 00:32:45.760
+in pearl and did all this parallelism
+
+00:32:45.760 --> 00:32:48.640
+through like threads. Uh but it was yeah
+
+00:32:48.640 --> 00:32:50.480
+it was time to rewrite it in rust.
+
+00:32:50.480 --> 00:32:52.799
+>> So firstly every single GP tool every
+
+00:32:52.799 --> 00:32:54.320
+single tool I have is that it will
+
+00:32:54.320 --> 00:32:55.679
+always return a string. That's what I
+
+00:32:55.679 --> 00:32:57.039
+did over here. I wish I didn't have to
+
+00:32:57.039 --> 00:32:59.360
+but I did. The last thing I did was
+
+00:32:59.360 --> 00:33:01.039
+every single time I ran any subprocess
+
+00:33:01.039 --> 00:33:02.320
+every single one of them has a timeout
+
+00:33:02.320 --> 00:33:05.840
+built in guaranteed. I had to do that.
+
+00:33:05.840 --> 00:33:07.840
+I did a couple more things in here. I
+
+00:33:07.840 --> 00:33:09.120
+actually had to limit how many files
+
+00:33:09.120 --> 00:33:11.919
+were allowed to be returned. It just was
+
+00:33:11.919 --> 00:33:13.120
+going to be too bad in a lot of
+
+00:33:13.120 --> 00:33:15.840
+scenarios because sometimes like uh the
+
+00:33:15.840 --> 00:33:17.120
+other reason that I have scary tools is
+
+00:33:17.120 --> 00:33:18.559
+I saw the model look at my root
+
+00:33:18.559 --> 00:33:20.640
+directory and I was like hell no, I'm
+
+00:33:20.640 --> 00:33:22.799
+not going to let it look at slash and
+
+00:33:22.799 --> 00:33:24.559
+that also had problems with glob and
+
+00:33:24.559 --> 00:33:26.240
+other tools that I was trying to run. So
+
+00:33:26.240 --> 00:33:27.600
+I had to go simplify that. So the first
+
+00:33:27.600 --> 00:33:30.320
+thing was limit directory searches.
+
+00:33:30.320 --> 00:33:32.320
+Now, once I did that, I realized that
+
+00:33:32.320 --> 00:33:33.600
+there was another problem that ended up
+
+00:33:33.600 --> 00:33:35.600
+happening, which was when I did the read
+
+00:33:35.600 --> 00:33:37.200
+tool.
+
+00:33:37.200 --> 00:33:38.559
+Many of you probably know Cloud Code
+
+00:33:38.559 --> 00:33:40.960
+doesn't read every single line of code.
+
+00:33:40.960 --> 00:33:43.039
+It can't in every file. It's because
+
+00:33:43.039 --> 00:33:44.720
+it's too complex. So, I had to go build
+
+00:33:44.720 --> 00:33:46.559
+the same thing out. So, I actually built
+
+00:33:46.559 --> 00:33:49.200
+a limiter on how reading worked. And I
+
+00:33:49.200 --> 00:33:50.880
+originally when I didn't do that, it
+
+00:33:50.880 --> 00:33:52.480
+actually had a much smaller limit of
+
+00:33:52.480 --> 00:33:54.000
+like 2,000 characters or something that
+
+00:33:54.000 --> 00:33:55.679
+was just too small. So, I increased the
+
+00:33:55.679 --> 00:33:57.679
+limit to 20,000 characters, but also
+
+00:33:57.679 --> 00:34:00.480
+5,000 lines. So either one of those two,
+
+00:34:00.480 --> 00:34:01.120
+whichever one is fine.
+
+00:34:01.120 --> 00:34:03.440
+>> But that's 20k per line, right?
+
+00:34:03.440 --> 00:34:05.360
+>> No, no, no. It's total.
+
+00:34:05.360 --> 00:34:08.000
+>> It says line characters. Line truncated
+
+00:34:08.000 --> 00:34:08.879
+at 20,000 characters.
+
+00:34:08.879 --> 00:34:10.800
+>> That's a bug. I should fix this.
+
+00:34:10.800 --> 00:34:12.240
+>> Um,
+
+00:34:12.240 --> 00:34:13.280
+>> it should have been 20.
+
+00:34:13.280 --> 00:34:14.879
+>> Really, it should be by tokens, right?
+
+00:34:14.879 --> 00:34:15.679
+But you're not going to bring a
+
+00:34:15.679 --> 00:34:16.320
+tokenizer.
+
+00:34:16.320 --> 00:34:17.520
+>> I'm not bring tokenizer. It's not worth
+
+00:34:17.520 --> 00:34:19.280
+it. But the other thing I had to do when
+
+00:34:19.280 --> 00:34:20.639
+this actually worked is I actually had
+
+00:34:20.639 --> 00:34:22.560
+to go write this code to say when with
+
+00:34:22.560 --> 00:34:24.079
+the truncation notice. Originally, I
+
+00:34:24.079 --> 00:34:26.240
+wrote just truncated.
+
+00:34:26.240 --> 00:34:27.839
+But now what I actually had to do was
+
+00:34:27.839 --> 00:34:28.800
+actually say that oh instead of
+
+00:34:28.800 --> 00:34:30.879
+truncation this I actually wanted to
+
+00:34:30.879 --> 00:34:32.879
+have the output the output is truncated
+
+00:34:32.879 --> 00:34:34.480
+starting at this line to this line and I
+
+00:34:34.480 --> 00:34:36.159
+gave it information about where the line
+
+00:34:36.159 --> 00:34:37.040
+was
+
+00:34:37.040 --> 00:34:39.200
+>> so that it can go through if it really
+
+00:34:39.200 --> 00:34:40.240
+wants to. Right.
+
+00:34:40.240 --> 00:34:42.480
+>> Exactly. And then I actually told it to
+
+00:34:42.480 --> 00:34:44.159
+use a read tool with this parameter. So
+
+00:34:44.159 --> 00:34:46.320
+I was very very specific in how to go
+
+00:34:46.320 --> 00:34:48.560
+deal with this along the way. And once I
+
+00:34:48.560 --> 00:34:50.879
+did this this was actually the crux to
+
+00:34:50.879 --> 00:34:52.240
+making this work the whole time because
+
+00:34:52.240 --> 00:34:54.000
+a lot of stuff was actually a lot of
+
+00:34:54.000 --> 00:34:55.040
+stuff is actually designed to be
+
+00:34:55.040 --> 00:34:56.639
+truncated. So, for example, web search
+
+00:34:56.639 --> 00:34:59.359
+and fetch was also truncated. This one
+
+00:34:59.359 --> 00:35:00.960
+doesn't work as well because I didn't do
+
+00:35:00.960 --> 00:35:02.480
+that. I had another one where I did
+
+00:35:02.480 --> 00:35:05.119
+this. Uh, what? No, that's different.
+
+00:35:05.119 --> 00:35:06.720
+This is the UI stuff. I had another
+
+00:35:06.720 --> 00:35:08.160
+truncation somewhere. I have to go find
+
+00:35:08.160 --> 00:35:08.800
+it.
+
+00:35:08.800 --> 00:35:09.200
+>> Um,
+
+00:35:09.200 --> 00:35:11.920
+>> so AOS is asking, um, this is great
+
+00:35:11.920 --> 00:35:13.839
+explanation, but I don't see the rag
+
+00:35:13.839 --> 00:35:15.599
+related context here. Am I missing
+
+00:35:15.599 --> 00:35:16.800
+something? Do you want to talk about how
+
+00:35:16.800 --> 00:35:18.800
+this like maps on to retrieval and
+
+00:35:18.800 --> 00:35:19.280
+search?
+
+00:35:19.280 --> 00:35:21.920
+>> Yes, let me go do that really fast. So
+
+00:35:21.920 --> 00:35:23.839
+what this probably just goes down to
+
+00:35:23.839 --> 00:35:26.079
+definitions of exactly what is rag. So
+
+00:35:26.079 --> 00:35:27.760
+rag is a system that takes in a user
+
+00:35:27.760 --> 00:35:30.480
+query and looks into some database of
+
+00:35:30.480 --> 00:35:32.160
+some kind that says hey given this
+
+00:35:32.160 --> 00:35:35.040
+database let me go get a subset of the
+
+00:35:35.040 --> 00:35:38.400
+database that is relevant here.
+
+00:35:38.400 --> 00:35:40.160
+I can't delete that dot. So it's going
+
+00:35:40.160 --> 00:35:41.599
+to go ahead and get like a subset of the
+
+00:35:41.599 --> 00:35:44.320
+database from this system that matches
+
+00:35:44.320 --> 00:35:46.320
+the query in some form factor. The
+
+00:35:46.320 --> 00:35:48.800
+typical way of doing rag is you use a
+
+00:35:48.800 --> 00:35:50.160
+vector search and you basically look at
+
+00:35:50.160 --> 00:35:52.320
+all this and you say hey given the
+
+00:35:52.320 --> 00:35:53.760
+vector search which ones are the ones
+
+00:35:53.760 --> 00:35:55.280
+that have the highest score and then I
+
+00:35:55.280 --> 00:35:57.280
+will just go get those and now you have
+
+00:35:57.280 --> 00:35:59.680
+a rag system that takes a query look
+
+00:35:59.680 --> 00:36:01.440
+through a database gets you the top
+
+00:36:01.440 --> 00:36:03.680
+scoring element. Yeah, I think it's it's
+
+00:36:03.680 --> 00:36:05.359
+really like the difference between like
+
+00:36:05.359 --> 00:36:07.520
+traditional rag and agentic rag is again
+
+00:36:07.520 --> 00:36:09.359
+like are you letting the agent call
+
+00:36:09.359 --> 00:36:11.599
+tools to search for stuff whether it's
+
+00:36:11.599 --> 00:36:14.640
+GP or glob or vectors or whatever or web
+
+00:36:14.640 --> 00:36:17.040
+search or whatever it is or are you
+
+00:36:17.040 --> 00:36:19.119
+basically doing that ahead of time and
+
+00:36:19.119 --> 00:36:20.560
+just almost like not quite
+
+00:36:20.560 --> 00:36:22.720
+deterministically but kind of more
+
+00:36:22.720 --> 00:36:25.119
+deterministically injecting stuff into
+
+00:36:25.119 --> 00:36:28.240
+the context window regardless of what
+
+00:36:28.240 --> 00:36:30.160
+tools the agent calls.
+
+00:36:30.160 --> 00:36:32.560
+>> Exactly. So what I do over here is 100%
+
+00:36:32.560 --> 00:36:34.000
+of the time when the user query comes in
+
+00:36:34.000 --> 00:36:35.760
+I call a vector database and like what
+
+00:36:35.760 --> 00:36:38.240
+is an example of this well like this
+
+00:36:38.240 --> 00:36:40.079
+system is agentic rag right over here
+
+00:36:40.079 --> 00:36:42.960
+give it a second so I'll search like how
+
+00:36:42.960 --> 00:36:45.520
+do I use gemini this thing every single
+
+00:36:45.520 --> 00:36:48.480
+time queries the database finds all the
+
+00:36:48.480 --> 00:36:50.000
+relevant pages to this and I hopefully
+
+00:36:50.000 --> 00:36:51.520
+this will work finds all the relevant
+
+00:36:51.520 --> 00:36:54.320
+pages to this and like right over here
+
+00:36:54.320 --> 00:36:57.040
+and then produces a response and this is
+
+00:36:57.040 --> 00:36:58.800
+great I think for a doc search this is
+
+00:36:58.800 --> 00:37:02.160
+not bad But what this system is able
+
+00:37:02.160 --> 00:37:04.079
+what this system is able to do when we
+
+00:37:04.079 --> 00:37:05.760
+don't 100% of the calling call a vector
+
+00:37:05.760 --> 00:37:09.280
+database is I decide
+
+00:37:09.280 --> 00:37:13.920
+if I need to rag anything at all like
+
+00:37:13.920 --> 00:37:16.880
+for example in order for this system to
+
+00:37:16.880 --> 00:37:18.880
+actually decide what let's say I sent
+
+00:37:18.880 --> 00:37:24.400
+this query is that is 1.5 pro the latest
+
+00:37:24.400 --> 00:37:27.520
+model what this will do in this scenario
+
+00:37:27.520 --> 00:37:29.760
+is this is still going to actually make
+
+00:37:29.760 --> 00:37:31.839
+the vector database call and go do this
+
+00:37:31.839 --> 00:37:34.000
+and it just looks only at my at our blog
+
+00:37:34.000 --> 00:37:35.920
+post and our docs to go do this because
+
+00:37:35.920 --> 00:37:38.320
+it's hardcoded to 100% of the time pull
+
+00:37:38.320 --> 00:37:40.000
+out context in that form factor.
+
+00:37:40.000 --> 00:37:41.839
+>> Okay. So there's no tool call there.
+
+00:37:41.839 --> 00:37:43.680
+You're just when you ask when you ask
+
+00:37:43.680 --> 00:37:45.680
+the question you will always do a search
+
+00:37:45.680 --> 00:37:47.520
+and always hand that to the agent based
+
+00:37:47.520 --> 00:37:49.119
+on you know vector similarity to the
+
+00:37:49.119 --> 00:37:49.680
+user.
+
+00:37:49.680 --> 00:37:52.800
+>> Exactly. What I do over here is I just
+
+00:37:52.800 --> 00:37:55.040
+decide if the the model is deciding if
+
+00:37:55.040 --> 00:37:57.920
+it needs to rag anything at all. And I'm
+
+00:37:57.920 --> 00:37:59.680
+basically letting it decide exactly
+
+00:37:59.680 --> 00:38:02.160
+which of the few things I may want to
+
+00:38:02.160 --> 00:38:04.640
+rag. So for example, one of the things I
+
+00:38:04.640 --> 00:38:06.079
+could give it is I could give it access
+
+00:38:06.079 --> 00:38:07.599
+to the same vector database that that
+
+00:38:07.599 --> 00:38:10.800
+Bammy chat has in our docs. I can also
+
+00:38:10.800 --> 00:38:14.000
+build what I did today, which is I built
+
+00:38:14.000 --> 00:38:15.680
+a I basically gave it access to our
+
+00:38:15.680 --> 00:38:17.599
+entire source code and I said, "Hey, you
+
+00:38:17.599 --> 00:38:19.839
+can just use this source code however
+
+00:38:19.839 --> 00:38:21.040
+you want." like search through or do
+
+00:38:21.040 --> 00:38:22.960
+anything else you want on it. And what
+
+00:38:22.960 --> 00:38:24.720
+that does for it is it basically treats
+
+00:38:24.720 --> 00:38:28.000
+it like a rag problem. Um,
+
+00:38:28.000 --> 00:38:30.160
+>> and you can still do all the rag stuff
+
+00:38:30.160 --> 00:38:31.680
+in your tool calls. You can do the
+
+00:38:31.680 --> 00:38:33.200
+reranking, you can do the embeddings,
+
+00:38:33.200 --> 00:38:34.800
+you can do the search. It's just the
+
+00:38:34.800 --> 00:38:36.480
+agent is saying, "Okay, I'm going to
+
+00:38:36.480 --> 00:38:37.920
+search for this." It's going to look at
+
+00:38:37.920 --> 00:38:39.680
+what it got back and then the model can
+
+00:38:39.680 --> 00:38:41.040
+decide, do we need to do another search
+
+00:38:41.040 --> 00:38:42.560
+or do we have all the information? And
+
+00:38:42.560 --> 00:38:44.240
+that's all kind of encapsulated
+
+00:38:44.240 --> 00:38:46.480
+generically in the agentic loop. Right.
+
+00:38:46.480 --> 00:38:48.480
+>> Exactly. It's basically the key part is
+
+00:38:48.480 --> 00:38:50.640
+like how the decision is being made.
+
+00:38:50.640 --> 00:38:52.720
+Usually in some code you have some you
+
+00:38:52.720 --> 00:38:54.640
+have some system making the decision and
+
+00:38:54.640 --> 00:38:56.000
+here you're just letting the model make
+
+00:38:56.000 --> 00:38:58.480
+the decision completely and this covered
+
+00:38:58.480 --> 00:39:00.160
+a lot of different trade-offs. One of
+
+00:39:00.160 --> 00:39:02.000
+the trade-offs is this question the
+
+00:39:02.000 --> 00:39:04.160
+ability to ask if 1.5 Pro is the latest
+
+00:39:04.160 --> 00:39:05.920
+model. That was just something we can't
+
+00:39:05.920 --> 00:39:07.680
+do in this in the current system as it
+
+00:39:07.680 --> 00:39:10.560
+is today. We can do it in this system
+
+00:39:10.560 --> 00:39:12.160
+where I asked the model like is Gemini
+
+00:39:12.160 --> 00:39:13.920
+the is this the latest model? And what
+
+00:39:13.920 --> 00:39:15.359
+it did is actually just did a web
+
+00:39:15.359 --> 00:39:17.520
+search, looked into Google Docs,
+
+00:39:17.520 --> 00:39:19.200
+actually got the change I guess got the
+
+00:39:19.200 --> 00:39:20.960
+change logs from the Gemini API.
+
+00:39:20.960 --> 00:39:22.560
+Additionally, got another change log
+
+00:39:22.560 --> 00:39:25.920
+from the models page and also uh I think
+
+00:39:25.920 --> 00:39:28.800
+it did a web where did it go and it also
+
+00:39:28.800 --> 00:39:31.280
+did a web search for like just where do
+
+00:39:31.280 --> 00:39:33.040
+I go look for the Gemini API on this
+
+00:39:33.040 --> 00:39:34.560
+page and that's how it found those
+
+00:39:34.560 --> 00:39:36.240
+links. It got it and then it was
+
+00:39:36.240 --> 00:39:37.920
+actually able to tell me way more
+
+00:39:37.920 --> 00:39:39.280
+information than my docs could ever have
+
+00:39:39.280 --> 00:39:40.480
+because I'm not indexing and like
+
+00:39:40.480 --> 00:39:41.680
+updating the vector database every
+
+00:39:41.680 --> 00:39:43.599
+second of the entire internet.
+
+00:39:43.599 --> 00:39:45.520
+which is it saying that it is the latest
+
+00:39:45.520 --> 00:39:47.599
+GA model but there are nonGA models that
+
+00:39:47.599 --> 00:39:49.680
+are available and there's pros and cons
+
+00:39:49.680 --> 00:39:51.680
+to both approach
+
+00:39:51.680 --> 00:39:53.200
+but that's the key difference does that
+
+00:39:53.200 --> 00:39:54.800
+answer the question well
+
+00:39:54.800 --> 00:39:56.400
+>> I think that was a great I think Akos
+
+00:39:56.400 --> 00:39:57.920
+said it was answered well that was a
+
+00:39:57.920 --> 00:39:59.520
+great question Akos glad we spent time
+
+00:39:59.520 --> 00:40:02.079
+on that um we have a little bit of time
+
+00:40:02.079 --> 00:40:06.720
+left um I want to make sure um we can
+
+00:40:06.720 --> 00:40:08.880
+talk a tiny bit about like RL and owning
+
+00:40:08.880 --> 00:40:10.960
+both the model and the tool chain and I
+
+00:40:10.960 --> 00:40:12.160
+also would think it would be really
+
+00:40:12.160 --> 00:40:14.480
+interesting on this search topic to look
+
+00:40:14.480 --> 00:40:16.000
+at how you implemented the web search
+
+00:40:16.000 --> 00:40:17.839
+even if it's even if it's simple because
+
+00:40:17.839 --> 00:40:19.359
+I imagine you're doing some stuff of
+
+00:40:19.359 --> 00:40:21.280
+like hey let's take all the HTML and
+
+00:40:21.280 --> 00:40:23.599
+then use a model to make it more context
+
+00:40:23.599 --> 00:40:24.960
+efficient things like that
+
+00:40:24.960 --> 00:40:26.400
+>> that is actually I did none of that
+
+00:40:26.400 --> 00:40:27.359
+stuff
+
+00:40:27.359 --> 00:40:28.240
+>> amazing
+
+00:40:28.240 --> 00:40:30.720
+>> enough like I said this took me a total
+
+00:40:30.720 --> 00:40:32.560
+of three hours to build the whole thing
+
+00:40:32.560 --> 00:40:35.040
+so most of the stuff I did was I
+
+00:40:35.040 --> 00:40:36.640
+implemented to-do tools I implemented
+
+00:40:36.640 --> 00:40:37.839
+most of these tools every single one of
+
+00:40:37.839 --> 00:40:39.599
+these tools is basically just baked by
+
+00:40:39.599 --> 00:40:42.079
+generated by cloud code I did modify
+
+00:40:42.079 --> 00:40:43.280
+some of them. I'd like to show you the
+
+00:40:43.280 --> 00:40:44.800
+ones I modified. So, I modified the read
+
+00:40:44.800 --> 00:40:46.480
+tool.
+
+00:40:46.480 --> 00:40:48.400
+I did modify the execute batch tool. For
+
+00:40:48.400 --> 00:40:49.920
+some reason, it didn't have the timeout
+
+00:40:49.920 --> 00:40:51.119
+in here. I don't know why. It just
+
+00:40:51.119 --> 00:40:52.640
+didn't. So, that was important to go add
+
+00:40:52.640 --> 00:40:54.320
+in. The error messages were really
+
+00:40:54.320 --> 00:40:56.000
+important. Having custom error messages.
+
+00:40:56.000 --> 00:40:57.440
+Cloud code did that pretty naturally cuz
+
+00:40:57.440 --> 00:40:59.119
+I prompt not cloud code. Cursor did that
+
+00:40:59.119 --> 00:41:00.240
+pretty naturally because I prompted it
+
+00:41:00.240 --> 00:41:01.680
+that I wanted good error messages that
+
+00:41:01.680 --> 00:41:04.000
+were human readable every single time.
+
+00:41:04.000 --> 00:41:05.520
+Um,
+
+00:41:05.520 --> 00:41:07.280
+Glob I had to go change like I said with
+
+00:41:07.280 --> 00:41:09.040
+the limit to the matches. That was
+
+00:41:09.040 --> 00:41:11.119
+important. Otherwise, it just added
+
+00:41:11.119 --> 00:41:12.640
+everything. GP. I showed you how I
+
+00:41:12.640 --> 00:41:14.800
+changed Grep. Uh, Grep. Did I show you
+
+00:41:14.800 --> 00:41:16.400
+how to change GP? The big change that I
+
+00:41:16.400 --> 00:41:19.280
+made to GP was whenever GP was resulting
+
+00:41:19.280 --> 00:41:21.920
+in itself, uh, one of the things that it
+
+00:41:21.920 --> 00:41:23.760
+did was it actually outputed the full
+
+00:41:23.760 --> 00:41:25.520
+path to the directory. I actually
+
+00:41:25.520 --> 00:41:27.200
+changed GP to always show you relative
+
+00:41:27.200 --> 00:41:28.079
+path
+
+00:41:28.079 --> 00:41:29.119
+>> and that was really important for
+
+00:41:29.119 --> 00:41:30.880
+accuracy. It actually worked way better
+
+00:41:30.880 --> 00:41:32.400
+once I did that. Before that, it just
+
+00:41:32.400 --> 00:41:34.079
+>> that's context engineering, dude. That's
+
+00:41:34.079 --> 00:41:35.359
+context engineering. How do you make it
+
+00:41:35.359 --> 00:41:36.560
+more context efficient? How do you give
+
+00:41:36.560 --> 00:41:38.560
+model just the information it needs?
+
+00:41:38.560 --> 00:41:40.319
+>> Love it. I really wish there was an
+
+00:41:40.319 --> 00:41:41.760
+easier way to model this, but there
+
+00:41:41.760 --> 00:41:43.599
+wasn't and it was really annoying. But I
+
+00:41:43.599 --> 00:41:44.880
+really wish that whenever I rendered
+
+00:41:44.880 --> 00:41:46.000
+this in the prompt, it would actually
+
+00:41:46.000 --> 00:41:47.599
+render as just the relative path.
+
+00:41:47.599 --> 00:41:49.359
+>> But that's that's context engineering.
+
+00:41:49.359 --> 00:41:50.800
+It's like go under the hood, do the
+
+00:41:50.800 --> 00:41:52.800
+janky weird thing, whatever it takes to
+
+00:41:52.800 --> 00:41:55.040
+get the right tokens into the model and
+
+00:41:55.040 --> 00:41:56.880
+every single token counts. When you're
+
+00:41:56.880 --> 00:41:58.560
+especially as your contacts get long,
+
+00:41:58.560 --> 00:42:01.520
+when you save 20 tokens per call and
+
+00:42:01.520 --> 00:42:03.359
+you're going to GP 30 times, that makes
+
+00:42:03.359 --> 00:42:05.119
+a huge difference in your outcome.
+
+00:42:05.119 --> 00:42:07.440
+>> It was really, really different. It was
+
+00:42:07.440 --> 00:42:09.280
+really, really big. This was one this
+
+00:42:09.280 --> 00:42:10.640
+was like one of the first failure cases
+
+00:42:10.640 --> 00:42:12.480
+I ran into. This is also why I started
+
+00:42:12.480 --> 00:42:13.760
+passing the working directory because I
+
+00:42:13.760 --> 00:42:15.520
+realized that the reason I need to pass
+
+00:42:15.520 --> 00:42:17.280
+this in was actually to produce relative
+
+00:42:17.280 --> 00:42:20.480
+paths and then that also made me uh want
+
+00:42:20.480 --> 00:42:23.760
+to go update the path as it was running.
+
+00:42:23.760 --> 00:42:25.040
+This is the other reason by the way
+
+00:42:25.040 --> 00:42:26.960
+Dexter that you really want to do where
+
+00:42:26.960 --> 00:42:28.800
+you want the agent loop to have access
+
+00:42:28.800 --> 00:42:30.640
+to the working directory because you
+
+00:42:30.640 --> 00:42:31.839
+kind of need to know what directory
+
+00:42:31.839 --> 00:42:33.440
+you're in to go do this
+
+00:42:33.440 --> 00:42:34.960
+>> to set up the relative paths and things
+
+00:42:34.960 --> 00:42:35.200
+like that.
+
+00:42:35.200 --> 00:42:36.880
+>> To go relative paths. Yes,
+
+00:42:36.880 --> 00:42:38.400
+>> there was a good comment as well, and I
+
+00:42:38.400 --> 00:42:39.280
+know we're not going to have time to
+
+00:42:39.280 --> 00:42:40.800
+talk about it, but having the directory
+
+00:42:40.800 --> 00:42:42.960
+at the start of your prompt basically
+
+00:42:42.960 --> 00:42:45.359
+wrecks the entire cache probably, but
+
+00:42:45.359 --> 00:42:46.880
+that's like an optimization we can do
+
+00:42:46.880 --> 00:42:47.599
+later, right?
+
+00:42:47.599 --> 00:42:49.359
+>> I I wasn't trying to optimize for that
+
+00:42:49.359 --> 00:42:50.960
+in that way. I could have left it as is
+
+00:42:50.960 --> 00:42:52.319
+and I could have just injected new tools
+
+00:42:52.319 --> 00:42:53.599
+saying like directory change, directory
+
+00:42:53.599 --> 00:42:55.839
+change, directory change and not have
+
+00:42:55.839 --> 00:42:57.599
+modified that if I wanted, but I do know
+
+00:42:57.599 --> 00:42:59.920
+OpenAI really favors that. So, I would
+
+00:42:59.920 --> 00:43:00.640
+if that was
+
+00:43:00.640 --> 00:43:02.800
+>> they favor the first the first beginning
+
+00:43:02.800 --> 00:43:05.040
+of the system prompt more so than like
+
+00:43:05.040 --> 00:43:06.800
+down problem. I would actually just move
+
+00:43:06.800 --> 00:43:08.000
+it out of the system prompt and put it
+
+00:43:08.000 --> 00:43:09.440
+into a user message saying this is my
+
+00:43:09.440 --> 00:43:11.440
+current directory artificially and then
+
+00:43:11.440 --> 00:43:12.640
+inject that in. That's how I would
+
+00:43:12.640 --> 00:43:15.599
+modify that if I had to.
+
+00:43:15.599 --> 00:43:16.960
+I definitely wouldn't leave it as a
+
+00:43:16.960 --> 00:43:18.960
+system prompt and then not modify it.
+
+00:43:18.960 --> 00:43:21.359
+>> Execute ls, ls had similar things uh
+
+00:43:21.359 --> 00:43:23.119
+that I had to do where instead of
+
+00:43:23.119 --> 00:43:25.359
+outputting everything when I ls it, I
+
+00:43:25.359 --> 00:43:27.599
+actually like tell ls tools exactly if
+
+00:43:27.599 --> 00:43:29.119
+it's a directory or a file when it
+
+00:43:29.119 --> 00:43:30.720
+actually ls. So, like if I go up here
+
+00:43:30.720 --> 00:43:32.560
+and you go look at this. Um
+
+00:43:32.560 --> 00:43:33.359
+>> Mhm.
+
+00:43:33.359 --> 00:43:36.240
+>> what you'll see what I mean. This is
+
+00:43:36.240 --> 00:43:38.240
+another big difference that came out of
+
+00:43:38.240 --> 00:43:40.800
+this. I hate that I use a thinking
+
+00:43:40.800 --> 00:43:42.560
+model. Do you see how I actually run
+
+00:43:42.560 --> 00:43:44.720
+this out? Makes a huge difference in how
+
+00:43:44.720 --> 00:43:46.160
+you actually read this. It just makes it
+
+00:43:46.160 --> 00:43:47.920
+easier for the model.
+
+00:43:47.920 --> 00:43:50.800
+>> And it looks noisy for a human, but it's
+
+00:43:50.800 --> 00:43:52.720
+actually that's always going to be just
+
+00:43:52.720 --> 00:43:54.480
+one token. Dur and file are each
+
+00:43:54.480 --> 00:43:55.520
+probably almost certainly going to be
+
+00:43:55.520 --> 00:43:56.240
+one token.
+
+00:43:56.240 --> 00:43:57.760
+>> Yeah, probably. So, it's just not worth
+
+00:43:57.760 --> 00:43:59.440
+it. It's just way better for me to do
+
+00:43:59.440 --> 00:44:00.640
+this and not. So that was one thing I
+
+00:44:00.640 --> 00:44:02.319
+had to do with the ls tool. The read
+
+00:44:02.319 --> 00:44:04.319
+tool I compressed using the line
+
+00:44:04.319 --> 00:44:06.000
+truncation thing with instructions of
+
+00:44:06.000 --> 00:44:08.640
+how to deal with shorter lines, how to
+
+00:44:08.640 --> 00:44:11.760
+deal with longer lines. Uh execute edit
+
+00:44:11.760 --> 00:44:13.200
+uh edit tool. I didn't look at I just
+
+00:44:13.200 --> 00:44:13.839
+removed it.
+
+00:44:13.839 --> 00:44:15.359
+>> So your edits, did you do old string,
+
+00:44:15.359 --> 00:44:17.040
+new string, just like string replace
+
+00:44:17.040 --> 00:44:17.839
+basically?
+
+00:44:17.839 --> 00:44:18.560
+>> That's clock code.
+
+00:44:18.560 --> 00:44:19.680
+>> Okay.
+
+00:44:19.680 --> 00:44:22.000
+>> Um Jupyter notebooks, they actually have
+
+00:44:22.000 --> 00:44:24.400
+to be dealt with differently compared to
+
+00:44:24.400 --> 00:44:26.000
+most systems. So the model
+
+00:44:26.000 --> 00:44:27.760
+>> which is easier to interact with the
+
+00:44:27.760 --> 00:44:29.760
+cells instead of like editing the raw
+
+00:44:29.760 --> 00:44:30.480
+JSON. Right.
+
+00:44:30.480 --> 00:44:32.319
+>> Exactly. So that's why cloud code builds
+
+00:44:32.319 --> 00:44:34.000
+like a Jupyter notebook editor in that
+
+00:44:34.000 --> 00:44:36.000
+way. Uh web fetch I didn't really
+
+00:44:36.000 --> 00:44:37.440
+modify. This is exactly the same. I just
+
+00:44:37.440 --> 00:44:38.720
+use BS4. Uh
+
+00:44:38.720 --> 00:44:40.400
+>> when you say you didn't modify it like
+
+00:44:40.400 --> 00:44:41.839
+what do you mean? Like you mean it's
+
+00:44:41.839 --> 00:44:44.560
+just once it was generated I didn't
+
+00:44:44.560 --> 00:44:46.400
+touch like once cursor wrote the
+
+00:44:46.400 --> 00:44:48.640
+function I just didn't touch it.
+
+00:44:48.640 --> 00:44:51.200
+>> So how are you okay? So soup.get text is
+
+00:44:51.200 --> 00:44:53.119
+just stripping out all the HTML and just
+
+00:44:53.119 --> 00:44:54.560
+giving you the raw text content. Yeah,
+
+00:44:54.560 --> 00:44:56.400
+that's it. That's all I do in fetch and
+
+00:44:56.400 --> 00:44:58.240
+I just give a really long give it
+
+00:44:58.240 --> 00:44:59.680
+truncated and there's no way to get more
+
+00:44:59.680 --> 00:45:00.720
+truncated. So
+
+00:45:00.720 --> 00:45:02.640
+>> I know that uh when you use cloud code
+
+00:45:02.640 --> 00:45:05.440
+it will take the some maybe it's ripping
+
+00:45:05.440 --> 00:45:06.880
+the text out but I think it just take it
+
+00:45:06.880 --> 00:45:08.560
+might even just be all the HTML and it
+
+00:45:08.560 --> 00:45:10.160
+passes it to haiku and it's like here
+
+00:45:10.160 --> 00:45:11.920
+was the question that the parent model
+
+00:45:11.920 --> 00:45:13.440
+asked. Can you strip this down and
+
+00:45:13.440 --> 00:45:15.280
+summarize it as markdown? This is
+
+00:45:15.280 --> 00:45:16.560
+interesting.
+
+00:45:16.560 --> 00:45:18.000
+You could add a BML call or something
+
+00:45:18.000 --> 00:45:19.839
+and this is like deterministic LMS
+
+00:45:19.839 --> 00:45:22.079
+inside your non-deterministic agentic
+
+00:45:22.079 --> 00:45:23.920
+rag pipeline the same way you could have
+
+00:45:23.920 --> 00:45:25.520
+a reranker pipeline or something like
+
+00:45:25.520 --> 00:45:26.720
+that inside a tool.
+
+00:45:26.720 --> 00:45:29.599
+>> I could do that here to do call haiku to
+
+00:45:29.599 --> 00:45:32.240
+summarize the content given the query
+
+00:45:32.240 --> 00:45:36.720
+>> um and how it's related. I could do that
+
+00:45:36.720 --> 00:45:38.240
+and I could pass in the summary. The
+
+00:45:38.240 --> 00:45:39.760
+other thing I could do is I could say
+
+00:45:39.760 --> 00:45:43.920
+truncated. If you need more information,
+
+00:45:43.920 --> 00:45:46.560
+use bash to fetch the content.
+
+00:45:46.560 --> 00:45:48.480
+>> Just tell to use curl to a file or
+
+00:45:48.480 --> 00:45:50.000
+something.
+
+00:45:50.000 --> 00:45:52.880
+>> Oh, wait. Not to store.
+
+00:45:52.880 --> 00:45:54.800
+>> Then you don't get the HTML stripping,
+
+00:45:54.800 --> 00:45:55.760
+but it's probably
+
+00:45:55.760 --> 00:45:59.520
+>> I mean, I can I can probably uh And then
+
+00:45:59.520 --> 00:46:00.960
+what I can pro I could probably do
+
+00:46:00.960 --> 00:46:02.160
+something around this like or write a
+
+00:46:02.160 --> 00:46:03.920
+Python command or something.
+
+00:46:03.920 --> 00:46:05.119
+>> Yeah. Or you could give it a code
+
+00:46:05.119 --> 00:46:07.520
+execution tool that runs the Python for
+
+00:46:07.520 --> 00:46:09.119
+you and goes and fetches the thing and
+
+00:46:09.119 --> 00:46:10.160
+does it. Yeah. Cool.
+
+00:46:10.160 --> 00:46:12.240
+>> Yeah. Or or I can or I can just modify
+
+00:46:12.240 --> 00:46:15.440
+my Here's another thing I can do. Agent
+
+00:46:15.440 --> 00:46:16.000
+tools.
+
+00:46:16.000 --> 00:46:18.240
+>> I think context 7 has in some of their
+
+00:46:18.240 --> 00:46:20.079
+fetch tools, they have a parameter that
+
+00:46:20.079 --> 00:46:22.400
+is like max tokens. And so the model can
+
+00:46:22.400 --> 00:46:24.880
+call the tool again and allow for more
+
+00:46:24.880 --> 00:46:26.720
+tokens and it goes into whatever
+
+00:46:26.720 --> 00:46:29.680
+summarizer model uh has that limit as
+
+00:46:29.680 --> 00:46:31.920
+its max tokens and like its expected
+
+00:46:31.920 --> 00:46:32.960
+amount of output.
+
+00:46:32.960 --> 00:46:36.720
+>> Yep. There you go. Um, path.
+
+00:46:36.720 --> 00:46:37.839
+>> Ah, cool. Okay.
+
+00:46:37.839 --> 00:46:39.280
+>> I can just tell it this just like tell
+
+00:46:39.280 --> 00:46:39.599
+me
+
+00:46:39.599 --> 00:46:40.880
+>> and then you would just tell it, hey, it
+
+00:46:40.880 --> 00:46:42.319
+was written to this path and the model
+
+00:46:42.319 --> 00:46:43.839
+can use the read tool to go get it. I
+
+00:46:43.839 --> 00:46:45.280
+love that. Actually, that's how that's
+
+00:46:45.280 --> 00:46:46.720
+the right way to solve this.
+
+00:46:46.720 --> 00:46:47.599
+>> Exactly. So, like
+
+00:46:47.599 --> 00:46:49.119
+>> we do this with our linear tool as well.
+
+00:46:49.119 --> 00:46:50.880
+Sometimes our linear tool, our CLI
+
+00:46:50.880 --> 00:46:52.400
+brings back way too much markdown
+
+00:46:52.400 --> 00:46:54.880
+content and so it's like cool, it will
+
+00:46:54.880 --> 00:46:56.880
+just automatically save it to a file,
+
+00:46:56.880 --> 00:46:58.640
+the CLI will, and just output, hey, it
+
+00:46:58.640 --> 00:46:59.920
+was too long, so we put it in this file
+
+00:46:59.920 --> 00:47:01.200
+and then the model can go read it.
+
+00:47:01.200 --> 00:47:03.599
+>> Exactly. Um,
+
+00:47:03.599 --> 00:47:06.880
+uh call the web fetch tool again with
+
+00:47:06.880 --> 00:47:08.960
+the rest of the content. That's actually
+
+00:47:08.960 --> 00:47:11.359
+a really good like takeaway in general
+
+00:47:11.359 --> 00:47:12.960
+for building these agents and designing
+
+00:47:12.960 --> 00:47:14.800
+these tools is like if you know the code
+
+00:47:14.800 --> 00:47:16.640
+it's a coding agent and it has a read
+
+00:47:16.640 --> 00:47:18.880
+tool and a search tool then you should
+
+00:47:18.880 --> 00:47:20.960
+almost always rather than truncating the
+
+00:47:20.960 --> 00:47:22.319
+output for the model you should just
+
+00:47:22.319 --> 00:47:24.079
+write it to a file tell the model where
+
+00:47:24.079 --> 00:47:25.680
+it is and then let the model decide
+
+00:47:25.680 --> 00:47:26.960
+which parts of it it wants to read
+
+00:47:26.960 --> 00:47:28.240
+>> and this is the whole point of like what
+
+00:47:28.240 --> 00:47:30.160
+an aentic rag system can do it's very
+
+00:47:30.160 --> 00:47:31.920
+dynamic so in this case I know some web
+
+00:47:31.920 --> 00:47:33.200
+pages are going to be really long so
+
+00:47:33.200 --> 00:47:34.560
+I'll just tell that but I'll
+
+00:47:34.560 --> 00:47:35.839
+specifically put a cloth if you need
+
+00:47:35.839 --> 00:47:38.079
+more information call the web fit
+
+00:47:38.079 --> 00:47:40.079
+go again to get the rest of the contents
+
+00:47:40.079 --> 00:47:42.319
+with a file path and it will probably
+
+00:47:42.319 --> 00:47:43.760
+figure itself out. Like I I don't have
+
+00:47:43.760 --> 00:47:46.000
+to think about this too hard. Um, and I
+
+00:47:46.000 --> 00:47:48.640
+trust that this will work.
+
+00:47:48.640 --> 00:47:50.240
+Uh, and then like it'll go ahead and do
+
+00:47:50.240 --> 00:47:52.800
+its thing and then marin content will go
+
+00:47:52.800 --> 00:47:54.480
+into here. And specifically what I would
+
+00:47:54.480 --> 00:47:56.960
+actually do is over here. This error
+
+00:47:56.960 --> 00:47:59.920
+message should actually not go there.
+
+00:47:59.920 --> 00:48:03.359
+Uh, what I should do truncation. I have
+
+00:48:03.359 --> 00:48:04.560
+a feeling this one's going to go more
+
+00:48:04.560 --> 00:48:07.760
+than an hour, which I'm super down for.
+
+00:48:07.760 --> 00:48:09.839
+>> Message this. And I apologize for the
+
+00:48:09.839 --> 00:48:12.960
+live coding. Boom. And now I add this
+
+00:48:12.960 --> 00:48:14.319
+added trim.
+
+00:48:14.319 --> 00:48:16.640
+>> Oh, your your audio your audio bell is
+
+00:48:16.640 --> 00:48:19.200
+is fascinating. I do not have that
+
+00:48:19.200 --> 00:48:20.319
+turned on.
+
+00:48:20.319 --> 00:48:22.880
+>> I I use it now because of like cursor
+
+00:48:22.880 --> 00:48:24.800
+and stuff all the time. Um, so now we
+
+00:48:24.800 --> 00:48:26.400
+have this we have a truncation message.
+
+00:48:26.400 --> 00:48:28.160
+Uh, to-do rewrite tools. I didn't modify
+
+00:48:28.160 --> 00:48:29.520
+at all. They just kind of worked along
+
+00:48:29.520 --> 00:48:31.760
+the way. Uh, web search. I just used
+
+00:48:31.760 --> 00:48:35.040
+Excel. I didn't even try. Um, it was
+
+00:48:35.040 --> 00:48:36.480
+actually really easy to just use Excel.
+
+00:48:36.480 --> 00:48:37.040
+It was great.
+
+00:48:37.040 --> 00:48:38.720
+>> They just have a Python SDK. You don't
+
+00:48:38.720 --> 00:48:40.240
+have to use the MCP or anything. You
+
+00:48:40.240 --> 00:48:41.280
+just you just launch
+
+00:48:41.280 --> 00:48:42.800
+>> Python SDK. Don't even think about it.
+
+00:48:42.800 --> 00:48:44.480
+It's not worth it.
+
+00:48:44.480 --> 00:48:45.680
+>> And it worked. It was beautifully
+
+00:48:45.680 --> 00:48:46.640
+worked. And I didn't have to think about
+
+00:48:46.640 --> 00:48:48.240
+it. Boom. Got the results. Joined it.
+
+00:48:48.240 --> 00:48:49.280
+Put it in.
+
+00:48:49.280 --> 00:48:52.000
+>> Uh, again did some more truncation. Uh,
+
+00:48:52.000 --> 00:48:54.880
+and I can say the same thing again. And
+
+00:48:54.880 --> 00:48:56.319
+I can again I should do I should
+
+00:48:56.319 --> 00:48:57.520
+probably do the same thing right over
+
+00:48:57.520 --> 00:48:59.440
+here too. Uh, and I should really just
+
+00:48:59.440 --> 00:49:02.000
+make this 5,000. Sick.
+
+00:49:02.000 --> 00:49:03.599
+Coming up on time, we got another
+
+00:49:03.599 --> 00:49:05.520
+question.
+
+00:49:05.520 --> 00:49:06.960
+What do you think about mapping the GP
+
+00:49:06.960 --> 00:49:09.520
+results to metadata turn one, it shows
+
+00:49:09.520 --> 00:49:11.200
+file names along with count per year and
+
+00:49:11.200 --> 00:49:13.680
+tool response and then you search Q?
+
+00:49:13.680 --> 00:49:15.680
+>> Yeah, I mean you can do a variety of
+
+00:49:15.680 --> 00:49:17.359
+things to make this better. But I think
+
+00:49:17.359 --> 00:49:18.960
+the key part that I really want everyone
+
+00:49:18.960 --> 00:49:21.040
+to take away is what was the difference
+
+00:49:21.040 --> 00:49:23.119
+here? The bulk of the time that I spent
+
+00:49:23.119 --> 00:49:25.200
+wasn't actually on tool definitions at
+
+00:49:25.200 --> 00:49:27.920
+all. almost all uh almost all the time I
+
+00:49:27.920 --> 00:49:29.119
+spent was actually looking at how the
+
+00:49:29.119 --> 00:49:31.119
+tools were implemented and like making
+
+00:49:31.119 --> 00:49:32.640
+sure that it was really really friendly
+
+00:49:32.640 --> 00:49:34.960
+for an agent. I spent a lot of time I
+
+00:49:34.960 --> 00:49:36.880
+spent the first I probably spent about
+
+00:49:36.880 --> 00:49:38.400
+an hour getting the whole thing up and
+
+00:49:38.400 --> 00:49:41.280
+running. Then I spent another hour
+
+00:49:41.280 --> 00:49:44.559
+purely getting um uh then I spent
+
+00:49:44.559 --> 00:49:47.200
+another hour purely doing um basically
+
+00:49:47.200 --> 00:49:49.760
+UI work to make the UI really good to
+
+00:49:49.760 --> 00:49:52.960
+iterate on and then once I did that then
+
+00:49:52.960 --> 00:49:55.920
+I actually add made the tools better. So
+
+00:49:55.920 --> 00:49:57.599
+that and the reason was because I tried
+
+00:49:57.599 --> 00:49:58.800
+to make the tools better without making
+
+00:49:58.800 --> 00:50:00.800
+the UI better and I just couldn't I just
+
+00:50:00.800 --> 00:50:02.400
+couldn't process the information well
+
+00:50:02.400 --> 00:50:04.800
+enough about what was going on in the
+
+00:50:04.800 --> 00:50:06.319
+agent loop to decide like where the
+
+00:50:06.319 --> 00:50:07.839
+failure cases were.
+
+00:50:07.839 --> 00:50:09.280
+And once I understood where all the
+
+00:50:09.280 --> 00:50:11.359
+cases were, then and once I could
+
+00:50:11.359 --> 00:50:14.079
+actually see and feel the agent, then I
+
+00:50:14.079 --> 00:50:16.480
+could be like, "Oh, cool. Yes, the LS
+
+00:50:16.480 --> 00:50:19.040
+tool needs to have dirt and file."
+
+00:50:19.040 --> 00:50:21.599
+>> Oh, yes. Obviously, the GP tool should
+
+00:50:21.599 --> 00:50:24.480
+be relative or the the uh the glob tool
+
+00:50:24.480 --> 00:50:26.720
+should or GP one of those tools should
+
+00:50:26.720 --> 00:50:28.079
+give the relative directory, not the
+
+00:50:28.079 --> 00:50:30.480
+full directory. Oh, yes. Obviously, I
+
+00:50:30.480 --> 00:50:31.920
+need to change my working path and the
+
+00:50:31.920 --> 00:50:33.200
+system message and make sure the model
+
+00:50:33.200 --> 00:50:35.040
+knows what directory it's in.
+
+00:50:35.040 --> 00:50:37.520
+>> You want to see something cool? Um yes,
+
+00:50:37.520 --> 00:50:38.160
+always.
+
+00:50:38.160 --> 00:50:41.280
+>> Okay, so um one thing that we found in
+
+00:50:41.280 --> 00:50:43.280
+digging in uh is like if you're going to
+
+00:50:43.280 --> 00:50:44.400
+build these agents, it's actually
+
+00:50:44.400 --> 00:50:46.160
+interesting to see how the coding
+
+00:50:46.160 --> 00:50:47.520
+harness. So you won't see this if you
+
+00:50:47.520 --> 00:50:50.079
+run cloud code. Um but in code layer, we
+
+00:50:50.079 --> 00:50:52.079
+like to actually show you the exact
+
+00:50:52.079 --> 00:50:54.400
+responses from the agent, not just the
+
+00:50:54.400 --> 00:50:55.920
+contents of the file.
+
+00:50:55.920 --> 00:50:57.200
+>> And one thing you'll notice is like I
+
+00:50:57.200 --> 00:50:58.480
+assumed you didn't do this where you
+
+00:50:58.480 --> 00:51:01.119
+actually put the line numbers in
+
+00:51:01.119 --> 00:51:02.000
+>> to the file
+
+00:51:02.000 --> 00:51:03.839
+>> if Well, I didn't do an I I should
+
+00:51:03.839 --> 00:51:05.440
+>> Well, it depends on the model, right? So
+
+00:51:05.440 --> 00:51:07.200
+you this is cloud code and this is like
+
+00:51:07.200 --> 00:51:08.480
+the benefit you get when you're building
+
+00:51:08.480 --> 00:51:11.359
+the model and the coding agent harness
+
+00:51:11.359 --> 00:51:13.040
+is you can RL the model because the
+
+00:51:13.040 --> 00:51:14.240
+model's going to have to make edits to
+
+00:51:14.240 --> 00:51:16.400
+this right and so what's useful here is
+
+00:51:16.400 --> 00:51:19.280
+like you can see when it does this old
+
+00:51:19.280 --> 00:51:21.520
+string new string it can pick the line
+
+00:51:21.520 --> 00:51:23.119
+numbers and it can see when it's
+
+00:51:23.119 --> 00:51:24.800
+navigating or reading or pulling through
+
+00:51:24.800 --> 00:51:26.880
+the file there's something been done
+
+00:51:26.880 --> 00:51:29.839
+where these numbers are kind of rled in
+
+00:51:29.839 --> 00:51:31.839
+such a way that it doesn't have meaning
+
+00:51:31.839 --> 00:51:32.800
+as a number
+
+00:51:32.800 --> 00:51:34.079
+>> I think you can do it with any model I
+
+00:51:34.079 --> 00:51:35.280
+bet if I did this in my For instance,
+
+00:51:35.280 --> 00:51:36.720
+some GPT models would work. Gemini
+
+00:51:36.720 --> 00:51:38.240
+models would work on this.
+
+00:51:38.240 --> 00:51:40.079
+>> I'm sure I'm sure it would work, but I'm
+
+00:51:40.079 --> 00:51:42.000
+sure if you wanted to like push it push
+
+00:51:42.000 --> 00:51:44.319
+push the limits of like exactly exactly
+
+00:51:44.319 --> 00:51:46.559
+what outputs you would want from this.
+
+00:51:46.559 --> 00:51:48.480
+Um, the training the training would help
+
+00:51:48.480 --> 00:51:50.720
+to basically like deemphasize the
+
+00:51:50.720 --> 00:51:52.559
+meaning of these things to ensure that
+
+00:51:52.559 --> 00:51:54.400
+the weights imply when it's in this
+
+00:51:54.400 --> 00:51:56.079
+format in this kind of file that it's
+
+00:51:56.079 --> 00:51:58.000
+line numbers and not any other meaning
+
+00:51:58.000 --> 00:52:01.760
+of that number. Maybe um maybe um but
+
+00:52:01.760 --> 00:52:02.079
+like
+
+00:52:02.079 --> 00:52:03.440
+>> we can only theorize at this point
+
+00:52:03.440 --> 00:52:04.960
+because it's a closed model but
+
+00:52:04.960 --> 00:52:07.280
+>> yeah my my hunch says that like most of
+
+00:52:07.280 --> 00:52:08.880
+these systems probably work just fine
+
+00:52:08.880 --> 00:52:10.559
+with any model. I think if you take a
+
+00:52:10.559 --> 00:52:12.559
+model of like equivalent capacity the
+
+00:52:12.559 --> 00:52:13.920
+key thing that makes a model really good
+
+00:52:13.920 --> 00:52:16.319
+is how well it understands semantics and
+
+00:52:16.319 --> 00:52:18.240
+that semantic of like hey this is a line
+
+00:52:18.240 --> 00:52:19.760
+number not content should be pretty
+
+00:52:19.760 --> 00:52:21.520
+obvious with the pattern of it
+
+00:52:21.520 --> 00:52:23.440
+>> even without like any extra training. I
+
+00:52:23.440 --> 00:52:24.960
+suspect training will get you a little
+
+00:52:24.960 --> 00:52:27.359
+bit of a boost on top of it, but like as
+
+00:52:27.359 --> 00:52:28.640
+the models get better and better and
+
+00:52:28.640 --> 00:52:29.599
+they have more training data, that
+
+00:52:29.599 --> 00:52:31.359
+probably matters less and less would be
+
+00:52:31.359 --> 00:52:33.040
+my hunch.
+
+00:52:33.040 --> 00:52:34.160
+>> Interesting. Yeah, I haven't looked
+
+00:52:34.160 --> 00:52:36.000
+under the hood at things like Codex and
+
+00:52:36.000 --> 00:52:37.920
+AMP and see if they use the same format.
+
+00:52:37.920 --> 00:52:40.559
+But that would be that would be a sim if
+
+00:52:40.559 --> 00:52:42.319
+you looked at Cotus and how it does file
+
+00:52:42.319 --> 00:52:43.839
+reads and it didn't have those line
+
+00:52:43.839 --> 00:52:45.839
+numbers, then that would be a signal to
+
+00:52:45.839 --> 00:52:47.599
+me that they are being trained
+
+00:52:47.599 --> 00:52:49.440
+differently as far as like how they
+
+00:52:49.440 --> 00:52:51.359
+interact with the coding harness itself.
+
+00:52:51.359 --> 00:52:54.000
+May maybe probably where my my hunch
+
+00:52:54.000 --> 00:52:55.520
+comes from is that the cursor agent is
+
+00:52:55.520 --> 00:52:57.119
+pretty good. I don't think it's it's
+
+00:52:57.119 --> 00:52:58.800
+that much worse than like cloud code or
+
+00:52:58.800 --> 00:53:00.160
+anything else like all these agents are
+
+00:53:00.160 --> 00:53:03.040
+roughly the same from my perspective. Um
+
+00:53:03.040 --> 00:53:03.839
+>> interesting
+
+00:53:03.839 --> 00:53:05.359
+>> cuz I've been toggling now between like
+
+00:53:05.359 --> 00:53:06.720
+cursor I've been toggling between codeex
+
+00:53:06.720 --> 00:53:08.720
+and I've been toggling between um cloud
+
+00:53:08.720 --> 00:53:10.720
+and I personally don't see a huge uptake
+
+00:53:10.720 --> 00:53:12.800
+on any one specific agent. I actually
+
+00:53:12.800 --> 00:53:14.079
+find that the thing that makes the
+
+00:53:14.079 --> 00:53:16.160
+biggest difference to my efficiency is
+
+00:53:16.160 --> 00:53:17.760
+actually the UX of how I interface with
+
+00:53:17.760 --> 00:53:21.040
+these agents, not the actual like
+
+00:53:21.040 --> 00:53:22.960
+uh context. And I find that like the way
+
+00:53:22.960 --> 00:53:24.400
+that they implement the tools probably
+
+00:53:24.400 --> 00:53:26.640
+makes a bigger difference. But because
+
+00:53:26.640 --> 00:53:28.400
+all the tool calls are basically going
+
+00:53:28.400 --> 00:53:31.760
+to be sending web API requests anyway,
+
+00:53:31.760 --> 00:53:33.359
+all of these basically converge on very
+
+00:53:33.359 --> 00:53:34.559
+similar tool calls because as soon as
+
+00:53:34.559 --> 00:53:36.000
+one strategy gets discovered as soon as
+
+00:53:36.000 --> 00:53:37.920
+enthropic discovers that hey we should
+
+00:53:37.920 --> 00:53:40.160
+do GP in this way, I can promise you
+
+00:53:40.160 --> 00:53:41.839
+cursor is like we should do GP in this
+
+00:53:41.839 --> 00:53:43.599
+way and as soon as cursor discovers that
+
+00:53:43.599 --> 00:53:44.960
+Enthropic is like we should do GP. It
+
+00:53:44.960 --> 00:53:46.559
+just basically just cycles forever and
+
+00:53:46.559 --> 00:53:47.200
+this stuff
+
+00:53:47.200 --> 00:53:48.720
+>> because cursor is using the same models,
+
+00:53:48.720 --> 00:53:50.000
+right? So they kind of have to take the
+
+00:53:50.000 --> 00:53:51.599
+lead from anthropic to like figure out
+
+00:53:51.599 --> 00:53:52.160
+okay here's what
+
+00:53:52.160 --> 00:53:54.000
+>> I use the Gemini models I use code clog
+
+00:53:54.000 --> 00:53:56.559
+GBT5 models but what I'm saying is I
+
+00:53:56.559 --> 00:53:58.960
+think like if I were if I were Codex I
+
+00:53:58.960 --> 00:54:00.160
+would just watch and I would just have a
+
+00:54:00.160 --> 00:54:02.800
+harness test that says hey let's just
+
+00:54:02.800 --> 00:54:04.480
+have a unit test that says anytime the
+
+00:54:04.480 --> 00:54:06.240
+tool changes in I would just write a
+
+00:54:06.240 --> 00:54:07.920
+bunch of unit tests that say trigger
+
+00:54:07.920 --> 00:54:09.359
+these specific tools with these unit
+
+00:54:09.359 --> 00:54:12.960
+tests observe what is happening
+
+00:54:12.960 --> 00:54:14.480
+>> for all these tests and anytime the
+
+00:54:14.480 --> 00:54:16.800
+format changes notify a user on the team
+
+00:54:16.800 --> 00:54:18.559
+to be like we should look at this the
+
+00:54:18.559 --> 00:54:20.160
+other agents have changed the format in
+
+00:54:20.160 --> 00:54:20.800
+some way
+
+00:54:20.800 --> 00:54:22.559
+>> because it might make a difference.
+
+00:54:22.559 --> 00:54:24.720
+>> I'll show you another one is if you come
+
+00:54:24.720 --> 00:54:26.480
+in here and you you we're using the
+
+00:54:26.480 --> 00:54:29.359
+cloud code harness uh for everything in
+
+00:54:29.359 --> 00:54:31.839
+code layer. Um and I will zoom in. Thank
+
+00:54:31.839 --> 00:54:34.559
+you for thank you for the nudge. Um but
+
+00:54:34.559 --> 00:54:36.720
+um if you go here and you change the
+
+00:54:36.720 --> 00:54:38.880
+model to a different like if we go use
+
+00:54:38.880 --> 00:54:42.319
+like um oh I'm going to stop sharing so
+
+00:54:42.319 --> 00:54:45.359
+I can set my API key real quick. Sorry.
+
+00:54:45.359 --> 00:54:47.839
+>> Um talking for a second. I I think some
+
+00:54:47.839 --> 00:54:49.119
+of the models are definitely worse, but
+
+00:54:49.119 --> 00:54:51.599
+I would try using like OpenAI GBT 5.
+
+00:54:51.599 --> 00:54:54.000
+>> Uh so that one I don't have right now.
+
+00:54:54.000 --> 00:54:56.720
+Um but if we go to open router and we
+
+00:54:56.720 --> 00:54:59.920
+put in our open router API key, I'm just
+
+00:54:59.920 --> 00:55:01.119
+going to show you what happens if you
+
+00:55:01.119 --> 00:55:04.800
+use the like a non-cloud code model with
+
+00:55:04.800 --> 00:55:09.520
+a uh with a with a cloud code harness.
+
+00:55:09.520 --> 00:55:10.240
+>> Interesting.
+
+00:55:10.240 --> 00:55:14.640
+>> Go. Let's grab this.
+
+00:55:14.640 --> 00:55:16.160
+While decks are setting that up, what I
+
+00:55:16.160 --> 00:55:17.599
+would advise everyone is I actually
+
+00:55:17.599 --> 00:55:19.280
+wouldn't the reason that I actually am
+
+00:55:19.280 --> 00:55:21.280
+really bearish on everyone implementing
+
+00:55:21.280 --> 00:55:24.160
+aic rag and the these live agent systems
+
+00:55:24.160 --> 00:55:25.599
+is because most people don't have
+
+00:55:25.599 --> 00:55:28.400
+systems that need to be that broad. Like
+
+00:55:28.400 --> 00:55:30.880
+while it is kind of nice, your users are
+
+00:55:30.880 --> 00:55:32.400
+going to be a lot more confused when it
+
+00:55:32.400 --> 00:55:34.559
+doesn't work. And I only spent 3 hours
+
+00:55:34.559 --> 00:55:36.079
+making these tools better, but before I
+
+00:55:36.079 --> 00:55:37.280
+shipped this, I would have to spend a
+
+00:55:37.280 --> 00:55:39.040
+lot more hours actually trying a bunch
+
+00:55:39.040 --> 00:55:41.440
+of scenarios on every single type of
+
+00:55:41.440 --> 00:55:43.200
+system that I built. And there's a lot
+
+00:55:43.200 --> 00:55:44.960
+of other stuff that is really hard to do
+
+00:55:44.960 --> 00:55:46.160
+with these systems. For example,
+
+00:55:46.160 --> 00:55:47.440
+streaming just takes a lot more effort
+
+00:55:47.440 --> 00:55:49.520
+and engineering time to get right. If
+
+00:55:49.520 --> 00:55:52.319
+you want to go do like for example
+
+00:55:52.319 --> 00:55:54.960
+uh while I go what model are you using?
+
+00:55:54.960 --> 00:55:56.960
+>> This is GPTOSS120B.
+
+00:55:56.960 --> 00:55:57.920
+>> Okay. Yeah.
+
+00:55:57.920 --> 00:56:00.079
+>> Much smaller model than Clad or Claude
+
+00:56:00.079 --> 00:56:01.839
+Sonnet or Clad Opus, but we'll see. It's
+
+00:56:01.839 --> 00:56:03.040
+also going to be a little bit faster
+
+00:56:03.040 --> 00:56:04.559
+which is cool.
+
+00:56:04.559 --> 00:56:06.559
+>> Yeah. So like before you go do any of
+
+00:56:06.559 --> 00:56:07.920
+this stuff and decide to build a aentic
+
+00:56:07.920 --> 00:56:09.440
+rag system I personally have found it
+
+00:56:09.440 --> 00:56:11.920
+very useful to go ahead and build a
+
+00:56:11.920 --> 00:56:15.920
+regular system without agentic rag and
+
+00:56:15.920 --> 00:56:18.079
+once you've implemented that then you
+
+00:56:18.079 --> 00:56:20.319
+can go ahead and then build uh a gentic
+
+00:56:20.319 --> 00:56:21.599
+rag on top of that because then you have
+
+00:56:21.599 --> 00:56:23.040
+some sort of expectation and baseline
+
+00:56:23.040 --> 00:56:25.760
+that you're comparing against and it's
+
+00:56:25.760 --> 00:56:26.960
+very similar to like a reference
+
+00:56:26.960 --> 00:56:28.720
+implementation in any sort of software
+
+00:56:28.720 --> 00:56:31.040
+where you always say like do the
+
+00:56:31.040 --> 00:56:32.160
+reference implementation every single
+
+00:56:32.160 --> 00:56:34.799
+time and that I personally find helps
+
+00:56:34.799 --> 00:56:36.240
+you iterate much faster. It's kind of
+
+00:56:36.240 --> 00:56:38.000
+similar to an eval loop, but instead of
+
+00:56:38.000 --> 00:56:39.440
+regular eval, you're just doing AB
+
+00:56:39.440 --> 00:56:40.960
+comparisons, which is actually what I
+
+00:56:40.960 --> 00:56:42.799
+think is the more useful thing in these
+
+00:56:42.799 --> 00:56:43.520
+sort of outcomes.
+
+00:56:43.520 --> 00:56:45.680
+>> Okay, this GPT OSS appears to be
+
+00:56:45.680 --> 00:56:47.280
+working. Um,
+
+00:56:47.280 --> 00:56:49.119
+>> so yeah, you can you can do this for
+
+00:56:49.119 --> 00:56:50.640
+simple stuff probably.
+
+00:56:50.640 --> 00:56:52.160
+>> I Yeah, I think it's actually more about
+
+00:56:52.160 --> 00:56:53.839
+model capability more than specifically
+
+00:56:53.839 --> 00:56:55.119
+anything. I that's why I said like you
+
+00:56:55.119 --> 00:56:56.559
+can you can probably swap in any model.
+
+00:56:56.559 --> 00:56:59.599
+I was actually trying I I did GT5. I did
+
+00:56:59.599 --> 00:57:01.839
+try the quad models. I tried Sonnet. I
+
+00:57:01.839 --> 00:57:05.200
+did give it GPD40 nano uh GPD5 nano that
+
+00:57:05.200 --> 00:57:08.160
+did not work very well
+
+00:57:08.160 --> 00:57:09.920
+and like it just does it just doesn't
+
+00:57:09.920 --> 00:57:11.920
+have the capacity I think that like GP5
+
+00:57:11.920 --> 00:57:15.119
+has uh on the nano models.
+
+00:57:15.119 --> 00:57:16.400
+>> Yep.
+
+00:57:16.400 --> 00:57:16.880
+>> Like
+
+00:57:16.880 --> 00:57:18.160
+>> uh Okay,
+
+00:57:18.160 --> 00:57:18.640
+>> go ahead.
+
+00:57:18.640 --> 00:57:20.160
+>> Sorry. Yeah, go ahead. I I was just
+
+00:57:20.160 --> 00:57:21.280
+Let's just do like two more questions
+
+00:57:21.280 --> 00:57:23.119
+and then we can call it for the day.
+
+00:57:23.119 --> 00:57:24.720
+>> Um we've got a couple more questions
+
+00:57:24.720 --> 00:57:26.240
+here. Let's just identify like where
+
+00:57:26.240 --> 00:57:27.839
+does RL help here?
+
+00:57:27.839 --> 00:57:30.000
+>> Um I think the point that Dextro is
+
+00:57:30.000 --> 00:57:31.520
+making
+
+00:57:31.520 --> 00:57:36.160
+Econ uh is that if you if you as a model
+
+00:57:36.160 --> 00:57:37.599
+provider are also building a coding
+
+00:57:37.599 --> 00:57:40.000
+agent, you can collect special data that
+
+00:57:40.000 --> 00:57:41.520
+is specifically tied to your tool
+
+00:57:41.520 --> 00:57:42.880
+implementations and you can actually
+
+00:57:42.880 --> 00:57:47.119
+post-train the model to favor your
+
+00:57:47.119 --> 00:57:50.400
+tooling format. So like fundamentally
+
+00:57:50.400 --> 00:57:51.680
+anytime you're doing fine-tuning or
+
+00:57:51.680 --> 00:57:52.880
+prompt engineering or context
+
+00:57:52.880 --> 00:57:54.000
+engineering of any kind, all you're
+
+00:57:54.000 --> 00:57:55.040
+doing is you're trying to tweak the
+
+00:57:55.040 --> 00:57:56.240
+weights of the model to do what you want
+
+00:57:56.240 --> 00:57:59.440
+it to do. with with fine-tuning and
+
+00:57:59.440 --> 00:58:00.640
+reinforcement learning, you're doing it
+
+00:58:00.640 --> 00:58:02.640
+at the weight layer. With prompt
+
+00:58:02.640 --> 00:58:03.839
+engineer and context engineering, you're
+
+00:58:03.839 --> 00:58:06.160
+doing it by modifying the input tokens.
+
+00:58:06.160 --> 00:58:06.640
+>> Mhm.
+
+00:58:06.640 --> 00:58:09.440
+>> So technically, there's a way to go in
+
+00:58:09.440 --> 00:58:11.440
+RL here without having to change the
+
+00:58:11.440 --> 00:58:13.359
+prompt again. Say for the static prompt,
+
+00:58:13.359 --> 00:58:15.440
+make the result better.
+
+00:58:15.440 --> 00:58:16.960
+>> Yeah. And so like I think if you
+
+00:58:16.960 --> 00:58:18.799
+probably if you took an open model and
+
+00:58:18.799 --> 00:58:22.640
+you trained it on this like harness that
+
+00:58:22.640 --> 00:58:24.799
+you have built your your tools, your web
+
+00:58:24.799 --> 00:58:26.319
+search, your file reading, all this kind
+
+00:58:26.319 --> 00:58:28.000
+of stuff and you gave it a bunch of
+
+00:58:28.000 --> 00:58:30.000
+coding problems, you could probably get
+
+00:58:30.000 --> 00:58:32.799
+it better at using your specific tools
+
+00:58:32.799 --> 00:58:34.799
+and in the exact way that they give
+
+00:58:34.799 --> 00:58:35.760
+their outputs.
+
+00:58:35.760 --> 00:58:37.040
+>> I mean, let's just do it really fast.
+
+00:58:37.040 --> 00:58:37.520
+Why not?
+
+00:58:37.520 --> 00:58:39.920
+>> Mik wants us to do a nano chat episode.
+
+00:58:39.920 --> 00:58:42.799
+>> The GVD5 Mini is the model name, right?
+
+00:58:42.799 --> 00:58:45.119
+>> Uh, sure.
+
+00:58:45.119 --> 00:58:46.640
+I I don't know. Probably.
+
+00:58:46.640 --> 00:58:48.079
+>> And if this thing runs and I know it's
+
+00:58:48.079 --> 00:58:51.760
+working. Okay, that seems to work. Cool.
+
+00:58:51.760 --> 00:58:54.000
+So, we can just see what this does. It's
+
+00:58:54.000 --> 00:58:55.280
+going to run the same Fern tool as
+
+00:58:55.280 --> 00:58:58.000
+before. What does a Fern folder do? It
+
+00:58:58.000 --> 00:59:00.160
+read my to-dos. It was like, okay, cool.
+
+00:59:00.160 --> 00:59:02.000
+No to-dos. It's going to glob the Fern
+
+00:59:02.000 --> 00:59:04.640
+folder. And it seems to have produced
+
+00:59:04.640 --> 00:59:06.400
+something
+
+00:59:06.400 --> 00:59:08.240
+right over there. Uh, so it did produce
+
+00:59:08.240 --> 00:59:09.680
+this and is able to understand this. How
+
+00:59:09.680 --> 00:59:12.400
+do I use Gemini
+
+00:59:12.400 --> 00:59:14.319
+with BAML? And I think this is again the
+
+00:59:14.319 --> 00:59:15.839
+thing that Dash always say just like try
+
+00:59:15.839 --> 00:59:17.200
+it and build your own intuition for
+
+00:59:17.200 --> 00:59:19.599
+whether or not this works.
+
+00:59:19.599 --> 00:59:20.240
+>> Um,
+
+00:59:20.240 --> 00:59:21.359
+>> all right. We're going to make you learn
+
+00:59:21.359 --> 00:59:23.200
+nano chat for the next episode. It's
+
+00:59:23.200 --> 00:59:24.079
+been decided.
+
+00:59:24.079 --> 00:59:25.359
+>> The first thing that I noticed that's
+
+00:59:25.359 --> 00:59:26.640
+different, by the way, is check out this
+
+00:59:26.640 --> 00:59:28.400
+GP. See how I did Gemini over here for
+
+00:59:28.400 --> 00:59:30.079
+the GP tool?
+
+00:59:30.079 --> 00:59:32.160
+>> When I did my old system, it actually
+
+00:59:32.160 --> 00:59:34.079
+didn't when I actually did my old GP,
+
+00:59:34.079 --> 00:59:35.440
+you'll notice the model actually made a
+
+00:59:35.440 --> 00:59:36.960
+much better grip. It actually came up
+
+00:59:36.960 --> 00:59:39.040
+with way more turn. So, that's one big
+
+00:59:39.040 --> 00:59:40.640
+difference that we see right away in the
+
+00:59:40.640 --> 00:59:43.119
+tiny model versus the small model.
+
+00:59:43.119 --> 00:59:45.280
+Um, and also it didn't automatically
+
+00:59:45.280 --> 00:59:46.559
+give me their example. It actually just
+
+00:59:46.559 --> 00:59:48.559
+dumped out simply an understanding of
+
+00:59:48.559 --> 00:59:49.920
+what it is, but it didn't actually give
+
+00:59:49.920 --> 00:59:51.040
+me the example because it didn't
+
+00:59:51.040 --> 00:59:54.000
+actually trigger the read tool probably.
+
+00:59:54.000 --> 00:59:55.359
+So that was like another learning I had
+
+00:59:55.359 --> 00:59:57.040
+when I was going to go do this was just
+
+00:59:57.040 --> 00:59:58.640
+a really quick understanding of what is
+
+00:59:58.640 --> 01:00:00.319
+actually happening under the hood. That
+
+01:00:00.319 --> 01:00:02.240
+said, if we go look at how much this
+
+01:00:02.240 --> 01:00:04.880
+thing costs, I suspect
+
+01:00:04.880 --> 01:00:05.359
+>> cheaper.
+
+01:00:05.359 --> 01:00:07.040
+>> Um, we are going to get very different
+
+01:00:07.040 --> 01:00:09.680
+cost functions over here.
+
+01:00:09.680 --> 01:00:12.319
+>> That's still right. we are getting much
+
+01:00:12.319 --> 01:00:14.319
+much smaller costs and why is this split
+
+01:00:14.319 --> 01:00:16.079
+uh this is split because the model
+
+01:00:16.079 --> 01:00:18.640
+changed so the so the data database
+
+01:00:18.640 --> 01:00:21.760
+actually split on itself automatically
+
+01:00:21.760 --> 01:00:23.200
+uh because if the type signature of the
+
+01:00:23.200 --> 01:00:24.400
+model changes then you get two different
+
+01:00:24.400 --> 01:00:26.400
+data points
+
+01:00:26.400 --> 01:00:28.079
+uh so when I did the grab like it's just
+
+01:00:28.079 --> 01:00:30.400
+a lot cheaper and I think I find that to
+
+01:00:30.400 --> 01:00:32.319
+be interesting to go look at and think
+
+01:00:32.319 --> 01:00:32.720
+about
+
+01:00:32.720 --> 01:00:33.599
+>> cool
+
+01:00:33.599 --> 01:00:36.000
+>> so as always uh try stuff look at what
+
+01:00:36.000 --> 01:00:38.079
+happened understand it feel the vibes
+
+01:00:38.079 --> 01:00:40.000
+look at the data understand the accuracy
+
+01:00:40.000 --> 01:00:41.599
+and the timing and the cost and all of
+
+01:00:41.599 --> 01:00:44.480
+this and uh you know there's no right
+
+01:00:44.480 --> 01:00:47.359
+answer. Agentic rag versus deterministic
+
+01:00:47.359 --> 01:00:49.839
+rag versus a mix of the two versus
+
+01:00:49.839 --> 01:00:51.839
+reranker pipelines inside your tools.
+
+01:00:51.839 --> 01:00:53.119
+The answer is like what solves your
+
+01:00:53.119 --> 01:00:54.480
+user's problem.
+
+01:00:54.480 --> 01:00:55.760
+>> Do you want to see one last thing while
+
+01:00:55.760 --> 01:00:57.440
+I'm here? Uh one really interesting
+
+01:00:57.440 --> 01:00:58.720
+thing that I actually did when I was
+
+01:00:58.720 --> 01:01:00.559
+running this code.
+
+01:01:00.559 --> 01:01:02.000
+>> You might enjoy it.
+
+01:01:02.000 --> 01:01:03.839
+>> Yen says you promised you'd get back to
+
+01:01:03.839 --> 01:01:06.240
+this eval tool that you showed us.
+
+01:01:06.240 --> 01:01:08.160
+>> Sorry. Um I'll talk about the code a
+
+01:01:08.160 --> 01:01:09.599
+little bit more. Bob's building a really
+
+01:01:09.599 --> 01:01:11.520
+cool evolve tool over at BAML and he's
+
+01:01:11.520 --> 01:01:13.440
+embarrassed to talk about it cuz it's
+
+01:01:13.440 --> 01:01:14.880
+it's really dope.
+
+01:01:14.880 --> 01:01:17.599
+>> It's not ready yet. But um the whole
+
+01:01:17.599 --> 01:01:19.440
+point of this is when I did the Asian
+
+01:01:19.440 --> 01:01:20.400
+loop, there's a couple of different
+
+01:01:20.400 --> 01:01:21.680
+things that happen. Sometimes the model
+
+01:01:21.680 --> 01:01:24.000
+didn't respond to tools. Um but if you
+
+01:01:24.000 --> 01:01:25.440
+notice my actual prompt that I actually
+
+01:01:25.440 --> 01:01:27.839
+sent to the model,
+
+01:01:27.839 --> 01:01:29.200
+uh let me render this again so you can
+
+01:01:29.200 --> 01:01:30.559
+actually go read the full prompt. Like
+
+01:01:30.559 --> 01:01:31.920
+the actual prompt that I sent to the
+
+01:01:31.920 --> 01:01:33.440
+model, the way that I render tools, I
+
+01:01:33.440 --> 01:01:34.640
+did a bit of context engineering. I
+
+01:01:34.640 --> 01:01:35.520
+don't actually render tools the right
+
+01:01:35.520 --> 01:01:36.559
+way. I actually render them this way.
+
+01:01:36.559 --> 01:01:38.960
+It's like to-do read, here's no to-dos.
+
+01:01:38.960 --> 01:01:40.400
+Then I actually render the tool again. I
+
+01:01:40.400 --> 01:01:42.240
+say clob and then here's the actual tool
+
+01:01:42.240 --> 01:01:44.000
+response. So I actually render the tools
+
+01:01:44.000 --> 01:01:45.839
+in a very trivial way rather than with
+
+01:01:45.839 --> 01:01:47.359
+pure JSON because again it's like I
+
+01:01:47.359 --> 01:01:48.720
+don't want to render JSON and stuff in
+
+01:01:48.720 --> 01:01:50.000
+the tool pattern. I want to dump it in
+
+01:01:50.000 --> 01:01:52.240
+as a part of the context message. But
+
+01:01:52.240 --> 01:01:53.520
+every now and then the model would
+
+01:01:53.520 --> 01:01:56.160
+actually reply with like a similar kind
+
+01:01:56.160 --> 01:01:58.559
+of reply where it just would say like oh
+
+01:01:58.559 --> 01:02:01.680
+here's the here's a tool that I want. In
+
+01:02:01.680 --> 01:02:04.240
+that scenario, I would actually want the
+
+01:02:04.240 --> 01:02:05.760
+model to know even if it replied in that
+
+01:02:05.760 --> 01:02:07.359
+way, I want to be very explicit and tell
+
+01:02:07.359 --> 01:02:09.359
+the model it's like invalid response,
+
+01:02:09.359 --> 01:02:11.440
+you must respond with one of the types.
+
+01:02:11.440 --> 01:02:13.040
+So the model knows that hey, this is
+
+01:02:13.040 --> 01:02:14.319
+invalid and I actually hide this from
+
+01:02:14.319 --> 01:02:15.680
+the user. So the user will never see
+
+01:02:15.680 --> 01:02:17.920
+this. Similarly, sometimes the model
+
+01:02:17.920 --> 01:02:19.599
+will not reply with the reply to user
+
+01:02:19.599 --> 01:02:21.200
+tool. It won't actually reply with this
+
+01:02:21.200 --> 01:02:23.440
+structure. In that scenario, I actually
+
+01:02:23.440 --> 01:02:25.040
+do a couple trivial checks. I'm like,
+
+01:02:25.040 --> 01:02:26.960
+hey, if the model responds with a J with
+
+01:02:26.960 --> 01:02:28.640
+back to JSON and doesn't start a curly
+
+01:02:28.640 --> 01:02:31.440
+brace or um or this, then the model
+
+01:02:31.440 --> 01:02:32.880
+probably was trying to reply to the
+
+01:02:32.880 --> 01:02:34.160
+user. It just messed up. So rather than
+
+01:02:34.160 --> 01:02:35.359
+doing a retry, I just take that
+
+01:02:35.359 --> 01:02:37.200
+assumption. What does that look like in
+
+01:02:37.200 --> 01:02:38.720
+practice? Is like some of these parsing
+
+01:02:38.720 --> 01:02:41.119
+failures that you see over here.
+
+01:02:41.119 --> 01:02:43.200
+I'll show it. Yeah, like this one. This
+
+01:02:43.200 --> 01:02:44.720
+is a parsing failure because the model
+
+01:02:44.720 --> 01:02:47.599
+actually responded like this. It said it
+
+01:02:47.599 --> 01:02:50.160
+just responded plain text. And that's
+
+01:02:50.160 --> 01:02:51.920
+okay because the model responded plain
+
+01:02:51.920 --> 01:02:53.839
+text. What I do is I just say, "Oh, if
+
+01:02:53.839 --> 01:02:55.040
+you're running in plain text and you're
+
+01:02:55.040 --> 01:02:57.040
+not starting with a curly or this or
+
+01:02:57.040 --> 01:02:59.520
+like tool something, then it's probably
+
+01:02:59.520 --> 01:03:01.040
+right." So just send take it as a reply
+
+01:03:01.040 --> 01:03:02.559
+to the user and just assume that the
+
+01:03:02.559 --> 01:03:03.839
+model meant the reply here.
+
+01:03:03.839 --> 01:03:05.599
+>> The model was just like too small and
+
+01:03:05.599 --> 01:03:07.440
+dumb to follow the explicit instructions
+
+01:03:07.440 --> 01:03:08.960
+of like here's the entire
+
+01:03:08.960 --> 01:03:10.319
+>> context window got really big. So like
+
+01:03:10.319 --> 01:03:11.839
+sometimes you'll see like a cursor gives
+
+01:03:11.839 --> 01:03:13.280
+this error message. I saw this yesterday
+
+01:03:13.280 --> 01:03:14.960
+where it's like the tool format wasn't
+
+01:03:14.960 --> 01:03:16.240
+correct. It's like you can just patch
+
+01:03:16.240 --> 01:03:17.520
+this really trivially. This is what I
+
+01:03:17.520 --> 01:03:18.799
+mean by implementing your tools can make
+
+01:03:18.799 --> 01:03:20.720
+a huge difference in some ways. getting
+
+01:03:20.720 --> 01:03:22.880
+what tool to use is another tool of its
+
+01:03:22.880 --> 01:03:25.119
+sort. So the way I implemented it was a
+
+01:03:25.119 --> 01:03:27.119
+little bit smarter basically where it's
+
+01:03:27.119 --> 01:03:28.559
+like if the model was trying to go do
+
+01:03:28.559 --> 01:03:30.160
+something and it didn't exactly obey it,
+
+01:03:30.160 --> 01:03:31.839
+I would just like recognize that it's
+
+01:03:31.839 --> 01:03:33.359
+trying to do that and just like let it
+
+01:03:33.359 --> 01:03:35.520
+keep going with that assumption. The
+
+01:03:35.520 --> 01:03:37.839
+other thing I did was I said in the case
+
+01:03:37.839 --> 01:03:39.839
+of it actually run turning an inval if
+
+01:03:39.839 --> 01:03:41.839
+again if it parse if it was a parsing
+
+01:03:41.839 --> 01:03:43.520
+failure rather than taking the exception
+
+01:03:43.520 --> 01:03:46.079
+and dumping it in directly I actually
+
+01:03:46.079 --> 01:03:48.480
+again made a slightly prettier error
+
+01:03:48.480 --> 01:03:50.000
+message that says return an invalid
+
+01:03:50.000 --> 01:03:51.599
+response dump the response I said must
+
+01:03:51.599 --> 01:03:53.119
+be one of the types specified and with
+
+01:03:53.119 --> 01:03:54.640
+that the model was able to go and fix
+
+01:03:54.640 --> 01:03:56.400
+almost every bug and I never had any
+
+01:03:56.400 --> 01:03:58.559
+more issues with the model not obeying
+
+01:03:58.559 --> 01:04:01.599
+tool calls and I I put max retries three
+
+01:04:01.599 --> 01:04:03.599
+I only ever really took one and what's
+
+01:04:03.599 --> 01:04:05.920
+really important here is that this these
+
+01:04:05.920 --> 01:04:07.839
+temporary states are actually temporary
+
+01:04:07.839 --> 01:04:09.839
+states. They never go into the pure
+
+01:04:09.839 --> 01:04:12.640
+state array of the of the final agent.
+
+01:04:12.640 --> 01:04:14.240
+>> Uh so you put the feedback in, you let
+
+01:04:14.240 --> 01:04:16.000
+the model correct itself, but then that
+
+01:04:16.000 --> 01:04:17.760
+doesn't stay in the context window.
+
+01:04:17.760 --> 01:04:19.440
+>> Exactly. And this was also really
+
+01:04:19.440 --> 01:04:21.039
+important to making this work.
+
+01:04:21.039 --> 01:04:22.400
+>> Yeah. And that's the other trade-off,
+
+01:04:22.400 --> 01:04:23.920
+right? The manis folks are big on like
+
+01:04:23.920 --> 01:04:25.280
+leave the errors in so it doesn't make
+
+01:04:25.280 --> 01:04:27.119
+the same mistake again. But I think I
+
+01:04:27.119 --> 01:04:28.799
+think you you were vibing with it and
+
+01:04:28.799 --> 01:04:30.799
+you found what worked and and and this
+
+01:04:30.799 --> 01:04:32.480
+was the thing that you wanted to do to
+
+01:04:32.480 --> 01:04:34.640
+get the right results. Exactly. And the
+
+01:04:34.640 --> 01:04:36.480
+model just doesn't make this message
+
+01:04:36.480 --> 01:04:38.640
+make this type of error very often. So
+
+01:04:38.640 --> 01:04:39.920
+because it doesn't make this kind of
+
+01:04:39.920 --> 01:04:41.839
+error very often, it's not worth
+
+01:04:41.839 --> 01:04:45.440
+breaking, if that makes sense.
+
+01:04:45.440 --> 01:04:46.960
+>> And you and you've proven that this
+
+01:04:46.960 --> 01:04:49.200
+reliably fixes it. So like it's not
+
+01:04:49.200 --> 01:04:51.520
+really actually that expensive to drop
+
+01:04:51.520 --> 01:04:53.520
+this in and then rip it back out because
+
+01:04:53.520 --> 01:04:55.599
+>> I sent it to the full agent loop as a
+
+01:04:55.599 --> 01:04:57.039
+whole just in case it made a different
+
+01:04:57.039 --> 01:04:58.480
+error message. But I could have sent it
+
+01:04:58.480 --> 01:05:00.640
+to a more trivial function that only job
+
+01:05:00.640 --> 01:05:02.720
+is to fix it.
+
+01:05:02.720 --> 01:05:03.920
+I just didn't want to risk it, so I just
+
+01:05:03.920 --> 01:05:06.079
+send it to the full agent loop.
+
+01:05:06.079 --> 01:05:08.400
+>> A look under the hood at how to best
+
+01:05:08.400 --> 01:05:10.960
+build AI AI pipelines and AI agents.
+
+01:05:10.960 --> 01:05:12.240
+This has been a really fun episode.
+
+01:05:12.240 --> 01:05:13.520
+>> Yeah, this whole thing is going to be
+
+01:05:13.520 --> 01:05:15.839
+live. Uh you will be able to just run UV
+
+01:05:15.839 --> 01:05:18.400
+install and UV run sync and just run it.
+
+01:05:18.400 --> 01:05:22.160
+Um it was a ton of fun to build and
+
+01:05:22.160 --> 01:05:24.319
+while this was really really fun, I
+
+01:05:24.319 --> 01:05:26.400
+would highly highly highly recommend
+
+01:05:26.400 --> 01:05:28.400
+that every single one of you like
+
+01:05:28.400 --> 01:05:30.079
+actually go build something like this.
+
+01:05:30.079 --> 01:05:32.319
+you will learn so much by writing the
+
+01:05:32.319 --> 01:05:34.960
+code and I like I always had an
+
+01:05:34.960 --> 01:05:37.680
+intuition that aentic rag was uh pretty
+
+01:05:37.680 --> 01:05:40.079
+cool. Uh but I didn't think I realized
+
+01:05:40.079 --> 01:05:41.839
+how
+
+01:05:41.839 --> 01:05:43.680
+how interesting it is for different
+
+01:05:43.680 --> 01:05:45.200
+product surface areas for certain kinds
+
+01:05:45.200 --> 01:05:46.400
+of things that I could never build
+
+01:05:46.400 --> 01:05:48.799
+without it. So our Bammy chat agent what
+
+01:05:48.799 --> 01:05:50.960
+I actually plan on doing is actually
+
+01:05:50.960 --> 01:05:53.440
+plan on giving it a way to go abort out
+
+01:05:53.440 --> 01:05:55.920
+of its main rag pipeline so it can go
+
+01:05:55.920 --> 01:05:58.400
+into an agentic loop. The problem I have
+
+01:05:58.400 --> 01:06:00.559
+with agentic loop is that it's just
+
+01:06:00.559 --> 01:06:04.079
+super freaking slow. I just don't want a
+
+01:06:04.079 --> 01:06:06.640
+system to be that slow. And for that
+
+01:06:06.640 --> 01:06:08.640
+reason alone, I'm going to keep the
+
+01:06:08.640 --> 01:06:10.240
+deterministic rag pipeline because it's
+
+01:06:10.240 --> 01:06:12.240
+way faster. But every now and then,
+
+01:06:12.240 --> 01:06:13.520
+someone will ask it a question like,
+
+01:06:13.520 --> 01:06:15.920
+"Hey, how does this work?" And I want a
+
+01:06:15.920 --> 01:06:17.920
+way to go trigger it into an agentic rag
+
+01:06:17.920 --> 01:06:20.640
+pipeline. And the answer to that might
+
+01:06:20.640 --> 01:06:22.240
+be there might be a button in the UI
+
+01:06:22.240 --> 01:06:24.880
+that we build at the very bottom that
+
+01:06:24.880 --> 01:06:28.480
+says something like uh let me clean my
+
+01:06:28.480 --> 01:06:30.160
+window again. There might be something
+
+01:06:30.160 --> 01:06:33.440
+here in here that says oh does this look
+
+01:06:33.440 --> 01:06:34.880
+wrong to you? And I might put a button
+
+01:06:34.880 --> 01:06:37.359
+here that says does this look wrong? And
+
+01:06:37.359 --> 01:06:38.880
+if you press it it will actually trigger
+
+01:06:38.880 --> 01:06:40.400
+the aentic rag system instead of the
+
+01:06:40.400 --> 01:06:42.799
+main rag system. And that's a way for me
+
+01:06:42.799 --> 01:06:44.640
+to opt into this without doing it all
+
+01:06:44.640 --> 01:06:46.319
+the time and design it in a really nice
+
+01:06:46.319 --> 01:06:48.240
+way. This is the same thing as you're
+
+01:06:48.240 --> 01:06:50.720
+like, "Hey, look, we have a really tight
+
+01:06:50.720 --> 01:06:53.200
+specific model that does 20 kinds of
+
+01:06:53.200 --> 01:06:54.799
+classification." And then if the model
+
+01:06:54.799 --> 01:06:56.799
+selects other or the user says it's
+
+01:06:56.799 --> 01:06:58.720
+wrong, then you go to the big slow
+
+01:06:58.720 --> 01:07:01.119
+expensive LLM to try to solve it.
+
+01:07:01.119 --> 01:07:02.880
+>> Imagine imagine you're on this doc site
+
+01:07:02.880 --> 01:07:04.079
+and you ask how to do this and it takes
+
+01:07:04.079 --> 01:07:05.440
+you like you saw how long the other
+
+01:07:05.440 --> 01:07:07.039
+system took. It's better, but it's
+
+01:07:07.039 --> 01:07:08.799
+slower.
+
+01:07:08.799 --> 01:07:10.400
+I just don't want that for here. And
+
+01:07:10.400 --> 01:07:11.920
+like coding is different because in a
+
+01:07:11.920 --> 01:07:14.079
+coding, why does why do coding agents
+
+01:07:14.079 --> 01:07:16.240
+tolerate this kind of UX? Well, it's
+
+01:07:16.240 --> 01:07:17.680
+because like the cost of me typing the
+
+01:07:17.680 --> 01:07:20.880
+code is always long. It's always long.
+
+01:07:20.880 --> 01:07:22.400
+So, it doesn't matter how long it takes
+
+01:07:22.400 --> 01:07:23.520
+because it's always going to be faster
+
+01:07:23.520 --> 01:07:25.280
+than me writing the code.
+
+01:07:25.280 --> 01:07:27.920
+>> Hey, Ken, you want to do something fun?
+
+01:07:27.920 --> 01:07:29.200
+>> Do you want to paste the research
+
+01:07:29.200 --> 01:07:31.520
+codebase prompt into your coding agent
+
+01:07:31.520 --> 01:07:33.440
+and see what happens?
+
+01:07:33.440 --> 01:07:35.359
+>> My cloud code agent?
+
+01:07:35.359 --> 01:07:37.920
+>> Your no your CLI agent that you wrote.
+
+01:07:37.920 --> 01:07:39.760
+Take the take the research codebase
+
+01:07:39.760 --> 01:07:41.680
+prompt that we use for uh working with
+
+01:07:41.680 --> 01:07:42.240
+Claude.
+
+01:07:42.240 --> 01:07:43.760
+>> That's actually really fun. And just see
+
+01:07:43.760 --> 01:07:44.720
+if it works
+
+01:07:44.720 --> 01:07:46.720
+>> here. I'll put it in the chat here.
+
+01:07:46.720 --> 01:07:48.640
+>> Um, before I do that, I will take two
+
+01:07:48.640 --> 01:07:50.000
+seconds and show you guys how this thing
+
+01:07:50.000 --> 01:07:51.680
+works if you guys are curious.
+
+01:07:51.680 --> 01:07:53.520
+>> Um, I think one of the key premises that
+
+01:07:53.520 --> 01:07:54.799
+we had when we started this thing was
+
+01:07:54.799 --> 01:07:56.480
+just I think it's important that people
+
+01:07:56.480 --> 01:07:57.920
+should be able to see their code really
+
+01:07:57.920 --> 01:07:59.280
+easily. So like one of the things that
+
+01:07:59.280 --> 01:08:00.559
+we started with is just we just like
+
+01:08:00.559 --> 01:08:02.960
+types. So we just store all your type
+
+01:08:02.960 --> 01:08:05.039
+systems into the codebase and then you
+
+01:08:05.039 --> 01:08:06.400
+can see your state messages and this is
+
+01:08:06.400 --> 01:08:09.200
+a rendering bug because you can actually
+
+01:08:09.200 --> 01:08:11.039
+turn this system into a quick little
+
+01:08:11.039 --> 01:08:12.720
+test case that you can run locally
+
+01:08:12.720 --> 01:08:14.559
+really really really fast. So, like if I
+
+01:08:14.559 --> 01:08:16.239
+for whatever reason that agent wasn't
+
+01:08:16.239 --> 01:08:18.480
+working, boom, I can just put this test
+
+01:08:18.480 --> 01:08:21.920
+case over here. And now I think there's
+
+01:08:21.920 --> 01:08:22.400
+some bug.
+
+01:08:22.400 --> 01:08:23.839
+>> Now you have an eval of like, hey,
+
+01:08:23.839 --> 01:08:25.679
+here's a long context. Can we get it to
+
+01:08:25.679 --> 01:08:27.040
+still spit out the right answer even
+
+01:08:27.040 --> 01:08:28.319
+with this long context?
+
+01:08:28.319 --> 01:08:29.600
+>> Exactly. And then I can just build this
+
+01:08:29.600 --> 01:08:30.960
+eval out really easily. And there's some
+
+01:08:30.960 --> 01:08:33.199
+small stuff that I have to do uh in this
+
+01:08:33.199 --> 01:08:36.159
+syntax like get rid of these commas.
+
+01:08:36.159 --> 01:08:37.359
+But we're working on this and making
+
+01:08:37.359 --> 01:08:39.199
+this better. So as soon as this is live,
+
+01:08:39.199 --> 01:08:40.960
+we'll share it out. But one of the key
+
+01:08:40.960 --> 01:08:42.319
+parts that we really wanted was just a
+
+01:08:42.319 --> 01:08:44.080
+really easy way to understand how type
+
+01:08:44.080 --> 01:08:46.000
+system work. Uh you want to be able to
+
+01:08:46.000 --> 01:08:47.359
+see like the raw web requests that the
+
+01:08:47.359 --> 01:08:48.560
+model actually made and make it super
+
+01:08:48.560 --> 01:08:49.920
+easy for you to go see. So if it did
+
+01:08:49.920 --> 01:08:51.600
+like reasoning of any kind, you should
+
+01:08:51.600 --> 01:08:53.679
+just be able to see that trivially.
+
+01:08:53.679 --> 01:08:54.239
+>> Cool.
+
+01:08:54.239 --> 01:08:55.199
+>> You should be able to see network
+
+01:08:55.199 --> 01:08:56.799
+requests, see timings, and everything
+
+01:08:56.799 --> 01:08:58.799
+else on here. So like this took 60. That
+
+01:08:58.799 --> 01:08:59.759
+looks wrong.
+
+01:08:59.759 --> 01:09:02.000
+>> It's cuz you busted the cache, dude. Or
+
+01:09:02.000 --> 01:09:02.640
+there's a bug.
+
+01:09:02.640 --> 01:09:04.880
+>> No, that that's a bug. This is why this
+
+01:09:04.880 --> 01:09:06.159
+isn't ready yet. We're just doing like a
+
+01:09:06.159 --> 01:09:07.759
+quick few things on the type system. And
+
+01:09:07.759 --> 01:09:08.960
+like one of the coolest things that we
+
+01:09:08.960 --> 01:09:10.960
+really worked on was if you change the
+
+01:09:10.960 --> 01:09:12.880
+type signature of any kind or you change
+
+01:09:12.880 --> 01:09:14.239
+like the model or something else, the
+
+01:09:14.239 --> 01:09:15.759
+data gets split out automatically for
+
+01:09:15.759 --> 01:09:17.920
+you. So in this in this scenario that we
+
+01:09:17.920 --> 01:09:19.600
+changed the model. So you notice that
+
+01:09:19.600 --> 01:09:21.440
+there's two agent loops. One for model
+
+01:09:21.440 --> 01:09:25.279
+A, one for the GD5 mini models and the
+
+01:09:25.279 --> 01:09:27.520
+other one for the GD5 model that we had
+
+01:09:27.520 --> 01:09:28.880
+here. And this kind of happens without
+
+01:09:28.880 --> 01:09:30.239
+you having to think about it. So your
+
+01:09:30.239 --> 01:09:32.799
+data is extremely clean is the premise.
+
+01:09:32.799 --> 01:09:35.600
+And obviously stuff
+
+01:09:35.600 --> 01:09:37.120
+>> had a really good summary of this. Let's
+
+01:09:37.120 --> 01:09:37.600
+do the thing.
+
+01:09:37.600 --> 01:09:38.799
+>> You want to paste it in. All right. I
+
+01:09:38.799 --> 01:09:40.480
+put it in the in the chat if you want to
+
+01:09:40.480 --> 01:09:41.279
+grab it.
+
+01:09:41.279 --> 01:09:42.960
+>> Where? In the chat. In Riverside.
+
+01:09:42.960 --> 01:09:44.400
+>> You scroll up like four messages in
+
+01:09:44.400 --> 01:09:45.279
+Riverside.
+
+01:09:45.279 --> 01:09:46.400
+>> I see it. I'm going to take this.
+
+01:09:46.400 --> 01:09:47.679
+>> Paste it in. See what happens. I don't
+
+01:09:47.679 --> 01:09:49.040
+think you you don't have a right file
+
+01:09:49.040 --> 01:09:51.920
+tool, so it might not actually uh
+
+01:09:51.920 --> 01:09:53.040
+>> it might not actually write the file,
+
+01:09:53.040 --> 01:09:54.320
+but it will probably print it out to
+
+01:09:54.320 --> 01:09:55.360
+you.
+
+01:09:55.360 --> 01:09:56.719
+>> So, I've copied the codebase. Sorry, I
+
+01:09:56.719 --> 01:09:59.280
+had to not screen share just in case I
+
+01:09:59.280 --> 01:10:01.600
+showed something that I shouldn't.
+
+01:10:01.600 --> 01:10:04.480
+Um, so let's go run this over here. What
+
+01:10:04.480 --> 01:10:05.760
+we're going to do is we're going to do
+
+01:10:05.760 --> 01:10:07.360
+two ti uh when we do this.
+
+01:10:07.360 --> 01:10:09.120
+>> No, I mean just paste it into the CLI.
+
+01:10:09.120 --> 01:10:10.080
+Oh, you're going to give it the edit
+
+01:10:10.080 --> 01:10:10.560
+tool.
+
+01:10:10.560 --> 01:10:12.239
+>> Of course.
+
+01:10:12.239 --> 01:10:13.840
+>> Uh so you want the right tool then cuz
+
+01:10:13.840 --> 01:10:14.960
+it's going to write a Oh, yeah. There
+
+01:10:14.960 --> 01:10:15.360
+you go. Okay.
+
+01:10:15.360 --> 01:10:16.800
+>> I'll give it all the scary tools. Screw
+
+01:10:16.800 --> 01:10:17.199
+it.
+
+01:10:17.199 --> 01:10:18.480
+>> Ship it.
+
+01:10:18.480 --> 01:10:19.520
+>> Yeah, I guess
+
+01:10:19.520 --> 01:10:21.360
+>> you already gave it bash.
+
+01:10:21.360 --> 01:10:22.800
+>> Yeah, basically.
+
+01:10:22.800 --> 01:10:25.280
+>> You're going to have to like cat that
+
+01:10:25.280 --> 01:10:25.840
+thing.
+
+01:10:25.840 --> 01:10:27.600
+>> No, no, no, no. I I have I have You
+
+01:10:27.600 --> 01:10:28.880
+don't have to do that. It just starts.
+
+01:10:28.880 --> 01:10:30.640
+Can I not? Okay. Well, that's not going
+
+01:10:30.640 --> 01:10:32.080
+to work.
+
+01:10:32.080 --> 01:10:34.880
+Um, I did not build command V into here.
+
+01:10:34.880 --> 01:10:37.840
+Uh, let me run this again.
+
+01:10:37.840 --> 01:10:39.600
+>> Oh, you can't paste.
+
+01:10:39.600 --> 01:10:41.520
+>> No, I did not build command V into
+
+01:10:41.520 --> 01:10:42.400
+there.
+
+01:10:42.400 --> 01:10:44.239
+>> All right,
+
+01:10:44.239 --> 01:10:47.280
+there might be quotes in here. So, you
+
+01:10:47.280 --> 01:10:49.360
+will have to use I think try single
+
+01:10:49.360 --> 01:10:50.880
+quotes around it instead.
+
+01:10:50.880 --> 01:10:53.199
+>> Okay, let me try. Sorry, guys. This is a
+
+01:10:53.199 --> 01:10:53.840
+live demo.
+
+01:10:53.840 --> 01:10:56.000
+>> I'm putting Vib on the spot.
+
+01:10:56.000 --> 01:10:56.960
+>> Okay, I'm
+
+01:10:56.960 --> 01:10:58.320
+>> think there's any single quotes.
+
+01:10:58.320 --> 01:10:59.280
+>> Okay,
+
+01:10:59.280 --> 01:11:01.520
+>> unless there's like punctuation. What
+
+01:11:01.520 --> 01:11:05.120
+does the fern folder do there?
+
+01:11:05.120 --> 01:11:06.960
+>> Didn't like that. All right, we'll try
+
+01:11:06.960 --> 01:11:08.640
+this later. We can put up a clip of it.
+
+01:11:08.640 --> 01:11:10.080
+All right, we'll try one more. I think
+
+01:11:10.080 --> 01:11:12.080
+there's punctuation. You got to do like
+
+01:11:12.080 --> 01:11:16.080
+cat out of eof or whatever.
+
+01:11:16.080 --> 01:11:18.080
+>> Here. You know what you got to do is uh
+
+01:11:18.080 --> 01:11:20.640
+it's dash I
+
+01:11:20.640 --> 01:11:22.480
+>> dash I What do you want me to do? I
+
+01:11:22.480 --> 01:11:23.520
+>> I'm going to put it in I'm going to put
+
+01:11:23.520 --> 01:11:25.679
+in the chat here. make this
+
+01:11:25.679 --> 01:11:27.679
+>> welcome to the uh
+
+01:11:27.679 --> 01:11:31.040
+>> into uh terminal within single quote.
+
+01:11:31.040 --> 01:11:32.400
+>> You just got to give it the path to
+
+01:11:32.400 --> 01:11:32.800
+that.
+
+01:11:32.800 --> 01:11:34.320
+>> I'll just see what this does. This might
+
+01:11:34.320 --> 01:11:35.280
+work.
+
+01:11:35.280 --> 01:11:36.960
+>> Okay.
+
+01:11:36.960 --> 01:11:37.440
+>> Um
+
+01:11:37.440 --> 01:11:38.640
+>> No, you're just going to remove all the
+
+01:11:38.640 --> 01:11:39.600
+single quotes.
+
+01:11:39.600 --> 01:11:41.360
+>> I don't know. Um probably.
+
+01:11:41.360 --> 01:11:42.640
+>> Oh, yeah. You could put in a file and
+
+01:11:42.640 --> 01:11:45.040
+then just make it read the file. Nope.
+
+01:11:45.040 --> 01:11:46.080
+Wrong.
+
+01:11:46.080 --> 01:11:47.840
+>> No. What did it do? No.
+
+01:11:47.840 --> 01:11:49.280
+>> Just save the file and then give it the
+
+01:11:49.280 --> 01:11:50.640
+path to the file.
+
+01:11:50.640 --> 01:11:52.960
+>> I haven't built that.
+
+01:11:52.960 --> 01:11:54.480
+Oh, it can't read a file.
+
+01:11:54.480 --> 01:11:58.080
+>> Yeah, it's Oh, maybe it can. Um Oh,
+
+01:11:58.080 --> 01:11:59.280
+maybe. Oh, I didn't think about that.
+
+01:11:59.280 --> 01:12:01.920
+That's a good idea. Uh I'm dumb. MD.
+
+01:12:01.920 --> 01:12:04.480
+Okay, cool. Let's run this. Uh I think
+
+01:12:04.480 --> 01:12:06.000
+this will work.
+
+01:12:06.000 --> 01:12:08.960
+>> Yeah. Okay. So, just tell to read
+
+01:12:08.960 --> 01:12:10.239
+research.m MD.
+
+01:12:10.239 --> 01:12:13.840
+>> Okay. Read research.m
+
+01:12:13.840 --> 01:12:20.320
+MD. Then uh then figure then use that to
+
+01:12:20.320 --> 01:12:24.960
+learn what the fern directory does.
+
+01:12:24.960 --> 01:12:26.400
+>> I have no idea what's going to happen.
+
+01:12:26.400 --> 01:12:29.040
+>> See what's up. This is like a full like
+
+01:12:29.040 --> 01:12:31.120
+curses toy. So when you resize the
+
+01:12:31.120 --> 01:12:32.960
+window, it doesn't rerender.
+
+01:12:32.960 --> 01:12:35.760
+>> It does eventually. Okay. So it did read
+
+01:12:35.760 --> 01:12:38.159
+research MD. Did it not find it? I I
+
+01:12:38.159 --> 01:12:40.320
+spelled it wrong. Okay. It's going to ls
+
+01:12:40.320 --> 01:12:43.679
+and then it'll run again. Oh shoot.
+
+01:12:43.679 --> 01:12:45.360
+Sorry.
+
+01:12:45.360 --> 01:12:46.960
+Uh, my interruption was not built
+
+01:12:46.960 --> 01:12:49.440
+perfectly. It was correct.
+
+01:12:49.440 --> 01:12:52.640
+Read research.m
+
+01:12:52.640 --> 01:12:59.679
+MD then uh, learn what the fern.
+
+01:12:59.679 --> 01:13:01.360
+Yeah, it only rerenders every few loops.
+
+01:13:01.360 --> 01:13:02.400
+This is what I meant. The hardest part
+
+01:13:02.400 --> 01:13:03.760
+about building this whole system is
+
+01:13:03.760 --> 01:13:05.199
+actually not the agent loop. It's
+
+01:13:05.199 --> 01:13:06.560
+actually all the tooling around it. So,
+
+01:13:06.560 --> 01:13:08.239
+like making this UI really good actually
+
+01:13:08.239 --> 01:13:09.520
+took way more than I found. And like you
+
+01:13:09.520 --> 01:13:10.719
+saw that it's kind of cool. Like I made
+
+01:13:10.719 --> 01:13:12.640
+a to-do. Um, and like it's just going to
+
+01:13:12.640 --> 01:13:14.400
+go build this out. But like having the
+
+01:13:14.400 --> 01:13:16.800
+UI in influence was actually really
+
+01:13:16.800 --> 01:13:19.199
+really hard. So we'll just see if the
+
+01:13:19.199 --> 01:13:20.719
+cloud code prompt works.
+
+01:13:20.719 --> 01:13:23.040
+>> Is this rich or typer or what is you
+
+01:13:23.040 --> 01:13:24.640
+what is your UI framework?
+
+01:13:24.640 --> 01:13:26.320
+>> I have no idea. This is cursor picked
+
+01:13:26.320 --> 01:13:26.640
+one.
+
+01:13:26.640 --> 01:13:28.080
+>> Updated the to-dos.
+
+01:13:28.080 --> 01:13:30.719
+>> Yep. And eventually it'll rerender. I
+
+01:13:30.719 --> 01:13:32.480
+think uh maybe that's a bug in the to-do
+
+01:13:32.480 --> 01:13:33.840
+implementation.
+
+01:13:33.840 --> 01:13:35.199
+>> This is also going to prompt it to use
+
+01:13:35.199 --> 01:13:36.640
+sub aents. We'll see if it actually
+
+01:13:36.640 --> 01:13:38.320
+launches sub agents. I don't know how
+
+01:13:38.320 --> 01:13:41.120
+your sub aent UI looks. It just it will
+
+01:13:41.120 --> 01:13:42.719
+trigger a sub agent. It'll show you. It
+
+01:13:42.719 --> 01:13:43.600
+should be very obvious if it's
+
+01:13:43.600 --> 01:13:45.600
+triggering a sub agent. Did you call it?
+
+01:13:45.600 --> 01:13:47.120
+It should call a sub agent. If it
+
+01:13:47.120 --> 01:13:48.960
+didn't, I mean, we can see if it did or
+
+01:13:48.960 --> 01:13:50.080
+not.
+
+01:13:50.080 --> 01:13:51.920
+>> You had a reply. It just said it read
+
+01:13:51.920 --> 01:13:54.640
+that file path. Are you still using GPT5
+
+01:13:54.640 --> 01:13:55.280
+Mini?
+
+01:13:55.280 --> 01:13:56.320
+>> Yeah, I am.
+
+01:13:56.320 --> 01:13:58.080
+>> Yeah. So, that's just not going to work.
+
+01:13:58.080 --> 01:13:59.600
+There's too many instructions. Yeah.
+
+01:13:59.600 --> 01:14:02.320
+See, it returned with tool colon.
+
+01:14:02.320 --> 01:14:04.400
+>> Yeah. Yeah, exactly. Oh, that's because
+
+01:14:04.400 --> 01:14:06.880
+my freaking loop was not good. Uh, I had
+
+01:14:06.880 --> 01:14:08.880
+another bug over here. Uh,
+
+01:14:08.880 --> 01:14:10.400
+>> yeah. This it looks like this block
+
+01:14:10.400 --> 01:14:11.199
+didn't get hit.
+
+01:14:11.199 --> 01:14:12.560
+>> There you go. This one, too. I need
+
+01:14:12.560 --> 01:14:13.360
+both.
+
+01:14:13.360 --> 01:14:15.679
+>> All right.
+
+01:14:15.679 --> 01:14:17.440
+>> As you guys can see, this is a very,
+
+01:14:17.440 --> 01:14:20.880
+very, very, very live demo. I did a
+
+01:14:20.880 --> 01:14:23.040
+couple things. I swapped the model and I
+
+01:14:23.040 --> 01:14:26.960
+returned and I also added that edge case
+
+01:14:26.960 --> 01:14:27.520
+over here.
+
+01:14:27.520 --> 01:14:29.600
+>> There's no way you're going to get GBT 5
+
+01:14:29.600 --> 01:14:32.320
+mini to be able to to to do research
+
+01:14:32.320 --> 01:14:33.679
+like that. Did you switch it back to
+
+01:14:33.679 --> 01:14:34.239
+main?
+
+01:14:34.239 --> 01:14:35.199
+>> I did.
+
+01:14:35.199 --> 01:14:38.400
+>> Okay, cool. All right. And then in four
+
+01:14:38.400 --> 01:14:39.440
+minutes, we're going to call this
+
+01:14:39.440 --> 01:14:40.960
+episode for real because I know we both
+
+01:14:40.960 --> 01:14:42.880
+have we both have companies to build.
+
+01:14:42.880 --> 01:14:44.800
+>> So, it did build the to-dos. That's kind
+
+01:14:44.800 --> 01:14:47.280
+of cool. I think I just don't have a
+
+01:14:47.280 --> 01:14:49.040
+good UI for to-dos. There's some syncing
+
+01:14:49.040 --> 01:14:50.800
+issue that I have in my UI.
+
+01:14:50.800 --> 01:14:52.560
+>> Did you know that Claude removed the
+
+01:14:52.560 --> 01:14:54.719
+to-do read tool because they they had
+
+01:14:54.719 --> 01:14:56.239
+found that like the model was trained
+
+01:14:56.239 --> 01:14:57.920
+well enough to just reinforce itself
+
+01:14:57.920 --> 01:14:59.600
+with to-do write and it doesn't have to
+
+01:14:59.600 --> 01:15:01.679
+be able to read its own to-dos.
+
+01:15:01.679 --> 01:15:03.280
+>> Interesting.
+
+01:15:03.280 --> 01:15:03.679
+>> Um
+
+01:15:03.679 --> 01:15:05.679
+>> that might be it. So another thing to
+
+01:15:05.679 --> 01:15:06.960
+notice is that one of the things that
+
+01:15:06.960 --> 01:15:08.719
+cloud code does is you'll notice that it
+
+01:15:08.719 --> 01:15:10.000
+sends you error messages and how it
+
+01:15:10.000 --> 01:15:12.080
+keeps state. So like if you try and
+
+01:15:12.080 --> 01:15:13.600
+write to a file that you have not read
+
+01:15:13.600 --> 01:15:16.400
+yet, it forces it to read the file first
+
+01:15:16.400 --> 01:15:18.719
+>> before it does that. That's another kind
+
+01:15:18.719 --> 01:15:20.239
+of thing that you can do over here.
+
+01:15:20.239 --> 01:15:22.000
+Cloud code also keeps track of what
+
+01:15:22.000 --> 01:15:25.520
+files have been modified.
+
+01:15:25.520 --> 01:15:27.440
+>> It like hashes it every time you read
+
+01:15:27.440 --> 01:15:29.440
+it. And if you try to write it since the
+
+01:15:29.440 --> 01:15:31.520
+last time you wrote it or read it, then
+
+01:15:31.520 --> 01:15:32.239
+you don't get to
+
+01:15:32.239 --> 01:15:33.679
+>> exly and it basically will say, "Oh, the
+
+01:15:33.679 --> 01:15:35.040
+file has changed since you last read it.
+
+01:15:35.040 --> 01:15:36.640
+Read the file again." And it actually
+
+01:15:36.640 --> 01:15:38.560
+does a lot of work in that world to make
+
+01:15:38.560 --> 01:15:39.440
+that easier.
+
+01:15:39.440 --> 01:15:40.719
+>> It's same with context engineering
+
+01:15:40.719 --> 01:15:42.239
+around how you keep like file iteration.
+
+01:15:42.239 --> 01:15:44.000
+So like for example, one of our past
+
+01:15:44.000 --> 01:15:46.719
+episodes were about dynamic memory and
+
+01:15:46.719 --> 01:15:48.320
+like I think the person in that episode
+
+01:15:48.320 --> 01:15:49.760
+or perhaps the episode after that was
+
+01:15:49.760 --> 01:15:51.600
+talking about how like if you read the
+
+01:15:51.600 --> 01:15:54.000
+same file five times, you probably don't
+
+01:15:54.000 --> 01:15:55.679
+need to keep all five versions of the
+
+01:15:55.679 --> 01:15:57.920
+file in the in the actual history of
+
+01:15:57.920 --> 01:15:59.120
+what you're showing off. You probably
+
+01:15:59.120 --> 01:16:00.640
+can show a different variation of it. So
+
+01:16:00.640 --> 01:16:02.000
+like there's ways to manipulate the
+
+01:16:02.000 --> 01:16:04.159
+context window historically and show a
+
+01:16:04.159 --> 01:16:05.360
+different thing based on what your
+
+01:16:05.360 --> 01:16:07.600
+current state representation is. And I
+
+01:16:07.600 --> 01:16:09.520
+think having that idea is personally
+
+01:16:09.520 --> 01:16:11.199
+like very useful.
+
+01:16:11.199 --> 01:16:12.560
+>> Yeah. I mean, I think a lot of people
+
+01:16:12.560 --> 01:16:14.000
+have been talking about like, hey, look,
+
+01:16:14.000 --> 01:16:15.920
+like small context gets better results.
+
+01:16:15.920 --> 01:16:17.760
+And people would rather just like be
+
+01:16:17.760 --> 01:16:19.600
+constantly mutating the context window
+
+01:16:19.600 --> 01:16:21.760
+to make it smaller and more compact than
+
+01:16:21.760 --> 01:16:23.440
+lean on like even if it breaks the
+
+01:16:23.440 --> 01:16:25.760
+cache, it just like I'd rather have that
+
+01:16:25.760 --> 01:16:27.760
+cloud code do that thing where it's like
+
+01:16:27.760 --> 01:16:30.480
+it will file reads from 10 turns ago
+
+01:16:30.480 --> 01:16:32.159
+basically get condensed down into like,
+
+01:16:32.159 --> 01:16:33.520
+hey, you read this file and here's what
+
+01:16:33.520 --> 01:16:35.840
+happened versus like the fullon like
+
+01:16:35.840 --> 01:16:37.520
+every single file we've read being
+
+01:16:37.520 --> 01:16:38.960
+sitting in the context window.
+
+01:16:38.960 --> 01:16:40.560
+>> That's cool. So, it made the to-dos and
+
+01:16:40.560 --> 01:16:42.159
+now it finished reading that one and now
+
+01:16:42.159 --> 01:16:44.320
+it's locating the fern folder. Um, and
+
+01:16:44.320 --> 01:16:45.679
+then it should
+
+01:16:45.679 --> 01:16:47.360
+>> 17 already.
+
+01:16:47.360 --> 01:16:48.880
+>> This is the problem with the aentic rag
+
+01:16:48.880 --> 01:16:50.880
+systems is like while they might work in
+
+01:16:50.880 --> 01:16:52.000
+the end, they are really really
+
+01:16:52.000 --> 01:16:53.760
+unbounded and how many times they work
+
+01:16:53.760 --> 01:16:55.199
+and like I have no idea why it's calling
+
+01:16:55.199 --> 01:16:56.719
+to-do right and to-do right over and
+
+01:16:56.719 --> 01:16:59.280
+over again. Um, I'd have to like debug
+
+01:16:59.280 --> 01:17:00.640
+that slightly better. So, like if I go
+
+01:17:00.640 --> 01:17:02.000
+look into this like why is it doing
+
+01:17:02.000 --> 01:17:02.560
+this?
+
+01:17:02.560 --> 01:17:03.920
+>> You should just get rid of the to-do
+
+01:17:03.920 --> 01:17:06.000
+tool. I think to-do lists are silly. You
+
+01:17:06.000 --> 01:17:07.520
+should just not have along you should
+
+01:17:07.520 --> 01:17:09.199
+you should not give a model enough tasks
+
+01:17:09.199 --> 01:17:10.640
+that it needs a to-do list. You should
+
+01:17:10.640 --> 01:17:12.719
+just use fresh context all the time.
+
+01:17:12.719 --> 01:17:14.320
+>> Why is it? Oh, it's because it's doing
+
+01:17:14.320 --> 01:17:16.560
+like globs and stuff like along the way.
+
+01:17:16.560 --> 01:17:18.719
+And then it did a spam of to-dos.
+
+01:17:18.719 --> 01:17:21.679
+>> Oh, it's just not showing those in the
+
+01:17:21.679 --> 01:17:22.800
+>> Yeah, it's just not showing them in the
+
+01:17:22.800 --> 01:17:24.480
+UI. And this is again why I like this.
+
+01:17:24.480 --> 01:17:25.600
+It's like I can actually go see what
+
+01:17:25.600 --> 01:17:26.880
+it's doing. Like why is it globing? It's
+
+01:17:26.880 --> 01:17:28.560
+like infern. Okay, cool. That makes
+
+01:17:28.560 --> 01:17:31.440
+sense. And like why is it writing to-do,
+
+01:17:31.440 --> 01:17:32.320
+right? It's probably because there's
+
+01:17:32.320 --> 01:17:33.840
+some bug in my to-do rendering. like
+
+01:17:33.840 --> 01:17:35.440
+whatever bug is causing this to not
+
+01:17:35.440 --> 01:17:37.199
+render here. It's probably the same bug
+
+01:17:37.199 --> 01:17:38.880
+that is causing the model to go do this
+
+01:17:38.880 --> 01:17:40.560
+and like and like not
+
+01:17:40.560 --> 01:17:42.480
+>> it is slowly making progress though.
+
+01:17:42.480 --> 01:17:44.159
+>> It is. And I think it will make progress
+
+01:17:44.159 --> 01:17:46.480
+like it actually added a lot more docs
+
+01:17:46.480 --> 01:17:48.640
+into like what the to-do is based on
+
+01:17:48.640 --> 01:17:50.640
+this. And like why is doing a to-do read
+
+01:17:50.640 --> 01:17:51.920
+every single time? I have no idea.
+
+01:17:51.920 --> 01:17:52.640
+>> Yeah.
+
+01:17:52.640 --> 01:17:53.440
+>> Um sick.
+
+01:17:53.440 --> 01:17:54.960
+>> I have I should probably figure this out
+
+01:17:54.960 --> 01:17:56.400
+and get this working a little bit more
+
+01:17:56.400 --> 01:17:57.920
+fully. But if someone wants to go play
+
+01:17:57.920 --> 01:17:59.440
+around with this and gets the to-do app
+
+01:17:59.440 --> 01:18:01.040
+actually working, I think that'd be
+
+01:18:01.040 --> 01:18:02.480
+super worth it for someone to go pursue
+
+01:18:02.480 --> 01:18:03.840
+and think about. about how can you make
+
+01:18:03.840 --> 01:18:07.040
+this system uh to do and figure out what
+
+01:18:07.040 --> 01:18:08.239
+the bug is yours. I think it's like a
+
+01:18:08.239 --> 01:18:09.280
+cursor bug to be honest.
+
+01:18:09.280 --> 01:18:11.440
+>> Apache 2 license, go steal Vibbop's code
+
+01:18:11.440 --> 01:18:13.199
+and turn it into a company.
+
+01:18:13.199 --> 01:18:14.719
+>> Yeah, go do that. I don't care. Yeah,
+
+01:18:14.719 --> 01:18:16.800
+this is a great do. If you make if you
+
+01:18:16.800 --> 01:18:18.159
+if you make a business doing this, I'd
+
+01:18:18.159 --> 01:18:19.840
+be so happy for you.
+
+01:18:19.840 --> 01:18:21.600
+>> Amazing. All right, this was a super fun
+
+01:18:21.600 --> 01:18:23.679
+episode. Uh biggest takeaway, I think
+
+01:18:23.679 --> 01:18:26.880
+we've already said it, um but is
+
+01:18:26.880 --> 01:18:29.360
+basically a rag, deterministic rag, it's
+
+01:18:29.360 --> 01:18:30.800
+all balance. It's all solving problems
+
+01:18:30.800 --> 01:18:32.400
+for your users. Make sure you actually
+
+01:18:32.400 --> 01:18:34.239
+have a real use case to build against
+
+01:18:34.239 --> 01:18:36.159
+and uh engineer the right amount of
+
+01:18:36.159 --> 01:18:37.840
+things in the right places in the right
+
+01:18:37.840 --> 01:18:39.040
+way.
+
+01:18:39.040 --> 01:18:41.679
+>> Yeah. Uh just write a [ __ ] ton of code
+
+01:18:41.679 --> 01:18:43.120
+and you will probably get better at
+
+01:18:43.120 --> 01:18:44.960
+building this kind of system.
+
+01:18:44.960 --> 01:18:45.440
+>> Amazing.
+
+01:18:45.440 --> 01:18:46.480
+>> Um
+
+01:18:46.480 --> 01:18:47.840
+>> cool. Thank you.
+
+01:18:47.840 --> 01:18:50.239
+>> Next episode, Tuesday, 10 a.m. Pacific.
+
+01:18:50.239 --> 01:18:51.199
+We'll see you there.
+
+01:18:51.199 --> 01:18:52.239
+>> All right. See you.
+
+01:18:52.239 --> 01:18:55.600
+>> All right, fam. Take care. Tip.

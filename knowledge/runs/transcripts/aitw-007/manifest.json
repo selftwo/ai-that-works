@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-007",
+  "video_id": "P5wRLKF4bt8",
+  "source_url": "https://www.youtube.com/watch?v=P5wRLKF4bt8",
+  "input_fingerprint": "7d12cfcb035b5ed11284be8bff94de94d12ca53d6885550c0605427ac53a11c3",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:15:29.380661+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 4485.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-007/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-007/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 1967,
+      "first_seconds": 3.75,
+      "last_seconds": 4484.36,
+      "source_duration_seconds": 4485.0,
+      "duration_delta_seconds": 0.6400000000003274,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:15:35.928291+00:00"
+}
