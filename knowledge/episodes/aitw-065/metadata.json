@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-065",
+  "episode": 65,
+  "season": 2,
+  "title": "SOTA Coding Agent Benchmarks",
+  "source_folder": "2026-07-14-sota-coding-agent-benchmarks",
+  "recorded_at": "2026-07-14T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate; it may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "X5mI1ZVxaIc",
+  "youtube_url": "https://www.youtube.com/watch?v=X5mI1ZVxaIc",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "high",
+  "status": "curated-from-existing-transcript"
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md identify YouTube video X5mI1ZVxaIc",
+  "transcript_range": "00:00:01.068 to 00:52:01.180",
+  "timestamp_order": "verified by knowledge/scripts/verify_transcript.py",
+  "timestamped_claim_count": 9,
+  "source_duration_check": "not run: source media was not downloaded because the upstream timestamped transcript is the primary source",
+  "remaining_uncertainty": [
+    "transcript provenance and ASR model are not recorded upstream",
+    "exact recording start may differ from eventDate",
+    "speaker attribution and proper nouns may contain transcript errors",
+    "benchmark descriptions and reported results were not independently checked against the cited benchmark projects"
+  ]
+}

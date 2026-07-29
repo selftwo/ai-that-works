@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-065",
+  "primary_transcript": {
+    "path": "2026-07-14-sota-coding-agent-benchmarks/transcript.txt",
+    "origin": "upstream",
+    "sha256": "59ab3db97ee00ad0acc8e959b3d18498c8b590cb4588a33ab8e304801e52172a"
+  },
+  "materials": [
+    {"path": "2026-07-14-sota-coding-agent-benchmarks/meta.md", "role": "episode metadata"},
+    {"path": "2026-07-14-sota-coding-agent-benchmarks/README.md", "role": "upstream summary"},
+    {"path": "2026-07-14-sota-coding-agent-benchmarks/email.md", "role": "episode announcement"}
+  ]
+}

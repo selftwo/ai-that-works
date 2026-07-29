@@ -1,9 +1,11 @@
 # AI That Works Knowledge Index
 
-Reviewed episode packets: 63
+Reviewed episode packets: 65
 
-Timestamped claims: 426
+Timestamped claims: 444
 
+- [aitw-066: No Vibes Allowed - July Edition](episodes/aitw-066/README.md) | 2026-07-21T18:00:00Z | 9 claims
+- [aitw-065: SOTA Coding Agent Benchmarks](episodes/aitw-065/README.md) | 2026-07-14T18:00:00Z | 9 claims
 - [aitw-064: Agent Observability](episodes/aitw-064/README.md) | 2026-07-07T18:00:00Z | 9 claims
 - [aitw-063: Software Factory for Agent Tools](episodes/aitw-063/README.md) | 2026-06-23T18:00:00Z | 9 claims
 - [aitw-062: Product Specs with AI](episodes/aitw-062/README.md) | 2026-06-16T18:00:00Z | 8 claims

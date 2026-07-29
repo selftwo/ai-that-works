@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-  "source_updated_at": "2026-07-06T14:40:22-05:00",
+  "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+  "source_updated_at": "2026-07-29T09:53:20+05:30",
   "episodes": [
     {
       "guid": "aitw-001",
@@ -15,8 +15,8 @@
       "transcript_sha256": "4256e9edfab99c86c4bd191d19f35950de9b3d430fab00dc8976b17c6f4b270e",
       "has_timestamps": true,
       "transcript_bytes": 92640,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-002",
@@ -30,8 +30,8 @@
       "transcript_sha256": "",
       "has_timestamps": false,
       "transcript_bytes": 0,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-003",
@@ -45,8 +45,8 @@
       "transcript_sha256": "de210f7f0083f1d7e94594fb1650f07aa89993d6e133dc0a71d76e158a19edd0",
       "has_timestamps": true,
       "transcript_bytes": 79537,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-004",
@@ -60,8 +60,8 @@
       "transcript_sha256": "f2da7c4c95fb2b8b9a47170067f5ebeb85b380357f48eb1a8fb15c582f2c683d",
       "has_timestamps": true,
       "transcript_bytes": 126845,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-workshop-nyc",
@@ -75,8 +75,8 @@
       "transcript_sha256": "",
       "has_timestamps": false,
       "transcript_bytes": 0,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-005",
@@ -90,8 +90,8 @@
       "transcript_sha256": "99635eef5d41cbe7c6ad966d9e072ec85b3eb2a3ed725ee7d27fa0ca6488ecc2",
       "has_timestamps": true,
       "transcript_bytes": 122958,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-workshop-sf",
@@ -105,8 +105,8 @@
       "transcript_sha256": "",
       "has_timestamps": false,
       "transcript_bytes": 0,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-006",
@@ -120,8 +120,8 @@
       "transcript_sha256": "d034ef1e56238a4cb2ec37190d133ac65af9bfd9fc0438bb02bd48b35f21b70f",
       "has_timestamps": true,
       "transcript_bytes": 89492,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-007",
@@ -135,8 +135,8 @@
       "transcript_sha256": "bcae2ebac915695014f58ba07e76c2614272d5a77f0cf5985b22d061be43355d",
       "has_timestamps": true,
       "transcript_bytes": 101211,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-008",
@@ -150,8 +150,8 @@
       "transcript_sha256": "b672ce1c50786dc38585e0ab0ff68d2a1283d27df6bd15c3ce964d4db081be7d",
       "has_timestamps": true,
       "transcript_bytes": 101795,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-009",
@@ -165,8 +165,8 @@
       "transcript_sha256": "d16a69e3bcdcd448062d12d868dcb9e3a5fe55099ecedca26aa13c70ea7bda82",
       "has_timestamps": true,
       "transcript_bytes": 104554,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-010",
@@ -180,8 +180,8 @@
       "transcript_sha256": "5cd5901d9fcb0cfe00feebb291c89b791064fe2081d9c317f5a14c9705879598",
       "has_timestamps": true,
       "transcript_bytes": 85431,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-011",
@@ -195,8 +195,8 @@
       "transcript_sha256": "8bf0a4ce0fa26d2e0685edc6da6988c5081928e737acba0764da9047da811a6d",
       "has_timestamps": true,
       "transcript_bytes": 123465,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-012",
@@ -210,8 +210,8 @@
       "transcript_sha256": "373781025ba60678f999135d4bf3b20f6324fd1b6df34583cac710d4dc4a51c0",
       "has_timestamps": true,
       "transcript_bytes": 104000,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-013",
@@ -225,8 +225,8 @@
       "transcript_sha256": "861c793070dc44d5db95f7331539961905cf7d5d8cb045178506b62120c3150d",
       "has_timestamps": true,
       "transcript_bytes": 132047,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-014",
@@ -240,8 +240,8 @@
       "transcript_sha256": "3aa34c7636c62d5071bca08bb08c34d0f26e69b9a5d71e6c8bca992580a0f217",
       "has_timestamps": true,
       "transcript_bytes": 115374,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-015",
@@ -255,8 +255,8 @@
       "transcript_sha256": "a4178690672f415878d40591389f7993e93bbd40d3be826b15a23d62ff4355c7",
       "has_timestamps": true,
       "transcript_bytes": 16593,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-016",
@@ -270,8 +270,8 @@
       "transcript_sha256": "c426cc3d2a64a7b5c9ef99dff52d2d1461b266ac7fd01726f8da5a240f9b0717",
       "has_timestamps": true,
       "transcript_bytes": 106573,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-017",
@@ -285,8 +285,8 @@
       "transcript_sha256": "13d0170fd701ae44b53a36675f64276a168fe994a23f573c20bc11ab592eb292",
       "has_timestamps": true,
       "transcript_bytes": 111842,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-018",
@@ -300,8 +300,8 @@
       "transcript_sha256": "6e1e79076591415f11e867fd53258b3145bebe86de49dade4b9cff7682ba04f8",
       "has_timestamps": true,
       "transcript_bytes": 113095,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-019",
@@ -315,8 +315,8 @@
       "transcript_sha256": "91b684c981da7f35e1f7f6b303013dc77aa2c23129bdc6acb6f703e2a2da411c",
       "has_timestamps": true,
       "transcript_bytes": 79797,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-020",
@@ -330,8 +330,8 @@
       "transcript_sha256": "b6ecde3d7b9bb424b217c49a53edde053919e9a6304e65425c646e62256c607f",
       "has_timestamps": true,
       "transcript_bytes": 94754,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-021",
@@ -345,8 +345,8 @@
       "transcript_sha256": "30b1ac8218e25e7202904c1c940a3f22352987e1b1115e823a6b7be3be85740a",
       "has_timestamps": true,
       "transcript_bytes": 76427,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-022",
@@ -360,8 +360,8 @@
       "transcript_sha256": "f6aafd62b0b9f38a5bedbba3e5eca75514051f2823e106b7c897455f1c86bd98",
       "has_timestamps": true,
       "transcript_bytes": 75788,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-023",
@@ -375,8 +375,8 @@
       "transcript_sha256": "8167b5675d853bef875e15842dd0295b6831759fd2c063f45f73b03a3fedbd8f",
       "has_timestamps": true,
       "transcript_bytes": 77885,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-024",
@@ -390,8 +390,8 @@
       "transcript_sha256": "281c76db7a65130991783c97fbae74679b796443204a0e7dce0afc22fea5c4ad",
       "has_timestamps": true,
       "transcript_bytes": 108815,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-025",
@@ -405,8 +405,8 @@
       "transcript_sha256": "69fc5364530a29104c0bd64de0064ae809aed0fcbd27a4008be69dcba9d6a264",
       "has_timestamps": true,
       "transcript_bytes": 91267,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-026",
@@ -420,8 +420,8 @@
       "transcript_sha256": "73f1bd14d4eeb0c6ce4a7b386ba06d107af9c85f0df5612eef40f919691490f8",
       "has_timestamps": true,
       "transcript_bytes": 85917,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-unconference-sf",
@@ -435,8 +435,8 @@
       "transcript_sha256": "",
       "has_timestamps": false,
       "transcript_bytes": 0,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-027",
@@ -450,8 +450,8 @@
       "transcript_sha256": "4fdeede3e102113ae9b968c35d60949024148598d5b654756b2f705d38ef4877",
       "has_timestamps": true,
       "transcript_bytes": 192625,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-028",
@@ -465,8 +465,8 @@
       "transcript_sha256": "e3eaaf38cf42d8962f8b6ae21f67010cd3da7c04fa27b0c823db657ee0bad33a",
       "has_timestamps": true,
       "transcript_bytes": 127484,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-029",
@@ -480,8 +480,8 @@
       "transcript_sha256": "1cf7ce685b3342fa320eb7d8b4581c7f828110826156c8b9aa25419b48f0bade",
       "has_timestamps": true,
       "transcript_bytes": 103675,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-030",
@@ -495,8 +495,8 @@
       "transcript_sha256": "278b122ba7acbe8ea8385159f59156bc341d63644e5ba7d6d54f721a6a5f1d05",
       "has_timestamps": true,
       "transcript_bytes": 81680,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-031",
@@ -510,8 +510,8 @@
       "transcript_sha256": "47ae11b71c3911aa65f12f1b983fe1eab0339a684a168eb9ed4356e99f1952e9",
       "has_timestamps": true,
       "transcript_bytes": 75576,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-032",
@@ -525,8 +525,8 @@
       "transcript_sha256": "ff44a14510c61bef2fca0b043d4cbd021ef6f700cda1d126c3f2ad08fdbf2890",
       "has_timestamps": true,
       "transcript_bytes": 58119,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-033",
@@ -540,8 +540,8 @@
       "transcript_sha256": "a9ae09c8226f6a9646eee7011ca8fa8e03a5ac18c7b14cfb1c37d6eba9a33179",
       "has_timestamps": true,
       "transcript_bytes": 183539,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-035",
@@ -555,8 +555,8 @@
       "transcript_sha256": "bc77964c4e225a1085b7442d898de95bd0b589416bded94a7b070f8b5c13e60f",
       "has_timestamps": true,
       "transcript_bytes": 71812,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-034",
@@ -570,8 +570,8 @@
       "transcript_sha256": "c60cb09254a443d201c664393a1b5fff77c76cb9dfc73812d160ef954563d700",
       "has_timestamps": true,
       "transcript_bytes": 61523,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-036",
@@ -585,8 +585,8 @@
       "transcript_sha256": "3bf4cc761af42aaf4254245de181350f9e096e49f46588249b1d63ec6bcc90d6",
       "has_timestamps": true,
       "transcript_bytes": 68428,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-037",
@@ -600,8 +600,8 @@
       "transcript_sha256": "ae648769ab360368cf07939c5615f19fb3338d22410a15ffa04ea6cd471d7ac1",
       "has_timestamps": true,
       "transcript_bytes": 70125,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-038",
@@ -615,8 +615,8 @@
       "transcript_sha256": "f244907eb46b26471e9a0f473d608cb26497f963fee90da8be41fb80b7d46119",
       "has_timestamps": true,
       "transcript_bytes": 90226,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-039",
@@ -630,8 +630,8 @@
       "transcript_sha256": "2f6b274d2f189aaca1ff9349de220dc6f302ddf2cede2eaa563999fee11ae679",
       "has_timestamps": true,
       "transcript_bytes": 78753,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-040",
@@ -645,8 +645,8 @@
       "transcript_sha256": "9efa44f4d6992aa2732577f30ba2eb900c3282a14d21e0528e80e2ee3585f578",
       "has_timestamps": true,
       "transcript_bytes": 82236,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-041",
@@ -660,8 +660,8 @@
       "transcript_sha256": "2c02a7c09d5fff6f2e10bef06287788e730c603e49890b2ec702a005046793ff",
       "has_timestamps": true,
       "transcript_bytes": 72954,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-042",
@@ -675,8 +675,8 @@
       "transcript_sha256": "8ab5ee5e1015cec9ae0b06eb19a1fc357317824240b813dd2aff8fb7bb212a5d",
       "has_timestamps": true,
       "transcript_bytes": 112648,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-043",
@@ -690,8 +690,8 @@
       "transcript_sha256": "b2ebfd4d0ad53ace7119ed21edf847605d8791708aa28434e1470777d2a6eec0",
       "has_timestamps": true,
       "transcript_bytes": 37404,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-044",
@@ -705,8 +705,8 @@
       "transcript_sha256": "3eddcf46ee9775c47e577389d25e530e4cdf1550b8fc549c98419facf7016676",
       "has_timestamps": true,
       "transcript_bytes": 64263,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-045",
@@ -720,8 +720,8 @@
       "transcript_sha256": "5222879aae77058914d0d4024fe1923292ba30a6361310d34bbd8025dbc7765f",
       "has_timestamps": true,
       "transcript_bytes": 64000,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-046",
@@ -735,8 +735,8 @@
       "transcript_sha256": "bc70c6118711bf8493a7b3fbd4ed70fa827fdab6b2a684faa92cb17903f9b57a",
       "has_timestamps": true,
       "transcript_bytes": 62639,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-047",
@@ -750,8 +750,8 @@
       "transcript_sha256": "7cba8a99aee8688a46542403066c75fab8ba30b588b782d631fd0297be5b15b5",
       "has_timestamps": true,
       "transcript_bytes": 74081,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-048",
@@ -765,8 +765,8 @@
       "transcript_sha256": "4df0d98dfd38b1956d13db294cbf80fc2a86349a164ab7fa310ae42e351511df",
       "has_timestamps": true,
       "transcript_bytes": 76044,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-049",
@@ -780,8 +780,8 @@
       "transcript_sha256": "30b33e37987eda1cae52ddb09eeba4505fb5105347dcf2003a97b0b266ec7316",
       "has_timestamps": true,
       "transcript_bytes": 60526,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-050",
@@ -795,8 +795,8 @@
       "transcript_sha256": "72b194d829a0d4f2890b01527d88d4b4282ddea44b73e3a1333de98c0b0d964e",
       "has_timestamps": true,
       "transcript_bytes": 68616,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-051",
@@ -810,8 +810,8 @@
       "transcript_sha256": "21bdb82e562c8ec8aad49cfa76b0d70466711fed8bcb9df94e6ca0551e4ce67f",
       "has_timestamps": true,
       "transcript_bytes": 153187,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-052",
@@ -825,8 +825,8 @@
       "transcript_sha256": "3c7d71100cc3aaea5d0d72c4ffd8917a7c04e187669244992e3c204d5f17f4a7",
       "has_timestamps": true,
       "transcript_bytes": 70625,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "",
@@ -840,8 +840,8 @@
       "transcript_sha256": "",
       "has_timestamps": false,
       "transcript_bytes": 0,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-053",
@@ -855,8 +855,8 @@
       "transcript_sha256": "be623235e41d98ff4b279a45e599d37895cefd1a807af9c92354ac463b5b63e8",
       "has_timestamps": true,
       "transcript_bytes": 64835,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-054",
@@ -870,8 +870,8 @@
       "transcript_sha256": "67ef1d4873047d114a10955427974e88ae6d47d185229a006021067a0333f67e",
       "has_timestamps": true,
       "transcript_bytes": 65302,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-055",
@@ -885,8 +885,8 @@
       "transcript_sha256": "f1bdb51c7e79f8ba9cdc52008cd967dd9ef002a7af6c205bbc1f5a2efdd91018",
       "has_timestamps": true,
       "transcript_bytes": 71712,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-056",
@@ -900,8 +900,8 @@
       "transcript_sha256": "db5bbbb6c2eaf35a12888132af231fb27c7dc8d7b6669aecb64d2a4ecf2c336a",
       "has_timestamps": true,
       "transcript_bytes": 61365,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-057",
@@ -915,8 +915,8 @@
       "transcript_sha256": "02592e386d58936ebf093fc391fbd3a8964c04afa61f73129011a1bd945b77c5",
       "has_timestamps": true,
       "transcript_bytes": 68568,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-058",
@@ -930,8 +930,8 @@
       "transcript_sha256": "25189479eed95c1d6c4eb963e5e876530ce20d885a394fe7d6cd9d9d117f7417",
       "has_timestamps": true,
       "transcript_bytes": 42604,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-059",
@@ -945,8 +945,8 @@
       "transcript_sha256": "ac1ec5d33eb8cf7d120318c6fb47ce0360e266d19626889d069218f4b4aae44c",
       "has_timestamps": true,
       "transcript_bytes": 96392,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-060",
@@ -960,8 +960,8 @@
       "transcript_sha256": "291d5d8d560ea7976097a382e07167a46406f5af85c843e5a0685d28a8d9c490",
       "has_timestamps": true,
       "transcript_bytes": 66931,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-061",
@@ -975,8 +975,8 @@
       "transcript_sha256": "6699c9483a72056b1a0c71bccb50d0a4434250b9178dbc4650a4a8fd34b4b77e",
       "has_timestamps": true,
       "transcript_bytes": 48484,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-062",
@@ -990,8 +990,8 @@
       "transcript_sha256": "cd4d816960328190f38b4b2d77c7a8aca928d35bd5adc43cb4b30e767f4ca505",
       "has_timestamps": true,
       "transcript_bytes": 63077,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-063",
@@ -1005,8 +1005,8 @@
       "transcript_sha256": "82e344f4dc1a9f06f51f86cdc276bd686d60c38b7ae3c0423190bec45d21a0bb",
       "has_timestamps": true,
       "transcript_bytes": 61884,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     },
     {
       "guid": "aitw-064",
@@ -1015,13 +1015,58 @@
       "source_folder": "2026-07-07-agent-observability",
       "event_date": "2026-07-07T18:00:00Z",
       "youtube_video_id": "_WLVv1C6-VM",
-      "transcript_path": "knowledge/episodes/aitw-064/transcripts/stitched.txt",
-      "transcript_origin": "youtube_captions",
-      "transcript_sha256": "87874928512285fdb6d2f233c01f94277b2cfc7fedd7bc5d7ff488aeb0498890",
+      "transcript_path": "2026-07-07-agent-observability/transcript.txt",
+      "transcript_origin": "upstream",
+      "transcript_sha256": "732e1eb401c9837be842406e1b324cf24229d3e637d8b1ead46733367455cf88",
       "has_timestamps": true,
-      "transcript_bytes": 80900,
-      "source_commit": "6a79bc809e5e460f15b20a60bc8a01b50c78a291",
-      "source_updated_at": "2026-07-06T14:40:22-05:00"
+      "transcript_bytes": 69503,
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
+    },
+    {
+      "guid": "aitw-065",
+      "episode": 65,
+      "title": "SOTA Coding Agent Benchmarks",
+      "source_folder": "2026-07-14-sota-coding-agent-benchmarks",
+      "event_date": "2026-07-14T18:00:00Z",
+      "youtube_video_id": "X5mI1ZVxaIc",
+      "transcript_path": "2026-07-14-sota-coding-agent-benchmarks/transcript.txt",
+      "transcript_origin": "upstream",
+      "transcript_sha256": "59ab3db97ee00ad0acc8e959b3d18498c8b590cb4588a33ab8e304801e52172a",
+      "has_timestamps": true,
+      "transcript_bytes": 58037,
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
+    },
+    {
+      "guid": "aitw-066",
+      "episode": 66,
+      "title": "No Vibes Allowed - July Edition",
+      "source_folder": "2026-07-21-no-vibes-july",
+      "event_date": "2026-07-21T18:00:00Z",
+      "youtube_video_id": "rTn8Vhdt-Jo",
+      "transcript_path": "2026-07-21-no-vibes-july/transcript.txt",
+      "transcript_origin": "upstream",
+      "transcript_sha256": "d4d2063d4a7f8df92014e84c1f9beaf993ed954f8fc4ad6ec4e50773f187428c",
+      "has_timestamps": true,
+      "transcript_bytes": 63883,
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
+    },
+    {
+      "guid": "aitw-067",
+      "episode": 67,
+      "title": "Your Model is Already Obsolete",
+      "source_folder": "2026-07-28-your-model-is-already-obsolete",
+      "event_date": "2026-07-28T18:00:00Z",
+      "youtube_video_id": "",
+      "transcript_path": "",
+      "transcript_origin": "",
+      "transcript_sha256": "",
+      "has_timestamps": false,
+      "transcript_bytes": 0,
+      "source_commit": "a3544a3737dec53aae4f5a1238f5ce995406a1ff",
+      "source_updated_at": "2026-07-29T09:53:20+05:30"
     }
   ]
 }

@@ -752,7 +752,31 @@
     "source_folder": "2026-07-07-agent-observability",
     "knowledge_readme": "knowledge/episodes/aitw-064/README.md",
     "claims_file": "knowledge/episodes/aitw-064/claims.jsonl",
-    "transcript_path": "knowledge/episodes/aitw-064/transcripts/stitched.txt",
+    "transcript_path": "2026-07-07-agent-observability/transcript.txt",
+    "claim_count": 9
+  },
+  {
+    "guid": "aitw-065",
+    "episode": 65,
+    "title": "SOTA Coding Agent Benchmarks",
+    "event_date": "2026-07-14T18:00:00Z",
+    "youtube_video_id": "X5mI1ZVxaIc",
+    "source_folder": "2026-07-14-sota-coding-agent-benchmarks",
+    "knowledge_readme": "knowledge/episodes/aitw-065/README.md",
+    "claims_file": "knowledge/episodes/aitw-065/claims.jsonl",
+    "transcript_path": "2026-07-14-sota-coding-agent-benchmarks/transcript.txt",
+    "claim_count": 9
+  },
+  {
+    "guid": "aitw-066",
+    "episode": 66,
+    "title": "No Vibes Allowed - July Edition",
+    "event_date": "2026-07-21T18:00:00Z",
+    "youtube_video_id": "rTn8Vhdt-Jo",
+    "source_folder": "2026-07-21-no-vibes-july",
+    "knowledge_readme": "knowledge/episodes/aitw-066/README.md",
+    "claims_file": "knowledge/episodes/aitw-066/claims.jsonl",
+    "transcript_path": "2026-07-21-no-vibes-july/transcript.txt",
     "claim_count": 9
   }
 ]
