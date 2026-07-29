@@ -34,6 +34,10 @@ work through your list.
    as orchestrator deciding dispatch pattern at call time, not fixed
    subagent roles. Includes the worker + validator pairing pattern and what
    today's failed multi-model run in `defkeys` already tells you.
+2. [Pi, Herdr, and Plannotator workflow](02-next-token-pi-herdr-plannotator-workflow.md)
+   — timestamped notes from Next Token Episode 02 on a minimal Pi harness,
+   visible parallel sessions, artifact-based plan and diff review, and
+   Wayfinder for larger work.
 
 ## How to use this with pi
 
