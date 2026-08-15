@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-027",
+  "video_id": "zNZs19fIDHk",
+  "source_url": "https://www.youtube.com/watch?v=zNZs19fIDHk",
+  "input_fingerprint": "d1558177cf3329197afa1d9be91c0bae499b745d3ba75dd422f5da8e86dd1d76",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:19:40.257861+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 7662.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-027/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-027/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 3981,
+      "first_seconds": 1.75,
+      "last_seconds": 7663.92,
+      "source_duration_seconds": 7662.0,
+      "duration_delta_seconds": 1.9200000000000728,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:19:54.486147+00:00"
+}

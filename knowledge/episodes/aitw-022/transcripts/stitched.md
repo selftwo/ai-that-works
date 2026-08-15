@@ -1,0 +1,3037 @@
+# Generative UIs and Structured Streaming
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:01.429] Oh, wait. We're waiting for the
+
+[00:00:01.439] recording. There we go. What's up? I'm
+
+[00:00:03.919] Dex. Uh, this is the AI that works show
+
+[00:00:05.920] where we teach you real hands-on
+
+[00:00:07.520] advanced AI coding, AI implementation,
+
+[00:00:10.559] AI pipeline, AI engineering, context
+
+[00:00:12.800] engineering, um, real world solutions to
+
+[00:00:16.240] building uh, really good AI apps. Hi,
+
+[00:00:19.279] Bob. What do I have to add there?
+
+[00:00:21.520] >> I think that's it. I think today is
+
+[00:00:23.519] going to be
+
+[00:00:25.519] one an episode that will be I think
+
+[00:00:27.760] hopefully educational to a lot of people
+
+[00:00:29.760] which is more about streaming and how
+
+[00:00:32.800] streaming can make your app a lot more
+
+[00:00:37.360] feel almost like a whole different
+
+[00:00:39.200] application uh with and without it and I
+
+[00:00:42.719] think it's one second I'm gonna get this
+
+[00:00:44.960] I'm gonna open the end um okay there we
+
+[00:00:48.399] go
+
+[00:00:49.200] >> yeah this is a really cool topic that
+
+[00:00:50.800] I'm really excited about um I think it
+
+[00:00:52.800] goes really under the hood of some of
+
+[00:00:54.320] the like weird hard annoying problems
+
+[00:00:56.640] with using LMS and especially like
+
+[00:00:59.039] creating really good UX's when LMS are
+
+[00:01:01.760] streaming like partial JSON objects and
+
+[00:01:04.799] how you can show incremental progress
+
+[00:01:06.880] updates in your UI and in your app or on
+
+[00:01:09.360] your CLI well without having to wait for
+
+[00:01:12.080] the entire JSON object to be streamed
+
+[00:01:14.080] out.
+
+[00:01:15.200] >> Exactly. But before when we go into
+
+[00:01:17.119] this, typically you start with
+
+[00:01:18.080] whiteboards, but today I want to do
+
+[00:01:19.840] something different. And I want to start
+
+[00:01:21.040] with examples. I want to go straight to
+
+[00:01:23.680] our example and just show a couple
+
+[00:01:25.360] examples along the way. And before we do
+
+[00:01:28.080] any of this stuff, let's just go look at
+
+[00:01:29.759] chatbt.
+
+[00:01:31.280] When any of us ever use chatbt and I ask
+
+[00:01:33.920] it to go do something, and I'm using the
+
+[00:01:35.439] thinking model right now. It's like
+
+[00:01:37.119] explain why traits are not good for LLMs
+
+[00:01:43.680] for LM generated
+
+[00:01:47.119] generated code and I'll add the more
+
+[00:01:51.759] and I go do this. This whole experience
+
+[00:01:54.079] that's designed by chatbt is actually
+
+[00:01:56.880] goes through and tells you oh you're
+
+[00:01:58.399] thinking you can look at the thinking
+
+[00:01:59.759] code. You can see what it's going to be
+
+[00:02:01.200] thinking along the way. If you want, you
+
+[00:02:03.040] can opt in and skip thinking and go
+
+[00:02:05.360] straight to content generation.
+
+[00:02:08.879] This is all content that actually and
+
+[00:02:10.800] right over here made a section for what
+
+[00:02:12.000] it is. It's actually I can click on and
+
+[00:02:13.680] see exactly what it's thinking for
+
+[00:02:14.959] different steps of the way. Why it does
+
+[00:02:17.120] this is because the generation of code
+
+[00:02:19.680] is all based on the same thing that we
+
+[00:02:21.440] have when we first build websites, which
+
+[00:02:23.520] is response time. anytime I I've never
+
+[00:02:26.560] met someone I've never met a single
+
+[00:02:28.480] major website provider that says, "Hey,
+
+[00:02:31.599] Google loaded fast enough. If you go to
+
+[00:02:34.400] google.com and you search something and
+
+[00:02:35.920] you say like, uh, dogs,
+
+[00:02:38.720] they talk about their search time." I
+
+[00:02:40.640] guess not anymore, but like there's
+
+[00:02:41.920] never been a single time where they've
+
+[00:02:43.840] stopped optimizing load times on Google.
+
+[00:02:46.160] There's never been a single website that
+
+[00:02:47.680] does that. Similarly for your LM
+
+[00:02:49.440] generation code, there's no point at
+
+[00:02:51.840] which no matter how fast the models are
+
+[00:02:53.519] that it will be fast enough because the
+
+[00:02:55.440] fastest thing you could have done is as
+
+[00:02:57.760] soon as the you before the user even
+
+[00:02:59.599] typed out the question, know what
+
+[00:03:00.800] question they were going to ask, have
+
+[00:03:02.159] the answer already ready and load it up
+
+[00:03:04.000] into their machine. The next best thing
+
+[00:03:06.159] you can do is take their answer and take
+
+[00:03:08.800] the question that as soon as they type
+
+[00:03:10.080] it, have the answer already ready on
+
+[00:03:12.000] their exact machine in the exact app in
+
+[00:03:14.720] memory, load it up and answer it back.
+
+[00:03:17.680] At some point, you're going to go down
+
+[00:03:18.800] and make a network call and that will
+
+[00:03:20.640] always be slow even if the LMS are
+
+[00:03:23.280] instantaneous. And the thing is that
+
+[00:03:25.040] today's models are all based on token
+
+[00:03:26.800] generation models. So the mechanisms
+
+[00:03:29.360] that you use to go and display these
+
+[00:03:31.440] responses makes a huge difference. If I
+
+[00:03:34.080] couldn't see what these thought
+
+[00:03:35.360] processes were along the way, it makes
+
+[00:03:38.239] it
+
+[00:03:38.640] >> you just get pissed off and you drop.
+
+[00:03:40.239] You'd be like, I don't have time for
+
+[00:03:41.280] this. I just see a spinner, right? And
+
+[00:03:42.959] so, okay, so you're talking about like
+
+[00:03:44.159] basically this the more you can show
+
+[00:03:46.000] something happen, the earlier you can
+
+[00:03:47.760] show something happening, even if it
+
+[00:03:49.040] isn't the final answer, the more likely
+
+[00:03:52.080] people will actually sit there and wait
+
+[00:03:53.519] for it to finish. And going back to the
+
+[00:03:56.319] theme of our previous last uh last
+
+[00:03:58.879] conversation and the conversation before
+
+[00:04:00.400] that, this UX is important for
+
+[00:04:02.560] steerability. You're not only helping
+
+[00:04:05.040] the person be entertained along the way,
+
+[00:04:06.959] you're helping them have confidence that
+
+[00:04:08.640] this thing that is going to take a
+
+[00:04:10.000] couple seconds to run. It's actually
+
+[00:04:12.799] going to give them something that's
+
+[00:04:14.000] worthwhile and worth sticking around
+
+[00:04:15.760] for. It's like the little doping giving.
+
+[00:04:19.199] >> So if I see the thoughts are wrong, I
+
+[00:04:20.880] might just like exit. I mean, I do this
+
+[00:04:22.240] with cloud code all the time. you exit
+
+[00:04:23.600] out and you'd be like, "Nope, nope,
+
+[00:04:24.639] that's wrong." Like, "Let me go and
+
+[00:04:26.000] start over." without having to wait for
+
+[00:04:27.440] it to do the whole thing.
+
+[00:04:29.040] >> Exactly. That's one of the things I find
+
+[00:04:30.720] very frustrating about sometimes using
+
+[00:04:32.479] cursor, for example, because it doesn't
+
+[00:04:34.479] give me a good incremental UX. So then
+
+[00:04:36.960] I'm kind of stuck trying to digest all
+
+[00:04:38.560] the information and resteer it
+
+[00:04:40.000] correctly. But one of the cool things
+
+[00:04:42.320] cursor has done is they let you go back
+
+[00:04:44.080] and click on a point and checkpoint your
+
+[00:04:45.919] code and go back to that point in the
+
+[00:04:47.759] codebase. It's very, very similar for
+
+[00:04:50.320] anything else. So let's take something
+
+[00:04:52.080] really really simple like ré parsing for
+
+[00:04:54.080] example.
+
+[00:04:55.680] If I were to do any sort of ré parsing
+
+[00:04:58.160] and typically you ask an LM to extract
+
+[00:05:00.240] information. We all know that an LM can
+
+[00:05:03.199] information markdown and we can render
+
+[00:05:04.800] the markdown in a useful way
+
+[00:05:07.520] that is totally valid. But this markdown
+
+[00:05:13.039] uh even if I go render in a really
+
+[00:05:14.720] pretty markdown format and I syntax and
+
+[00:05:16.880] like bolded etc is just going to be a
+
+[00:05:19.600] lot less attractive than something
+
+[00:05:21.919] that's actually like for example these
+
+[00:05:23.280] are real hyperlinks I can click on this
+
+[00:05:25.360] hyperlink is broken. I can even give you
+
+[00:05:27.039] a little notification that's an invalid
+
+[00:05:28.560] URL. The skills can be listed as tags
+
+[00:05:32.800] experiences can be listed in more drop-
+
+[00:05:36.240] down form in a more visually appealing
+
+[00:05:38.240] format. There's a reason most websites
+
+[00:05:39.919] aren't plain text or plain HTML. They
+
+[00:05:42.400] have like CSS on it because style does
+
+[00:05:44.960] matter. But if I were to go and stream
+
+[00:05:47.680] this, I have a couple options. This is
+
+[00:05:49.680] easy to stream. I just render it as it
+
+[00:05:52.160] comes out and the markdown naturally
+
+[00:05:55.360] streams token-wise. This gets a lot more
+
+[00:05:58.000] complicated. So, we're going to talk
+
+[00:06:00.000] about how it actually looks to go and
+
+[00:06:01.840] build more stable streaming systems
+
+[00:06:04.479] along the way over here. And there's a
+
+[00:06:06.560] very
+
+[00:06:06.880] >> Okay, so you're you're converting to
+
+[00:06:08.880] some sort of structured output under the
+
+[00:06:10.880] hood and then you have a renderer like
+
+[00:06:12.720] React components or something that take
+
+[00:06:14.240] that like JSON object and turn it into
+
+[00:06:16.240] this like beautiful view.
+
+[00:06:18.160] >> Exactly. And if we go take something a
+
+[00:06:20.080] little bit more complicated like a
+
+[00:06:21.199] recipe generator, when you go do
+
+[00:06:23.360] something like this, chat GBT is
+
+[00:06:25.280] definitely just rendering tokens, but
+
+[00:06:26.960] what this allows me to build is very
+
+[00:06:28.720] interactive components where even while
+
+[00:06:31.759] it's streaming, I can actually interact
+
+[00:06:34.240] with it. Okay. So, pause this. So,
+
+[00:06:36.639] you're you're running the slider is
+
+[00:06:38.639] basically how many servings do I want?
+
+[00:06:40.960] And you're basically at any given point,
+
+[00:06:42.960] you're able to combine logic that's
+
+[00:06:45.520] interactive in the UI with whatever
+
+[00:06:48.000] incremental output has to date been
+
+[00:06:50.319] streamed by the LLM
+
+[00:06:52.000] >> and it updates in real time. Okay.
+
+[00:06:54.400] >> Exactly. So, if I if I and this is the
+
+[00:06:58.720] beauty of doing things like this is the
+
+[00:07:00.319] code is actually not complex. So,
+
+[00:07:02.560] everyone I think should be able to build
+
+[00:07:05.120] applications like this along the way,
+
+[00:07:08.639] but I'm just going to do a really quick
+
+[00:07:10.240] thing to talk about what this is and
+
+[00:07:11.599] what the data separation path is. So, if
+
+[00:07:15.520] we're down here and we have like our UI,
+
+[00:07:17.520] which is a React component. Let's we'll
+
+[00:07:19.120] use a recipe as an example. I don't know
+
+[00:07:21.440] how to spell, but we'll assume that
+
+[00:07:22.960] spelling is not a thing that I have to
+
+[00:07:24.479] care about anymore thanks to LMS. Um, we
+
+[00:07:27.360] have a recipe example. And what does a
+
+[00:07:30.479] recipe take in? Well, this renderer
+
+[00:07:32.560] takes in a type of recipe.
+
+[00:07:41.909] This takes in a recipe data model. And a
+
+[00:07:41.919] recipe data model is just a class or I
+
+[00:07:45.120] guess interface in JavaScript TypeScript
+
+[00:07:48.639] that has a name string
+
+[00:07:53.360] uh number of servings
+
+[00:08:00.550] in
+
+[00:08:00.560] and on top of that it's going to have a
+
+[00:08:02.560] couple more things which are ingredients
+
+[00:08:11.029] which is going to be a string array
+
+[00:08:11.039] And it's going to have a instructions
+
+[00:08:15.520] finger array as well. Well, all of us
+
+[00:08:19.039] know how to render this type. I don't
+
+[00:08:20.720] have to write the react for code for
+
+[00:08:22.080] this. Any chat GBT model can do this.
+
+[00:08:24.479] So, all I need to be able to do is
+
+[00:08:26.000] provide some sort of backend service
+
+[00:08:29.919] that can somehow produce this recipe
+
+[00:08:32.240] type. And if I am able to do that, then
+
+[00:08:35.760] this UI should just work. and any
+
+[00:08:38.640] interactivity I build on this, for
+
+[00:08:40.640] example, a recipe slider that multiplies
+
+[00:08:44.399] um oops, ingredients is wrong. We'll
+
+[00:08:46.320] need something else.
+
+[00:08:49.040] Um, in order to make this interactive
+
+[00:08:50.800] based on number of servings, I actually
+
+[00:08:52.160] need to uh change my data model a little
+
+[00:08:56.000] bit
+
+[00:09:06.389] and I need to write it
+
+[00:09:06.399] >> where ingredients needs to be a list of
+
+[00:09:07.920] items.
+
+[00:09:09.519] But if I did this, it should be possible
+
+[00:09:12.399] to make for me to make an interactive
+
+[00:09:14.080] recipe view pretty straight in a
+
+[00:09:15.519] straightforward manner.
+
+[00:09:17.600] This is really clear how I would turn
+
+[00:09:19.040] this into React components and render
+
+[00:09:21.279] the different things and however I
+
+[00:09:22.959] wanted and I could have the slider logic
+
+[00:09:24.720] and stuff.
+
+[00:09:26.000] >> Exactly. The problem however that I'll
+
+[00:09:28.320] run into is
+
+[00:09:31.040] right now as as of right now if I had an
+
+[00:09:33.440] LLM generate a recipe type I won't
+
+[00:09:36.640] actually be able to send it to the model
+
+[00:09:38.240] until it's done.
+
+[00:09:40.720] So that's kind of the problem that I
+
+[00:09:42.480] want to talk about today. How do you get
+
+[00:09:43.839] around this? And how do you make it so
+
+[00:09:45.360] that this interactive component doesn't
+
+[00:09:47.839] turn into a nightmare of code?
+
+[00:09:51.200] >> Uh,
+
+[00:09:51.600] >> can I change this to interface real
+
+[00:09:53.279] quick? That's going to bother me.
+
+[00:09:54.720] >> Sorry. Yes. Uh, that's a good point.
+
+[00:09:57.839] Um, and we really, really want to go
+
+[00:09:59.760] nail this problem. The thing is, this
+
+[00:10:01.279] problem is actually really quite easy.
+
+[00:10:02.640] It's not that hard. Um, and I think
+
+[00:10:04.959] we'll be able to do this in real time
+
+[00:10:07.360] when I screen share over here. Let me
+
+[00:10:10.240] pull this up over here. Give me one
+
+[00:10:11.760] second.
+
+[00:10:19.269] Okay. And then let me screen share my
+
+[00:10:19.279] actual VS Code to show how we'll turn
+
+[00:10:21.600] this thing into code.
+
+[00:10:28.949] Share VS Code. Actually, I'll just share
+
+[00:10:28.959] my whole desktop. And again, as per
+
+[00:10:31.120] usual, if you see anything you're not
+
+[00:10:32.720] supposed to see, please let us know.
+
+[00:10:34.000] We'll clip it from the video and um
+
+[00:10:37.040] we'll keep going.
+
+[00:10:40.000] So right over here I have a very very
+
+[00:10:42.560] basic uh next.js app that I just made.
+
+[00:10:45.279] You can see if I have the commands that
+
+[00:10:47.519] I ran. I basically just ran pnvpm create
+
+[00:10:50.320] next app and added baml into it. Um and
+
+[00:10:54.240] the only thing I'm going to do is I'm
+
+[00:10:56.399] going to go ahead and just start off
+
+[00:10:57.760] first with just a example of the exact
+
+[00:11:00.320] thing that we did which is recipes.
+
+[00:11:03.440] I can't type.
+
+[00:11:10.069] My computer doesn't let me type. Okay,
+
+[00:11:10.079] that works.
+
+[00:11:19.269] I'm going to zoom in and write this over
+
+[00:11:19.279] here. We want to start off with function
+
+[00:11:22.880] generate. Oh, there you go. Okay, cool.
+
+[00:11:32.710] name string ingredients
+
+[00:11:32.720] uh servings
+
+[00:11:39.750] and then class ingredient. Okay, cool.
+
+[00:11:39.760] It kind of figured it out over here
+
+[00:11:41.360] anyway. I didn't have to write any code
+
+[00:11:42.959] which is kind of nice.
+
+[00:11:46.000] Cool. And let's just play around with
+
+[00:11:48.160] this prompt really fast and see what we
+
+[00:11:49.839] do. Uh let me know if this font size is
+
+[00:11:52.640] acceptable for everyone else.
+
+[00:11:55.120] Yeah.
+
+[00:11:56.160] >> So, right over here, we're going to make
+
+[00:11:57.920] a recipe. And this will be like, let's
+
+[00:11:59.600] say like uh I love SOG paneer. Uh that's
+
+[00:12:03.040] what I had for dinner last night. So,
+
+[00:12:04.320] let's let's use that.
+
+[00:12:06.560] >> I want a recipe for so paneer.
+
+[00:12:09.519] >> All right.
+
+[00:12:10.000] >> When I go run this, uh someone's
+
+[00:12:11.839] talking. Can you mute them, Dex? Okay.
+
+[00:12:14.079] >> Yeah, I got it.
+
+[00:12:14.639] >> Go run this. The first thing that's
+
+[00:12:16.160] going to happen is the model's going to
+
+[00:12:17.680] start generating stuff.
+
+[00:12:19.680] >> And I'm going to try and show some
+
+[00:12:21.200] subtle stuff along the way. So you can
+
+[00:12:23.120] see how it's streaming and how it's
+
+[00:12:24.480] actually rendering stuff. I don't know
+
+[00:12:25.440] if you guys caught that. I'll rerun it
+
+[00:12:26.880] really fast.
+
+[00:12:31.269] So you can see how it's streaming.
+
+[00:12:31.279] >> Okay. So on the on on the left you have
+
+[00:12:33.200] broken JSON and on the right you're kind
+
+[00:12:36.000] of just like always producing a valid
+
+[00:12:38.560] object. Right.
+
+[00:12:39.680] >> Exactly. So this is pretty much a
+
+[00:12:41.519] guarantee that BAML does for you. So now
+
+[00:12:43.920] you don't have to worry about this. But
+
+[00:12:45.360] there's something that kind of bothers
+
+[00:12:46.639] me over here, which is ingredients don't
+
+[00:12:49.120] really mean anything until the full
+
+[00:12:50.800] ingredient has come out of it. I don't
+
+[00:12:53.120] really want ingredient to be used. I
+
+[00:12:56.399] don't really care if the name is paneer,
+
+[00:12:58.000] but the quantity is uh is not yet
+
+[00:13:00.240] defined because the model's only printed
+
+[00:13:02.000] out these tokens. How could I do that?
+
+[00:13:04.560] Well, one thing you can do is we can
+
+[00:13:07.360] just tell the model that, hey, this
+
+[00:13:10.160] thing only should come out when it's
+
+[00:13:12.240] actually done. So every ingredient will
+
+[00:13:15.040] only stream as it's done. So I'll show
+
+[00:13:16.639] you what that means. Now you'll notice
+
+[00:13:19.120] the streaming mechanism only prints out
+
+[00:13:21.440] the whole object instead of partially
+
+[00:13:23.600] regardless of what the model is doing
+
+[00:13:25.200] along the way. So what this does is it
+
+[00:13:28.160] actually gives you good guarantees on
+
+[00:13:30.399] the types of the object over there. On
+
+[00:13:33.040] the other hand, instructions, I'm
+
+[00:13:34.639] actually very happy to have these stream
+
+[00:13:36.240] out along the way because they're long
+
+[00:13:37.600] forms of text. So it's not that useful
+
+[00:13:40.079] for me to have it.
+
+[00:13:42.639] That said, the serving size is almost an
+
+[00:13:46.000] essential necessary thing that I need.
+
+[00:13:48.800] So why don't we also tell the model that
+
+[00:13:50.639] hey this thing cannot be null when it's
+
+[00:13:53.040] processing it needs to be at least
+
+[00:13:54.880] somewhat present. So now when I actually
+
+[00:13:57.440] run this even if the model has dumped
+
+[00:13:59.440] out some tokens until the serving size
+
+[00:14:01.519] has appeared nothing will be rendered at
+
+[00:14:04.000] all to the model. So it allows me to go
+
+[00:14:06.480] and control this purely by giving some
+
+[00:14:09.360] minor annotations into the code. what
+
+[00:14:12.560] these small things I did make a huge
+
+[00:14:15.839] impact in exactly how
+
+[00:14:18.560] >> the stuff is actually going to be
+
+[00:14:20.320] rendered in the UX that happens.
+
+[00:14:23.040] >> So you don't push an an ingredient into
+
+[00:14:25.360] the final object until the whole
+
+[00:14:27.199] ingredient object has been streamed.
+
+[00:14:29.519] >> Exactly.
+
+[00:14:31.040] >> Okay.
+
+[00:14:32.399] >> Sick. I haven't gone super deep on this
+
+[00:14:35.440] part of BAML or doing this like
+
+[00:14:37.600] otherwise. I know like AI AI SDK has
+
+[00:14:40.160] some stuff that kind of does this. Um,
+
+[00:14:42.240] but this is really cool to see.
+
+[00:14:44.480] >> I'll show you the exact manifestation.
+
+[00:14:46.079] And this is really subtle, so see if you
+
+[00:14:47.600] can catch it. Um, of what this actually
+
+[00:14:51.440] does.
+
+[00:14:53.199] Let's see if the images load. Once I do,
+
+[00:14:55.519] give it a second. There we go. Okay.
+
+[00:14:58.320] See if you guys can see what's happening
+
+[00:14:59.920] over here.
+
+[00:15:02.480] Anyone have a guess?
+
+[00:15:05.199] I'm just streaming numbers and a plot
+
+[00:15:07.040] line. I'm plotting uh how many
+
+[00:15:09.360] tablespoons of water are there on Earth
+
+[00:15:11.600] and I'm accumulating numbers. And here I
+
+[00:15:13.519] asked it to list out a bunch of XYZ
+
+[00:15:15.360] coordinates.
+
+[00:15:22.150] >> All right. Where's our super cracked
+
+[00:15:22.160] chat? Tell us what's going on here.
+
+[00:15:31.670] >> So exactly it it defaults to zero.
+
+[00:15:31.680] That's part one. The other thing it's
+
+[00:15:33.839] doing is while the numbers are actually
+
+[00:15:35.600] generated, LLM spit out numbers from
+
+[00:15:37.600] left to right, which is reasonable.
+
+[00:15:39.120] That's how I write them as well. So, it
+
+[00:15:40.959] actually renders a five, then a 53, then
+
+[00:15:42.880] a 530, and a 53,000. It actually makes
+
+[00:15:45.680] for a very, very, very jarring
+
+[00:15:49.360] uh UX on there. But what if you said
+
+[00:15:52.720] that, hey, numbers can't actually stream
+
+[00:15:54.959] until they're fully done by default?
+
+[00:15:58.480] Well, once you do that, you now get a
+
+[00:16:01.120] view like this. It's a little bit
+
+[00:16:02.399] slower,
+
+[00:16:03.920] but every single point is rendered at
+
+[00:16:06.320] the exact same point that it needs to be
+
+[00:16:08.240] on the XYZ axis without you having to
+
+[00:16:10.800] think about it. And what this means is
+
+[00:16:13.120] there's no point at which rendering this
+
+[00:16:15.279] graph that it's invalid or incorrect.
+
+[00:16:18.160] There's no such thing as an invalid
+
+[00:16:19.519] state. It's incomplete, but there's no
+
+[00:16:22.160] invalid states like this where it's like
+
+[00:16:23.839] slowly hopping up to the right digit.
+
+[00:16:27.600] And more tangibly, what this leads to is
+
+[00:16:30.560] if I was rendering this graph, which is
+
+[00:16:32.320] just book popularity over time. You can
+
+[00:16:34.560] see how this would be much much harder
+
+[00:16:38.000] to deal with without you having to think
+
+[00:16:41.120] if you had to think about this along the
+
+[00:16:42.720] way. This axis would just not work cuz
+
+[00:16:44.800] you'd render at one. So your graph yaxis
+
+[00:16:47.920] would snap all the way to the left and
+
+[00:16:50.079] then go all the way down along the way.
+
+[00:16:53.199] >> Question in the chat. How do you
+
+[00:16:54.320] determine when a number is complete?
+
+[00:16:57.600] a lot of algorithms uh that we've built
+
+[00:17:00.079] out there. You can go read the BAML
+
+[00:17:01.519] source code. But the idea is that if we
+
+[00:17:03.199] know what fields what fields are in a
+
+[00:17:05.199] data type or something else, we can
+
+[00:17:06.559] basically run a bunch of heristics to
+
+[00:17:08.319] know if a number is complete along the
+
+[00:17:09.839] way or not. For example,
+
+[00:17:12.400] >> the simple the simple version. Yeah, go
+
+[00:17:14.400] ahead.
+
+[00:17:15.280] >> Let's take an let's take an example of
+
+[00:17:16.720] like an integer for example. If I'm I'll
+
+[00:17:19.280] draw on my screen. If an example is like
+
+[00:17:21.839] if you know that the type is an integer
+
+[00:17:24.319] and the model spit out one two three,
+
+[00:17:26.559] you don't actually know if it's complete
+
+[00:17:27.919] yet. But if the model put a comma there,
+
+[00:17:30.160] you also don't know if it's complete. If
+
+[00:17:32.880] a model put a period there, you also
+
+[00:17:35.200] don't know if it's complete because you
+
+[00:17:36.880] could be in Europe um or you could be in
+
+[00:17:39.919] Europe instead of um in America because
+
+[00:17:43.919] periods don't mean something else. But
+
+[00:17:45.280] on the other hand, if the model put a
+
+[00:17:46.320] question mark there, you know it's
+
+[00:17:47.360] complete.
+
+[00:17:49.440] So you can kind of have intuition about
+
+[00:17:51.280] how numbers are going to be dealt with
+
+[00:17:54.960] uh in different contexts based on what
+
+[00:17:56.799] you know
+
+[00:17:59.120] and we just have done a lot of this work
+
+[00:18:01.280] under the hood for you.
+
+[00:18:07.909] >> Uh kind of
+
+[00:18:07.919] >> right like I would be looking for a
+
+[00:18:09.200] comma, right? It was like if I integer
+
+[00:18:11.679] specifically integer and JSON I feel
+
+[00:18:13.360] like is an easy one. You're like okay
+
+[00:18:14.799] when is the field like JSON has a field
+
+[00:18:16.640] terminator which is a comma in most
+
+[00:18:18.240] cases or a like closed bracket for the
+
+[00:18:20.320] object.
+
+[00:18:23.039] >> Exactly. So let me let me go into
+
+[00:18:25.280] Exactly. So that's kind of how we can
+
+[00:18:26.480] build intuition hunches around this. Let
+
+[00:18:28.240] me clear my notation.
+
+[00:18:29.760] >> So we need reax or grammar for every
+
+[00:18:32.720] data type basically. I'll clear it.
+
+[00:18:34.960] >> Yeah, that's kind of what the BAML
+
+[00:18:36.160] parser does under the hood. But what
+
+[00:18:37.679] this lets you do is I want you guys to
+
+[00:18:39.360] take a look at this UI really fast and
+
+[00:18:40.880] see if you can catch the difference. and
+
+[00:18:42.320] it's named incorrectly, object and
+
+[00:18:44.080] array. But there's a very subtle
+
+[00:18:46.160] difference here.
+
+[00:18:55.110] >> I like the I like the the second one
+
+[00:18:55.120] better. I like the array one better.
+
+[00:18:57.360] >> What do you like about it better?
+
+[00:19:04.470] >> I I don't know. It just feels more pol I
+
+[00:19:04.480] mean the other one is like more
+
+[00:19:05.520] interactive. It has more like the where
+
+[00:19:07.440] the token stream one by one. It feels
+
+[00:19:10.559] more but like just feels super polished.
+
+[00:19:14.880] >> I think it's just I think what I
+
+[00:19:18.080] >> what I would describe it as is u Andre
+
+[00:19:20.480] Karpathi talks about this autonomy
+
+[00:19:22.160] slider all the time. But here we kind of
+
+[00:19:24.720] have like this UX slider of how much
+
+[00:19:26.640] streaming do you want to do? The object
+
+[00:19:28.799] one is basically full streaming. Stream
+
+[00:19:31.039] every token as soon as it comes there
+
+[00:19:32.960] like show the user everything. The array
+
+[00:19:36.160] one is somewhere down here which says,
+
+[00:19:37.520] hey, I'm only going to show you cards as
+
+[00:19:39.280] they finish and nothing else. And a
+
+[00:19:42.000] totally different approach would be,
+
+[00:19:43.280] hey, I'll show you nothing until it's
+
+[00:19:44.640] completely done and then I'll show you
+
+[00:19:46.080] the whole thing all at once. It's not to
+
+[00:19:48.559] say any one of these are better or
+
+[00:19:50.000] worse, but definitely your users will
+
+[00:19:53.120] have a preference for different ones of
+
+[00:19:55.679] them. And what you'll want to do is
+
+[00:19:57.600] you'll want the ability to control that
+
+[00:20:00.080] very trivially. So you can actually go
+
+[00:20:01.840] ahead and decide what you do.
+
+[00:20:05.600] >> I would almost want like I feel like
+
+[00:20:07.200] something in the middle would be really
+
+[00:20:08.559] good. Like not don't stream every single
+
+[00:20:10.400] token, but like show the header and then
+
+[00:20:12.559] once all the text is there, show all the
+
+[00:20:14.320] text in one go. Like the streaming every
+
+[00:20:16.320] token just feels like chat GPT and it
+
+[00:20:18.720] feels like every AI app I've ever seen.
+
+[00:20:21.360] The second one feels like it is real
+
+[00:20:23.840] time and I can tell it's AI. Maybe if
+
+[00:20:25.600] there's like a spinner here after each
+
+[00:20:27.440] one of these. But like I I yeah I think
+
+[00:20:30.640] there's like yeah having I think I think
+
+[00:20:32.159] your point about like having control and
+
+[00:20:33.679] granularity on every field is is the
+
+[00:20:35.919] right one to be focusing on.
+
+[00:20:37.679] >> Exactly. And I think the point here is
+
+[00:20:39.120] like the thing that differentiates most
+
+[00:20:40.880] AI applications today is purely the UX
+
+[00:20:44.799] and this is a big part of the UX of how
+
+[00:20:47.360] you're actually streaming stuff around.
+
+[00:20:49.280] So why don't we take this example that
+
+[00:20:51.039] we're building out here, the recipe
+
+[00:20:52.559] example to fruition and just complete it
+
+[00:20:55.440] uh in complete it.
+
+[00:20:59.440] Let's do this.
+
+[00:21:01.600] So what we have here is we have a
+
+[00:21:03.520] function called generate recipe. It's
+
+[00:21:05.120] going to take in a recipe produce a
+
+[00:21:06.400] recipe data model. We put some streaming
+
+[00:21:08.960] traits around it. So we actually get to
+
+[00:21:10.640] know that hey servings it won't pop up
+
+[00:21:12.320] until servings are complete. Um, let's
+
+[00:21:15.840] also guarantee that name will also exist
+
+[00:21:17.760] at all points. Like this data model is
+
+[00:21:19.440] kind of useless until the name and the
+
+[00:21:20.880] servings are done.
+
+[00:21:23.360] Uh, ingredients, they don't have to be
+
+[00:21:25.039] done. Uh, they don't have to like I
+
+[00:21:26.799] don't I'm okay if the ingredients aren't
+
+[00:21:28.480] yet started, but I definitely want to
+
+[00:21:29.840] make sure that ingredients only pop in
+
+[00:21:31.760] as an ingredient is fully complete. And
+
+[00:21:34.320] lastly, I want to make sure that
+
+[00:21:35.360] instructions only pop in uh can stream
+
+[00:21:38.159] as much as they want. I don't really
+
+[00:21:39.360] care. So, let's build a UI for this um
+
+[00:21:42.159] really quickly.
+
+[00:21:48.630] layout.tsx page.tsx.
+
+[00:21:48.640] Um, so I'll just do this in the main
+
+[00:21:50.320] React app because I why not? So the
+
+[00:21:53.200] first thing I'll do is import.
+
+[00:22:03.669] >> Okay. So this is and this is I guess is
+
+[00:22:03.679] using the built-in BAML generator for
+
+[00:22:06.720] creating for creating like React hooks
+
+[00:22:09.280] that you can use to stream this stuff
+
+[00:22:10.799] down.
+
+[00:22:11.919] >> Exactly. So it's just it will just do
+
+[00:22:13.760] we'll do purely purely on the react side
+
+[00:22:15.760] but we don't have to think about
+
+[00:22:16.799] anything
+
+[00:22:18.320] from
+
+[00:22:35.510] client slash react slash hooks
+
+[00:22:35.520] use generate recipe
+
+[00:22:38.240] >> nice
+
+[00:22:45.270] And what I have here is I've used
+
+[00:22:45.280] generate recipe. This thing is going to
+
+[00:22:46.799] spit out data to me. It's either going
+
+[00:22:48.640] to be a recipe type or undefined.
+
+[00:22:51.440] And I think it streams by default.
+
+[00:22:54.960] So, and the type of data is going to be
+
+[00:22:58.720] as you can see name is guaranteed. Uh
+
+[00:23:01.280] where is this? Oh, sorry.
+
+[00:23:04.400] If data
+
+[00:23:07.200] data name is guaranteed to be there as
+
+[00:23:12.159] it's filled in name dot
+
+[00:23:16.000] name
+
+[00:23:18.240] ingredients.m mapap
+
+[00:23:21.679] I
+
+[00:23:24.240] and all these are guaranteed to be
+
+[00:23:25.600] completed along the way. So I actually
+
+[00:23:28.320] don't have to worry about streaming over
+
+[00:23:29.840] here because this thing will just do the
+
+[00:23:31.440] streaming work for me and it basically
+
+[00:23:33.200] guarantees that my type system matches
+
+[00:23:34.799] the type I have over here. In theory, if
+
+[00:23:37.760] I remove this and I only use
+
+[00:23:40.400] ingredients, then unit should become oh
+
+[00:23:44.080] data is
+
+[00:23:54.149] when I'm writing ingredients unit
+
+[00:23:54.159] becomes uh where is this?
+
+[00:23:58.080] Let me just make sure the types.
+
+[00:23:59.360] >> Okay. So the the point here while you're
+
+[00:24:00.640] while while you're fixing that I guess
+
+[00:24:01.600] the point here is that you don't have to
+
+[00:24:03.120] put like question mark everywhere to do
+
+[00:24:05.840] these like optional checks on everything
+
+[00:24:08.000] because you're like okay once once an
+
+[00:24:09.679] item is in that array I can guarantee
+
+[00:24:13.200] from the parser that that field will be
+
+[00:24:15.919] non-null rather than having to be like
+
+[00:24:18.000] okay if this is true then show it
+
+[00:24:19.440] otherwise don't show it and have all
+
+[00:24:20.720] these like conditional checks down like
+
+[00:24:22.559] streaming into my render function or
+
+[00:24:24.880] leaking down into my render function
+
+[00:24:26.559] basically
+
+[00:24:27.440] >> I can put all that logic declar
+
+[00:24:29.039] comparatively in my class definitions.
+
+[00:24:31.840] >> As 408, is that right?
+
+[00:24:36.640] >> Sorry, I write a lot more Python code
+
+[00:24:38.320] than type code.
+
+[00:24:40.720] >> Scale issue.
+
+[00:24:42.400] >> Yeah, probably
+
+[00:24:49.430] uh ingredient. Yeah, when I go do this,
+
+[00:24:49.440] unit becomes like optional when I'm
+
+[00:24:51.200] actually returning this type along the
+
+[00:24:52.799] way. So, let me catch up to what we're
+
+[00:24:55.360] doing again. So what we're doing here is
+
+[00:24:57.440] we're calling the generate recipe method
+
+[00:24:59.360] we have in a streaming mechanism. For
+
+[00:25:01.760] every single instance that we get of the
+
+[00:25:03.200] stream, we loop through every ingredient
+
+[00:25:04.799] and we see unit. Unit is a string or
+
+[00:25:08.000] undefined. But if we go back here and we
+
+[00:25:10.720] actually say that ingredient can only
+
+[00:25:12.240] pop in when it's done. Then in theory,
+
+[00:25:16.240] unit should actually no longer be
+
+[00:25:17.600] undefined. It should only be defined at
+
+[00:25:19.600] compile time. And that is exactly I
+
+[00:25:22.400] think what happens.
+
+[00:25:24.880] There we go. That's exactly what
+
+[00:25:26.240] happened. So unit now becomes known at
+
+[00:25:27.840] compile time. So now I when I do
+
+[00:25:29.279] rendering, I know how to render
+
+[00:25:30.799] ingredients and I just render an
+
+[00:25:32.159] ingredient with this thing. So when I
+
+[00:25:34.080] actually render the new quantity, I can
+
+[00:25:35.600] do unit quantity times
+
+[00:25:39.039] uh dunk dot servings. And this is
+
+[00:25:42.559] guaranteed to be a number. There's no
+
+[00:25:44.640] streaming constraints. So I get a lot of
+
+[00:25:46.480] simplicity. Otherwise, what I would have
+
+[00:25:48.080] to do if I didn't have all these things
+
+[00:25:50.159] on here.
+
+[00:25:53.200] >> Okay. Okay. And the is the chunk going
+
+[00:25:54.799] to be the incrementally updated object,
+
+[00:25:57.360] right? It's not it's not just the like
+
+[00:25:59.679] diff of the tokens that were sent. It's
+
+[00:26:01.760] literally every chunk that comes off of
+
+[00:26:03.600] that iterator in in Typescript is going
+
+[00:26:05.760] to be the full object.
+
+[00:26:08.159] >> Exactly. Otherwise, now to build a
+
+[00:26:09.919] reactive component, I have to write some
+
+[00:26:11.600] code like this. And if every single time
+
+[00:26:13.760] I want to build some sort of
+
+[00:26:14.799] interactivity, I have to write code like
+
+[00:26:16.559] this, I basically won't do it because
+
+[00:26:19.520] I've made life a lot harder for myself.
+
+[00:26:21.679] So what I find is adding a few type
+
+[00:26:24.640] constraints on here can go a long way in
+
+[00:26:27.919] terms of making life easier for
+
+[00:26:29.360] developers to actually go ahead and
+
+[00:26:31.679] build the system that they want under
+
+[00:26:33.200] the hood because now this thing reflects
+
+[00:26:35.279] the type system correctly and I'm
+
+[00:26:37.919] reflecting my UX in the type system. So
+
+[00:26:40.320] now rendering a UI object off of this
+
+[00:26:42.240] ingredient type is just infinitely
+
+[00:26:44.159] easier
+
+[00:26:45.039] >> because yeah, what I can do now is I can
+
+[00:26:47.360] say Oops. Yeah, let's I would love to
+
+[00:26:50.159] see this like mixed in with a nonI
+
+[00:26:52.159] generated variable like your slider or
+
+[00:26:54.240] something.
+
+[00:26:55.360] >> Well, exactly. So now you just do like
+
+[00:26:57.600] you say something like this. So let me
+
+[00:26:59.039] show you that code. I'm going to go
+
+[00:27:00.720] write this over here.
+
+[00:27:03.600] There we go. Okay. Um so when I go write
+
+[00:27:06.400] this, I'm going to say like
+
+[00:27:09.360] state uh servings.
+
+[00:27:28.230] >> Oh, I see. Okay. So, you have a state
+
+[00:27:28.240] thing here. Cool.
+
+[00:27:29.440] >> I have a state right over here. And what
+
+[00:27:31.679] I will do here is I'll say like
+
+[00:27:38.310] now I have to actually make another
+
+[00:27:38.320] object.
+
+[00:27:51.269] And then you're going to iterate over
+
+[00:27:51.279] this.
+
+[00:27:53.440] And because I'm doing the partial
+
+[00:27:54.960] version of it, I'm going to render a
+
+[00:27:56.320] recipe from the partial versions of it.
+
+[00:28:09.590] I don't suppose this uh Okay. Well, I
+
+[00:28:09.600] will
+
+[00:28:12.000] Sorry, I uh finish the original demo and
+
+[00:28:14.799] then uh and then we can come here and
+
+[00:28:16.240] make it toggleable.
+
+[00:28:17.039] >> Well, I can I can write the UI type out
+
+[00:28:18.559] really fast. It's not good.
+
+[00:28:20.640] >> Yeah.
+
+[00:28:21.360] >> So, what I'll do over here is now I'll
+
+[00:28:22.640] do this and I'll do use effect as long
+
+[00:28:25.200] as I have stream data. What I'll do is I
+
+[00:28:28.000] will take the serving scale and I'll say
+
+[00:28:34.470] sets
+
+[00:28:34.480] set recipe.
+
+[00:28:36.559] >> Yep.
+
+[00:28:45.990] They're right over here. I'm going to go
+
+[00:28:46.000] multiply this together.
+
+[00:28:47.679] >> And as soon as I
+
+[00:28:48.640] >> Okay, so you're just basically
+
+[00:28:50.799] >> overwriting the recipe and then mapping
+
+[00:28:52.640] it in to update the quantity.
+
+[00:28:54.880] >> Uh I'm actually silly. I've I haven't
+
+[00:28:57.520] written front end code in a very long
+
+[00:28:59.039] time.
+
+[00:29:01.919] I'll do this. I have to import this.
+
+[00:29:05.600] Uh as soon as I get streamed, I do this.
+
+[00:29:07.440] And now what I will do is
+
+[00:29:12.399] I don't actually know how to build a
+
+[00:29:14.320] renderer in
+
+[00:29:21.830] >> I'm sure I'm sure uh I'm sure Claude can
+
+[00:29:21.840] help you out with this.
+
+[00:29:22.640] >> There you go. I'm just going to go fill
+
+[00:29:24.640] this in. It's going to fill it in for
+
+[00:29:25.919] me. I like if not recipe. Cool.
+
+[00:29:31.279] Uh
+
+[00:29:38.630] um and I'm going to go fill this out.
+
+[00:29:38.640] And what I'll say is ingredients will
+
+[00:29:40.559] convert over here. Um
+
+[00:29:43.600] e
+
+[00:29:45.120] add a little bit of space.
+
+[00:29:47.360] Oops.
+
+[00:29:59.669] There you go.
+
+[00:29:59.679] And now I've built myself a nice little
+
+[00:30:02.080] unified symbol right over here.
+
+[00:30:05.440] >> Oh man, we got some React experts in the
+
+[00:30:07.440] crowd telling you that.
+
+[00:30:08.480] >> Yeah. So I apologize for not being a
+
+[00:30:09.919] React expert. Um, but what you
+
+[00:30:12.559] >> we will push this code. You should put a
+
+[00:30:14.480] PR in and uh update it to be more
+
+[00:30:17.039] correct.
+
+[00:30:19.120] >> Uh what you do over here is you just do
+
+[00:30:20.799] you just take the quantity and just
+
+[00:30:21.840] multiply by the serving skill and then
+
+[00:30:23.120] you can turn this into a slider in React
+
+[00:30:25.520] along the way and go do this. So if I
+
+[00:30:27.360] actually were to show you the real code,
+
+[00:30:29.840] um I actually wrote this code with
+
+[00:30:32.399] actual react and you can go
+
+[00:30:35.840] the exactly what we do where we actually
+
+[00:30:37.440] have like we do the exact same thing
+
+[00:30:38.880] that I was showing earlier which is we
+
+[00:30:41.360] have servings that we set over here then
+
+[00:30:42.880] we have servings ratio and then we
+
+[00:30:44.399] basically use a slider to go and change
+
+[00:30:45.840] the ratio along the way and that sets
+
+[00:30:47.440] the number of servings. So the initial
+
+[00:30:50.240] state is always set by the recipe
+
+[00:30:52.000] providing me a number of servings. And
+
+[00:30:54.480] then we just use the serving state to
+
+[00:30:57.200] tell me what I'm doing.
+
+[00:31:00.080] And what this lets me do is when I go do
+
+[00:31:02.640] this, I just take
+
+[00:31:05.039] if uh where is this? Sorry, let me find
+
+[00:31:07.360] this.
+
+[00:31:11.990] Every single time I list out an
+
+[00:31:12.000] ingredient recipe, I just list it out
+
+[00:31:13.840] with the ratio of the serving ratio. And
+
+[00:31:15.600] that solves the problem for me. If I go
+
+[00:31:18.080] down to here and I show you what this
+
+[00:31:19.279] code looks like. Oops. Over here.
+
+[00:31:24.320] This thing render.
+
+[00:31:28.880] We made too many abstractions when we
+
+[00:31:30.399] did this.
+
+[00:31:32.640] >> Yeah, actually like you probably don't
+
+[00:31:33.840] even need to use effect if you're just
+
+[00:31:35.360] computing it live in the thing. But
+
+[00:31:37.919] >> yeah, probably not. Uh, well, we use a
+
+[00:31:39.600] slider to go do it. So I maybe we do. I
+
+[00:31:42.240] have no idea. I'm not a React expert. I
+
+[00:31:44.320] do mostly Rust code sadly. But we're
+
+[00:31:46.320] able to is we just take the amount and
+
+[00:31:47.679] we just like format it according to
+
+[00:31:49.440] this.
+
+[00:31:50.960] >> And
+
+[00:31:52.320] >> the reason that we do format amount is
+
+[00:31:55.039] because it turned out that when you
+
+[00:31:57.360] actually multiply numbers together, you
+
+[00:31:59.120] actually don't get nice fractions. And
+
+[00:32:00.640] what I wanted to do over here in this
+
+[00:32:03.200] UI, if you take a look at this is notice
+
+[00:32:05.760] what I actually do is I actually have
+
+[00:32:07.039] like halves with like proper UTF UTF8
+
+[00:32:12.000] half tokens and 14 tokens and etc.
+
+[00:32:15.360] So I actually wanted the fractions to
+
+[00:32:17.039] look good. So we did a little bit more
+
+[00:32:19.519] effort to take the fraction you have and
+
+[00:32:21.440] actually render in a really really nice
+
+[00:32:22.960] way.
+
+[00:32:24.880] >> But again, these sort of things aren't
+
+[00:32:26.480] possible. And there's nothing I can do
+
+[00:32:27.760] in the LM prompting to actually make it
+
+[00:32:29.519] render this out in the right way.
+
+[00:32:31.200] There's just it's just not possible.
+
+[00:32:32.320] >> Also, if you have a scale that can
+
+[00:32:35.039] measure four and 38 grams of something,
+
+[00:32:38.240] there's might be other problems going
+
+[00:32:39.919] on.
+
+[00:32:40.399] >> Oh, my skill can do that. You just need
+
+[00:32:42.159] a better You just need to cook more.
+
+[00:32:44.559] Um, but I I think a large part about
+
+[00:32:47.360] what the conversation today is about is
+
+[00:32:48.960] really around like designing these UXs
+
+[00:32:50.640] and different challenges that you can
+
+[00:32:51.919] have. So, one of the most basic things
+
+[00:32:53.679] we showed you is you can go and control
+
+[00:32:56.240] exactly how you're streaming along the
+
+[00:32:57.679] way. But I think another thing that's
+
+[00:33:00.000] worth talking about is actually like
+
+[00:33:01.120] what is the implication of this?
+
+[00:33:03.120] Assuming you can go build this, what are
+
+[00:33:05.039] interesting UI things you can do to
+
+[00:33:07.919] actually make life better for your
+
+[00:33:09.440] users? Because building is one part, but
+
+[00:33:12.000] another thing you can do in this
+
+[00:33:13.200] approach is now let's say I'm building
+
+[00:33:15.360] an invoice generator. So we've all seen
+
+[00:33:17.039] a lot of invoice generators. If I'm
+
+[00:33:19.360] actually streaming out objects and I
+
+[00:33:20.720] have certain things be like editable.
+
+[00:33:22.880] What I could actually do in this in this
+
+[00:33:25.200] UI, imagine this is an invoice thing is
+
+[00:33:27.279] or but in the same case of recipes, I
+
+[00:33:28.960] could actually put an edit icon right
+
+[00:33:30.960] next to chicken breast and say I'm going
+
+[00:33:32.640] to edit chicken breast and replace what
+
+[00:33:34.799] 500g is because I know the real answer
+
+[00:33:36.960] should actually be like 750 grams for
+
+[00:33:38.880] four servings
+
+[00:33:40.640] or the unit should actually be like one
+
+[00:33:42.240] breast or two breasts instead of 500
+
+[00:33:45.519] gram of chicken breast. So, I can
+
+[00:33:47.600] actually make edit uh UI components that
+
+[00:33:49.919] are editor editor only edit the state of
+
+[00:33:52.720] this. And even though the LM is
+
+[00:33:54.080] constantly going to be spitting out
+
+[00:33:55.200] chicken breast 500 grams, I have edited
+
+[00:33:57.919] it to be one breast or um Thank you.
+
+[00:34:02.799] I've edited it to be a single amount.
+
+[00:34:04.399] So, if you're building any sort of
+
+[00:34:05.840] application, you can actually like build
+
+[00:34:07.279] a user interactivity flow much much much
+
+[00:34:09.919] sooner than you think. So, if you're
+
+[00:34:12.000] doing I know folks that are running like
+
+[00:34:14.000] that are generating like on the order of
+
+[00:34:15.520] like 8 to 5,000 5 to 8,000 tokens out of
+
+[00:34:18.240] LLMs.
+
+[00:34:20.000] If your user can only interact with your
+
+[00:34:22.079] component at the end of 5,000 or 8,000
+
+[00:34:23.919] tokens, you've basically built an async
+
+[00:34:25.520] workflow.
+
+[00:34:26.800] >> Like your user is basically tab and come
+
+[00:34:29.760] back to it later,
+
+[00:34:31.359] >> which is a totally different mindset to
+
+[00:34:33.359] go in.
+
+[00:34:34.399] >> If um let's say my code a bit a lot of
+
+[00:34:37.919] your engineers, you've probably seen
+
+[00:34:39.359] this one.
+
+[00:34:41.200] um my code is compiling
+
+[00:34:43.359] >> um my tokens are my LM is generating
+
+[00:34:46.560] like my tokens are streaming it's the
+
+[00:34:48.480] same thing like the gap is long enough
+
+[00:34:50.960] your users will leave and go do my AI is
+
+[00:34:54.079] thinking exactly your users will leave
+
+[00:34:56.000] and go do something else and it doesn't
+
+[00:34:58.320] matter if you made it a little bit
+
+[00:34:59.839] faster because fundamentally what's
+
+[00:35:02.480] going to happen is your user is
+
+[00:35:05.119] distracted. So, if you can keep your
+
+[00:35:07.760] user more engaged, you can actually lead
+
+[00:35:10.240] to a higher outcome workflow much much
+
+[00:35:12.480] much faster. And for anyone that's
+
+[00:35:14.880] building agent code, you're basically
+
+[00:35:16.640] doing structured outputs all the time.
+
+[00:35:18.400] You're basically just streaming
+
+[00:35:19.520] structured outputs. That's what tool
+
+[00:35:20.720] calls are
+
+[00:35:21.280] >> cuz yeah, you're showing the tools,
+
+[00:35:22.880] you're showing the thinking, you're
+
+[00:35:23.920] showing the like, okay, here's what's
+
+[00:35:25.359] happening. No, I love this. This is this
+
+[00:35:27.119] is sick. I've been meaning to play with
+
+[00:35:28.320] this for a while and I haven't had a
+
+[00:35:29.520] chance to. Um, are you guys still
+
+[00:35:31.040] talking about that? You showed me like a
+
+[00:35:32.240] to-do app a while ago which was like
+
+[00:35:34.800] even more interactive, right?
+
+[00:35:37.119] >> Is that still live? Is that still
+
+[00:35:38.480] kicking?
+
+[00:35:39.280] >> I think so.
+
+[00:35:39.760] >> And then we should probably we should
+
+[00:35:41.200] probably transition to uh questions and
+
+[00:35:43.599] stuff.
+
+[00:35:44.560] >> Yes. So, let's see if I can get this
+
+[00:35:46.160] to-do app kicking. Um so, like this is
+
+[00:35:49.520] one example what you can do with a to-do
+
+[00:35:50.960] app. And again, these structured
+
+[00:35:52.880] outputs, let me refresh this.
+
+[00:35:56.480] Um sadly, this is not maintained by my
+
+[00:35:58.480] team. is maintained by me and I am not a
+
+[00:36:00.960] very good reactive and probably we
+
+[00:36:02.320] should put someone on this in a better
+
+[00:36:03.760] way. Uh so I'm going to go run this
+
+[00:36:06.560] really fast. It's like I'm a um I want
+
+[00:36:11.440] steps I want by things to get better at
+
+[00:36:15.920] chess.
+
+[00:36:18.160] And so when you do some sort of
+
+[00:36:19.520] streaming here, you can see that this
+
+[00:36:20.720] thing is actually uh
+
+[00:36:29.990] create five steps. No, create five
+
+[00:36:30.000] steps.
+
+[00:36:36.230] Remove
+
+[00:36:36.240] that task.
+
+[00:36:38.240] Five steps.
+
+[00:36:47.589] No, this did not work. Did not. Let me
+
+[00:36:47.599] reset this.
+
+[00:36:49.520] >> I thought you just put in your to-do
+
+[00:36:50.960] items and then you like tell it what's
+
+[00:36:52.480] been done.
+
+[00:37:13.190] >> We swapped this to use a really dumb
+
+[00:37:13.200] model and I was curious how that would
+
+[00:37:14.800] behave. There you go.
+
+[00:37:17.119] Okay.
+
+[00:37:17.599] >> So, what did what and you guys saw
+
+[00:37:19.599] something kind of interesting here,
+
+[00:37:20.480] which is this thing actually streams
+
+[00:37:22.560] everything.
+
+[00:37:24.320] This thing only streams as it comes out.
+
+[00:37:28.240] I'm a pro chess player.
+
+[00:37:32.800] I'm a pro.
+
+[00:37:35.359] I do chess.
+
+[00:37:38.240] I think this will work. And what's
+
+[00:37:40.800] interesting here is actually adds
+
+[00:37:42.160] another tag to it dynamically along the
+
+[00:37:44.400] way. But now as a you as a as a user I
+
+[00:37:47.520] can say like I actually just did this
+
+[00:37:49.119] myself or I can uncheck this. So I've
+
+[00:37:51.920] built interactivity into an application
+
+[00:37:53.520] that is almost typically only LM
+
+[00:37:55.839] powered. If I go through and said like
+
+[00:37:59.760] I reviewed
+
+[00:38:01.760] games yesterday
+
+[00:38:08.150] and all of this is actually just
+
+[00:38:08.160] streaming streaming results. It doesn't
+
+[00:38:10.880] feel like it. It feels like it's an
+
+[00:38:12.560] agent, but I'm actually streaming
+
+[00:38:14.560] everything, the entire background. And
+
+[00:38:17.119] that's what makes it, I think, feel a
+
+[00:38:18.560] lot more natural. It is very, very
+
+[00:38:21.119] similar to the example that I was
+
+[00:38:22.400] showing over here, which is the
+
+[00:38:23.520] difference between this versus this.
+
+[00:38:27.440] I have chosen to be on the more the left
+
+[00:38:29.920] hand side of the streaming here, where I
+
+[00:38:31.599] don't want to stream everything. I only
+
+[00:38:33.440] want to stream a couple of things.
+
+[00:38:37.040] >> This is dope.
+
+[00:38:43.430] But I'll open up to questions today. Uh
+
+[00:38:43.440] Dex, firstly, what are your thoughts on
+
+[00:38:45.359] this kind of stuff? H how do you
+
+[00:38:47.040] envision people using these kinds of
+
+[00:38:48.640] tools?
+
+[00:38:51.119] >> Uh I mean, I'm obsessed with coding
+
+[00:38:52.720] agents, so I'm just kind of sitting
+
+[00:38:54.160] around thinking about like almost none
+
+[00:38:56.640] of them support streaming. Codeex kind
+
+[00:38:58.400] of does, but it's a mess. And like I
+
+[00:39:00.480] would love it. I think open code has
+
+[00:39:02.160] some good streaming stuff in it, but
+
+[00:39:03.680] it's like there's there's so much you
+
+[00:39:06.400] can do to make the UI more interesting
+
+[00:39:09.839] when you give kind of the model a
+
+[00:39:11.599] stateful object to interact with and
+
+[00:39:13.440] either like patch and send updates to or
+
+[00:39:16.480] uh it almost feels like I don't know I'm
+
+[00:39:18.880] I'm I'm getting like flashbacks to 10
+
+[00:39:21.119] years ago when I was like learning about
+
+[00:39:22.640] the React virtual DOM and you basically
+
+[00:39:24.720] just have like a system interacting with
+
+[00:39:26.800] like a set of state um and it feels much
+
+[00:39:29.680] more like if you're building browser
+
+[00:39:31.200] like the browser was designed to handle
+
+[00:39:33.040] this kind of stuff. And I feel like
+
+[00:39:35.760] we're in like the stone age in terms of
+
+[00:39:37.520] hooking LLM up to be able to interact
+
+[00:39:39.599] with visual state in that world.
+
+[00:39:42.480] >> What's really interesting actually on
+
+[00:39:45.200] that idea is I' I know a couple of
+
+[00:39:47.200] people that do this, which is
+
+[00:39:49.359] ingredients are really just an array of
+
+[00:39:51.119] items.
+
+[00:39:53.680] But there are a lot of scenarios where
+
+[00:39:55.119] you ask an LLM to talk about generate an
+
+[00:39:57.280] array of items. But if you know that the
+
+[00:40:00.079] items are only coming in as they
+
+[00:40:01.920] complete, you can actually kick off
+
+[00:40:04.720] future workflows
+
+[00:40:06.640] on top of those items. So if you're
+
+[00:40:08.640] going to run like a if if you're going
+
+[00:40:10.560] to run like a item uh what
+
+[00:40:14.880] >> oh like emit the item and then go do a
+
+[00:40:16.800] deep research to like hydrate it with
+
+[00:40:18.880] like links that I can click on to learn
+
+[00:40:20.560] more or something.
+
+[00:40:22.560] Like if you were going to go write this
+
+[00:40:24.000] kind of task, it's like uh it like use
+
+[00:40:27.839] LM for research
+
+[00:40:31.680] on I typically this thing would be a
+
+[00:40:34.880] thing that you would have like think
+
+[00:40:36.320] about your latency workflow here. You'd
+
+[00:40:37.839] have to generate every item and then go
+
+[00:40:39.680] do this. But now you can actually go
+
+[00:40:42.480] build this out really really easily
+
+[00:40:45.119] simply by running an iteration loop on
+
+[00:40:47.760] every single item that comes through.
+
+[00:40:55.030] So like the speed boost that you get is
+
+[00:40:55.040] just insanely high along the way.
+
+[00:40:59.920] Uh and I think coding agents especially
+
+[00:41:01.760] can make a lot of uh benefit from this.
+
+[00:41:04.640] Um someone asked a really interesting
+
+[00:41:06.800] question. You talk about birectional
+
+[00:41:08.240] communication managing state between the
+
+[00:41:09.839] front end and the back end.
+
+[00:41:11.200] >> Thoughts about a couple of different
+
+[00:41:12.880] things.
+
+[00:41:14.079] Um, birectional state is a thing we
+
+[00:41:16.560] talked about a lot last episode as well
+
+[00:41:18.640] and the voice agents and in the
+
+[00:41:20.480] interruptability thing. So, I'll pull
+
+[00:41:22.160] that up really fast.
+
+[00:41:30.550] Also, Dex, is your website up? We should
+
+[00:41:30.560] give you an exact one to one copy of
+
+[00:41:32.400] this stuff.
+
+[00:41:34.079] >> Oh, yeah.
+
+[00:41:36.880] >> I actually load up everything down here
+
+[00:41:38.240] and I think we have whiteboards where we
+
+[00:41:39.920] talked about how birectional agents
+
+[00:41:41.359] work. It's actually a pretty complicated
+
+[00:41:43.280] system to go build out because the
+
+[00:41:45.440] fundamental problem is biirectional
+
+[00:41:47.280] stuff especially when you're streaming
+
+[00:41:49.200] is choosing exactly when you interrupt
+
+[00:41:51.599] the thing that's streaming to inject the
+
+[00:41:53.280] new information. um if that's of
+
+[00:41:55.680] interest at this concept uh episode 19
+
+[00:41:59.280] interruptible agents probably talks
+
+[00:42:00.640] about it in a lot more detail albeit
+
+[00:42:02.400] it's a very specific use case of how you
+
+[00:42:05.839] um how you actually how you do it in
+
+[00:42:08.720] terms of interruptions but the exact
+
+[00:42:10.800] same things in terms of birectional
+
+[00:42:12.240] you're basically interrupting the stream
+
+[00:42:14.400] to go rest steer it in some other way
+
+[00:42:17.440] >> I have one question for you before we
+
+[00:42:19.680] get into the rest of the questions did
+
+[00:42:21.599] you just ask me if my website was up
+
+[00:42:24.560] >> for the code for the code thing. Uh it's
+
+[00:42:27.839] >> Oh, you mean the new the new website?
+
+[00:42:29.839] >> Yes, the new one. It's so freaking cool.
+
+[00:42:32.240] >> It's coming. It's coming. We're going to
+
+[00:42:33.599] ship it Friday. Uh keep an eye on Hacker
+
+[00:42:36.400] News on Monday. Um there will be fun
+
+[00:42:39.200] things, fun fun announcements coming.
+
+[00:42:41.440] >> Okay, you should copy and paste the
+
+[00:42:43.280] podcast page and put it on so then you
+
+[00:42:45.200] have access to it. It's all This
+
+[00:42:46.560] website's open source.
+
+[00:42:49.680] >> Amazing.
+
+[00:42:50.160] >> Yes. It was not meant to be a shots
+
+[00:42:51.599] fired at is your website. And so I'm
+
+[00:42:53.119] just excited to talk about it more. So I
+
+[00:42:54.640] was like, I'll link you to it.
+
+[00:42:56.880] >> Um, okay. Ice dev2 dev said I'm
+
+[00:43:01.440] >> sorry. I'm just making sure answer's
+
+[00:43:03.440] question as well.
+
+[00:43:04.400] >> You didn't comment on Agui, which I'm
+
+[00:43:06.400] curious your thoughts.
+
+[00:43:09.280] >> Let me go pull it up really fast. I
+
+[00:43:11.839] don't think I've seen AGUI. I'll pull it
+
+[00:43:13.440] up so everyone can see what it is.
+
+[00:43:15.440] >> This is the like co-pilot kit project,
+
+[00:43:19.440] >> which is awesome.
+
+[00:43:26.390] Okay, let's look at it. Um, it's a
+
+[00:43:26.400] standard protocol to help you go manage
+
+[00:43:28.160] information through your application.
+
+[00:43:30.880] Um, I haven't used it, so I don't have a
+
+[00:43:32.880] strong opinion right now. Um, I don't
+
+[00:43:35.280] really know how they do it. I think the
+
+[00:43:37.200] hardest parts about these systems isn't
+
+[00:43:38.960] actually like the isn't the hardest way
+
+[00:43:41.280] to sync these systems isn't actually
+
+[00:43:42.880] about sending data. Isn't actually about
+
+[00:43:45.119] like the UI and everything else.
+
+[00:43:46.560] Building UI, there's lots of frameworks
+
+[00:43:48.000] that go do that. This might be one of
+
+[00:43:49.359] them. The hardest things about it is
+
+[00:43:51.520] actually like the mechanics of how you
+
+[00:43:54.079] write it. So for example, the fact that
+
+[00:43:56.480] I could actually like not know this and
+
+[00:43:58.160] only use like the done version of the
+
+[00:43:59.680] ingredient type and I get the type
+
+[00:44:01.760] safety instead of having to write
+
+[00:44:03.040] something like
+
+[00:44:05.839] uh instead of
+
+[00:44:06.640] >> you have like six different renderers in
+
+[00:44:08.800] these all these different conditional
+
+[00:44:10.319] blocks of like okay if we have this show
+
+[00:44:11.920] this we have this show this otherwise
+
+[00:44:13.599] show nothing and all that stuff.
+
+[00:44:15.440] >> Exactly. It's all about like the
+
+[00:44:17.040] question like if I have to write like
+
+[00:44:18.800] for example if I have to write something
+
+[00:44:20.079] like
+
+[00:44:22.000] stream data ingredients on map and I if
+
+[00:44:24.560] the way I have to write this is I can't
+
+[00:44:26.160] actually write this I have to write
+
+[00:44:27.359] something like
+
+[00:44:29.440] this
+
+[00:44:35.510] then I've kind of lost the benefit of
+
+[00:44:35.520] any framework there's no framework that
+
+[00:44:37.119] I can really use where if I have to go
+
+[00:44:40.720] it's just the ergonomics of writing this
+
+[00:44:42.880] code is very challenging
+
+[00:44:44.960] >> it's declaring You're doing you're doing
+
+[00:44:46.880] declarative versus imperative and we all
+
+[00:44:48.800] we all know I don't know if there's any
+
+[00:44:50.160] list pads in here but we all love
+
+[00:44:51.839] declarative code over here.
+
+[00:44:53.359] >> Yeah. Yeah. I think so like I don't know
+
+[00:44:55.839] if the framework actually supports like
+
+[00:44:57.200] types and propagating types correctly
+
+[00:44:59.359] but if it does it it would be that's
+
+[00:45:01.200] really the most important part about
+
+[00:45:02.640] doing this stuff in my opinion.
+
+[00:45:04.880] >> Um I think we covered decision workflows
+
+[00:45:07.440] that can update based on inputs to
+
+[00:45:09.200] previous steps. I think the to-do app
+
+[00:45:10.800] covers that well. Um, could this be the
+
+[00:45:12.960] AI equivalent of progressive disclosure
+
+[00:45:15.920] UI pattern? Meaning, could streaming be
+
+[00:45:18.240] used to reduce cognitive lo while
+
+[00:45:19.839] showing the essentials to start and
+
+[00:45:21.280] letting the user choose what they want
+
+[00:45:22.560] to see?
+
+[00:45:24.480] >> Yeah, I don't I don't know who said
+
+[00:45:25.839] that, but that is probably that's a
+
+[00:45:27.280] great way to put it of what I think the
+
+[00:45:29.280] power of streaming is uh for AI
+
+[00:45:32.720] applications.
+
+[00:45:35.680] Um, and then there's someone talking
+
+[00:45:37.200] about letting the AI design the UI
+
+[00:45:39.119] itself instead of just managing the
+
+[00:45:41.280] data. Uh, I think my take on that is
+
+[00:45:44.079] probably like I wouldn't put that in a
+
+[00:45:46.480] production app that I wanted to sell to
+
+[00:45:47.920] people, but I bet you could do it for
+
+[00:45:49.440] certain use cases and it would look
+
+[00:45:50.960] really dope.
+
+[00:45:51.839] >> Well, actually, Dex, I have a way to do
+
+[00:45:53.760] this that I think would be really
+
+[00:45:55.200] freaking cool.
+
+[00:45:56.400] >> So,
+
+[00:45:56.880] >> okay,
+
+[00:45:57.520] >> I know that I know the shape of my data
+
+[00:45:59.520] over here, right? As long as I know the
+
+[00:46:01.359] type of my data,
+
+[00:46:02.640] >> what I could do is I could say, "Hey,
+
+[00:46:04.640] hey, model, I have a type that is
+
+[00:46:06.720] described with this interface. Can you
+
+[00:46:08.960] give me a React component that takes in
+
+[00:46:10.480] that interface and renders it?"
+
+[00:46:12.560] >> There's some people doing that.
+
+[00:46:14.560] >> Like there's some I think like the Tambo
+
+[00:46:16.160] guys are working on that.
+
+[00:46:18.400] >> Yeah. And I actually think it's a great
+
+[00:46:20.560] idea long term because what's
+
+[00:46:22.079] interesting now is I can actually have
+
+[00:46:23.280] one model generate the data and a second
+
+[00:46:25.520] model render it. And the rendering is a
+
+[00:46:28.720] one-time task. As soon as I know what
+
+[00:46:30.480] the shape of my data model is, I can
+
+[00:46:32.240] actually like pull it out and I just
+
+[00:46:33.920] render that React component dynamically
+
+[00:46:35.680] every single time.
+
+[00:46:37.359] >> This is like the um like the dynamic
+
+[00:46:39.680] extraction example almost where you're
+
+[00:46:41.520] like, okay, here's the here's the
+
+[00:46:43.440] document, generate a schema, and then do
+
+[00:46:45.760] the extraction, right?
+
+[00:46:47.599] >> Exactly. So I want I'll run this again.
+
+[00:46:50.720] So like what I'm going to do here is I'm
+
+[00:46:52.079] going to take this invoice. I'm going to
+
+[00:46:53.200] go run it out. And what I'm doing here
+
+[00:46:55.280] is I'm first having the model spit out
+
+[00:46:56.800] what it thinks of what it thinks the
+
+[00:46:58.400] schema of this data type is. And it does
+
+[00:47:00.640] that and it builds out the schema. And I
+
+[00:47:02.560] run a secondary task to actually extract
+
+[00:47:04.480] data from the schema.
+
+[00:47:06.560] >> Now,
+
+[00:47:06.960] >> and so you use the schema to render this
+
+[00:47:08.800] UI. And then you just render. Yeah.
+
+[00:47:11.920] >> And the third task I could have done is
+
+[00:47:13.760] say, hey, I have this schema I'm going
+
+[00:47:15.680] to produce. Give me a React component
+
+[00:47:18.960] that takes the schema and renders it.
+
+[00:47:21.359] And if I did that 100% I can make this a
+
+[00:47:24.880] lot prettier. In fact, I should probably
+
+[00:47:26.319] do that. I think this example would be
+
+[00:47:27.760] so much more fun if I built that in. You
+
+[00:47:30.079] could see something even
+
+[00:47:31.440] >> You should have a third button here that
+
+[00:47:32.800] is like dynamic render and it's like
+
+[00:47:34.720] different every time.
+
+[00:47:36.160] >> Exactly. Yeah. Um because like the AI is
+
+[00:47:38.640] generating the React component that
+
+[00:47:39.839] renders that type, but it's different
+
+[00:47:41.760] but stable. And that's an important
+
+[00:47:44.000] distinction to make along the way.
+
+[00:47:47.599] >> So that's cool. Yeah, whoever asked that
+
+[00:47:49.920] question like 100% you can do this and I
+
+[00:47:51.680] think you can do it in a way that's
+
+[00:47:52.720] actually good as long as this place that
+
+[00:47:55.520] you start with is actually a type system
+
+[00:47:57.440] and not really arbitrary code. Whether
+
+[00:48:00.319] the type system is described in JSON
+
+[00:48:02.240] schema, whether it's described in Zod,
+
+[00:48:03.839] whether it's described in BAML doesn't
+
+[00:48:05.119] really matter. But the premise of what
+
+[00:48:07.119] you do with it is um is that you use the
+
+[00:48:10.960] type system to power what the AI does
+
+[00:48:12.960] rather than uh rather than just do it
+
+[00:48:15.760] with vibes.
+
+[00:48:21.990] sick. Uh there's a lot of chatter, but I
+
+[00:48:22.000] don't see any more questions. Anybody
+
+[00:48:23.440] got any last minute things? Otherwise,
+
+[00:48:26.400] VIB Bob, let us know what uh the big
+
+[00:48:28.880] takeaway here is.
+
+[00:48:31.520] >> I'll wait one more second and see if
+
+[00:48:32.640] there's any more questions. But
+
+[00:48:33.599] otherwise, like really the big takeaway
+
+[00:48:35.040] is like when you're designing your AI
+
+[00:48:36.319] applications, spend a couple more
+
+[00:48:38.000] minutes thinking about what the UX is.
+
+[00:48:39.680] And then like if it's easy enough, if
+
+[00:48:41.839] it's literally as easy as writing one
+
+[00:48:43.440] line of code to make your object stream
+
+[00:48:46.160] to like and feel more ergonomic, just go
+
+[00:48:48.960] do it. It's not hard. It's really really
+
+[00:48:51.680] easy to make your applications feel
+
+[00:48:53.200] natural.
+
+[00:48:55.280] Um, could this be used to optimize token
+
+[00:48:57.359] usage? Streaming really doesn't optimize
+
+[00:48:59.599] token usage in any way. Uh, so I don't
+
+[00:49:02.000] think there's that would be orthogonal
+
+[00:49:04.319] things that you could do to make uh
+
+[00:49:07.359] better. If anything, streaming lets you
+
+[00:49:09.599] use more tokens without having the user
+
+[00:49:11.599] have to wait. Like you can like stream
+
+[00:49:13.359] out the thing and then be like, "Okay,
+
+[00:49:14.480] now we're doing the research." And
+
+[00:49:15.520] you're burning lots of tokens to improve
+
+[00:49:17.119] the quality iteratively over time while
+
+[00:49:19.040] not having the user have to wait 20
+
+[00:49:20.800] minutes for deep research.
+
+[00:49:23.680] >> Uh this Rolando said something really
+
+[00:49:26.319] interesting over here. You can guard
+
+[00:49:27.680] rail the design with a design system
+
+[00:49:29.200] instead of generating schema. And I
+
+[00:49:30.880] would generate a layout kind of like
+
+[00:49:32.000] this. So,
+
+[00:49:33.359] >> so you already have the components, but
+
+[00:49:35.119] it's taking from your design library to
+
+[00:49:37.440] to actually render the stuff. I like
+
+[00:49:39.520] that. That's sick. Awesome.
+
+[00:49:41.200] >> Exactly. So, then you could have a form
+
+[00:49:42.480] that literally matches the theme of your
+
+[00:49:43.920] website. And if you're using something
+
+[00:49:44.880] like Shad CN, that's kind of what you're
+
+[00:49:46.240] doing manually as a developer, but now
+
+[00:49:48.000] you just tell the AI to only use these
+
+[00:49:49.520] specific components and boom, it fits in
+
+[00:49:51.280] right away. So, it's even more it's even
+
+[00:49:55.040] more like tied together. And I think
+
+[00:49:57.200] like personally for me, this is what I'm
+
+[00:49:59.440] most excited about AI and I think we're
+
+[00:50:00.800] not really there yet as generally
+
+[00:50:02.559] engineering teams because the complexity
+
+[00:50:04.720] of doing this stuff is like like I said
+
+[00:50:07.839] if every single time I want to stream
+
+[00:50:09.680] something and make it slightly better I
+
+[00:50:11.040] have to do like five extra tokens or my
+
+[00:50:13.920] my app is going to re yell at me because
+
+[00:50:16.160] TypeScript says no. I'm just not going
+
+[00:50:18.480] to do this thing especially if streaming
+
+[00:50:20.160] partial JSON is hard. But if it's really
+
+[00:50:22.319] easy and I can add one line of code to
+
+[00:50:24.079] do the thing to make it do the behavior
+
+[00:50:25.760] I want, I'll do it more correctly. It's
+
+[00:50:28.319] the exact same thing of like why use
+
+[00:50:30.000] state and react makes it way easier to
+
+[00:50:32.079] build reactive apps because I don't have
+
+[00:50:34.000] to think about like I just change the
+
+[00:50:35.839] state and somehow React will rerender
+
+[00:50:37.440] the home component and do the right
+
+[00:50:38.720] thing. My brain cycles don't go on it.
+
+[00:50:42.079] And I think that's the same thing over
+
+[00:50:43.359] here as a developer. You probably don't
+
+[00:50:44.720] want to spend brain cycles thinking
+
+[00:50:45.839] about how to do partial streaming or any
+
+[00:50:47.200] of this stuff. You just kind of want it
+
+[00:50:48.559] to work.
+
+[00:50:51.200] Oh yeah, there's there's so much cool
+
+[00:50:52.960] stuff to build.
+
+[00:50:54.800] >> Yeah, I think so too. I we have a couple
+
+[00:50:57.040] more things that we've been thinking
+
+[00:50:57.920] about how streaming works for like long
+
+[00:50:59.440] agentic systems. So maybe we'll do a
+
+[00:51:01.119] future episode on that.
+
+[00:51:02.720] >> Uh but that is also a whole different
+
+[00:51:05.040] ballgame of how you go do that.
+
+[00:51:09.280] Um Tambo UI is pretty cool. If you
+
+[00:51:11.599] haven't checked it out, they do some
+
+[00:51:12.800] interesting stuff for generating UI
+
+[00:51:14.240] components on the fly.
+
+[00:51:16.319] >> Yeah.
+
+[00:51:17.920] Um,
+
+[00:51:19.119] >> sick y'all. This was dope. Thank you,
+
+[00:51:20.640] Vib. I have been looking forward to this
+
+[00:51:22.720] episode for a while.
+
+[00:51:24.160] >> Where do you actually persist results?
+
+[00:51:26.800] Um, so just for more context on how this
+
+[00:51:29.280] thing works.
+
+[00:51:31.440] Uh, this use generated recipe actually
+
+[00:51:33.680] comes from the BAML code you write. But
+
+[00:51:35.760] under the hood, what we do is we
+
+[00:51:37.440] actually codegen BML code. We actually
+
+[00:51:39.280] codegen react code and we code genen
+
+[00:51:42.800] react server action code
+
+[00:51:46.000] that actually does the uh that actually
+
+[00:51:48.960] makes the calls for you and then does
+
+[00:51:50.559] all the work behind the scenes to
+
+[00:51:51.760] propagate data straight to the front
+
+[00:51:52.880] end. So there's a server action file and
+
+[00:51:54.880] a um and a hook that gets codegen. So
+
+[00:51:58.400] then when you use this it's actually the
+
+[00:52:00.000] data is living in the hook itself. Um if
+
+[00:52:03.440] you go read this code somewhere down.
+
+[00:52:04.800] >> Okay. So if I wanted to, I mean that
+
+[00:52:06.400] server action was pretty pretty small.
+
+[00:52:08.240] Like if I wanted to, I could stream it
+
+[00:52:10.000] and like shim part of it out to a
+
+[00:52:11.680] database and stream the rest of it down
+
+[00:52:13.119] to a UI if I wanted to. Right.
+
+[00:52:14.720] >> Exactly.
+
+[00:52:15.200] >> Do like optimistic updates basically.
+
+[00:52:18.400] >> Um are there any um security
+
+[00:52:21.920] implications to be aware of with
+
+[00:52:23.839] streaming? Um no, I don't think so. I
+
+[00:52:26.960] mean, sometimes you might like, for
+
+[00:52:28.400] example, you might want to be really um
+
+[00:52:31.520] I can think of a couple actually that
+
+[00:52:33.760] will happen in like eventual apps. Like,
+
+[00:52:35.920] for example, sometimes I want to hide
+
+[00:52:38.000] some secret words and I don't want to
+
+[00:52:39.839] show them off to users. Um, and I think
+
+[00:52:42.720] the most the easiest example of this is
+
+[00:52:44.880] like when an LM is streaming markdown,
+
+[00:52:47.359] sometimes you'll see it go from like
+
+[00:52:49.599] title here and before it actually makes
+
+[00:52:51.760] the title bold, it just spits out like
+
+[00:52:53.520] asteris title and then eventually it
+
+[00:52:56.079] snaps to bold and I'm doing this and I
+
+[00:52:58.000] kind of as a user I kind of wish I never
+
+[00:52:59.920] rendered the asterisk at all. I just
+
+[00:53:02.880] waited until the title word popped in.
+
+[00:53:05.760] Um, and you could do the same thing with
+
+[00:53:08.160] like rendering some sort of sensitive
+
+[00:53:09.520] data where like for example a password
+
+[00:53:10.960] field should not render the raw password
+
+[00:53:12.800] until the password field is complete and
+
+[00:53:15.280] it should render as dots and the user
+
+[00:53:16.800] should opt into seeing it like envirs or
+
+[00:53:18.640] something else.
+
+[00:53:20.480] Um, you probably would have to do a
+
+[00:53:22.800] little bit more engineering work to go
+
+[00:53:24.079] solve that problem on your own in some
+
+[00:53:26.160] use case. Like if you have a raw text
+
+[00:53:27.520] field and you want to just hide parts of
+
+[00:53:28.800] it, that's just not a thing you can do.
+
+[00:53:30.160] But it it's not really a major security
+
+[00:53:32.160] flaw because the data is available
+
+[00:53:33.200] anyway. It's in the raw text. If you
+
+[00:53:35.119] wanted to cancel the data generation
+
+[00:53:37.359] like for example chat GBT does this
+
+[00:53:39.599] where like if you if you start talking
+
+[00:53:41.119] about things it's not supposed to talk
+
+[00:53:42.400] about and it starts answering in the
+
+[00:53:44.400] middle
+
+[00:53:44.880] >> it dies midstream right it's just like
+
+[00:53:46.960] oh nope
+
+[00:53:48.400] >> exactly so the way you solve that
+
+[00:53:50.400] problem if you go back and look at our
+
+[00:53:52.160] interruptions video episode 19 I think
+
+[00:53:54.800] is
+
+[00:53:56.400] you have to go interrupt the stream you
+
+[00:53:57.760] have to be monitoring the stream and
+
+[00:53:59.119] checking for something in an invalid way
+
+[00:54:00.880] and then go cancel it. Uh but that's the
+
+[00:54:03.520] only real way to go do this. There's no
+
+[00:54:05.359] inherent security problems in streaming
+
+[00:54:07.440] itself.
+
+[00:54:09.200] Uh does this work with Tanstack? Yeah,
+
+[00:54:10.960] it should it should work with Tanstack
+
+[00:54:12.480] as well. But you don't really need to
+
+[00:54:14.160] use Tanstack uh for at least these calls
+
+[00:54:17.200] because these calls are just calling the
+
+[00:54:18.559] LM directly in the server action itself.
+
+[00:54:21.359] So you don't have to make a use query
+
+[00:54:22.800] mechanism out of it along the way. It's
+
+[00:54:25.440] kind of a self-contained hook for every
+
+[00:54:27.280] function that you define.
+
+[00:54:33.430] Sick. Cool. I think that puts us at
+
+[00:54:33.440] time.
+
+[00:54:34.319] >> I am extremely jetlagged. So, uh, today
+
+[00:54:36.880] we're going to go and reset this and I'm
+
+[00:54:38.559] going to go get some rest. But it was
+
+[00:54:42.000] tons of fun. Thank you everyone for
+
+[00:54:43.520] joining. Dexter
+
+[00:54:46.079] >> super fun.
+
+[00:54:46.720] >> Real quick announcement. We are changing
+
+[00:54:49.200] we are changing the platform up next
+
+[00:54:51.119] week. We're going to try to move this to
+
+[00:54:52.240] Streamyard. So, they do have live
+
+[00:54:53.680] streaming. Um, there will be a better
+
+[00:54:55.119] chat experience. The recordings will be
+
+[00:54:57.200] much higher quality. Uh so thank you all
+
+[00:55:00.240] for the first I think it was episode 20
+
+[00:55:02.640] episode 21. Everyone here for supporting
+
+[00:55:04.640] and being a part of this community and
+
+[00:55:06.559] giving us the bringing us your energy
+
+[00:55:08.160] and your great questions. We're going to
+
+[00:55:09.599] double down on the show and maybe uh
+
+[00:55:12.319] give you all a little bit better
+
+[00:55:13.440] production quality going forward. So
+
+[00:55:15.040] super stoked about that.
+
+[00:55:16.240] >> Yeah, we are too. Um and also like
+
+[00:55:18.720] firstly thank you everyone. We just hit
+
+[00:55:20.720] I was going to make I totally forgot the
+
+[00:55:23.040] beginning. like we've uh we just crossed
+
+[00:55:25.359] 1.5K subs and that is awesome to see
+
+[00:55:28.400] everyone supporting us and actually
+
+[00:55:29.839] watching these videos that start off
+
+[00:55:31.040] with just me and Dexter talking at each
+
+[00:55:33.040] other for an hour about weird AI topics.
+
+[00:55:36.800] Um
+
+[00:55:37.119] >> a lot of shouting. It wasn't just
+
+[00:55:38.559] talking.
+
+[00:55:39.760] >> We're both very passionate humans as you
+
+[00:55:41.599] as most people can probably tell at this
+
+[00:55:42.960] point. Um,
+
+[00:55:44.000] >> we're still learning to share the toys.
+
+[00:55:46.319] >> And please keep sending um topic ideas
+
+[00:55:49.599] if you ever want on our on the GitHub
+
+[00:55:52.880] for AI that works. If you ever have
+
+[00:55:54.559] topic ideas that you think would be
+
+[00:55:55.599] awesome to see, like post them on there.
+
+[00:55:57.359] If some code feels unflushed out,
+
+[00:55:59.200] comment. We'll do our best to make sure
+
+[00:56:00.720] that it's actually helpful and guiding
+
+[00:56:03.520] people in the way that they want. But
+
+[00:56:06.880] this was great, Dexter, as always.
+
+[00:56:08.880] >> Awesome. Thanks everybody. Catch you all
+
+[00:56:10.799] next week.

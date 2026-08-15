@@ -1,0 +1,4299 @@
+# S02E12 – Evaluating Prompts Across Models
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:03.030] cloud.
+
+[00:00:03.040] All right, welcome back everyone uh to
+
+[00:00:05.120] another episode of AI Networks. Uh this
+
+[00:00:08.559] uh I'm Bibb, one of the creators of BAML
+
+[00:00:11.280] and with me I have
+
+[00:00:13.759] >> uh my name is Dex. Uh and I'm the
+
+[00:00:16.320] founder of Human Layer.
+
+[00:00:17.680] >> Yeah. Um
+
+[00:00:19.199] >> 12 factor agents, although VIB doesn't
+
+[00:00:21.359] get enough credit for that one.
+
+[00:00:23.920] >> 12 Factor agents and you want to give me
+
+[00:00:25.359] a shout out, give Vibbob a shout out,
+
+[00:00:26.960] too.
+
+[00:00:27.920] >> Uh no, that's all good. Um but I think
+
+[00:00:30.720] today what we want to talk about is
+
+[00:00:32.239] really around a topic that comes up a
+
+[00:00:34.239] lot. Uh which is we have new models come
+
+[00:00:36.320] out all the time. How do we actually go
+
+[00:00:38.640] about measuring which model we should
+
+[00:00:40.719] use? Should we swap the model? Should we
+
+[00:00:42.320] not swap the model? We're going to write
+
+[00:00:44.239] some code. We're going to show you how
+
+[00:00:45.360] to do it. And then but I think most
+
+[00:00:46.800] importantly we're going to we're going
+
+[00:00:49.360] to start off with just a general
+
+[00:00:50.559] discussion around this uh really quickly
+
+[00:00:53.199] and I'm going to try and get like people
+
+[00:00:54.640] to share their thoughts along the way.
+
+[00:00:57.840] So the first thing I want to talk about
+
+[00:00:59.120] is like for everyone that is um that
+
+[00:01:01.600] does build LM applications um you can do
+
+[00:01:04.000] by show of hand type in chat whatever
+
+[00:01:05.680] you think is best.
+
+[00:01:07.600] Uh and Dex as well like I want to ask
+
+[00:01:10.000] how many of you are how many of you did
+
+[00:01:12.720] when you see a new model come out
+
+[00:01:14.240] immediately go back and try and update
+
+[00:01:16.000] your prompts to use that model right
+
+[00:01:17.439] away.
+
+[00:01:25.270] >> Steph you do
+
+[00:01:25.280] >> uh yeah I've done this a couple times.
+
+[00:01:26.799] Um,
+
+[00:01:28.560] even back like a year and a half ago
+
+[00:01:30.479] when it was like GPT4
+
+[00:01:32.880] switched to GPT40, that was the biggest
+
+[00:01:35.520] one. That was and like I know 40 was a
+
+[00:01:37.759] little bit dumber, but it was so much
+
+[00:01:39.200] faster and cheaper that I was just like,
+
+[00:01:41.360] "Okay, this is faster. We're good." Like
+
+[00:01:43.119] I vibed it in 30 seconds. I was like,
+
+[00:01:45.200] "Yep, we're going to use this one from
+
+[00:01:46.479] now on."
+
+[00:01:48.159] >> I see. And like what drives that for
+
+[00:01:50.240] you? Like what is it just cost for you
+
+[00:01:52.479] that makes that decision? Like what?
+
+[00:01:54.320] >> It was speed. It was experience. We had
+
+[00:01:56.079] we had a thing in the UI. Basically, we
+
+[00:01:57.600] we built this app before we were working
+
+[00:01:58.880] on human layer. We're doing this thing
+
+[00:02:00.240] like analyze uh SQL queries from your
+
+[00:02:02.320] SQL audit log and like pump them through
+
+[00:02:04.079] GPT and then like summarize the query
+
+[00:02:06.320] and then like segment them by person or
+
+[00:02:08.319] by table to try to give descriptions of
+
+[00:02:10.319] like what is this table generally used
+
+[00:02:12.400] for or what is this person generally
+
+[00:02:14.160] query things about. And so that summary
+
+[00:02:16.640] was like take the last 10 queries,
+
+[00:02:19.120] summarize those and then do that a bunch
+
+[00:02:21.120] of times in parallel and then summarize
+
+[00:02:23.360] the summaries. And so like we had to we
+
+[00:02:25.440] were running a ton of prompts and so
+
+[00:02:27.760] like I think 40 is like four times
+
+[00:02:29.680] faster or twice as fast as GPT4. So it
+
+[00:02:32.239] was a huge like UX boost because we were
+
+[00:02:34.319] doing it live on the fly. We hadn't
+
+[00:02:35.680] started like pre-filling it or warming
+
+[00:02:37.280] the cache for it or whatever. So it was
+
+[00:02:39.360] like the speed was the only thing with
+
+[00:02:41.200] like user experience. It was like this
+
+[00:02:42.640] is faster even if it's slightly dumber I
+
+[00:02:44.959] want it.
+
+[00:02:46.160] >> Yeah. I think that's normally what I've
+
+[00:02:48.000] seen as well. Uh it's like if there's a
+
+[00:02:49.840] huge step function improvement, most
+
+[00:02:51.840] people are just immediately trying to
+
+[00:02:53.040] swap over at least some of their prompts
+
+[00:02:54.319] to the latest model or at least see how
+
+[00:02:55.760] they could do. But at least my empirical
+
+[00:02:58.720] evidence has been the minute a uh the
+
+[00:03:02.080] minute um like a new model comes out,
+
+[00:03:05.040] the first thing that I often see people
+
+[00:03:06.879] do is like wait for other people's
+
+[00:03:08.720] response to it and
+
+[00:03:10.800] >> let someone else vibe check for you,
+
+[00:03:12.319] right? Yeah,
+
+[00:03:13.120] >> that's what I feel like I'm seeing a lot
+
+[00:03:14.560] more of is like people are like mostly
+
+[00:03:16.400] happy with the model today or they're I
+
+[00:03:19.680] would say like it's like the known enemy
+
+[00:03:22.480] and a new model is like the unknown
+
+[00:03:24.319] enemy. It could be good, it could be a
+
+[00:03:25.519] friend, but you really don't know and
+
+[00:03:27.680] like the effort of actually seeing if
+
+[00:03:30.319] the model will work or not work is not
+
+[00:03:32.239] worth it especially if a system isn't
+
+[00:03:33.760] broken. Well, and what you see also is
+
+[00:03:36.560] people come up with their own uh like
+
+[00:03:40.319] benchmark systems like their own um how
+
+[00:03:44.480] do we say it like their own just
+
+[00:03:45.920] personal benchmark of like when a new
+
+[00:03:47.440] model comes out I have a bunch of
+
+[00:03:48.640] prompts that are secrets that is like my
+
+[00:03:50.319] private benchmark set that gives me a
+
+[00:03:52.239] feel for how it performs and I can tweak
+
+[00:03:54.319] and like see how that works. Um, if
+
+[00:03:56.879] you're an AI engineer, this is a really
+
+[00:03:58.239] good talk. Simon Wilson talks about his
+
+[00:04:00.799] benchmark for seeing how good a model is
+
+[00:04:02.720] is now like his vibe is generating an
+
+[00:04:04.560] SVG of a pelican on a bicycle and like
+
+[00:04:07.120] literally generating the SVGs from
+
+[00:04:08.799] scratch. And so like he has it for Nova
+
+[00:04:10.879] and Llama 3.3 and Deep Seek and kind of
+
+[00:04:14.560] like how all of these different models
+
+[00:04:17.359] draw things.
+
+[00:04:18.639] >> So like this is not a technical
+
+[00:04:20.079] benchmark. This is a vibe benchmark, but
+
+[00:04:21.919] new model comes out, he's running this
+
+[00:04:23.440] test on it basically.
+
+[00:04:29.830] So that as well.
+
+[00:04:29.840] >> Yeah, I think um I think that's kind of
+
+[00:04:31.840] what I see too.
+
+[00:04:33.440] >> Sorry,
+
+[00:04:33.759] >> we got some comments in the chat as
+
+[00:04:35.040] well.
+
+[00:04:37.199] >> I think Sylvia put um Sylvia said a
+
+[00:04:40.320] point about like this is uh the best way
+
+[00:04:42.720] to do it is just like prompt it.
+
+[00:04:44.320] Honestly, I think I I feel the same way.
+
+[00:04:46.400] Like for example, we have our AI content
+
+[00:04:47.919] pipeline that we use to summarize these
+
+[00:04:49.440] videos, send out emails, send out little
+
+[00:04:51.280] blurb. We'll probably be adding pretty
+
+[00:04:53.120] soon to it. will be adding this ability
+
+[00:04:54.960] to
+
+[00:04:56.479] uh what I would say is like add um
+
+[00:04:59.680] hopefully add like blog posts written
+
+[00:05:01.440] about it as well from the same context
+
+[00:05:03.280] and our borrow
+
+[00:05:04.160] >> I wrote a pro I wrote a prompt for
+
+[00:05:05.520] tweets based on it it's pretty well
+
+[00:05:08.479] >> yeah and it's surprising it it takes a
+
+[00:05:10.240] while but like now that it's working
+
+[00:05:12.400] would you change to a new model
+
+[00:05:14.320] >> the original owner was kind of
+
+[00:05:18.000] >> oh I'm not a host I can't mute people
+
+[00:05:19.840] for you
+
+[00:05:21.120] >> I don't know why you're not auto host
+
+[00:05:22.560] let me make you an auto host.
+
+[00:05:25.199] I'll make host. There we go. Um, yeah.
+
+[00:05:27.919] What what would you do like now that the
+
+[00:05:29.440] tweet pipeline is working and the other
+
+[00:05:30.880] systems are working, would you go ahead
+
+[00:05:32.320] and like update the model?
+
+[00:05:35.199] So, here's another thing that's happened
+
+[00:05:36.560] recently is like and this is going to be
+
+[00:05:38.560] kind of like uh
+
+[00:05:41.120] sorry, I lost my power for a sec. Um,
+
+[00:05:45.360] we built this whole pipeline and then I
+
+[00:05:47.280] was like prototyping something in
+
+[00:05:48.639] Claude. Um, and just seeing like we
+
+[00:05:50.960] built this pipeline to do the tweets and
+
+[00:05:52.320] the human a loop and all this stuff. And
+
+[00:05:54.800] I jumped in. I was just like, can Claude
+
+[00:05:56.639] build this in like a headless like the
+
+[00:05:58.720] more agentic way?
+
+[00:06:00.080] >> Yeah.
+
+[00:06:00.479] >> Um, and so that's the other thing. It's
+
+[00:06:02.000] like not just vibing different models,
+
+[00:06:03.520] but different like architectures.
+
+[00:06:06.000] >> Um, let me see if I can switch back to
+
+[00:06:07.600] the other. There we go.
+
+[00:06:08.720] >> Yeah.
+
+[00:06:09.360] >> Um, but this tweet, this LinkedIn post
+
+[00:06:13.120] here was literally entirely written by
+
+[00:06:15.680] Claude. Every I didn't edit it at all. I
+
+[00:06:18.000] added the credit for the slide because
+
+[00:06:19.759] Claude can't do links. But like this is
+
+[00:06:21.199] from our last episode. I just said I'll
+
+[00:06:23.120] show you the prompt that we use. Um
+
+[00:06:27.759] it's called social. So it's like find
+
+[00:06:29.840] all the whiteboard images and the
+
+[00:06:31.199] episodes. So if you go on our website um
+
+[00:06:34.160] this is getting a tiny bit off topic,
+
+[00:06:35.759] but um this is exactly kind of how I'm
+
+[00:06:38.720] vibing through this stuff. So here's the
+
+[00:06:40.240] episode and it's basically like for each
+
+[00:06:42.639] of these pictures that we uploaded like
+
+[00:06:45.680] download it look at it and write a post
+
+[00:06:47.520] about it.
+
+[00:06:49.199] Um so like use will get to download the
+
+[00:06:51.440] image create a Twitter post that
+
+[00:06:53.120] captures the key insight keep it short.
+
+[00:06:55.600] Each post should teach one specific
+
+[00:06:57.280] lesson from the whiteboard and this is
+
+[00:07:00.560] the file that got created. So it
+
+[00:07:02.800] basically for each one um yeah so here's
+
+[00:07:06.880] the one that was posted on LinkedIn. Um
+
+[00:07:11.039] so this is kind of like it's not just
+
+[00:07:13.759] vibing like
+
+[00:07:16.240] one prompt in and the model does
+
+[00:07:18.000] something but it's also it's like how
+
+[00:07:19.599] smart is the model at like multi-turn
+
+[00:07:21.440] tool calling and stuff like that. So all
+
+[00:07:23.120] that is to say is like not only should
+
+[00:07:25.120] you say here's the text in here's the
+
+[00:07:26.960] prompt what comes out this like like
+
+[00:07:29.680] tokens in tokens out context engineering
+
+[00:07:31.919] view but also like can you zoom out like
+
+[00:07:34.240] is the new model smart enough in the
+
+[00:07:36.240] right harness some kind of like just
+
+[00:07:38.080] like simple tool calling loop like cloud
+
+[00:07:39.840] code to solve a bigger problem to like
+
+[00:07:42.960] oneshot a LinkedIn post or something
+
+[00:07:44.560] like that.
+
+[00:07:46.000] >> Yeah, exactly. I think that's the right
+
+[00:07:47.520] mentality and I think the really like my
+
+[00:07:49.759] my approach to new models is honestly
+
+[00:07:51.599] twofold. whenever I think about them.
+
+[00:07:53.759] The way that I approach new models is
+
+[00:07:55.440] one I every time a new model comes out I
+
+[00:07:57.680] try and like flip the switch in my brain
+
+[00:08:00.080] that helps me like think about what a
+
+[00:08:02.080] model can do and cannot do and just like
+
+[00:08:03.520] turn it off. It's really important I try
+
+[00:08:05.759] and remove that bias because otherwise I
+
+[00:08:07.440] won't ask the model to do enough and I
+
+[00:08:09.759] just push the model to its limit. I try
+
+[00:08:11.440] and use a shorter prompt that is maybe a
+
+[00:08:14.319] little bit more ambiguous sometimes even
+
+[00:08:16.160] and just see what the model does and
+
+[00:08:18.319] then I let I run like 20 or 30 of them
+
+[00:08:20.400] and then I get a vibe check on how good
+
+[00:08:22.240] it's going and if it can do harder
+
+[00:08:24.000] problems it's a more interesting model
+
+[00:08:25.840] if it behaves better in certain domains
+
+[00:08:27.840] it's a more interesting model and if
+
+[00:08:30.160] that is true then only do I go and say
+
+[00:08:33.039] like okay now let me go and see how well
+
+[00:08:34.800] this model performs on the actual task I
+
+[00:08:36.479] need to think about
+
+[00:08:37.519] >> in your like production code in the
+
+[00:08:39.120] product you're building
+
+[00:08:39.839] >> exactly and I usually will never ever
+
+[00:08:41.919] think about swapping a model until I've
+
+[00:08:43.599] built that intuition on my own. And if
+
+[00:08:45.200] if it seems like tangentially
+
+[00:08:46.720] beneficial, what I view it as, it's not
+
+[00:08:49.440] worth the energy that it would take me
+
+[00:08:51.519] to go do that and make the system
+
+[00:08:53.279] slightly better when I can just make
+
+[00:08:56.240] when I can just go ahead and add a new
+
+[00:08:57.760] feature cuz it's not about like whether
+
+[00:08:59.440] or not you switch the prompt. switching
+
+[00:09:01.200] prompts takes almost as much time as
+
+[00:09:04.160] actually writing a new feature usually
+
+[00:09:08.240] because and it's not even because you're
+
+[00:09:09.519] like doing busy work just that writing a
+
+[00:09:11.040] feature now is really fast because you
+
+[00:09:12.480] can use a genic system to write code but
+
+[00:09:15.279] evaluating evaluating an AI pipeline is
+
+[00:09:17.839] always going to be really slow because
+
+[00:09:19.360] most people don't have automated evals
+
+[00:09:21.279] so what we're going to do is vibe evals
+
+[00:09:23.440] and if we're going to do vibe evals
+
+[00:09:24.800] we're going to be slower inherently
+
+[00:09:26.560] along the way and that's what I often
+
+[00:09:29.120] see as the bottleneck
+
+[00:09:31.200] when I go and like uh decide what I do
+
+[00:09:34.160] and don't do with these systems. Well,
+
+[00:09:36.800] and and I'll I'll link this talk as well
+
+[00:09:38.320] is um Ben Stein from AI engineer talked
+
+[00:09:40.720] a little bit about what it's like to be
+
+[00:09:41.839] a product manager in the AI world where
+
+[00:09:44.399] you're doing a lot of he doesn't call it
+
+[00:09:46.880] like VI evals from like a engineering
+
+[00:09:48.880] perspective for him it's a little bit
+
+[00:09:50.160] more like the the properties are
+
+[00:09:51.680] emergent and so we can go build a new
+
+[00:09:53.680] feature and pull in a new model and then
+
+[00:09:55.279] put it in our product and then goes play
+
+[00:09:57.360] around with it in the context of the
+
+[00:09:58.959] product and see oh it can do this and it
+
+[00:10:00.720] can do this and like by playing and
+
+[00:10:02.880] trying and like exploring it then you
+
+[00:10:05.519] back into oh that's a cool feature we
+
+[00:10:07.920] want to build for that if it since it
+
+[00:10:09.920] since now we know it can do that let's
+
+[00:10:12.240] now we bake the evals now we do the
+
+[00:10:14.320] testing but this idea that used to
+
+[00:10:16.000] happen Ben put it as like we used to
+
+[00:10:17.200] have this idea of like behavior driven
+
+[00:10:18.720] development where like non-technical
+
+[00:10:20.800] people would write the specifications of
+
+[00:10:22.560] like in this case it should work like
+
+[00:10:24.079] this and in this case it should work
+
+[00:10:25.360] like this and we would like it was like
+
+[00:10:26.640] given when then if you've used like
+
+[00:10:28.240] cucumber or girkin or anything like that
+
+[00:10:30.160] it was like less technical people would
+
+[00:10:32.000] write this Englishy syntax and then the
+
+[00:10:34.640] engineers would develop that and like
+
+[00:10:36.399] the take is like that doesn't work
+
+[00:10:38.640] anymore in the AI world because it's
+
+[00:10:41.040] really hard to be able to say we must be
+
+[00:10:42.959] able to do this and then like oh the
+
+[00:10:44.560] models can never do that but if you just
+
+[00:10:46.560] throw the new model into your product
+
+[00:10:48.000] and see what can it do now you're like
+
+[00:10:49.920] oh it can do that okay cool let's go
+
+[00:10:52.240] make that part of the spec. Yeah, with
+
+[00:10:55.200] that let's jump to the fun part of this
+
+[00:10:57.440] uh session. Um, which unless someone has
+
+[00:10:59.760] someone else they want to share, but it
+
+[00:11:00.880] sounds like most people have the same
+
+[00:11:02.079] opinion as us, which is like they
+
+[00:11:04.240] usually uh evaluate one is like should
+
+[00:11:06.959] we even update? If the system is
+
+[00:11:08.399] working, don't update it. If you want to
+
+[00:11:10.160] try the new model, then you kind of end
+
+[00:11:11.519] up vibe evaling uh along the way. With
+
+[00:11:14.240] that, let's talk about how one does vibe
+
+[00:11:16.240] eval because I think that's going to be
+
+[00:11:17.920] quite important um to actually think
+
+[00:11:19.680] about it. So, I'm going to screen share
+
+[00:11:22.880] uh my desktop. Again, as always, if you
+
+[00:11:25.519] see something you're not supposed to
+
+[00:11:26.399] see, please let me know so I can turn it
+
+[00:11:28.079] off and clip it out of the screen share.
+
+[00:11:29.920] Um otherwise,
+
+[00:11:31.120] >> do a do a poll real quick because I just
+
+[00:11:32.880] fixed your generator versions.
+
+[00:11:35.200] >> Oh, thank you.
+
+[00:11:40.630] >> It was cursor hallucinated a generator
+
+[00:11:40.640] version, but
+
+[00:11:41.600] >> unless you just pulled it down.
+
+[00:11:43.200] >> I did. I just pulled it.
+
+[00:11:45.200] >> So, the prompt that we're going to use
+
+[00:11:46.959] is actually uh the AI that works prompt.
+
+[00:11:50.240] We're going to go ahead and try some of
+
+[00:11:51.839] these, especially like the email prompt
+
+[00:11:53.440] to see like how do we actually eval the
+
+[00:11:55.440] email prompt? Today we use the Gemini
+
+[00:11:58.720] um model to go do this. So like is there
+
+[00:12:01.360] a way that we could perhaps see if we
+
+[00:12:02.959] can use the non-geemini model to do
+
+[00:12:04.480] better?
+
+[00:12:05.200] >> And this is yeah, this is something I've
+
+[00:12:06.320] been really curious about especially in
+
+[00:12:08.079] the context of like BAML because BAML I
+
+[00:12:10.320] think is my for these low-level evals of
+
+[00:12:12.320] just like does did we if we change the
+
+[00:12:14.079] prompt are we gonna break things we know
+
+[00:12:15.519] are supposed to work? Um, but I've never
+
+[00:12:17.760] really had a good framework for like I
+
+[00:12:20.240] want to just take this one prompt and
+
+[00:12:21.839] test it with the same data across four
+
+[00:12:24.000] different models and like see what that
+
+[00:12:25.839] workflow feels like. So, I'm really
+
+[00:12:27.120] excited to have you dig into this.
+
+[00:12:28.800] >> Yeah. Well, like I think the first thing
+
+[00:12:30.720] is like obviously we can deal one model
+
+[00:12:32.720] at a time. Oh, did I not set up uh
+
+[00:12:36.480] one second, I didn't set up my end bars.
+
+[00:12:38.800] Um, I went to hide this and then set up
+
+[00:12:40.800] my environment variables.
+
+[00:12:43.519] Um while you're doing that um let me
+
+[00:12:45.600] just check the chat here. Um Jud says
+
+[00:12:49.200] we've been testing and validating
+
+[00:12:50.399] results of one model against another
+
+[00:12:51.680] model mostly for the batch ecosystem
+
+[00:12:53.440] setup not real time. So there are places
+
+[00:12:55.360] where I or my team are quite occupied to
+
+[00:12:58.000] even review the results which are
+
+[00:12:59.920] sometimes hallucinated. We try to
+
+[00:13:01.120] automate validation results from one M
+
+[00:13:03.040] model again. Yeah. having one model look
+
+[00:13:05.519] at the outputs of other models is like
+
+[00:13:07.440] technically in an academic sense uh I
+
+[00:13:11.040] think is uh corre like papers will say
+
+[00:13:13.680] that that works better and LLM as judge
+
+[00:13:15.600] works like improves your accuracy but it
+
+[00:13:18.639] also is like that same thing that the
+
+[00:13:20.079] the postwe point is like the more steps
+
+[00:13:22.160] you add to your pipeline the more you're
+
+[00:13:24.160] introducing uncertainty and so if your
+
+[00:13:26.079] judge is just as inaccurate as your
+
+[00:13:27.839] other models then you uh may end up just
+
+[00:13:31.040] having creating more like stochastic
+
+[00:13:33.600] effects and more randomness.
+
+[00:13:36.800] >> That's true. Um the challenge we had was
+
+[00:13:39.519] mostly in the batch ecosystem and we
+
+[00:13:41.279] were like just lazy enough to review
+
+[00:13:42.959] like I mean to give you guys some
+
+[00:13:44.480] context we do like large reports on
+
+[00:13:47.040] candidates and when we do that it's
+
+[00:13:49.279] painfully st I mean we we had some
+
+[00:13:51.360] hallucination effects from open AAI or
+
+[00:13:53.519] any standard models we were like tired
+
+[00:13:55.279] of it. the we put them in like some sort
+
+[00:13:57.680] of a recursive loop in our ETLs and uh
+
+[00:14:01.440] that somehow saved us a lot of time
+
+[00:14:03.600] because now we have near um uh near good
+
+[00:14:07.600] level accuracy meaning both the models
+
+[00:14:10.079] are trained very differently right like
+
+[00:14:11.680] llama 3 or open AAI or anthropic so that
+
+[00:14:14.639] kind of helps wet the results for us but
+
+[00:14:17.680] this is not really uh related to this
+
+[00:14:19.760] topic I just thought I'll throw that out
+
+[00:14:21.279] there yeah I know you guys are talking
+
+[00:14:22.959] about evals of one single model yeah
+
+[00:14:25.600] That's a actually um that's actually a
+
+[00:14:27.600] really good question that leading into
+
+[00:14:29.279] like what is accuracy and like accuracy
+
+[00:14:31.519] can be hallucination rate. Um I'm just
+
+[00:14:33.360] going to pull up one more slide that
+
+[00:14:34.480] I'll I'll I'll add to the show notes as
+
+[00:14:36.160] well. Um let me go grab that
+
+[00:14:46.150] um
+
+[00:14:46.160] really quick. This is from a talk we
+
+[00:14:47.680] gave at the MLOps uh meetup um or agents
+
+[00:14:51.600] and prod like virtual conference. Um,
+
+[00:14:55.360] where is this?
+
+[00:15:09.590] I think this is the wrong deck. Sorry.
+
+[00:15:09.600] Let me go find it.
+
+[00:15:18.310] Um, basically the idea that like uh
+
+[00:15:18.320] performance in the past was all about
+
+[00:15:20.560] cost latency like before AI. Um, here we
+
+[00:15:24.320] go.
+
+[00:15:26.800] Um,
+
+[00:15:29.199] like Vibbos says this all the time,
+
+[00:15:30.959] right? Can can you imagine if your REST
+
+[00:15:32.800] API failed on 20% of requests? Like you
+
+[00:15:35.839] would be having an outage. You would
+
+[00:15:37.120] update your savage page, you'd be like
+
+[00:15:38.560] everything is broken. But in an AI, if
+
+[00:15:40.880] it gets it right 80% of the time for
+
+[00:15:42.480] certain use cases, that's like kind of
+
+[00:15:43.920] good enough. Um, and so before AI, we
+
+[00:15:46.399] had latency and uptime and cost and
+
+[00:15:48.160] security, but now we also have accuracy.
+
+[00:15:50.720] And accuracy is like number of
+
+[00:15:52.320] hallucinations and a couple other
+
+[00:15:54.800] things. But like it it's really like
+
+[00:15:57.600] depends on your use case, right? Like in
+
+[00:15:59.839] certain cases there are things where
+
+[00:16:00.880] like oh if the model gets that wrong,
+
+[00:16:02.079] the user will be able to tell and they
+
+[00:16:03.680] can go change it. But there's other
+
+[00:16:05.279] things where it's like if your model is
+
+[00:16:06.959] fetching context from some list of
+
+[00:16:08.959] regulations and you want it to like
+
+[00:16:10.800] accurately
+
+[00:16:12.560] uh reproduce the content of that
+
+[00:16:14.639] regulation in its reasoning trace. That
+
+[00:16:17.040] has to be correct. Otherwise, like your
+
+[00:16:19.600] app is not only like not helpful, but
+
+[00:16:21.920] it's actively harmful.
+
+[00:16:23.680] >> And so, this is kind of when we talk
+
+[00:16:24.959] about performance. Yeah. Go ahead,
+
+[00:16:26.240] Silia. Just to articulate what I think
+
+[00:16:29.360] you're saying, it seems like you're
+
+[00:16:31.040] saying that accur or what I'm taking
+
+[00:16:34.079] away is that accuracy is implied to also
+
+[00:16:38.399] be a a standin for quality and it's a
+
+[00:16:42.639] poorly defined word and it can mean a
+
+[00:16:45.279] lot of different things in a lot of
+
+[00:16:46.560] different contexts,
+
+[00:16:49.040] I guess.
+
+[00:16:58.790] I think that's I think that's valid.
+
+[00:16:58.800] Yeah, I think that's a good way to put
+
+[00:16:59.920] it. And it's like again I'll I'll share
+
+[00:17:01.519] the link to the product talk which is
+
+[00:17:02.880] like accuracy and like trade-offs and
+
+[00:17:05.360] like what you need and like what makes
+
+[00:17:06.959] your product good and like what makes it
+
+[00:17:08.640] what delivers value for the because like
+
+[00:17:10.880] you could say like 95% accuracy and 99%
+
+[00:17:13.520] accuracy from the customer perspective
+
+[00:17:15.600] are equivalent. Like those two things
+
+[00:17:17.679] both help the user solve their problem
+
+[00:17:19.679] in the same way, the same amount. Well,
+
+[00:17:22.319] >> but there are other cases. Yeah.
+
+[00:17:23.839] >> If I'm vibe coding and I have 80%
+
+[00:17:26.799] accuracy, I can just go fix the 20%
+
+[00:17:29.679] that's wrong.
+
+[00:17:31.440] >> Yes.
+
+[00:17:31.760] >> Or like like it's
+
+[00:17:34.960] if accuracy
+
+[00:17:37.120] like in that context, what accuracy
+
+[00:17:39.600] means is makes working code. Um, but
+
+[00:17:44.240] it's if it's hallucination rate on
+
+[00:17:47.280] factual data, that's a completely
+
+[00:17:49.120] different
+
+[00:17:50.720] measure than makes working code. Well,
+
+[00:17:53.600] and I think it also depends on your you
+
+[00:17:55.520] like writing code in cursor is a very
+
+[00:17:57.520] human in the loop experience where it's
+
+[00:17:59.039] like even if the code it makes is not
+
+[00:18:00.960] quite working or doesn't quite pass the
+
+[00:18:02.960] llinter or whatever, it's like you still
+
+[00:18:05.120] saved me a bunch of time even though I
+
+[00:18:06.960] have now I'm just doing 20% of the work
+
+[00:18:08.559] instead of 100% of the work. Um but in
+
+[00:18:11.360] certain workflows like if if if it's
+
+[00:18:14.080] hard for the human to be in like a lot
+
+[00:18:15.600] of these like cloud maxers,
+
+[00:18:17.120] hyperengineers, whatever you want to
+
+[00:18:18.480] call them like their their goal and like
+
+[00:18:20.559] the goal of tools like cloud code which
+
+[00:18:22.000] is totally headless is becoming more and
+
+[00:18:23.679] more like how do we make it so that you
+
+[00:18:26.240] don't have to edit the code or so that
+
+[00:18:27.840] like if if the code is wrong you can fix
+
+[00:18:29.919] it with a prompt rather than with um
+
+[00:18:33.919] something like something like going and
+
+[00:18:35.679] editing the file yourself. an experiment
+
+[00:18:38.080] like he went spent about a month having
+
+[00:18:40.880] multiple different claents prompt each
+
+[00:18:44.000] other just to like see how actually good
+
+[00:18:46.960] that was right now and I thought that
+
+[00:18:48.799] was an interesting experiment.
+
+[00:18:50.799] >> Yeah
+
+[00:18:52.400] like yesterday with like 12 sub Asian
+
+[00:18:54.880] instances and just one container with
+
+[00:18:56.400] two orchestrators and it was not fun to
+
+[00:18:58.799] do that. I think the idea is very very
+
+[00:19:02.080] similar to like for example this email
+
+[00:19:04.000] task. Like what the heck does good
+
+[00:19:06.480] accuracy mean for generating good email
+
+[00:19:08.799] that's a summary for a for a blog post
+
+[00:19:12.080] of some kind. It's actually really
+
+[00:19:13.840] really ambiguous what it would be. Like
+
+[00:19:16.480] for example,
+
+[00:19:17.679] >> if we miss bullet points, if we miss
+
+[00:19:19.520] topics, that's fine. But if the tone
+
+[00:19:21.440] sucks, then we're [ __ ]
+
+[00:19:23.679] >> Exactly. And like and for example, like
+
+[00:19:25.840] hello first name. I don't personally
+
+[00:19:27.679] care about this right now because our
+
+[00:19:29.840] workflow right now is we take the email
+
+[00:19:31.760] that is generated from this system and
+
+[00:19:35.120] then we paste it into loops. If we did
+
+[00:19:38.400] this in a fully automated way then
+
+[00:19:40.160] suddenly accuracy of generating hello
+
+[00:19:41.919] first name no longer works.
+
+[00:19:44.400] Now I need to guarantee that it
+
+[00:19:46.080] generates hello first name and I need to
+
+[00:19:47.440] substitute that with the actual variable
+
+[00:19:48.880] that they swap out in the loops API
+
+[00:19:51.280] system. And now my accuracy constraints
+
+[00:19:54.400] and definition have fundamentally
+
+[00:19:55.760] changed.
+
+[00:19:57.120] So, it's possible that a new model
+
+[00:19:58.960] allows for that, but I think the the
+
+[00:20:01.120] real way to always think about it is
+
+[00:20:02.400] exactly what Sylvia said, which is you
+
+[00:20:04.080] always have to think about the business
+
+[00:20:05.679] use case of AI before defining the
+
+[00:20:08.640] problem. It's like it's when people talk
+
+[00:20:10.320] about like if if you're an engineer or
+
+[00:20:13.200] worked with engineers before, you'll
+
+[00:20:14.559] often see people that are talking about
+
+[00:20:16.000] like how does this work in the case of
+
+[00:20:19.520] um like someone's like, I want to make
+
+[00:20:22.160] the a I want to make the system faster.
+
+[00:20:24.320] But if there's no user criteria attached
+
+[00:20:26.400] to making it faster, there's no end
+
+[00:20:28.640] goal. Code can always be faster. Code
+
+[00:20:30.880] can always be better, but you need
+
+[00:20:32.880] always a definition that makes sense for
+
+[00:20:34.640] the product. So in this case, the email
+
+[00:20:36.960] can always be better. We know that
+
+[00:20:39.120] there's no end to a perfect email. If
+
+[00:20:41.520] there was, marketing would be solved and
+
+[00:20:43.039] we wouldn't have to do any of this stuff
+
+[00:20:44.159] ever again. There'd be one button that
+
+[00:20:45.600] you press and you generate the best
+
+[00:20:46.799] email. But most things that are worth
+
+[00:20:49.760] solving from a business standpoint have
+
+[00:20:51.440] no infinite goal. The thing with AI that
+
+[00:20:54.080] I think makes people more nervous about
+
+[00:20:57.039] this compared to other problems is that
+
+[00:20:59.679] the iteration speed feels faster. So we
+
+[00:21:02.880] feel like we should get to a faster
+
+[00:21:04.559] better solution faster as well. So we
+
+[00:21:06.640] want to converge to the best solution
+
+[00:21:08.159] ASAP. So like when a new model comes
+
+[00:21:09.679] out, I think the feeling that we're
+
+[00:21:12.080] having most of the time is not that this
+
+[00:21:14.400] model is going to generally like oh
+
+[00:21:17.520] maybe this was what I needed, not a
+
+[00:21:19.840] better prompt, not a better software. I
+
+[00:21:21.280] just the model will solve all these
+
+[00:21:22.559] problems and make it go away. And
+
+[00:21:23.840] sometimes that happens. GD4 to GPD35 was
+
+[00:21:27.360] a big difference. Undeniably so. GPT 40
+
+[00:21:31.440] Mini like D said changed latency in an
+
+[00:21:33.520] order of magnitude way. And there's no
+
+[00:21:35.679] five evals that Dex Dex actually said he
+
+[00:21:38.640] will lose a he will lose um accuracy and
+
+[00:21:43.520] like reliability in favor of latency
+
+[00:21:45.280] because that mattered for his product
+
+[00:21:47.039] experience.
+
+[00:21:48.720] On the other hand, DeepC came out and
+
+[00:21:50.880] like the need of it being open source
+
+[00:21:52.320] and matching even if it's worse than
+
+[00:21:54.159] GP40 suddenly got a lot of people
+
+[00:21:56.240] excited because it opened up use cases
+
+[00:21:58.480] that weren't possible before. But if
+
+[00:22:01.120] you're a consumer app that has like
+
+[00:22:03.120] let's say like a 100 thousand users or
+
+[00:22:05.200] like a thousand users and that isn't a
+
+[00:22:07.360] big problem for you, just use GT40.
+
+[00:22:10.000] There's no need to eval.
+
+[00:22:12.320] But I always think it's worth thinking
+
+[00:22:13.679] about. So if you have high accuracy
+
+[00:22:15.440] constraints like in this case, we can
+
+[00:22:17.039] always make the email better. Let's talk
+
+[00:22:19.039] about how we would eval this. Well, the
+
+[00:22:21.280] first thing that we would do is what I
+
+[00:22:23.679] like to do is just very very basically
+
+[00:22:25.840] just like at least have one test. Like I
+
+[00:22:28.799] have one test here and it's written over
+
+[00:22:30.480] here. I want to deal with this. I might
+
+[00:22:32.480] actually have a couple more tests and
+
+[00:22:34.720] let's see if I can get it.
+
+[00:22:39.990] >> But the the idea being like if you have
+
+[00:22:40.000] one test you can just drop in 40 mini
+
+[00:22:43.280] and just like verify your probably gut
+
+[00:22:45.600] instinct that like 40 min is going to
+
+[00:22:47.039] suck at this task or drop in sonnet 4
+
+[00:22:49.760] versus opus 4 and just kind of see how
+
+[00:22:51.679] do these things perform just by looking
+
+[00:22:53.120] at the output.
+
+[00:22:54.559] >> Sorry I was sharing nvar and I did not
+
+[00:22:56.400] want to share it again.
+
+[00:23:02.149] So, right over here, um, we're spending
+
+[00:23:02.159] almost no money because the system's
+
+[00:23:03.600] pretty good. But if I go into here, uh,
+
+[00:23:06.400] what prompt am I on? I'm on email
+
+[00:23:09.280] structure prompt.
+
+[00:23:11.840] That's what I run. Okay, cool.
+
+[00:23:15.039] Let's just make another test cases. So,
+
+[00:23:16.480] I have two now.
+
+[00:23:22.789] Okay, now I have two test cases. And
+
+[00:23:22.799] this is literally a thing from cracking
+
+[00:23:24.799] the prompting interview. That's a
+
+[00:23:26.080] subject. it has this and like dumps out
+
+[00:23:28.400] a bunch of stuff that describes uh
+
+[00:23:30.640] cracking a prompt interview along with
+
+[00:23:33.440] um what the next session is about. Um
+
+[00:23:37.039] and I can just go
+
+[00:23:37.840] >> Okay, cool. So this is So the inputs to
+
+[00:23:39.679] this are the outputs from parsing the
+
+[00:23:41.360] transcript and just asking it to pull
+
+[00:23:43.360] out these four different like categories
+
+[00:23:45.440] of insights.
+
+[00:23:46.880] >> Exactly. And like it talks about labels,
+
+[00:23:48.880] diorization, a few other things. So I'm
+
+[00:23:50.400] not going to prompt I'm not going to
+
+[00:23:51.440] email the whole pipeline. I'm going to
+
+[00:23:52.720] eval just as one step because eval
+
+[00:23:55.600] pipeline is a thing I can do but like
+
+[00:23:58.000] it's way easier to just make sure that
+
+[00:23:59.360] the one step got better and then I can
+
+[00:24:01.120] make the other step go better and right
+
+[00:24:04.240] and the analogy that I always use in my
+
+[00:24:07.600] self is like a long time ago it was
+
+[00:24:11.120] definitely true that most people could
+
+[00:24:12.799] write better assembly than what C could
+
+[00:24:14.640] write but now the C compiler is always
+
+[00:24:18.400] going to be better than most people can
+
+[00:24:20.159] ever write and like systems get better
+
+[00:24:22.559] over time. I think we're in the assembly
+
+[00:24:25.120] era of prompting right now. We're
+
+[00:24:26.960] probably not at a point where like
+
+[00:24:28.240] systems can automatically heal
+
+[00:24:29.679] themselves because not because they
+
+[00:24:31.600] can't do it, but most people don't have
+
+[00:24:33.279] good problem definitions on which they
+
+[00:24:35.120] need to optimize for. So therefore, the
+
+[00:24:37.679] best thing you can do is first get a
+
+[00:24:39.200] good grasp of your problem. So if I just
+
+[00:24:41.679] like go ahead and quickly run this um
+
+[00:24:43.520] I'll run this test specifically
+
+[00:24:46.559] and we'll just see how well it works.
+
+[00:24:49.039] And while I'm doing this, I'm going to
+
+[00:24:50.640] talk about how we can eval multiple
+
+[00:24:51.919] models because I think that's the part
+
+[00:24:53.039] that everyone is really really
+
+[00:24:54.159] interested in. So we'll do from
+
+[00:25:06.470] and I have to
+
+[00:25:06.480] install one more thing. UV run UV add
+
+[00:25:11.840] identic
+
+[00:25:13.440] sync.
+
+[00:25:15.520] Cool. So it is running all the
+
+[00:25:16.880] environment variables are running
+
+[00:25:17.919] correctly. So, I want to see how well
+
+[00:25:19.200] this works.
+
+[00:25:21.279] Python restart language server.
+
+[00:25:29.510] Why is it not picking up?
+
+[00:25:29.520] This is the most annoying thing about
+
+[00:25:31.120] Python. You have to set the environment
+
+[00:25:32.640] variables correctly.
+
+[00:25:35.919] Um, and I believe I have to do one last
+
+[00:25:39.120] thing, which is I have to tell it to
+
+[00:25:40.400] generate.
+
+[00:25:41.520] >> Probably have to generate.
+
+[00:25:44.799] Oh, yeah. I was putting in an app but
+
+[00:25:48.720] >> oh that's okay I'll just put it directly
+
+[00:25:51.600] there. Um and then what we'll do is
+
+[00:25:54.400] we'll do B dot and the test that I'm
+
+[00:25:56.880] making is only on draft email. So like
+
+[00:25:58.720] draft email
+
+[00:26:04.070] and I'm going to pass in some sort of
+
+[00:26:04.080] summary into it and then a structure
+
+[00:26:07.039] uh along with it and then I'm going to
+
+[00:26:08.559] like get the results. At some point what
+
+[00:26:11.200] I want to do is swap the model. So like
+
+[00:26:12.480] let's really quickly make a test case
+
+[00:26:13.919] from this. So I will uh
+
+[00:26:35.430] there you go and then claw fill these
+
+[00:26:35.440] out the wrong thing I
+
+[00:26:46.789] and it'll do its thing. But while it's
+
+[00:26:46.799] doing its thing, I basically have a
+
+[00:26:48.000] result. Now, the first thing I'll notice
+
+[00:26:49.520] is what I really want to do is I'm going
+
+[00:26:50.880] to do the very very quickly dumbest
+
+[00:26:53.200] thing that I can do, which is No, I
+
+[00:26:56.559] don't want this, which is I'm just going
+
+[00:26:58.960] to save this to disk
+
+[00:27:07.750] and I'll just dump the data out and that
+
+[00:27:07.760] will do something for me.
+
+[00:27:09.039] >> You want to put a time stamp in there?
+
+[00:27:11.200] >> Um, I'll do that in a second. Now, what
+
+[00:27:13.120] I really want to do when I go run this
+
+[00:27:14.720] system is actually
+
+[00:27:18.320] Uh end
+
+[00:27:25.190] there.
+
+[00:27:25.200] >> UV addend. Oh
+
+[00:27:29.760] >> that is like the worst naming of any
+
+[00:27:31.360] package ever and I hate it.
+
+[00:27:33.840] Um I wish they would just take end over.
+
+[00:27:36.240] Um and it does this adds this stuff in
+
+[00:27:38.400] there and then prints this out.
+
+[00:27:41.039] Now the real thing that I really really
+
+[00:27:42.799] want to do over here is I want to make
+
+[00:27:45.039] sure that whatever I'm dumping into here
+
+[00:27:47.760] is actually like parameterized over a
+
+[00:27:49.600] lot of test suites. What I'm actually
+
+[00:27:51.520] going to do is I'm going to say
+
+[00:27:54.799] defaf load test
+
+[00:27:58.799] name stir
+
+[00:28:02.159] um
+
+[00:28:13.110] Okay. So, you're going to be storing
+
+[00:28:13.120] your test data on disk as JSON.
+
+[00:28:16.399] >> Exactly. I'm just going to load it and
+
+[00:28:18.320] I'm going to load it into here and I'm
+
+[00:28:19.440] going to go send both the data out of
+
+[00:28:20.799] here. And the reason that I'm going to
+
+[00:28:22.880] go do this is now what I'm really going
+
+[00:28:24.399] to do in my eval set is not just this.
+
+[00:28:27.840] And for now, what I will do is I'll just
+
+[00:28:29.440] like um
+
+[00:28:35.269] Yeah,
+
+[00:28:35.279] >> I'm just going to hard code these for
+
+[00:28:36.640] now.
+
+[00:28:44.789] And did I spell structure wrong?
+
+[00:28:44.799] What did I do wrong?
+
+[00:28:52.230] >> You have an indent somewhere. Oh, your
+
+[00:28:52.240] indent on summary needs to have come
+
+[00:28:53.840] back one.
+
+[00:28:55.039] >> I forgot. I hate Python.
+
+[00:28:56.799] >> Love Python. Best language.
+
+[00:29:00.399] Hey,
+
+[00:29:00.640] >> I set this up for TypeScript, dude. You
+
+[00:29:02.320] could have done this all in TypeScript
+
+[00:29:03.440] if you wanted to.
+
+[00:29:04.799] >> Yeah. Yeah. Yeah. I will. I will. I
+
+[00:29:06.480] will.
+
+[00:29:07.520] Um, and then what I'm really going to do
+
+[00:29:09.200] after this is I'm going to go and let's
+
+[00:29:11.120] run a bunch of models. So I'm going to
+
+[00:29:12.399] have a bunch of tests and I'll say uh,
+
+[00:29:14.720] and I can choose what dimension I run
+
+[00:29:16.480] this on. I can run it per test per model
+
+[00:29:19.120] or I can run per model per test.
+
+[00:29:21.600] >> It's up to me. And the dimension
+
+[00:29:23.600] >> Oh, I see. So you're going to do like a
+
+[00:29:25.039] nested for loop basically like for each
+
+[00:29:27.120] test run the same test against four
+
+[00:29:29.200] models and then dump them out so we can
+
+[00:29:30.799] look at them.
+
+[00:29:32.960] >> I'll like write all these out. It
+
+[00:29:34.480] doesn't really matter. Um, and I have
+
+[00:29:37.520] some models that I've already defined.
+
+[00:29:39.679] So, like if I go into um
+
+[00:29:44.000] >> Okay. So, you're not going to generate
+
+[00:29:45.279] multiple BAML clients like in the BAML
+
+[00:29:47.520] source. So, you're going to use like the
+
+[00:29:48.799] dynamic client builder.
+
+[00:29:50.559] >> I have some that I'll define over here.
+
+[00:29:52.480] Um, and some I won't. So, I'm just going
+
+[00:29:53.840] to run three model. GT40 Mini. I'm going
+
+[00:29:55.679] to run this and I'm going to run my
+
+[00:29:56.720] Gemini smart.
+
+[00:29:58.080] >> Um, I think I have a different model as
+
+[00:29:59.840] well called my Gemini store somewhere
+
+[00:30:02.240] over here. So, I'll just go to these and
+
+[00:30:04.320] just see what else I I like my Gemini,
+
+[00:30:05.919] which is going to use a flash as well.
+
+[00:30:08.480] >> Cool. Nice.
+
+[00:30:09.919] >> And I'll just put these all in here. I
+
+[00:30:11.279] won't think about it. And I'm going to
+
+[00:30:12.240] run each of these models along the way.
+
+[00:30:15.200] Now, the way I'm going to do this is I'm
+
+[00:30:16.640] going to run like for model in this
+
+[00:30:20.159] client registry
+
+[00:30:22.320] equals client.
+
+[00:30:35.510] I think I see where you're going with
+
+[00:30:35.520] this vibe of are you trying to do like
+
+[00:30:36.960] dynamic passing of the model names by
+
+[00:30:40.240] the client?
+
+[00:30:41.440] >> Yeah, exactly.
+
+[00:30:49.269] >> Ah, sorry I'm typing very slow today. I
+
+[00:30:49.279] don't know why.
+
+[00:31:00.870] That client or BML pie right
+
+[00:31:00.880] pie. Yeah.
+
+[00:31:10.549] Sorry, I've been I slept very late last
+
+[00:31:10.559] night, so I'm a little bit slower than I
+
+[00:31:11.840] normally am when I type.
+
+[00:31:18.870] And like boom, we're just going to set
+
+[00:31:18.880] the model. And now we're going to give
+
+[00:31:19.760] the eval of that model. Now, the problem
+
+[00:31:21.600] that I want to want to do here is I'm
+
+[00:31:23.039] going to want to also do this for every
+
+[00:31:24.480] test. So I'll say for test
+
+[00:31:28.480] in this range, and then for this, I'm
+
+[00:31:30.399] now going to go run the test. It's
+
+[00:31:31.600] basically a parameterized test suite,
+
+[00:31:33.279] but there's a reason that I'm not using
+
+[00:31:34.880] pi test.
+
+[00:31:36.399] >> Do you want to move this in here? The
+
+[00:31:38.320] load test
+
+[00:31:39.360] >> based on test name.
+
+[00:31:43.120] >> And the reason that I'm not using piest
+
+[00:31:44.799] right away um is that the way that I'm
+
+[00:31:48.159] going to run this test is actually going
+
+[00:31:49.600] to be async.
+
+[00:31:52.880] So I want to run all the stuff in async
+
+[00:31:54.960] mode.
+
+[00:32:01.430] >> Nice. And the reason I want to run all
+
+[00:32:01.440] of this in async mode is because this is
+
+[00:32:03.360] going to be a lot of stuff. I don't
+
+[00:32:06.000] really want to think about what I run
+
+[00:32:07.279] when I have basically infinite capacity.
+
+[00:32:09.840] So I'm just going to run maximally
+
+[00:32:11.440] parallel stuff.
+
+[00:32:13.679] >> Do you have to change where you're
+
+[00:32:14.640] writing to? Also,
+
+[00:32:17.039] >> say that again.
+
+[00:32:18.399] >> Uh with your with open result.json.
+
+[00:32:22.640] >> Yeah. So it gets tricky when you do
+
+[00:32:24.480] eval. The reason that this gets tricky
+
+[00:32:27.279] is because at some point some of these
+
+[00:32:29.360] are going to fail. You just you just
+
+[00:32:31.600] know that if you're running a bunch in
+
+[00:32:33.120] parallel all the time like model outages
+
+[00:32:35.440] naturally happen. You might put retry
+
+[00:32:37.519] logics in here. You might do all sorts
+
+[00:32:39.039] of things. But at some point some of
+
+[00:32:40.799] these are going to fail. So there's a
+
+[00:32:42.880] couple ways to do this. And what I
+
+[00:32:44.159] always do is I just do this def run unit
+
+[00:32:48.399] u
+
+[00:32:58.149] I always run I always run it wrapped in
+
+[00:32:58.159] a thing
+
+[00:33:00.559] and I always run it this way and I will
+
+[00:33:02.640] also do like the saving and everything
+
+[00:33:04.080] in here right in here as well. So if I'm
+
+[00:33:06.399] going to go save something, I'll save it
+
+[00:33:08.000] in this function directly
+
+[00:33:10.640] and then I will just do a try
+
+[00:33:17.590] accept
+
+[00:33:17.600] and we'll usually not turn
+
+[00:33:20.880] and I will just guarantee that this
+
+[00:33:22.320] function is not allowed to fail.
+
+[00:33:25.200] >> God, I love Python.
+
+[00:33:27.120] >> Say again.
+
+[00:33:29.039] >> I love Python.
+
+[00:33:30.799] >> Yes, indeed. Uh that is how I feel about
+
+[00:33:32.640] this. But I mean, you're going to have
+
+[00:33:33.600] to do this anytime because we have a
+
+[00:33:35.120] high network dependency. And if you're
+
+[00:33:36.880] truly running eval, you're probably
+
+[00:33:38.640] running like 500 of them, a 100 of them
+
+[00:33:41.039] at large test bandwidth. So like you're
+
+[00:33:44.000] going to have to design code. If you're
+
+[00:33:45.039] only running 10, it doesn't really
+
+[00:33:46.000] matter. Just go do it. Um, but if you're
+
+[00:33:48.880] running a lot, this does matter and
+
+[00:33:50.399] starts making a huge difference. So now
+
+[00:33:52.559] we can go do this. We run the unit test
+
+[00:33:54.399] and we go do this. But then we get to
+
+[00:33:56.240] have a the best part is we just have to
+
+[00:33:58.000] have like a tasks cube. now
+
+[00:34:07.509] and our problem goes away.
+
+[00:34:07.519] Uh, and now we have a really, really
+
+[00:34:09.200] nice Wait, what is this?
+
+[00:34:11.440] >> We got to fix this. How you're writing
+
+[00:34:13.040] to the disc or something.
+
+[00:34:16.159] >> Sorry, I'm going to fix this.
+
+[00:34:23.750] >> Nice.
+
+[00:34:23.760] >> Uh, and now this no longer needs to
+
+[00:34:25.280] write to disk.
+
+[00:34:27.520] And then boom.
+
+[00:34:28.000] >> So something needs to write to disk,
+
+[00:34:29.280] right?
+
+[00:34:31.280] >> Well, this part right here. I'll write
+
+[00:34:33.119] to this right over here. I'm going to
+
+[00:34:35.440] write in this method. Uh, this is where
+
+[00:34:37.280] I want to go this, but I don't want to
+
+[00:34:38.960] do it anywhere else. I really only want
+
+[00:34:40.720] to do it here. Now, the other thing I'm
+
+[00:34:42.399] going to run into is all this stuff is
+
+[00:34:44.000] going to run really massively in
+
+[00:34:45.760] parallel. So, how do I want to think
+
+[00:34:47.760] about this? I have to think about what
+
+[00:34:48.720] I'm going to go do. So, I'm going to
+
+[00:34:49.760] have like a target directory.
+
+[00:34:56.310] I think you also need to return from the
+
+[00:34:56.320] run unit test function. It's returning
+
+[00:34:58.079] none.
+
+[00:34:59.359] >> Yeah. Uh I can just ignore that. But I
+
+[00:35:01.119] can just like also return like true.
+
+[00:35:02.960] >> Yeah.
+
+[00:35:04.240] >> Or return false.
+
+[00:35:06.640] And that's okay.
+
+[00:35:23.829] I can
+
+[00:35:23.839] There we go. And this will give me some
+
+[00:35:27.359] modicum of something. Uh,
+
+[00:35:31.280] and it'll be like it'll tell me how many
+
+[00:35:32.640] tests actually pass versus failed. And
+
+[00:35:34.560] there's some count over here. And then
+
+[00:35:36.720] the other thing that I want to do is I
+
+[00:35:37.760] just want to save this to disk. And it
+
+[00:35:40.640] kind of figured it out what I wanted to
+
+[00:35:42.079] go do. So like let's just leave it at
+
+[00:35:43.520] this. I don't want to think about it.
+
+[00:35:46.240] Um, I'm going to go run this. I'm going
+
+[00:35:48.160] to run I'm going to create one more test
+
+[00:35:49.920] really fast um from here.
+
+[00:35:57.750] I wish uh it would just do it but it did
+
+[00:35:57.760] not do it properly. I'll do it manually.
+
+[00:36:05.589] >> I don't think you need the transcript,
+
+[00:36:05.599] right?
+
+[00:36:06.880] >> Um I don't remember what we passed into
+
+[00:36:08.560] this. So I'll try
+
+[00:36:10.880] a long freaking transcript. I forgot how
+
+[00:36:12.560] big these things.
+
+[00:36:13.119] >> Yeah. The whole point of this was like
+
+[00:36:14.240] we were we were showing off how Gemini
+
+[00:36:15.920] can be used with the whole transcript,
+
+[00:36:17.520] but I
+
+[00:36:19.760] Yeah,
+
+[00:36:22.000] I guess you could keep the transcript if
+
+[00:36:23.520] you wanted to. Why did you say you don't
+
+[00:36:25.680] use piest again? I might have missed
+
+[00:36:27.280] that part.
+
+[00:36:28.720] >> Because when I run everything in
+
+[00:36:29.920] parallel, it starts to get tricky how I
+
+[00:36:31.440] want to save stuff, how I want to go do
+
+[00:36:32.960] things. It gets really
+
+[00:36:34.640] >> And like the thing about pi test is it's
+
+[00:36:36.240] like a unit testing framework. when
+
+[00:36:37.920] you're running evals, it's much much
+
+[00:36:39.680] closer to Jupyter notebooks than
+
+[00:36:41.599] anything Piest is going to go do.
+
+[00:36:44.560] >> So it's actually like the better. You
+
+[00:36:46.240] wouldn't use Jupyter notebooks and piest
+
+[00:36:47.839] for the same thing.
+
+[00:36:49.280] >> Yep.
+
+[00:36:49.920] >> And this is exploratory, right?
+
+[00:36:52.160] >> Exactly.
+
+[00:36:56.870] >> Okay, let's have Cursor do some more
+
+[00:36:56.880] work.
+
+[00:37:05.030] One second. We're actually working on
+
+[00:37:05.040] getting exporting test cases to here
+
+[00:37:06.880] because it sounds very useful
+
+[00:37:18.630] Oh, no, no, no, no, no, no, no. What the
+
+[00:37:18.640] [ __ ]
+
+[00:37:19.440] >> You said revert, dude.
+
+[00:37:21.119] >> I realized that.
+
+[00:37:24.320] Um, how do I get back?
+
+[00:37:27.359] >> Can you command Z?
+
+[00:37:29.440] >> Can't.
+
+[00:37:29.760] >> Can you undo?
+
+[00:37:31.119] >> Can't.
+
+[00:37:32.720] That's gone. Okay.
+
+[00:37:34.000] >> Yeah, it's gone.
+
+[00:37:35.440] >> Oh my freaking god. Sorry.
+
+[00:37:37.119] >> Oh, you could be like that guy that
+
+[00:37:38.320] posted on Twitter about how cursor
+
+[00:37:40.160] deleted a month's worth of your work.
+
+[00:37:43.599] >> Whoa, that was a lot.
+
+[00:37:45.200] >> This is why I don't use cursor anymore.
+
+[00:37:47.680] >> It's like the UX is there's just one one
+
+[00:37:50.320] thing that that there's just certain
+
+[00:37:52.000] times it just doesn't doesn't behave in
+
+[00:37:53.920] a nice way.
+
+[00:37:54.400] >> I thought I accepted the change and
+
+[00:37:55.920] everything. Um, is there a way that I
+
+[00:37:58.560] can fix this? Let me just see.
+
+[00:38:07.750] Same chat. If you didn't if you didn't
+
+[00:38:07.760] run the second prompt, if you just
+
+[00:38:09.280] clicked off, it would have fixed it. But
+
+[00:38:10.960] it's gone now.
+
+[00:38:11.760] >> No, it's gone. It's gone. So, I
+
+[00:38:13.680] apologize, friends. Uh, we're going to
+
+[00:38:15.359] have to wait a second uh while I go do
+
+[00:38:17.280] this again.
+
+[00:38:22.630] >> And Dexter, do you use cloud code for
+
+[00:38:22.640] everything now?
+
+[00:38:24.000] >> I'm using cloud. I haven't opened an
+
+[00:38:25.760] editor in uh in about a month, and I
+
+[00:38:29.119] shipped eight PRs yesterday.
+
+[00:38:32.800] Dex is one of the best um cloud coders
+
+[00:38:35.359] that I've seen. I'm actually trying to
+
+[00:38:36.480] learn from him.
+
+[00:38:38.960] >> Okay, I think we're good.
+
+[00:38:40.000] >> Yeah, I'm uh I'm restraining my uh my
+
+[00:38:42.720] instinct to Okay, so it does have it in
+
+[00:38:44.560] like the edit history, so it can kind of
+
+[00:38:46.320] figure it seems like it kind of
+
+[00:38:47.839] remembers what you were doing
+
+[00:38:49.839] >> kind of. It's almost
+
+[00:38:51.119] >> You lost your end. You lost everything.
+
+[00:38:54.240] Wait, Dax, drop some claw code like
+
+[00:38:57.920] lower while we wait.
+
+[00:38:59.040] >> Once once Vib gets this running, I'll
+
+[00:39:00.720] I'll I'll take over for a second. I'll
+
+[00:39:02.480] I'll I'll whatever the next change we
+
+[00:39:04.160] make once the initial thing is done, I
+
+[00:39:06.000] can I can take over and have show you
+
+[00:39:07.839] some claw tricks.
+
+[00:39:09.280] >> Nice.
+
+[00:39:38.790] Okay. I think we're mostly done. Uh,
+
+[00:39:38.800] this will, I think, work in theory.
+
+[00:39:41.040] >> You lost your M though. You need to get
+
+[00:39:43.280] back.
+
+[00:39:43.760] >> Yes.
+
+[00:39:53.430] Cool. Okay.
+
+[00:39:53.440] >> Yeah, let's try. We haven't run any code
+
+[00:39:54.800] in a while. I'm curious just to like
+
+[00:39:56.400] kind of run the simple version and see
+
+[00:39:57.839] what happens and then we can iterate
+
+[00:39:59.119] from there.
+
+[00:39:59.680] >> So, I have to still migrate these tests.
+
+[00:40:02.160] Um, but I think I can do it in a
+
+[00:40:03.839] slightly nicer way, which is
+
+[00:40:22.710] >> maybe I should have used cloud code and
+
+[00:40:22.720] that was my mistake.
+
+[00:40:26.000] >> It's always a mistake.
+
+[00:40:33.270] >> I don't trust it anymore.
+
+[00:40:33.280] >> Well, it's very also interesting to see
+
+[00:40:34.640] what's going to happen with the pricing
+
+[00:40:35.760] change because I know I'm I went to a
+
+[00:40:38.000] meet up in SF a couple weeks ago that
+
+[00:40:39.839] was like the uh the quad maxers meet up
+
+[00:40:41.920] and they literally like checked receipts
+
+[00:40:43.440] at the door. If you're not spending more
+
+[00:40:44.800] than $50 a day on AI coding tools, then
+
+[00:40:47.119] you don't get in
+
+[00:40:48.320] >> really.
+
+[00:40:49.119] >> And there was a lot of people at that
+
+[00:40:50.800] meetup.
+
+[00:40:53.040] >> I think Cloud said it was like 5% of
+
+[00:40:54.960] their users effective. That's a lot.
+
+[00:40:57.280] Like there's a lot of power users just
+
+[00:40:58.640] run like six a day.
+
+[00:41:01.359] >> Yeah. And it's very quickly overnight
+
+[00:41:03.599] became like I think when when sonnet 4
+
+[00:41:05.680] and opus 4 came out I think anthropic
+
+[00:41:08.240] was probably serving 10% of their
+
+[00:41:10.160] inference or 20% of their inference to
+
+[00:41:11.839] cloud code and it probably jumped up to
+
+[00:41:13.440] like 50%. Like I think the the heaviest
+
+[00:41:16.800] like per token users are definitely
+
+[00:41:18.480] going to be the the cloud code people
+
+[00:41:20.000] who are like
+
+[00:41:21.280] >> running 10 in parallel
+
+[00:41:23.040] >> for everything. you what?
+
+[00:41:25.680] >> While this is running, the next thing is
+
+[00:41:27.920] like first thing that you'll notice is
+
+[00:41:30.160] once this thing is actually done
+
+[00:41:31.440] running, we're just going to have a
+
+[00:41:32.640] bunch of JSON files. JSON files are
+
+[00:41:34.400] garbage. They're not very useful at all
+
+[00:41:36.480] because like when I go look at them, I
+
+[00:41:37.920] won't be able to do anything. So, let's
+
+[00:41:39.359] go do something else now.
+
+[00:41:43.040] Please don't [ __ ] me cursor.
+
+[00:41:46.000] Let's
+
+[00:41:46.640] >> new chat.
+
+[00:42:02.230] table
+
+[00:42:02.240] stream. Is it stream lit? I don't know
+
+[00:42:04.319] what it is.
+
+[00:42:05.119] >> Yep. Yep. Streamlit should work. It's
+
+[00:42:07.200] pretty good at stream lit.
+
+[00:42:21.349] Yeah.
+
+[00:42:21.359] Oh, what the [ __ ] did it do? Cloud Code
+
+[00:42:23.440] did some stuff.
+
+[00:42:39.589] >> So, it's editing the JSON files for you.
+
+[00:42:39.599] >> Okay. Made made one file for me for test
+
+[00:42:42.240] and married gun. Cool.
+
+[00:42:49.430] Okay. It's got two files that I think
+
+[00:42:49.440] are mostly good.
+
+[00:42:55.430] Uh this is the last one. Burning any
+
+[00:42:55.440] foul
+
+[00:43:07.510] and I don't want to touch this file. I'm
+
+[00:43:07.520] kind of scared. So I'm going to let it
+
+[00:43:08.640] do its thing.
+
+[00:43:14.150] >> And because I deleted all the code, I
+
+[00:43:14.160] became super cautious right away because
+
+[00:43:16.480] I don't trust this
+
+[00:43:17.920] >> one thing.
+
+[00:43:27.670] Okay,
+
+[00:43:27.680] >> I think we're almost done. Um,
+
+[00:43:36.710] all right, let's just go run this really
+
+[00:43:36.720] fast. Um, and the first thing I'll do is
+
+[00:43:38.400] I'll notice that you what you'll notice
+
+[00:43:40.000] is like um the first thing you'll notice
+
+[00:43:42.720] is I don't actually trust whether the AI
+
+[00:43:44.240] thing is going to work or not. I don't
+
+[00:43:45.200] know if the cloud code generated code is
+
+[00:43:47.599] good.
+
+[00:43:48.960] This is the only thing I hate about
+
+[00:43:50.000] cloud code VS code. I can't hide it. Um,
+
+[00:43:52.640] so I'm actually not going to run the
+
+[00:43:54.000] code. I'm just going to run it like
+
+[00:43:56.319] this. Not say what it is.
+
+[00:43:57.440] >> Just going to make sure it kind of
+
+[00:43:58.400] compiles and works
+
+[00:43:59.599] >> exactly.
+
+[00:44:13.990] That work.
+
+[00:44:14.000] >> Uh, you had some pyantic error.
+
+[00:44:21.190] I think I run I'm running the wrong
+
+[00:44:21.200] test. There we go. That one worked. And
+
+[00:44:23.760] then email structure and then um
+
+[00:44:26.480] burning.
+
+[00:44:37.190] >> So what are those names again? What is
+
+[00:44:37.200] married guan burning guinea fo?
+
+[00:44:38.800] >> They're just like the two test names
+
+[00:44:40.079] that I had.
+
+[00:44:41.359] >> Yeah. when you when you pull tests from
+
+[00:44:42.800] the BAML console, it just makes up a
+
+[00:44:45.200] like random string for you.
+
+[00:44:47.520] >> Adjective animal. I think
+
+[00:44:49.119] >> it doesn't really matter. Um, but now
+
+[00:44:51.440] that I have the test, I can go run this.
+
+[00:44:53.440] And this will run. And while this is
+
+[00:44:55.680] doing this, I will also do that make the
+
+[00:44:58.160] results.
+
+[00:45:00.079] Then I'm going to run this. Okay, while
+
+[00:45:03.040] this is running, I'm now going to start
+
+[00:45:04.720] another cloud code test.
+
+[00:45:08.160] Um, I got scared by his cursor, so I
+
+[00:45:10.720] don't think I'll use it anymore. Um,
+
+[00:45:13.920] update the app to be a Streamlit app
+
+[00:45:20.079] that renders the result
+
+[00:45:24.560] as they come in
+
+[00:45:28.000] for each uh variant.
+
+[00:45:31.520] Um,
+
+[00:45:33.280] for each variant. Um, cool.
+
+[00:45:37.280] and see what it does. And the first
+
+[00:45:38.800] thing I'm going really want to do is I
+
+[00:45:40.079] just want to like vibe code a somewhat
+
+[00:45:42.000] decent UI so I can actually just iterate
+
+[00:45:44.079] because if I can't actually see my
+
+[00:45:45.440] results like
+
+[00:45:48.319] you'll notice in here uh email draft is
+
+[00:45:50.319] not JSON serializable because I I'm dumb
+
+[00:45:54.880] model
+
+[00:45:56.400] is what I should have done. Um and that
+
+[00:45:58.640] would produce a dict object that would
+
+[00:46:00.319] do everything. Do we do mode equals JSON
+
+[00:46:03.359] because it will you need it to convert
+
+[00:46:05.040] the time stamps if there's any time
+
+[00:46:06.640] stamps? Yeah. So,
+
+[00:46:08.400] >> thank you.
+
+[00:46:11.520] >> Let it run again.
+
+[00:46:12.319] >> I dump a lot of JSON in my day by let me
+
+[00:46:15.599] tell you.
+
+[00:46:16.480] >> I can see that. So, like this is like
+
+[00:46:18.400] one of the few things like this is why
+
+[00:46:19.839] it's just really good to not like go all
+
+[00:46:21.760] out on your emails and wait the whole
+
+[00:46:23.119] time for everything because if you do
+
+[00:46:24.960] that, you'll just get stuck. Um, sure,
+
+[00:46:27.599] why not?
+
+[00:46:29.040] I'll let it generate the screen app and
+
+[00:46:30.640] then it's going to go use this function
+
+[00:46:32.079] to go run run the unit test.
+
+[00:46:43.349] And once this thing is done it, as you
+
+[00:46:43.359] can see over here, it dumped out a bunch
+
+[00:46:44.640] of stuff.
+
+[00:46:46.800] And I can actually go look at each of
+
+[00:46:48.319] these and see how well they do. Uh, but
+
+[00:46:50.319] as you can see, it's actually going to
+
+[00:46:51.359] be hard for me to go read all this. So,
+
+[00:46:54.400] um, yes.
+
+[00:46:55.359] >> Oh, wow. Oh yeah, the JSON Unicode
+
+[00:46:57.440] serialized emojis is atrocious.
+
+[00:47:01.040] >> Yep, exactly.
+
+[00:47:03.839] UV run sync.
+
+[00:47:06.079] I don't actually know how to run a
+
+[00:47:07.280] Streamlit app. Uh, but I've run it a few
+
+[00:47:09.200] times, so I always have to look at how
+
+[00:47:11.520] to go do it.
+
+[00:47:12.480] >> I think you just UV run it.
+
+[00:47:14.480] >> Oh, UVX streamllet run.
+
+[00:47:17.760] Oh, yeah. There you go.
+
+[00:47:19.280] >> There you go. Um, so it actually lets
+
+[00:47:21.119] you select test as you're going to it.
+
+[00:47:22.720] Let's just select model and then I can
+
+[00:47:24.000] just run the evals.
+
+[00:47:26.480] >> So you have this yeah you have this um
+
+[00:47:28.480] pantic issue
+
+[00:47:31.920] >> where whatever whatever your test data
+
+[00:47:33.520] is like missing certain fields
+
+[00:47:37.040] >> because of this stupid thing. Uh let me
+
+[00:47:38.960] >> just paste it into cloud.
+
+[00:47:40.880] >> No no this one is like the wrong test
+
+[00:47:42.480] case that's why.
+
+[00:47:44.400] >> Okay.
+
+[00:47:51.910] Uh, it was called
+
+[00:47:51.920] >> search for email structure.
+
+[00:48:05.670] >> There you go.
+
+[00:48:05.680] >> Nice.
+
+[00:48:06.640] >> Oh, it just loads them in.
+
+[00:48:12.950] >> Yeah, your input JSON just paste that
+
+[00:48:12.960] error in the cloud.
+
+[00:48:14.560] >> That is also a good idea.
+
+[00:48:24.230] No, just put Yeah. Okay.
+
+[00:48:24.240] >> Maybe I give it too much context. Um, it
+
+[00:48:27.520] is running though and it is definitely
+
+[00:48:29.280] running something. Um,
+
+[00:48:30.800] >> yeah.
+
+[00:48:31.680] >> And it's running to like JSON
+
+[00:48:32.960] serializable
+
+[00:48:34.800] errors. Um, and then I just have to go
+
+[00:48:37.760] fix that one error which is
+
+[00:48:41.200] JSON.
+
+[00:48:42.240] >> It's it's off track.
+
+[00:48:45.119] Yeah. Okay. Good. Here we go.
+
+[00:49:03.510] if this is done. I usually do this in
+
+[00:49:03.520] TypeScript. I thought I'd do it in
+
+[00:49:04.640] Python today and I think that was a
+
+[00:49:06.000] mistake. Um,
+
+[00:49:08.319] and the reason I use TypeScript for
+
+[00:49:09.920] everyone else's context of why I prefer
+
+[00:49:11.359] to go do that is because what I really
+
+[00:49:12.800] want is I want a quick React app that I
+
+[00:49:14.400] can just like run a simple system in and
+
+[00:49:16.480] just see what's happening.
+
+[00:49:17.280] >> What Why don't you Why don't you push
+
+[00:49:19.200] what you have because I'll I can I can
+
+[00:49:21.280] kind of show show off how we might
+
+[00:49:23.760] quickly translate this to to TypeScript.
+
+[00:49:27.200] >> Let's do it.
+
+[00:49:30.319] Well, let me see if it's running yet.
+
+[00:49:32.880] One last thing and then if this runs and
+
+[00:49:34.800] I think we're good.
+
+[00:49:45.030] Dex, could you just also talk talk out
+
+[00:49:45.040] aloud when you're doing some of the
+
+[00:49:46.319] translation work because some of us
+
+[00:49:47.760] don't really know TypeScript that well.
+
+[00:49:50.240] >> Uh, I mean, I'll ask Claude to talk out
+
+[00:49:52.160] loud.
+
+[00:49:53.040] >> That would be great. Whatever works.
+
+[00:49:54.800] >> It's going to be very verbose. Uh, so we
+
+[00:49:57.599] might have to skim it, but I'll I'll
+
+[00:49:58.960] paste I can paste the trace in or
+
+[00:50:00.640] whatever.
+
+[00:50:01.760] >> Y'all can read it later.
+
+[00:50:09.510] The hard part about all this systems, as
+
+[00:50:09.520] many of you can see, is the hard part is
+
+[00:50:11.280] actually not the AI part. It's actually
+
+[00:50:12.960] building the infra so you can actually
+
+[00:50:14.079] go render everything. Okay. Well, this
+
+[00:50:16.000] isn't really working. So, I'm going to
+
+[00:50:17.040] I'm going to change I'm going to change
+
+[00:50:18.240] trajectories.
+
+[00:50:20.079] And instead of the app doing that, just
+
+[00:50:23.200] load the just make a streamlit app that
+
+[00:50:28.559] loads the data from the
+
+[00:50:32.960] results
+
+[00:50:34.800] directory and renders it. I gave up. Um,
+
+[00:50:38.480] I'm going to do a simpler thing and this
+
+[00:50:39.920] is like just get more guaranteed to be
+
+[00:50:41.680] good. Uh, I'm just going to load the
+
+[00:50:43.599] data from the results gener uh,
+
+[00:50:44.880] directory and just like render it and
+
+[00:50:46.160] then see what happens because I think
+
+[00:50:48.559] I'm just going to have way more
+
+[00:50:49.760] likelihood of success in that scenario.
+
+[00:50:54.319] >> Oh yeah, that works.
+
+[00:50:55.839] >> Yes. Uh, and that's a simpler way to go
+
+[00:50:57.520] about it. While I'm doing this, I
+
+[00:50:59.440] realize a couple more things. Uh, the
+
+[00:51:01.200] model name over here is going to have an
+
+[00:51:03.280] escape slash. So, I need to go unescape
+
+[00:51:05.200] that. Uh, unescaped
+
+[00:51:08.800] model.
+
+[00:51:11.280] Perfect.
+
+[00:51:12.000] >> I'm going to go deal with this. Uh, show
+
+[00:51:13.920] that off. Um,
+
+[00:51:16.960] go deal with this. Um,
+
+[00:51:21.280] uh,
+
+[00:51:23.440] I'm going to make that directory import
+
+[00:51:25.359] OS
+
+[00:51:35.670] and then UV.
+
+[00:51:35.680] This should in theory be a lot more
+
+[00:51:37.280] reliable.
+
+[00:51:46.390] if this app load. And now I can go see
+
+[00:51:46.400] it. And like really what I want to go do
+
+[00:51:47.680] is I literally just want to see these
+
+[00:51:48.800] side by side and just go read it because
+
+[00:51:50.559] that is the only true way that I can
+
+[00:51:52.400] actually eval them.
+
+[00:51:54.880] Uh and I just have to go build this. And
+
+[00:51:56.480] if I don't build this UI, no matter what
+
+[00:51:58.400] I no matter what I do, it won't be good.
+
+[00:52:00.640] And the first thing you can notice when
+
+[00:52:01.680] I build this UI is like I can
+
+[00:52:02.720] immediately see that see that one of
+
+[00:52:03.839] them is just longer than the other. It's
+
+[00:52:06.160] like a really quick glance thing that I
+
+[00:52:07.680] can get without reading it.
+
+[00:52:09.920] And I can see one of them includes bold
+
+[00:52:11.599] text, the other one doesn't. For better
+
+[00:52:13.760] or for worse, it doesn't really matter.
+
+[00:52:15.520] But the fact is like the UI based vibe
+
+[00:52:18.319] eval system that we build here is just
+
+[00:52:19.760] going to be a lot better than anything
+
+[00:52:21.760] else that we could do manually. So if I
+
+[00:52:24.400] go ahead and we'll do this again. Um,
+
+[00:52:29.920] u
+
+[00:52:31.440] main.py. We'll run this. And then I
+
+[00:52:34.240] think
+
+[00:52:36.800] what did I do?
+
+[00:52:48.549] email structure. Did I delete the wrong
+
+[00:52:48.559] one? Oh,
+
+[00:52:51.920] uh, which one do I want? I don't want
+
+[00:52:53.599] married one email structure.
+
+[00:52:57.200] Um, structure. Yeah.
+
+[00:53:03.190] If I go ahead and run this, it's going
+
+[00:53:03.200] to go ahead and produce a bunch of tests
+
+[00:53:04.319] for me really fast while it goes to run.
+
+[00:53:05.760] And then it should have a new directory
+
+[00:53:07.359] structure here to make my life slightly
+
+[00:53:09.920] easier when I go do this. Change
+
+[00:53:12.960] structure
+
+[00:53:14.559] to be
+
+[00:53:28.309] not allow JSON and then it dump stuff in
+
+[00:53:28.319] there. So I'll just run this
+
+[00:53:30.960] and then this should be able to run the
+
+[00:53:32.640] stream app.
+
+[00:53:35.599] and then be able to read from it.
+
+[00:53:38.400] And now you'll see I have a lot more
+
+[00:53:39.599] test in here. I have an optics on it and
+
+[00:53:41.359] openi as well that it wasn't reading
+
+[00:53:43.200] before because of the directory
+
+[00:53:44.319] structure. And like one of the most
+
+[00:53:46.000] practical things that I think a lot of
+
+[00:53:47.520] people under underlook when they build
+
+[00:53:49.599] these eval systems is the amount of work
+
+[00:53:52.559] that you have to put into actually like
+
+[00:53:54.000] building out all this like infra tooling
+
+[00:53:56.480] is surprisingly large. It's way more
+
+[00:54:00.000] than I ever expected. And this is the
+
+[00:54:02.160] same kind of work. If you go talk to any
+
+[00:54:03.599] data scientist, go talk to any machine
+
+[00:54:05.200] learning person that was doing it before
+
+[00:54:06.880] the LLM era, what they'll tell you is
+
+[00:54:08.960] 90% of the job is not training the
+
+[00:54:10.559] model. 90% of the job is getting the
+
+[00:54:12.880] data in the right shape so you can make
+
+[00:54:14.240] the right decisions. And that is so
+
+[00:54:16.960] annoying. But that problem doesn't
+
+[00:54:18.319] magically go away when you work with LM.
+
+[00:54:20.800] It's just something you have to do very
+
+[00:54:22.319] very frequently. So in this
+
+[00:54:24.000] >> and this is why people talk about how
+
+[00:54:25.599] important eval are. And like when we did
+
+[00:54:27.200] the episode with Brian, he's like, I'll
+
+[00:54:28.720] share the code. I'll share the prompts.
+
+[00:54:30.240] The only thing I will not show on screen
+
+[00:54:31.839] is the evals because that's the part
+
+[00:54:33.599] that takes the most work and the most
+
+[00:54:35.200] thought and it is about knowing your
+
+[00:54:37.119] problem. And I think as we get to this
+
+[00:54:39.280] world where it's like more and more code
+
+[00:54:41.520] is written by AI and more and more
+
+[00:54:43.119] software can be trivially repro like if
+
+[00:54:44.880] you wanted to build a copy of VS code
+
+[00:54:47.839] you could do that with AI. There are
+
+[00:54:49.280] like techniques and processes where you
+
+[00:54:50.960] can take large complex software as long
+
+[00:54:52.800] as everything is documented. You can
+
+[00:54:54.319] build specs and plans to reproduce any
+
+[00:54:56.480] existing piece of software. And so the
+
+[00:54:58.640] real moat is this is like taste and
+
+[00:55:02.079] knowing what your users want and having
+
+[00:55:04.240] like hard-coded like results of looking
+
+[00:55:06.960] at stuff and deciding what good looks
+
+[00:55:09.040] like because then you can then you can
+
+[00:55:11.200] iterate on your stuff and then you can
+
+[00:55:12.720] learn and then you can keep making the
+
+[00:55:14.319] software better.
+
+[00:55:15.359] >> And even over here like think about how
+
+[00:55:17.040] complicated it is for me to actually
+
+[00:55:18.240] like go build this out. Like I can't
+
+[00:55:20.319] actually analyze emails like this. Like
+
+[00:55:22.240] this is not a good readable format. So
+
+[00:55:24.319] what I really want is I want A and B for
+
+[00:55:26.720] every test case. So I can see for every
+
+[00:55:28.400] test case I want to just swap out random
+
+[00:55:29.920] models. So I'm going to tell Gemini to
+
+[00:55:31.040] do I'm going to tell it to do that
+
+[00:55:32.640] instead of showing every model for every
+
+[00:55:36.079] test case
+
+[00:55:38.559] for a for a given
+
+[00:55:49.190] test case. I want to side by side drop
+
+[00:55:49.200] downs.
+
+[00:55:51.599] >> All right. After this I'm going to make
+
+[00:55:52.640] a commit and push and I'm gonna I'm
+
+[00:55:54.079] gonna I'm gonna practice uh I'm gonna
+
+[00:55:57.200] So I can see the So I can see side by
+
+[00:56:00.799] side of model versus model
+
+[00:56:06.160] what does that and this is just a really
+
+[00:56:07.839] important thing because like the thing
+
+[00:56:08.880] that I actually would want to build here
+
+[00:56:11.040] is not even like an evaluate. What I
+
+[00:56:12.799] really want to build is infra where my
+
+[00:56:15.599] team can go eval this stuff very
+
+[00:56:18.079] quickly. You can think of it like
+
+[00:56:20.319] building any sort of internal tooling
+
+[00:56:21.839] that you would be building for your own
+
+[00:56:23.040] company. And you have to again what
+
+[00:56:24.720] we're trying to do here is decide what
+
+[00:56:26.559] the goal of this email is. And the goal
+
+[00:56:28.400] of this email is I want to know what
+
+[00:56:29.680] email is better. I'm going to send this
+
+[00:56:31.200] out to like a bunch of people.
+
+[00:56:37.109] And like now I can go do this. And it
+
+[00:56:37.119] becomes really easy for me to go see
+
+[00:56:39.280] this. Like okay, let me swap this out
+
+[00:56:40.640] and see how well this works. Which one
+
+[00:56:42.160] do I like better?
+
+[00:56:42.720] >> Oh, this is better. Yeah, this is great.
+
+[00:56:45.040] >> And like now we can quickly see which
+
+[00:56:46.880] one we like. Um, these look almost the
+
+[00:56:50.079] same. Are they the same? No, this is my
+
+[00:56:52.559] Gemini. So, this is Flash. This is uh
+
+[00:56:55.119] this is um uh the better pro. And it
+
+[00:56:59.520] seems like Flash almost got everything
+
+[00:57:01.359] right, but it forgot about the next
+
+[00:57:02.799] session. So, like, okay, clear. Flash is
+
+[00:57:04.960] definitely a loser. Let me just move on
+
+[00:57:06.319] to the next one and go on. But you
+
+[00:57:08.720] notice something here. I did this super
+
+[00:57:10.319] manually. If I'm sharing this with my
+
+[00:57:11.760] team, I need to add a new feature to my
+
+[00:57:13.280] Eval dashboard, which is a thing where I
+
+[00:57:15.040] can leave my notes in here. Now, I
+
+[00:57:17.440] that's another thing I have to go build.
+
+[00:57:18.960] Another thing that I want to build is
+
+[00:57:20.720] like just like really quickly like
+
+[00:57:22.160] invalidate this and just say like Flash
+
+[00:57:23.760] is bad. So I might want to build like an
+
+[00:57:25.680] X. So I can just click X over here and
+
+[00:57:27.920] like remind myself that I've already
+
+[00:57:29.520] seen Flash compared to Gemini. And
+
+[00:57:32.319] there's all sorts of systems you can
+
+[00:57:34.000] build along the way here to just decide
+
+[00:57:35.599] which one is better. Same thing here.
+
+[00:57:37.599] Like this one just doesn't like it. This
+
+[00:57:40.720] one I guess made it a lot shorter which
+
+[00:57:42.319] could be better. One, two, three. You
+
+[00:57:44.960] got this one. It dropped one of the
+
+[00:57:46.559] bullet points which might be fine. I
+
+[00:57:48.400] don't really care. So, if I was okay
+
+[00:57:50.720] with this and anthropic sonnet would be
+
+[00:57:52.480] like seems okay. And GT4 Mini, I don't
+
+[00:57:56.319] really like this one. This one literally
+
+[00:57:57.520] just made a giant blob of text and
+
+[00:57:59.280] that's not what we want to send out. So,
+
+[00:58:00.720] this becomes immediately invalidated.
+
+[00:58:02.240] So, I'm like, "Okay, cool. I'm
+
+[00:58:04.000] >> I like the Borro mini one. It's like got
+
+[00:58:06.000] a little bit of like a Hemingway vibe
+
+[00:58:07.440] where it's just like lots of little
+
+[00:58:08.559] short sentences."
+
+[00:58:09.920] >> Dude, I hate this. But that's You can
+
+[00:58:12.319] see how we just disagree on this.
+
+[00:58:14.079] >> Yeah. But we need to be able to quickly
+
+[00:58:15.599] evaluate this in the previous
+
+[00:58:16.799] >> but now okay one more feed lap back loop
+
+[00:58:19.200] I want to do like go change the prompt
+
+[00:58:21.200] now and then rerun this and like this
+
+[00:58:23.119] shows how you can iterate on you like
+
+[00:58:24.720] use this as a system to iterate like
+
+[00:58:26.400] because it's not just on like which
+
+[00:58:27.520] one's better across the model but it's
+
+[00:58:29.280] like okay now let's change it let's see
+
+[00:58:30.720] how it changes all the models and how
+
+[00:58:32.160] all the models perform.
+
+[00:58:33.599] >> Exactly. And then the other thing you're
+
+[00:58:34.880] going to run into if we change the
+
+[00:58:35.839] prompt is now you need to previous
+
+[00:58:37.280] compare the previous version of the
+
+[00:58:38.319] prompt against this part. So now we have
+
+[00:58:39.760] three dimensions. We're comparing
+
+[00:58:41.119] against the model, the version, and the
+
+[00:58:43.359] model at the same time. So, and there's
+
+[00:58:46.160] no, and a lot of people will try and
+
+[00:58:48.240] sell you like, hey, I have the perfect
+
+[00:58:49.760] UI for you. We're going to solve all
+
+[00:58:51.119] your problems. The fact of the matter is
+
+[00:58:53.359] there's no perfect UI to be completely
+
+[00:58:55.520] honest. For seeing an email, this is
+
+[00:58:56.960] probably a better UI than like a
+
+[00:58:59.680] dashboard that just shows you JSON. I
+
+[00:59:01.440] don't want to see the JSON. I want to
+
+[00:59:02.559] see something that looks like an email
+
+[00:59:03.520] and reads like an email and renders the
+
+[00:59:04.960] markdown. for rendering coordinates on
+
+[00:59:07.280] an image. I want to see the actual image
+
+[00:59:08.559] with a box rod around the coordinates of
+
+[00:59:10.240] the image
+
+[00:59:11.200] >> and every single thing you have to do is
+
+[00:59:12.960] bespoke and unique. So, you just have to
+
+[00:59:14.880] do the work to go do this and like vibe
+
+[00:59:16.880] code it like we did over here. BJ's got
+
+[00:59:18.720] a question or like
+
+[00:59:20.720] >> no just an afterthought that you could
+
+[00:59:22.640] split the entire email body like we did
+
+[00:59:24.559] earlier uh in multiple like an
+
+[00:59:26.880] introduction paragraph and you know a
+
+[00:59:29.200] final
+
+[00:59:30.480] >> uh like call to action or whatever and
+
+[00:59:32.559] then pass them like evaluate them
+
+[00:59:35.119] whatever then you can actually it's not
+
+[00:59:37.599] it's no longer just a body anymore but
+
+[00:59:39.440] you have multiple segments to work with
+
+[00:59:41.040] with different bodies again. So you're
+
+[00:59:42.400] dissecting the problem into smaller
+
+[00:59:44.160] problems basically.
+
+[00:59:45.839] >> Exactly. And then the other thing that
+
+[00:59:47.200] you could end up doing is even though
+
+[00:59:48.640] you dissect it into smaller problems,
+
+[00:59:50.319] you could still assemble it from the
+
+[00:59:51.680] eval perspective as one big thing.
+
+[00:59:55.040] So from the eval perspective, it looks
+
+[00:59:56.960] like the big thing. And now we can build
+
+[00:59:58.319] small tooling. So like for example, I'll
+
+[01:00:00.960] show you something cool. Uh LMS tend to
+
+[01:00:05.359] Sorry, Dex. I'll I'll push it over in
+
+[01:00:06.960] one second. I really
+
+[01:00:07.760] >> No, you're good. I I think at this point
+
+[01:00:09.040] we can we can wrap it up soon and go to
+
+[01:00:10.559] questions. And I just all the activity
+
+[01:00:12.000] in the chat is telling me like let's do
+
+[01:00:13.680] our next episode on context engineering
+
+[01:00:16.000] with with uh with coding CLIs. I think
+
+[01:00:18.480] that's a great topic. LMS tend to
+
+[01:00:21.359] produce uh things like m dashes
+
+[01:00:26.559] and hyperboles.
+
+[01:00:30.480] um build a detector
+
+[01:00:33.839] for that in the UI by highlighting
+
+[01:00:37.760] LME
+
+[01:00:40.000] stuff. So I can go build this uh I can
+
+[01:00:43.119] just like add it to the UI where one of
+
+[01:00:44.880] the things it's going to do is just
+
+[01:00:47.040] highlight a bunch of stuff for me and
+
+[01:00:48.880] like if I go look at the diff of what's
+
+[01:00:50.480] going to generate. Did I miss it? No, I
+
+[01:00:53.520] didn't. Cool.
+
+[01:00:54.319] >> This is interesting. Okay. Oh, you it's
+
+[01:00:56.720] making it's using a reax to detect
+
+[01:00:58.559] things that look like LME.
+
+[01:01:00.240] >> Yeah. And I think that's okay. We don't
+
+[01:01:02.000] need it to be perfect. Um we just need
+
+[01:01:03.839] to be good enough.
+
+[01:01:05.520] >> That's actually a dope feature. Um
+
+[01:01:09.200] >> Exactly. content generation,
+
+[01:01:11.680] >> right?
+
+[01:01:12.160] >> Will you flip back to the UI before this
+
+[01:01:13.839] gets I just want to grab a screenshot
+
+[01:01:15.440] real quick for the for the episode.
+
+[01:01:18.079] >> Perfect. Okay. And then we can show
+
+[01:01:20.079] another one once it has the LM
+
+[01:01:21.680] detectors.
+
+[01:01:23.119] >> Yeah.
+
+[01:01:24.160] >> Yeah. It better put absolutely and
+
+[01:01:26.559] you're absolutely right in that reax.
+
+[01:01:30.079] >> Um
+
+[01:01:30.720] >> certainly
+
+[01:01:32.270] [Laughter]
+
+[01:01:35.200] >> that's funny.
+
+[01:01:35.839] >> Uh Sylvia's got a question.
+
+[01:01:37.520] >> So like it's put a bunch of stuff in
+
+[01:01:39.040] here. It's like uh undoubtedly been
+
+[01:01:42.400] credibly like I don't even know what
+
+[01:01:43.520] that means. Sure. What
+
+[01:01:44.640] >> comprehensive comprehensive needs to be
+
+[01:01:46.640] >> the back slashb is the it is beginning
+
+[01:01:48.720] of the word the word.
+
+[01:01:50.559] >> Sorry I'm dumb. Yes. Uh yes. Uh, as you
+
+[01:01:54.319] can see, um, I spend very little time
+
+[01:01:56.079] writing Reax. Thank goodness for that.
+
+[01:01:58.720] >> Yeah, Viob replaced all his Reaxes with
+
+[01:02:00.880] 40 Mini like six years ago.
+
+[01:02:03.280] >> 40 Mini is amazing at Reax.
+
+[01:02:06.160] And like boom, now we can just see this
+
+[01:02:07.760] right away. And you can see how like I
+
+[01:02:09.839] just improved the Eval system really
+
+[01:02:11.760] fast without doing too much work.
+
+[01:02:15.200] >> Yeah. And this is what actually um I
+
+[01:02:17.040] forget. I think it was Sarah Cat and
+
+[01:02:18.160] Zarah at Amplify Partners posted this
+
+[01:02:20.000] like a year ago like talked to a 100 AI
+
+[01:02:21.839] founders and one of her big takeaways is
+
+[01:02:23.839] like the eval harness is basically just
+
+[01:02:27.040] like any other test system. It's quite
+
+[01:02:28.640] easy to build and the actual value in
+
+[01:02:30.960] eval is generating the data of like
+
+[01:02:34.880] what's good and what's not so that you
+
+[01:02:36.480] can continue to improve
+
+[01:02:37.839] >> trying to solve a problem using so uh VJ
+
+[01:02:40.720] I I think the interesting thing about
+
+[01:02:42.400] this is like what I'm not trying to do
+
+[01:02:43.760] is I'm not trying to solve the problem
+
+[01:02:45.200] of saying that this is perfect what I'm
+
+[01:02:47.200] trying to do with this goal the reason I
+
+[01:02:48.880] even came up with this UI is not because
+
+[01:02:50.799] I think this is perfect but what I
+
+[01:02:53.440] really want to do is I just want the
+
+[01:02:54.960] user who's evaluing to quickly see
+
+[01:02:57.040] certain things
+
+[01:02:59.119] and I'm like okay like cuz if I scan
+
+[01:03:01.280] this I might not even notice that an M
+
+[01:03:02.640] dash existed here but like I don't know
+
+[01:03:05.119] if you go on Reddit if you go anywhere
+
+[01:03:07.119] you'll often see people now complaining
+
+[01:03:08.799] about like a m dashes post I just ignore
+
+[01:03:10.960] them because they're all AI generated
+
+[01:03:13.520] >> and some people auto filter emails that
+
+[01:03:15.280] have m dashes in them and there's all
+
+[01:03:16.720] sorts of these risks that are now
+
+[01:03:17.920] happening because of AI generated
+
+[01:03:19.119] behavior. So, I want to go and like uh
+
+[01:03:23.599] uh like uh flag for that quickly.
+
+[01:03:27.839] >> Um
+
+[01:03:28.319] >> that's really sad because some of us
+
+[01:03:29.680] like m dashes.
+
+[01:03:31.039] >> I love
+
+[01:03:31.760] >> I do too. And now I explicitly remove
+
+[01:03:34.160] them because like I'm in a lot of like
+
+[01:03:36.559] founder groups and just general. I've
+
+[01:03:38.240] talked to a lot of folks and like most
+
+[01:03:40.000] people remove them.
+
+[01:03:42.079] >> OM has been prompt or has been poisoning
+
+[01:03:44.960] my training data with M dashes.
+
+[01:03:51.670] Yeah, I think actually like the trick is
+
+[01:03:51.680] like uh just like we did on Twitter in
+
+[01:03:53.760] 2013 uh intentional typos. And I've I've
+
+[01:03:57.359] been using M dashes for 10 years, but
+
+[01:03:59.039] I've always used them wrong. People tell
+
+[01:04:00.640] me that's the wrong way to use an M
+
+[01:04:02.079] dash. And I'm like, no, this is how I
+
+[01:04:03.760] use M dashes. So, there's my trick. You
+
+[01:04:05.680] can keep your M dash as long as you use
+
+[01:04:07.440] it wrong. Like, put spaces around it.
+
+[01:04:09.760] The correct way to use an M dash is to
+
+[01:04:12.319] have it like touch both words with no
+
+[01:04:14.160] spaces around it. But if you put spaces
+
+[01:04:15.839] around it, no one every you can you can
+
+[01:04:18.160] prove, hey, that's not an LLM cuz I did
+
+[01:04:19.760] it wrong.
+
+[01:04:20.160] >> I do that all the time. That's my human.
+
+[01:04:22.960] >> I feel like people that think that
+
+[01:04:24.960] people don't know how to use M dashes
+
+[01:04:26.559] and that only agents do probably don't
+
+[01:04:28.720] know the proper usage of M dashes.
+
+[01:04:35.910] >> Yeah.
+
+[01:04:35.920] >> Sad question.
+
+[01:04:37.520] >> I'm gonna turn this into an email really
+
+[01:04:39.680] fast.
+
+[01:04:40.880] >> Yeah. So I had just wanted to summarize
+
+[01:04:43.839] what VIP was saying earlier where it
+
+[01:04:47.520] seems like evaluation tooling is
+
+[01:04:50.640] incredibly specific to the definition of
+
+[01:04:53.760] accuracy and the actual business problem
+
+[01:04:57.680] that the LLM is being used to solve and
+
+[01:05:02.480] thus it cannot be it has to be bespoke.
+
+[01:05:19.510] >> doesn't have to be bespoke, but it's
+
+[01:05:19.520] easy to do it bespoke and then you have
+
+[01:05:22.400] full flexibility. This is kind of
+
+[01:05:24.079] exactly how uh shad CN works where it's
+
+[01:05:26.720] like scaffold out the core of it that is
+
+[01:05:28.640] like basic best practices, but then you
+
+[01:05:30.400] can change everything you want. And now
+
+[01:05:32.079] the code is really cheap. I think in
+
+[01:05:33.920] general it's like if you have the
+
+[01:05:35.680] patterns or the outline or you have a
+
+[01:05:37.440] template that you can use for this stuff
+
+[01:05:38.960] then um and then you customize it with a
+
+[01:05:41.680] vibe coding tool or something like that.
+
+[01:05:43.200] I think that's probably right. Um there
+
+[01:05:45.599] are for certain very like if you are
+
+[01:05:47.839] drawing bounding boxes on images there
+
+[01:05:50.160] are tools that will do it better and
+
+[01:05:52.079] more completely than whatever you can
+
+[01:05:53.520] vibe code in an hour for sure. If your
+
+[01:05:55.760] use case is super generic, but also like
+
+[01:05:57.760] if you're building evals for a super
+
+[01:05:59.359] generic use case, you're probably
+
+[01:06:00.720] already cooked because that shit's been
+
+[01:06:02.079] around for five years.
+
+[01:06:05.280] >> Exactly. And like you'll notice what I
+
+[01:06:06.799] just did really fast because I built
+
+[01:06:08.000] this eval dashboard. I did something. I
+
+[01:06:09.839] literally added a new model called Chad
+
+[01:06:11.839] GBT really quickly where I literally
+
+[01:06:14.319] just went to CHBT, generated the same
+
+[01:06:15.760] JSON. Um, and I'm just going to have it
+
+[01:06:18.240] go through that again
+
+[01:06:20.559] and I will generate for this one as
+
+[01:06:22.240] well.
+
+[01:06:28.230] I'll go render this. And I'm This isn't
+
+[01:06:28.240] even me doing this manual. I just went
+
+[01:06:29.599] to ChatGpt, did this uh straight up. I
+
+[01:06:32.240] just asked to do zero shot do the model.
+
+[01:06:35.039] And what I want to do now is I can go
+
+[01:06:36.799] here in theory. I should see ChatG pop
+
+[01:06:40.160] up and I can just like compare it. We
+
+[01:06:42.799] know that we like my Gemini Smart and
+
+[01:06:44.720] then we know that we have a new one
+
+[01:06:46.079] called Chat GT. So you can just like
+
+[01:06:47.520] compare it
+
+[01:06:49.520] and like the first thing you'll notice
+
+[01:06:50.640] is just like yeah there's just a lot
+
+[01:06:52.000] more m dashes right away in chat GBT and
+
+[01:06:55.599] this is without me having to read it.
+
+[01:06:56.799] It's a lot shorter. It's a lot different
+
+[01:06:58.079] and this one reads a little bit more AI
+
+[01:07:00.240] generated. If someone saw this one they
+
+[01:07:02.559] wouldn't see that. But like what I'm
+
+[01:07:03.520] trying to do in Eval is just like really
+
+[01:07:05.200] quickly detect it and see what happens.
+
+[01:07:08.160] And I'm trying to make life easier for
+
+[01:07:09.839] the developer so that the person that's
+
+[01:07:12.480] actually building the pipeline can
+
+[01:07:13.520] quickly decide is chatt better or not in
+
+[01:07:15.359] my use case.
+
+[01:07:17.200] And if you build a good framework, then
+
+[01:07:19.039] ideally what you'll have is you'll
+
+[01:07:20.559] slowly make this system better and
+
+[01:07:22.480] better and better for this part of your
+
+[01:07:24.079] pipeline.
+
+[01:07:25.119] >> And you will likely not end up with just
+
+[01:07:27.280] one of these systems. You'll end up with
+
+[01:07:28.799] tons of these systems
+
+[01:07:30.640] >> because you'll have Go ahead.
+
+[01:07:33.119] >> Sorry, I was going to say and the one
+
+[01:07:34.240] one of the dimensions that we're not
+
+[01:07:35.280] tracking here is the actual prompt
+
+[01:07:37.119] itself. Like you could actually take
+
+[01:07:39.119] five models, five prompts, and then
+
+[01:07:42.720] generate what is it 25 outputs and then
+
+[01:07:45.039] have a one-on-one like voting system and
+
+[01:07:47.200] just have people go through which one is
+
+[01:07:48.799] better, which one is better until you
+
+[01:07:50.079] get to the best one and then that's how
+
+[01:07:51.599] you kind of decide what to develop on.
+
+[01:07:53.599] >> Exactly. And the real problem here that
+
+[01:07:55.680] everyone runs into from my experience is
+
+[01:07:58.720] just the fact that like these are
+
+[01:08:00.240] complex multi-dimensional problems.
+
+[01:08:03.359] You're you're indexing on the test case.
+
+[01:08:05.520] You're indexing on the model. You're
+
+[01:08:07.119] indexing on the prompt. You're indexing
+
+[01:08:08.720] on any such variety of stuff.
+
+[01:08:11.119] >> Which episode are we doing the email
+
+[01:08:12.799] for? All that stuff could be variables.
+
+[01:08:15.280] >> Exactly. Right. So like all that stuff
+
+[01:08:17.359] just takes time to go build out and
+
+[01:08:19.199] sadly there's no shortcut and the best
+
+[01:08:21.759] thing you can do is like well I mean we
+
+[01:08:23.440] do have a shortcut which is you use LM
+
+[01:08:24.960] to generate all the code so you don't
+
+[01:08:26.080] have to build it. And we spend we went
+
+[01:08:28.159] from nothing to fully running the test
+
+[01:08:30.080] suite to actually viewing multiple
+
+[01:08:32.000] models to actually having a UI that we
+
+[01:08:33.920] can go eval stuff on in less than an
+
+[01:08:35.839] hour.
+
+[01:08:36.640] >> And we deleted all the code once.
+
+[01:08:38.640] >> And yeah, and we deleted all the code
+
+[01:08:40.640] once. Um
+
+[01:08:43.279] stuff is really fast now. You just have
+
+[01:08:44.880] to go like go do and this is going to be
+
+[01:08:46.560] way faster than like any automated LM
+
+[01:08:48.799] evalu.
+
+[01:08:51.120] And it's not that it's naturally going
+
+[01:08:52.400] to be better. It's just that I don't
+
+[01:08:53.440] have a clear definition for what a great
+
+[01:08:54.960] email is. So I can put LM as judge, but
+
+[01:08:57.279] like I don't even know what's going to
+
+[01:08:58.880] judge him. Like it's not going to be
+
+[01:09:01.120] very helpful right now for this.
+
+[01:09:02.480] >> Right. You need to get your judge prompt
+
+[01:09:03.839] really well and eval that separately.
+
+[01:09:05.839] >> Exactly. Exactly. And if I were doing
+
+[01:09:08.000] LMS as judge, what I would do here is
+
+[01:09:09.600] I'd write another prompt to go and eval
+
+[01:09:11.920] the email at the very end here to say,
+
+[01:09:13.440] "How is this one good?" And then I'd
+
+[01:09:15.520] literally write the annotation here of
+
+[01:09:16.880] what the judge says. And then I can eval
+
+[01:09:18.560] the judge prompt while evaling the main
+
+[01:09:20.239] prompt. And it becomes this huge meta
+
+[01:09:22.960] problem along the way. VJ you had a
+
+[01:09:25.679] question.
+
+[01:09:31.590] >> I just have an afterthought again. Uh
+
+[01:09:31.600] because we are discussing evaluating uh
+
+[01:09:34.480] the structure of emails. Naturally since
+
+[01:09:36.719] we are trying to develop the entire uh
+
+[01:09:39.600] email structure um recently we did one
+
+[01:09:43.520] implementation of outbound uh email uh
+
+[01:09:46.880] like email sales and we noticed that for
+
+[01:09:50.080] example we were targeting uh executives
+
+[01:09:53.120] for a small segment and none of these
+
+[01:09:55.920] executives actually read their emails.
+
+[01:09:57.520] It was it was LLMs doing their emails.
+
+[01:10:00.560] So we sat and you know evaluated all of
+
+[01:10:03.440] these complex systems like you just
+
+[01:10:05.120] mentioned. Turns out they don't care. So
+
+[01:10:08.480] they wanted it in a particular structure
+
+[01:10:10.400] in a particular format without uh
+
+[01:10:13.440] complex uh URLs or images or whatever.
+
+[01:10:17.199] So the point is I think it's not just
+
+[01:10:19.360] about uh getting the structure right but
+
+[01:10:22.159] it is about actually understanding the
+
+[01:10:24.320] entire end to-end use case and see how
+
+[01:10:27.120] this brings impact to the business
+
+[01:10:28.560] because we need to keep that in
+
+[01:10:29.679] perspective as well at end of the day
+
+[01:10:31.840] that that outcome is what is uh
+
+[01:10:34.480] delivering value and not uh this
+
+[01:10:36.960] particular outcome does that make sense
+
+[01:10:41.520] >> I think that's a great way to put it
+
+[01:10:44.080] >> yeah and like like I I think what I
+
+[01:10:47.600] would do here is just like if I were
+
+[01:10:49.280] building this out more holistically like
+
+[01:10:50.960] there's small checks that I would build.
+
+[01:10:52.719] For example, how many of the links here
+
+[01:10:54.960] are made up versus valid.
+
+[01:10:57.440] >> Yeah, that can be your like runtime
+
+[01:10:59.280] guards, right? Is like go try to fetch
+
+[01:11:00.960] every link and make sure that it
+
+[01:11:02.239] actually returns a 200 or whatever.
+
+[01:11:04.159] >> Yeah. Or I could just do that only in my
+
+[01:11:05.679] evalu. I don't actually have to go do it
+
+[01:11:07.679] everywhere. I can just purely do in my
+
+[01:11:09.199] evalu.
+
+[01:11:10.159] >> Yeah.
+
+[01:11:10.480] >> I can go validate that like there's no
+
+[01:11:12.320] placeholders like this one. Like if
+
+[01:11:15.120] there's like a word with like a bracket
+
+[01:11:16.640] with like the word here on it, I can go
+
+[01:11:18.320] detect that and detect placeholders
+
+[01:11:19.840] because that seems to be a pretty common
+
+[01:11:21.120] pattern
+
+[01:11:22.640] >> and there's like any such thing that I
+
+[01:11:24.880] could go build slowly over time to make
+
+[01:11:26.560] the system as good as I need it to be. I
+
+[01:11:28.880] think Sylvia had a question a while ago.
+
+[01:11:30.560] I don't know if the question still
+
+[01:11:31.920] exists.
+
+[01:11:37.830] >> I think it was addressed.
+
+[01:11:37.840] >> Okay, awesome.
+
+[01:11:39.920] Um, with that, any other questions
+
+[01:11:42.239] before I we get to show off something
+
+[01:11:43.679] really freaking cool today?
+
+[01:11:46.880] >> All right, this will be your teaser
+
+[01:11:48.239] preview for the next. You got to come in
+
+[01:11:49.679] and push this though.
+
+[01:11:50.880] >> Okay, let me push it.
+
+[01:11:53.840] Uh, made some change added. Uh, Eval
+
+[01:11:58.560] system. Let me make sure I did not
+
+[01:12:00.719] accidentally check in my file. Yes, for
+
+[01:12:04.080] comparing models plus test cases.
+
+[01:12:14.149] We're not going to be able to go deep on
+
+[01:12:14.159] this because we don't have time, but
+
+[01:12:15.199] this will be your teaser for next week.
+
+[01:12:16.719] And I think yeah, next week it seems
+
+[01:12:18.159] like there's a ton of interest in doing
+
+[01:12:20.000] um doing like a how do we do context
+
+[01:12:22.880] engineering for coding agents like cloud
+
+[01:12:25.120] code and Gemini CLI and stuff like that.
+
+[01:12:27.120] >> I pushed um I will let you screen share.
+
+[01:12:28.880] I thought this is the coolest thing I've
+
+[01:12:30.159] ever seen. Um I'll give a little primer
+
+[01:12:32.880] um because I'm usually very very suspect
+
+[01:12:35.040] on most things. Um, but like vibe coding
+
+[01:12:38.800] is kind of annoying. Um, but I think
+
+[01:12:40.239] vibe coding is a different kind of
+
+[01:12:41.600] coding than cursor or anything else is.
+
+[01:12:44.719] And like I think when I first met
+
+[01:12:46.480] someone that was trying to go do this, I
+
+[01:12:48.400] was just like, ah, cursor just feels
+
+[01:12:50.239] wrong. And we saw an examples of it
+
+[01:12:51.600] today. Like what I'm really trying to do
+
+[01:12:53.280] is I'm not really writing code. I'm
+
+[01:12:54.960] watching the code.
+
+[01:12:57.120] And like that showed me something that
+
+[01:12:58.480] was really freaking cool. uh which is
+
+[01:13:00.400] what does an ID look like if your
+
+[01:13:02.560] primary incentive
+
+[01:13:04.560] is to like watch the code not write the
+
+[01:13:07.280] code yourself.
+
+[01:13:09.920] Is that a good description Dex?
+
+[01:13:12.159] >> Yeah, I think that's right.
+
+[01:13:14.560] Um so this is kind of our tool for
+
+[01:13:16.560] multipplexing cloud codes. This is open
+
+[01:13:18.480] source. We can go deeper next week, but
+
+[01:13:20.080] this is a system that lets you run lots
+
+[01:13:22.239] of cloud codes in parallel. Um
+
+[01:13:26.000] so I can say start bootstrapping a new
+
+[01:13:28.480] Nex.js JS app.
+
+[01:13:31.199] So I have one claude running and doing
+
+[01:13:33.040] the bootstrapping. I have another claude
+
+[01:13:35.040] building a plan to research the current
+
+[01:13:37.199] codebase and find the streamlet app and
+
+[01:13:39.360] go through all of this. Um let's see we
+
+[01:13:42.560] are tracking the to-dos here. Um but
+
+[01:13:45.120] basically the interesting thing here is
+
+[01:13:46.719] not like hey there's a UI on cloud code
+
+[01:13:48.560] that's a little bit nicer. The
+
+[01:13:49.679] interesting thing here is really like
+
+[01:13:51.120] the process that we use for uh prompting
+
+[01:13:54.400] Claude to do this like continual
+
+[01:13:56.960] compacting markdown and doing context
+
+[01:13:58.960] engineering by using sub agents to
+
+[01:14:01.360] research and fetch things and sort of
+
+[01:14:03.199] like I think um I forget the source
+
+[01:14:05.520] graph um CTO talked about this at AI
+
+[01:14:07.600] engineer which is like the skill of
+
+[01:14:09.199] wielding coding agents. If you just
+
+[01:14:11.600] shout at claude what you want, you're
+
+[01:14:13.600] not going to get great results.
+
+[01:14:16.640] Um, but if you are able to kind of wield
+
+[01:14:20.800] the agent, well, then um, all right.
+
+[01:14:23.920] See, this is this one's not going to
+
+[01:14:25.280] work because it's going to have to do
+
+[01:14:28.320] uh, a bunch of shell things. Um, so
+
+[01:14:30.480] there's still certain things that we do,
+
+[01:14:31.600] but essentially like what we what we've
+
+[01:14:34.239] been doing a lot at Human Layer lately
+
+[01:14:35.679] is basically like closing the editor.
+
+[01:14:37.760] Um,
+
+[01:14:45.510] and what we do have is uh
+
+[01:14:45.520] we we do a lot of like reading
+
+[01:14:47.280] implementation plans. Um, and so this is
+
+[01:14:50.719] what we're editing right now is like
+
+[01:14:52.480] markdown files that talk about the code
+
+[01:14:54.400] and how it's going to change because if
+
+[01:14:56.320] you can get this right, then the
+
+[01:14:59.040] implementation is always really really
+
+[01:15:00.719] clean. And so we spend way more time
+
+[01:15:03.040] reviewing and like nitpicking these
+
+[01:15:06.239] implementation plans. that talk about
+
+[01:15:07.920] what the architecture is going to be
+
+[01:15:09.920] than we do actually um
+
+[01:15:13.840] nitpick like I barely review code
+
+[01:15:15.520] anymore and like I said I haven't opened
+
+[01:15:16.960] a file in an editor in like a month
+
+[01:15:18.560] because we mostly just look at these
+
+[01:15:20.159] plans and so everything we're doing is
+
+[01:15:22.080] open source we'll keep the specs is the
+
+[01:15:24.640] thing that we're not publishing just yet
+
+[01:15:26.719] um because that's the valuable thing
+
+[01:15:28.159] because if an AI agent is good and
+
+[01:15:29.520] you're prompting it right then you can
+
+[01:15:31.120] take any spec and turn it into working
+
+[01:15:33.679] code um
+
+[01:15:35.600] >> so anyways that's uh That's a little
+
+[01:15:37.440] preview. Um, if you're interested in
+
+[01:15:39.120] playing with this, um, happy to I'll
+
+[01:15:42.000] I'll throw a link in the in the email.
+
+[01:15:43.679] There's we have a weight list sign up.
+
+[01:15:45.280] Um, especially if you like superhuman or
+
+[01:15:47.120] you like using Vim mode and you hate
+
+[01:15:48.880] touching the mouse. Um, this is a really
+
+[01:15:51.840] fun set of tools that we've been messing
+
+[01:15:53.520] with and uh, curious to see what people
+
+[01:15:55.600] think.
+
+[01:16:00.470] >> Questions, thoughts. Vib, what do you
+
+[01:16:00.480] want? What do you want to see here? I
+
+[01:16:01.600] mean number one thing I saw is like look
+
+[01:16:03.120] the infrastructure for me of like
+
+[01:16:04.480] setting up git work trees and all this
+
+[01:16:05.760] other stuff is just annoying and like
+
+[01:16:08.000] this you just want something that kind
+
+[01:16:09.199] of does that for you. That's why I found
+
+[01:16:10.400] it personally kind of interesting.
+
+[01:16:12.480] >> Oh the work tree stuff. Yeah, we should
+
+[01:16:13.840] talk about we can talk about work trees
+
+[01:16:15.199] next week too. Um we haven't built in
+
+[01:16:16.800] work tree support for this yet but um we
+
+[01:16:19.440] have a bunch of prompts that make it
+
+[01:16:20.800] pretty easy to create work trees for all
+
+[01:16:22.480] this. Um but
+
+[01:16:24.880] >> yeah, it'll be fun. I think like
+
+[01:16:26.800] multipplexing and like five coding in
+
+[01:16:28.159] general has been really good. Maybe I'll
+
+[01:16:29.280] get someone else from my team to show up
+
+[01:16:30.480] as well who's I think is a much better
+
+[01:16:32.640] vibe coder than I am. As we all
+
+[01:16:34.239] discovered, I delete my code way more
+
+[01:16:35.920] often by accident. Um, but I'll show
+
+[01:16:38.880] that off in a bit.
+
+[01:16:41.040] Um, with that, um, I think that's it for
+
+[01:16:44.159] today's episode. Unless someone's got
+
+[01:16:45.520] one last question. Uh, we'll take one
+
+[01:16:47.679] more if there is one. Otherwise, we're
+
+[01:16:49.120] going to log off and then we'll come
+
+[01:16:50.800] back next week where we'll talk about
+
+[01:16:52.640] actually like what the full vibe coding
+
+[01:16:54.800] workflow is for like building agents.
+
+[01:16:57.040] Yeah, we're going to make all of you
+
+[01:16:58.480] 99.9th percentile vibe coders. It's
+
+[01:17:00.960] going to be it's going to be a good
+
+[01:17:02.080] time. And if anyone has a cool vibe
+
+[01:17:04.159] coding workflow that you want to share
+
+[01:17:05.679] next week, like think about it and we
+
+[01:17:07.360] can maybe have people do like one to two
+
+[01:17:09.040] minute demos.
+
+[01:17:12.080] >> Sorry, was there a question?
+
+[01:17:18.630] >> Oh, I was just saying I'm not trying to
+
+[01:17:18.640] be a 99th percentile vibe coder yet. I
+
+[01:17:20.960] feel like I got to be a 99th percentile
+
+[01:17:23.040] coder first.
+
+[01:17:25.440] Uh a lot of people are skipping that
+
+[01:17:27.040] part.
+
+[01:17:28.640] >> People I think the way I I I was also
+
+[01:17:30.880] very skeptical to be completely honest
+
+[01:17:32.159] of that. But like the thing that has
+
+[01:17:33.440] changed my perspective is like my gut
+
+[01:17:37.120] instinct is not to use AI. And I think
+
+[01:17:39.040] the part of the reason is like one I'm a
+
+[01:17:41.360] I feel like I'm a very efficient
+
+[01:17:42.800] developer. So I write code generally
+
+[01:17:44.320] fast. two, I kind of feel like AI I was
+
+[01:17:47.840] like I have this natural bias because
+
+[01:17:49.840] I'm still thinking about GPT35 and GPT4
+
+[01:17:52.640] sometimes about the limits of today's
+
+[01:17:54.000] models and I'm like ah yeah I can't do
+
+[01:17:56.400] that but what I've been trying to do now
+
+[01:17:58.159] is I have a new policy which is like for
+
+[01:18:00.960] any feature I implement I spend 10
+
+[01:18:02.880] minutes on clog or cursor or something
+
+[01:18:05.199] like that and after that what I end up
+
+[01:18:08.000] doing is at the end of 10 minutes I
+
+[01:18:10.320] either decide do I think I'll finish
+
+[01:18:11.920] this task in 30 minutes or not if the
+
+[01:18:13.600] answer is no then and I go back to
+
+[01:18:15.280] coding. If the answer is yes, I stay
+
+[01:18:17.040] vibe coding. And it has been a really
+
+[01:18:20.080] good mental model for me to get over.
+
+[01:18:22.640] >> You're doing something that I think is
+
+[01:18:23.760] really important, which is Jeff Huntley
+
+[01:18:25.440] calls deliberate intentional practice.
+
+[01:18:28.880] >> Yeah. And it's just like I have to I
+
+[01:18:30.560] have to muscle my way to do this.
+
+[01:18:34.640] >> The reason why I've been so skeptical is
+
+[01:18:36.560] because I've been like coding for less
+
+[01:18:38.400] than a year and a half at this point. So
+
+[01:18:40.400] I'm just like I really want good
+
+[01:18:42.320] foundations.
+
+[01:18:43.760] >> Yeah. Yeah. the the maybe I like I said
+
+[01:18:46.320] it's hard to know. I don't know what's
+
+[01:18:47.440] best or what's wrong, but I'm just
+
+[01:18:48.719] sharing my practice. But we'll talk
+
+[01:18:49.840] about the stuff a lot more and like
+
+[01:18:51.040] other things that we've been having the
+
+[01:18:52.239] team do uh to get better at like
+
+[01:18:54.880] shipping code faster along the way.
+
+[01:18:56.800] >> But that's the idea is like it's it's
+
+[01:18:58.560] it's good to just try it for I actually
+
+[01:19:00.480] really like what you just said by Bob is
+
+[01:19:01.840] like let me try it for 10 minutes a day
+
+[01:19:03.360] before I go start to do my old thing.
+
+[01:19:05.440] And that's like
+
+[01:19:06.320] >> 10 minutes a feature not 10 minutes a
+
+[01:19:08.000] day
+
+[01:19:08.960] >> if you are going to learn anything. Um,
+
+[01:19:11.360] and the LM is essentially a very complex
+
+[01:19:13.760] instrument and we all need to learn to
+
+[01:19:15.440] play it. And the problem is is that they
+
+[01:19:17.199] ship a new version of the instrument
+
+[01:19:18.800] every month and you got to learn to play
+
+[01:19:20.480] that one too. Um, but I think that's the
+
+[01:19:22.960] future is going to look a lot like um
+
+[01:19:25.520] something that is a little more art than
+
+[01:19:27.280] science and something that is a lot more
+
+[01:19:29.040] feel than than concrete. But if you can
+
+[01:19:31.920] stay on the bleeding edge of of of what
+
+[01:19:34.080] the best in class looks like in that
+
+[01:19:36.320] world, uh you're gonna be you're gonna
+
+[01:19:38.960] reap rewards.
+
+[01:19:40.400] >> Anyway, we'll chat more about this next
+
+[01:19:42.080] week. Um for this week, uh that's it. We
+
+[01:19:45.520] talked about how to evalu
+
+[01:19:52.070] dashboards as you build them. Post
+
+[01:19:52.080] screenshots conversations always live on
+
+[01:19:54.000] the Discord if you guys would like or
+
+[01:19:55.440] send us an email.
+
+[01:19:57.360] >> Awesome. Super fun. Thanks. Bye, Bob.
+
+[01:19:59.280] Thanks everybody.
+
+[01:20:00.159] >> Bye everyone. owned by Dex.

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md, README.md, catalog, and transcript agree on YouTube ID _VB9TT1Vus4",
+  "transcript_range": "00:03.030 to 58:08.319",
+  "timestamp_order": "passed: all 1,631 stitched.json segments are monotonic",
+  "spot_checks": ["queue behavior", "interrupt behavior", "event source of truth", "UI projection", "replay testing", "event bus"],
+  "timestamped_claim_count": 8,
+  "source_duration_check": "caption coverage checked from 3.030 to 3488.319 seconds; source media duration was not probed",
+  "remaining_uncertainty": ["automatic caption errors", "exact recording start", "speaker attribution", "production durability and scale"]
+}

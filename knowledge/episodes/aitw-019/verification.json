@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID 2ivXNdHJpxk",
+  "transcript_range": "00:00 to 01:00:50.720",
+  "timestamp_order": "passed with a direct HH:MM:SS.mmm parser; knowledge/scripts/verify_transcript.py does not recognize this caption timestamp format",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "The demo starts from a planner that can be guided and c",
+    "A simple blocking loop cannot become interruptible with",
+    "Queued messages are tracked as state and become eligibl",
+    "The threaded design races agent completion against an i"
+  ],
+  "timestamped_claim_count": 6,
+  "source_duration_check": "Caption end compared with the duration stated in the source README where available; source media was not downloaded.",
+  "remaining_uncertainty": [
+    "automatic caption errors",
+    "speaker attribution",
+    "screen only evidence",
+    "exact recording start"
+  ]
+}

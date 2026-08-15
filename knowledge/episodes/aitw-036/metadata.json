@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-036",
+  "episode": 36,
+  "season": 2,
+  "title": "Building a Prompt Optimizer",
+  "source_folder": "2025-12-16-prompt-optimizer",
+  "recorded_at": "2025-12-16T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "IkSEXg6f4KY",
+  "youtube_url": "https://www.youtube.com/watch?v=IkSEXg6f4KY",
+  "transcript_origin": "upstream timestamped transcript.md",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

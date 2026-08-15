@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-031",
+  "episode": 31,
+  "season": 2,
+  "title": "Dates, Times, and LLMs",
+  "source_folder": "2025-11-11-dates-and-times",
+  "recorded_at": "2025-11-11T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "l7txtbgCFGU",
+  "youtube_url": "https://www.youtube.com/watch?v=l7txtbgCFGU",
+  "transcript_origin": "imported YouTube automatic captions: en",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-youtube-captions"
+}

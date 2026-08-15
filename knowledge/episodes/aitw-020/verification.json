@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID NJcph4j9sNg",
+  "transcript_range": "00:00 to 01:01:19.360",
+  "timestamp_order": "passed with a direct HH:MM:SS.mmm parser; knowledge/scripts/verify_transcript.py does not recognize this caption timestamp format",
+  "spot_checks": [
+    "opening",
+    "middle",
+    "ending",
+    "The hosts describe a lightweight CRM or knowledge graph",
+    "Frontmatter and file structure are used to select conte",
+    "A daily review SOP gathers source material and produces",
+    "The repository example keeps recurring output formats a"
+  ],
+  "timestamped_claim_count": 6,
+  "source_duration_check": "Caption end compared with the duration stated in the source README where available; source media was not downloaded.",
+  "remaining_uncertainty": [
+    "automatic caption errors",
+    "speaker attribution",
+    "screen only evidence",
+    "exact recording start"
+  ]
+}

@@ -1,0 +1,137 @@
+WEBVTT
+
+00:00.000 --> 00:04.960
+As it shows, I got a ton done, like an unbelievable amount done.
+
+00:04.960 --> 00:09.360
+This is the closed PR's in Lakebed where, reminder, I'm still the only contributor.
+
+00:09.360 --> 00:12.000
+I have not forced this project onto my team yet.
+
+00:12.000 --> 00:13.400
+They don't deserve the slop.
+
+00:13.400 --> 00:14.400
+It's cleaning up fast.
+
+00:14.400 --> 00:15.560
+Thank you, Fable.
+
+00:15.560 --> 00:20.320
+But all of these PR's were done in literally two to three days.
+
+00:20.320 --> 00:25.120
+The sheer volume of work here, especially if you're looking at the ones that actually merged
+
+00:25.120 --> 00:31.800
+like this pile here. It's like I think 11 or 12 PRs that merged all not just in one day,
+
+00:31.800 --> 00:37.600
+but from one thread. And I keep going and I'm on page two. We're still in things from
+
+00:37.600 --> 00:43.280
+two days ago. Then there's a four day ago, one five days ago, then a huge jump to two weeks
+
+00:43.280 --> 00:48.480
+because I was just not really feeling it. When I lost access to this model, I tried to
+
+00:48.480 --> 00:52.120
+run around in circles and get the best stuff I could out of Opus, but it wasn't at the
+
+00:52.120 --> 00:53.560
+the bar I needed to ship.
+
+00:53.560 --> 00:56.120
+It what ended up happening is in this particular project,
+
+00:56.120 --> 00:59.600
+Lakebed, I had a bunch of these PR stack up of work
+
+00:59.600 --> 01:02.320
+that was like 50 to 80% complete,
+
+01:02.320 --> 01:04.360
+but I didn't like the SDK changes it made.
+
+01:04.360 --> 01:06.960
+I didn't really have confidence in the implementation,
+
+01:06.960 --> 01:09.120
+including it up would just take too long.
+
+01:09.120 --> 01:11.000
+And the result was that I kept having ideas,
+
+01:11.000 --> 01:14.080
+I kept making PRs, and they kept sitting there doing nothing.
+
+01:14.080 --> 01:18.560
+I probably had 20 or 30 PRs just sitting in this repo,
+
+01:18.560 --> 01:21.160
+not moving, and the project has been sitting there
+
+01:21.160 --> 01:22.800
+as a result, and I don't like that.
+
+01:22.800 --> 01:25.040
+I really want to ship Lakebed.
+
+01:25.040 --> 01:26.840
+I've talked about what Lakebed is in some other videos.
+
+01:26.840 --> 01:28.600
+I don't want to bog you down the details
+
+01:28.600 --> 01:29.800
+until I actually have it launched.
+
+01:29.800 --> 01:31.280
+I haven't earned the right to market this yet.
+
+01:31.280 --> 01:32.160
+I want it done.
+
+01:32.160 --> 01:33.800
+So we'll do that later.
+
+01:33.800 --> 01:35.400
+But I want to talk about the workflows
+
+01:35.400 --> 01:37.760
+that got me this far in the project,
+
+01:37.760 --> 01:39.280
+as well as some of the cool things I'm doing
+
+01:39.280 --> 01:41.440
+on other projects that I've been working on.
+
+01:41.440 --> 01:43.160
+I'm going to start in a weird place here,
+
+01:43.160 --> 01:44.680
+but I promise it will help.
+
+01:44.680 --> 01:46.640
+I'm going to start with min-maxing tips
+
+01:46.640 --> 01:48.400
+and like cost reduction things
+
+01:48.400 --> 01:50.960
+in order to make sure that when you adopt this workflow,
+
+01:50.960 --> 01:53.200
+you don't immediately bankrupt yourself,
+
+01:53.200 --> 01:55.600
+because if you were to go to the second half of this video
+
+01:55.600 --> 01:58.440
+and skip straight to that part, it will be expensive.
+
+01:58.440 --> 02:00.400
+That's what I did in the first three days.
+

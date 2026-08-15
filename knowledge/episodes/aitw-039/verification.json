@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID wadVIkJnjQE",
+  "transcript_range": "00:01.512 to 01:10:12.303",
+  "timestamp_order": "passed: 271 timestamps are monotonic using knowledge/scripts/verify_transcript.py",
+  "spot_checks": ["bottleneck framing", "event architecture", "prefetch safety", "cache warming", "token reduction", "reasoning tokens", "semantic streaming", "decoupled UI", "minimal reasoning demo"],
+  "timestamped_claim_count": 9,
+  "supporting_code_check": "passed: main.py, pyproject.toml, and all four baml_src files were reviewed; @stream.done and minimal reasoning settings match the discussion",
+  "source_duration_check": "not run: source media was not downloaded",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "provider behavior after January 2026", "speaker reported performance numbers", "screen-only evidence"]
+}

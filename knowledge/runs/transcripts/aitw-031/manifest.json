@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-031",
+  "video_id": "l7txtbgCFGU",
+  "source_url": "https://www.youtube.com/watch?v=l7txtbgCFGU",
+  "input_fingerprint": "2d404559aece8ed250fdcb87490d42947d18d508a4930acdfd7c0ce9948342bc",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:20:13.441937+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 3483.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-031/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-031/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 1545,
+      "first_seconds": 2.79,
+      "last_seconds": 3483.599,
+      "source_duration_seconds": 3483.0,
+      "duration_delta_seconds": 0.5990000000001601,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:20:38.342661+00:00"
+}

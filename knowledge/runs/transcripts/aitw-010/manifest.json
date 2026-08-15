@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-010",
+  "video_id": "niR896pQWOQ",
+  "source_url": "https://www.youtube.com/watch?v=niR896pQWOQ",
+  "input_fingerprint": "6d5f8adf274bc59a9b21878b478c05bde728d6940aa3f6ff814c057329de87e5",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:16:19.229439+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 4070.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-010/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-010/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 1714,
+      "first_seconds": 4.07,
+      "last_seconds": 4072.0,
+      "source_duration_seconds": 4070.0,
+      "duration_delta_seconds": 2.0,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:16:24.918688+00:00"
+}

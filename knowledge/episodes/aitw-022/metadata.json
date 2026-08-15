@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-022",
+  "episode": 22,
+  "season": 2,
+  "title": "Generative UIs and Structured Streaming",
+  "source_folder": "2025-09-09-generative-uis",
+  "recorded_at": "2025-09-09T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "RX8D5oJrV9k",
+  "youtube_url": "https://www.youtube.com/watch?v=RX8D5oJrV9k",
+  "transcript_origin": "YouTube automatic English captions, imported as timestamped stitched transcript",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-youtube-captions"
+}

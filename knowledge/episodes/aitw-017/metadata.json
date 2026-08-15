@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-017",
+  "episode": 13,
+  "season": 2,
+  "title": "Context Engineering for Coding Agents",
+  "source_folder": "2025-08-05-advanced-context-engineering-for-coding-agents",
+  "recorded_at": "2025-08-05T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "42AzKZRNhsk",
+  "youtube_url": "https://www.youtube.com/watch?v=42AzKZRNhsk",
+  "transcript_origin": "YouTube automatic English captions, imported as timestamped stitched transcript",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-youtube-captions"
+}

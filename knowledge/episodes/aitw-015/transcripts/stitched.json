@@ -1,0 +1,2001 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-015",
+  "video_id": "sCScFZB4Am8",
+  "origin": "youtube_captions",
+  "caption_source": "automatic:en",
+  "segments": [
+    {
+      "id": 1,
+      "start": 2.389,
+      "end": 2.399,
+      "text": "Otherwise, if"
+    },
+    {
+      "id": 2,
+      "start": 2.399,
+      "end": 4.4,
+      "text": ">> Oh, were we not recording today?"
+    },
+    {
+      "id": 3,
+      "start": 4.4,
+      "end": 6.16,
+      "text": ">> I think probably someone else joined"
+    },
+    {
+      "id": 4,
+      "start": 6.16,
+      "end": 7.68,
+      "text": "with a noteaker or something."
+    },
+    {
+      "id": 5,
+      "start": 7.68,
+      "end": 8.16,
+      "text": ">> Awesome."
+    },
+    {
+      "id": 6,
+      "start": 8.16,
+      "end": 10.8,
+      "text": ">> Yeah. Um, if we do this then now the"
+    },
+    {
+      "id": 7,
+      "start": 10.8,
+      "end": 11.759,
+      "text": "transaction is actually going to"
+    },
+    {
+      "id": 8,
+      "start": 11.759,
+      "end": 13.36,
+      "text": "continue and I can go do dupes. Now,"
+    },
+    {
+      "id": 9,
+      "start": 13.36,
+      "end": 15.599,
+      "text": "this might also be kind of annoying. So,"
+    },
+    {
+      "id": 10,
+      "start": 15.599,
+      "end": 17.119,
+      "text": "I'll do the dumb thing and I'll just say"
+    },
+    {
+      "id": 11,
+      "start": 17.119,
+      "end": 20.32,
+      "text": "like TXNS equals"
+    },
+    {
+      "id": 12,
+      "start": 20.32,
+      "end": 23.91,
+      "text": "get TXNS"
+    },
+    {
+      "id": 13,
+      "start": 25.91,
+      "end": 25.92,
+      "text": "without"
+    },
+    {
+      "id": 14,
+      "start": 25.92,
+      "end": 27.92,
+      "text": "dupes. I'll just pass in the old TXNS"
+    },
+    {
+      "id": 15,
+      "start": 27.92,
+      "end": 30.0,
+      "text": "and the new TXNS. pass through the"
+    },
+    {
+      "id": 16,
+      "start": 30.0,
+      "end": 31.679,
+      "text": "model, give it context that these are"
+    },
+    {
+      "id": 17,
+      "start": 31.679,
+      "end": 33.12,
+      "text": "coming from some new pages that might"
+    },
+    {
+      "id": 18,
+      "start": 33.12,
+      "end": 35.36,
+      "text": "have overlaps from the previous page and"
+    },
+    {
+      "id": 19,
+      "start": 35.36,
+      "end": 37.2,
+      "text": "then get out a new full array from the"
+    },
+    {
+      "id": 20,
+      "start": 37.2,
+      "end": 38.96,
+      "text": "model"
+    },
+    {
+      "id": 21,
+      "start": 38.96,
+      "end": 41.28,
+      "text": "and now we have our answer."
+    },
+    {
+      "id": 22,
+      "start": 41.28,
+      "end": 43.68,
+      "text": ">> Um, and this is only if I actually"
+    },
+    {
+      "id": 23,
+      "start": 43.68,
+      "end": 46.239,
+      "text": "continued from a previous page. Uh,"
+    },
+    {
+      "id": 24,
+      "start": 46.239,
+      "end": 48.64,
+      "text": "otherwise I wouldn't do it. Uh,"
+    },
+    {
+      "id": 25,
+      "start": 48.64,
+      "end": 50.0,
+      "text": "otherwise I would just append everything"
+    },
+    {
+      "id": 26,
+      "start": 50.0,
+      "end": 52.399,
+      "text": "all there on its own. And now I' have"
+    },
+    {
+      "id": 27,
+      "start": 52.399,
+      "end": 54.8,
+      "text": "built a pipeline that is pretty good at"
+    },
+    {
+      "id": 28,
+      "start": 54.8,
+      "end": 57.28,
+      "text": "extracting all this data."
+    },
+    {
+      "id": 29,
+      "start": 57.28,
+      "end": 58.879,
+      "text": "Um, before I get into it, any questions"
+    },
+    {
+      "id": 30,
+      "start": 58.879,
+      "end": 60.96,
+      "text": "for people uh, as we're doing this? Does"
+    },
+    {
+      "id": 31,
+      "start": 60.96,
+      "end": 62.399,
+      "text": "this kind of make sense? Like the"
+    },
+    {
+      "id": 32,
+      "start": 62.399,
+      "end": 64.08,
+      "text": "process that we went through of all the"
+    },
+    {
+      "id": 33,
+      "start": 64.08,
+      "end": 66.32,
+      "text": "way originally trying the PDF raw didn't"
+    },
+    {
+      "id": 34,
+      "start": 66.32,
+      "end": 68.479,
+      "text": "work. Figuring out how to go do that."
+    },
+    {
+      "id": 35,
+      "start": 68.479,
+      "end": 69.6,
+      "text": "Well, we're going to apply some filters"
+    },
+    {
+      "id": 36,
+      "start": 69.6,
+      "end": 71.119,
+      "text": "and only find pages with actual"
+    },
+    {
+      "id": 37,
+      "start": 71.119,
+      "end": 72.96000000000001,
+      "text": "transactions for every single subsequent"
+    },
+    {
+      "id": 38,
+      "start": 72.96000000000001,
+      "end": 75.119,
+      "text": "step. Then we're going to go ahead and"
+    },
+    {
+      "id": 39,
+      "start": 75.119,
+      "end": 76.4,
+      "text": "solve the biggest problem, which is"
+    },
+    {
+      "id": 40,
+      "start": 76.4,
+      "end": 78.479,
+      "text": "headers and footers. Get rid of that."
+    },
+    {
+      "id": 41,
+      "start": 78.479,
+      "end": 79.52,
+      "text": "And then we're going to solve the next"
+    },
+    {
+      "id": 42,
+      "start": 79.52,
+      "end": 81.28,
+      "text": "big problem, which is data breaking,"
+    },
+    {
+      "id": 43,
+      "start": 81.28,
+      "end": 83.759,
+      "text": "having page breaks. and continuing that"
+    },
+    {
+      "id": 44,
+      "start": 83.759,
+      "end": 85.119,
+      "text": "down with a similar problem where I just"
+    },
+    {
+      "id": 45,
+      "start": 85.119,
+      "end": 87.52,
+      "text": "ask an LLM, do these pages have"
+    },
+    {
+      "id": 46,
+      "start": 87.52,
+      "end": 89.36,
+      "text": "continued data or break points? If the"
+    },
+    {
+      "id": 47,
+      "start": 89.36,
+      "end": 91.92,
+      "text": "LM says yes, I do some special stuff"
+    },
+    {
+      "id": 48,
+      "start": 91.92,
+      "end": 94.24000000000001,
+      "text": "like merge the image into a new image or"
+    },
+    {
+      "id": 49,
+      "start": 94.24000000000001,
+      "end": 101.35,
+      "text": "paste both images in."
+    },
+    {
+      "id": 50,
+      "start": 108.149,
+      "end": 108.15899999999999,
+      "text": ">> Yeah, I mean this approach makes sense."
+    },
+    {
+      "id": 51,
+      "start": 108.15899999999999,
+      "end": 110.96000000000001,
+      "text": "Um, I'm trying to restrain like the"
+    },
+    {
+      "id": 52,
+      "start": 110.96000000000001,
+      "end": 114.399,
+      "text": "receptive field of of an LLM basically."
+    },
+    {
+      "id": 53,
+      "start": 114.399,
+      "end": 115.6,
+      "text": ">> Um,"
+    },
+    {
+      "id": 54,
+      "start": 115.6,
+      "end": 118.07900000000001,
+      "text": ">> I'm just wondering if like there are"
+    },
+    {
+      "id": 55,
+      "start": 118.07900000000001,
+      "end": 121.04,
+      "text": "pretty good OCR models that do bounding"
+    },
+    {
+      "id": 56,
+      "start": 121.04,
+      "end": 125.6,
+      "text": "box detection. Um, so would like"
+    },
+    {
+      "id": 57,
+      "start": 125.6,
+      "end": 128.0,
+      "text": "would it make sense to"
+    },
+    {
+      "id": 58,
+      "start": 128.0,
+      "end": 130.56,
+      "text": "restrain the field even more just by"
+    },
+    {
+      "id": 59,
+      "start": 130.56,
+      "end": 133.28,
+      "text": "using a bounding box of the line item"
+    },
+    {
+      "id": 60,
+      "start": 133.28,
+      "end": 135.44,
+      "text": "instead of trying to like do this the"
+    },
+    {
+      "id": 61,
+      "start": 135.44,
+      "end": 138.16,
+      "text": "this page magic?"
+    },
+    {
+      "id": 62,
+      "start": 138.16,
+      "end": 140.0,
+      "text": "You can try that. In general, what I"
+    },
+    {
+      "id": 63,
+      "start": 140.0,
+      "end": 141.36,
+      "text": "have seen with bounding box models is"
+    },
+    {
+      "id": 64,
+      "start": 141.36,
+      "end": 142.959,
+      "text": "that they're generally worse than LLMs"
+    },
+    {
+      "id": 65,
+      "start": 142.959,
+      "end": 146.319,
+      "text": "at a lot of things. Um, so like it's the"
+    },
+    {
+      "id": 66,
+      "start": 146.319,
+      "end": 148.72,
+      "text": "same as like using an OCR model instead"
+    },
+    {
+      "id": 67,
+      "start": 148.72,
+      "end": 150.48,
+      "text": "of an LLM. On average, you're probably"
+    },
+    {
+      "id": 68,
+      "start": 150.48,
+      "end": 152.16,
+      "text": "right. It might work, but like what I"
+    },
+    {
+      "id": 69,
+      "start": 152.16,
+      "end": 153.76,
+      "text": "have seen in practice that the LM just"
+    },
+    {
+      "id": 70,
+      "start": 153.76,
+      "end": 156.07999999999998,
+      "text": "does a much better job. I think LM can"
+    },
+    {
+      "id": 71,
+      "start": 156.07999999999998,
+      "end": 158.72,
+      "text": "do more than you think. Um, but they"
+    },
+    {
+      "id": 72,
+      "start": 158.72,
+      "end": 160.48,
+      "text": "just need a little bit more stability to"
+    },
+    {
+      "id": 73,
+      "start": 160.48,
+      "end": 163.12,
+      "text": "help with them. So like if we get rid of"
+    },
+    {
+      "id": 74,
+      "start": 163.12,
+      "end": 164.959,
+      "text": "all the transaction data, I think that"
+    },
+    {
+      "id": 75,
+      "start": 164.959,
+      "end": 166.64,
+      "text": "like you you're definitely right. you"
+    },
+    {
+      "id": 76,
+      "start": 166.64,
+      "end": 168.64,
+      "text": "will get that transaction pulled out."
+    },
+    {
+      "id": 77,
+      "start": 168.64,
+      "end": 171.2,
+      "text": "But I have found very very few bounding"
+    },
+    {
+      "id": 78,
+      "start": 171.2,
+      "end": 173.68,
+      "text": "box algorithm that'll actually detect"
+    },
+    {
+      "id": 79,
+      "start": 173.68,
+      "end": 175.519,
+      "text": "like every single bounding box on this"
+    },
+    {
+      "id": 80,
+      "start": 175.519,
+      "end": 177.519,
+      "text": "correctly because the semantic meaning"
+    },
+    {
+      "id": 81,
+      "start": 177.519,
+      "end": 179.76,
+      "text": "of a bounding box here is very"
+    },
+    {
+      "id": 82,
+      "start": 179.76,
+      "end": 181.12,
+      "text": "different. The semantic meaning of a"
+    },
+    {
+      "id": 83,
+      "start": 181.12,
+      "end": 182.48,
+      "text": "bounding box here is like this whole"
+    },
+    {
+      "id": 84,
+      "start": 182.48,
+      "end": 184.56,
+      "text": "thing."
+    },
+    {
+      "id": 85,
+      "start": 184.56,
+      "end": 186.48,
+      "text": "Good luck getting a bounding box to give"
+    },
+    {
+      "id": 86,
+      "start": 186.48,
+      "end": 188.4,
+      "text": "you that shape."
+    },
+    {
+      "id": 87,
+      "start": 188.4,
+      "end": 189.519,
+      "text": "That's just not going to work. What the"
+    },
+    {
+      "id": 88,
+      "start": 189.519,
+      "end": 190.72,
+      "text": "batting box algorithm will do is they'll"
+    },
+    {
+      "id": 89,
+      "start": 190.72,
+      "end": 192.8,
+      "text": "give you this one and it'll give you"
+    },
+    {
+      "id": 90,
+      "start": 192.8,
+      "end": 196.319,
+      "text": "this maybe if you're lucky and then I'll"
+    },
+    {
+      "id": 91,
+      "start": 196.319,
+      "end": 198.56,
+      "text": "give you this"
+    },
+    {
+      "id": 92,
+      "start": 198.56,
+      "end": 201.36,
+      "text": "and then I'll give you this"
+    },
+    {
+      "id": 93,
+      "start": 201.36,
+      "end": 203.68,
+      "text": "and now you're still stuck in a world of"
+    },
+    {
+      "id": 94,
+      "start": 203.68,
+      "end": 204.959,
+      "text": "pain of connecting all this stuff"
+    },
+    {
+      "id": 95,
+      "start": 204.959,
+      "end": 207.519,
+      "text": "together and that is a really really"
+    },
+    {
+      "id": 96,
+      "start": 207.519,
+      "end": 210.879,
+      "text": "really really hard problem. This is why"
+    },
+    {
+      "id": 97,
+      "start": 210.879,
+      "end": 212.72,
+      "text": "I think the math approach didn't really"
+    },
+    {
+      "id": 98,
+      "start": 212.72,
+      "end": 215.84,
+      "text": "work and why like training models end to"
+    },
+    {
+      "id": 99,
+      "start": 215.84,
+      "end": 217.04,
+      "text": "end would ended up being the answer"
+    },
+    {
+      "id": 100,
+      "start": 217.04,
+      "end": 218.4,
+      "text": "because the math approach would connect"
+    },
+    {
+      "id": 101,
+      "start": 218.4,
+      "end": 220.07999999999998,
+      "text": "all these together. Can you do this?"
+    },
+    {
+      "id": 102,
+      "start": 220.07999999999998,
+      "end": 221.84,
+      "text": "Yes."
+    },
+    {
+      "id": 103,
+      "start": 221.84,
+      "end": 223.84,
+      "text": "It will just take more time, more tuning"
+    },
+    {
+      "id": 104,
+      "start": 223.84,
+      "end": 226.72,
+      "text": "and more correctness to go do this"
+    },
+    {
+      "id": 105,
+      "start": 226.72,
+      "end": 229.599,
+      "text": ">> and it will work on a less diverse set"
+    },
+    {
+      "id": 106,
+      "start": 229.599,
+      "end": 232.31900000000002,
+      "text": "of data and inputs. The reason that I"
+    },
+    {
+      "id": 107,
+      "start": 232.31900000000002,
+      "end": 233.76,
+      "text": "shared the header technique is not"
+    },
+    {
+      "id": 108,
+      "start": 233.76,
+      "end": 234.879,
+      "text": "because I think that's one of the best"
+    },
+    {
+      "id": 109,
+      "start": 234.879,
+      "end": 237.2,
+      "text": "techniques, but because there's a level"
+    },
+    {
+      "id": 110,
+      "start": 237.2,
+      "end": 239.519,
+      "text": "of standardization that I know is true"
+    },
+    {
+      "id": 111,
+      "start": 239.519,
+      "end": 241.28,
+      "text": "in headers,"
+    },
+    {
+      "id": 112,
+      "start": 241.28,
+      "end": 243.36,
+      "text": "it's like almost definitively true in"
+    },
+    {
+      "id": 113,
+      "start": 243.36,
+      "end": 244.159,
+      "text": "headers."
+    },
+    {
+      "id": 114,
+      "start": 244.159,
+      "end": 246.159,
+      "text": ">> And so why not give yourself the extra"
+    },
+    {
+      "id": 115,
+      "start": 246.159,
+      "end": 248.64,
+      "text": "1% by just forcing the model to ignore"
+    },
+    {
+      "id": 116,
+      "start": 248.64,
+      "end": 251.04,
+      "text": "everything there basically."
+    },
+    {
+      "id": 117,
+      "start": 251.04,
+      "end": 253.36,
+      "text": ">> Exactly. And this is only after finding"
+    },
+    {
+      "id": 118,
+      "start": 253.36,
+      "end": 254.64,
+      "text": "out that like in in the case of"
+    },
+    {
+      "id": 119,
+      "start": 254.64,
+      "end": 256.079,
+      "text": "financial data like headers are like a"
+    },
+    {
+      "id": 120,
+      "start": 256.079,
+      "end": 257.28,
+      "text": "big problem. In the case of medical"
+    },
+    {
+      "id": 121,
+      "start": 257.28,
+      "end": 259.6,
+      "text": "records, headers are a big problem. uh"
+    },
+    {
+      "id": 122,
+      "start": 259.6,
+      "end": 261.6,
+      "text": "the model just gets like confused by a"
+    },
+    {
+      "id": 123,
+      "start": 261.6,
+      "end": 262.88,
+      "text": "bunch of like numbers and stuff at the"
+    },
+    {
+      "id": 124,
+      "start": 262.88,
+      "end": 265.199,
+      "text": "bottom. Uh is kind of what we found."
+    },
+    {
+      "id": 125,
+      "start": 265.199,
+      "end": 267.199,
+      "text": "It's like like these numbers end up"
+    },
+    {
+      "id": 126,
+      "start": 267.199,
+      "end": 268.72,
+      "text": "hurting the model's performance a lot"
+    },
+    {
+      "id": 127,
+      "start": 268.72,
+      "end": 272.4,
+      "text": "more. Uh passing in a page like this"
+    },
+    {
+      "id": 128,
+      "start": 272.4,
+      "end": 273.919,
+      "text": "hurts the model's performance a lot"
+    },
+    {
+      "id": 129,
+      "start": 273.919,
+      "end": 277.12,
+      "text": "more. So like just like"
+    },
+    {
+      "id": 130,
+      "start": 277.12,
+      "end": 279.28,
+      "text": "removing extra context from the model"
+    },
+    {
+      "id": 131,
+      "start": 279.28,
+      "end": 282.32,
+      "text": "does help that it doesn't need for sure,"
+    },
+    {
+      "id": 132,
+      "start": 282.32,
+      "end": 284.24,
+      "text": "but I also don't want to accidentally be"
+    },
+    {
+      "id": 133,
+      "start": 284.24,
+      "end": 285.52,
+      "text": "stuck in a world of pain where I have to"
+    },
+    {
+      "id": 134,
+      "start": 285.52,
+      "end": 287.759,
+      "text": "go and find all these weird edge cases"
+    },
+    {
+      "id": 135,
+      "start": 287.759,
+      "end": 289.68,
+      "text": "myself. I want to do the simplest thing"
+    },
+    {
+      "id": 136,
+      "start": 289.68,
+      "end": 291.919,
+      "text": "that takes almost no code that I can go"
+    },
+    {
+      "id": 137,
+      "start": 291.919,
+      "end": 294.88,
+      "text": "vibe code up that gives me that 1%. It's"
+    },
+    {
+      "id": 138,
+      "start": 294.88,
+      "end": 297.12,
+      "text": "a time to ROI problem over everything"
+    },
+    {
+      "id": 139,
+      "start": 297.12,
+      "end": 300.16,
+      "text": "else. Does that answer the question, AJ?"
+    },
+    {
+      "id": 140,
+      "start": 300.16,
+      "end": 301.68,
+      "text": ">> Yeah, it does. Cool. No, that makes"
+    },
+    {
+      "id": 141,
+      "start": 301.68,
+      "end": 302.639,
+      "text": "sense. Thanks."
+    },
+    {
+      "id": 142,
+      "start": 302.639,
+      "end": 304.08,
+      "text": ">> Yeah, of course. Uh VJ, you got a"
+    },
+    {
+      "id": 143,
+      "start": 304.08,
+      "end": 306.479,
+      "text": "question?"
+    },
+    {
+      "id": 144,
+      "start": 306.479,
+      "end": 309.68,
+      "text": ">> Yeah, I I had a similar scenario"
+    },
+    {
+      "id": 145,
+      "start": 309.68,
+      "end": 311.919,
+      "text": "previously when we were processing"
+    },
+    {
+      "id": 146,
+      "start": 311.919,
+      "end": 313.84,
+      "text": "invoices. Yeah,"
+    },
+    {
+      "id": 147,
+      "start": 313.84,
+      "end": 316.08,
+      "text": ">> this is pre-LM days when we were all"
+    },
+    {
+      "id": 148,
+      "start": 316.08,
+      "end": 318.16,
+      "text": "building RPA boards and automations and"
+    },
+    {
+      "id": 149,
+      "start": 318.16,
+      "end": 320.4,
+      "text": "stuff."
+    },
+    {
+      "id": 150,
+      "start": 320.4,
+      "end": 324.08,
+      "text": ">> So, we had different uh invoices coming"
+    },
+    {
+      "id": 151,
+      "start": 324.08,
+      "end": 326.16,
+      "text": "in from different vendors and we were"
+    },
+    {
+      "id": 152,
+      "start": 326.16,
+      "end": 327.36,
+      "text": "trying to build these automation"
+    },
+    {
+      "id": 153,
+      "start": 327.36,
+      "end": 329.039,
+      "text": "pipelines"
+    },
+    {
+      "id": 154,
+      "start": 329.039,
+      "end": 331.44,
+      "text": "uh and as as you can imagine like a"
+    },
+    {
+      "id": 155,
+      "start": 331.44,
+      "end": 333.68,
+      "text": "large enterprise has so many vendors and"
+    },
+    {
+      "id": 156,
+      "start": 333.68,
+      "end": 335.759,
+      "text": "each vendor might have their own format"
+    },
+    {
+      "id": 157,
+      "start": 335.759,
+      "end": 338.08,
+      "text": "for invoice and headers and stuff and"
+    },
+    {
+      "id": 158,
+      "start": 338.08,
+      "end": 340.72,
+      "text": "they have their own different sizes. So"
+    },
+    {
+      "id": 159,
+      "start": 340.72,
+      "end": 343.68,
+      "text": "what we ended up doing is we we again"
+    },
+    {
+      "id": 160,
+      "start": 343.68,
+      "end": 346.0,
+      "text": "took the uh paro principle there. We"
+    },
+    {
+      "id": 161,
+      "start": 346.0,
+      "end": 348.72,
+      "text": "took around 80% of the uh invoices which"
+    },
+    {
+      "id": 162,
+      "start": 348.72,
+      "end": 351.039,
+      "text": "had like five or six formats and try to"
+    },
+    {
+      "id": 163,
+      "start": 351.039,
+      "end": 354.24,
+      "text": "automate that another another 20%"
+    },
+    {
+      "id": 164,
+      "start": 354.24,
+      "end": 357.039,
+      "text": "uh sort of either now you could say"
+    },
+    {
+      "id": 165,
+      "start": 357.039,
+      "end": 358.72,
+      "text": "those are human in the loop but those"
+    },
+    {
+      "id": 166,
+      "start": 358.72,
+      "end": 360.8,
+      "text": "are processed manually."
+    },
+    {
+      "id": 167,
+      "start": 360.8,
+      "end": 362.88,
+      "text": "uh I think that approach might be"
+    },
+    {
+      "id": 168,
+      "start": 362.88,
+      "end": 365.36,
+      "text": "applicable here as well where let's"
+    },
+    {
+      "id": 169,
+      "start": 365.36,
+      "end": 367.52,
+      "text": "let's imagine if you have a repo of a"
+    },
+    {
+      "id": 170,
+      "start": 367.52,
+      "end": 369.52,
+      "text": "million records historically you want to"
+    },
+    {
+      "id": 171,
+      "start": 369.52,
+      "end": 373.44,
+      "text": "process your entire data bank then uh"
+    },
+    {
+      "id": 172,
+      "start": 373.44,
+      "end": 374.96,
+      "text": "then I think you'll have to adapt these"
+    },
+    {
+      "id": 173,
+      "start": 374.96,
+      "end": 378.24,
+      "text": "pipelines using that uh uh approach as"
+    },
+    {
+      "id": 174,
+      "start": 378.24,
+      "end": 381.919,
+      "text": "well correct exactly so what I would do"
+    },
+    {
+      "id": 175,
+      "start": 381.919,
+      "end": 383.44,
+      "text": "if I really building this pipeline out"
+    },
+    {
+      "id": 176,
+      "start": 383.44,
+      "end": 386.0,
+      "text": "from like scratch on my own is I"
+    },
+    {
+      "id": 177,
+      "start": 386.0,
+      "end": 387.28,
+      "text": "actually wouldn't build headers and"
+    },
+    {
+      "id": 178,
+      "start": 387.28,
+      "end": 389.919,
+      "text": "footers out on every single process what"
+    },
+    {
+      "id": 179,
+      "start": 389.919,
+      "end": 392.15999999999997,
+      "text": "I would do is I would just save this per"
+    },
+    {
+      "id": 180,
+      "start": 392.15999999999997,
+      "end": 393.919,
+      "text": "type of vendor that's coming in. Do a"
+    },
+    {
+      "id": 181,
+      "start": 393.919,
+      "end": 395.28,
+      "text": "quick extraction of like what vendor is"
+    },
+    {
+      "id": 182,
+      "start": 395.28,
+      "end": 397.6,
+      "text": "this like Chase, US Bank or like the top"
+    },
+    {
+      "id": 183,
+      "start": 397.6,
+      "end": 399.919,
+      "text": "500 banks that exist."
+    },
+    {
+      "id": 184,
+      "start": 399.919,
+      "end": 402.15999999999997,
+      "text": "save PDFs"
+    },
+    {
+      "id": 185,
+      "start": 402.15999999999997,
+      "end": 403.759,
+      "text": "together"
+    },
+    {
+      "id": 186,
+      "start": 403.759,
+      "end": 406.319,
+      "text": "and just like have that saved forever"
+    },
+    {
+      "id": 187,
+      "start": 406.319,
+      "end": 408.4,
+      "text": "and then literally every single week"
+    },
+    {
+      "id": 188,
+      "start": 408.4,
+      "end": 410.96,
+      "text": "pull one% of my pipeline through this"
+    },
+    {
+      "id": 189,
+      "start": 410.96,
+      "end": 412.72,
+      "text": "script to see if the header changes"
+    },
+    {
+      "id": 190,
+      "start": 412.72,
+      "end": 415.52,
+      "text": "dramatically and if it does put a human"
+    },
+    {
+      "id": 191,
+      "start": 415.52,
+      "end": 417.68,
+      "text": "in the loop in that process and then"
+    },
+    {
+      "id": 192,
+      "start": 417.68,
+      "end": 419.199,
+      "text": "once I put a human in the loop in that"
+    },
+    {
+      "id": 193,
+      "start": 419.199,
+      "end": 422.08,
+      "text": "process I will basically just go ahead"
+    },
+    {
+      "id": 194,
+      "start": 422.08,
+      "end": 427.68,
+      "text": "and um solve um like validate the data"
+    },
+    {
+      "id": 195,
+      "start": 427.68,
+      "end": 429.36,
+      "text": "that it's doing is not randomly a header"
+    },
+    {
+      "id": 196,
+      "start": 429.36,
+      "end": 430.96,
+      "text": "and footer because it's financial data,"
+    },
+    {
+      "id": 197,
+      "start": 430.96,
+      "end": 432.639,
+      "text": "I don't accidentally want to lose"
+    },
+    {
+      "id": 198,
+      "start": 432.639,
+      "end": 434.4,
+      "text": "something critical."
+    },
+    {
+      "id": 199,
+      "start": 434.4,
+      "end": 435.759,
+      "text": "And that's kind of how I would solve"
+    },
+    {
+      "id": 200,
+      "start": 435.759,
+      "end": 437.84,
+      "text": "this problem like more long term. I do a"
+    },
+    {
+      "id": 201,
+      "start": 437.84,
+      "end": 438.96,
+      "text": "hybrid of exactly what you were"
+    },
+    {
+      "id": 202,
+      "start": 438.96,
+      "end": 441.12,
+      "text": "repeating, Vay, which is like specialize"
+    },
+    {
+      "id": 203,
+      "start": 441.12,
+      "end": 442.72,
+      "text": "for"
+    },
+    {
+      "id": 204,
+      "start": 442.72,
+      "end": 446.88,
+      "text": "um specialize for um specific vendors"
+    },
+    {
+      "id": 205,
+      "start": 446.88,
+      "end": 448.639,
+      "text": "and as much as possible and then the"
+    },
+    {
+      "id": 206,
+      "start": 448.639,
+      "end": 450.16,
+      "text": "other 90% just get slightly worse"
+    },
+    {
+      "id": 207,
+      "start": 450.16,
+      "end": 452.88,
+      "text": "quality or other 10% get slightly worse"
+    },
+    {
+      "id": 208,
+      "start": 452.88,
+      "end": 454.96,
+      "text": "quality."
+    },
+    {
+      "id": 209,
+      "start": 454.96,
+      "end": 458.87,
+      "text": ">> Correct."
+    },
+    {
+      "id": 210,
+      "start": 460.55,
+      "end": 460.56,
+      "text": "Everyone that's listening should 100% do"
+    },
+    {
+      "id": 211,
+      "start": 460.56,
+      "end": 462.0,
+      "text": "that for as much of their pipelines as"
+    },
+    {
+      "id": 212,
+      "start": 462.0,
+      "end": 463.759,
+      "text": "they can. It's like you drive really"
+    },
+    {
+      "id": 213,
+      "start": 463.759,
+      "end": 466.56,
+      "text": "high quality for u certain vendors that"
+    },
+    {
+      "id": 214,
+      "start": 466.56,
+      "end": 468.4,
+      "text": "you know are well understood and like"
+    },
+    {
+      "id": 215,
+      "start": 468.4,
+      "end": 470.56,
+      "text": "represent 80 to 90% of your data and"
+    },
+    {
+      "id": 216,
+      "start": 470.56,
+      "end": 472.0,
+      "text": "like sacrifice some lower quality on"
+    },
+    {
+      "id": 217,
+      "start": 472.0,
+      "end": 473.759,
+      "text": "10%. You have to understand that as a"
+    },
+    {
+      "id": 218,
+      "start": 473.759,
+      "end": 476.639,
+      "text": "part of building your AI pipeline."
+    },
+    {
+      "id": 219,
+      "start": 476.639,
+      "end": 477.36,
+      "text": "um"
+    },
+    {
+      "id": 220,
+      "start": 477.36,
+      "end": 480.24,
+      "text": ">> where sorry if I can have a follow-up"
+    },
+    {
+      "id": 221,
+      "start": 480.24,
+      "end": 483.12,
+      "text": "question where I have difficulty in"
+    },
+    {
+      "id": 222,
+      "start": 483.12,
+      "end": 484.72,
+      "text": "extracting since we are talking about"
+    },
+    {
+      "id": 223,
+      "start": 484.72,
+      "end": 486.4,
+      "text": "multimodality"
+    },
+    {
+      "id": 224,
+      "start": 486.4,
+      "end": 488.879,
+      "text": "uh is extracting legal clauses for"
+    },
+    {
+      "id": 225,
+      "start": 488.879,
+      "end": 490.72,
+      "text": "example I have a use case where I'm"
+    },
+    {
+      "id": 226,
+      "start": 490.72,
+      "end": 493.36,
+      "text": "building uh extracting contracts like"
+    },
+    {
+      "id": 227,
+      "start": 493.36,
+      "end": 496.16,
+      "text": "vendor contracts vendor clauses those"
+    },
+    {
+      "id": 228,
+      "start": 496.16,
+      "end": 498.96,
+      "text": "are so random and they're defined per"
+    },
+    {
+      "id": 229,
+      "start": 498.96,
+      "end": 502.16,
+      "text": "use case per vendor one vendor can have"
+    },
+    {
+      "id": 230,
+      "start": 502.16,
+      "end": 504.639,
+      "text": "100 contracts which with you know"
+    },
+    {
+      "id": 231,
+      "start": 504.639,
+      "end": 506.0,
+      "text": "different contexts"
+    },
+    {
+      "id": 232,
+      "start": 506.0,
+      "end": 508.479,
+      "text": "So it's so complex to extract these"
+    },
+    {
+      "id": 233,
+      "start": 508.479,
+      "end": 511.68,
+      "text": "legal clauses that uh the the I mean"
+    },
+    {
+      "id": 234,
+      "start": 511.68,
+      "end": 513.76,
+      "text": "writing EAS for that is is just a"
+    },
+    {
+      "id": 235,
+      "start": 513.76,
+      "end": 516.56,
+      "text": "nightmare for me. What I would recommend"
+    },
+    {
+      "id": 236,
+      "start": 516.56,
+      "end": 519.36,
+      "text": "for a scenario like um abstract"
+    },
+    {
+      "id": 237,
+      "start": 519.36,
+      "end": 521.279,
+      "text": "scenarios like legal clauses where it's"
+    },
+    {
+      "id": 238,
+      "start": 521.279,
+      "end": 523.2,
+      "text": "not even concrete what is a legal clause"
+    },
+    {
+      "id": 239,
+      "start": 523.2,
+      "end": 526.24,
+      "text": "or not is I would honestly just go and"
+    },
+    {
+      "id": 240,
+      "start": 526.24,
+      "end": 529.2,
+      "text": "write take 50 documents and by hand pull"
+    },
+    {
+      "id": 241,
+      "start": 529.2,
+      "end": 531.44,
+      "text": "out what you would want to pull out and"
+    },
+    {
+      "id": 242,
+      "start": 531.44,
+      "end": 533.2,
+      "text": "then see if you can semantically"
+    },
+    {
+      "id": 243,
+      "start": 533.2,
+      "end": 535.04,
+      "text": "understand them. So I think a similar"
+    },
+    {
+      "id": 244,
+      "start": 535.04,
+      "end": 536.399,
+      "text": "problem that we worked with a company on"
+    },
+    {
+      "id": 245,
+      "start": 536.399,
+      "end": 538.88,
+      "text": "was around SEC violations like detect"
+    },
+    {
+      "id": 246,
+      "start": 538.88,
+      "end": 543.04,
+      "text": "SEC violations from like emails. That's"
+    },
+    {
+      "id": 247,
+      "start": 543.04,
+      "end": 543.76,
+      "text": "a really"
+    },
+    {
+      "id": 248,
+      "start": 543.76,
+      "end": 545.44,
+      "text": ">> this was our uh policy to prompts"
+    },
+    {
+      "id": 249,
+      "start": 545.44,
+      "end": 547.12,
+      "text": "episode that was like the example we did"
+    },
+    {
+      "id": 250,
+      "start": 547.12,
+      "end": 549.839,
+      "text": ">> right."
+    },
+    {
+      "id": 251,
+      "start": 549.839,
+      "end": 551.44,
+      "text": ">> And the thing is like instead of trying"
+    },
+    {
+      "id": 252,
+      "start": 551.44,
+      "end": 553.44,
+      "text": "to solve all of SEC in one prompt"
+    },
+    {
+      "id": 253,
+      "start": 553.44,
+      "end": 554.959,
+      "text": "because models can't do that today maybe"
+    },
+    {
+      "id": 254,
+      "start": 554.959,
+      "end": 557.8389999999999,
+      "text": "they can tomorrow but not today. Um"
+    },
+    {
+      "id": 255,
+      "start": 557.8389999999999,
+      "end": 560.32,
+      "text": "we'll pick one policy and we'll make it"
+    },
+    {
+      "id": 256,
+      "start": 560.32,
+      "end": 561.76,
+      "text": "work on that. Then we'll pick another"
+    },
+    {
+      "id": 257,
+      "start": 561.76,
+      "end": 563.279,
+      "text": "policy make it work on that. It's"
+    },
+    {
+      "id": 258,
+      "start": 563.279,
+      "end": 564.72,
+      "text": "exactly the same as an invoice problem"
+    },
+    {
+      "id": 259,
+      "start": 564.72,
+      "end": 566.32,
+      "text": "where you instead of specializing per"
+    },
+    {
+      "id": 260,
+      "start": 566.32,
+      "end": 568.72,
+      "text": "vendor, we take the general thing of"
+    },
+    {
+      "id": 261,
+      "start": 568.72,
+      "end": 570.32,
+      "text": "legal clause and we break it down to"
+    },
+    {
+      "id": 262,
+      "start": 570.32,
+      "end": 572.399,
+      "text": "specialized clauses and we get really"
+    },
+    {
+      "id": 263,
+      "start": 572.399,
+      "end": 573.92,
+      "text": "high performance on those specialized"
+    },
+    {
+      "id": 264,
+      "start": 573.92,
+      "end": 577.68,
+      "text": "clauses and we plan that out. So you"
+    },
+    {
+      "id": 265,
+      "start": 577.68,
+      "end": 580.24,
+      "text": "could manually do something. Let me vib"
+    },
+    {
+      "id": 266,
+      "start": 580.24,
+      "end": 581.6,
+      "text": "I think this is building a little bit"
+    },
+    {
+      "id": 267,
+      "start": 581.6,
+      "end": 583.2,
+      "text": "but let me know if this sounds crazy is"
+    },
+    {
+      "id": 268,
+      "start": 583.2,
+      "end": 586.32,
+      "text": "you could do something like take 50 to"
+    },
+    {
+      "id": 269,
+      "start": 586.32,
+      "end": 589.6,
+      "text": "100 like legal clauses that you know"
+    },
+    {
+      "id": 270,
+      "start": 589.6,
+      "end": 592.0,
+      "text": "turn them into kind of like almost like"
+    },
+    {
+      "id": 271,
+      "start": 592.0,
+      "end": 593.68,
+      "text": "their own classification sets with"
+    },
+    {
+      "id": 272,
+      "start": 593.68,
+      "end": 595.44,
+      "text": "really good descriptions. Have the LLM"
+    },
+    {
+      "id": 273,
+      "start": 595.44,
+      "end": 596.9590000000001,
+      "text": "try to categorize into one of those"
+    },
+    {
+      "id": 274,
+      "start": 596.9590000000001,
+      "end": 599.04,
+      "text": "hundred. If it can't do it, it goes into"
+    },
+    {
+      "id": 275,
+      "start": 599.04,
+      "end": 600.64,
+      "text": "the other category. It goes into your"
+    },
+    {
+      "id": 276,
+      "start": 600.64,
+      "end": 602.72,
+      "text": "manual queue to go, \"Oh, this is belongs"
+    },
+    {
+      "id": 277,
+      "start": 602.72,
+      "end": 604.24,
+      "text": "in this category. we need to change the"
+    },
+    {
+      "id": 278,
+      "start": 604.24,
+      "end": 607.279,
+      "text": "prompt for that category or this doesn't"
+    },
+    {
+      "id": 279,
+      "start": 607.279,
+      "end": 608.72,
+      "text": "belong in any category, we need to make"
+    },
+    {
+      "id": 280,
+      "start": 608.72,
+      "end": 610.72,
+      "text": "a new category. And like that you can"
+    },
+    {
+      "id": 281,
+      "start": 610.72,
+      "end": 612.24,
+      "text": "kind of build up where like even if the"
+    },
+    {
+      "id": 282,
+      "start": 612.24,
+      "end": 613.92,
+      "text": "wording is slightly different, if"
+    },
+    {
+      "id": 283,
+      "start": 613.92,
+      "end": 615.519,
+      "text": "semantically it fits into one of your"
+    },
+    {
+      "id": 284,
+      "start": 615.519,
+      "end": 617.36,
+      "text": "hundred categories, then you have a"
+    },
+    {
+      "id": 285,
+      "start": 617.36,
+      "end": 620.399,
+      "text": "solution. Does that sound accurate?"
+    },
+    {
+      "id": 286,
+      "start": 620.399,
+      "end": 622.88,
+      "text": ">> Dexter has basically become the ultimate"
+    },
+    {
+      "id": 287,
+      "start": 622.88,
+      "end": 625.36,
+      "text": "to value translator."
+    },
+    {
+      "id": 288,
+      "start": 625.36,
+      "end": 627.04,
+      "text": "A lot of words and Dexter says a lot of"
+    },
+    {
+      "id": 289,
+      "start": 627.04,
+      "end": 629.92,
+      "text": "more better words and it's much better I"
+    },
+    {
+      "id": 290,
+      "start": 629.92,
+      "end": 632.9590000000001,
+      "text": "say. Uh um I'll take one more question"
+    },
+    {
+      "id": 291,
+      "start": 632.9590000000001,
+      "end": 634.399,
+      "text": "and then I think we're going to hop out"
+    },
+    {
+      "id": 292,
+      "start": 634.399,
+      "end": 636.72,
+      "text": "for today. Um sadly can't go the full 90"
+    },
+    {
+      "id": 293,
+      "start": 636.72,
+      "end": 638.079,
+      "text": "minutes, but if you post a question in"
+    },
+    {
+      "id": 294,
+      "start": 638.079,
+      "end": 639.519,
+      "text": "Discord, we'll get to it by the end of"
+    },
+    {
+      "id": 295,
+      "start": 639.519,
+      "end": 640.399,
+      "text": "the day."
+    },
+    {
+      "id": 296,
+      "start": 640.399,
+      "end": 642.32,
+      "text": ">> Also, for the for the record, this show"
+    },
+    {
+      "id": 297,
+      "start": 642.32,
+      "end": 644.24,
+      "text": "runs an hour, so every minute after"
+    },
+    {
+      "id": 298,
+      "start": 644.24,
+      "end": 647.12,
+      "text": "after 60 minutes. Uh you're welcome. Uh"
+    },
+    {
+      "id": 299,
+      "start": 647.12,
+      "end": 648.399,
+      "text": "but thank you for bringing good"
+    },
+    {
+      "id": 300,
+      "start": 648.399,
+      "end": 650.72,
+      "text": "questions. This has been super fun. Um"
+    },
+    {
+      "id": 301,
+      "start": 650.72,
+      "end": 651.92,
+      "text": "yeah, Andre, you want to take us out"
+    },
+    {
+      "id": 302,
+      "start": 651.92,
+      "end": 653.36,
+      "text": "with the last one?"
+    },
+    {
+      "id": 303,
+      "start": 653.36,
+      "end": 655.04,
+      "text": ">> Yeah, really interesting techniques with"
+    },
+    {
+      "id": 304,
+      "start": 655.04,
+      "end": 656.72,
+      "text": "cropping. So I'll tell you how I've done"
+    },
+    {
+      "id": 305,
+      "start": 656.72,
+      "end": 660.079,
+      "text": "this with um medical records. So I I do"
+    },
+    {
+      "id": 306,
+      "start": 660.079,
+      "end": 663.2,
+      "text": "the OCR and then just extract the text"
+    },
+    {
+      "id": 307,
+      "start": 663.2,
+      "end": 666.24,
+      "text": "and the the OCR is pretty accurate um"
+    },
+    {
+      "id": 308,
+      "start": 666.24,
+      "end": 668.24,
+      "text": "for the text and then I pass the"
+    },
+    {
+      "id": 309,
+      "start": 668.24,
+      "end": 669.92,
+      "text": "language model both the text from the"
+    },
+    {
+      "id": 310,
+      "start": 669.92,
+      "end": 673.36,
+      "text": "OCR and attach the PDF and for medical"
+    },
+    {
+      "id": 311,
+      "start": 673.36,
+      "end": 675.76,
+      "text": "records that just seems to work and it"
+    },
+    {
+      "id": 312,
+      "start": 675.76,
+      "end": 677.92,
+      "text": "might work for for bank statements too."
+    },
+    {
+      "id": 313,
+      "start": 677.92,
+      "end": 680.56,
+      "text": "Um but you would have to dduplicate"
+    },
+    {
+      "id": 314,
+      "start": 680.56,
+      "end": 682.32,
+      "text": "things probably and check with your"
+    },
+    {
+      "id": 315,
+      "start": 682.32,
+      "end": 683.519,
+      "text": "technique."
+    },
+    {
+      "id": 316,
+      "start": 683.519,
+      "end": 684.959,
+      "text": ">> Yeah, exactly. Yeah,"
+    },
+    {
+      "id": 317,
+      "start": 684.959,
+      "end": 687.6,
+      "text": ">> exactly. That that's um yeah, this"
+    },
+    {
+      "id": 318,
+      "start": 687.6,
+      "end": 689.2,
+      "text": "technique with OCR, we found the same"
+    },
+    {
+      "id": 319,
+      "start": 689.2,
+      "end": 690.399,
+      "text": "thing for a lot of medical companies."
+    },
+    {
+      "id": 320,
+      "start": 690.399,
+      "end": 692.72,
+      "text": "They do OCR first, but what they found,"
+    },
+    {
+      "id": 321,
+      "start": 692.72,
+      "end": 695.12,
+      "text": "what we found is actually every company"
+    },
+    {
+      "id": 322,
+      "start": 695.12,
+      "end": 696.48,
+      "text": "that was doing that has now stopped"
+    },
+    {
+      "id": 323,
+      "start": 696.48,
+      "end": 697.76,
+      "text": "doing that. They just pass the data"
+    },
+    {
+      "id": 324,
+      "start": 697.76,
+      "end": 699.519,
+      "text": "directly to the model with no OCR in the"
+    },
+    {
+      "id": 325,
+      "start": 699.519,
+      "end": 703.36,
+      "text": "middle and it actually works better."
+    },
+    {
+      "id": 326,
+      "start": 703.36,
+      "end": 704.0,
+      "text": ">> Nice."
+    },
+    {
+      "id": 327,
+      "start": 704.0,
+      "end": 705.68,
+      "text": ">> So, I would try that in the more newer"
+    },
+    {
+      "id": 328,
+      "start": 705.68,
+      "end": 707.04,
+      "text": "models and see if you get better results"
+    },
+    {
+      "id": 329,
+      "start": 707.04,
+      "end": 708.64,
+      "text": "and report back. We'd love to hear and"
+    },
+    {
+      "id": 330,
+      "start": 708.64,
+      "end": 710.32,
+      "text": "see if that works for you as well."
+    },
+    {
+      "id": 331,
+      "start": 710.32,
+      "end": 712.399,
+      "text": ">> Thanks. Good stuff."
+    },
+    {
+      "id": 332,
+      "start": 712.399,
+      "end": 715.68,
+      "text": ">> Cool. Would that"
+    }
+  ]
+}

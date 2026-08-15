@@ -164,3 +164,9 @@ skills-lock.json
 .claude/skills/
 .agents/
 .scratch/
+
+# Repository-owned agent skill
+!.agents/
+!.agents/skills/
+!.agents/skills/source-command-episode-prep/
+!.agents/skills/source-command-episode-prep/**

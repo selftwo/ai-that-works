@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-020",
+  "primary_transcript": "knowledge/episodes/aitw-020/transcripts/stitched.txt",
+  "source_folder": "2025-08-26-claude-for-non-code-workflows",
+  "materials": [
+    {
+      "path": "2025-08-26-claude-for-non-code-workflows/README.md",
+      "role": "episode summary and links"
+    },
+    {
+      "path": "2025-08-26-claude-for-non-code-workflows/meta.md",
+      "role": "episode identity and event metadata"
+    },
+    {
+      "path": "2025-08-26-claude-for-non-code-workflows/COMPANY.md",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-08-26-claude-for-non-code-workflows/sops/daily-review-sop.md",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-08-26-claude-for-non-code-workflows/sops/investor-updates.md",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-08-26-claude-for-non-code-workflows/dailies/2025-08-26-daily-review.md",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-08-26-claude-for-non-code-workflows/tools/slice-files.ts",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-08-26-claude-for-non-code-workflows/tools/pull-metrics.ts",
+      "role": "supporting implementation or workflow evidence"
+    }
+  ],
+  "notes": [
+    "Transcript claims are grounded in timestamped automatic captions.",
+    "Supporting files establish implementation context but do not prove every spoken claim."
+  ]
+}

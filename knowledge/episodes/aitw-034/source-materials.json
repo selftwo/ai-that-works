@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-034",
+  "materials": [
+    {"path": "2025-12-09-git-worktrees/transcript.md", "role": "primary timestamped transcript", "verification": "upstream speaker-labeled transcript with monotonic timestamps"},
+    {"path": "2025-12-09-git-worktrees/README.md", "role": "episode overview, topic list, links, and remote whiteboards"},
+    {"path": "2025-12-09-git-worktrees/meta.md", "role": "episode number, event time, and canonical video mapping"}
+  ],
+  "external_support": [
+    {"url": "https://git-scm.com/docs/git-worktree", "role": "official Git worktree command documentation"},
+    {"url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects", "role": "official Git object model explanation"},
+    {"url": "https://github.com/dexhorthy/multiclaude", "role": "open source manager workflow named in the episode"}
+  ],
+  "excluded": ["event registration page", "remote whiteboard image contents not available as local text", "screen-only demo output not retained in the source folder"]
+}

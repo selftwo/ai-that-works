@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-047",
+  "primary": [
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/transcript.txt",
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/meta.md",
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/README.md"
+  ],
+  "supporting": [
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/README.md",
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/meta.md",
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/main.py",
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/baml_src/redact.baml",
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/baml_src/redact_tests.baml",
+    "2026-03-03-pii-redaction-and-sensitive-data-scrubbing/baml_src/Screenshot 2026-03-03 at 11.04.59 AM.png"
+  ],
+  "notes": "Supporting artifacts provide implementation context but do not independently verify speaker claims."
+}

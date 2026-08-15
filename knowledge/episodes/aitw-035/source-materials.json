@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-035",
+  "materials": [
+    {"path": "2025-12-02-multimodal-evals/transcript.md", "role": "primary timestamped transcript", "verification": "upstream speaker-labeled transcript with monotonic timestamps"},
+    {"path": "2025-12-02-multimodal-evals/README.md", "role": "episode overview and documented six-check workflow"},
+    {"path": "2025-12-02-multimodal-evals/meta.md", "role": "episode number, event time, and canonical video mapping"},
+    {"path": "2025-12-02-multimodal-evals/baml_src/receipts.baml", "role": "typed extraction schema and prompt"},
+    {"path": "2025-12-02-multimodal-evals/src/receipt_evaluator.py", "role": "extraction orchestration, deterministic checks, retries, and result persistence"},
+    {"path": "2025-12-02-multimodal-evals/src/streamlit_app.py", "role": "run comparison and failure inspection dashboard"},
+    {"path": "2025-12-02-multimodal-evals/results/", "role": "saved run metadata, summaries, and detailed evaluation results"}
+  ],
+  "external_support": [
+    {"url": "https://huggingface.co/datasets/naver-clova-ix/cord-v2", "role": "CORD v2 dataset named by the episode and README"},
+    {"url": "https://docs.boundaryml.com/", "role": "BAML documentation linked by the source README"}
+  ],
+  "excluded": ["event registration page", "dataset images not checked into the repository", "generated baml_client directory not checked into the repository", "screen-only receipt examples"]
+}

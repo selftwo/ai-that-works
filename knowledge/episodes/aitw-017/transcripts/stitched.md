@@ -1,0 +1,4401 @@
+# S02E13 – Context Engineering for Coding Agents
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:02.629] cool about the GPTO OSS thing. Yeah,
+
+[00:00:02.639] throw that on. Uh, VB, you want to make
+
+[00:00:03.919] a host, too, just so I can mute people
+
+[00:00:05.279] and stuff?
+
+[00:00:06.000] >> Yes, you can always.
+
+[00:00:07.839] >> This is the worst feature of Zoom is if
+
+[00:00:09.760] you're in a meeting, you cannot change
+
+[00:00:11.679] the settings for that meeting. So, if
+
+[00:00:13.280] you want to add someone as a host, you
+
+[00:00:14.559] only notice it when you're already in
+
+[00:00:15.839] the meeting. And that's the only time
+
+[00:00:17.119] Zoom doesn't let you update the host
+
+[00:00:18.720] settings.
+
+[00:00:20.320] >> Indeed.
+
+[00:00:22.320] >> Um, I don't know if you saw this vibe,
+
+[00:00:23.840] Bob. The new OpenAI OSS model uses a uh
+
+[00:00:28.160] Rust runtime and then compiles Python
+
+[00:00:31.679] bindings.
+
+[00:00:33.120] >> That is correct. That is a correct way
+
+[00:00:34.960] to write code.
+
+[00:00:35.680] >> They they mogged your they mogged your
+
+[00:00:37.680] approach.
+
+[00:00:38.800] >> Um that is the only way to write code in
+
+[00:00:40.800] the future. Everything every piece of
+
+[00:00:42.320] useful software will become Rust slowly
+
+[00:00:44.160] and then users use Python.
+
+[00:00:48.239] >> Um anyone that isn't writing Rust code
+
+[00:00:50.160] for core systems is doing it wrong. But
+
+[00:00:52.000] for application layer code is definitely
+
+[00:00:53.840] never going to be Rust and it it should
+
+[00:00:55.760] not be.
+
+[00:00:57.199] >> Yeah, it reminds me of like when Golang
+
+[00:00:58.960] first came out and everyone using Golang
+
+[00:01:00.559] for all their REST APIs and like it
+
+[00:01:02.559] worked but like there was no OM and
+
+[00:01:05.040] there's no package management and you
+
+[00:01:06.240] were kind of like making a lot of
+
+[00:01:07.119] sacrifices and not getting a ton in
+
+[00:01:08.880] return.
+
+[00:01:09.840] >> Yeah, exactly. Like like we I think now
+
+[00:01:12.960] it's like we kind of feel like the
+
+[00:01:14.799] benefit of Rust to be honest like we
+
+[00:01:16.240] found huge huge benefits to using Rust.
+
+[00:01:19.119] Uh but mostly the real benefit is just
+
+[00:01:21.280] like you can make life really easy for
+
+[00:01:23.680] your users because you can build
+
+[00:01:25.439] bindings anything and that is like worth
+
+[00:01:29.520] a lot in my opinion for anyone that's
+
+[00:01:31.439] building for uh that's building for
+
+[00:01:34.560] builders.
+
+[00:01:39.990] >> Yeah, love it. Um cool. It's almost
+
+[00:01:40.000] 10:05. Should we get into it?
+
+[00:01:41.680] >> Let's get into it. Uh hello everyone. Um
+
+[00:01:43.840] I'm Vivof. I make BAML and write some
+
+[00:01:47.119] code in Rust, I guess. And today I have
+
+[00:01:50.159] here with me Dexter who works on some
+
+[00:01:54.799] what do you want to say Dexter?
+
+[00:01:56.880] >> Uh Swix according to Swix I coined the
+
+[00:01:59.520] term context engineering back in April.
+
+[00:02:01.840] That's my claim to fame today.
+
+[00:02:04.399] >> Um and what we want to talk about here
+
+[00:02:06.719] in our weekly episodes is always about
+
+[00:02:08.560] how to build systems that actually work.
+
+[00:02:10.239] AI is pretty good for demos, but how do
+
+[00:02:11.920] you get it past a demo and make it
+
+[00:02:13.360] really really productive in any sort of
+
+[00:02:15.520] application? Today's episode is one that
+
+[00:02:18.319] I think deviates a little bit from what
+
+[00:02:19.680] we normally talk about which is how do
+
+[00:02:20.879] you actually write the code to how do
+
+[00:02:22.879] you use AI to write the code and how do
+
+[00:02:24.560] you build context engineering in a way
+
+[00:02:26.160] that's actually useful um because if you
+
+[00:02:29.360] not only have to start using AI tools
+
+[00:02:31.120] for how your user going to do them but
+
+[00:02:32.640] sometimes it's really valuable to know
+
+[00:02:34.319] how to be the user of these systems so
+
+[00:02:35.680] you can start building an intuition for
+
+[00:02:37.519] about what other people might be doing
+
+[00:02:39.120] behind the scenes
+
+[00:02:40.400] >> I think Dexter is one of the best coders
+
+[00:02:42.319] that I've seen
+
+[00:02:43.680] >> so like let's just learn from him and
+
+[00:02:45.760] see what he
+
+[00:02:47.360] Yeah. And and I think I think what's
+
+[00:02:49.040] really cool about this is like it's the
+
+[00:02:50.800] same thing that's true if you're
+
+[00:02:52.080] building like low-level LM pipeline code
+
+[00:02:54.959] that is like the exact prompt and
+
+[00:02:56.480] engineering every token that goes into
+
+[00:02:58.000] the context window to improve your
+
+[00:02:59.680] performance on that prompt is the same
+
+[00:03:03.599] concepts apply to using coding agents.
+
+[00:03:06.400] And I'm really excited to dig in on
+
+[00:03:07.599] that. And it's the same thing of like
+
+[00:03:08.879] yeah you could sit around and wait for
+
+[00:03:10.000] the models to get smarter. You could try
+
+[00:03:12.159] to like figure out how to get AI to get
+
+[00:03:14.319] AI to get AI to get AI to do a thing and
+
+[00:03:16.879] like somehow figure that out. But at the
+
+[00:03:18.319] end of the day, it's all about being
+
+[00:03:19.760] thoughtful and understanding a little
+
+[00:03:21.440] bit more uh deeply how these models work
+
+[00:03:23.519] and what makes them perform well and
+
+[00:03:25.040] what makes them mess up so that you can
+
+[00:03:27.280] get the most performance out of whatever
+
+[00:03:28.720] is available today.
+
+[00:03:36.470] Um so, uh quick show of hands in the
+
+[00:03:36.480] chat. Uh, drop a drop a C in the chat if
+
+[00:03:39.760] you're using claude code.
+
+[00:03:46.149] I don't know. I guess we could have done
+
+[00:03:46.159] Fs in the chat. I don't I don't know how
+
+[00:03:47.840] to speak. Gen Z.
+
+[00:03:49.040] >> Cloud code is amazing to be honest.
+
+[00:03:50.879] >> Oh, we got C CSI. I like that. Nice one.
+
+[00:03:53.680] >> A lot of cloud code actually. Um, it
+
+[00:03:56.799] sounds like people do like it.
+
+[00:03:58.959] >> Yeah. Um, so we've been working on cloud
+
+[00:04:01.120] code for probably I've been using it
+
+[00:04:03.840] basically since the day it came out. Um
+
+[00:04:05.920] we did a Twitter space with some folks
+
+[00:04:07.360] in the AI space and we were just like
+
+[00:04:08.879] vibe checking all of the it was like the
+
+[00:04:10.799] sonnet 37 version. Um it wasn't quite
+
+[00:04:13.439] that good. Um but when the SDK came out
+
+[00:04:16.239] and when CL when Opus 4 came out and
+
+[00:04:17.919] Sonnet 4 came out um we started to kind
+
+[00:04:20.799] of transform as a team um and there were
+
+[00:04:23.520] some engineers um at least one engineer
+
+[00:04:26.160] on our on our group that um was
+
+[00:04:28.000] essentially just like
+
+[00:04:30.240] shipping 2,000 lines of Go code every
+
+[00:04:32.960] day. And I got to the point where I was
+
+[00:04:35.280] like, I don't really know where this is
+
+[00:04:36.720] going. And also like I can't review
+
+[00:04:39.280] 2,000 lines of Go code every day. Like I
+
+[00:04:42.080] I like not without more context. And um
+
+[00:04:45.680] it was all working and Ko found out
+
+[00:04:47.280] later like I was like I can't verify if
+
+[00:04:49.120] this is the correct implementation if it
+
+[00:04:51.040] solves the problem like let alone like
+
+[00:04:53.280] style and bugs and things like that. Um,
+
+[00:04:56.080] and so we went on this kind of like sort
+
+[00:04:58.000] of uncomfortable transformation as a
+
+[00:04:59.759] team over the last 8 weeks, which um,
+
+[00:05:02.880] kind of culminated in us developing a
+
+[00:05:04.800] workflow that was optimized for
+
+[00:05:08.639] not paying as much Vibbar's going to
+
+[00:05:10.960] hate this part, but not paying as much
+
+[00:05:12.320] attention to the code and paying a lot
+
+[00:05:14.320] more attention to what comes before the
+
+[00:05:16.560] code, which is the specifications and
+
+[00:05:19.280] the writeups and the requirements and
+
+[00:05:21.520] even the something like fairly low
+
+[00:05:23.600] level, which we call like implementation
+
+[00:05:25.680] plans. Um, and like I think the the main
+
+[00:05:29.520] benefit we got other than like hey look
+
+[00:05:31.120] we're all shipping a ton of really like
+
+[00:05:32.800] highquality features all the time using
+
+[00:05:34.880] claude. Um, like I think I shipped six
+
+[00:05:38.080] PRs last Thursday and I haven't opened a
+
+[00:05:40.240] nonmarkdown file in an editor in over a
+
+[00:05:42.800] month.
+
+[00:05:43.600] >> Um,
+
+[00:05:45.120] so very with very few exceptions writing
+
+[00:05:47.840] all our code.
+
+[00:05:48.639] >> Why don't we show people some of this
+
+[00:05:50.000] stuff? I think that's like the most
+
+[00:05:51.120] useful thing we can do. Like I think
+
+[00:05:52.720] we'll get it. Let's just
+
+[00:05:55.440] >> I want to open a little bit with the
+
+[00:05:56.560] why, but um so basically like there's a
+
+[00:05:59.280] there's a really dumb way to use I'm not
+
+[00:06:01.759] going to call it dumb because it works
+
+[00:06:02.880] pretty well for a lot of use cases. Um
+
+[00:06:05.039] but like everything you have when you're
+
+[00:06:06.720] working with these models, you have a
+
+[00:06:08.319] context window and when you use cloud
+
+[00:06:10.800] code, you can actually reverse engineer.
+
+[00:06:12.560] We put in the episode notes um
+
+[00:06:15.919] let's see,
+
+[00:06:18.560] share traces. Um, we put a trace of a
+
+[00:06:21.120] clawed call to Opus um that I captured
+
+[00:06:23.520] just using a proxy. I won't go deep into
+
+[00:06:25.680] that, but you can see the entire request
+
+[00:06:28.000] body here. 99% of it this is not my
+
+[00:06:32.160] prompt. It's the user message. It's the
+
+[00:06:34.960] system message. It's all the tools. Um,
+
+[00:06:37.759] this was for like a really simple like,
+
+[00:06:39.280] hey, tell write a threeline poem about a
+
+[00:06:41.199] cat or something. Some like test prompt.
+
+[00:06:43.600] Um, but a lot of what goes into the
+
+[00:06:45.360] context window for claude is like system
+
+[00:06:48.560] instructions.
+
+[00:06:51.120] Um, if you've used the cloud.md file,
+
+[00:06:54.960] your cloud.md,
+
+[00:06:57.199] um, there's cloud built-in tools,
+
+[00:07:01.520] there's whatever MCP tools you've
+
+[00:07:03.360] exposed. If you've connected a bunch of
+
+[00:07:05.520] MCP servers, these all go in. Um and
+
+[00:07:08.639] then there's whatever message that you
+
+[00:07:10.240] drop in user message which is like you
+
+[00:07:12.080] know make the website purple or whatever
+
+[00:07:13.840] it is. Um often like so the context
+
+[00:07:18.080] window for cloud code is 200k tokens.
+
+[00:07:22.160] And what we're going to do today is
+
+[00:07:23.919] we're going to walk through how to build
+
+[00:07:26.639] uh build your workflow in a way to take
+
+[00:07:28.240] advantage of this context window in a
+
+[00:07:30.240] way that lets basically lets cloud code
+
+[00:07:33.280] work really well in large code bases for
+
+[00:07:35.280] complex features with really advanced
+
+[00:07:37.199] like beyond just making a next.js site
+
+[00:07:39.440] to you know um sell sell uh burritos to
+
+[00:07:43.840] SAS delivery operators or something. Um,
+
+[00:07:47.199] so the dumb way is you send your message
+
+[00:07:48.639] and then Cloud works for a little bit
+
+[00:07:49.840] and it calls some tools. Um, I just
+
+[00:07:52.560] color these a little bit.
+
+[00:07:58.869] Does this make sense so far?
+
+[00:07:58.879] >> Yeah, that's good. I think it's good to
+
+[00:08:00.319] actually show people how it's being
+
+[00:08:01.440] built because the important part here is
+
+[00:08:04.000] like if if you're not thinking about how
+
+[00:08:05.280] these systems are working, you it's
+
+[00:08:06.720] really hard to actually engineer them
+
+[00:08:08.240] and like hack them to do what you want.
+
+[00:08:10.879] And I think the the inverse point is if
+
+[00:08:12.879] you're a builder building these kinds of
+
+[00:08:14.240] tools, if you make it really really
+
+[00:08:16.160] abstract for how your tools work, it
+
+[00:08:18.879] just you're just making life for your
+
+[00:08:20.319] users harder to get the right things out
+
+[00:08:22.960] of it.
+
+[00:08:25.280] >> Interesting. You're talking about like
+
+[00:08:26.879] making the cloud the cloud stuff itself
+
+[00:08:28.560] kind of abstract.
+
+[00:08:29.919] >> Yeah. Like if we abstract it away fully
+
+[00:08:31.520] and like let's say open a cloud made it
+
+[00:08:33.279] impossible for you to understand this
+
+[00:08:34.800] then it actually becomes way harder for
+
+[00:08:36.399] you as an engineer to maximize cloud
+
+[00:08:38.479] code. The reason you can maximize cloud
+
+[00:08:40.240] code is because you can understand
+
+[00:08:41.279] what's happening.
+
+[00:08:42.800] >> Yeah. Um so you go through this and you
+
+[00:08:45.519] go through your context window and let's
+
+[00:08:46.720] say at this point you've you've used up
+
+[00:08:49.040] about um
+
+[00:08:51.519] oh god how do I draw a line? At this
+
+[00:08:53.600] point you've used up maybe like 40% of
+
+[00:08:55.360] your context window. Um, and you can
+
+[00:08:58.959] keep going like this and you can keep
+
+[00:09:00.000] going, but the thing we always talk
+
+[00:09:01.120] about, um, 12 factor agents on the show
+
+[00:09:02.720] all the time is you want to optimize
+
+[00:09:05.200] your context window. And every time you
+
+[00:09:07.519] make a new user message, you're sending
+
+[00:09:09.040] the whole context window to the model.
+
+[00:09:10.320] Every time a tool gets called, you're
+
+[00:09:11.360] sending the whole context window. And so
+
+[00:09:12.800] the longer this gets, the more noise
+
+[00:09:15.200] there is and the less really useful
+
+[00:09:17.519] information is like the the density of
+
+[00:09:19.680] useful information about what is the
+
+[00:09:21.360] right next step gets diluted and diluted
+
+[00:09:23.839] over time. And so, um, while you could
+
+[00:09:27.279] just say like, hey, read all the files,
+
+[00:09:28.880] search for the thing, fix this. Okay, I
+
+[00:09:30.399] did it. Okay, now do this. Now, do this.
+
+[00:09:32.320] Okay, I did it. Um, what what we have
+
+[00:09:35.519] found is like, let me see, sorry, I have
+
+[00:09:38.480] show notes and some other uh some other
+
+[00:09:40.160] things over here. Um, yeah, what we do a
+
+[00:09:44.000] lot of the time is we'll do like what we
+
+[00:09:45.680] call intentional compaction where we'll
+
+[00:09:48.000] kind of take the progress. You can use
+
+[00:09:49.440] the slash compact command. I personally
+
+[00:09:51.200] think it sucks um because it's not just
+
+[00:09:53.760] the information in the prompt, it's also
+
+[00:09:55.360] the trajectory, but we'll get into that
+
+[00:09:56.880] in a sec. Um so what you can do is you
+
+[00:09:59.120] can like send a user message like, you
+
+[00:10:01.040] know, put everything we did
+
+[00:10:04.720] everything we did so far in a markdown
+
+[00:10:09.279] file so that an agent can pick up with
+
+[00:10:14.880] task, right? And so you'll put that into
+
+[00:10:18.320] a file in your repo.
+
+[00:10:20.640] This is like the the the slightly
+
+[00:10:22.560] smarter way.
+
+[00:10:29.910] Um and then you would your first user
+
+[00:10:29.920] message you would clear the context. So
+
+[00:10:31.200] you'd have all your base stuff and then
+
+[00:10:32.399] you'd have user message and you would
+
+[00:10:33.839] say like read this file and then get on
+
+[00:10:35.920] with the plan. Um and so you would it
+
+[00:10:39.600] would the assistant would read the file
+
+[00:10:49.190] And and the premise here, just so
+
+[00:10:49.200] everyone knows, is like it's not just
+
+[00:10:50.959] that you can put the context window
+
+[00:10:52.399] directly into the conversation. What
+
+[00:10:54.800] you're able to do is you can actually
+
+[00:10:56.720] put like a compressed version of the
+
+[00:10:58.160] context window, not even a onetoone copy
+
+[00:11:00.560] of what happened previously.
+
+[00:11:02.560] >> So the thing that file represents when
+
+[00:11:04.480] Dexter is drawing this is actually
+
+[00:11:06.160] represents a compression of all this
+
+[00:11:08.000] state that happened up until now in a
+
+[00:11:10.640] way that the model understands it.
+
+[00:11:13.040] >> Yes. And it's important here that when
+
+[00:11:14.720] you when you tell the model
+
+[00:11:16.800] >> to actually go do this, it's not going
+
+[00:11:18.959] to magically go do this and actually
+
+[00:11:20.640] clear out the context window. This stuff
+
+[00:11:22.959] still lives in this thread. So the only
+
+[00:11:25.360] way you can take advantage of this
+
+[00:11:26.720] technique was actually to stop the
+
+[00:11:28.399] thread and start a new thread
+
+[00:11:30.079] >> with this ability.
+
+[00:11:30.959] >> Yes. Unless
+
+[00:11:33.279] Unless Claude act gives you a specific
+
+[00:11:36.000] tool that it gives the model that says
+
+[00:11:38.560] clear context which is able to go back
+
+[00:11:40.640] and go do this to itself.
+
+[00:11:42.560] >> That slashcompact command is effectively
+
+[00:11:45.680] that
+
+[00:11:46.480] >> that Claude has built.
+
+[00:11:48.800] >> What about
+
+[00:11:49.279] >> Yeah. So, so yeah, go ahead.
+
+[00:11:51.360] >> What about the micro compaction? They
+
+[00:11:53.200] just that gets rid of the tool calls.
+
+[00:11:54.959] They just came out with it like
+
+[00:11:56.079] yesterday.
+
+[00:11:57.040] >> That's what I mean. like they're adding
+
+[00:11:58.640] more and more ways for you as a user to
+
+[00:12:01.440] engineer the to engineer the context
+
+[00:12:04.640] because that is an essential part for
+
+[00:12:06.240] cloud code to success. But it's not just
+
+[00:12:09.120] about it's not just about like any sort
+
+[00:12:10.880] of command. It's just like they want to
+
+[00:12:12.240] give you tools so that you can do a
+
+[00:12:14.079] better job at doing the compaction. And
+
+[00:12:16.720] the best way to think about this is if
+
+[00:12:18.240] you've ever seen like Malik or memory
+
+[00:12:20.160] and you've seen like disc fragmentation
+
+[00:12:21.920] issues. Obviously the computer on
+
+[00:12:24.480] average we don't want to allocate the
+
+[00:12:26.240] disk manually every single time. But at
+
+[00:12:28.639] some point your disc gets super
+
+[00:12:30.240] fragmented and you run a defragger and
+
+[00:12:32.560] it actually will make your disc space
+
+[00:12:34.320] way better allocated. This is kind of
+
+[00:12:36.480] your equivalent of defragging the
+
+[00:12:38.079] context out of here.
+
+[00:12:40.079] >> So you can just like really easily
+
+[00:12:41.680] organize what you're actually sending to
+
+[00:12:43.120] the model.
+
+[00:12:44.639] >> Yeah. And so the the issue with compact
+
+[00:12:46.399] is and and clear and micro compaction
+
+[00:12:48.079] all this stuff. So so clear is really
+
+[00:12:49.360] good. I use clear all the time because
+
+[00:12:50.560] clear is essentially starting you out
+
+[00:12:51.839] with a fresh context window. Clear does
+
+[00:12:53.839] not reset the same. Clear basically
+
+[00:12:55.600] gives you a fresh session with no
+
+[00:12:57.200] context in it and then you can start
+
+[00:12:59.120] from fresh from from a new message.
+
+[00:13:01.839] >> Um compact is designed to be super
+
+[00:13:06.320] general like work for everything. And
+
+[00:13:08.720] just like building agents that work for
+
+[00:13:10.720] everything, like this generic tool
+
+[00:13:12.320] calling loop that is just go call tools
+
+[00:13:13.920] until you're done, while it will work
+
+[00:13:16.399] okay and get you to 80% quickly. Um, if
+
+[00:13:20.399] you want to get the most performance out
+
+[00:13:22.240] of a coding agent, you should be doing
+
+[00:13:24.000] your compaction manually. And you can
+
+[00:13:26.079] prompt it and you can build the file and
+
+[00:13:27.600] then you can edit the file by hand or
+
+[00:13:29.279] you can prompt claude, hey, update this
+
+[00:13:31.200] file some more. Um, but as you get to
+
+[00:13:34.000] what we try to do is we try to target
+
+[00:13:35.680] like maximum 50% context. This doesn't
+
+[00:13:38.639] always become true. Um, but we try to
+
+[00:13:40.800] target maximum like 50% context
+
+[00:13:42.800] utilization because that's that's
+
+[00:13:44.800] generally plenty to do anything that's
+
+[00:13:47.040] good. And I'll walk through kind of our
+
+[00:13:48.399] our process a little bit more
+
+[00:13:49.519] intentional than this. But I'll um and
+
+[00:13:51.680] like what I've seen really really good
+
+[00:13:53.600] vibe coders do is a little bit more
+
+[00:13:54.959] intentional than this. Um, but the idea
+
+[00:13:57.199] of keeping your context window small and
+
+[00:13:59.199] being very intentional about what you
+
+[00:14:01.360] tell the model. This current progress.md
+
+[00:14:03.760] is going to have like path to file line
+
+[00:14:07.519] number
+
+[00:14:09.040] path to file because that way you're not
+
+[00:14:12.639] filling up the context window with a
+
+[00:14:14.160] bunch of search search finding other
+
+[00:14:16.480] things like finding things that are
+
+[00:14:17.839] irrelevant. Once a model looks for
+
+[00:14:19.600] something and finds a bunch of
+
+[00:14:20.560] irrelevant stuff that's in the context
+
+[00:14:22.480] window forever until you compact it. And
+
+[00:14:24.800] so you want to this is also like um a
+
+[00:14:27.120] great opportunity to talk about like how
+
+[00:14:28.480] sub aents work. Um sub aents have
+
+[00:14:31.040] actually been in claude um for a long
+
+[00:14:33.519] time. And if we go back to the trace
+
+[00:14:35.040] this is from a pre sub aents um let's
+
+[00:14:38.480] see task tool. Yeah. So this is a tool
+
+[00:14:42.240] called task. This has been in cloud
+
+[00:14:44.079] since way before the like sub aents
+
+[00:14:45.839] launch uh a couple weeks ago. Um and
+
+[00:14:48.880] this is basically launch a new tool that
+
+[00:14:50.800] has two it's a tool that has two
+
+[00:14:52.160] parameter. description that is what
+
+[00:14:53.760] shows up in the UI and then the prompt
+
+[00:14:56.880] and so this is just launching another
+
+[00:14:58.560] instance of cloud code cloud code system
+
+[00:15:01.120] message encourages it to use this task
+
+[00:15:03.519] for that same reason so there's you can
+
+[00:15:05.440] do frequent compaction that's part of
+
+[00:15:07.680] context control the other thing that you
+
+[00:15:10.000] can do to control your context is use
+
+[00:15:12.160] sub aents and so that's why if you tell
+
+[00:15:14.399] claude
+
+[00:15:15.920] >> find where we um
+
+[00:15:18.959] >> yes before we go super into this I have
+
+[00:15:21.199] an idea Yeah,
+
+[00:15:22.639] >> we should show people the outcome of
+
+[00:15:24.240] what happens out of this. I think you
+
+[00:15:25.760] showed me something kind of cool at the
+
+[00:15:27.600] beginning of this. I think we should
+
+[00:15:28.560] just like show people and then let's go
+
+[00:15:30.000] deep into sub agents right after that.
+
+[00:15:33.120] >> Um
+
+[00:15:37.110] >> I want to show people
+
+[00:15:37.120] >> always trying to change the agenda on
+
+[00:15:38.560] me.
+
+[00:15:39.279] >> Well, I want to show people the real
+
+[00:15:40.560] code that you had and I think that was
+
+[00:15:42.000] like the coolest. Um
+
+[00:15:43.760] >> we're going to get there. We're going to
+
+[00:15:44.639] get there. We're going to get there.
+
+[00:15:45.600] >> All right, go for it.
+
+[00:15:47.120] Um
+
+[00:15:48.639] what we're working backwards from is
+
+[00:15:50.079] basically I don't know Rust very well
+
+[00:15:52.320] and the BAML codebase is incredibly
+
+[00:15:54.720] complex uh because it's a programming
+
+[00:15:56.720] language and the process I'm going to
+
+[00:15:58.720] outline here I used last night and I'll
+
+[00:16:00.959] show you every step. We'll do every step
+
+[00:16:02.160] live as part of this. Um but this is the
+
+[00:16:04.160] process I use to fix a bug in BAML. Um
+
+[00:16:07.440] and at the end we're going to look at
+
+[00:16:08.480] the PRs and I have two separate
+
+[00:16:10.000] implementation paths to compare
+
+[00:16:11.759] different approaches and we're going to
+
+[00:16:13.199] see which one FBO likes better.
+
+[00:16:16.399] real code review feedback.
+
+[00:16:19.199] >> Um, so just on the concept one more
+
+[00:16:21.199] time, if you say something like find
+
+[00:16:23.360] where we load the user data from the
+
+[00:16:25.040] database, you might get a task. And what
+
+[00:16:28.240] a task is, sub aents are not for playing
+
+[00:16:30.720] house. They're not for
+
+[00:16:31.519] anthropomorphizing. They are for exactly
+
+[00:16:33.600] one thing, which is context control. And
+
+[00:16:35.839] so what a task will do will give you a
+
+[00:16:37.440] brand new context window where the user
+
+[00:16:39.839] message, you get all the same system
+
+[00:16:41.279] stuff, but the user message is actually
+
+[00:16:43.360] determined by the model. The parent
+
+[00:16:45.600] model is going to give it a message like
+
+[00:16:47.360] you know find where we load this stuff
+
+[00:16:49.360] and then this thing is going to read
+
+[00:16:50.880] read read. It's usually set usually we
+
+[00:16:53.279] use sub aents mostly for readon stuff.
+
+[00:16:55.680] So it's going to read read search etc
+
+[00:16:57.839] until it finds the thing
+
+[00:17:01.199] and then it's going to return an
+
+[00:17:02.320] assistant message which is pretty tight
+
+[00:17:03.920] which is like that file
+
+[00:17:07.600] that file is in source main whatever.
+
+[00:17:11.760] And so what you get back here is your
+
+[00:17:13.919] tool response is really tight. And so
+
+[00:17:16.720] all of this searching and finding all
+
+[00:17:18.240] those tool calls are never in the main
+
+[00:17:20.160] agents context window. And so if you can
+
+[00:17:21.919] get good at using sub agents, one, they
+
+[00:17:23.439] can run in parallel. So you can say,
+
+[00:17:24.559] "Hey, go find where this happens and
+
+[00:17:25.839] where this happens and where this
+
+[00:17:26.959] happens." But you have to to get this to
+
+[00:17:29.600] happen well, the only people I've seen
+
+[00:17:31.520] do this well and the only way I've found
+
+[00:17:32.640] to do it well is to have your user
+
+[00:17:34.559] message say like use a sub agent and
+
+[00:17:38.320] prompt it like this. And I'll show you
+
+[00:17:41.520] some of our prompts that look like that
+
+[00:17:43.360] are open source
+
+[00:17:44.960] >> because that's how you
+
+[00:17:45.840] >> work well for this kind of task is like
+
+[00:17:48.000] for example
+
+[00:17:49.600] >> uh very recently we just added go
+
+[00:17:51.679] support and we had to write a lot of
+
+[00:17:53.200] unit tests for go support to make sure
+
+[00:17:55.039] it actually worked. Well, once I had it
+
+[00:17:57.919] outlined the spec for all the unit tests
+
+[00:17:59.679] that I had to write and all the file
+
+[00:18:00.640] names that had to go write, I just made
+
+[00:18:02.799] it go write all the go uh unit tests in
+
+[00:18:05.520] parallel. And that was an easy way to do
+
+[00:18:08.559] sub agents because each sub aent was
+
+[00:18:11.360] really responsible or each task was
+
+[00:18:13.679] responsible for each type of test. So
+
+[00:18:15.919] some tests were testing recursive types,
+
+[00:18:17.840] some test were testing unions, some
+
+[00:18:19.679] tests were testing classes and each one
+
+[00:18:22.080] could build its own context window and
+
+[00:18:23.760] maximize the context for that task
+
+[00:18:25.600] individually. And that I found to be
+
+[00:18:28.160] like a really good strategy. It has like
+
+[00:18:30.000] incredible performance wins over
+
+[00:18:32.960] actually doing it in one continuous
+
+[00:18:34.559] thread. It's not just about like speed.
+
+[00:18:35.919] He guess it's faster, but what De says
+
+[00:18:38.160] about accuracy, like I can 100% echo
+
+[00:18:40.640] that.
+
+[00:18:42.080] >> Yeah. And and the goal with all of this
+
+[00:18:43.679] is like can you get it to the point
+
+[00:18:44.880] where this agent can oneshot the the the
+
+[00:18:47.600] task, right? And so you do a lot of
+
+[00:18:49.520] research and get to the point where you
+
+[00:18:50.640] have a plan. Um and so the way the kind
+
+[00:18:53.840] of like intentional steps that we do
+
+[00:18:55.840] here is we have kind of a three-phased
+
+[00:18:57.440] approach which is like research,
+
+[00:18:59.679] planning,
+
+[00:19:01.919] and then like implementation.
+
+[00:19:04.640] And actually like from a both from a uh
+
+[00:19:08.640] both from a like getting the best
+
+[00:19:10.480] performance out of the coding agent and
+
+[00:19:12.240] also like being able to collaborate. I
+
+[00:19:14.640] don't know if anyone's ever seen this um
+
+[00:19:16.799] but you start working on a feature with
+
+[00:19:18.160] a vibe coding agent and the scope just
+
+[00:19:20.320] grows and grows. You're like, "Oh, I'll
+
+[00:19:21.600] fix this too and I'll fix this too." And
+
+[00:19:23.039] like it just gets bigger and bigger
+
+[00:19:24.480] because you're just sitting there and
+
+[00:19:25.440] like, "Well, I'm I already have it. I
+
+[00:19:26.640] already have the context. Agent already
+
+[00:19:28.000] knows everything. Let's just do this,
+
+[00:19:29.679] too."
+
+[00:19:30.640] Um, and to combat that, um, we found
+
+[00:19:33.760] that creating these intentional
+
+[00:19:35.039] checkpoints, um, works really, really
+
+[00:19:37.200] well. So, I'm going to show you our
+
+[00:19:38.720] prompt for research real quick. Um, so
+
+[00:19:41.120] we have all our commands. They're open
+
+[00:19:42.320] source. We use these. We update there's
+
+[00:19:43.760] a couple private ones that we haven't
+
+[00:19:44.799] shared yet, but that like once we like
+
+[00:19:46.480] them, we will we will publish them as
+
+[00:19:48.080] well. This is the research prompt. It's
+
+[00:19:50.799] 300 lines of markdown. Um, and we tell
+
+[00:19:53.600] it here's the document you want we want
+
+[00:19:55.360] to pull out. And u, we tell it here's
+
+[00:19:58.559] all the different sub aents and how to
+
+[00:20:00.080] use them and how to prompt them. Um, and
+
+[00:20:03.679] this is mostly written by um, Allison
+
+[00:20:06.320] who is a legendary vibe coder um, and
+
+[00:20:08.960] has built a lot of really dope stuff.
+
+[00:20:10.720] So, shouts out to her. Um, research. So,
+
+[00:20:14.320] our research is going to be again the
+
+[00:20:15.840] same thing. We have this prompt
+
+[00:20:19.760] and then we have a long user message,
+
+[00:20:21.520] right? that that that cloud slash
+
+[00:20:23.120] command is like pretty long, but that's
+
+[00:20:25.120] okay. We're it's worth it. We're like
+
+[00:20:26.640] tuning this to make sure we get the
+
+[00:20:27.840] right context window. And so what this
+
+[00:20:29.520] is going to do is it's going to launch a
+
+[00:20:30.960] bunch of sub aents to go look at
+
+[00:20:33.520] different parts of the codebase. And I'm
+
+[00:20:34.960] going to go kick one of these off right
+
+[00:20:36.080] now just so you can see what it looks
+
+[00:20:37.360] like. Um so I'm going to create one in
+
+[00:20:42.000] AI that works slash um which one is it?
+
+[00:20:45.919] What are we? 08.
+
+[00:20:48.000] >> Mhm.
+
+[00:20:49.440] >> Search codebase. Um, and actually what
+
+[00:20:53.600] I'm going to do is I'm going to pull up
+
+[00:20:55.360] the BAML issue that we are working on.
+
+[00:20:57.520] So, this is something that's been open
+
+[00:20:58.720] for a while. Uh, basically an issue in
+
+[00:21:00.400] BAML where if you put an at assertion in
+
+[00:21:03.200] um,
+
+[00:21:05.120] uh, I'm not going to show off why this
+
+[00:21:06.799] is broken. Maybe I'll come back to it.
+
+[00:21:08.400] Um,
+
+[00:21:09.039] >> it basically, you can take my word for
+
+[00:21:10.640] it. It is a real bug uh, that has been
+
+[00:21:12.559] open since December.
+
+[00:21:14.400] >> Yeah. So if you have a test like this
+
+[00:21:15.919] where it's like okay you're asking the
+
+[00:21:17.280] model to output hello world and you
+
+[00:21:18.799] assert that it equals hello fu you will
+
+[00:21:21.039] get no warning and this test will pass
+
+[00:21:22.880] because this is meaningless. But if you
+
+[00:21:24.880] have two ats in your assert then the
+
+[00:21:27.039] test will fail. And so now so like you
+
+[00:21:29.039] could have tests that you thought you
+
+[00:21:30.559] wrote and have no idea that they're
+
+[00:21:32.400] failing silently. So I basically took
+
+[00:21:34.720] this in um find everywhere in dot dot
+
+[00:21:39.919] dot dotbaml
+
+[00:21:42.159] relevant
+
+[00:21:44.000] to solving this issue and figure out how
+
+[00:21:49.280] the information flows. Um these take a
+
+[00:21:52.559] little bit of steering like the prompt
+
+[00:21:53.760] itself is not you know foolproof. Um and
+
+[00:21:57.039] then I'm just going to paste this in and
+
+[00:21:58.080] I'm going to launch a new session and
+
+[00:21:59.440] we'll see that this is going to launch a
+
+[00:22:00.720] bunch of sub aents. Um, I'm going to let
+
+[00:22:03.440] this run for a sec, um, while I'm
+
+[00:22:05.440] drawing out what's happening. So, this
+
+[00:22:07.200] will launch a bunch of different sub
+
+[00:22:08.640] aents to research different things.
+
+[00:22:10.000] These sub aents can also research the
+
+[00:22:11.600] web, but these are going to do most of
+
+[00:22:13.280] the work. Um, and they're all going to
+
+[00:22:16.320] have their own context window and their
+
+[00:22:17.840] own specific prompt. And then we're
+
+[00:22:19.760] going to pull this back to uh basically
+
+[00:22:23.360] have a big write call where the agent's
+
+[00:22:25.440] going to write out a you know two to 400
+
+[00:22:28.720] line file that is like the research
+
+[00:22:30.720] about this.
+
+[00:22:33.039] >> Um and that'll
+
+[00:22:34.559] >> point and the whole mechanism that's
+
+[00:22:36.880] driving that is that one Dextra is
+
+[00:22:40.240] trying to be as hands off on this
+
+[00:22:42.080] codebase as possible because one he
+
+[00:22:43.679] doesn't know the codebase. So what he
+
+[00:22:45.600] really wants to do is like rather than
+
+[00:22:46.799] manually even telling the person to do
+
+[00:22:48.000] this, he's just going to instead of like
+
+[00:22:50.159] saying like, "Oh, this task is probably
+
+[00:22:51.679] easy." Like if you go for me, my
+
+[00:22:53.280] perspective, I know exactly what lines
+
+[00:22:54.799] of code I have to touch. Dex has no
+
+[00:22:56.799] idea. So, what he should do, he's he's
+
+[00:22:59.520] like shortcutting the agent's work and
+
+[00:23:01.039] saying like before you before I even
+
+[00:23:02.480] tell you to fix it, just identify
+
+[00:23:04.559] anything that could potentially be
+
+[00:23:06.000] better because then when I actually go
+
+[00:23:08.320] look and understand what might be
+
+[00:23:10.000] necessary to fix it instead of me
+
+[00:23:12.400] instead of the agent both trying to fix
+
+[00:23:14.000] it and discover everything, the
+
+[00:23:15.600] discovery problem is solved at that
+
+[00:23:17.840] point.
+
+[00:23:18.159] >> Yeah. And even if you were going to
+
+[00:23:19.919] build a plan and implement it by hand by
+
+[00:23:21.840] going into cursor or Vim and making the
+
+[00:23:23.520] changes, this can be super valuable to
+
+[00:23:25.919] tell me, hey, here's the files you need
+
+[00:23:27.520] to be looking at.
+
+[00:23:28.559] >> And we have in the repo here. Okay, so
+
+[00:23:30.640] this is
+
+[00:23:32.480] >> it's effectively the same work that Dex
+
+[00:23:34.720] would be doing if I were to sit with him
+
+[00:23:36.400] for 20 minutes and onboard him. Like
+
+[00:23:38.000] this is literally what
+
+[00:23:38.880] >> show me where are the files.
+
+[00:23:39.919] >> You probably have to touch roughly these
+
+[00:23:41.600] files and this is the idea that you
+
+[00:23:43.919] would want to really go and touch play
+
+[00:23:45.360] around with.
+
+[00:23:46.880] >> Yeah. So, this one's using a lot of uh
+
+[00:23:49.039] GP and blob and stuff which tend to
+
+[00:23:50.799] require permissions. But yeah, this is
+
+[00:23:52.159] searching for this. Um, I'm actually
+
+[00:23:54.240] going to stop this and say stop
+
+[00:23:57.520] run the agents in parallel. And you
+
+[00:24:00.240] still have to steer some steer some of
+
+[00:24:01.679] this stuff to only use read glob gp
+
+[00:24:07.919] search never bash because bash requires
+
+[00:24:11.440] permission and I know it can find this
+
+[00:24:12.880] stuff using the built-in tools.
+
+[00:24:15.120] >> Yep. Um,
+
+[00:24:16.080] >> and this just where like just knowing
+
+[00:24:17.520] that the fact that these tools exist
+
+[00:24:19.120] just makes Dex better at this and faster
+
+[00:24:20.799] at this because he's like, "Ah, rather
+
+[00:24:21.919] than me approving the manual, I'll just
+
+[00:24:23.200] try and force it to not use mash
+
+[00:24:25.760] >> again." And knowing all this stuff is
+
+[00:24:28.320] understanding how the tools look and how
+
+[00:24:30.400] it is prompted. So, it's like, yeah, GP
+
+[00:24:32.799] first fast pattern search based on based
+
+[00:24:34.880] on RIP GP or whatever. Um, I don't know
+
+[00:24:37.120] if it's still based on RG, but um, if we
+
+[00:24:39.840] come in here to research, I can show you
+
+[00:24:41.679] the document that was created when I did
+
+[00:24:43.039] this last night. So, we're not going to
+
+[00:24:44.240] wait for it to go do the whole thing.
+
+[00:24:46.000] Um, but here, yeah, BAML test
+
+[00:24:47.279] assertions, assert versus assert, and it
+
+[00:24:49.360] says here's where the issue is. The
+
+[00:24:50.799] parser accepts both things. And most
+
+[00:24:52.720] importantly, it's giving us the names of
+
+[00:24:54.400] the files. So, the next agent that's
+
+[00:24:56.320] going to work on this, whether it's
+
+[00:24:57.520] building a plan or jumping straight to
+
+[00:24:59.120] implementation, knows exactly where to
+
+[00:25:01.360] look and what lines to look at. And so,
+
+[00:25:03.600] this is really, really powerful.
+
+[00:25:05.679] >> So, you can see how like this is clearly
+
+[00:25:07.840] going to make any implementation plan
+
+[00:25:09.840] just like way fewer tool calls.
+
+[00:25:12.720] Exactly. And so the tool you want to get
+
+[00:25:14.880] to the
+
+[00:25:16.000] >> you want to get to the writing and yeah
+
+[00:25:17.679] go ahead. Sorry.
+
+[00:25:18.799] >> What I'm say the tool call you can make
+
+[00:25:20.559] is literally just exactly this. It's
+
+[00:25:22.159] read this file at these line numbers.
+
+[00:25:24.400] That's an exact tool call already
+
+[00:25:26.000] defined in claude. That is like 10 times
+
+[00:25:29.279] less work than anything else the agent
+
+[00:25:31.120] would be doing.
+
+[00:25:32.400] >> Yeah. And so we go even a little bit
+
+[00:25:34.240] further. And so what's also cool is like
+
+[00:25:36.320] we think about this in a hierarchy,
+
+[00:25:37.919] right? So like a bad line of code is a
+
+[00:25:40.240] bad line of code. A bad line in an imple
+
+[00:25:43.200] implementation plan if there's like a
+
+[00:25:44.799] mistake in how to implement something
+
+[00:25:46.320] could be 10 or 100 line bad lines of
+
+[00:25:48.559] code. A bad line of research like a
+
+[00:25:51.120] misunderstanding of how the system works
+
+[00:25:53.600] or where functionality is located can
+
+[00:25:56.240] lead you to a thousand bad lines of
+
+[00:25:58.320] code. And then of course your like core
+
+[00:26:00.960] prompting set is which is how you like
+
+[00:26:02.880] manage your research and your building
+
+[00:26:04.559] implementation plans and things like
+
+[00:26:06.000] that can actually lead to a 100,000 bad
+
+[00:26:09.120] lines of code. um if you're if you're
+
+[00:26:11.520] not actually your core building blocks.
+
+[00:26:13.120] And so what we do when we're building is
+
+[00:26:15.039] we focus human attention on the highest
+
+[00:26:18.480] leverage stuff. So everybody reviews the
+
+[00:26:20.799] research and in our linear board we
+
+[00:26:22.320] literally have like research in
+
+[00:26:23.520] progress, research in review before it
+
+[00:26:25.840] goes to ready to plan. And so we spend a
+
+[00:26:28.159] lot more time reviewing the research and
+
+[00:26:29.679] the plan and keeping a shared
+
+[00:26:31.520] understanding of the system than we do
+
+[00:26:33.679] actually like reviewing the
+
+[00:26:35.279] implementation itself and the code. I
+
+[00:26:37.279] read what I read really closely in
+
+[00:26:38.480] implementation is the tests. And so if
+
+[00:26:40.480] the tests are passing and the tests are
+
+[00:26:41.840] well designed, I have high confidence in
+
+[00:26:43.919] the code that it's at least like
+
+[00:26:45.760] somewhat well architected and that it's
+
+[00:26:47.360] going to and that it's going to solve
+
+[00:26:48.400] the problem.
+
+[00:26:49.760] >> Yeah.
+
+[00:26:50.159] >> Um and we do regular like architecture
+
+[00:26:52.159] reviews and co tech deck cleanups too.
+
+[00:26:54.320] >> Yeah. And the problem and the I think
+
+[00:26:55.760] the premise here is like for those of
+
+[00:26:57.360] you that have ever worked like principal
+
+[00:26:58.559] engineers or senior staff engineers or
+
+[00:27:00.400] distinguished engineers, it's always the
+
+[00:27:02.640] same. like the distinguished engineer
+
+[00:27:04.080] doesn't actually have to be writing the
+
+[00:27:05.279] code, but as long as they sign off on
+
+[00:27:06.799] the design, it's probably correct. I
+
+[00:27:09.679] think that's the only thing that you
+
+[00:27:10.880] have to do here. And like it's it's a
+
+[00:27:12.400] hard practice to do because most people
+
+[00:27:16.080] sometimes forget to be really detail-
+
+[00:27:17.919] oriented in that part of the plan.
+
+[00:27:19.279] That's the trick.
+
+[00:27:20.640] >> Yeah.
+
+[00:27:20.960] >> But doing that is what you got to do. If
+
+[00:27:23.120] you're not doing that, you're slowing
+
+[00:27:24.320] down. And Pete just said exactly what I
+
+[00:27:26.240] was going to say.
+
+[00:27:31.590] Um, and so we'll look at we'll look at
+
+[00:27:31.600] the planning next, but the plan is very
+
+[00:27:33.279] similar. It's instructions on how to
+
+[00:27:35.520] build a phase by phase plan.
+
+[00:27:37.679] >> Do you want to show
+
+[00:27:38.480] >> implementation plan?
+
+[00:27:39.840] >> Yes. So, I'll show in a sec the plan
+
+[00:27:41.360] that got made. Um,
+
+[00:27:43.679] see, so there's two of these actually.
+
+[00:27:45.679] So, let me let me just talk about talk
+
+[00:27:47.440] through kind of what what I did just to
+
+[00:27:49.039] for what we're comparing is I actually
+
+[00:27:52.159] ended up um Oops. Let's see if we can
+
+[00:27:56.159] find this.
+
+[00:27:57.919] Uh,
+
+[00:27:59.520] I actually got impatient because the
+
+[00:28:00.720] research actually like the research was
+
+[00:28:02.320] wrong a couple times. I had to like
+
+[00:28:04.000] delete it, throw it out and resteere it
+
+[00:28:05.520] a couple times because the first one
+
+[00:28:06.799] that came back said it's perfectly
+
+[00:28:09.600] solved. It already supports this today
+
+[00:28:11.360] and like you don't need to worry about
+
+[00:28:12.640] this. And so I had to steer it a little
+
+[00:28:14.480] bit and I had to like basically go back
+
+[00:28:15.919] to the issue, write up this failing test
+
+[00:28:18.240] case and so that it would be able to
+
+[00:28:19.679] actually find the right thing. And so
+
+[00:28:21.200] those are learnings and like none of
+
+[00:28:22.640] this is foolproof and you have to adapt
+
+[00:28:24.159] it to your codebase and to whatever kind
+
+[00:28:26.720] of mood Opus is in throughout the day.
+
+[00:28:29.039] But I actually so I made I made a
+
+[00:28:30.559] research
+
+[00:28:31.840] >> and just and while Dexter is going to
+
+[00:28:33.760] type out some diagrams just to call out
+
+[00:28:35.279] here like the reason Dasher could
+
+[00:28:36.720] actually throw out that research is
+
+[00:28:37.840] twofold. One he actually reads a
+
+[00:28:39.360] research. He doesn't just throw it away.
+
+[00:28:40.640] A lot of people just throw it away.
+
+[00:28:41.679] >> Yes. Read it.
+
+[00:28:42.480] >> You have to read your [ __ ] Do not do
+
+[00:28:44.159] not make a plan and send it to your
+
+[00:28:45.279] co-workers if you didn't read it yet.
+
+[00:28:47.120] >> Exactly. And then two, the other thing
+
+[00:28:48.960] is like Dexter to some degree knows the
+
+[00:28:51.679] user experience that he expects. He
+
+[00:28:53.360] knows this is broken for sure. So it's
+
+[00:28:55.279] like the axiom that he's working off of
+
+[00:28:57.600] is somewhat true. Like he knows it must
+
+[00:29:00.640] be false because he's tried using it and
+
+[00:29:02.640] the feature is broken.
+
+[00:29:04.480] >> Yeah.
+
+[00:29:04.799] >> And it's possible that since December
+
+[00:29:06.240] was fixed and we didn't update the
+
+[00:29:07.279] GitHub issue, but he also knows that
+
+[00:29:08.720] it's false because he's tried it and he
+
+[00:29:10.320] knows that that feature is still broken.
+
+[00:29:13.039] >> Yeah. And this is also where like you
+
+[00:29:14.480] need to get creative a little bit. So,
+
+[00:29:16.080] like step one, I wrote this journal
+
+[00:29:17.360] down. We'll publish this as well. It's
+
+[00:29:18.559] like I did a bad research. Uh, and I
+
+[00:29:20.720] actually threw out the file because it
+
+[00:29:22.000] kept confusing the later ones, but I'll
+
+[00:29:23.600] go find it um and put it back in here.
+
+[00:29:26.080] Um, but I basically uh I refined. So, I
+
+[00:29:28.880] saw the research was wrong and it said
+
+[00:29:30.399] there's no bug. I updated the spec with
+
+[00:29:32.480] that test case and then I resteered the
+
+[00:29:34.399] research and I actually what I said was
+
+[00:29:36.399] like here's the issue. Give me back a
+
+[00:29:39.200] research prompt so that the next person
+
+[00:29:41.120] who tries this will not [ __ ] it up. And
+
+[00:29:43.279] so it gave me back this huge prompt of
+
+[00:29:45.440] like here's the problem and here's the
+
+[00:29:46.799] test cases and all this stuff. And then
+
+[00:29:48.559] on my second research I pasted this in
+
+[00:29:50.799] and I said research the codebase which
+
+[00:29:53.039] took my big command here and then I gave
+
+[00:29:55.279] it as like what do you want to research
+
+[00:29:57.200] all of this content. And so like there
+
+[00:29:59.200] is value to understanding and you can
+
+[00:30:01.200] still take that broken research context
+
+[00:30:03.600] and turn it into something useful that
+
+[00:30:05.360] is compacted down of and then you start
+
+[00:30:08.559] from scratch again with your manually.
+
+[00:30:10.399] So this was an instance of like manual
+
+[00:30:11.840] compaction that I used to kick off the
+
+[00:30:14.240] research again.
+
+[00:30:15.440] >> And if you want to go back to one more
+
+[00:30:17.039] thing I want to talk about
+
+[00:30:18.399] >> is the thing I want everyone to think
+
+[00:30:20.080] about here is like the only reason that
+
+[00:30:21.600] this can also be happen and this is an
+
+[00:30:23.440] important part of building software now
+
+[00:30:25.520] is if you're not thinking about like
+
+[00:30:27.200] common nomenclature and using the same
+
+[00:30:29.039] names across your code bases you're
+
+[00:30:31.360] going to mess up the system because like
+
+[00:30:33.279] for example we clearly call these field
+
+[00:30:35.200] and block attributes and they are called
+
+[00:30:36.799] the same thing everywhere in the
+
+[00:30:38.399] codebase. There's not a single place in
+
+[00:30:40.240] the codebase where you don't refer to
+
+[00:30:41.440] this as an attribute or there's not a
+
+[00:30:43.840] another thing that is magically called
+
+[00:30:46.000] attribute that is slightly different. So
+
+[00:30:48.399] if you have a codebase that randomly
+
+[00:30:49.919] renamed things and you only renamed half
+
+[00:30:51.600] of it, you're [ __ ] yourself and you
+
+[00:30:54.720] need to go and fix that because a model
+
+[00:30:56.559] can't do the right thing if you have
+
+[00:30:57.919] seven different
+
+[00:30:59.919] um seven different ways to refer to it.
+
+[00:31:02.320] So like not only are you making it hard
+
+[00:31:03.679] for humans, you're also making hard for
+
+[00:31:05.200] agentic systems.
+
+[00:31:07.039] Yes, words are important. Code is
+
+[00:31:10.159] >> words are more important than ever
+
+[00:31:11.919] before.
+
+[00:31:13.200] >> Yeah. Um, okay, cool. So, this one's
+
+[00:31:16.240] continuing to do research and stuff. Um,
+
+[00:31:20.080] I'm going to just approve these. This is
+
+[00:31:21.679] a this is a this is an example of how
+
+[00:31:23.440] this stuff can work. Um, let's see.
+
+[00:31:27.039] Okay.
+
+[00:31:28.799] Uh,
+
+[00:31:31.039] but where were we? Sorry. Um, that's
+
+[00:31:32.960] that's great. We're going to show the
+
+[00:31:34.240] plan.
+
+[00:31:34.559] >> So, I did two things, right? So I I took
+
+[00:31:36.240] this research, I threw it in the trash.
+
+[00:31:37.840] I took this research and I started a
+
+[00:31:39.519] plan. I also got annoyed because the
+
+[00:31:42.159] research was taking too long. So I tried
+
+[00:31:43.840] to just create a plan with no research
+
+[00:31:45.519] to see if that would work too. Because
+
+[00:31:47.440] what you can probably do for small
+
+[00:31:49.120] issues is like during the planning
+
+[00:31:51.200] process, it's also going to go do some
+
+[00:31:53.120] research on the codebase. And so for
+
+[00:31:55.120] really big really complex things where
+
+[00:31:57.840] like if this thing has to research
+
+[00:31:59.519] everything it might push it to the like
+
+[00:32:02.480] you know 80% of the context window at
+
+[00:32:04.320] which point your written plan is like
+
+[00:32:06.000] not going to work basically like if this
+
+[00:32:08.159] thing doesn't find what it wants in the
+
+[00:32:09.600] first six sub agents then it's going to
+
+[00:32:11.519] run you know six more sub aents and then
+
+[00:32:13.360] your context window is getting kind of
+
+[00:32:14.960] bad and your plan's going to be low
+
+[00:32:16.399] quality. Um sometimes you can just plan
+
+[00:32:19.440] if it's a simple thing you can create a
+
+[00:32:20.880] plan and skip the research phase. Um and
+
+[00:32:23.279] we've done that. So, I I actually wanted
+
+[00:32:24.559] to try this for this feature cuz I
+
+[00:32:26.480] wanted to build a sense for it. This is
+
+[00:32:27.840] also like what Vibb always talks about
+
+[00:32:29.200] is like getting lots of reps. The more
+
+[00:32:31.200] reps you can get on this stuff, the
+
+[00:32:32.880] better intuition. What's the thing you
+
+[00:32:34.399] said about like the ML engineer who just
+
+[00:32:36.000] like put his thumb in the air or
+
+[00:32:37.200] something?
+
+[00:32:38.320] >> Well, yeah. It's all just vibes.
+
+[00:32:40.000] Everything is just like which direction
+
+[00:32:41.200] is the wind blowing? I don't know. It
+
+[00:32:42.240] depends on the day.
+
+[00:32:44.080] >> Yeah, it's hard to tell.
+
+[00:32:45.360] >> How is How is Opus feeling today? Um,
+
+[00:32:48.000] >> exactly.
+
+[00:32:49.840] >> Uh, you're absolutely right, man. So uh
+
+[00:32:52.640] what we what we'll do here is uh there's
+
+[00:32:54.960] two plans here. So this one was made
+
+[00:32:57.600] with the research. So I waited for the
+
+[00:32:59.279] research to finish and then I did the
+
+[00:33:01.360] plan and then I did the implementation.
+
+[00:33:03.120] And this one I just launched the plan.
+
+[00:33:04.720] And I just said, you know, here I I I
+
+[00:33:06.720] pasted that exact same big prompt that
+
+[00:33:08.640] we pasted into the second research. And
+
+[00:33:11.360] I um find this thing, this whole big
+
+[00:33:15.519] prompt of like, hey, here's how would
+
+[00:33:17.440] you look into this? And I just pasted
+
+[00:33:19.600] that into the plan command. And the plan
+
+[00:33:21.519] command is very specific around um and
+
+[00:33:24.399] like your plan command should basically
+
+[00:33:25.760] like, you know, you have step one, which
+
+[00:33:27.200] is figuring learn still you still have
+
+[00:33:28.640] to refill the context window with all
+
+[00:33:29.919] the files and things like that. Um, and
+
+[00:33:32.640] then you're going to discover how things
+
+[00:33:34.000] work. Um, but then you build the plan.
+
+[00:33:36.240] Um, and this one's even prompted to work
+
+[00:33:37.840] back and forth with the user to propose,
+
+[00:33:40.320] hey, here's what the phases are and then
+
+[00:33:42.559] basically like build out a phased uh,
+
+[00:33:45.200] implementation plan. And so we'll look
+
+[00:33:47.120] at these.
+
+[00:33:47.919] >> So, by the way, before we go into the
+
+[00:33:49.120] plan, I just want to tell everyone when
+
+[00:33:50.480] I go skim that research just as someone
+
+[00:33:52.320] that knows the codebase, I look at that
+
+[00:33:54.159] research that Dex has, I'm like, this
+
+[00:33:56.000] looks correct.
+
+[00:33:57.200] >> It's like 120 lines. Just skimming it. I
+
+[00:33:59.360] know those files by heart and I know
+
+[00:34:00.960] those are the right files to look at. So
+
+[00:34:03.360] now let's go look at the plan and I I'll
+
+[00:34:05.039] give you my gut instinct on whether or
+
+[00:34:06.559] not I thought it was good or not.
+
+[00:34:08.159] >> Okay, we're going to look at the no
+
+[00:34:09.440] research one first. Um so yeah, here's
+
+[00:34:12.320] how it works. You have your BAML block
+
+[00:34:14.560] attributes. Um tester parses value
+
+[00:34:18.320] expression blocks. Um the parser is
+
+[00:34:20.800] here. The validation gap is missing in
+
+[00:34:23.119] visit test case. That actually sounds I
+
+[00:34:24.960] I don't know anything about BAML, but I
+
+[00:34:26.399] know a lot about parsers, and that
+
+[00:34:27.599] sounds about right for the uh
+
+[00:34:29.359] >> that's a visitor for a test case.
+
+[00:34:31.200] >> Yeah. Um so what's cool about the plan
+
+[00:34:32.960] also is you can prompt to say like, hey,
+
+[00:34:34.320] here's what we're not doing. Um because
+
+[00:34:36.079] this is really valuable when you give
+
+[00:34:37.200] this to the implementation agent. It
+
+[00:34:39.040] steers it to stay away from trying. A
+
+[00:34:40.960] lot of times cloud will be like, oh
+
+[00:34:41.919] yeah, I also added this and I also added
+
+[00:34:43.359] this and I also added postquantum
+
+[00:34:44.960] cryptography or whatever the hell
+
+[00:34:46.320] emergent thing that it wants to drop in.
+
+[00:34:48.639] Um but yeah, so we add field attribute
+
+[00:34:50.960] validation to test block. So this is it.
+
+[00:34:52.399] This is saying go to configuration.rs
+
+[00:34:54.639] and make this change.
+
+[00:34:57.200] >> Um which is like adding
+
+[00:34:59.040] >> this is not just good. This is a great
+
+[00:35:01.040] error message on top of that. Uh on top
+
+[00:35:03.280] of that
+
+[00:35:08.630] >> um and that's phase one. And then it has
+
+[00:35:08.640] like hey here's how to do the automated
+
+[00:35:10.480] checks. And I actually didn't do any
+
+[00:35:11.920] manual verification because I don't know
+
+[00:35:13.359] how to spin up my local version of BAML
+
+[00:35:15.119] and install it in VS Code. But uh we
+
+[00:35:17.680] skipped that part. So we'll see when we
+
+[00:35:18.960] get to the code review phase. Um, and
+
+[00:35:20.960] then it talked about what test to add.
+
+[00:35:22.400] Um, so your prompt should all you should
+
+[00:35:23.920] always prompt the model to add tests.
+
+[00:35:25.280] And actually what I'm doing lately is I
+
+[00:35:26.800] have a new version of this prompt which
+
+[00:35:28.079] is like the phases should be always
+
+[00:35:30.800] write a failing test and then fix it.
+
+[00:35:33.200] And that way you have as many
+
+[00:35:34.240] checkpoints as you can. I mean obviously
+
+[00:35:35.680] the idea is with a really good
+
+[00:35:37.280] implementation plan written by experts
+
+[00:35:38.960] who know the codebase well. You the
+
+[00:35:41.359] implementation is almost always very
+
+[00:35:42.880] straightforward and you can once you can
+
+[00:35:44.320] put it on auto accept and you can come
+
+[00:35:45.839] back when it's done.
+
+[00:35:47.440] Um
+
+[00:35:47.920] >> what I have what I have found is exactly
+
+[00:35:49.920] what VJ is saying is like I only do TDD
+
+[00:35:52.560] with agents. It is the only in my
+
+[00:35:55.040] opinion I I have a very strong opinion
+
+[00:35:56.400] on it is the only way to write uh AI
+
+[00:35:58.880] generated code AI generated code. Um and
+
+[00:36:01.599] I pretty much I the first thing I do is
+
+[00:36:03.760] I make it write tests before I let it
+
+[00:36:05.680] write any other code. And what I do
+
+[00:36:07.839] specifically even further is we actually
+
+[00:36:09.680] have done work in the BMA codebase to
+
+[00:36:11.280] make write running and eval test way
+
+[00:36:14.320] easier than it should be because if it's
+
+[00:36:17.359] not then it doesn't work. Uh because the
+
+[00:36:20.640] system that you actually have like the
+
+[00:36:22.240] test commands you use they need to be
+
+[00:36:24.320] really trivial for the LM to run and it
+
+[00:36:26.000] needs to be able to run just like any
+
+[00:36:28.640] sort of test case trivially. So for
+
+[00:36:30.640] example, this test is called like test
+
+[00:36:32.079] multiple args of test multiple invalid
+
+[00:36:34.720] argriets and test that thing should be
+
+[00:36:37.119] like it should be obvious to the LM
+
+[00:36:39.040] exactly how it's going to go run.
+
+[00:36:41.680] >> Yep. I like it. So anyways, any anything
+
+[00:36:45.440] in this plan so far that's standing out
+
+[00:36:47.040] to you is wrong?
+
+[00:36:48.640] >> No. Like I I would honestly be like like
+
+[00:36:50.880] maybe there there might be nuances that
+
+[00:36:53.280] are wrong, but the fir the scan that I'm
+
+[00:36:55.839] looking for in my mind is what are the
+
+[00:36:58.079] error messages? Do the error messages
+
+[00:36:59.839] look good? Because that's important
+
+[00:37:00.960] because human readability is an end
+
+[00:37:02.480] outcome that I would measure on. And
+
+[00:37:03.520] like what test is it adding
+
+[00:37:05.520] >> everything else like I'm like skimming.
+
+[00:37:07.200] I'm like is it roughly touching
+
+[00:37:08.480] approximately the right files and it
+
+[00:37:10.000] looks approximately correct.
+
+[00:37:12.160] >> Okay.
+
+[00:37:12.400] >> So like I'm like okay
+
+[00:37:14.640] >> that I think that's one thing that's the
+
+[00:37:16.000] same around all really good people who
+
+[00:37:18.240] are really good at using these tools is
+
+[00:37:19.839] they they focus a lot on how can we
+
+[00:37:21.599] build automated ways for the model to
+
+[00:37:23.119] know that it's correct. And so like if
+
+[00:37:24.640] the tests are well designed and you've
+
+[00:37:26.880] given the model a good harness in which
+
+[00:37:28.640] it can iterate and test and make sure
+
+[00:37:30.240] that it's that it's that it's working
+
+[00:37:31.839] well and you steer it to focus on making
+
+[00:37:34.240] sure the tests are correct and then
+
+[00:37:35.839] fixing the code afterwards, you can get
+
+[00:37:37.920] really good results with being totally
+
+[00:37:39.760] hands off while it's implementing.
+
+[00:37:43.040] >> Exactly.
+
+[00:37:44.320] >> Um okay, cool. This is the one made with
+
+[00:37:46.079] no research. The one made with research
+
+[00:37:48.800] is actually much shorter, which is
+
+[00:37:50.480] interesting because maybe that's a sign
+
+[00:37:51.839] that the research was uh let's see. So,
+
+[00:37:55.119] here's basically the same change that we
+
+[00:37:56.880] saw in the other one, which is in the
+
+[00:37:58.240] visitor. This is like the fact that I
+
+[00:37:59.839] saw this in both plans is a good sign to
+
+[00:38:01.920] me that like this is the exact actual
+
+[00:38:03.839] fix.
+
+[00:38:05.359] Um, and then it's adding a validation
+
+[00:38:08.720] test case. So, it's like the way it
+
+[00:38:10.079] describes the test is actually like
+
+[00:38:11.760] quite different. And I'm guessing that
+
+[00:38:14.720] this is probably because it read more of
+
+[00:38:16.960] the files about how the unit tests work.
+
+[00:38:19.760] >> This is the right way to write tests in
+
+[00:38:21.839] our repo for this type of system. Uh the
+
+[00:38:24.079] other test case would actually be
+
+[00:38:25.359] incorrect. Uh not incorrect sense. Like
+
+[00:38:28.160] if it did this, I would later tell it
+
+[00:38:30.160] not to do this and I'd be like go do
+
+[00:38:31.760] this other thing later. The research
+
+[00:38:33.440] one,
+
+[00:38:33.680] >> you reject the PR and you would say do
+
+[00:38:35.440] it this way.
+
+[00:38:36.240] >> I would.
+
+[00:38:37.359] >> Yeah. Okay, cool. So there's there's the
+
+[00:38:39.440] there's the big difference. Um, but
+
+[00:38:41.920] anyways, what I did after that was I
+
+[00:38:43.359] took both plans and handed them to
+
+[00:38:45.200] agents and we're not going to go to get
+
+[00:38:46.560] work trees or how we interact with
+
+[00:38:48.000] GitHub API and stuff because I don't
+
+[00:38:49.280] think we have time. We can maybe save
+
+[00:38:50.320] that for the Q&A if there's time. But we
+
+[00:38:52.320] ran these in two separate directories,
+
+[00:38:54.800] both plans in parallel. And um, we got
+
+[00:38:57.680] out these two PRs.
+
+[00:39:00.000] So, um, this is the one from with
+
+[00:39:03.200] research and this is the one with no
+
+[00:39:04.720] research. And I'm curious, actually, I
+
+[00:39:07.119] haven't really looked in depth at these
+
+[00:39:08.560] um, but we're going to look at these
+
+[00:39:09.440] together.
+
+[00:39:10.960] Um, it looks like we have that fixed
+
+[00:39:12.400] that we saw in both plans. And then you
+
+[00:39:14.640] have the tests being updated as probably
+
+[00:39:16.800] as expected.
+
+[00:39:18.160] >> So these are the tests. These are
+
+[00:39:19.680] correct. And then we can just see if it
+
+[00:39:21.280] Oh, it's it's merging. I guess it passed
+
+[00:39:23.119] all the tests.
+
+[00:39:24.720] >> Oh, sick.
+
+[00:39:25.920] >> Yeah.
+
+[00:39:27.040] >> I didn't realize you had you have
+
+[00:39:28.160] automatic you have automatic merge cues.
+
+[00:39:30.560] >> Yeah. Well, I approved this one. I I
+
+[00:39:32.800] didn't actually run. I guess the test
+
+[00:39:33.920] must have passed. Oh, yeah. Aaron does
+
+[00:39:35.599] merge.
+
+[00:39:35.839] >> Oh, and Aaron didn't even know I was
+
+[00:39:37.200] doing this PR as a bit. Yeah, Aaron had
+
+[00:39:38.960] no idea that he was in this. He just
+
+[00:39:40.240] merged it because the test passed and
+
+[00:39:42.320] like we know what it means for the test
+
+[00:39:44.079] to pass. These tests are good tests.
+
+[00:39:45.839] They will work.
+
+[00:39:47.280] >> Nice. Let's see this one.
+
+[00:39:49.200] >> Um like
+
+[00:39:50.880] >> this one didn't get reviewed.
+
+[00:39:53.440] >> Yeah. So you should close this one. This
+
+[00:39:54.800] is incorrect.
+
+[00:39:55.599] >> Yeah.
+
+[00:39:56.000] >> Oh, this is the research file test.
+
+[00:39:58.720] >> Yeah, it eventually during the
+
+[00:39:59.920] implementation it figured it out that
+
+[00:40:01.680] this was how to do tests.
+
+[00:40:04.160] >> Um
+
+[00:40:04.720] >> okay, that probably tells me one thing.
+
+[00:40:06.240] The way we designed a repo is not
+
+[00:40:07.680] totally absurd. If both models figured
+
+[00:40:10.000] it out, even if it had the wrong way.
+
+[00:40:12.400] Um, but yeah, this
+
+[00:40:13.920] >> this one's interesting.
+
+[00:40:15.760] >> This has the config thing in it. It's
+
+[00:40:18.000] like implemented differently. It's it's
+
+[00:40:19.599] changed actually a different file.
+
+[00:40:22.400] >> Um, it's
+
+[00:40:24.560] it's the same thing. Uh, there's like
+
+[00:40:26.560] two different ways to do it.
+
+[00:40:28.640] >> Oh, interesting.
+
+[00:40:30.079] >> Yeah, the other way is better.
+
+[00:40:32.640] >> Okay, cool. So, yeah, we'll close this
+
+[00:40:34.480] one. Uh, but yeah, that's I mean that's
+
+[00:40:37.200] kind of the core of it. Let me jump back
+
+[00:40:38.640] to the list and see if there's anything
+
+[00:40:39.680] else I wanted to talk about. Um, the
+
+[00:40:42.079] biggest takeaway I think the Vibop said
+
+[00:40:43.359] that I want to like hash on a lot is you
+
+[00:40:45.760] have to read the [ __ ] that the model
+
+[00:40:47.200] spits out and you can either iterate
+
+[00:40:49.040] with the model on like that plan's not
+
+[00:40:50.560] right. I want to change the order of the
+
+[00:40:52.000] phases or like hey make sure there's
+
+[00:40:53.520] tests first or you can literally go I do
+
+[00:40:55.839] this a lot. I spend a lot again like the
+
+[00:40:59.040] direction of leverage is like this the
+
+[00:41:00.960] stuff over on the left is the highest
+
+[00:41:02.720] leverage and so I am always looking
+
+[00:41:05.599] really closely at you know how at this
+
+[00:41:08.960] kind of stuff and I might even change it
+
+[00:41:10.400] manually if it if the model can't get it
+
+[00:41:12.240] I might even change it manually be like
+
+[00:41:13.520] the tests are here change this test
+
+[00:41:15.760] here's a failing test sometimes I'll
+
+[00:41:17.119] even write the failing test for it um
+
+[00:41:19.440] but this gives you also like one thing I
+
+[00:41:21.280] love to talk about in coding and code
+
+[00:41:22.880] review I don't know if you've seen this
+
+[00:41:23.839] one Um
+
+[00:41:26.560] uh this guy Blake Smith that I used to
+
+[00:41:28.319] work with who wrote an article on code
+
+[00:41:29.920] review. Um the most important thing
+
+[00:41:32.319] about code review is not design or
+
+[00:41:35.920] correct or finding bugs. The most
+
+[00:41:37.760] important thing is mental alignment is
+
+[00:41:39.599] keeping people on the same page about
+
+[00:41:41.680] how the system is changing as it
+
+[00:41:43.599] evolves.
+
+[00:41:45.280] And this is a big like principal
+
+[00:41:46.640] engineer kind of thing. And so the specs
+
+[00:41:49.440] process means that even if I don't
+
+[00:41:51.920] review the code, I read the spec. And
+
+[00:41:54.240] the spec is way easier. The the 200line
+
+[00:41:56.720] spec or 300 line implementation plan is
+
+[00:41:59.520] way easier for me to review and grock
+
+[00:42:01.839] and understand than a GitHub PR where
+
+[00:42:04.640] all the code is out of order and I don't
+
+[00:42:06.160] actually know which order you made the
+
+[00:42:07.440] changes in and it's kind of logic. It's
+
+[00:42:09.040] just alphabetical instead of like being
+
+[00:42:10.720] stacked in the order that you did it. Um
+
+[00:42:13.280] so this is really like one of the like
+
+[00:42:15.760] ancillary benefits of working in this
+
+[00:42:17.520] way and how really big teams work like
+
+[00:42:19.839] saying yeah the principal engineer signs
+
+[00:42:21.119] off on the design and then it goes to
+
+[00:42:22.560] implementation he doesn't care anymore
+
+[00:42:24.240] >> but he has understand they have
+
+[00:42:26.079] understanding of how how things are
+
+[00:42:27.520] changing
+
+[00:42:28.560] >> and I'm show like in our code base for
+
+[00:42:31.839] example there are parts of there are
+
+[00:42:33.359] parts of the code like for example we do
+
+[00:42:35.119] no code reviews in our whole team even
+
+[00:42:36.560] with AIdriven development the reason we
+
+[00:42:38.560] don't do them is because we write pretty
+
+[00:42:39.839] damn good tests and we put a lot of
+
+[00:42:41.280] infrastructure of writing good test
+
+[00:42:42.800] suites. But there are some parts of the
+
+[00:42:45.760] codebase that are really really really
+
+[00:42:48.240] really nuanced and we do need like two
+
+[00:42:51.359] or three people to read them for a
+
+[00:42:52.880] couple reasons. One, they're just
+
+[00:42:54.079] algorithmic algorithmically complex and
+
+[00:42:57.599] two there's just not enough test
+
+[00:42:59.359] coverage and we have a proxy for that as
+
+[00:43:01.520] a team for where that is. So we just use
+
+[00:43:04.000] apply process as necessary accordingly.
+
+[00:43:07.040] And we found that to be a great system.
+
+[00:43:09.040] And like it's the same with AI agents.
+
+[00:43:11.440] Like if you're going to use an agent to
+
+[00:43:12.560] go write code, you need to treat it in
+
+[00:43:14.079] that way where it's like you have to
+
+[00:43:15.520] mentally build a model for like what's a
+
+[00:43:17.839] boundary for what it can do and what it
+
+[00:43:19.359] can't do. What parts of your codebase
+
+[00:43:21.520] are already [ __ ] up and you should
+
+[00:43:23.520] probably not let it loose. What parts of
+
+[00:43:25.280] your codebase are really well hygiened
+
+[00:43:26.960] and you can let it kind of do whatever
+
+[00:43:28.400] because it'll probably do the right
+
+[00:43:29.680] thing.
+
+[00:43:32.079] Yeah, that makes sense. And like having
+
+[00:43:33.599] a sense and that's the kind of thing
+
+[00:43:34.720] that like you can eventually start to
+
+[00:43:36.800] feed that instinct to the model through
+
+[00:43:38.400] your claw MD or through your base
+
+[00:43:39.760] prompts or through your steering. But
+
+[00:43:41.440] like the things that we validate the
+
+[00:43:42.960] most are like if someone wants to change
+
+[00:43:44.800] one of these, this impacts every line of
+
+[00:43:47.520] code in our codebase. And so before we
+
+[00:43:49.920] change this, we don't just review the
+
+[00:43:52.079] code. We have everybody pull down the
+
+[00:43:54.400] new version and use it for a couple days
+
+[00:43:56.480] in their day-to-day work before we let
+
+[00:43:58.720] that change roll out because it's like
+
+[00:44:00.720] changing your CI/CD or changing your
+
+[00:44:02.800] cloud provider. It's so fundamental to
+
+[00:44:05.359] everything in our product and every way
+
+[00:44:07.520] that we make progress that a regression
+
+[00:44:09.599] in one of these could cause a hundred
+
+[00:44:11.920] regressions within within a
+
+[00:44:13.520] >> I have a question. Do you think you're
+
+[00:44:14.800] will do you think you're able to share a
+
+[00:44:16.240] conbon board of how you look at
+
+[00:44:17.920] research?
+
+[00:44:18.640] >> Yeah, we'll we'll pull that up. We'll
+
+[00:44:19.760] pull that up. Um I have a combo board
+
+[00:44:21.680] which is for our
+
+[00:44:22.960] >> Yeah. So this is um by the way this is
+
+[00:44:24.960] the human layer repo. This is where we
+
+[00:44:26.480] work on a number of things including our
+
+[00:44:29.200] like open- source terminal UI for
+
+[00:44:30.960] managing lots of cloud codes. Um and I
+
+[00:44:34.000] actually go
+
+[00:44:36.160] >> if I go I'm going to show you kind of
+
+[00:44:37.760] how the implementation plan looks as
+
+[00:44:39.599] well. Um,
+
+[00:44:41.520] BAML
+
+[00:44:44.160] slash. Um, yeah. So, if we do the one
+
+[00:44:47.040] with the research,
+
+[00:44:49.359] um,
+
+[00:44:50.880] copy. When you showed this, I was
+
+[00:44:53.280] furiously googling where this came from
+
+[00:44:55.359] and then I found your repo eventually.
+
+[00:44:57.760] >> Yeah.
+
+[00:44:58.800] >> Everyone's like, "Dex, what are you
+
+[00:44:59.839] working on?" And I'm like, "You could
+
+[00:45:01.440] find it. It's just uh it's completely in
+
+[00:45:03.440] the open, but we're not we're not really
+
+[00:45:04.720] talking about it just yet."
+
+[00:45:06.640] >> Um, yeah. I think this is one of the
+
+[00:45:08.319] coolest UXes that I've seen to actually
+
+[00:45:10.079] manage like multiple cloud codes. So
+
+[00:45:12.640] like if someone's like a super user, I
+
+[00:45:14.240] think it'd be interesting for them to
+
+[00:45:15.280] try it. Um
+
+[00:45:24.870] while Dex does this um questions from
+
+[00:45:24.880] people I think I think today's episode
+
+[00:45:26.800] is really about like conversations
+
+[00:45:28.079] around how to go do this. Like we built
+
+[00:45:29.359] a real PR. We got it merged. I actually
+
+[00:45:32.000] had not seen the PR until Dex told me
+
+[00:45:34.079] like two minutes before the call I did
+
+[00:45:35.440] this and I saw a notification for the PR
+
+[00:45:37.359] going through. He's like, "Can you
+
+[00:45:38.640] approve this?" I was like, "What the
+
+[00:45:39.760] heck?" Um, but like honestly like people
+
+[00:45:43.680] should be using more AI for everything.
+
+[00:45:45.200] And like part of that is you should be
+
+[00:45:47.040] teaching yourself how to maximize
+
+[00:45:48.640] context window at any given time. And
+
+[00:45:50.400] that might be a change in process. It
+
+[00:45:52.160] might be a change in like testing
+
+[00:45:53.599] design. It might be a change in the way
+
+[00:45:55.520] you're just naming your file systems
+
+[00:45:57.839] along the way or your files along the
+
+[00:45:59.359] way. But like if you're not actively
+
+[00:46:01.839] thinking about it and you're just like
+
+[00:46:02.880] vibing it fully, don't do it. Don't do
+
+[00:46:05.520] that. You're just shooting yourself in
+
+[00:46:07.280] the foot. Like hoping is a really really
+
+[00:46:09.040] bad strategy. It's like hiring a bunch
+
+[00:46:10.400] of junior engineers or even hiring a
+
+[00:46:12.079] bunch of senior engineers that have no
+
+[00:46:13.680] context on what you're doing and just
+
+[00:46:15.200] telling them to go build 50,000
+
+[00:46:16.720] features. They will, but it probably
+
+[00:46:18.720] won't align with what you want even if
+
+[00:46:20.400] they're really really good engineers.
+
+[00:46:23.040] And that's just like a fundamental way
+
+[00:46:24.720] of like how software does like
+
+[00:46:26.800] transitioning and understanding what
+
+[00:46:28.240] both people have like doing the
+
+[00:46:29.760] intellect transition or the handoff of
+
+[00:46:31.440] like here's what I know here's what you
+
+[00:46:33.200] know like building the bridge for how
+
+[00:46:34.720] you communicate that's the magic behind
+
+[00:46:36.560] all of this.
+
+[00:46:38.480] >> Yeah. Um also here's a fun trick. If you
+
+[00:46:40.720] tell Claude to think deeply you get the
+
+[00:46:42.160] thinking tokens. This can backfire. Uh
+
+[00:46:45.200] you don't always want more thinking.
+
+[00:46:47.200] There's a I don't Has anyone ever used
+
+[00:46:48.640] ultraink?
+
+[00:46:49.599] >> What?
+
+[00:46:50.960] >> Yeah sucks. Uh most of the time it's
+
+[00:46:53.680] like
+
+[00:46:55.119] >> yeah it's uh it pays it makes it really
+
+[00:46:56.960] good at paying attention to things
+
+[00:46:58.079] higher up in the conversation but
+
+[00:46:59.520] sometimes you like change your you say
+
+[00:47:01.119] hey we're not doing it that way and ult
+
+[00:47:03.760] on a previous instruction.
+
+[00:47:05.839] >> Yeah.
+
+[00:47:06.560] >> So anyways this is the agent going
+
+[00:47:08.160] through the plan. Yeah. Jensen, what's
+
+[00:47:09.520] up?
+
+[00:47:11.040] >> Oh uh my question was uh sorry I was uh
+
+[00:47:15.599] listening too deeply. Sorry I forgot I
+
+[00:47:18.640] raised my hand. I was going to ask it.
+
+[00:47:21.920] Yeah, I know. I was I read your command
+
+[00:47:23.760] literally, I guess, uh or your your
+
+[00:47:26.560] prompt technique uh for sharing things.
+
+[00:47:29.440] I guess like you know, one thing that is
+
+[00:47:31.040] hard for some people might be that they
+
+[00:47:33.200] don't they're not they're literally not
+
+[00:47:35.119] allowed to use any of the things you're
+
+[00:47:36.880] using basically for their work, but they
+
+[00:47:38.720] also need to work with AI tools. And I
+
+[00:47:42.560] find that many people have no experience
+
+[00:47:45.359] with these tool tools outside of work
+
+[00:47:47.920] because they're too busy working to
+
+[00:47:49.280] learn anything. Any suggestion?
+
+[00:47:52.720] >> I think you want to go first.
+
+[00:47:55.599] >> Let me I'm just gonna share an article.
+
+[00:47:57.359] Um this is a guy.
+
+[00:48:00.240] >> No, I already got it. It's too late.
+
+[00:48:01.760] >> Okay.
+
+[00:48:03.040] >> Uh Jeff is uh works on AMP, which is the
+
+[00:48:05.520] source code coding CLI. He posted this
+
+[00:48:07.359] article back in June. Like coding with
+
+[00:48:10.319] LM is like an instrument. You need just
+
+[00:48:12.160] like any other coding, just like any
+
+[00:48:13.599] other like software craft, any craft,
+
+[00:48:16.160] >> you you need to practice and you need to
+
+[00:48:18.319] learn. And uh if you can't do it at
+
+[00:48:20.560] work, you need to find time to do it
+
+[00:48:21.839] outside of work. Um because the people
+
+[00:48:25.200] who are getting really really good at
+
+[00:48:26.480] this are uh I think my favorite thing uh
+
+[00:48:29.599] Jeff has said to me is like a lot of
+
+[00:48:31.200] people running a marathon and some of
+
+[00:48:32.800] them are about to get passed by people
+
+[00:48:34.400] riding motorcycles and they're not going
+
+[00:48:35.760] to know what to do about it. So you got
+
+[00:48:37.280] to go got to go uh find the parking lot
+
+[00:48:39.119] on the weekend and go spin the
+
+[00:48:40.319] motorcycle around a little bit.
+
+[00:48:42.000] >> I have subscriptions to all the
+
+[00:48:43.760] expensive ones. So
+
+[00:48:45.440] >> there you Well, I think another way
+
+[00:48:46.960] another thing I think is like people
+
+[00:48:48.559] assume that they can't do this at work
+
+[00:48:50.400] for a variety of reasons and they're
+
+[00:48:52.480] like, "Ah, I'm I'm stuck using Gemini or
+
+[00:48:54.640] I just use Azure models instead of using
+
+[00:48:56.480] cloud code or something else." But in
+
+[00:48:58.880] reality, I think most companies at this
+
+[00:49:01.680] point have allowed some level of AI in
+
+[00:49:04.480] their workplace. And even if it's just
+
+[00:49:06.720] using chat GBT at the very least, let's
+
+[00:49:08.160] just go with the very basic example.
+
+[00:49:10.079] It's not very efficient, but the
+
+[00:49:12.480] practices that we're talking about here
+
+[00:49:14.240] are apply everywhere. Whenever you copy
+
+[00:49:16.640] and paste stuff in the chat GPT,
+
+[00:49:18.079] whenever you go and like use cursor to
+
+[00:49:19.599] go write some code, the same principles
+
+[00:49:21.920] apply. Choosing when you clear your
+
+[00:49:24.079] context window, adding a research step
+
+[00:49:26.319] before you actually go and implement
+
+[00:49:27.599] your actual system. Like all of these
+
+[00:49:30.000] steps are just processes that you have
+
+[00:49:32.640] to go think about. And even even the
+
+[00:49:34.079] steps that we're proposing here today,
+
+[00:49:35.920] like I don't think Dex would be the one
+
+[00:49:37.359] to claim that like this process is like
+
+[00:49:38.880] the best. it's foolproof. This is the
+
+[00:49:40.319] way to go. 100% do this. Like it's just
+
+[00:49:43.200] about process discovery and like keeping
+
+[00:49:45.280] your mind open to being like what I need
+
+[00:49:47.280] to constantly do is re-evaluate what I'm
+
+[00:49:49.680] doing. I think one of the most stressful
+
+[00:49:51.839] parts about software engineering as a
+
+[00:49:53.359] whole is that the hardest thing about
+
+[00:49:55.440] software is you have to keep learning
+
+[00:49:56.480] new things. Like you don't stop. You're
+
+[00:49:58.559] like we went on from like being like oh
+
+[00:50:00.400] you could build C++ terminal
+
+[00:50:02.319] applications. Then you have to build
+
+[00:50:03.680] gueies in native desktop. Then you have
+
+[00:50:06.319] to go learn how to build websites. Then
+
+[00:50:08.240] you learn how to build backends in
+
+[00:50:09.599] Python. Then you learn pandas and numpy
+
+[00:50:11.920] to do various types of machine learning.
+
+[00:50:13.760] And all these things are just more and
+
+[00:50:15.520] more things we had to go learn along the
+
+[00:50:17.280] way. But like now the problem is now we
+
+[00:50:19.920] have to adapt our process of learning
+
+[00:50:21.680] all the time. And learning how to learn
+
+[00:50:24.160] is just a hard skill set. But just start
+
+[00:50:27.040] do anything any amount of AI you use.
+
+[00:50:29.440] Just be ask yourself that question every
+
+[00:50:31.359] single time like what could be better
+
+[00:50:33.200] this time? And like just try things.
+
+[00:50:36.880] Like don't be afraid to like change up
+
+[00:50:38.400] your process 10% of the time. Write a
+
+[00:50:40.640] different prompt 10% of the time. Change
+
+[00:50:42.960] whether you put your question first or
+
+[00:50:44.800] your context first half the time. Like I
+
+[00:50:47.520] do I've been sampling with that. Do I
+
+[00:50:49.040] put the file first or do I put the
+
+[00:50:50.400] question first? At some point I
+
+[00:50:52.400] empirically discovered that putting the
+
+[00:50:54.000] question second just led to better
+
+[00:50:55.599] results. So I just
+
+[00:50:57.680] >> and the people who are the best at this
+
+[00:50:59.200] and like the people who uh I
+
+[00:51:01.280] collaborated with on making these plans
+
+[00:51:03.119] and these prompts and stuff are people
+
+[00:51:05.520] who spend all day using Claude like yes
+
+[00:51:08.960] even if it's slower and like I we've
+
+[00:51:10.800] embraced this too and like after after a
+
+[00:51:13.200] month or so you start to like at at
+
+[00:51:14.960] first you'll be slower you'll be like
+
+[00:51:16.319] [ __ ] I could have just gone and done
+
+[00:51:17.359] this in cursor and this is taking too
+
+[00:51:18.880] long but it's worth the invest. It's
+
+[00:51:20.800] just like if you were a great Python
+
+[00:51:22.000] developer and you try to learn C, like
+
+[00:51:24.240] yeah, you're going to suck and it's
+
+[00:51:25.440] going to take you way longer to do the
+
+[00:51:26.559] things you used to be able to do, but
+
+[00:51:28.240] once C is a bad example. Let's say if
+
+[00:51:29.680] you're a C developer, I don't think that
+
+[00:51:31.520] would be worth learning, but yes,
+
+[00:51:32.720] >> let's go the other way. Let's say if
+
+[00:51:33.760] you're if you're a C++ person, you got
+
+[00:51:35.359] to learn Python and you're like, I can't
+
+[00:51:37.440] do this.
+
+[00:51:38.559] >> Okay. All right. All right.
+
+[00:51:40.480] >> I mean, I I found that I'm using
+
+[00:51:41.839] languages that I haven't fully learned,
+
+[00:51:43.520] but I understand enough to use the
+
+[00:51:44.880] language. So that's basically it. And uh
+
+[00:51:47.520] I mean and what you're saying is yeah
+
+[00:51:49.599] that's essentially the path I figured
+
+[00:51:51.200] out. The hardest thing was
+
+[00:51:53.200] >> trying to figure out how I learn
+
+[00:51:56.559] basically that was really the hardest
+
+[00:51:58.400] part and you know if I go back to
+
+[00:52:00.640] college time like I didn't really I you
+
+[00:52:03.920] know I had one degree in business and I
+
+[00:52:07.280] notetaking wasn't a thing and then in
+
+[00:52:08.800] computer science I didn't really do
+
+[00:52:10.480] notes I just did computer science. For
+
+[00:52:12.800] most people, what I recommend is most
+
+[00:52:14.720] people have don't have the context or
+
+[00:52:16.319] the bandwidth, like both emotional and
+
+[00:52:18.319] mental bandwidth to just like learn
+
+[00:52:20.400] things all the time. It's just tiring to
+
+[00:52:22.160] be honest.
+
+[00:52:22.640] >> Yeah.
+
+[00:52:23.359] >> So, I do two things. One, I just
+
+[00:52:24.960] replicate what other people do that I
+
+[00:52:26.319] like. And two, I just add some process
+
+[00:52:29.040] in there that's bounded that helped me
+
+[00:52:30.960] go do this in a naturally explorative
+
+[00:52:32.880] way. So, for example, for our engineers,
+
+[00:52:34.960] I generally recommend everyone try cloud
+
+[00:52:36.559] code for the first 10 minutes of a task.
+
+[00:52:38.640] If at the end of those 10 minutes you
+
+[00:52:40.160] feel like you will conclude on a happy
+
+[00:52:42.240] path within 30 minutes, keep doing it.
+
+[00:52:44.240] If you don't, go back and do it your old
+
+[00:52:46.079] way. But it's a really nice framework
+
+[00:52:48.240] that isn't absolute that can always be
+
+[00:52:50.319] used. So you don't you don't your brain
+
+[00:52:52.480] doesn't have to think about it. You just
+
+[00:52:53.680] go do it.
+
+[00:52:55.200] >> One tweak to that is I would say yeah,
+
+[00:52:56.960] if you're 10 minutes in and it's not
+
+[00:52:58.559] working,
+
+[00:52:59.760] >> start over and try for another 10
+
+[00:53:02.000] minutes and then go do it again.
+
+[00:53:02.960] >> At some point you kind of want to just
+
+[00:53:04.000] go write some code and get it done with
+
+[00:53:05.280] and move on with the feature. And it's a
+
+[00:53:06.640] balance. Like if I'm a senior drones,
+
+[00:53:08.079] [ __ ] dude. If I'm a staff level, I just
+
+[00:53:09.839] I just want to ship the thing and move
+
+[00:53:10.960] on to the thing that I actually want to
+
+[00:53:12.240] work on.
+
+[00:53:13.200] >> Yeah. But if you shoot a half court, if
+
+[00:53:14.800] you shoot a hot half court shot and you
+
+[00:53:16.400] miss, but you see that you're off to the
+
+[00:53:18.240] left. If you immediately try to shoot
+
+[00:53:19.839] another one, you will learn faster than
+
+[00:53:21.760] if you just shoot one a day
+
+[00:53:23.839] >> because it's like muscle memory. It's
+
+[00:53:25.200] like the action of the learning a
+
+[00:53:29.599] Yeah. But anyway, the premise is the
+
+[00:53:30.960] same. I agree.
+
+[00:53:31.920] >> This is fantastic.
+
+[00:53:32.480] >> All we got question from Pete.
+
+[00:53:36.079] >> Yeah. Yeah, I wanted and we might not
+
+[00:53:37.760] have enough time to talk about but it be
+
+[00:53:38.880] it'd be good to hear a little bit about
+
+[00:53:41.359] how you kind of like set up good
+
+[00:53:42.960] feedback loop for for the agent like as
+
+[00:53:45.359] it's coding like like hey uh the you
+
+[00:53:48.240] know don't forget to run tests setting
+
+[00:53:50.319] up linting rules stuff like that. One of
+
+[00:53:51.760] one of the things that I've noticed is
+
+[00:53:53.680] if I drop clawed code into a codebase
+
+[00:53:55.839] that I haven't really done that much AI
+
+[00:53:57.440] coding with, it tends to write a bunch
+
+[00:53:59.760] of code that's just isn't going to lint
+
+[00:54:01.359] or like the typeing is going to fail and
+
+[00:54:03.599] I'm sitting there in the IDE like
+
+[00:54:05.440] saying, "Dude, there's a lot of red
+
+[00:54:06.720] squigglies there, but Claude code
+
+[00:54:07.920] doesn't get the red squiggly." So, yeah,
+
+[00:54:10.079] it would be good to know if there's any
+
+[00:54:11.280] kind of like power moves that that you
+
+[00:54:13.200] can share.
+
+[00:54:14.800] >> Two tips that I have seen.
+
+[00:54:16.400] >> Oh, go ahead.
+
+[00:54:17.520] >> No, you go first.
+
+[00:54:18.800] >> Um, two tips I've seen. One, open cloud
+
+[00:54:20.800] code in the integrated terminal. Don't
+
+[00:54:22.319] open in a separate terminal. If you do
+
+[00:54:23.680] it through the integrated terminal and
+
+[00:54:24.800] you download a cloud code VS code
+
+[00:54:26.160] extension, you get ID extensions which
+
+[00:54:29.359] give which gives it the LSP errors. If
+
+[00:54:32.400] you're not doing that, shoot yourself.
+
+[00:54:33.680] >> Is it actually getting like the LSP?
+
+[00:54:35.920] >> There is a tool in there that says get
+
+[00:54:37.359] ID extension. Get get uh LSP errors and
+
+[00:54:40.160] it'll get the LSP errors from there.
+
+[00:54:42.640] >> Maybe sometimes you have to prompt it to
+
+[00:54:44.400] use it, but yeah, it is like a a really
+
+[00:54:46.800] big improvement.
+
+[00:54:48.160] >> Yes. So one do that. Two if what
+
+[00:54:50.720] language are you using? Python,
+
+[00:54:51.760] TypeScript, Ruby, Java, Go, C++, like
+
+[00:54:53.760] what's the language?
+
+[00:54:55.280] >> Um, mostly TypeScript and Python.
+
+[00:54:57.839] >> Okay. If you're using TypeScript, if
+
+[00:55:00.160] you're using Python, select the
+
+[00:55:01.920] interpreter in VS Code that is the
+
+[00:55:03.599] correct interpreter like actually select
+
+[00:55:06.400] >> that has the right libraries and stuff.
+
+[00:55:08.240] >> Exactly. Because they don't always
+
+[00:55:09.599] exist. So you're not getting type
+
+[00:55:10.640] checking. Two, turn on type checking for
+
+[00:55:12.720] Python. Python does not have typeeing
+
+[00:55:14.480] turned on by default. Turn it on. So
+
+[00:55:17.280] like for example, let's see if I have
+
+[00:55:19.440] one
+
+[00:55:21.280] cursor. So like if you're in Python py
+
+[00:55:24.079] I'll just open one and you go down here
+
+[00:55:26.800] like my interpreter is not selected.
+
+[00:55:28.240] This because it's a build tool so it
+
+[00:55:29.440] doesn't really matter.
+
+[00:55:30.319] >> The other thing that's not turned on is
+
+[00:55:31.599] like I actually need to go here and like
+
+[00:55:32.800] turn on type checking to on and then
+
+[00:55:35.520] you'll get good typeing errors. So
+
+[00:55:37.920] that's like a really really small
+
+[00:55:39.520] practical thing that you can go do.
+
+[00:55:41.760] That'll just make your Python code
+
+[00:55:43.119] development better. For TypeScript
+
+[00:55:44.720] you're going to end up with something
+
+[00:55:45.599] similar. You want to make sure if you're
+
+[00:55:46.640] using bun, npm, whatever you're using,
+
+[00:55:48.480] your commands in your package.json file
+
+[00:55:50.640] should be exactly the same. They should
+
+[00:55:52.640] all use bun. They should all use npm. I
+
+[00:55:54.640] see sometimes people with pmppm code
+
+[00:55:56.079] bases with npm commands in there. It's
+
+[00:55:59.280] not that it's bad. It's just like now as
+
+[00:56:01.839] a model like okay, which one do I use?
+
+[00:56:03.359] When
+
+[00:56:04.640] >> you're using
+
+[00:56:05.040] >> the other thing you can do is
+
+[00:56:06.720] >> go ahead.
+
+[00:56:07.119] >> You can you can and a model can can
+
+[00:56:08.640] build this into a plan really easily.
+
+[00:56:10.240] Um, if you go I have a one plan here,
+
+[00:56:13.359] but I want to find the brew.
+
+[00:56:16.880] Yeah, the nightly releases thing. So, in
+
+[00:56:19.119] in updating our build process, I it gave
+
+[00:56:21.920] me this plan. Um, and it gave me the
+
+[00:56:23.839] automated verification steps and like
+
+[00:56:25.520] that's all great. Um,
+
+[00:56:28.559] oh, this might not be the right one. Um,
+
+[00:56:31.359] but basically like if you're building a
+
+[00:56:32.880] plan, you can literally give it uh give
+
+[00:56:35.920] it the shell command. you be like make
+
+[00:56:37.280] sure the shell commands have after each
+
+[00:56:38.880] file run this command, run this command,
+
+[00:56:40.880] run this command because then as the
+
+[00:56:41.839] model's going through the plan and using
+
+[00:56:43.200] its to-do list, um it's going to go
+
+[00:56:45.520] through and do that. And like might like
+
+[00:56:47.839] this one has, you know, automated
+
+[00:56:49.359] verification. That's that's not great. A
+
+[00:56:52.480] better version of this plan would say ls
+
+[00:56:54.400] this thing and see what's in there. It
+
+[00:56:56.000] would give the model exact instructions
+
+[00:56:58.000] on how to verify its work.
+
+[00:57:00.400] >> Um you can also use cloud code hooks
+
+[00:57:02.960] >> you can go ahead put a lot of that in
+
+[00:57:04.480] the cloud MD, right?
+
+[00:57:06.160] like
+
+[00:57:06.480] >> you put in the cloudmd.
+
+[00:57:07.839] >> Yes.
+
+[00:57:08.319] >> But I'm going to show you something that
+
+[00:57:09.520] is uh a lot of people don't know. Uh
+
+[00:57:13.440] there is instruction
+
+[00:57:15.760] in Yeah. important. This context may or
+
+[00:57:18.319] may not be relevant to your task. You
+
+[00:57:19.920] should not respond to this context or
+
+[00:57:21.200] otherwise consider in your response
+
+[00:57:22.160] unless it is highly relevant to your
+
+[00:57:23.520] task. Most of the time it is not
+
+[00:57:25.280] relevant. And then and then this is
+
+[00:57:28.319] literally what it says after your cloud
+
+[00:57:30.160] MD. In your cloud MD it gets injected at
+
+[00:57:33.520] the end with a message. this might not
+
+[00:57:35.119] be relevant to everything you're doing.
+
+[00:57:36.720] That's a UX thing because most people
+
+[00:57:38.400] don't know how to write a good cla MD.
+
+[00:57:40.400] >> So if you really want the model to do
+
+[00:57:42.079] something, put it in your plan or better
+
+[00:57:44.319] yet put it exactly directly in your
+
+[00:57:46.559] prompt.
+
+[00:57:47.440] >> Um
+
+[00:57:47.839] >> yeah, and then lastly, what I find is
+
+[00:57:50.559] honestly you're just shooting yourself
+
+[00:57:51.839] in the foot by using bad tools most of
+
+[00:57:53.760] the time. Not you specifically, but most
+
+[00:57:56.000] people are not using good bad tools. So
+
+[00:57:57.839] for example, I use Cargo, we use Rust
+
+[00:57:59.920] for everything.
+
+[00:58:01.599] I have never seen a claw system not run
+
+[00:58:04.319] cargo test while I'm doing it. It
+
+[00:58:07.200] doesn't it doesn't not run claw check or
+
+[00:58:10.640] cargo check. It runs all my llinters and
+
+[00:58:13.520] all my tests automatically for me
+
+[00:58:15.920] >> because Rust by default has a huge test
+
+[00:58:18.319] driven uh TDD type of workflow. If
+
+[00:58:22.000] you're using TypeScript and you're not
+
+[00:58:23.599] using like something like Turbo to do
+
+[00:58:25.119] like your build systems and your
+
+[00:58:26.400] dependency checking, you're right,
+
+[00:58:28.480] you're going to have a hard time telling
+
+[00:58:30.000] cloud code what to build in what order
+
+[00:58:31.920] for a massive workspace,
+
+[00:58:34.079] right? And I think all these problems
+
+[00:58:35.359] get easier if you have small repos. So I
+
+[00:58:36.960] think the only scale which it's worth
+
+[00:58:38.640] talking about is talking about like
+
+[00:58:39.680] giant giant code bases. If you have se
+
+[00:58:42.160] if you have your code across seven
+
+[00:58:43.359] different repos and you're not using a
+
+[00:58:44.640] monor repo, you're right, you will have
+
+[00:58:46.559] a hard time making stuff work. So like I
+
+[00:58:49.359] think it's small things like that that
+
+[00:58:50.640] are actually what the bottleneck of most
+
+[00:58:52.960] systems are. So for example, we don't
+
+[00:58:54.480] have a full monor repo. Bam is a monor
+
+[00:58:56.880] repo but our cloud system is not in the
+
+[00:58:59.200] monor repo. So how do we deal with this?
+
+[00:59:01.359] Well the way we deal with this is our
+
+[00:59:02.799] cloud system it actually works as a
+
+[00:59:05.839] monor repo because we sim link from a
+
+[00:59:08.000] local directory from the baml repo into
+
+[00:59:10.240] there that allows us to pretend like
+
+[00:59:13.599] it's a monor repo. you might want to use
+
+[00:59:16.319] hard links instead because there are
+
+[00:59:18.160] rules about if something is get ignored
+
+[00:59:19.760] or a sim link the cloud search tools
+
+[00:59:21.680] won't traverse it
+
+[00:59:22.960] >> but if you do hard links then it'll work
+
+[00:59:25.599] >> but you can also do something that
+
+[00:59:27.599] something that we do let me show you I'm
+
+[00:59:28.960] going to show you one one more thing uh
+
+[00:59:30.640] actually two more things because I said
+
+[00:59:31.680] I would share a workflow as well
+
+[00:59:33.680] >> um but if you look in this thing and
+
+[00:59:35.680] I'll publish this as well you can put in
+
+[00:59:37.440] your settings.json JSON, you can add
+
+[00:59:39.440] additional directories and then claude
+
+[00:59:41.359] will be able to work and write in those
+
+[00:59:43.119] directories without you can also do this
+
+[00:59:44.559] on the command line. You could do it
+
+[00:59:45.599] during a session, but if you know
+
+[00:59:47.040] everybody on your team is going to be
+
+[00:59:48.160] using two repos, if you open cloud in
+
+[00:59:50.240] one repo, you should give it permission
+
+[00:59:52.160] to go do stuff in the other repo.
+
+[00:59:55.040] >> Yeah. So, like there's just small things
+
+[00:59:57.599] that everyone can do that I think would
+
+[00:59:59.040] dramatically improve their workflows,
+
+[01:00:00.559] but it's mostly just like use the right
+
+[01:00:01.839] tools. And actually like like one of our
+
+[01:00:04.640] uh Chris on our team spent over two
+
+[01:00:06.720] weeks redoing our repo to make the
+
+[01:00:08.799] package.json work with Turbo. It did a
+
+[01:00:11.200] couple things. One, it makes onboarding
+
+[01:00:12.640] for new people easier. Uh so like anyone
+
+[01:00:14.880] else going to contribute can have a
+
+[01:00:16.000] waste your time. They just run like top
+
+[01:00:17.520] level Turbo commands for everything. But
+
+[01:00:19.359] two, it turns out the other thing it
+
+[01:00:20.640] really does makes it way easier for
+
+[01:00:22.480] cloud code and other AI agents to like
+
+[01:00:24.799] get up and running because they just
+
+[01:00:26.079] don't have to think about everything.
+
+[01:00:27.040] They just like run these commands along
+
+[01:00:28.559] the way. And that would be like building
+
+[01:00:31.440] good on it's like basically just
+
+[01:00:33.119] focusing on onboarding for the brand new
+
+[01:00:34.880] engineer who shows up every time you
+
+[01:00:37.440] like type SLC clear.
+
+[01:00:39.359] >> Exactly.
+
+[01:00:39.920] >> Yeah.
+
+[01:00:40.400] >> And just like like what what do you wish
+
+[01:00:42.640] you had when you started the system and
+
+[01:00:44.720] like all the tech that things that you
+
+[01:00:46.160] handwave before because you're like ah
+
+[01:00:47.520] it's just oral legend it's good enough.
+
+[01:00:50.480] >> Some of those stuff might be worth
+
+[01:00:52.880] investing in earlier than you think. I
+
+[01:00:55.280] think I had this revelation when you
+
+[01:00:56.640] guys were talking about the the sub
+
+[01:00:58.079] aents and the tasks is that like unless
+
+[01:01:01.200] you've got really nailed down claude MD
+
+[01:01:04.319] and and and tools and all the rest of
+
+[01:01:06.640] it, it's not even like when you start a
+
+[01:01:08.160] new Claude session, it's every time it
+
+[01:01:09.839] does a subtask or it does a sub agent
+
+[01:01:12.400] you it does anything that you've told it
+
+[01:01:14.319] in that session is lost, which is good,
+
+[01:01:16.400] right? less context, like less kind of
+
+[01:01:18.720] stuff to confuse it. But it also means
+
+[01:01:20.079] it's like again it's like turning to
+
+[01:01:22.000] another brand new hire who just walked
+
+[01:01:24.079] in 10 seconds ago and saying, "Hey,
+
+[01:01:26.400] >> figure out why this test isn't working."
+
+[01:01:28.000] And so it has Yeah.
+
+[01:01:30.799] >> For example, one of the things I hate
+
+[01:01:32.480] about Nex.js is everything is called
+
+[01:01:34.400] page.csx.
+
+[01:01:36.160] >> It is impossible.
+
+[01:01:38.079] It is structurally impossible for cloud
+
+[01:01:40.480] code to navigate that.
+
+[01:01:42.160] >> In our in our you see a lot of mod. RS
+
+[01:01:45.280] files because like that's how we used to
+
+[01:01:47.200] write Rust code. But honestly, I try and
+
+[01:01:50.160] not do that anymore. I try and just do
+
+[01:01:52.400] the like folder namer RS for that same
+
+[01:01:54.880] reason because naturally searching for
+
+[01:01:56.960] it is really good.
+
+[01:01:58.559] >> I have another thing.
+
+[01:02:00.160] >> Go ahead.
+
+[01:02:01.280] >> For what it's worth, I mean, you still
+
+[01:02:02.640] have your like file path based stuff in
+
+[01:02:04.960] your next app. Um, and I've spent like
+
+[01:02:06.960] the past two weeks putting together some
+
+[01:02:10.160] demos for a customer on like a Nex.js JS
+
+[01:02:12.880] codebase that's pretty non-trivial now.
+
+[01:02:14.960] And I found that like Claude does
+
+[01:02:16.319] navigate well, but it helps to tell it
+
+[01:02:18.720] like, you know, like in in context.
+
+[01:02:21.839] There's like a little tree view of like
+
+[01:02:23.440] where things are and and like what
+
+[01:02:26.079] they're for. And so like I have a name
+
+[01:02:27.359] for this. I'm like, well, this is the
+
+[01:02:28.400] walkthrough details view. This is the
+
+[01:02:30.079] walkthrough list view. And so like it
+
+[01:02:32.160] understands that. But I mean, I've like
+
+[01:02:33.920] cloud shipped probably 8,000 lines of
+
+[01:02:36.079] code on it in the past couple days for
+
+[01:02:37.839] me. And like I haven't had a problem
+
+[01:02:38.960] with it. It's just one of those things
+
+[01:02:40.240] where like
+
+[01:02:41.520] >> unique frameworks will have like unique
+
+[01:02:43.440] like quirks that you have to like come
+
+[01:02:45.200] up with your own little like context
+
+[01:02:47.760] engineering approach to like solve or to
+
+[01:02:49.839] manage well but it's not like a
+
+[01:02:51.280] fundamental limitation. It's just
+
+[01:02:52.799] something you have to like work around.
+
+[01:02:55.680] >> Yeah. I think the point that I'm making
+
+[01:02:56.880] is like if you're a builder building for
+
+[01:02:58.240] builders these things didn't used to
+
+[01:02:59.920] matter before but they matter now.
+
+[01:03:02.319] >> Like like you're right it is you can do
+
+[01:03:04.480] a little bit more work and get find the
+
+[01:03:06.000] right page.tsx CSX. But like for
+
+[01:03:08.240] example, if you do a tree view of like a
+
+[01:03:10.319] folder structure, I'll share my screen
+
+[01:03:12.400] again
+
+[01:03:20.309] CD repos site. Like if I do tree over
+
+[01:03:20.319] here and I do this tree view, all I'm
+
+[01:03:23.359] going to see here is a bunch of
+
+[01:03:25.119] page.tsxes most of the time. Uh sorry,
+
+[01:03:28.960] somewhere up here.
+
+[01:03:31.119] How do I hide certain folder? Yeah,
+
+[01:03:32.480] you'll just see a bunch of page.tsxes.
+
+[01:03:34.160] And if I have seven files here, it's
+
+[01:03:35.680] really hard to associate this page.x
+
+[01:03:37.839] with the podcast file. Like that's a lot
+
+[01:03:39.760] of context the LM has to do to link
+
+[01:03:41.839] these two things together. So even
+
+[01:03:44.000] merely dumping this stuff into the
+
+[01:03:46.000] prompt isn't going to naturally get me
+
+[01:03:47.760] to work because the model depends on
+
+[01:03:49.280] connecting those dots together. And
+
+[01:03:52.400] >> this depends this depends on your
+
+[01:03:54.799] finally honed over three plus years
+
+[01:03:57.119] instinct on how do models assign meaning
+
+[01:04:00.480] and how do transformers apply kind of
+
+[01:04:02.720] like oh this is related to this thing
+
+[01:04:04.799] because all the model sees is a string
+
+[01:04:06.559] of tokens.
+
+[01:04:07.760] >> Exactly. So like I'm just like it's
+
+[01:04:09.359] guaranteed that the more files in a
+
+[01:04:11.119] certain directory the worse it's going
+
+[01:04:12.079] to be. So it may not even be that
+
+[01:04:13.200] page.cssx is bad. It's just that I need
+
+[01:04:15.599] to have no directories in there that
+
+[01:04:17.520] start with a p and all my other
+
+[01:04:18.799] directories should start with after a p.
+
+[01:04:20.240] So page.tsx comes up first. Like that's
+
+[01:04:23.359] like the subtle thing that I could do
+
+[01:04:24.480] there and make that not be a problem.
+
+[01:04:26.319] But what I'm saying is if you're a
+
+[01:04:27.200] builder building for builders, think
+
+[01:04:28.640] about this stuff when you build
+
+[01:04:29.599] frameworks. If you're a framework user,
+
+[01:04:31.760] think about this stuff when cloud code
+
+[01:04:33.200] isn't doing it right. Be like, "Oh, this
+
+[01:04:35.200] is probably what's happening. This
+
+[01:04:36.400] codebase has gone long. Let me think
+
+[01:04:38.640] about how I can go solve these
+
+[01:04:39.839] problems."
+
+[01:04:42.079] >> Um, really good question from Pete. I
+
+[01:04:43.760] know he just asked one. Um, but I would
+
+[01:04:45.680] say consider optimizing your uh MCP
+
+[01:04:48.400] tools. If you use a tool all the time,
+
+[01:04:50.240] we use the linear MCP all the time. And
+
+[01:04:51.920] I did say I would share our workflow, so
+
+[01:04:53.680] I'm going to pull that up. Um, we have
+
+[01:04:55.359] to-do, spec needed, research needed,
+
+[01:04:57.039] research in progress, research and
+
+[01:04:58.400] review, ready for plan, plan in
+
+[01:04:59.839] progress, plan and review, ready for dev
+
+[01:05:01.200] indev, code review, ready for deploy. So
+
+[01:05:03.039] we have review steps at every kind of
+
+[01:05:05.119] stage. Um, but also if you look at the
+
+[01:05:08.160] response from the linear MCP server, it
+
+[01:05:10.640] ends up being very noisy. It's a ton of
+
+[01:05:12.960] JSON. And what we've actually built is
+
+[01:05:16.319] um I'm going to try to find this real
+
+[01:05:18.799] quick. Um human layer shared I think
+
+[01:05:21.680] it's tickets. We built a tool that pulls
+
+[01:05:24.799] context optimized linear tickets into
+
+[01:05:27.839] markdown and it has the description and
+
+[01:05:30.559] all the comments in one call. It doesn't
+
+[01:05:32.400] have to make multiple tool calls. We're
+
+[01:05:33.920] working on a thing to actually drop in
+
+[01:05:35.119] the images as well. Um, but this is so
+
+[01:05:38.480] if you're using tools all the time and
+
+[01:05:39.760] you want to use them context
+
+[01:05:40.880] efficiently, consider just making a
+
+[01:05:42.799] script that does it exactly how you want
+
+[01:05:45.520] it.
+
+[01:05:46.319] >> Yeah. And it doesn't even have to do
+
+[01:05:48.240] that. Like you could do compression, you
+
+[01:05:49.760] could do anything you want in that step
+
+[01:05:51.200] to actually put that in there because
+
+[01:05:52.480] maybe there's a common chain. We have a
+
+[01:05:53.839] Discord thread in our Discord that has
+
+[01:05:55.520] like hundreds of messages. I think like
+
+[01:05:56.880] 500 messages. Longest Discord thread
+
+[01:05:58.880] I've ever been on in my life. It lasted
+
+[01:06:00.480] four months.
+
+[01:06:01.920] Um, but like likely we don't need things
+
+[01:06:04.720] from like month one anymore in that
+
+[01:06:06.640] Discord thread. It's almost guaranteed
+
+[01:06:08.400] to be irrelevant. So like putting
+
+[01:06:09.599] something on there to like compress that
+
+[01:06:10.880] away would be really really useful.
+
+[01:06:18.150] >> Yeah, love it.
+
+[01:06:18.160] >> The whole like 12 factor agents thing,
+
+[01:06:19.920] right? It's like pick a better data
+
+[01:06:22.240] representation than you know like the
+
+[01:06:24.880] noisy format that you know you're given
+
+[01:06:27.280] natively.
+
+[01:06:29.039] Um I think and then we'll take I guess
+
+[01:06:31.440] two more questions because I really like
+
+[01:06:33.119] uh the question that Pete asked which is
+
+[01:06:34.799] like MCP tools. Um Pete you are 100%
+
+[01:06:37.680] correct. If you use MCPs willy-nilly
+
+[01:06:40.160] that is the same as uh shooting yourself
+
+[01:06:42.720] in the foot as many times as you have
+
+[01:06:44.960] to. Um
+
+[01:06:46.400] >> yeah has been telling people don't put
+
+[01:06:48.079] JSON in the context window for like a
+
+[01:06:50.160] year now.
+
+[01:06:51.920] >> Yeah. The whole point is that MTP is
+
+[01:06:53.680] basically just adding more tools into
+
+[01:06:54.960] your tool context window and you're just
+
+[01:06:56.640] occupying more space. And if you don't
+
+[01:06:58.640] need all those tools, you're just it's
+
+[01:07:01.200] unnecessary.
+
+[01:07:02.960] I I think I'm surprised that as of right
+
+[01:07:05.520] now there's no
+
+[01:07:08.400] not enough people are putting effort
+
+[01:07:09.680] into how to reduce the number of tools
+
+[01:07:11.280] that go into any one system.
+
+[01:07:13.760] But it makes sense. It's a lot of work
+
+[01:07:15.680] and there's no standardized way to go do
+
+[01:07:17.359] it. There's a lot of subjectivity in
+
+[01:07:18.880] there. So the easiest thing to do is to
+
+[01:07:20.240] just dump tools into the context window
+
+[01:07:22.000] and then leave the problem to the user.
+
+[01:07:24.720] So if you are
+
+[01:07:26.240] >> like some people talk I can't remember
+
+[01:07:27.839] what which tool which coding agent it
+
+[01:07:29.599] was but I feel like I remember hearing
+
+[01:07:31.039] something about like having essentially
+
+[01:07:33.200] like a little mini rag system for tools
+
+[01:07:35.680] where like you give the agent like a
+
+[01:07:38.079] tool of like a tool for searching its
+
+[01:07:39.839] tools and then it doesn't do it all the
+
+[01:07:41.440] time. I think John was just mentioning
+
+[01:07:43.280] that too. I I can't remember where I saw
+
+[01:07:45.039] that, but that feels come intuitively
+
+[01:07:46.720] that feels like maybe slightly better.
+
+[01:07:48.880] Like I don't want to have to kind of
+
+[01:07:50.240] like
+
+[01:07:51.359] >> Yeah,
+
+[01:07:51.760] >> I think we had an episode like episode
+
+[01:07:53.359] four or something that does that that
+
+[01:07:54.799] talks about how to deal with like 10,000
+
+[01:07:56.720] plus tools when you have an MCB server
+
+[01:07:58.319] with that many tools. How do you how do
+
+[01:07:59.520] you actually use that in prod and that's
+
+[01:08:00.880] exactly what we do.
+
+[01:08:02.400] >> Yeah.
+
+[01:08:09.750] >> Uh Jen's last question and I think uh we
+
+[01:08:09.760] will pause after that and then uh take a
+
+[01:08:12.480] break.
+
+[01:08:14.640] uh you answered it I think with what you
+
+[01:08:17.359] just said and that's probably where I
+
+[01:08:19.359] read it uh by you in some blog post I'm
+
+[01:08:23.120] guessing uh about the number of tools
+
+[01:08:25.520] that you have enabled in an MC like
+
+[01:08:28.480] either the number of tools that your
+
+[01:08:30.719] current session has access to whatever
+
+[01:08:33.440] that session might be
+
+[01:08:37.040] do you limit that itself
+
+[01:08:45.269] >> way that you do that um essentially.
+
+[01:08:45.279] >> Yeah, just check out the code. I think
+
+[01:08:46.640] the code is live and you can go check
+
+[01:08:47.759] that out. It's probably super easy to go
+
+[01:08:49.199] check it out in that perspective.
+
+[01:08:51.359] >> Um there's a similar video for anyone
+
+[01:08:53.199] interested on the first video we ever
+
+[01:08:55.359] did was how to classify with like 10,000
+
+[01:08:57.199] plus categories.
+
+[01:08:58.560] >> It's the same exact problem and just
+
+[01:09:00.400] like
+
+[01:09:02.640] >> I was going through all those. I just
+
+[01:09:04.159] haven't had time to finish. So,
+
+[01:09:06.400] >> no. Yeah, we we say random words. Dexter
+
+[01:09:09.199] and I say random words all the time. So,
+
+[01:09:10.640] who knows what rand words are actually
+
+[01:09:12.080] useful.
+
+[01:09:13.040] >> Um, but we're basically we're basically
+
+[01:09:16.080] worse LM and sonnet. So, we'll see how
+
+[01:09:18.799] good I
+
+[01:09:20.480] >> have you had for
+
+[01:09:21.199] >> all you know this could be LM generated.
+
+[01:09:23.520] >> Yeah, that's what I think as far as I
+
+[01:09:25.359] know.
+
+[01:09:26.480] >> Yeah. Um, one last thing because there's
+
+[01:09:28.400] a lot of questions on like cloud code
+
+[01:09:29.600] versus Gemini, Amazon's Curo. I mean,
+
+[01:09:31.679] the the goal of this episode is to give
+
+[01:09:33.359] you concepts and principles that are
+
+[01:09:36.080] standard to how LLMs work. Um, obviously
+
+[01:09:39.120] every LM behaves a little bit
+
+[01:09:40.560] differently and they have different
+
+[01:09:41.679] vibes. So like prompts that work really
+
+[01:09:43.679] well for Opus might not really work
+
+[01:09:45.600] really well for 03. And actually like
+
+[01:09:47.120] even the prompts we write for Opus, we
+
+[01:09:48.960] don't use them for Sonnet because Sonnet
+
+[01:09:50.560] like doesn't have the right like like
+
+[01:09:52.400] level of attention to use them well. And
+
+[01:09:54.560] so the idea is like the coding agent is
+
+[01:09:56.800] as good as like how well you understand
+
+[01:09:58.719] it, how good your vibe is, and how much
+
+[01:10:00.320] time you split into crafting your
+
+[01:10:02.320] prompts to encompass these principles.
+
+[01:10:04.560] But at the end of the day, the biggest
+
+[01:10:05.760] takeaway is manage your context window
+
+[01:10:08.640] because the the smaller you can keep
+
+[01:10:10.159] your context windows, the better
+
+[01:10:12.320] performance you will get. And so that's
+
+[01:10:14.400] using sub aents. That's using frequent
+
+[01:10:16.320] intentional compaction. And that's don't
+
+[01:10:18.480] forget to steer. And don't forget to
+
+[01:10:20.159] read everything the model outputs
+
+[01:10:21.520] because the research is super high
+
+[01:10:22.880] leverage. And if the research is wrong,
+
+[01:10:24.560] nothing else is going to work.
+
+[01:10:27.280] >> Yeah, that's a great point to close on.
+
+[01:10:29.760] Um, I'm going to say two last things
+
+[01:10:32.000] really fast that are really short. one,
+
+[01:10:33.760] if you guys enjoyed this stuff, uh, give
+
+[01:10:36.400] us a like on YouTube. Really appreciate
+
+[01:10:37.760] that. That helps. Uh, it helps
+
+[01:10:39.280] >> bring a friend.
+
+[01:10:40.400] >> I told people bring a friend.
+
+[01:10:42.560] >> Um, and then lastly, like if any of you
+
+[01:10:44.560] want to try the thing that Dex is
+
+[01:10:45.840] building, like reach out, message him.
+
+[01:10:47.280] He'll probably give you access. Um,
+
+[01:10:48.800] especially if you're on here, just
+
+[01:10:50.480] mention it. Um, it took me a while to
+
+[01:10:52.400] convince him to give me access, but he
+
+[01:10:54.000] did eventually, and it was nice. Uh,
+
+[01:10:56.320] >> five complained a lot, which I knew he
+
+[01:10:58.000] was going to do.
+
+[01:10:58.800] >> Yeah, I'm I'm a complainer. Um, I will
+
+[01:11:00.640] try most products because I think it's
+
+[01:11:03.199] interesting. I push my limits while I do
+
+[01:11:04.960] that. Um, and then to quite a few of
+
+[01:11:07.679] you, I just want to say like really
+
+[01:11:09.040] really quickly like super super thanks
+
+[01:11:12.000] um to
+
+[01:11:14.239] all of you like we
+
+[01:11:16.480] uh recently just hit like 5,000 stars on
+
+[01:11:18.480] what we're doing uh with BMW and like it
+
+[01:11:20.640] was super meaningful. Uh means a lot to
+
+[01:11:22.560] all of us that for everyone that
+
+[01:11:24.000] support. So like thank you for that. Um,
+
+[01:11:26.080] it's been a wild ride and it's really
+
+[01:11:27.679] cool to be doing this content with Dex
+
+[01:11:29.280] and having you all actually hop in and
+
+[01:11:30.960] listen and waste an hour and a half of
+
+[01:11:32.960] your time. So, it means a lot to us.
+
+[01:11:35.120] We'll hopefully see you guys next week.
+
+[01:11:37.280] >> Well said. Thanks everybody. And I I
+
+[01:11:39.199] will include a link for the uh weight
+
+[01:11:41.120] list to sign up. We're kind of dripping
+
+[01:11:42.560] out signups just so we can make sure we
+
+[01:11:43.840] get all the stability issues out, but
+
+[01:11:45.040] we'll put in the email that we send out
+
+[01:11:46.320] tomorrow.
+
+[01:11:47.760] >> I'll ping you Dex right after this.
+
+[01:11:50.239] >> Yeah, I got you, baby.
+
+[01:11:52.080] >> Good luck everyone. Have fun.
+
+[01:11:54.159] >> Thanks.

@@ -1,0 +1,4151 @@
+# Ralph Wiggum under the hood: Coding Agent Power Tools
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:03.510] is really really really fascinating in
+
+[00:00:03.520] the form of
+
+[00:00:05.600] almost like taking coding agents to the
+
+[00:00:07.359] nth degree is how I when I first saw
+
+[00:00:09.679] this concept is how I framed it in my
+
+[00:00:11.679] mind is what happens when um when you
+
+[00:00:17.199] just let a coding agent go wild and I
+
+[00:00:19.520] think most people's perspective is
+
+[00:00:23.680] nothing much or nothing nothing useful
+
+[00:00:26.640] and I was convinced that that may be
+
+[00:00:28.640] wrong Um, and I think that is really the
+
+[00:00:32.079] topic of today's conversation for
+
+[00:00:33.600] everyone interested. I'm BBOP. I work on
+
+[00:00:35.680] BAML, which is a programming language
+
+[00:00:36.960] for building AI stuff. And my co-host,
+
+[00:00:40.160] uh, I'm Dex. I work on code layer, which
+
+[00:00:43.040] is an IDE for getting more out of coding
+
+[00:00:45.680] agents.
+
+[00:00:47.520] >> If you guys find this kind of stuff fun,
+
+[00:00:49.440] this is the link where we post events
+
+[00:00:51.280] usually up ahead of time, and usually
+
+[00:00:52.800] they have the right link to the live
+
+[00:00:54.000] stream. Uh, [laughter] but I think with
+
+[00:00:57.440] that, we should really get started. I
+
+[00:00:59.280] think we have a really special guest
+
+[00:01:00.640] joining today.
+
+[00:01:02.079] >> I did just send him the link. Um I told
+
+[00:01:04.960] him I would do a quick intro before we
+
+[00:01:07.360] got him on stage anyways. So if you want
+
+[00:01:09.119] to coordinate with him on X or wherever
+
+[00:01:13.360] um and make sure he can get in, I can
+
+[00:01:15.119] start running through kind of what we're
+
+[00:01:16.240] going to talk about today.
+
+[00:01:17.040] >> Do it. Let's get people.
+
+[00:01:18.400] >> Amazing. Okay, so I'm actually going to
+
+[00:01:21.119] start with a demo because that seems to
+
+[00:01:22.960] be pretty fun. Um, I am going to pop
+
+[00:01:26.320] over to my terminal and I have a very
+
+[00:01:29.280] silly little Next.js app. So, if I go to
+
+[00:01:31.280] local S 3000, this is the complete
+
+[00:01:34.479] generic Nex.js starter app. Um, and I
+
+[00:01:38.240] have a couple things in here that I'm
+
+[00:01:39.680] going to go over with you, but I just
+
+[00:01:41.360] want to before I kick this off, I just
+
+[00:01:43.520] want to um kind of create some
+
+[00:01:45.759] specifications for an app that we want
+
+[00:01:47.439] to make. So, uh, Vibob, do you have any
+
+[00:01:50.399] suggestions for an app you'd like to see
+
+[00:01:52.399] us build today?
+
+[00:01:54.960] >> I think we could do something really
+
+[00:01:56.159] complex, but let's do something really
+
+[00:01:57.439] simple so people can we can talk about
+
+[00:01:58.799] the concepts more. Let's make a simple
+
+[00:02:00.479] to like a task manager, like a to-do
+
+[00:02:02.479] list. Very, very basic example, but we
+
+[00:02:04.719] can take it to the end degree and make
+
+[00:02:06.000] it as complicated as we need to.
+
+[00:02:10.479] >> All right, I'm going to do login with
+
+[00:02:11.840] email and magic link. Um, so what users
+
+[00:02:14.800] can add to-dos,
+
+[00:02:17.280] they can group to-dos into lists. They
+
+[00:02:21.599] can share a list of to-dos with other
+
+[00:02:25.680] users.
+
+[00:02:27.599] They can add comments and emoji
+
+[00:02:31.760] reactions to to-dos.
+
+[00:02:34.640] Um, they can mark
+
+[00:02:39.680] to-dos as to
+
+[00:02:43.440] >> doing, done, cancelled.
+
+[00:02:47.200] >> Yeah.
+
+[00:02:47.519] >> And maybe I want to see a conbon board
+
+[00:02:49.360] while I'm at it.
+
+[00:02:50.800] They can view all their to-dos for a
+
+[00:02:55.200] list in a conbon board or view all
+
+[00:02:59.360] to-dos
+
+[00:03:01.519] across all lists in a single board.
+
+[00:03:04.480] Great.
+
+[00:03:04.879] >> Cool.
+
+[00:03:05.599] >> Uh I'm going to kick this
+
+[00:03:08.560] >> simple concept and like took it to the
+
+[00:03:10.239] nth degree because that is more than a
+
+[00:03:11.840] basic to-do app.
+
+[00:03:13.200] >> Yep. Um, so, uh, what we're going to do
+
+[00:03:16.159] is we're gonna NVM deactivate and then
+
+[00:03:18.480] we're going to run this this loop. Um,
+
+[00:03:20.319] I'm not going to tell you what this is
+
+[00:03:21.360] doing because I'm going to pop over to
+
+[00:03:23.760] kind of the, um, let me just make sure
+
+[00:03:26.879] we got our whiteboard up. This is not
+
+[00:03:29.360] it. Okay, this is the whiteboard we'll
+
+[00:03:32.080] be using. I sent you the link. Um, we're
+
+[00:03:34.000] going to learn a technique today called
+
+[00:03:35.280] Ralph Wigum, which was written um by
+
+[00:03:37.440] Jeff Huntley as part of um, a bunch of
+
+[00:03:39.920] research he was doing with coding agents
+
+[00:03:41.280] this year. Um the basic idea here is you
+
+[00:03:45.360] run a coding a in a loop forever. Uh and
+
+[00:03:49.040] you just give it the same prompt over
+
+[00:03:50.720] and over and over again. We'll go into
+
+[00:03:52.720] what that prompt is. Um and you can look
+
+[00:03:55.360] at this and you can say, "Oh, this is
+
+[00:03:56.879] like a very dumb way to use a coding
+
+[00:03:59.200] agent." Uh and Je
+
+[00:04:00.560] >> is a very dumb way to use a text.
+
+[00:04:03.439] >> There he is. What's up, man?
+
+[00:04:05.680] >> I remember dropping in to San Franand
+
+[00:04:07.920] around about July saying just showing
+
+[00:04:10.000] you this thing. It's like this has to be
+
+[00:04:11.760] the dumbest thing.
+
+[00:04:13.439] >> Yeah.
+
+[00:04:13.680] >> Um just to basically research, explore
+
+[00:04:16.799] the limits of what is possible.
+
+[00:04:19.040] >> Um
+
+[00:04:19.600] >> yeah,
+
+[00:04:20.799] >> but it turns out it is
+
+[00:04:24.880] >> you can make it a little bit better.
+
+[00:04:26.639] There are limitations to it. Um
+
+[00:04:30.000] >> yeah, there's so much.
+
+[00:04:31.600] >> I think the main thing that it did for
+
+[00:04:33.199] me when you first uh when I first read
+
+[00:04:35.040] this concept and talked about it with
+
+[00:04:36.240] both of you was really just changed the
+
+[00:04:37.680] paradigm of how I thought about it. So,
+
+[00:04:38.720] we talk about context injuring a lot on
+
+[00:04:40.400] the show. And I think one of the things
+
+[00:04:44.160] that I find myself having to do every
+
+[00:04:46.000] single time and very often is challenge
+
+[00:04:48.560] myself into remembering what can a model
+
+[00:04:51.040] do. Sometimes
+
+[00:04:52.880] >> I'm always I'm always like I get kind of
+
+[00:04:54.960] like um skill capped based on my last
+
+[00:04:57.280] assumption of what the model is doing.
+
+[00:04:59.680] >> And what some of the best AI engineers I
+
+[00:05:01.680] know are the ones that actually like
+
+[00:05:03.120] constantly challenge their own worldview
+
+[00:05:04.880] of what is happening. And I think that
+
+[00:05:06.880] why I like
+
+[00:05:08.880] Why this topic specifically I think was
+
+[00:05:10.800] really useful is because I think it was
+
+[00:05:12.000] the first time when it um challenged my
+
+[00:05:14.479] worldview of what a model can do and it
+
+[00:05:16.960] reframed the perspective of like hey
+
+[00:05:19.840] like there was a time when to build
+
+[00:05:21.759] roller coaster tycoon you had to do bit
+
+[00:05:23.600] magic and make all the stuff work and
+
+[00:05:26.000] like today you can do it way faster and
+
+[00:05:28.960] context engineering is a very very
+
+[00:05:30.479] useful skill set and even today you
+
+[00:05:32.000] still optimize your code but you don't
+
+[00:05:33.759] optimize at the level of bit magic
+
+[00:05:35.520] usually you optimize at the level of
+
+[00:05:36.880] like networking different things have
+
+[00:05:39.360] become bottlenecks and you want you want
+
+[00:05:40.720] to make sure that you constantly evolve
+
+[00:05:43.039] and Ralph Wigum as a concept of running
+
+[00:05:45.520] that while loop and letting it just like
+
+[00:05:47.360] produce an app
+
+[00:05:49.600] I think does that same I don't think
+
+[00:05:52.160] it's there yet like you were saying Jeff
+
+[00:05:53.680] but I think it is
+
+[00:05:54.560] >> it's not all there yet it's not all yet
+
+[00:05:56.320] but but it it warps your brain a little
+
+[00:05:58.560] bit um it's it's got all the I like to
+
+[00:06:02.479] use the term harnesses and models so any
+
+[00:06:05.919] agentic tooling out there like cursor,
+
+[00:06:08.560] wind surf, all these other tools out
+
+[00:06:10.720] there, open code, their harnesses, they
+
+[00:06:12.960] do pretty much nothing. They do pretty
+
+[00:06:15.520] much nothing. It's all the model and how
+
+[00:06:18.000] you use the model.
+
+[00:06:20.720] And
+
+[00:06:21.199] >> so I've got a before we get into this,
+
+[00:06:23.199] Jeff, uh give everyone a quick
+
+[00:06:24.479] background. Who are you? Uh what have
+
+[00:06:26.479] you worked on?
+
+[00:06:27.759] >> Why do you think uh you're awesome? And
+
+[00:06:30.720] and let's let's quickly before you jump
+
+[00:06:33.120] like tell us who you are, what you've
+
+[00:06:34.720] been working on and also like let's work
+
+[00:06:36.479] backwards like talk about cursed and
+
+[00:06:38.479] your experience and how you learned that
+
+[00:06:40.319] and then we'll pop back to the code. I
+
+[00:06:42.560] have a bunch of other examples of other
+
+[00:06:44.400] things you can use Ralph for that we'll
+
+[00:06:46.160] get into actual like code that we'll
+
+[00:06:47.840] ship as part of this episode. But yeah,
+
+[00:06:49.280] give us the intro. How did you find this
+
+[00:06:50.639] and what did you use it to build?
+
+[00:06:52.800] Yeah. So um uh my personal journey with
+
+[00:06:56.880] AI starts ran about December almost a
+
+[00:06:59.680] year ago now. Um I did a very crude
+
+[00:07:03.440] running uh running an agent in a loop
+
+[00:07:07.919] but I was myself attended and then
+
+[00:07:10.639] through myself having to babysit this I
+
+[00:07:13.680] was able to identify like some
+
+[00:07:15.120] abstractions and then I learned a little
+
+[00:07:16.880] bit more about what inferencing is in
+
+[00:07:19.759] that sense and like context engineer in
+
+[00:07:21.680] the early days even before those terms
+
+[00:07:23.280] weren't even defined and I just kept
+
+[00:07:25.360] playing um and I realized if I had long
+
+[00:07:28.240] run one long running chat I was getting
+
+[00:07:31.039] worse and worse outcomes. But if I
+
+[00:07:33.280] clicked new chat and then I and I was
+
+[00:07:35.360] able to encodify that up. So I was a
+
+[00:07:38.000] tech lead over at Campber doing AI dev
+
+[00:07:40.800] tooling. Um moved over this when I saw
+
+[00:07:44.560] you uh Dex. So I was over at SourceCraft
+
+[00:07:46.639] was one of the engineers building AMP.
+
+[00:07:49.039] >> Um and where I am now is not public
+
+[00:07:53.199] knowledge. Um
+
+[00:07:56.319] typical good things.
+
+[00:07:58.080] >> Yeah. Um, so,
+
+[00:08:01.759] um, for me it was always
+
+[00:08:02.879] >> You did something very specific that I I
+
+[00:08:05.039] personally thought was very impressive.
+
+[00:08:06.720] One of your first earliest like mad
+
+[00:08:09.120] crazy AI projects, cursing.
+
+[00:08:12.800] >> Yeah. So, that that was like
+
+[00:08:15.759] it was kind of kind of there's so many
+
+[00:08:18.800] people just saying, "Hey, uh, it's not
+
+[00:08:21.199] good enough yet. I'm only going to be
+
+[00:08:22.560] interested when it makes a programming
+
+[00:08:24.400] language." And I didn't have to pay for
+
+[00:08:26.160] tokens.
+
+[00:08:27.599] I didn't have to pay for tokens. I'm
+
+[00:08:29.360] like, bet.
+
+[00:08:30.560] >> And that's the goal, right? Is like
+
+[00:08:32.080] everybody who's building with AI is
+
+[00:08:34.000] like, yeah, you don't want to just spend
+
+[00:08:35.760] tokens and throw them into the black
+
+[00:08:37.440] hole. But the more
+
+[00:08:39.839] meaning the more you can spend
+
+[00:08:41.599] meaningful tokens on things that
+
+[00:08:43.360] actually make progress, even if it's
+
+[00:08:46.000] incremental or small progress, you want
+
+[00:08:48.480] to spend as many tokens as possible.
+
+[00:08:50.000] This is what we always pitch. It's a
+
+[00:08:51.440] little bit of a meme, but it's like at
+
+[00:08:52.560] the end of the day, that should be your
+
+[00:08:53.519] goal is like how can you spend as many
+
+[00:08:55.680] tokens on meaningful work with as little
+
+[00:08:58.399] human input and effort as possible,
+
+[00:09:00.160] right?
+
+[00:09:01.519] >> Exactly. Um I I've heard stories of
+
+[00:09:04.320] companies capping uh productivity like
+
+[00:09:07.440] like a max dollar spend of like $500 a
+
+[00:09:10.720] month per employee type stuff. And then
+
+[00:09:12.800] none of that stuff makes sense. Um you
+
+[00:09:15.920] you don't want to cap uh uh people like
+
+[00:09:19.120] they're when they're productive um and
+
+[00:09:22.399] you do want to ensure that you you are
+
+[00:09:25.519] getting incremental output. So Kirst was
+
+[00:09:28.399] kind of proving that hey look it you
+
+[00:09:31.360] could make a new programming language.
+
+[00:09:33.440] Now, it's it's pretty much the dumbest
+
+[00:09:35.760] way to do it because it'd be re much
+
+[00:09:38.160] easier to clone the Golang source code
+
+[00:09:41.440] and just use reax and just like relex.
+
+[00:09:45.120] It
+
+[00:09:46.000] >> would have been change all the keywords
+
+[00:09:47.839] and leave all the source code the same.
+
+[00:09:49.440] >> Just change the keywords. There's a
+
+[00:09:50.640] keyword swap, right? So, it was a for me
+
+[00:09:53.839] playing around with the idea of like
+
+[00:09:55.839] what languages work best for LLMs.
+
+[00:09:59.680] So I started in C and I was able to see
+
+[00:10:02.880] that it was uh it was able to do a prep
+
+[00:10:06.160] pasa pretty well. Uh it was going quite
+
+[00:10:09.839] it was making progress but it was going
+
+[00:10:11.760] backwards because there was not what I
+
+[00:10:13.440] described as like back pressure on the
+
+[00:10:15.120] generation. So some sort of type system
+
+[00:10:18.000] etc or like it lms can drive GDB
+
+[00:10:23.600] and you it's able to troubleshoot
+
+[00:10:25.680] itself. you add print f debug logging
+
+[00:10:27.839] but it was just going backwards. So
+
+[00:10:30.160] cursed originally was in C. Um then I
+
+[00:10:34.880] took it over to
+
+[00:10:35.839] >> curs the cursed compiler itself that
+
+[00:10:38.160] like generates like
+
+[00:10:39.040] >> yeah cursed compiler itself originally
+
+[00:10:40.800] it's actually three compilers in the
+
+[00:10:42.720] history there on GitHub.
+
+[00:10:44.720] >> First first was in C.
+
+[00:10:47.680] >> Go ahead.
+
+[00:10:48.399] >> Um it was in C then it went to Rust then
+
+[00:10:51.839] it went to Zigg.
+
+[00:10:54.000] >> Let's get into it. I want to ask I want
+
+[00:10:55.680] to ask a couple quick questions when you
+
+[00:10:57.279] were doing this. So let's to catch
+
+[00:10:59.440] everyone else up. What is the goal of
+
+[00:11:01.040] curs? So one, we wanted to make a new
+
+[00:11:02.800] programming language with the goal of
+
+[00:11:04.320] pushing current models to their limits
+
+[00:11:06.480] and see what is possible. And I think um
+
+[00:11:09.040] I can say it best, making a programming
+
+[00:11:10.640] language is [ __ ] hard. Um I've been
+
+[00:11:12.880] doing a bit you build a real programming
+
+[00:11:15.680] language not as a joke.
+
+[00:11:17.600] >> Um and like it is really hard. And
+
+[00:11:19.440] you're right, AI models do struggle with
+
+[00:11:21.839] this. And this is why I was a really big
+
+[00:11:24.000] skeptic on AI coding in general for a
+
+[00:11:25.519] while because like I was like there's
+
+[00:11:27.760] just certain classes of problems where
+
+[00:11:28.959] they don't work well in but obviously I
+
+[00:11:31.839] feel differently now. Um so I want to
+
+[00:11:35.200] like tell the goal of it. So cursed lang
+
+[00:11:37.600] you write a cursed file. What happens
+
+[00:11:40.240] from like a whiteboard? What happens
+
+[00:11:42.240] next? So you write a cursed file. The
+
+[00:11:43.680] compiler is supposed to do blah fill in
+
+[00:11:46.880] blah.
+
+[00:11:47.279] >> Yeah sure. Um it's essentially uh it has
+
+[00:11:52.320] LLVM back end um okay and it also has
+
+[00:11:55.360] interpreted mode. There's a couple bugs
+
+[00:11:58.160] um that I need to resolve uh to get over
+
+[00:12:01.839] line. Um this thing has been the biggest
+
+[00:12:03.680] test of faith for me. We'll get into
+
+[00:12:06.000] that a little bit later. Um, but the
+
+[00:12:08.800] ultimate goal for me was really to test
+
+[00:12:10.480] the boundaries
+
+[00:12:12.560] of what is possible for research and
+
+[00:12:14.560] understanding how to drive an LLM really
+
+[00:12:16.720] hard. For example,
+
+[00:12:19.360] um there's a there's a f there's a this
+
+[00:12:22.160] uh LLM
+
+[00:12:24.240] um people say, well, it's not in the
+
+[00:12:25.680] training data set. It can't be done.
+
+[00:12:28.560] I was out there to prove that wrong.
+
+[00:12:31.519] Like the fact that it can make a
+
+[00:12:33.680] compiler
+
+[00:12:35.680] >> not that interesting, right? There's a
+
+[00:12:37.760] huge tone of knowledge. It's it fact
+
+[00:12:40.480] that it can make a compiler is not that
+
+[00:12:42.320] interesting to me. What is interesting
+
+[00:12:44.720] is how the heck did it generate all of
+
+[00:12:48.480] the actual programs in the language when
+
+[00:12:51.519] it's not in the training data set.
+
+[00:12:54.399] >> So I've got I think that's a really
+
+[00:12:56.800] interesting thing. We should double
+
+[00:12:57.839] click on that. So the question I have
+
+[00:12:59.360] for you is I think one of the decisions
+
+[00:13:00.720] that you made for cursing in the very
+
+[00:13:02.079] very big uh first uh is that you're not
+
+[00:13:05.519] going to reinvent all the syntax. You're
+
+[00:13:07.519] going to say I want to copy the syntax
+
+[00:13:09.440] of go effectively and I'll change the
+
+[00:13:12.480] keywords to mean something totally
+
+[00:13:13.920] different where it doesn't really matter
+
+[00:13:16.079] to the model and then what I will do is
+
+[00:13:18.240] then I will convert that to an LVM back
+
+[00:13:20.399] end. Do you leverage any of the existing
+
+[00:13:22.720] Go pipelines to do any of that work or
+
+[00:13:24.959] do you go straight from curs to LVM?
+
+[00:13:27.920] curse straight to LLVM.
+
+[00:13:29.839] >> Okay, perfect. So, that's part one. I
+
+[00:13:31.760] think just so people can understand what
+
+[00:13:33.040] that is. What is LVM? A lot of people
+
+[00:13:34.800] may not know. I'll just give a quick
+
+[00:13:36.079] primer. LVM is the premise of like uh
+
+[00:13:39.519] for those of you that don't know how to
+
+[00:13:40.639] describe this in a really good concrete
+
+[00:13:42.560] way.
+
+[00:13:44.320] When you want to write uh
+
+[00:13:48.160] at some point your code has to convert
+
+[00:13:49.600] to a lot of bits and machinery that a
+
+[00:13:52.399] machine operates. You don't want to run
+
+[00:13:53.839] all the assembly instructions yourself.
+
+[00:13:55.760] LVM is just
+
+[00:13:56.480] >> you don't want to roll
+
+[00:13:58.160] >> you don't want to roll for x86 you don't
+
+[00:14:00.399] want to roll for ARM you don't want to
+
+[00:14:01.839] run roll for different CPU architectures
+
+[00:14:04.320] you just want to like a common format
+
+[00:14:06.639] that you can target and that handles uh
+
+[00:14:10.079] the lowering
+
+[00:14:11.360] >> yeah and it also does a lot of the
+
+[00:14:12.720] optimization stuff so you get to take
+
+[00:14:14.160] advantage of all the optimizations and
+
+[00:14:15.519] everything on there a lot of existing
+
+[00:14:17.519] systems used uh LVM uh for a lot of it
+
+[00:14:21.519] if you've ever used client that uses LVM
+
+[00:14:23.440] I'm pretty sure JavaScript also does
+
+[00:14:25.760] that but I might be wrong.
+
+[00:14:27.760] >> Oh sorry that's not what I meant.
+
+[00:14:29.680] >> Remember right it was an Apple invent
+
+[00:14:31.600] clang came from Apple.
+
+[00:14:33.760] >> Yeah.
+
+[00:14:35.120] >> So this entire objective C ecosystem
+
+[00:14:37.279] swift um pretty much everything targets
+
+[00:14:40.560] clang. Clang so targeting LLVM is
+
+[00:14:43.920] normally the compiler's nerdy
+
+[00:14:47.120] destination they want to get to.
+
+[00:14:49.440] >> Yes. So the the the the point here, I
+
+[00:14:52.160] guess, is the idea that like this is
+
+[00:14:54.399] this is not vibe coding your Nex.js
+
+[00:14:57.440] website. This is incredibly complex
+
+[00:15:00.480] systems coding that is probably not as
+
+[00:15:03.760] well represented in the training set.
+
+[00:15:06.160] And I think what was really interesting
+
+[00:15:07.760] to me about this is like Jeeoff, do you
+
+[00:15:09.519] want to walk through kind of like how
+
+[00:15:11.120] you've set things up? show us kind of
+
+[00:15:12.959] like early version of prompt.mmdday,
+
+[00:15:15.600] early versions of the specifications
+
+[00:15:17.279] like what are the inputs to Ralph that
+
+[00:15:20.560] that that allowed you to output a bunch
+
+[00:15:23.760] of code and also like you know hundreds
+
+[00:15:26.000] of markdown files, right? That's the
+
+[00:15:27.440] joke that everyone talks about now is
+
+[00:15:28.720] like Claude just dumping out tons of all
+
+[00:15:30.720] uppercade markdown files.
+
+[00:15:33.760] >> Yeah. So it started with a simple
+
+[00:15:35.519] prompt. The simple prompt is, hey, I
+
+[00:15:37.519] want to make a compiler. Um, but all the
+
+[00:15:40.399] lexical keywords are Gen Z.
+
+[00:15:44.079] So, yeet, vibe, slay, highkey, low key,
+
+[00:15:47.519] that's it. And, um, you see in tools
+
+[00:15:51.199] there's a planning mode.
+
+[00:15:53.680] Um, these planning modes are basically
+
+[00:15:55.920] nothing. There's basically an additional
+
+[00:15:57.920] prompt that uh says do not implement. So
+
+[00:16:02.560] if you want to do planning, all you got
+
+[00:16:04.240] to do is choose a model that's good for
+
+[00:16:06.959] planning. So GPT5 is pretty good for
+
+[00:16:09.120] planning. Gemini is pretty good for
+
+[00:16:11.120] planning. I think I either used
+
+[00:16:14.160] Sonnet or Gemini 25 in the early days
+
+[00:16:17.360] and I specifically prompted do not
+
+[00:16:19.360] implement your goal is to have a
+
+[00:16:21.279] conversation. So the context window is
+
+[00:16:24.959] best just being seen from a consumer
+
+[00:16:28.240] point of view as an array that's
+
+[00:16:31.040] continually appended to with messages.
+
+[00:16:34.720] So I'm having a large conversation
+
+[00:16:37.680] about hey I want to build a compiler.
+
+[00:16:40.079] What could a compiler need? And I'm like
+
+[00:16:42.480] steering it left and right etc. And I'm
+
+[00:16:44.880] not never giving it permission to
+
+[00:16:46.160] implement.
+
+[00:16:47.759] I'm just loading up this array with all
+
+[00:16:50.079] this context.
+
+[00:16:52.079] I have a discussion about different
+
+[00:16:53.759] types of pasa designs. I I I talk about
+
+[00:16:56.639] LVM. I going to use this language. So
+
+[00:17:00.480] I'm loading up this just continually
+
+[00:17:02.079] appending to this array. My both myself
+
+[00:17:04.880] and also the outcomes of actually using
+
+[00:17:08.720] the LLM itself. Um the result of asking
+
+[00:17:12.079] a question appends to that array.
+
+[00:17:15.120] Once I'm satisi satisfied, I tell it to
+
+[00:17:17.760] create out a markdown markdown file
+
+[00:17:20.000] called specs.md. I give it one prompt uh
+
+[00:17:24.640] and that prompt is hey can you uh write
+
+[00:17:28.079] out to a folder specs slash
+
+[00:17:31.600] um one file per topic like for lexical
+
+[00:17:35.120] one is a file grammar is a file
+
+[00:17:38.400] uh yada yada yada yada and I got all
+
+[00:17:40.640] these files and that's that's the
+
+[00:17:43.360] baseline
+
+[00:17:45.039] now
+
+[00:17:47.039] um this part is this is the part that's
+
+[00:17:49.520] really really important
+
+[00:17:52.960] uh one one line bad co one bad line of
+
+[00:17:56.720] code is one line bad line of code
+
+[00:18:00.559] but like uh a bad spec will like one bad
+
+[00:18:06.880] line of spec can result in tens of
+
+[00:18:09.039] thousands or 50 thousands or hundreds of
+
+[00:18:11.200] thousands
+
+[00:18:13.120] worth of bad code output. So when I
+
+[00:18:16.320] first kicked this off, if you roll back
+
+[00:18:18.160] the GitHub history to the bit the GitHub
+
+[00:18:20.080] history to the beginning of time, you'll
+
+[00:18:22.880] come across things like uh I had two two
+
+[00:18:26.480] of the keywords for the programming
+
+[00:18:28.080] language. They had a jeweled meaning cuz
+
+[00:18:31.919] I the specs were wrong. So So when I
+
+[00:18:34.720] kicked it off in the loop unattended,
+
+[00:18:37.120] guess what it got most of the way and
+
+[00:18:39.280] then it tore itself down like it was
+
+[00:18:41.360] brilliant but dumb. It these things
+
+[00:18:43.280] can't think. So this is um I'm just
+
+[00:18:46.080] going to quickly kind of show for
+
+[00:18:47.520] example some of the files that are in
+
+[00:18:49.760] the specifications which is like this is
+
+[00:18:51.760] actually like the grammar of the
+
+[00:18:53.360] language with a bunch of examples right?
+
+[00:18:56.160] >> Yeah.
+
+[00:18:57.120] >> Yeah.
+
+[00:18:57.919] >> And I have a question here. How much of
+
+[00:18:59.840] this stuff did you read? You were
+
+[00:19:01.120] running this in a pure while loop. So
+
+[00:19:02.880] almost no interruptions on your end.
+
+[00:19:06.080] If I was paying for tokens, I would have
+
+[00:19:08.000] put a lot more care in this. And because
+
+[00:19:10.000] this was meant to be like a Dogecoin or
+
+[00:19:12.559] programming languages,
+
+[00:19:14.778] [laughter] um, I just kicked it off,
+
+[00:19:17.760] um, and just put it on YouTube and like
+
+[00:19:20.400] Twitch and just walked away. And I just
+
+[00:19:22.400] watched it build and tear down build the
+
+[00:19:25.120] Roman Empire and tear down the Ro Roman
+
+[00:19:27.039] Empire. I think it reimplemented the
+
+[00:19:29.039] Lexa
+
+[00:19:30.559] uh, [laughter] probably at least 10
+
+[00:19:33.280] times.
+
+[00:19:35.840] Um, and before I just cuz I'm just
+
+[00:19:38.080] looking at it. Like if you look at the
+
+[00:19:40.640] output of your from your harness, you
+
+[00:19:44.960] can start to notice patterns and
+
+[00:19:46.880] behaviors and you start asking the why
+
+[00:19:48.880] is that happening? It's like, oh, I've
+
+[00:19:50.400] seen it. Why is it going in a loop?
+
+[00:19:53.840] Kill the the while true loop and then
+
+[00:19:56.640] eventually like, oh, you idiot.
+
+[00:19:59.600] So, it's really important to your point,
+
+[00:20:01.760] Dex,
+
+[00:20:03.039] >> is if you if you're doing this serious,
+
+[00:20:07.120] >> spend your time reading the specs
+
+[00:20:11.120] >> before you kick off anything.
+
+[00:20:13.200] >> Yeah,
+
+[00:20:13.520] >> this is the uh
+
+[00:20:15.600] >> Oh, go ahead. One really interesting I
+
+[00:20:17.440] wanted to call out was actually just the
+
+[00:20:20.799] the concept here of uh that I think is
+
+[00:20:25.200] really undervalued when you actually
+
+[00:20:26.480] work with a coding agent versus working
+
+[00:20:28.000] with a human. You said you rewrote this
+
+[00:20:30.559] thing like five times.
+
+[00:20:32.720] >> Yep.
+
+[00:20:33.440] >> When you rewrote this thing like five
+
+[00:20:35.120] times, it's fascinating because like
+
+[00:20:37.200] what you can do is with a no with a
+
+[00:20:40.080] person, you can't just tell someone to
+
+[00:20:41.440] go delete the code and rewrite it again.
+
+[00:20:42.880] There's like feelings involved. This is
+
+[00:20:44.799] a motivator [laughter] feelings.
+
+[00:20:46.640] >> It's it feels different to tell a person
+
+[00:20:48.720] to say, "Hey, rewrite all your code
+
+[00:20:50.640] versus telling an agent, I don't like
+
+[00:20:52.000] that. Restart from zero."
+
+[00:20:54.240] >> In some ways, that's actually a thing
+
+[00:20:56.240] that people should be leveraging more
+
+[00:20:57.679] and more,
+
+[00:20:58.720] >> not absolutely thinking about the old
+
+[00:21:00.320] way of writing code because everything
+
+[00:21:01.760] in coding is almost always incremental.
+
+[00:21:04.480] >> And usually the biggest tax is like,
+
+[00:21:06.400] "Hey, we don't want to rip it out and
+
+[00:21:07.520] redo everything again." It's way way
+
+[00:21:10.960] faster in many scenarios to actually
+
+[00:21:12.640] just rip it out. You you said you redid
+
+[00:21:14.640] it again from like you said see rust and
+
+[00:21:17.440] sick.
+
+[00:21:18.640] >> Yep.
+
+[00:21:19.120] >> You could have never done that in the
+
+[00:21:21.760] old world where like you need a human to
+
+[00:21:23.360] go do that. You'd get so much like um
+
+[00:21:27.200] like like just like stuff you have to
+
+[00:21:30.080] deal with that's just like ah
+
+[00:21:31.679] >> now we have to go. Turns out
+
+[00:21:33.440] >> I have emotional connection with the
+
+[00:21:35.360] specs
+
+[00:21:36.559] >> number. When I was technically back over
+
+[00:21:39.760] at Camber, I remember an engineering
+
+[00:21:41.600] director
+
+[00:21:42.720] >> saying, "Jeff, why did you implement it
+
+[00:21:44.799] in Rust? Rust is not an approved
+
+[00:21:46.880] language here."
+
+[00:21:48.320] >> And I was just sitting there on the Zoom
+
+[00:21:50.240] call. I just deleted the source code.
+
+[00:21:53.120] Just just delete the source code. Just
+
+[00:21:54.799] like, "Yep, all right. See you in 8
+
+[00:21:57.120] hours." So, I put on like Jag and this
+
+[00:22:00.240] is before I was just sitting down
+
+[00:22:02.480] watching like old episodes of Jag and I
+
+[00:22:04.880] and I was just pressing continue
+
+[00:22:07.200] continue. It's like here it goes. It's a
+
+[00:22:09.039] Golang now and it's like 40,000 lines of
+
+[00:22:12.400] code in 8 hours and [laughter] it's like
+
+[00:22:14.720] with full TUI this full TUI. It's the
+
+[00:22:16.960] the equivalence of like the equivalence
+
+[00:22:19.840] of uh Goose Goose with LCP and all this
+
+[00:22:23.679] stuff just
+
+[00:22:26.559] >> I want to start watching TV.
+
+[00:22:29.520] >> I want to start diving a little bit
+
+[00:22:30.640] deeper into some of these concepts. So
+
+[00:22:32.240] you said one of the things that you were
+
+[00:22:33.600] talking about earlier was like which
+
+[00:22:34.640] programming language works better for
+
+[00:22:35.919] AI. Let's talk about that because you
+
+[00:22:37.919] said you tried three for a very
+
+[00:22:39.440] complicated problem. We have chosen Rust
+
+[00:22:42.080] for building a programming language and
+
+[00:22:44.559] I have feelings about AI vibe coding
+
+[00:22:46.799] Rust. Um, and I have feelings about AI
+
+[00:22:49.679] coding C++. I have feelings about AI
+
+[00:22:51.520] putting TypeScript, Python. I want to
+
+[00:22:53.679] hear your perspective. What did you
+
+[00:22:55.200] learn um
+
+[00:22:57.760] about each of the three implementations
+
+[00:22:59.600] that I think helped you understand
+
+[00:23:01.760] better what the model was doing and what
+
+[00:23:04.000] the model is not capable of doing?
+
+[00:23:06.400] So I'd like to uh I see the I visualize
+
+[00:23:10.559] software development as bit of a wheel
+
+[00:23:13.039] in the sense that the top half of the
+
+[00:23:14.559] wheel is the generation phase and then
+
+[00:23:18.799] that's the top half of the wheel and
+
+[00:23:20.159] then eventually that wheel as it turns
+
+[00:23:21.919] is going to hit the road and the road is
+
+[00:23:24.159] basically where you need a bit of
+
+[00:23:25.360] friction to be able to move the car
+
+[00:23:27.120] forward and I call that back pressure.
+
+[00:23:30.559] So with C there were there's no
+
+[00:23:33.520] friction. There's no back pressure like
+
+[00:23:35.919] it's an untyped language
+
+[00:23:38.559] etc. And there's no back pressure.
+
+[00:23:43.520] >> Back pressure. I just want to drill in.
+
+[00:23:44.880] That's that's things like the model
+
+[00:23:46.559] being able to run a unit test suite and
+
+[00:23:49.120] understand if things are working. the
+
+[00:23:50.559] model being able I mean part of the
+
+[00:23:52.000] reason I think that makes programming
+
+[00:23:53.280] languages such a good like example use
+
+[00:23:57.039] case for unattended coding agents is
+
+[00:23:59.919] precisely because you can create this
+
+[00:24:01.600] loop of like it's not a website where
+
+[00:24:03.600] the model has to take a picture of it
+
+[00:24:05.039] with playright and then decide if it
+
+[00:24:06.480] looks good or not. It's like write the
+
+[00:24:08.159] source file. If the compiler can compile
+
+[00:24:10.159] it and the source does what we think it
+
+[00:24:12.080] should do then it works. And so the
+
+[00:24:14.159] model can give itself its own feedback
+
+[00:24:16.080] without having to like have opinions
+
+[00:24:18.159] just by reading or reviewing the code
+
+[00:24:19.919] itself.
+
+[00:24:21.120] >> Is that like kind of what how how would
+
+[00:24:23.679] you expand on that in terms of how you
+
+[00:24:25.120] define and think about back pressure?
+
+[00:24:28.159] >> So let me pull this up.
+
+[00:24:35.830] >> Um we're into an area here where this is
+
+[00:24:35.840] not really vibe coding. It's more like
+
+[00:24:37.520] vibe engineering.
+
+[00:24:40.240] Um so um this is del you're deliberately
+
+[00:24:45.200] putting your engineering hat on. So you
+
+[00:24:47.440] take your your specs which is like your
+
+[00:24:50.240] PD what you want to generate that's the
+
+[00:24:51.919] top half of the wheel. You got your
+
+[00:24:53.760] technical uh pattern library on how like
+
+[00:24:56.559] logging what else have you and that's
+
+[00:24:58.080] like typically language agnostic
+
+[00:25:02.159] typically agnostic. Um, and then you got
+
+[00:25:05.200] the bottom part, the bottom half, and
+
+[00:25:07.200] that's that's where it's your job uh to
+
+[00:25:10.159] put your engineering hat on, run your
+
+[00:25:12.080] unit tests, run the build, program
+
+[00:25:14.880] anything in there like a security
+
+[00:25:17.520] scanning software um that you would
+
+[00:25:19.840] normally do. But the key thing is the
+
+[00:25:22.320] wheel needs to spin fast and the the
+
+[00:25:26.799] bottom half of like the cargo test
+
+[00:25:28.559] clippy that I've got shown here, it
+
+[00:25:30.960] needs to be enough back pressure to stop
+
+[00:25:33.120] the wheel from turning if the code
+
+[00:25:35.679] generation step was bad. if it if it's
+
+[00:25:38.159] any form of hallucination in the output.
+
+[00:25:41.919] Um, and I realized that if I look at it
+
+[00:25:44.960] from the right way and like I'm just
+
+[00:25:46.480] sitting down watching TV,
+
+[00:25:49.520] um, and I'm just doing these things
+
+[00:25:51.200] manually, I could do a while true loop.
+
+[00:25:53.679] I could probably just do a bash loop.
+
+[00:25:55.200] And that's how it came to be. Um,
+
+[00:25:57.360] there's a question in, uh, in the, uh,
+
+[00:26:01.760] in chat and I'll address it, Dave. Yes.
+
+[00:26:05.120] Uh, no one as far as I'm aware of has
+
+[00:26:07.120] actually successfully did it, but I I
+
+[00:26:10.159] started reimplementing OS step in three
+
+[00:26:12.960] easy pieces using Ralph and it got
+
+[00:26:16.240] sufficiently along the way enough where
+
+[00:26:19.120] I was able to boot a VM uh so a virtual
+
+[00:26:21.919] box machine. was able to read the text
+
+[00:26:24.480] console out. From there, I was able to
+
+[00:26:27.279] basically engineer the bottom half of
+
+[00:26:29.279] the loop and I got got all got all the
+
+[00:26:32.960] way like in uh past bootloadader and we
+
+[00:26:36.320] start getting into like
+
+[00:26:38.880] next couple chapters of OS step. Um
+
+[00:26:41.760] these LLMs know what a compiler is
+
+[00:26:45.120] better than I did at the time and they
+
+[00:26:47.840] know what an operating system is at a
+
+[00:26:49.919] implemented level better than I do. So
+
+[00:26:51.760] you can you can lean upon that but you
+
+[00:26:53.600] still need to have your brain on to your
+
+[00:26:56.240] question Bab of like different
+
+[00:26:57.840] languages.
+
+[00:26:59.760] It's the speed of the wheel
+
+[00:27:02.880] that matters like how fast it turns.
+
+[00:27:05.728] [snorts] So if we we look at Rust, Rust
+
+[00:27:08.880] is a strongly typed language
+
+[00:27:11.919] and the good thing about a strongly
+
+[00:27:13.520] typed language is it will reject any bad
+
+[00:27:17.200] like generation. It's very particular.
+
+[00:27:19.919] That's it's things like Haskell is the
+
+[00:27:22.080] same like strongly typed language is
+
+[00:27:23.919] really good. Um because that provides
+
+[00:27:29.200] soundness in the language by default.
+
+[00:27:32.400] If the language doesn't have that
+
+[00:27:34.159] soundness, you need to do more
+
+[00:27:36.080] engineering like you you have to wire
+
+[00:27:38.559] that stuff in. Like if you on Python,
+
+[00:27:41.039] you would have to configure your like
+
+[00:27:43.919] your uh your your pyite like your your
+
+[00:27:48.240] actual type checkers. Um same with
+
+[00:27:52.400] TypeScript on the compiler yada yada
+
+[00:27:54.640] yada you get the idea. Um so but Rust's
+
+[00:27:59.679] compiler is slow.
+
+[00:28:02.480] Uh the Rust compile compilation speed
+
+[00:28:04.480] can be really really slow. So there's a
+
+[00:28:06.559] tradeoff.
+
+[00:28:08.320] um
+
+[00:28:10.720] you want the generation speed to be
+
+[00:28:13.440] sufficiently slowed down but you still
+
+[00:28:16.399] want the generation speed to be fast.
+
+[00:28:19.600] So if you've got a single loop running
+
+[00:28:23.120] then the speed of the generation the
+
+[00:28:26.159] inferencing step and the speed of the
+
+[00:28:27.760] compilation is essentially your velocity
+
+[00:28:30.640] and output unless you concurrency it
+
+[00:28:33.039] have some form of concurrency.
+
+[00:28:35.360] now.
+
+[00:28:36.399] >> So,
+
+[00:28:36.960] >> um, I've done C, I've done Python, I've
+
+[00:28:41.600] done Elixir, I've done Zigg,
+
+[00:28:45.200] I've donenet,
+
+[00:28:48.080] um, I've done Java, I've played with
+
+[00:28:51.039] them all like almost got into like a
+
+[00:28:53.440] like a tier list
+
+[00:28:56.080] >> of what languages LM are good at
+
+[00:28:57.840] writing.
+
+[00:28:58.880] >> Yeah. Um, so and
+
+[00:29:02.480] >> finish your point and then I wanna I
+
+[00:29:03.840] want to jump back into code and like
+
+[00:29:05.440] whiteboarding and kind of talk a little
+
+[00:29:07.039] bit more under the hood about, you know,
+
+[00:29:09.279] how do context windows work and why is
+
+[00:29:12.320] like Ralph such a good strategy based on
+
+[00:29:15.120] the concepts of context engineering.
+
+[00:29:17.919] Does that sound good? Bye Bob. You good?
+
+[00:29:19.840] >> Sounds good. Um, I would like to say
+
+[00:29:23.679] it's how you drive the LLM, which will
+
+[00:29:26.559] segue into context engineering
+
+[00:29:28.799] >> that matters.
+
+[00:29:30.559] >> Um, all the sample applications in Kurs
+
+[00:29:34.640] Kirst is about 15 million lines of code
+
+[00:29:37.600] folks.
+
+[00:29:39.840] Okay. um and all the sample applications
+
+[00:29:45.200] and all the things in there that they
+
+[00:29:47.120] were generated by the LLM and the LLM
+
+[00:29:51.120] was not trained on that data. It was
+
+[00:29:53.440] through the context engineering I was
+
+[00:29:55.679] able to create the right loop where it
+
+[00:29:59.279] was able to generate program for
+
+[00:30:01.039] something it hadn't been programmed on.
+
+[00:30:04.559] >> So you can do some really
+
+[00:30:05.840] >> make one um go ahead.
+
+[00:30:08.480] Yeah, you can do some really uh you can
+
+[00:30:10.320] do some really unhinged things. Um you
+
+[00:30:14.159] can either
+
+[00:30:16.399] work on its inbuilt training data set,
+
+[00:30:19.360] but if it lacks the training data set,
+
+[00:30:21.120] it's how you do the context engine that
+
+[00:30:22.720] matters.
+
+[00:30:24.240] >> So let's take a let's take a deeper dive
+
+[00:30:26.240] into that really fast. But before we go
+
+[00:30:28.000] into that, you mentioned a couple things
+
+[00:30:29.120] about the tra the loop being the most
+
+[00:30:30.799] important part. I think it's really when
+
+[00:30:33.039] I think about it, I think it's about
+
+[00:30:34.159] trade-offs that you want to make in your
+
+[00:30:35.520] engineering cycle. So, let's talk about
+
+[00:30:38.000] the different trade-offs we might want
+
+[00:30:39.039] to make. One is about speed.
+
+[00:30:40.799] >> Guys, guys, guys, guys, guys, let's
+
+[00:30:42.399] let's get practical. Sorry, I'm gonna
+
+[00:30:44.320] I'm gonna I'm gonna hijack this
+
+[00:30:45.760] conversation. We can keep talking about
+
+[00:30:47.360] theory, but let's do a little bit of
+
+[00:30:48.799] practice and we can work that use that
+
+[00:30:50.399] as a as a platform to do the theory on.
+
+[00:30:52.720] >> Let's show the platform. Let's show the
+
+[00:30:54.159] prompt. MD that you have. I think that's
+
+[00:30:56.000] actually
+
+[00:30:56.559] >> Exactly. We're going to show the prompt
+
+[00:30:57.679] and then I'm going to I'm going to
+
+[00:30:58.480] whiteboard out kind of how we how we
+
+[00:30:59.919] like to talk about this. Um, so we have
+
+[00:31:02.720] prompt MD. Um, it's a very simple
+
+[00:31:05.679] prompt. This is very similar to the one
+
+[00:31:07.520] that I think was the initial one that
+
+[00:31:09.120] Jeff published with the Ralph paper.
+
+[00:31:10.720] Jeff, you can read this prompt and romp.
+
+[00:31:12.480] You can you can roast this prompt, but
+
+[00:31:14.640] >> it's essentially very very short. It's
+
+[00:31:17.760] read the specs, read the code and
+
+[00:31:20.159] source, read the implementation plan,
+
+[00:31:22.640] and implement the single highest
+
+[00:31:24.240] priority feature using up to 50 sub
+
+[00:31:26.080] agents. Now, I'm using Claude with the
+
+[00:31:27.600] default, so it'll only do like five max.
+
+[00:31:29.679] I haven't changed the Envar that lets
+
+[00:31:31.440] you have more sub agents, but I left
+
+[00:31:32.960] this in as a nod to curs. uh ensure all
+
+[00:31:36.480] the tests and linting passes, then
+
+[00:31:37.840] update implementation plan with your
+
+[00:31:39.360] progress, and then commit. And so we can
+
+[00:31:42.240] see this has been working. We have a few
+
+[00:31:44.480] commits going on. Phase one, phase two.
+
+[00:31:47.120] Um I'm going to show you what we're
+
+[00:31:49.279] actually running under the hood as well.
+
+[00:31:51.440] Um and I'm actually going to make a
+
+[00:31:53.039] quick tweak to this. So this is our this
+
+[00:31:54.640] is our our loop. Um, I'm actually going
+
+[00:31:57.679] to run this headless, but basically what
+
+[00:31:58.960] we're doing is I'm running it with
+
+[00:32:00.000] Claude instead of AMP, but we're running
+
+[00:32:01.360] Claude with dangerously skip permissions
+
+[00:32:03.440] and stream the JSON, and we're piping
+
+[00:32:05.200] into this little visualizer. When you
+
+[00:32:06.640] run Claude in headless mode, um, you
+
+[00:32:09.279] basically get this like JSON output. Um,
+
+[00:32:14.000] and so it's going to stream out all this
+
+[00:32:15.679] stuff. We wrote a small little
+
+[00:32:17.519] visualizer that basically makes this a
+
+[00:32:19.919] little bit nicer to look at. Um, but
+
+[00:32:22.080] it's the same. It's just pars. It's all
+
+[00:32:23.840] it's doing is parsing that JSON. So,
+
+[00:32:26.240] we're catting that prompt over and over
+
+[00:32:28.000] again. I'm going to show you when I
+
+[00:32:29.760] started this um it basically
+
+[00:32:33.120] um had no implementation plan file. So,
+
+[00:32:35.279] it just created this based on the specs
+
+[00:32:38.000] and it's been going through and creating
+
+[00:32:39.760] all the CRUD operations. It's created
+
+[00:32:41.919] the allegedly like the database schema.
+
+[00:32:44.080] I believe it shows like um Prisma and
+
+[00:32:47.760] Postgress as the but I I gave it no
+
+[00:32:49.840] guidance on how to do this stuff. Um,
+
+[00:32:51.840] and it's just taking notes and keeping
+
+[00:32:53.840] its own like list of tasks in the plan.
+
+[00:32:58.559] >> Um, and we can go and have a look and
+
+[00:33:00.240] see how it's doing. I actually I saw
+
+[00:33:02.080] that in the M.LE
+
+[00:33:04.720] it had created uh Gmail keys. Um, which
+
+[00:33:09.200] I've actually I added one more piece.
+
+[00:33:11.279] This is an idea of like when might you
+
+[00:33:13.279] want to actually steer this is I wanted
+
+[00:33:15.200] it to use resend because I don't want to
+
+[00:33:16.720] give it my Gmail keys live on the
+
+[00:33:18.399] stream. So, I just added a new feature
+
+[00:33:20.240] and an example should have uh should
+
+[00:33:22.799] have a resend API key. So, it has it
+
+[00:33:24.720] hasn't picked this up yet. Um, but I I
+
+[00:33:28.480] want to get into kind of like what's the
+
+[00:33:30.240] structure of this prompt and like why is
+
+[00:33:32.640] this like, you know, uh Malik and Code
+
+[00:33:35.440] and compiling and all this stuff. Um,
+
+[00:33:38.799] Jeff, you're a Kubernetes guy, right?
+
+[00:33:41.360] >> Yeah. Um, so one of the things that we
+
+[00:33:44.080] like to think about in terms of like
+
+[00:33:45.760] when I think about Ralph is as in terms
+
+[00:33:48.399] of control loops, right? Yep. And so
+
+[00:33:50.960] every component in a lot of like
+
+[00:33:52.799] complicated systems that are able to run
+
+[00:33:54.720] autonomously is they have a very focused
+
+[00:33:57.919] what we call control loop where you have
+
+[00:33:59.519] the desired state of the world, you have
+
+[00:34:01.360] the current state of the world and then
+
+[00:34:02.880] you take one action to progress the
+
+[00:34:05.760] current state towards the desired state
+
+[00:34:07.679] and then you read it again. And you kind
+
+[00:34:09.440] of do this in a loop forever. And if all
+
+[00:34:11.599] the components have the right like
+
+[00:34:13.359] federated responsibilities, then this
+
+[00:34:15.839] becomes a really nice model like mental
+
+[00:34:17.919] model for thinking about your code. Yes.
+
+[00:34:21.440] >> Yep.
+
+[00:34:22.240] >> Yeah. Yeah. So, but that's one of the
+
+[00:34:24.159] harder things is because everything is
+
+[00:34:26.800] so undeterministic. That's why I use the
+
+[00:34:29.839] image of Ralph in the oven. um that loop
+
+[00:34:34.000] is either underbaked,
+
+[00:34:36.320] perfectly baked or overbaked with later
+
+[00:34:38.960] tendencies or things you never
+
+[00:34:40.480] specified,
+
+[00:34:41.679] >> right? If these two things are equal,
+
+[00:34:44.320] well, the models want to be helpful. And
+
+[00:34:46.240] so even if they're equal, the model will
+
+[00:34:48.399] find something to do because you've
+
+[00:34:50.079] invoked you've invoked the cloud CLI.
+
+[00:34:51.760] It's like, well, it's it's default. It's
+
+[00:34:54.159] heavily trained to do something, right?
+
+[00:34:57.599] And so then it will come up with more
+
+[00:34:59.280] actions and it usually defaults to
+
+[00:35:02.160] changing the desired state of the world
+
+[00:35:03.839] to justify its continued existence and
+
+[00:35:06.000] working. Right?
+
+[00:35:07.440] >> A concrete example is when I was running
+
+[00:35:09.440] a loop, it decided to add some types to
+
+[00:35:12.079] the programming language. I never
+
+[00:35:13.599] specified some types, but you do a 100
+
+[00:35:16.079] loops and it says it's done, it's done,
+
+[00:35:17.839] it's done. on the 105th time and five
+
+[00:35:21.440] times complaining it's done
+
+[00:35:24.400] it hallucinates and says well a
+
+[00:35:26.640] programming language should use some
+
+[00:35:28.720] types and next thing you know that the
+
+[00:35:31.119] way I was driving it was just completely
+
+[00:35:33.839] brainless it would decided to add some
+
+[00:35:36.720] sub some types to the implementation
+
+[00:35:38.079] plan
+
+[00:35:40.079] >> I love it
+
+[00:35:40.720] >> and it's off to the races so it's like
+
+[00:35:42.320] baked underbaked baked or baked with
+
+[00:35:44.720] latent tendencies all these kind of
+
+[00:35:46.640] properties and behaviors are
+
+[00:35:48.320] controllable
+
+[00:35:49.920] but um that's a little bit more abstract
+
+[00:35:53.920] than we can get here. Now,
+
+[00:35:56.320] >> so coming coming to the context window
+
+[00:35:58.480] side of this, essentially like we have a
+
+[00:36:01.920] the most common way to work with AI
+
+[00:36:03.760] models is you have all your system stuff
+
+[00:36:05.280] and then you have your user message. And
+
+[00:36:07.200] the idea is that this will usually get
+
+[00:36:09.280] you to about you know depending on how
+
+[00:36:12.000] many MCPS you have somewhere between
+
+[00:36:14.000] five and 60% of your context window. But
+
+[00:36:17.280] let's assume you're being responsible.
+
+[00:36:18.480] This gets you to like somewhere between
+
+[00:36:20.000] five and 15% of your context window
+
+[00:36:22.160] used. I'd like to see that you got about
+
+[00:36:24.800] 176k. Ignore the million etc. It's still
+
+[00:36:28.480] all it's still like 200.
+
+[00:36:30.800] >> So you take 200, you minus 16 for your
+
+[00:36:33.760] harness prompt to minus 16 for your LLM
+
+[00:36:37.440] system prompt. Just the rough numbers.
+
+[00:36:40.079] >> Yeah.
+
+[00:36:40.400] >> And then all of a sudden you got about
+
+[00:36:42.160] 176 usable. You add your MCPs in and
+
+[00:36:45.440] that comes out of 176. So now all of a
+
+[00:36:47.920] sudden you're like you've had 50k of
+
+[00:36:50.160] MCPs, you're now down to like 100 120k
+
+[00:36:54.640] usable.
+
+[00:36:56.000] >> Well, and also if you fill like if let's
+
+[00:36:58.480] say you don't have a lot of MCPS, if you
+
+[00:37:00.640] like the most high performance range I
+
+[00:37:03.200] found for the models is like before you
+
+[00:37:05.839] hit this 30 to 40% mark and anything
+
+[00:37:08.800] past there. So, if this is all full of
+
+[00:37:10.960] [ __ ] MCPs, then you're actually doing
+
+[00:37:13.599] all of your work in the like what I call
+
+[00:37:16.160] the dumb zone
+
+[00:37:18.079] >> where there's so much context in terms
+
+[00:37:20.240] of like here's all the things you can do
+
+[00:37:22.320] that it becomes much harder to actually
+
+[00:37:24.000] get it to do something valuable.
+
+[00:37:27.440] >> This is conceptually universal
+
+[00:37:29.200] regardless which LLM that you choose or
+
+[00:37:31.680] which model you choose. This is a
+
+[00:37:33.520] fundamental thing. The less you use, the
+
+[00:37:36.320] better it h it gets. I when I was back
+
+[00:37:38.960] in February, I was noticing
+
+[00:37:41.920] uh like kind of a a degrading like a
+
+[00:37:45.680] degrade the more that I used it.
+
+[00:37:47.760] >> Yep.
+
+[00:37:48.240] >> Um and then that was just through like
+
+[00:37:50.720] kind of like jazz banding kind of with
+
+[00:37:52.640] the LLM like pure observation and lots
+
+[00:37:55.520] of time playing with it.
+
+[00:37:57.359] >> Um nothing scientific but
+
+[00:38:00.720] >> I'll toss a slightly more controversial
+
+[00:38:02.320] opinion. I think that was very very true
+
+[00:38:04.800] a long time ago. I think it's becoming
+
+[00:38:06.880] less true um with every new release that
+
+[00:38:10.240] they put out personally because they
+
+[00:38:11.920] have more they have more training data
+
+[00:38:13.119] for longer context data like it's so
+
+[00:38:15.440] definitely true that longer context
+
+[00:38:16.800] training data is very hard to collect
+
+[00:38:18.240] but now with all these coding agents
+
+[00:38:19.760] running a muk they have really long
+
+[00:38:22.320] continuous sequences of training data
+
+[00:38:24.880] >> that that I think are making the models
+
+[00:38:26.960] better. Yes, they are getting better,
+
+[00:38:29.119] but I've said this every at least twice
+
+[00:38:31.920] a week since April, maybe even earlier,
+
+[00:38:34.320] is like they are getting better, but no
+
+[00:38:37.119] one will disagree even when the models
+
+[00:38:38.960] support 10 million context token windows
+
+[00:38:41.200] like and actually they can do something
+
+[00:38:42.720] with it. No one will deny that you get
+
+[00:38:45.359] better results if you use less because
+
+[00:38:47.599] the attention is spread over less noise,
+
+[00:38:50.000] right?
+
+[00:38:50.400] >> And don't mix the concerns. Don't mix
+
+[00:38:52.480] the concerns. Don't don't just like have
+
+[00:38:54.640] a the way most people use cursor is they
+
+[00:38:58.000] take that window there, they continually
+
+[00:38:59.839] append to it and it's like sweet, it's
+
+[00:39:02.000] all working now. I'm going to make the
+
+[00:39:03.920] website pink. Oh, now I'm going to do
+
+[00:39:05.920] some data SQL migrations and all those
+
+[00:39:09.040] unrelated things are appended in there.
+
+[00:39:11.920] And
+
+[00:39:13.119] >> to be clear, folks, when you
+
+[00:39:15.760] >> this array that gets appended, it gets
+
+[00:39:18.160] appended and sent back each time. It's
+
+[00:39:20.720] stateless. like you just send it back.
+
+[00:39:23.280] You send it back.
+
+[00:39:25.119] >> Um, so when you have unrelated things,
+
+[00:39:28.800] >> it makes
+
+[00:39:30.560] >> no sense. So I'm going to find a
+
+[00:39:32.640] picture.
+
+[00:39:32.960] >> That was one of the the key things was I
+
+[00:39:35.599] realized if I useless drove the context
+
+[00:39:38.800] window with and had one item per task,
+
+[00:39:43.359] good outcomes.
+
+[00:39:45.280] >> Yeah. And this is kind of the idea is
+
+[00:39:46.960] every time you're sending the entire
+
+[00:39:48.800] thing to the LLM, the only thing that
+
+[00:39:51.119] determines whether it is going to pick
+
+[00:39:53.920] the right next step or the wrong next
+
+[00:39:56.000] step is what was already in the context
+
+[00:39:59.760] window. And coding agents are
+
+[00:40:02.480] interesting because you don't actually
+
+[00:40:03.839] write every word of what's in the
+
+[00:40:05.520] context window. You have to kind of
+
+[00:40:06.960] guide it to I mean you could paste in
+
+[00:40:08.640] the contents of all the files that
+
+[00:40:10.480] matter. But the idea is it's slightly
+
+[00:40:11.920] easier to be like, read these four files
+
+[00:40:14.240] and then go do one thing. And then when
+
+[00:40:16.160] the one thing is done, then you're
+
+[00:40:17.359] sending the whole conversation of like,
+
+[00:40:19.200] cool, they said read these files and
+
+[00:40:20.560] then they said do this thing and now
+
+[00:40:21.920] they're saying do this thing. And
+
+[00:40:22.960] there's just like more for the agent to
+
+[00:40:24.800] think through and decide which part of
+
+[00:40:27.440] this conversation is relevant to the
+
+[00:40:30.640] next edit call or the next write call or
+
+[00:40:33.040] the next search call. Yes.
+
+[00:40:39.910] Um, all right. I want to model this a
+
+[00:40:39.920] little bit differently and then I'm
+
+[00:40:40.800] going to go through a couple different
+
+[00:40:42.240] use cases that I love using Ralph for.
+
+[00:40:44.720] Um, and I'd love to hear your thoughts,
+
+[00:40:46.240] Jeff, on which of these you've had
+
+[00:40:47.440] success.
+
+[00:40:47.920] >> Yeah. Let's go to let's actually go to
+
+[00:40:50.160] the next part of Ralph. So, we're told
+
+[00:40:51.680] it to create the specifications.
+
+[00:40:53.839] >> Well, so,
+
+[00:40:54.480] >> uh, the next
+
+[00:40:55.520] >> really really quick, I just kind of want
+
+[00:40:56.880] to like model how like how Ralph works
+
+[00:40:58.880] in terms of a context window. Sure.
+
+[00:41:00.960] >> Is so we have our desired state of the
+
+[00:41:02.880] world, which is, you know, read the
+
+[00:41:04.079] specs.
+
+[00:41:06.480] Um,
+
+[00:41:08.640] right. Read the specs, then read the
+
+[00:41:10.720] source code. That's the current state of
+
+[00:41:12.319] the world. And then our implementation
+
+[00:41:14.480] plan is kind of like the rolling action
+
+[00:41:16.560] plan. And by because we only tell it to
+
+[00:41:19.359] do one thing, we end up with we end up
+
+[00:41:23.839] with using like you're more likely to
+
+[00:41:26.079] stay in the smart zone of the context
+
+[00:41:28.400] window versus the dumb zone.
+
+[00:41:30.720] >> Correct?
+
+[00:41:31.520] >> And then you bomb out. You say just do
+
+[00:41:33.280] one thing and then exit. And so rather
+
+[00:41:35.440] than telling, hey Codeex, keep working
+
+[00:41:37.359] and don't stop working and make sure
+
+[00:41:39.040] don't stop working after nine tasks and
+
+[00:41:40.880] don't stop working after 10 and trying
+
+[00:41:42.480] to prompt it to be able to remember to
+
+[00:41:44.480] keep working. You just say, hey, you
+
+[00:41:46.400] have a really easy job. Stay in the
+
+[00:41:48.079] smart zone, pop one thing off of the
+
+[00:41:50.640] implementation plan list and go do that
+
+[00:41:52.880] and then you're done. And then actually
+
+[00:41:55.760] you can
+
+[00:41:56.480] >> horrendously inefficient.
+
+[00:41:58.720] >> You see the top of the line where it's
+
+[00:42:00.480] decide a decided state of the world, the
+
+[00:42:02.240] user message and the harness, etc. Yeah,
+
+[00:42:04.560] >> what you're doing is you're you're
+
+[00:42:06.079] actually malicking uh and burning a lot
+
+[00:42:09.119] of tokens so it can just do that one
+
+[00:42:11.680] thing. It's it's highly inefficient and
+
+[00:42:14.480] that because I wasn't paying for tokens,
+
+[00:42:16.160] I didn't care. Um but the idea was if I
+
+[00:42:19.599] could deterministically allocate the
+
+[00:42:21.839] array,
+
+[00:42:22.880] >> yes,
+
+[00:42:23.280] >> or the context window
+
+[00:42:26.160] then and I tell it to to do one thing, I
+
+[00:42:29.520] didn't care if uh like to the costs. But
+
+[00:42:33.440] the idea was allocate one thing to the
+
+[00:42:35.839] array to the context window and do one
+
+[00:42:38.720] thing and just burn lots of tokens. Um I
+
+[00:42:42.079] could have forked or clone context
+
+[00:42:43.920] windows and got snazzy and stuff, but
+
+[00:42:46.880] really what I'm doing is just malicking
+
+[00:42:48.560] the the array the same time every loop.
+
+[00:42:51.280] >> So what's interesting here is like what
+
+[00:42:53.359] we have here is desired current and then
+
+[00:42:55.280] implementation plan. And so what that
+
+[00:42:57.359] might let you do is actually cache if
+
+[00:42:59.119] you if you if you tune it just right,
+
+[00:43:01.119] you may actually be able to cache this.
+
+[00:43:02.800] Now I know the claude system message
+
+[00:43:04.640] actually like changes based on the get
+
+[00:43:07.040] dirty state, but like you could
+
+[00:43:09.920] potentially set this up so that you're
+
+[00:43:12.160] constantly forking off of this set and
+
+[00:43:14.640] so you're only updating the current
+
+[00:43:16.319] state of the worldly implementation
+
+[00:43:17.680] plan. This is where context engineering
+
+[00:43:19.920] comes in. I intentionally made a mistake
+
+[00:43:21.839] in this prompt because when I at@mention
+
+[00:43:24.240] this it means it gets pulled in as part
+
+[00:43:26.000] of the user message which means there's
+
+[00:43:28.319] no way we're going to be able to cache
+
+[00:43:29.760] any of that because it's going to read
+
+[00:43:31.040] the implementation plan as part of the
+
+[00:43:32.640] user message and so none of the rest of
+
+[00:43:34.400] this can be cached
+
+[00:43:36.319] >> anyways that's it's totally a tangent
+
+[00:43:38.560] but that does that match your
+
+[00:43:39.599] understanding?
+
+[00:43:40.880] >> Yep.
+
+[00:43:42.640] Um
+
+[00:43:43.280] >> um
+
+[00:43:44.160] >> what we've done what we got drawn out
+
+[00:43:46.160] here is we told it go immediately to the
+
+[00:43:48.720] implementation plan
+
+[00:43:50.720] >> um but we haven't told how the
+
+[00:43:52.400] implementation plan came to be.
+
+[00:43:54.640] >> So the second train of thought there was
+
+[00:43:58.720] >> okay I've got my specs
+
+[00:44:01.680] I've generated them in the context
+
+[00:44:03.200] window of research planning and then I
+
+[00:44:04.880] gave it permission to write markdown
+
+[00:44:06.240] then I've thrown away that array.
+
+[00:44:08.960] The next step is I would run lots of
+
+[00:44:13.040] loops.
+
+[00:44:14.960] Um, I was using Gemini for its large
+
+[00:44:17.599] context window when I first started,
+
+[00:44:19.440] probably around about Juneish.
+
+[00:44:22.400] >> And maybe it was Marchish, Junish,
+
+[00:44:25.040] Marchish. And um, essentially what I
+
+[00:44:29.040] said was
+
+[00:44:30.720] uh,
+
+[00:44:31.119] >> so you would be giving it
+
+[00:44:34.640] >> Sorry.
+
+[00:44:39.670] Yeah,
+
+[00:44:39.680] >> study the specs to understand what needs
+
+[00:44:41.359] to be implemented.
+
+[00:44:43.359] Then uh what I want you to do is look at
+
+[00:44:46.079] the source code directory and set the
+
+[00:44:49.200] two. Tell me what's not implemented.
+
+[00:44:52.880] That's the high level theory.
+
+[00:44:55.119] >> Yeah,
+
+[00:44:55.520] >> set the two and
+
+[00:44:58.800] run that many times. Lots of times. Lots
+
+[00:45:01.920] lots of times. and then tell it to write
+
+[00:45:03.680] an implementation plan.
+
+[00:45:06.640] >> So when you run it lots of times like
+
+[00:45:09.359] are you running it in a single context
+
+[00:45:11.119] window and it's going and doing all the
+
+[00:45:12.560] reading or is it like is there what's
+
+[00:45:14.160] the exhaust from each run of this loop?
+
+[00:45:16.720] >> I try to blow the context window up in
+
+[00:45:18.720] this stage.
+
+[00:45:20.400] >> You try to have as much context as
+
+[00:45:22.319] possible. load as much a big the big so
+
+[00:45:25.760] this is back when Gemini was
+
+[00:45:27.839] >> so you're literally doing a million and
+
+[00:45:29.920] then Claude was like tiny like Claude
+
+[00:45:34.400] was tiny um but the idea was
+
+[00:45:38.800] >> get it to execute RIP GP lots of times
+
+[00:45:41.280] and get like get like no fs no fs
+
+[00:45:44.000] because
+
+[00:45:44.800] >> when it's searching the source code
+
+[00:45:46.960] versus specifications what it's doing is
+
+[00:45:48.880] it's executing a tool and that tool is
+
+[00:45:51.280] rip grip and rip RIP powers the source
+
+[00:45:53.760] code intelligence for all the coding
+
+[00:45:55.520] harnesses out there. Like Ripcript runs
+
+[00:45:58.000] the world, but the input to the function
+
+[00:46:01.359] of what it searches for the search query
+
+[00:46:03.440] into RipG is nondeterministic.
+
+[00:46:07.200] It's generative
+
+[00:46:08.960] >> generative based on what it's seen so
+
+[00:46:11.280] far.
+
+[00:46:12.000] >> It's generative input to a to a
+
+[00:46:14.319] deterministic
+
+[00:46:15.839] uh tool. So I ran it lots of times.
+
+[00:46:18.720] >> So you did this all in one context
+
+[00:46:20.480] window over and over and over again. Let
+
+[00:46:21.920] it do something
+
+[00:46:22.640] >> over and over and over again.
+
+[00:46:24.000] >> Run and over. And then at the very end,
+
+[00:46:25.520] you say, "Write the implementation
+
+[00:46:26.800] plan."
+
+[00:46:27.920] >> Pretty much like I'd either do it by
+
+[00:46:30.000] hand or I'd run it in a bash loop and
+
+[00:46:33.040] blow the stack.
+
+[00:46:35.359] >> Okay.
+
+[00:46:35.839] >> From a very tangible perspective, when
+
+[00:46:37.920] should someone do this? Like this Ralph
+
+[00:46:40.079] Wiggum technique of where you run this
+
+[00:46:41.520] in a while loop, you let it rip.
+
+[00:46:52.309] pull up some of the examples that we
+
+[00:46:52.319] have and I'd love to get Jeff your
+
+[00:46:54.640] thoughts on this. Um, and then we'll
+
+[00:46:56.240] come back at the
+
+[00:46:56.720] >> Did you repeat yourself? Starling
+
+[00:46:57.920] dropped out
+
+[00:46:58.560] >> next.js server.
+
+[00:47:00.880] >> Uh, we're going to look at some other
+
+[00:47:02.720] examples.
+
+[00:47:04.480] >> Yeah. Of what of what what Ralph can do
+
+[00:47:07.839] not not just for the not not just for
+
+[00:47:11.200] building a new programming language from
+
+[00:47:12.800] scratch, but um
+
+[00:47:14.240] >> there's forward modes, there's research
+
+[00:47:17.200] modes, and there's reverse modes. So
+
+[00:47:19.839] this is what I have here as a reverse
+
+[00:47:21.440] mode. So this is our your job is to
+
+[00:47:23.920] build the specifications for we have a
+
+[00:47:26.319] process that's written in Golang and we
+
+[00:47:27.839] want to rewrite it in Typescript and so
+
+[00:47:30.079] I've written kind of the same style of
+
+[00:47:32.720] prompt to build out specifications
+
+[00:47:36.160] from so it's like read the code
+
+[00:47:39.040] familiarize yourself with what's in the
+
+[00:47:40.720] specs but now this is the desired state
+
+[00:47:42.800] of the world and this is the current
+
+[00:47:44.319] state of the world because our output is
+
+[00:47:46.079] specifications.
+
+[00:47:47.680] Does that sound right?
+
+[00:47:49.440] >> Yep. So, I've ran Ralph in reverse
+
+[00:47:53.119] >> and I've cloned things that I went I
+
+[00:47:57.920] heard that like commercial open source
+
+[00:48:01.119] companies like crazy stuff crazy crazy
+
+[00:48:05.359] stuff just ran it in full reverse and
+
+[00:48:08.480] then
+
+[00:48:10.000] um due to a pecuriality in Australian
+
+[00:48:13.119] copyright law because it was kind of
+
+[00:48:16.000] like no effort involved. It was computer
+
+[00:48:18.880] doing it. It's actually legal.
+
+[00:48:21.599] So you could take a proprietary code
+
+[00:48:23.839] base,
+
+[00:48:24.800] >> take it up to your white label
+
+[00:48:26.400] specifications,
+
+[00:48:28.160] >> throw away the tainted IP and then Ralph
+
+[00:48:30.559] run Ralph forwards.
+
+[00:48:33.359] >> So let me u let me try and reframe this
+
+[00:48:35.520] question really fast. For example, we
+
+[00:48:37.680] run everything BAML's run purely in
+
+[00:48:39.920] Rust. Let's say I decided tomorrow that
+
+[00:48:42.160] I want to migrate our 300,000 lines of
+
+[00:48:44.640] Rust code as a compiler to Zig.
+
+[00:48:49.040] >> Bro, did you did you know what I was
+
+[00:48:50.960] doing on this episode? This is literally
+
+[00:48:52.640] my one of my examples.
+
+[00:48:55.599] >> That's so funny. But um I not know that.
+
+[00:48:58.000] But I have a question. Give me your
+
+[00:48:59.520] overunder on how well you think that
+
+[00:49:00.880] would work in terms of the most
+
+[00:49:02.400] important part being opaque reliability
+
+[00:49:05.280] to a user. How how much would you trust
+
+[00:49:08.079] it? Because the hardest part about the
+
+[00:49:10.720] system is like
+
+[00:49:13.119] >> the testing coverage is very hard at the
+
+[00:49:15.280] end of a real code base. So in this
+
+[00:49:17.680] scenario, I bet we could get a prototype
+
+[00:49:19.440] that gets pretty close. But how how
+
+[00:49:21.920] close to current parody would we
+
+[00:49:23.680] actually get?
+
+[00:49:25.760] The way I look at Ralph is kind of like
+
+[00:49:27.760] a a principal software engineer who
+
+[00:49:30.640] wants to
+
+[00:49:32.480] uh get something done
+
+[00:49:35.680] without having to like sit down for
+
+[00:49:38.240] endless meetings. Like the specs is your
+
+[00:49:41.599] kind of the PRD, the working code
+
+[00:49:43.599] prototype. Um, you can use it to get
+
+[00:49:48.800] essentially an army of interns to just
+
+[00:49:50.960] get a concept in your idea out really
+
+[00:49:53.920] fast.
+
+[00:49:55.760] Um, conceptual prototype without like
+
+[00:49:59.440] enough if you have an idea that you
+
+[00:50:01.119] could scaffold a team around you pretty
+
+[00:50:02.720] much instantly,
+
+[00:50:04.800] right? And there's no nothing precious
+
+[00:50:06.640] about the source code. So that's that's
+
+[00:50:08.079] the level of maturity that I I think at
+
+[00:50:11.200] now. I've had successes in essentially
+
+[00:50:15.040] oneshotting things. It it it you got to
+
+[00:50:18.640] really think about the unit the concrete
+
+[00:50:21.119] unit of domain. So I like when I was
+
+[00:50:24.960] over at source graph I there was a
+
+[00:50:27.359] really good um mermaid library in Golang
+
+[00:50:33.839] and it had really good property based
+
+[00:50:36.480] tests
+
+[00:50:38.319] and because of those really good
+
+[00:50:39.680] property based tests I was able to go oh
+
+[00:50:43.839] I can use those property based tests as
+
+[00:50:46.720] input data to drive the new generation
+
+[00:50:49.760] to reject if the new generation is bad.
+
+[00:50:51.760] So it was like take this Golang like
+
+[00:50:54.720] mermaid diagram drawer and make it in
+
+[00:50:57.680] Typescript and then we're able to just
+
+[00:51:00.400] essentially transpile and use the old
+
+[00:51:02.800] test data to drive the loop or the new
+
+[00:51:05.359] one
+
+[00:51:06.319] >> and you didn't even have to imple you
+
+[00:51:08.480] didn't even need to have to implement
+
+[00:51:10.640] the testing feedback back pressure loop.
+
+[00:51:13.359] You just had to have it designed. You
+
+[00:51:15.200] had to know what the properties you
+
+[00:51:16.800] wanted to test. This is the engineering
+
+[00:51:19.680] engineering not coding.
+
+[00:51:21.119] >> The the people who are really really
+
+[00:51:23.680] good at this like agentic engineering
+
+[00:51:26.800] they'll spend three days designing the
+
+[00:51:29.200] back pressure harness. They won't even
+
+[00:51:30.800] implement it. They'll just design the
+
+[00:51:32.800] answer to the question how will the
+
+[00:51:34.640] model know that it's working and then
+
+[00:51:37.119] they'll spend three days on that and
+
+[00:51:38.319] then they'll just hand it to the model
+
+[00:51:39.599] and let it cook for 48 hours and they'll
+
+[00:51:42.079] come back to 50,000 lines of working
+
+[00:51:44.160] code.
+
+[00:51:45.359] So I have a question about this because
+
+[00:51:46.960] I think this premise that you're saying
+
+[00:51:49.440] is very similar to why the Rust language
+
+[00:51:51.280] exists. Like Rust exists like why does
+
+[00:51:53.599] code in Rust mostly just work? I mean
+
+[00:51:55.280] part of it's just syntax. My personal
+
+[00:51:57.040] opinion is that because like testing is
+
+[00:51:58.880] one of the few things that is built into
+
+[00:52:00.400] Rust as a part of the core language not
+
+[00:52:02.880] as a part of like an afterthought. Like
+
+[00:52:04.400] in Python you have to import piest to do
+
+[00:52:06.079] it. In Typescript to import Jest like
+
+[00:52:08.319] test is just a syntax.
+
+[00:52:10.720] >> For someone that has never seen Rust
+
+[00:52:12.079] code I'll just show you guys really fast
+
+[00:52:13.280] what I mean. And I have a the reason I'm
+
+[00:52:15.839] asking this is because I actually do
+
+[00:52:16.960] have a question about this
+
+[00:52:19.119] which is um like
+
+[00:52:21.440] >> I describe this as the soundness of the
+
+[00:52:23.359] language
+
+[00:52:24.800] >> like right over here like I don't know
+
+[00:52:26.240] about that but like I think R is
+
+[00:52:28.079] beautiful but I know many people that
+
+[00:52:29.520] probably would like disagree like you
+
+[00:52:31.280] basically mark a test as a test thing
+
+[00:52:32.880] and now you can one you get really nice
+
+[00:52:34.240] hooks to run this and this is like a CLI
+
+[00:52:35.920] command run
+
+[00:52:43.270] you can just write test anywhere in the
+
+[00:52:43.280] file it doesn't need a file any just
+
+[00:52:46.079] become a test. So if I for example let's
+
+[00:52:49.119] say this is sorry this is very
+
+[00:52:51.520] complicated code. I'll just let's say I
+
+[00:52:53.119] wanted to write a test for this
+
+[00:52:54.240] function. I could literally just write
+
+[00:52:56.000] really quickly cfg test. Boom. I now
+
+[00:52:59.119] have a test for this function.
+
+[00:53:02.240] Uh and this will test this function for
+
+[00:53:04.000] me and do something with it if I wanted
+
+[00:53:05.839] to. And the fact that I can just write a
+
+[00:53:08.400] test really quickly means that whenever
+
+[00:53:09.920] I write Rust code, I will basically
+
+[00:53:12.400] never um how do I how do I describe it?
+
+[00:53:15.520] I'll basically never ever break my code
+
+[00:53:17.839] because the minute I get a bug, I just
+
+[00:53:19.119] add this test into here and now my code
+
+[00:53:20.480] is just magically tested from here on
+
+[00:53:22.400] out.
+
+[00:53:23.520] >> And the fact that the language does this
+
+[00:53:25.040] makes that the loop is really good. But
+
+[00:53:28.160] what the question I have for you guys is
+
+[00:53:30.559] what I run into is even if I write the
+
+[00:53:33.520] test in theory this Ralph Wiggum
+
+[00:53:35.520] technique should work with any coding
+
+[00:53:36.640] agent. It it shouldn't really require
+
+[00:53:38.240] the Ralph Wigum technique. I should be
+
+[00:53:39.599] able to do this in cloud code in codeex
+
+[00:53:42.400] and in any scenario. What is the alpha
+
+[00:53:45.680] that I'm getting specifically with the
+
+[00:53:47.599] Ralph Wigum technique and what is what
+
+[00:53:49.520] help me distill that into like a one-s
+
+[00:53:51.599] sentence um difference between just
+
+[00:53:54.640] running Claude code from both of you
+
+[00:53:56.240] independently. I'd love to hear that
+
+[00:53:59.119] >> the
+
+[00:54:01.040] it's distilled down to I realize the
+
+[00:54:03.520] LLMs understand what a compiler is
+
+[00:54:05.839] better than most university students or
+
+[00:54:10.160] people who are many years past like out
+
+[00:54:13.680] of university unless that's their
+
+[00:54:15.920] professional job. So you can lean upon
+
+[00:54:19.119] that training data set and it can make
+
+[00:54:22.319] decisions
+
+[00:54:23.920] statistically make decisions of what the
+
+[00:54:26.720] next logical order of things that should
+
+[00:54:29.280] implement. So if we're not talking about
+
+[00:54:31.440] compilers quickly, I've had it run
+
+[00:54:34.319] through an implementation plan for
+
+[00:54:38.480] um an implementation plan and it's done
+
+[00:54:41.119] logging first. Like it's got 20 items to
+
+[00:54:44.079] do. does logging first and then I tell
+
+[00:54:46.319] it it should have telemetry and it does
+
+[00:54:48.079] the telemetry next and then it's uh uh
+
+[00:54:51.920] tenant awareness because I'm doing
+
+[00:54:53.520] multi-tenant applications. So next thing
+
+[00:54:55.680] you know it creates the uh the tenant uh
+
+[00:54:59.280] middleware and none of this the the key
+
+[00:55:03.359] and it it does that and then from that
+
+[00:55:04.960] point forward it it builds continually
+
+[00:55:06.960] on it because it's statistically making
+
+[00:55:09.440] better decisions what to what to
+
+[00:55:10.960] implement than most engineers do or like
+
+[00:55:14.240] even best matching what I would do. It's
+
+[00:55:17.440] it's about the probably the simplest way
+
+[00:55:19.680] of looking at this is we got into our
+
+[00:55:22.800] profession because we loved controlling
+
+[00:55:25.839] computers. It is so good to like the
+
+[00:55:28.079] control aspect. I get to control the
+
+[00:55:30.559] computer.
+
+[00:55:32.319] The people who really get it Dex and
+
+[00:55:34.160] I'll hand over to you is I feel they've
+
+[00:55:37.359] surrendered the control but not their
+
+[00:55:39.440] thinking.
+
+[00:55:41.040] They've they've they they've they've
+
+[00:55:43.520] they've learned to understand that
+
+[00:55:45.760] statistically it can create and decide
+
+[00:55:48.880] what the next step is
+
+[00:55:51.680] as good as what you would do at times.
+
+[00:55:54.640] And at times it's most of the time it's
+
+[00:55:58.079] scary how good it's able to make the the
+
+[00:56:00.079] next step or decision.
+
+[00:56:01.920] >> But is that different than just letting
+
+[00:56:04.240] it rip in cloud code? That's I think
+
+[00:56:06.880] that's what I'm trying to like from a
+
+[00:56:08.240] practical standpoint. I think most
+
+[00:56:09.520] people that are watching and listening
+
+[00:56:11.359] what they do is they use cloud code,
+
+[00:56:12.880] they use codec, they use cursor
+
+[00:56:15.680] uh and like what you guys are doing is
+
+[00:56:17.200] slightly different technique. You're
+
+[00:56:18.880] literally running a prompt and it's
+
+[00:56:20.079] still running through cloud code but
+
+[00:56:21.359] there's a slightly different harness
+
+[00:56:22.799] that you're using to run cloud code is
+
+[00:56:24.880] the way that I describe it.
+
+[00:56:26.880] >> So what is that advantage?
+
+[00:56:28.960] >> So let me yeah let me let me give my
+
+[00:56:30.720] take here. Um because Jeff made some
+
+[00:56:32.400] good points about like hey there's a lot
+
+[00:56:33.920] in the training data set that if you
+
+[00:56:35.599] just kind of like let it figure itself
+
+[00:56:37.440] out you will get good answers to I think
+
+[00:56:40.559] for me the challenge with and I think of
+
+[00:56:42.880] like model inner harness outer harness
+
+[00:56:45.359] right so you have the inner harness
+
+[00:56:46.559] which is something like claude code or
+
+[00:56:48.000] codeex or the CLI and then you have
+
+[00:56:50.480] things like that I would describe as
+
+[00:56:52.400] your outer harness and I've used two
+
+[00:56:55.040] different outer harnesses quite often
+
+[00:56:57.280] one of them is the research plan
+
+[00:56:59.040] implement workflow that works really
+
+[00:57:00.720] well for brownfield code bases and lets
+
+[00:57:02.720] you get like a vertical slice of
+
+[00:57:04.720] relevant context in a really old
+
+[00:57:06.559] codebase so you can make a valid
+
+[00:57:08.079] implementation plan and the review of a
+
+[00:57:09.760] human in the loop like that's our outer
+
+[00:57:11.119] harness. The other outer harness is this
+
+[00:57:13.599] thing like the biggest problem with
+
+[00:57:14.960] these coding agents that requires the
+
+[00:57:17.200] human to be in the loop is like people
+
+[00:57:18.640] say oh cloud code it'll work for a
+
+[00:57:20.079] minute and then I'll have to come give
+
+[00:57:21.520] it the next thing and the next thing and
+
+[00:57:22.880] the next and even if I prompted we saw
+
+[00:57:24.720] some someone from the AI the works
+
+[00:57:26.000] community was giving a talk um at the
+
+[00:57:28.240] unconference and he basically showed us
+
+[00:57:29.920] his prompt and it was like do not stop
+
+[00:57:31.760] after one step do not stop after two
+
+[00:57:33.680] steps do not he literally his whole
+
+[00:57:35.040] prompt was literally just like trying to
+
+[00:57:36.799] convince the model to keep working but
+
+[00:57:38.960] the problem is
+
+[00:57:39.440] >> it doesn't work the models get anxiety
+
+[00:57:41.599] model, it will terminate early.
+
+[00:57:44.400] >> Yeah. And so there's two there's two
+
+[00:57:45.760] pieces of this like one of them is like
+
+[00:57:47.359] how do you get a model to work for
+
+[00:57:48.799] longer than uh it wants to is you
+
+[00:57:52.480] actually have it only you tell it to
+
+[00:57:53.920] work for only a short time and you do
+
+[00:57:56.079] that over and over again. And then the
+
+[00:57:58.160] other side is like how do you do context
+
+[00:58:00.480] engineering? How do you guarantee as
+
+[00:58:03.680] much work as possible? As you say Jay
+
+[00:58:05.599] like Jeff like the more context you use
+
+[00:58:08.720] the worse results you'll get. How do you
+
+[00:58:11.200] make sure that you're doing most of the
+
+[00:58:13.119] work in the smart zone as we call it?
+
+[00:58:15.599] And so how like this allows you if you
+
+[00:58:18.160] can set your specs and allocate them
+
+[00:58:19.920] properly of like exactly how much budget
+
+[00:58:22.559] you know I mean you were the first
+
+[00:58:23.599] person to explain this to me Jeff was
+
+[00:58:25.200] like okay you want to budget about 7% of
+
+[00:58:27.280] your context window for specs 7% for
+
+[00:58:29.920] finding the state of the world you know
+
+[00:58:31.520] 3% for actually reading the cont the
+
+[00:58:33.520] implementation plan and then you budget
+
+[00:58:35.599] your you know 10 to 15% for your like
+
+[00:58:37.920] base message and MCPS and all this crap
+
+[00:58:40.480] y and that way you know that like
+
+[00:58:42.799] because it's not just writing the files
+
+[00:58:44.559] it's like 10% 20% of your context window
+
+[00:58:48.240] if that's all you have right if this is
+
+[00:58:49.760] 10% for doing the work you need to be
+
+[00:58:52.079] able to do the number of edits you need
+
+[00:58:54.640] you need to be able to run the test you
+
+[00:58:56.079] need to be able to fix the test you need
+
+[00:58:57.599] to be able to update the plan with your
+
+[00:58:59.119] status and you need to be able to commit
+
+[00:59:01.680] like two file edits is enough that like
+
+[00:59:04.960] you're going to fill up 10% of your
+
+[00:59:06.240] context window with everything else and
+
+[00:59:08.240] so this is the other part is like long
+
+[00:59:10.240] horizon by just constantly looping it
+
+[00:59:12.079] through and restarting but also better
+
+[00:59:14.559] results because you're designing it to
+
+[00:59:16.640] only do the smallest possible chunk of
+
+[00:59:18.640] work at a time.
+
+[00:59:20.160] >> Yeah, the bash loop is the most abstract
+
+[00:59:22.640] thing. I was doing this all by hand in
+
+[00:59:26.319] cursor back
+
+[00:59:28.880] like
+
+[00:59:30.079] >> check off the box
+
+[00:59:32.880] >> just absolutely driving it like
+
+[00:59:35.280] >> text
+
+[00:59:37.280] >> just so people get an idea of what we're
+
+[00:59:38.640] talking about the command line tool of
+
+[00:59:40.319] like the what do you just cat it so
+
+[00:59:42.559] people know what we mean by the bash
+
+[00:59:43.920] loop
+
+[00:59:45.119] >> yeah we'll have another look
+
+[00:59:46.960] >> so it's actually
+
+[00:59:49.440] >> there's no silver bullet here
+
+[00:59:52.720] >> there's no silver bullet here. It's it's
+
+[00:59:55.920] how you think and approach the problem
+
+[00:59:58.240] domain. It's not a tool. It's not a
+
+[01:00:00.640] workflow.
+
+[01:00:02.240] Um you could
+
+[01:00:05.440] the bash loop was
+
+[01:00:08.400] nice because I started to see common
+
+[01:00:10.880] failure domains
+
+[01:00:13.119] and then I was able to update the bash
+
+[01:00:15.359] loop to do a git reset hard or like
+
+[01:00:18.640] reset the agent or all these other
+
+[01:00:20.559] things. It allowed me to start thinking
+
+[01:00:22.079] abstractly.
+
+[01:00:23.920] >> So the biggest difference in the hot
+
+[01:00:26.079] seat
+
+[01:00:27.280] >> I'm going to try and summarize what I
+
+[01:00:28.720] took away as the takeaway from this
+
+[01:00:30.880] perspective. If you go back whenever you
+
+[01:00:32.720] show that text.
+
+[01:00:33.920] >> Yeah.
+
+[01:00:34.240] >> The biggest difference between running
+
+[01:00:35.760] quad code or codeex or something else
+
+[01:00:37.920] here versus running the walkwigum loop
+
+[01:00:40.480] from what I see is this ability to go
+
+[01:00:43.839] ahead and when I pull this up is this
+
+[01:00:46.880] ability to say that for extremely
+
+[01:00:49.040] extremely hard tasks what I need to
+
+[01:00:52.559] worry about at all times is the model
+
+[01:00:55.920] will not continue them. And I think I
+
+[01:00:57.760] have personally experienced that and a
+
+[01:00:58.799] lot of people have experienced that.
+
+[01:00:59.920] What I do is because I'm usually working
+
+[01:01:02.640] with Claude or Codeex, it hasn't really
+
+[01:01:05.760] been a problem because I just let it
+
+[01:01:07.200] come. But it's definitely a problem that
+
+[01:01:08.559] if I go to bed and I definitely want
+
+[01:01:10.000] Claw to keep continuing reaching to some
+
+[01:01:12.240] good horizon by the end of the by the
+
+[01:01:15.119] end, then I definitely need to provide
+
+[01:01:17.680] that in some better mechanism.
+
+[01:01:21.119] So in that scenario, what I can do is I
+
+[01:01:24.000] can either prop it and tell the model to
+
+[01:01:27.119] keep going until it's actually done and
+
+[01:01:28.559] hope that it does that or I can force it
+
+[01:01:31.920] to go do this. And the only way I can
+
+[01:01:33.839] really force it to do this is basically
+
+[01:01:35.200] continuously run the process.
+
+[01:01:37.040] >> Like I deterministic again, Claude.
+
+[01:01:39.520] >> Yeah.
+
+[01:01:40.079] >> Like basically add determinism to
+
+[01:01:42.160] running forever.
+
+[01:01:43.440] >> Like for and what I
+
+[01:01:45.680] >> now when I run into this, can you go
+
+[01:01:47.760] back?
+
+[01:01:48.960] >> Uh yeah. Yeah. And then I'll I have a
+
+[01:01:51.359] picture. Yeah.
+
+[01:01:52.240] >> Yeah. And then when you run into this,
+
+[01:01:54.240] the fundamental tradeoff that you end up
+
+[01:01:57.200] here is some tasks do indeed need long
+
+[01:02:00.160] context horizon. And in those tasks,
+
+[01:02:02.559] this loop will not work well because if
+
+[01:02:05.280] you need a long context horizon like
+
+[01:02:07.440] you're you've design the system and I'm
+
+[01:02:10.000] not saying there's you can't modify this
+
+[01:02:11.440] loop to make it run better for those
+
+[01:02:13.119] tasks. But as stated here, this task
+
+[01:02:16.400] will probably suffer because the
+
+[01:02:17.680] implementation plan just may not contain
+
+[01:02:20.160] enough details. And
+
+[01:02:21.920] >> this is when I'd see it
+
+[01:02:22.880] >> to be able to do something.
+
+[01:02:24.880] >> When I see it like hill climbing towards
+
+[01:02:26.720] a destination, it's just not getting
+
+[01:02:28.079] there. Like it's keep resetting hard too
+
+[01:02:30.160] many times.
+
+[01:02:31.520] >> Um this is where you know I do haven't
+
+[01:02:34.720] got here yet. I would throw away the
+
+[01:02:36.559] implementation plan continually because
+
+[01:02:38.720] it was so easy to regenerate the
+
+[01:02:40.240] implement and you start again.
+
+[01:02:42.799] Then you just kick it off and you go
+
+[01:02:44.079] down to the pub and drink a beer.
+
+[01:02:46.480] >> Exactly. So, it's not saying that it
+
+[01:02:48.079] doesn't work. It's just that you
+
+[01:02:49.280] interrupt it. You interact with it in a
+
+[01:02:51.200] different way.
+
+[01:02:51.599] >> Oh, absolutely. This is
+
+[01:02:53.920] >> like It's not like
+
+[01:02:54.880] >> It's kind of like a If you're a really
+
+[01:02:57.359] good M2, like a manager 2, that's kind
+
+[01:02:59.839] of what you do. You're not really going
+
+[01:03:01.200] to go and interrupt. You don't want
+
+[01:03:02.319] stand up bigs from your teams, but you
+
+[01:03:04.400] do need a way to stop a team from going
+
+[01:03:06.240] down the totally wrong direction if
+
+[01:03:07.760] they've been at it for a while.
+
+[01:03:09.599] >> I would. And I think this is kind of the
+
+[01:03:12.880] The reason I had it streaming, V, is so
+
+[01:03:16.000] I I could just rewind to a point in time
+
+[01:03:19.200] and skip through and I was monitoring it
+
+[01:03:22.079] as if I was an engineering manager
+
+[01:03:23.920] getting my daily status updates or my
+
+[01:03:27.280] Jurro board. Like it was a second
+
+[01:03:29.440] monitor that was available on my phone.
+
+[01:03:32.160] I was using YouTube to stream to my
+
+[01:03:34.640] phone with VCR record. And I was going
+
+[01:03:37.359] through reviewing all that work and the
+
+[01:03:39.200] amount of times it's failed
+
+[01:03:41.200] >> and it's failed because of uh the idiot
+
+[01:03:44.400] in front of the computer, me, I gave it
+
+[01:03:46.880] the wrong input data, the wrong
+
+[01:03:48.480] implementation plan, the wrong specs or
+
+[01:03:51.440] I underspecified what the objective is
+
+[01:03:55.440] and it gets that behavior exactly you
+
+[01:03:57.119] described.
+
+[01:03:58.480] >> We've got one really important question
+
+[01:04:00.079] that keeps coming up. How does it stop?
+
+[01:04:02.960] >> Uh and I know we talked about this
+
+[01:04:04.240] briefly. The answer is it stops in
+
+[01:04:06.000] general. You've deterministically said
+
+[01:04:08.319] it should not stop. It stops when you
+
+[01:04:10.319] hit control C. That is it.
+
+[01:04:13.680] >> This is why you do a commit after every
+
+[01:04:16.079] loop when you get a success a successful
+
+[01:04:18.400] compilation. So
+
+[01:04:20.000] >> it's like model training, right? It's
+
+[01:04:21.599] like you overtrain the model and then
+
+[01:04:23.280] you re you roll back to the actual good
+
+[01:04:25.440] version, right?
+
+[01:04:27.680] >> Yeah. The other part that we didn't get
+
+[01:04:30.000] into was uh
+
+[01:04:33.599] a perspective of how when in that loop
+
+[01:04:36.720] is h how you drove the context window,
+
+[01:04:40.960] how you drive the context window. I
+
+[01:04:43.760] realized you could register
+
+[01:04:46.720] uh new context windows
+
+[01:04:50.400] in as tools in an existing context
+
+[01:04:54.480] window. We call them sub aents. now. And
+
+[01:04:59.359] what that meant was I could spawn a
+
+[01:05:03.200] green thread like a new process green
+
+[01:05:06.160] thread and anything that was a minty
+
+[01:05:09.599] allocation like cargo test and maybe
+
+[01:05:12.720] that that maybe that uses 200k of
+
+[01:05:15.359] tokens. I don't want 200k of tokens
+
+[01:05:18.799] appended to the main inferencing loop. I
+
+[01:05:23.280] want garbage collection. I went green
+
+[01:05:26.000] threads with garbage collection. I went
+
+[01:05:27.520] from mal malicking manually with C
+
+[01:05:30.079] memory with C all the way into the JVM
+
+[01:05:32.960] era. I wanted automatic garbage
+
+[01:05:35.920] collection. That's the way I was looking
+
+[01:05:37.680] at it. I wanted I was running a
+
+[01:05:40.240] operating system process as a single
+
+[01:05:42.799] process. Everyone's talking about agent
+
+[01:05:45.680] agent like microservices type stuff. Um
+
+[01:05:50.640] I I don't think it's a thing right now.
+
+[01:05:53.359] But what what I was focusing on is
+
+[01:05:55.119] keeping it simple. And the idea was how
+
+[01:05:57.280] do I keep one process running forever?
+
+[01:06:01.200] That loop running forever. How do I keep
+
+[01:06:03.920] it running forever? And the key was
+
+[01:06:06.160] don't allocate to it. And the way to not
+
+[01:06:09.359] allocate to it is to spawn a green
+
+[01:06:11.760] thread,
+
+[01:06:12.720] >> JVM
+
+[01:06:14.559] like vinking and garbage collect. So the
+
+[01:06:17.599] idea is all you care about is the Unix
+
+[01:06:20.079] return code on cargo test
+
+[01:06:22.960] >> will and
+
+[01:06:24.079] >> we're running a little bit long today.
+
+[01:06:26.319] >> You summarize back to make decisions.
+
+[01:06:29.200] >> I'm going to show one more thing on the
+
+[01:06:31.039] how does it exit and then I'm going to
+
+[01:06:32.480] hand it to you viob.
+
+[01:06:33.920] >> Yeah,
+
+[01:06:34.160] >> we did this
+
+[01:06:35.680] >> uh we did this in a hackathon and we
+
+[01:06:37.440] used it to port a bunch of repos from
+
+[01:06:39.119] Python to Typescript and things like
+
+[01:06:40.720] this. Uh, one of the agents figured out
+
+[01:06:43.599] it was running in an infinite loop and
+
+[01:06:46.240] it figured out how to send a kill signal
+
+[01:06:48.960] to its own process and stop itself. It
+
+[01:06:51.680] like freaked out an existential crisis
+
+[01:06:53.920] and like offed itself. But that's that's
+
+[01:06:56.799] one option of how it finishes is if if
+
+[01:06:58.799] the prompt is in a certain way, it will
+
+[01:07:00.400] figure that out.
+
+[01:07:02.000] >> Um, I have a couple things. We started a
+
+[01:07:04.000] demo at the beginning of this call where
+
+[01:07:05.359] we were like, we ran the raw loop for
+
+[01:07:07.280] the to-do loop. Let's see it. We built a
+
+[01:07:08.960] to-do app. Do you can you share a quick
+
+[01:07:11.839] description of what the initial to-do
+
+[01:07:13.359] app was speced out to be
+
+[01:07:15.119] >> and then I want to show off what we have
+
+[01:07:17.440] now and we'll start with purely the
+
+[01:07:20.240] demo.
+
+[01:07:21.680] So yeah, so here's the spec. You know,
+
+[01:07:23.839] to-dos application login with email and
+
+[01:07:26.000] magic link. Users can add to-dos. They
+
+[01:07:27.760] can group to-dos into lists. Um they can
+
+[01:07:30.319] share a list of to-dos with other users.
+
+[01:07:31.760] They can add comments and emoji
+
+[01:07:32.960] reactions. They can mark. And then I
+
+[01:07:34.400] added in the middle of this I added a
+
+[01:07:36.079] one new instruction. So let's go let's
+
+[01:07:38.000] go have a look at it. Um
+
+[01:07:40.480] >> and it's an X.js app. So we just go look
+
+[01:07:42.640] at it. Cool. Magic links.
+
+[01:07:45.440] >> Yep.
+
+[01:07:45.839] >> Human layer.dev. We'll send a link
+
+[01:07:48.000] there. I'm going to shut resend API key
+
+[01:07:51.760] manually while you
+
+[01:07:52.960] >> I set that in the environment.
+
+[01:07:54.160] >> Agent did not do that. Yes.
+
+[01:07:55.520] >> No. Yeah, I didn't want to wait for it
+
+[01:07:57.039] to do that.
+
+[01:07:58.400] >> Totally valid.
+
+[01:08:00.400] >> Um
+
+[01:08:02.480] let's see. Post offline.
+
+[01:08:03.920] >> Let's see what the app did.
+
+[01:08:05.839] >> So, I'm trying
+
+[01:08:06.799] >> while we're running this demo. people
+
+[01:08:08.640] definitely uh we'll take questions now
+
+[01:08:10.240] for the next five or 10 minutes if
+
+[01:08:11.760] people have them and then we'll go um
+
+[01:08:13.920] we'll try and like just like I said show
+
+[01:08:15.920] the real code of what ended up
+
+[01:08:17.279] concluding at the end of this content
+
+[01:08:20.319] >> cuz like while we were talking a lot
+
+[01:08:21.600] about this I think the best thing about
+
+[01:08:23.120] this episode is we actually don't
+
+[01:08:25.600] there's not much to code and show like
+
+[01:08:27.600] we really just run a while loop with a
+
+[01:08:29.199] very simple prompt in cloud code and let
+
+[01:08:30.880] it rip and I think a lot of this why we
+
+[01:08:33.040] talk so much about theory is because
+
+[01:08:34.480] like
+
+[01:08:36.239] >> honestly that's what's useful in like
+
+[01:08:38.000] understanding why this stuff works
+
+[01:08:39.679] because we'll run this code and we'll
+
+[01:08:41.120] see what happens.
+
+[01:08:42.560] >> So, I didn't get the email yet. Um, so
+
+[01:08:45.199] I'm just going to grab happened to log
+
+[01:08:47.359] out the magic link.
+
+[01:08:49.120] Yeah. So this is what exactly why we
+
+[01:08:51.759] spend so much time in theory because
+
+[01:08:53.759] it's not I see so many pro people going
+
+[01:08:57.040] look at my perfect prompt the like buy
+
+[01:09:01.040] my course of the perfect prompt or the
+
+[01:09:03.920] perfect sub aent persona and all the
+
+[01:09:06.400] rest like it it it it's all about like
+
+[01:09:10.719] engineering is first principles thinking
+
+[01:09:13.120] here um and I'm looking for someone to
+
+[01:09:18.080] come up with something better than a
+
+[01:09:19.520] while true bash loop. Whatever comes
+
+[01:09:22.000] next is going to be really great. Like
+
+[01:09:24.319] how do you solve the halting problem?
+
+[01:09:25.920] Like how do you like
+
+[01:09:28.480] decide when it's going to terminate?
+
+[01:09:30.239] I've seen self- termination. Dex has
+
+[01:09:32.000] seen self- termination. I've seen
+
+[01:09:34.239] underbaking. I've seen perfectly baked
+
+[01:09:37.120] and you just do get reset. This is where
+
+[01:09:39.440] you put your judgment in. And I've seen
+
+[01:09:41.199] overbaked when it's it's added features
+
+[01:09:43.679] because I was silly and I didn't look at
+
+[01:09:46.560] the specifications or was hallucinated
+
+[01:09:48.799] and just on the implementation plan
+
+[01:09:50.560] decide to add something more.
+
+[01:09:52.799] >> Yeah. Like running like
+
+[01:09:55.360] >> think about it yourself as like an
+
+[01:09:56.719] engineer. If someone gives you a
+
+[01:09:58.159] checklist of all the features you want
+
+[01:09:59.600] running and then they're all checked off
+
+[01:10:01.360] and they're like they just give it to
+
+[01:10:02.640] you of like build stuff, you will build
+
+[01:10:05.520] stuff because that is what
+
+[01:10:06.960] >> it just builds stuff. It it's it's kind
+
+[01:10:09.920] of like the Fantasia mop,
+
+[01:10:12.640] >> like the scary uh pdoom
+
+[01:10:16.960] a fantasia mop when I was first coming
+
+[01:10:19.040] across it cuz I realized
+
+[01:10:20.400] >> it just keeps working.
+
+[01:10:21.199] >> This is enough.
+
+[01:10:22.400] >> It just keeps working. This is enough to
+
+[01:10:24.400] to get software I don't know 70% done,
+
+[01:10:27.440] 80% done. like the prototype that
+
+[01:10:29.840] normally got off like all this
+
+[01:10:31.760] offshoring that people normally did for
+
+[01:10:34.080] 6 months or two years and they they
+
+[01:10:36.320] dropped 100 grand for like a a little
+
+[01:10:39.120] pock like I just don't see the place in
+
+[01:10:42.239] the market for it anymore because a
+
+[01:10:44.800] competent engineer can just run the loop
+
+[01:10:48.159] and and they get the results back in in
+
+[01:10:50.400] in a couple days.
+
+[01:10:52.000] >> I I will tell you one counter-argument
+
+[01:10:54.080] for why I disagree with that though.
+
+[01:10:56.480] Honestly, when I want to when I hire
+
+[01:10:58.560] someone or when I when I ask some
+
+[01:11:00.960] software to solve my problem, I often
+
+[01:11:02.719] most of the time just want the problem
+
+[01:11:04.000] solved for me. And even if I could do it
+
+[01:11:06.159] myself, it's just not as interesting as
+
+[01:11:09.040] just having the problem be solved for
+
+[01:11:10.880] me.
+
+[01:11:11.840] >> Yeah.
+
+[01:11:12.239] >> And I think so like even if even if it's
+
+[01:11:15.040] possible for me to go technically write
+
+[01:11:16.640] the code to go do it, it's still highly
+
+[01:11:18.640] useful for me to hire someone else that
+
+[01:11:20.239] can just go take care of that problem
+
+[01:11:21.679] and spend their time thinking about it.
+
+[01:11:23.760] Because like for example right now
+
+[01:11:25.040] Dexter is working on communicating with
+
+[01:11:26.560] the model to make this work. Could I be
+
+[01:11:28.334] [laughter] doing that 100%. Like I could
+
+[01:11:30.880] go do that but it's definitely useful
+
+[01:11:33.440] for someone else to be doing that and me
+
+[01:11:34.960] not spending my time on there. So like
+
+[01:11:36.320] when people talk about these incredibly
+
+[01:11:37.600] small teams doing everything. I think
+
+[01:11:40.080] one person can definitely do more than
+
+[01:11:42.080] they used to be able to do. But
+
+[01:11:45.199] definitely five people all doing more
+
+[01:11:47.600] than what one person individually used
+
+[01:11:49.040] to do will do more than what five people
+
+[01:11:50.800] used to do before as well. And some
+
+[01:11:53.440] problems, you're right, don't need five
+
+[01:11:55.199] people of work. But some problem, most
+
+[01:11:57.280] problems that are interesting, I think
+
+[01:11:58.560] do need usually at least two people's
+
+[01:12:00.400] worth of work.
+
+[01:12:02.080] >> There's building upon that, there's
+
+[01:12:04.080] there's failure domains, liability, and
+
+[01:12:06.480] warranty domains of business. Like I I I
+
+[01:12:10.159] cloned um uh San Fran um uh PKI startup
+
+[01:12:16.880] um just just run Ralph in reverse to
+
+[01:12:20.000] specifications and ran it forward.
+
+[01:12:22.719] see if it could
+
+[01:12:23.600] >> Did you pull their docs?
+
+[01:12:25.760] >> I put so some of the source code wasn't
+
+[01:12:28.159] available cuz it's enterprise.
+
+[01:12:30.320] >> Sure.
+
+[01:12:30.719] >> So I used their public facing
+
+[01:12:32.719] documentation as additional context to
+
+[01:12:34.960] reverse engineer to get the
+
+[01:12:36.640] specifications cuz the a lot of the
+
+[01:12:38.239] source code wasn't available and it was
+
+[01:12:40.400] able to generate it really well. But
+
+[01:12:42.640] let's be clear, we're talking about PKI
+
+[01:12:45.600] here, folks. Like that's a perfect
+
+[01:12:48.719] example. Like just because you can do it
+
+[01:12:50.560] doesn't mean you're going to do it. but
+
+[01:12:51.600] you're not going to run your business on
+
+[01:12:52.960] it. Um, you it's nice knowing that
+
+[01:12:57.679] there's a a company that I can pay money
+
+[01:13:00.239] to and they're specialized specialist in
+
+[01:13:02.400] this domain.
+
+[01:13:08.310] Uh Dave, your question running in
+
+[01:13:08.320] reverse is literally you take an
+
+[01:13:11.040] existing piece of intellectual property,
+
+[01:13:14.800] whether that be proprietary software or
+
+[01:13:17.920] proprietary documentation
+
+[01:13:20.480] and you essentially do a clean room. You
+
+[01:13:23.600] take it up to specific, you take the
+
+[01:13:25.679] proprietary code, you create uh
+
+[01:13:27.840] specifications
+
+[01:13:29.360] >> in autonomous way
+
+[01:13:31.120] >> and then you throw away the tainted
+
+[01:13:33.199] intellectual property.
+
+[01:13:34.960] >> Um, you need to speak with lawyers
+
+[01:13:37.840] because it could be argued under US law
+
+[01:13:41.520] that it's not a true clean room.
+
+[01:13:45.280] >> Um, I've
+
+[01:13:47.360] >> had some discussions and then you still
+
+[01:13:50.400] drive forwards to implement it.
+
+[01:13:53.440] Both of you have tried this for quite a
+
+[01:13:55.600] few different programs. And before we
+
+[01:13:57.120] close this out, I have a couple
+
+[01:13:58.560] questions that I want to ask you guys.
+
+[01:14:00.560] >> One, how many of your programs got to
+
+[01:14:02.400] past 80% correctness? Like are actually
+
+[01:14:04.880] good and like reliable when you did this
+
+[01:14:06.719] loop?
+
+[01:14:08.640] >> I think it's almost always you can get
+
+[01:14:10.400] to 90 or 95%. There's almost always a
+
+[01:14:13.920] little bit of steering and polishing.
+
+[01:14:15.600] Yeah. Jeff, what do you think?
+
+[01:14:17.760] Uh it I I
+
+[01:14:20.800] think software outsourcing is cooked.
+
+[01:14:24.239] Um like
+
+[01:14:26.560] >> you can get into the high 70s 80s. Like
+
+[01:14:30.320] there's going to be holes.
+
+[01:14:32.560] Um you don't trust the output. When it
+
+[01:14:36.080] says it's done, it's not really done.
+
+[01:14:37.920] Like reviewing code is one of the
+
+[01:14:40.560] hardest things now. um because the
+
+[01:14:43.840] velocity is so fast, it's it comes at
+
+[01:14:46.400] you faster than you can mentally adjust
+
+[01:14:48.880] and then you put a team factor into it.
+
+[01:14:51.679] It's really weird, folks. But
+
+[01:14:55.760] um if I needed to generatively figure
+
+[01:14:59.280] out the shape of it, like why wouldn't
+
+[01:15:02.320] you not take a spec and then implement
+
+[01:15:04.400] it in Zigg and then implement it in Rust
+
+[01:15:06.400] and implement it in Python and then like
+
+[01:15:09.199] go down to the pub, go for lunch, come
+
+[01:15:11.520] back and go, this is what it could kind
+
+[01:15:14.080] of look like. like really lean into the
+
+[01:15:15.920] generative aspects
+
+[01:15:18.239] um which allows you to capitalize on
+
+[01:15:20.560] things that would
+
+[01:15:23.040] there used to be a higher level
+
+[01:15:24.400] emotional connection to me with code.
+
+[01:15:26.719] >> It it doesn't exist anymore. Code is
+
+[01:15:29.280] disposable to me now. Ideas are not.
+
+[01:15:32.080] >> And the other thing is
+
+[01:15:35.440] um
+
+[01:15:37.679] it just feels like code's more
+
+[01:15:39.040] disposable now. It's more throwaway.
+
+[01:15:40.640] It's more like it's more about
+
+[01:15:43.840] um it's idea to execution immediately.
+
+[01:15:47.760] Idea execution, execution, execution,
+
+[01:15:49.840] execution. It's all about the idea. And
+
+[01:15:52.320] that's what's changed. Like it's just
+
+[01:15:54.159] this huge dopamine hit of getting
+
+[01:15:55.679] outcomes. It's crazy. But it's nowhere I
+
+[01:15:59.199] wouldn't call it engineering.
+
+[01:16:00.640] Engineering has li professional
+
+[01:16:02.480] liability to it. If you build a bridge
+
+[01:16:04.480] and the build bridge collapses, then you
+
+[01:16:06.719] should lose your license, should be
+
+[01:16:08.080] sued. Um kind of out of time, but I
+
+[01:16:11.600] think software engineering should have
+
+[01:16:13.199] professional liability to it. Um just
+
+[01:16:15.760] because AI generated it does not mean
+
+[01:16:19.440] >> that I mean
+
+[01:16:20.640] >> that like your brain you need to take
+
+[01:16:23.440] accountability for it.
+
+[01:16:25.520] >> The model will generate 70% done really
+
+[01:16:28.800] fast, really well in a generative way.
+
+[01:16:31.920] >> You can't hang up a shelf and then blame
+
+[01:16:34.080] the drill. Like it's your job to make
+
+[01:16:36.080] sure it's safe.
+
+[01:16:38.400] is um cool. I think with that we should
+
+[01:16:41.199] uh I think this episode has been really
+
+[01:16:42.800] fun. Uh I think that's if Have we got
+
+[01:16:44.960] the website working? Otherwise, we'll
+
+[01:16:46.239] post it later if it works.
+
+[01:16:48.480] >> I'll push all the code when it's done.
+
+[01:16:50.159] It's it's still churning. I think an
+
+[01:16:52.560] hour to bake is not enough time for a
+
+[01:16:54.719] app with that many features. And I was
+
+[01:16:56.560] using Opus. I think we used it would
+
+[01:16:58.159] have gone a little bit faster. I want to
+
+[01:16:59.440] share one more thing that I really love.
+
+[01:17:01.440] Uh thank you so much, Jeff. Uh I'm going
+
+[01:17:03.920] to share my screen one more time. It's a
+
+[01:17:05.840] little give give us all a little pat on
+
+[01:17:07.600] the back here. Um, let's have a look and
+
+[01:17:10.880] we'll we'll end on this one. Uh,
+
+[01:17:14.960] this is the most interesting show on
+
+[01:17:16.719] YouTube. Thank you, Jeff, for joining us
+
+[01:17:19.840] and making it even more interesting than
+
+[01:17:22.239] it is in in general. This was a blast.
+
+[01:17:25.199] Uh, [laughter]
+
+[01:17:26.719] >> until we next catch up in San Fran.
+
+[01:17:30.480] >> Um, we'll get there. And then funny
+
+[01:17:32.400] enough, uh Dash and I for the first time
+
+[01:17:34.560] are actually a room apart uh while we're
+
+[01:17:37.040] doing this thing. We just sadly didn't
+
+[01:17:38.480] have a webcam set up to go do it on the
+
+[01:17:40.000] same computer. Um but for everyone else
+
+[01:17:42.239] that's tuning in, uh this AI that works.
+
+[01:17:44.080] We try and show real working pipelines.
+
+[01:17:45.840] Um we will push the code and all the
+
+[01:17:47.520] markdown files and everything that
+
+[01:17:48.560] Dexter is doing here in the repo. So
+
+[01:17:50.159] you'll get it as per usual. Uh next
+
+[01:17:52.800] week's episode is going to go back to
+
+[01:17:54.640] some interesting context endurance stuff
+
+[01:17:56.320] and how to build a stick pipelines. I
+
+[01:17:58.000] think that'll be interesting and fun.
+
+[01:17:59.840] Uh, come join, sign up, and then we'll
+
+[01:18:02.239] see you guys soon.
+
+[01:18:03.920] >> Bye everyone.
+
+[01:18:04.800] >> Thanks everybody.

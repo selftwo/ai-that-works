@@ -1,0 +1,4863 @@
+# S01E04 – Twelve Factor Agents
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:06.710] computer. All right, sounds like we got
+
+[00:00:06.720] quite a few folks signed up today. I'm
+
+[00:00:08.720] really excited to talk about 12 factor
+
+[00:00:10.160] agents. How many of you read the blog
+
+[00:00:11.920] post? Did everyone read it so far that
+
+[00:00:14.240] Dexter made?
+
+[00:00:20.630] Nope. Oh, you're you're in for a real
+
+[00:00:20.640] treat. The gonna be a good time. One of
+
+[00:00:22.880] the one of the most fun blog posts I've
+
+[00:00:24.960] read in a while. Um,
+
+[00:00:28.240] and it's this interesting concept that
+
+[00:00:29.920] we had percolated on for quite a while
+
+[00:00:32.239] and then Dexter just put it down to like
+
+[00:00:33.840] these beautiful words to really help
+
+[00:00:35.840] outline it in a more concrete way.
+
+[00:00:38.800] Well, yeah, I
+
+[00:00:40.520] think I kind of stumbled on this. We did
+
+[00:00:42.960] I think you and me did a hackathon back
+
+[00:00:44.719] in like October or November and we were
+
+[00:00:47.520] building agents and we were building
+
+[00:00:49.440] them from
+
+[00:00:50.360] scratch. Uh, and that was kind of the
+
+[00:00:54.079] seed and the the initial idea there that
+
+[00:00:57.680] I then went and hacked on and talked to
+
+[00:00:59.520] a ton a ton of founders
+
+[00:01:02.199] and was just trying to trying to figure
+
+[00:01:06.080] out what makes what makes good agents
+
+[00:01:08.080] and like how can we how can we can
+
+[00:01:10.400] distill this down into building blocks.
+
+[00:01:13.840] Yeah. Yeah. Like the building blocks I
+
+[00:01:15.920] think are that's really what's missing
+
+[00:01:18.240] right now.
+
+[00:01:20.400] Well, and and so the problem with with
+
+[00:01:21.759] not having good building blocks, I
+
+[00:01:23.360] think, is you I know we said we're going
+
+[00:01:26.560] to wait till people got here, but I'm
+
+[00:01:27.920] just going to start going. The problem
+
+[00:01:30.320] with not having good building blocks is
+
+[00:01:31.759] I think you end up with this problem of
+
+[00:01:34.079] you're like, "Oh, I want to build
+
+[00:01:35.119] something pretty cool with AI. I want to
+
+[00:01:36.880] build something agentic. I want to do
+
+[00:01:38.320] something a little bit more than just a
+
+[00:01:40.320] chatbot or uh, you know, summarization
+
+[00:01:43.119] in my web app." And and so you're like,
+
+[00:01:45.360] "Cool, we need an agent." like okay like
+
+[00:01:49.119] I don't want to write all this code from
+
+[00:01:50.640] scratch really learn it all from
+
+[00:01:52.159] scratch. Uh maybe you do, some people
+
+[00:01:54.479] do, but a lot of folks are like, "Cool,
+
+[00:01:56.079] let's go get some frameworks and some
+
+[00:01:58.119] libraries." And I think what it leads
+
+[00:02:00.960] you down this path of like, "Hey, let's
+
+[00:02:04.079] build rather than like just making our
+
+[00:02:07.040] existing software a little more AI
+
+[00:02:08.800] integrated." You end up
+
+[00:02:10.840] with people who are just like, "Hey,
+
+[00:02:13.040] let's go build something from scratch.
+
+[00:02:14.319] Let's we're building our agent. We're
+
+[00:02:16.000] gonna we have our thing now and we're
+
+[00:02:17.280] going to go do green field from scratch.
+
+[00:02:19.200] Build an agent." And uh I think what
+
+[00:02:23.680] happens
+
+[00:02:25.160] is that never works. And what I wanted
+
+[00:02:28.720] to figure out was like how can I help
+
+[00:02:30.080] people who already have really good
+
+[00:02:31.360] software and have ideas about how how AI
+
+[00:02:33.920] could make it better
+
+[00:02:36.040] and what what things did they need to
+
+[00:02:39.120] take from the agent
+
+[00:02:41.560] paradigm that they can take one by one
+
+[00:02:44.000] that they can take peace meal that they
+
+[00:02:45.599] can kind of like just carve up this
+
+[00:02:47.040] problem and slowly over time take
+
+[00:02:49.760] deterministic code and sprinkle in some
+
+[00:02:52.160] LLM calls in the right places to make it
+
+[00:02:55.120] really man like magical without tanking
+
+[00:02:58.160] the quality or making it unreliable or
+
+[00:03:00.480] having this sort of like chat GPT
+
+[00:03:02.480] hallucination effect where like one in
+
+[00:03:04.319] five times you're like, "Oh, this is
+
+[00:03:05.599] useless. This is never going to work."
+
+[00:03:08.080] Yeah, I agree. Let's um All right, it's
+
+[00:03:10.959] 104. Let's do a quick little brief
+
+[00:03:12.640] background who we are um to everyone
+
+[00:03:14.800] that's on the call and then let's get
+
+[00:03:16.640] into it and like what this thing is
+
+[00:03:18.000] about. So, cool. Um I'm Vibe. I'm one of
+
+[00:03:21.840] the co-creators of BAML. Um, I'm a YC
+
+[00:03:24.400] founder from Winter 23 and uh this is my
+
+[00:03:28.800] co-host, I guess.
+
+[00:03:30.680] Uh, go for
+
+[00:03:32.760] it. Uh, what's up? I'm Dex. Uh, I'm the
+
+[00:03:35.680] founder of uh, Human Layer, uh, another
+
+[00:03:37.599] YC company. Uh, we are working on um,
+
+[00:03:40.959] safer, more reliable agents and, uh, how
+
+[00:03:43.840] to build agents that can actually get
+
+[00:03:45.920] real, meaningful work done. And uh yeah,
+
+[00:03:49.440] and the whole point series that we've
+
+[00:03:51.440] got here is really just we all see a lot
+
+[00:03:53.920] of demos that come with AI and we'd like
+
+[00:03:56.000] to go past the demo stage. We've seen uh
+
+[00:03:58.000] between Dex and I, we've seen like
+
+[00:03:59.200] probably hundreds of companies that have
+
+[00:04:00.480] actually shipped to production and found
+
+[00:04:02.400] patterns that work and we've found our
+
+[00:04:04.239] own techniques that work and we just
+
+[00:04:06.480] want to use this session to go share
+
+[00:04:07.760] some of those and not really at a high
+
+[00:04:09.120] level, but really at the layer of code
+
+[00:04:11.360] because honestly, it's just there's a
+
+[00:04:14.080] lot of things that talk about the the
+
+[00:04:16.079] words behind the AI, but there's not a
+
+[00:04:18.400] lot of stuff that talks about the code
+
+[00:04:19.840] that we have to go write and that's the
+
+[00:04:21.600] whole point of these sessions. So, as
+
+[00:04:23.199] you guys have any questions, um, please
+
+[00:04:26.400] go ahead and post them in the chat or if
+
+[00:04:28.320] you really want, you're welcome to
+
+[00:04:29.440] unmute and go ask questions as you go.
+
+[00:04:31.759] What we're going to go do is typically
+
+[00:04:33.520] we include a whiteboard session and then
+
+[00:04:35.040] we also include some coding sessions
+
+[00:04:36.560] because whiteboards are just a great way
+
+[00:04:37.919] to convey ideas before the code. Um, so
+
+[00:04:41.040] be patient. You will see code, we
+
+[00:04:42.479] promise. Um, but also the whiteboarding
+
+[00:04:45.280] is just to help contextualize and make
+
+[00:04:46.800] sure we're on the same page.
+
+[00:04:49.840] Cool. Awesome. Let's get today's session
+
+[00:04:52.960] I think. Let's get into it. Um little
+
+[00:04:55.199] preface. There will be some um question.
+
+[00:05:04.950] Okay, let's go on. That's Let's go. All
+
+[00:05:04.960] right, we're gonna keep rolling. Let's
+
+[00:05:06.720] go into 12 factory. You want to screen?
+
+[00:05:09.360] Yep. I'm gonna screen share and um
+
+[00:05:11.120] there's gonna be a little bit less uh
+
+[00:05:13.120] what I would call
+
+[00:05:15.400] um let's
+
+[00:05:23.510] see a little bit less of what I would
+
+[00:05:23.520] call the like hands-on live
+
+[00:05:25.600] whiteboarding just because there's a lot
+
+[00:05:26.960] a lot a lot of content to cover. Um and
+
+[00:05:29.919] so I'm going to jump through kind of a
+
+[00:05:32.000] little bit more of a slideshow kind of
+
+[00:05:33.840] thing, but this is all the content in
+
+[00:05:35.680] the repo. You can see all of this. Um,
+
+[00:05:37.919] so I want to start with kind of like a
+
+[00:05:39.440] little bit of like how we got here and
+
+[00:05:41.120] how to think about writing code in
+
+[00:05:43.039] software. Um, and this is a concept
+
+[00:05:44.960] here, this like software is a directed
+
+[00:05:47.160] graph. Um, because there's a lot of like
+
+[00:05:50.240] frameworks today that help you think in
+
+[00:05:52.080] graphs, but at the end of the day, code
+
+[00:05:54.000] is a graph. And the theme we're going to
+
+[00:05:55.600] keep coming back to here is you want to
+
+[00:05:57.759] have control over the code. You want to
+
+[00:05:59.120] have hands in the code because that's
+
+[00:06:00.800] what gives you the control to add probes
+
+[00:06:02.880] and changes and tests and things to help
+
+[00:06:05.120] you improve the quality. Um after a
+
+[00:06:08.240] while we ended up with these things we
+
+[00:06:10.000] call like DAG orchestrators. If you're
+
+[00:06:11.680] familiar with your like prefects or your
+
+[00:06:13.600] airflows or your um dagsters, these
+
+[00:06:16.319] sorts of things where each one of these
+
+[00:06:17.840] nodes it's still a directed graph. You
+
+[00:06:20.080] still have logic that is moving
+
+[00:06:21.919] information whether it's variables or
+
+[00:06:23.919] data in a pipeline through different
+
+[00:06:25.960] steps. Uh and it's very declarative and
+
+[00:06:28.560] deterministic.
+
+[00:06:30.319] Um, the promise of agents is essentially
+
+[00:06:33.199] like the the real hype around agents is
+
+[00:06:35.280] you can take an LLM, you can give it a
+
+[00:06:37.120] bag of tools, you can say like here's
+
+[00:06:38.479] all the steps you could take. I'm not
+
+[00:06:40.080] going to tell you which steps to take
+
+[00:06:41.280] and which order to do it in, but here's
+
+[00:06:43.360] your goal and here's the steps you can
+
+[00:06:44.880] take
+
+[00:06:46.440] and like go figure it out basically. And
+
+[00:06:49.680] that the LM will traverse the graph,
+
+[00:06:52.960] figure out which steps to take in which
+
+[00:06:54.720] order and get to that goal. And it might
+
+[00:06:57.840] skip some steps as well. I might not
+
+[00:06:59.360] need to take all the steps. And the idea
+
+[00:07:01.360] here is cool, now I have to write a lot
+
+[00:07:03.120] less software. Whether it's like a DAG
+
+[00:07:05.759] that is in code or it's a DAG that's in
+
+[00:07:08.240] my infrastructure. Conceptually, the
+
+[00:07:10.479] agent's going to figure out the ifs and
+
+[00:07:12.400] the logic and the and the looping for me
+
+[00:07:14.479] instead of me having to go write all of
+
+[00:07:16.240] that and test it and make sure it's
+
+[00:07:17.599] really really good. And as LM get
+
+[00:07:19.039] smarter, they'll be able to handle more
+
+[00:07:20.639] and more complex workflows.
+
+[00:07:23.800] Um, and the way we model this, um,
+
+[00:07:26.720] especially when we talk about like
+
+[00:07:27.759] agents, um, and structured outputs is
+
+[00:07:29.759] essentially like an agent is just a
+
+[00:07:32.800] prompt that determines a next step. And
+
+[00:07:35.759] so you have an event and you say, "Hey,
+
+[00:07:38.160] LM, what's the next step with this
+
+[00:07:39.759] event?" And then the LM might say,
+
+[00:07:41.120] "Okay, we have to call this API or we
+
+[00:07:42.720] have to kick off this pipeline or we
+
+[00:07:44.639] have to update this database." Um, or
+
+[00:07:46.720] maybe it's like, "Cool, we're done.
+
+[00:07:47.919] We've done those things and now and now
+
+[00:07:49.440] we're finished." And just and the way
+
+[00:07:51.039] this kind of Sorry, go ahead. Just to
+
+[00:07:52.960] really highlight to a lot of people,
+
+[00:07:54.240] it's like a lot of people use this word
+
+[00:07:55.680] of like the agent is calling the tool.
+
+[00:07:58.720] It's not calling the tool. An
+
+[00:08:02.599] LLM is really just a really really smart
+
+[00:08:06.560] go-to statement. Like in our code, we
+
+[00:08:09.759] used to write goto statement. That's
+
+[00:08:11.280] really all this boils down to. I love
+
+[00:08:14.000] that you said goto because I literally
+
+[00:08:16.080] have a blog post I want to write that is
+
+[00:08:17.840] like do do you remember that post that
+
+[00:08:20.080] was uh goto considered harmful? Yeah.
+
+[00:08:22.639] Yeah. Yeah. It's Yeah. What an LM is. So
+
+[00:08:26.479] uh I I actually think the concept of
+
+[00:08:28.960] tool use is harmful. The idea that a
+
+[00:08:32.320] model is smart and is interacting with
+
+[00:08:34.399] its environment is actually like it's a
+
+[00:08:37.599] little bit of hype. I mean it's you can
+
+[00:08:39.120] think about it in that way and it's a
+
+[00:08:40.240] good way to like introduce the concept
+
+[00:08:42.399] but at the end of the day when a model
+
+[00:08:44.800] calls a tool it's taking a bunch of a
+
+[00:08:48.080] bunch of input tokens as the prompt and
+
+[00:08:50.720] maybe some tokens about what's happened
+
+[00:08:52.480] so far and it's outputting JSON that
+
+[00:08:54.800] says I think the next step in this
+
+[00:08:56.240] workflow is X. We should play the one.
+
+[00:08:59.680] Yeah. Yeah. Yeah. Yeah. So the way this
+
+[00:09:01.519] works as you kind of uh move through
+
+[00:09:03.680] this stuff is
+
+[00:09:10.710] um you would you would kind of like pick
+
+[00:09:10.720] a step, call an API, and then add that
+
+[00:09:13.120] to the context window, feed that new
+
+[00:09:15.040] context window in. It says, "Okay, we
+
+[00:09:16.720] had this event, we called this API, we
+
+[00:09:18.320] got a result." Then the LM is going to
+
+[00:09:20.000] say like, "Okay, cool. With that result,
+
+[00:09:21.600] I can now kick off a pipeline and get
+
+[00:09:23.680] the result of that." And then we add
+
+[00:09:25.839] that to the context window. We feed it
+
+[00:09:27.360] back into the LLM and we then we update
+
+[00:09:30.480] the database and we get the result. And
+
+[00:09:33.040] then then we add that to the context
+
+[00:09:34.399] window. And then the LLM may say, "Cool,
+
+[00:09:36.320] we've done our job." Based on the event,
+
+[00:09:37.839] based on the goal, based on this is
+
+[00:09:39.279] super generic, but every time you do a
+
+[00:09:41.600] tool calling. And if you've built these
+
+[00:09:42.880] tool calling loops with the OpenAI APIs
+
+[00:09:45.120] or the anthropic APIs, like this, this
+
+[00:09:47.120] will seem super familiar. We just want
+
+[00:09:49.200] to break this down conceptually into,
+
+[00:09:50.959] you know, what is um what is this
+
+[00:09:53.080] really? Um, what's the shortcut for
+
+[00:09:56.480] opening the file browser? Command B.
+
+[00:09:58.800] Command B. I'm trying that. Yeah, there
+
+[00:10:00.959] we go. Okay, cool. Thank you. Uh so in
+
+[00:10:04.240] this kind of like uh dynamic loop what
+
+[00:10:07.519] was materialized is this DAG right the
+
+[00:10:09.440] agent figured out the DAG for us. We did
+
+[00:10:11.440] this step and then we did this step and
+
+[00:10:12.720] then we did this step and uh at the end
+
+[00:10:15.360] of the day that's that's kind of that's
+
+[00:10:16.800] kind of what happened. Um if we come
+
+[00:10:18.800] back to this loop there's basically four
+
+[00:10:20.320] components right you have
+
+[00:10:23.519] uh you have a prompt and then the
+
+[00:10:25.760] prompt's going to output JSON. You have
+
+[00:10:27.360] a switch statement which is going to
+
+[00:10:29.760] basically say based on the JSON that was
+
+[00:10:31.680] output which code path do we want to go
+
+[00:10:33.680] down or do we want to exit and then you
+
+[00:10:36.800] have how you're building how you tell
+
+[00:10:38.720] the model again because this is totally
+
+[00:10:40.800] stateless. The only way it knows what
+
+[00:10:42.399] happened in the past is if you p pass in
+
+[00:10:45.600] tokens strings JSON XML whatever it is
+
+[00:10:49.200] uh and tell it what happened before so
+
+[00:10:50.959] it can make the decision of the next
+
+[00:10:52.640] step and then you have a for loop. The
+
+[00:10:55.760] whole idea behind 12 factor agents is
+
+[00:10:57.920] really like you're a good
+
+[00:11:01.000] engineer. I hope probably you can write
+
+[00:11:04.800] a switch statement. You can write a for
+
+[00:11:07.279] loop and you can turn some data into a
+
+[00:11:10.519] string. And the most important part
+
+[00:11:12.959] that's going to control how good your
+
+[00:11:16.160] agent is and how good the performance is
+
+[00:11:19.120] is this prompt. The prompt of how to
+
+[00:11:22.000] behave, how to do it. what's the context
+
+[00:11:24.079] that we put in and how to call these
+
+[00:11:26.800] tools, the description of the JSON that
+
+[00:11:28.959] you're asking it to output. And I I want
+
+[00:11:31.360] to highlight one thing here. A lot of
+
+[00:11:32.959] people just I I know what you mean when
+
+[00:11:35.200] you say prompt, but I think a lot of
+
+[00:11:37.040] people are going to assume that prompt
+
+[00:11:38.240] means a system prompt all the stuff.
+
+[00:11:40.320] That is not what Dexture means. Just to
+
+[00:11:43.040] highlight that again, what Dexter are
+
+[00:11:44.480] trying to say is it's the full
+
+[00:11:46.320] serialization of the state. We talked
+
+[00:11:49.040] about this determine next step being
+
+[00:11:50.800] completely stateless. Yeah. Context that
+
+[00:11:53.760] you're putting into it. Somehow you turn
+
+[00:11:55.519] that context into a where are you going
+
+[00:11:58.240] to the whiteboard? Someow you're going
+
+[00:12:00.160] to turn that context into a string.
+
+[00:12:02.640] Somehow you're going to include
+
+[00:12:03.959] instructions for what you want the model
+
+[00:12:06.320] to do. Somehow you're going to model the
+
+[00:12:09.120] exact outputs you want the model to
+
+[00:12:11.720] output. All of those things together are
+
+[00:12:16.160] the prompt. It is not individualistic.
+
+[00:12:18.639] It is not simply to say exactly what the
+
+[00:12:20.959] system prompt is. It is everything
+
+[00:12:22.880] together. That is what Dexter is trying
+
+[00:12:24.800] to highlight of what the prompt is. And
+
+[00:12:26.399] even here where you we're using the word
+
+[00:12:28.000] system and user prompt because that's
+
+[00:12:29.680] just terminology people have used. You
+
+[00:12:32.160] may find that putting the entire context
+
+[00:12:34.320] into the pure system prompt is going to
+
+[00:12:36.240] get you the best response. You may find
+
+[00:12:38.160] putting instructions in the user prompt
+
+[00:12:39.839] gets you the best response. Even that
+
+[00:12:42.480] itself, whether you use the system
+
+[00:12:44.399] prompt or the user prompt or what tokens
+
+[00:12:46.639] you're using to represent this
+
+[00:12:48.880] dramatically makes a difference. And
+
+[00:12:51.519] being aware of that fact of like what
+
+[00:12:53.440] you're what you're doing here is somehow
+
+[00:12:55.600] you're taking a data model that you have
+
+[00:12:57.200] that represents a state that you save in
+
+[00:12:59.040] your database and turning it into an API
+
+[00:13:03.040] call that matches the best output format
+
+[00:13:05.600] that you want somehow. That's and the
+
+[00:13:08.399] point and the point is not to kind of
+
+[00:13:11.519] say there's a right way to do this or
+
+[00:13:13.440] there's a right thing to do here. The
+
+[00:13:15.360] point is if you think of this whole
+
+[00:13:17.040] thing as just one big string. You can do
+
+[00:13:20.800] anything you want with this. And I don't
+
+[00:13:23.440] know what the best way to handle the
+
+[00:13:25.600] prompt for your specific problem. But I
+
+[00:13:28.399] know that if you don't have full control
+
+[00:13:30.160] over what goes in there in what order
+
+[00:13:32.240] with what special tokens, you may be
+
+[00:13:35.279] missing out on optimizations that you
+
+[00:13:38.480] could make. And so the more control you
+
+[00:13:40.720] have, the more ability you have to
+
+[00:13:42.320] customize all of this and to take full
+
+[00:13:45.200] control, the more likely you're going to
+
+[00:13:47.519] be able to get to the best performance
+
+[00:13:50.000] for a given task that a model could get.
+
+[00:13:51.920] And that's all that we talk about in
+
+[00:13:53.279] this show is how do we get the best
+
+[00:13:54.880] possible performance out of today's
+
+[00:13:56.399] models. Yeah, that's perfect. Yeah, and
+
+[00:13:59.760] we'll get into kind of as the models get
+
+[00:14:01.279] smarter as well, but um I'm going to
+
+[00:14:03.279] quickly run through the 12 factors as we
+
+[00:14:05.519] talk about them and we may pause on a
+
+[00:14:07.040] couple of them to go a little bit
+
+[00:14:07.920] deeper, but um from there from there
+
+[00:14:10.720] we'll get into some code. So, uh number
+
+[00:14:13.120] one is like natural language uh becoming
+
+[00:14:15.920] tool calls. And this one's really really
+
+[00:14:18.000] straightforward, but it's basically, you
+
+[00:14:20.079] know, taking words from a human and
+
+[00:14:22.880] turning them into JSON. That's all we're
+
+[00:14:25.760] going to do. We'll go through this in
+
+[00:14:26.800] the in the in in the demo. Uh, but being
+
+[00:14:29.519] able to take human human words and turn
+
+[00:14:32.720] them into actions in the world.
+
+[00:14:35.920] Uh, Carlos has a question. Does that
+
+[00:14:37.279] mean ditch the frameworks? We'll talk
+
+[00:14:38.480] about we'll talk about frameworks in a
+
+[00:14:40.079] second. Yeah, we'll have a second coming
+
+[00:14:42.800] out about Nobody here is saying ditch
+
+[00:14:45.199] the frameworks. I actually think of a
+
+[00:14:47.760] lot of this year as like feature
+
+[00:14:50.399] requests or like a letter to the
+
+[00:14:52.800] builders of frameworks of like the kinds
+
+[00:14:54.720] of control knobs that I think they
+
+[00:14:56.160] should be exposing.
+
+[00:14:58.519] Um, factor two is own your prompts. This
+
+[00:15:00.880] is what we just talked about. Basically,
+
+[00:15:02.079] like rather than building abstractions
+
+[00:15:04.040] around something that's going to build
+
+[00:15:06.079] you a great prompt, you can hit a
+
+[00:15:07.680] framework like Langchain, like Crua,
+
+[00:15:09.760] they all have really, really good prompt
+
+[00:15:11.440] engineering primitives built in. And if
+
+[00:15:13.440] you're not a good prompt engineer like
+
+[00:15:14.800] me, I'm a shitty prompt engineer. You'll
+
+[00:15:16.800] you'll see Fibb shout at me for my
+
+[00:15:18.480] prompts later today. Uh you can turn
+
+[00:15:21.440] some like highle sentences into a banger
+
+[00:15:24.079] prompt, which like you'd need months to
+
+[00:15:25.920] go to prompt school to learn. I don't
+
+[00:15:27.519] know if there's a prompt school, but bye
+
+[00:15:28.959] Bob if you're thinking of other schools
+
+[00:15:30.240] to do. Um
+
+[00:15:33.519] uh but
+
+[00:15:35.320] eventually like with the blackbox,
+
+[00:15:37.760] you're going to hit the limits and
+
+[00:15:38.639] you're going to be reverse engineering.
+
+[00:15:39.760] Okay, how does this prompt get built and
+
+[00:15:41.199] how do I flip these tokens around so
+
+[00:15:42.639] that it happens in the order that I
+
+[00:15:44.000] think is actually going to be better?
+
+[00:15:45.519] And so at the end of the day, it's
+
+[00:15:46.959] really just worth like full ownership.
+
+[00:15:49.440] Yeah, it's just like any it's not an
+
+[00:15:51.199] additional framework, but you really
+
+[00:15:52.399] want you don't you probably don't want
+
+[00:15:54.240] to build a prompt from raw strings on
+
+[00:15:56.560] your own, but you also don't want a
+
+[00:15:58.880] framework that makes it harder for you
+
+[00:16:00.480] to own the prompt. That's really what I
+
+[00:16:03.279] would look for. like how closely do you
+
+[00:16:05.199] own the prompt and how much control do
+
+[00:16:07.279] you have over the final prompt that is
+
+[00:16:09.920] being sent out? Yeah. And again, this is
+
+[00:16:12.560] I don't know what's better, but I know
+
+[00:16:13.839] you want to be able to try everything.
+
+[00:16:15.600] Yeah.
+
+[00:16:17.120] Um, cool. The other one is own your
+
+[00:16:19.040] context building. This is you know when
+
+[00:16:20.560] we say prompt like this is a kind of a
+
+[00:16:23.040] subset of that but it's a very
+
+[00:16:24.399] specialized one because I think a lot of
+
+[00:16:26.639] people uh think of tool calling and
+
+[00:16:29.440] context building as separate from
+
+[00:16:30.880] prompting but it's all just tokens going
+
+[00:16:33.120] into the model. So if you want to use
+
+[00:16:34.800] the standard format of like system user
+
+[00:16:37.040] assistant tool assistant tool and like
+
+[00:16:39.600] you're giving it back and forth in this
+
+[00:16:41.199] official format you could do that. But
+
+[00:16:43.680] in this moment when you're giving the
+
+[00:16:45.040] model a prompt, your only job is to tell
+
+[00:16:48.959] the model what happened so far and ask
+
+[00:16:51.040] it what the next step should be. And you
+
+[00:16:52.880] can put all of the events of like, hey,
+
+[00:16:54.720] what's the weather in Tokyo? Hey, we did
+
+[00:16:56.240] a check weather call. Hey, we got a
+
+[00:16:58.079] response. Ask the next step. And then we
+
+[00:16:59.920] would probably get our final answer. You
+
+[00:17:01.839] can do that all in one user message if
+
+[00:17:03.519] it works better. And I don't know what's
+
+[00:17:05.199] better. Every model is a tool calling
+
+[00:17:07.799] model is the way to think about it. As
+
+[00:17:10.319] long as you can describe your tools in a
+
+[00:17:11.919] good way.
+
+[00:17:13.039] Yes, exactly. Um, tools are just
+
+[00:17:17.039] structured output. We're going to these
+
+[00:17:18.319] are a lot of these are clearly like
+
+[00:17:19.679] related and and come together. Um, but
+
+[00:17:21.919] whether you're telling OpenAI with a
+
+[00:17:23.600] JSON schema to output certain tool to
+
+[00:17:27.199] output a function call to a certain
+
+[00:17:29.520] function or you're using something like
+
+[00:17:31.600] BAML to just ask it to output JSON
+
+[00:17:34.520] plane. Um it's all just part of the
+
+[00:17:37.919] prompt and then what you do with the
+
+[00:17:39.440] output and parsing it and turning it
+
+[00:17:41.039] into structured data for your model to
+
+[00:17:43.039] use. Um let's find this one. Yeah. So
+
+[00:17:46.799] all you have to do is get JSON out of
+
+[00:17:48.480] the model. And so thinking about this in
+
+[00:17:52.000] terms of special tools or special
+
+[00:17:53.440] functions is is can be can be sometimes
+
+[00:17:56.000] a little bit uh counterproductive. Yeah.
+
+[00:17:58.320] Instead of calling a tool, it's just
+
+[00:17:59.760] honestly way easier to say it's a type
+
+[00:18:01.600] that I want the model to produce. I want
+
+[00:18:03.039] the model to return a class. I want the
+
+[00:18:04.720] model to return an array instead of
+
+[00:18:06.640] using the special word tool because we
+
+[00:18:08.320] have tooling for all the other things
+
+[00:18:09.919] pipe systems in the past. Yep. Um, cool.
+
+[00:18:14.080] Here's another one. Uh, unify execution
+
+[00:18:16.320] state and business state. I'm actually
+
+[00:18:17.840] going to do the animation for this one.
+
+[00:18:19.600] Um but basically you know as you are
+
+[00:18:22.720] iterating through this flow and you have
+
+[00:18:24.480] your different JSON outputs um being
+
+[00:18:27.120] able to serialize what's happened so far
+
+[00:18:29.919] your context window that you're passing
+
+[00:18:31.440] into the model
+
+[00:18:33.559] um is not just like the business state
+
+[00:18:36.799] of what is the model thinking about and
+
+[00:18:38.320] what the logic is but you can if you can
+
+[00:18:42.160] you should trivially like make the
+
+[00:18:44.720] context window itself be a
+
+[00:18:46.799] representation of your execution state
+
+[00:18:48.640] as Well, a lot of these frameworks like
+
+[00:18:50.480] uh if you look at something like um lang
+
+[00:18:53.600] graph which I I think is very good for a
+
+[00:18:55.679] lot of reasons but you have kind of two
+
+[00:18:57.440] states here. You have the graph state
+
+[00:18:59.520] and then you have the like uh like the
+
+[00:19:02.880] object that flow you have your business
+
+[00:19:04.400] state right you have like the object
+
+[00:19:05.760] that flows through the graph and this is
+
+[00:19:07.919] usually like some strruct that is just
+
+[00:19:10.240] like messages and it's a list of
+
+[00:19:12.320] messages and you can store other things
+
+[00:19:13.840] on here as well like you know pending
+
+[00:19:15.520] tool calls or something like that.
+
+[00:19:18.520] Um, but basically your like business
+
+[00:19:21.120] state of what what the model operates on
+
+[00:19:23.440] is separate from this big I don't have a
+
+[00:19:25.679] screenshot of it, but there's this huge
+
+[00:19:27.200] like a bunch of tables that go into
+
+[00:19:28.960] SQLite or Postgress or whatever it is
+
+[00:19:31.360] that kind of outline every single step
+
+[00:19:33.280] that's been taken. If you can unify
+
+[00:19:35.600] these things, you're going to simplify a
+
+[00:19:36.960] lot. There may still be reasons to have
+
+[00:19:39.039] this. And this gets back into like own
+
+[00:19:41.280] your context window. If you have an
+
+[00:19:42.880] object that you control that tracks like
+
+[00:19:46.160] the state of your application, you can
+
+[00:19:48.240] put methods on it that tell, hey, when
+
+[00:19:50.080] we send to the model, just send it this
+
+[00:19:51.679] way, like here's how you serialize this
+
+[00:19:53.200] for the LM versus here's how you
+
+[00:19:55.120] serialize this for rag versus here's how
+
+[00:19:57.600] you actually like use this to pump the
+
+[00:19:59.360] execution state. Um so it's again it's
+
+[00:20:02.480] all about control but if you unify those
+
+[00:20:04.480] things then you can get uh you can get a
+
+[00:20:06.400] lot of simplicity and you can get this
+
+[00:20:08.080] is what a lot of people are doing in
+
+[00:20:09.440] terms of just like I think building AI
+
+[00:20:12.000] agents in production. Go ahead. The best
+
+[00:20:13.919] analogy for this kind of stuff is I
+
+[00:20:16.000] don't know if any of you have ever
+
+[00:20:16.960] worked on like massively online
+
+[00:20:18.240] multiplayer games, but like the way you
+
+[00:20:20.720] build these systems is that they're
+
+[00:20:22.400] built to have a unified state of source
+
+[00:20:24.880] of tree and then you basically use that
+
+[00:20:27.520] everyone views and renders.
+
+[00:20:32.950] You view that as the thing that everyone
+
+[00:20:32.960] that builds and renders and that's just
+
+[00:20:34.799] the easiest. If you have like seven
+
+[00:20:36.960] different objects that reference the
+
+[00:20:38.159] source of truth, you have discrepancies,
+
+[00:20:40.159] you have untruths and you you have a
+
+[00:20:41.919] really hard time representing the data.
+
+[00:20:44.799] But if you have a single state,
+
+[00:20:47.120] debugging and everything else building,
+
+[00:20:49.280] maintaining our systems becomes a lot
+
+[00:20:50.880] easier and that simplicity is really
+
+[00:20:52.720] really important. Yeah, nailed it. Um,
+
+[00:20:56.799] cool. We're gonna keep running again.
+
+[00:20:58.320] Uh, what this lets you do is you can
+
+[00:21:00.880] pause and resume with like very simple
+
+[00:21:03.320] APIs. So as you're running through this
+
+[00:21:06.480] workflow and your model is maybe you
+
+[00:21:08.559] know you launch a workflow over rest or
+
+[00:21:10.679] MCP and that causes some kind of context
+
+[00:21:13.360] to be input into the model maybe it
+
+[00:21:15.360] calls a longunning tool and you need to
+
+[00:21:17.200] kind of like interrupt or pause your
+
+[00:21:18.880] workflow that's great store your context
+
+[00:21:21.120] in the database and the fact that you've
+
+[00:21:22.880] most recently called a longunning tool
+
+[00:21:25.520] and then basically when the job is
+
+[00:21:28.480] finished you would post a web hook back
+
+[00:21:30.720] use that to pull the state out of the
+
+[00:21:32.320] database and then take the result and
+
+[00:21:34.400] push it onto the thing and send it back
+
+[00:21:36.320] into the model. Man, I wish that thing
+
+[00:21:37.840] paused. I think this is it. Yeah. So,
+
+[00:21:41.280] essentially like resume later using a
+
+[00:21:43.039] state ID that tells it how to pull the
+
+[00:21:44.640] context out of the database and then you
+
+[00:21:46.320] take the job result. And so you can
+
+[00:21:48.480] build if you own this logic here, this
+
+[00:21:50.400] API endpoint, you can catch a web hook,
+
+[00:21:52.559] you can reassemble the context from the
+
+[00:21:54.480] past, you can append the result to it,
+
+[00:21:56.480] push it right back into the model, and
+
+[00:21:58.159] there's no other execution system.
+
+[00:22:00.559] There's no, you know, distributed
+
+[00:22:02.240] workflow system that you also have to go
+
+[00:22:04.000] integrate into because all we care about
+
+[00:22:05.600] is our context window. Exactly. And
+
+[00:22:08.080] because it's a stateless function, it
+
+[00:22:09.840] doesn't matter. It's really easy to make
+
+[00:22:11.360] everything work. Yeah. LMS are
+
+[00:22:13.919] stateless. The only Yeah. The only state
+
+[00:22:15.440] is basically this context window, which
+
+[00:22:17.039] is also nice because it's very
+
+[00:22:18.159] inspectable. Like as a human, you can
+
+[00:22:19.679] look at it and see, okay, here's what's
+
+[00:22:21.039] happening. Here's where it got stuck.
+
+[00:22:22.240] Here's where it's looping on an error,
+
+[00:22:23.679] whatever it is. Exactly. And as a
+
+[00:22:25.360] developer, that means you can build UIs
+
+[00:22:26.720] for your tool, for your customers as
+
+[00:22:28.320] well to see exactly what's happening on
+
+[00:22:30.000] a long running async task. Yeah. Um,
+
+[00:22:33.679] this one's subtle. I think we could do a
+
+[00:22:35.280] whole 20 minute on just this one. But um
+
+[00:22:38.799] basically when a model is making a
+
+[00:22:41.039] decision about whether to output a tool
+
+[00:22:43.120] call or whether to output plain text,
+
+[00:22:46.559] there's like a very very like
+
+[00:22:48.720] highweighted like token choice which is
+
+[00:22:51.679] like the JSON token or the I'm going to
+
+[00:22:54.320] contact a human token
+
+[00:22:57.240] um and or sorry not contacting you but
+
+[00:22:59.919] I'm gonna output my answer that goes to
+
+[00:23:01.520] the chat UI or wherever wherever it is.
+
+[00:23:04.400] And um what I've seen a lot of people
+
+[00:23:06.240] doing is one there are different reasons
+
+[00:23:08.480] you might want to send a note to a human
+
+[00:23:10.320] whether it's like requesting
+
+[00:23:11.360] clarification or a final answer. And
+
+[00:23:13.840] there's also different like types of
+
+[00:23:16.640] humans a model might want to contact.
+
+[00:23:19.440] And if you want like better AI
+
+[00:23:22.400] experiences you need something you need
+
+[00:23:24.080] to give the model the option to involve
+
+[00:23:26.320] multiple players. And so you have
+
+[00:23:28.240] standard tool calls like call a function
+
+[00:23:29.840] that's deterministic, but then you
+
+[00:23:31.679] basically are having the model declare
+
+[00:23:33.200] its intent before it goes in. So it's
+
+[00:23:36.000] always outputting JSON. And you have a
+
+[00:23:38.080] little bit more um focus on basically
+
+[00:23:42.000] this this string of what do we want to
+
+[00:23:45.200] do next versus do I want to call a tool
+
+[00:23:48.080] or or say something to a human. Does
+
+[00:23:49.840] that make sense? I think you're saying
+
+[00:23:51.679] almost the right thing. And just like
+
+[00:23:52.799] really clarify, I know we keep saying
+
+[00:23:54.159] like JSON. What we really mean is we
+
+[00:23:55.679] just we're just outputting some specific
+
+[00:23:57.200] structure that we want. There's many
+
+[00:23:58.799] ways to do the structure. Yeah. Like
+
+[00:24:01.039] JSON is one technique that a lot of
+
+[00:24:02.640] people know commonly, but there are
+
+[00:24:04.400] other techniques that can make it
+
+[00:24:05.440] better. But I think what like
+
+[00:24:06.799] representing everything with as a tool
+
+[00:24:08.640] of like intent and giving the model some
+
+[00:24:11.279] way to go do that, then definitely yes.
+
+[00:24:14.480] Yeah. Cool. And there's no such Carlos
+
+[00:24:17.200] as a great question. Can a human be a
+
+[00:24:18.799] tool? So it's universal. There's no such
+
+[00:24:21.120] thing as universality with the world of
+
+[00:24:23.200] LMS. There's no when when you go to
+
+[00:24:26.400] Google search and when I search for like
+
+[00:24:28.720] how do I print a string, how do I do
+
+[00:24:30.320] like a print statement, I use a lot of
+
+[00:24:32.640] Rust code. Google will show me mostly
+
+[00:24:34.960] Rust results. When when someone
+
+[00:24:37.360] anonymous goes and search, it'll
+
+[00:24:38.720] probably show them Python or JavaScript.
+
+[00:24:40.960] There's no universality. And for your
+
+[00:24:43.200] users and your tooling, you might be
+
+[00:24:45.520] using the most average tool. So maybe we
+
+[00:24:47.120] can just call it a human. But the more
+
+[00:24:48.960] specific you can make it, the more
+
+[00:24:50.559] control that you are taking over your
+
+[00:24:52.320] system, the more accurate and a better
+
+[00:24:54.240] experience you'll provide to your users.
+
+[00:24:57.360] But it's all about testing and
+
+[00:24:58.720] iterating.
+
+[00:25:00.520] Anyone the best tool is is probably not
+
+[00:25:04.480] correct because they just don't have the
+
+[00:25:06.000] data for your use case. Okay, we got
+
+[00:25:09.520] five more minutes for slides and then
+
+[00:25:10.720] we're going to jump into code. So, I'm
+
+[00:25:11.679] going to fly through some more of these.
+
+[00:25:13.480] Um, control flow. I mean, we we've kind
+
+[00:25:16.320] of hinted on this a lot, but basically,
+
+[00:25:18.000] if you own your control flow, if you own
+
+[00:25:20.320] that switch statement, you can decide
+
+[00:25:22.320] when to break out into another workflow,
+
+[00:25:24.400] when to pause and resume later, when
+
+[00:25:26.799] these are all kind of like complement
+
+[00:25:28.320] each other. But the idea is you can pick
+
+[00:25:29.840] two or three of them at a time and start
+
+[00:25:31.279] incorporating them. And so, if you own
+
+[00:25:34.080] the switch statement, you can insert
+
+[00:25:36.000] little like modes to summarize things or
+
+[00:25:38.799] add an LLM as a judge to break out and
+
+[00:25:40.799] bring things back in. You can pause and
+
+[00:25:42.480] do something asynchronous and then
+
+[00:25:43.840] resume later. So this is this is kind of
+
+[00:25:46.080] we've gone over this one a little bit.
+
+[00:25:47.679] Another thing that I think I is is worth
+
+[00:25:49.840] mentioning is this like adding errors
+
+[00:25:51.520] onto the context window. If a model
+
+[00:25:53.840] calls a tool and that tool is bad,
+
+[00:25:56.400] either the API is down or it used bad
+
+[00:25:58.480] parameters or whatever it is. Um let's
+
+[00:26:01.919] say that result caused an error. We can
+
+[00:26:04.400] put that on the context window and hand
+
+[00:26:05.919] it back to the LLM and have it say like
+
+[00:26:08.720] let's try
+
+[00:26:09.799] again. And then maybe that will give it
+
+[00:26:12.480] enough to get to success. super s simple
+
+[00:26:14.840] concept. Almost every framework already
+
+[00:26:17.360] does this. Um, but that's another
+
+[00:26:19.840] interesting one that we talk about a
+
+[00:26:21.559] lot. Uh, the next one is kind of small
+
+[00:26:24.080] focused agents. Again, the longer and
+
+[00:26:26.159] bigger you have this like workflow owned
+
+[00:26:29.200] by the agent. Um, the more tools you
+
+[00:26:31.039] have and the more steps you have, the
+
+[00:26:32.320] more likely this thing's going to spin
+
+[00:26:33.600] out and fail. Uh, you may say like,
+
+[00:26:35.600] well, what if the agents get smarter?
+
+[00:26:37.600] Um, this is kind of how I see all this
+
+[00:26:39.360] progressing where you have a fully
+
+[00:26:41.200] deterministic workflow. You replace
+
+[00:26:43.279] small parts of it with agents and then
+
+[00:26:45.039] over time you can get bigger and more
+
+[00:26:47.600] interesting agents and they start to
+
+[00:26:48.960] overlap and maybe in a couple years say
+
+[00:26:52.080] what and I think this point what Dexter
+
+[00:26:55.200] is saying is that like when when these
+
+[00:26:58.080] principles that we're sharing here are
+
+[00:27:00.880] not just about like models getting
+
+[00:27:03.120] better like Sam Alman might tell you
+
+[00:27:04.960] that we have to go wait for the better
+
+[00:27:06.320] model it's going to go do everything but
+
+[00:27:08.640] that just means that the box gets bigger
+
+[00:27:10.640] like this visualization shows.
+
+[00:27:13.039] Yeah. And I think remove the need for
+
+[00:27:15.200] the box. Yeah. And I think even as the
+
+[00:27:18.799] as the models get smarter and you can
+
+[00:27:20.799] get better results with less
+
+[00:27:22.840] engineering, there will always be tips
+
+[00:27:25.039] and tricks that will help you get more
+
+[00:27:26.960] out of a given model. And I think the
+
+[00:27:29.600] Notebook LM team put this really well. I
+
+[00:27:32.000] haven't seen anything on Notebook LM in
+
+[00:27:33.360] a while, but when they launched it was
+
+[00:27:34.720] super popular. And the reason why it was
+
+[00:27:37.520] is because in their own words, the only
+
+[00:27:40.080] way to create really impressive or even
+
+[00:27:42.159] like magical experiences in AI is to
+
+[00:27:45.360] find something that is right at the
+
+[00:27:47.279] boundary of what the model is capable of
+
+[00:27:50.240] and get it right consistently. And so
+
+[00:27:53.200] even as the model gets smarter and you
+
+[00:27:54.640] don't need to do so much engineering, if
+
+[00:27:56.000] you want to do something that is 10x
+
+[00:27:58.320] better than what already exists, you are
+
+[00:28:00.240] going to want to do some engineering and
+
+[00:28:01.840] you want to have the flexibility to to
+
+[00:28:04.159] be intentional about this. And to give
+
+[00:28:06.000] everyone like an analogy that I think is
+
+[00:28:07.520] relevant to like current software is
+
+[00:28:10.320] technically most websites are really
+
+[00:28:12.159] just the same thing the different views
+
+[00:28:14.640] on similar databases.
+
+[00:28:17.440] the way people interface with it makes a
+
+[00:28:19.279] huge difference and because it just way
+
+[00:28:22.240] that you re like react to a site and the
+
+[00:28:25.200] way that you see the data the same is
+
+[00:28:27.520] going to be your agentic systems like
+
+[00:28:30.159] we're all using the same models quad
+
+[00:28:32.559] code versus cursor they're both using
+
+[00:28:34.480] sonet 37 there's no difference it's just
+
+[00:28:37.760] the the UX and all the engineering in
+
+[00:28:39.840] between exactly that is the only thing
+
+[00:28:43.200] so like if you want to make a
+
+[00:28:44.880] differentiated product there's no moat
+
+[00:28:46.880] and saying, "I'm going to use the best
+
+[00:28:48.080] model." Everyone has the best model. You
+
+[00:28:49.760] assume that and assume people have a
+
+[00:28:51.440] better model than you. Yeah. Make a
+
+[00:28:54.159] better product anyway. And do that with
+
+[00:28:55.840] engineering.
+
+[00:28:57.399] Cool. Um, all right. We're going to
+
+[00:28:59.679] speed through the last few of these. So,
+
+[00:29:01.039] um, yeah, factor 11. Trigger from
+
+[00:29:02.559] anywhere. Meet users where they are. I
+
+[00:29:04.320] think, uh, chat GBT is the like geo
+
+[00:29:07.440] cities era of like AI UX's. There's
+
+[00:29:10.640] going to be a lot better ways to
+
+[00:29:12.080] interact with AI. Um, I think a lot of
+
+[00:29:15.520] people who are building really
+
+[00:29:16.399] impressive things are building AIs that
+
+[00:29:17.919] you can interact with fully from your
+
+[00:29:19.600] email inbox, from Slack, um, from lots
+
+[00:29:22.720] of places beyond just a web application.
+
+[00:29:25.919] And this one's a bit of a meme, but it's
+
+[00:29:27.520] kind of the the culmination of
+
+[00:29:29.360] everything else that we've been talking
+
+[00:29:30.559] about, which is, you
+
+[00:29:33.000] know, LM are stateless, agents can be
+
+[00:29:36.480] stateless, you're just operating on a
+
+[00:29:38.159] context window. And uh actually someone
+
+[00:29:40.320] commented on LinkedIn. I think it's
+
+[00:29:41.520] actually because there's multiple steps.
+
+[00:29:43.039] It's a transducer, not a reducer. But uh
+
+[00:29:46.240] that's that's kind of a good summary.
+
+[00:29:48.080] Maybe. All right. We can get into that
+
+[00:29:50.960] one later. One second. I just want to
+
+[00:29:53.279] appreciate one thing for everyone. Can
+
+[00:29:54.880] we appreciate that the naming that Dex
+
+[00:29:56.720] used was hex code? That is amazing.
+
+[00:30:03.590] Well, I wanted it to sort. I wanted it
+
+[00:30:03.600] to make sure. No, I get it. I get it.
+
+[00:30:04.960] So, I want everyone to just appreciate
+
+[00:30:06.320] that. All right. quick little thing and
+
+[00:30:08.799] then can you go to the to the browser
+
+[00:30:11.120] really fast your uh drawing thing I just
+
+[00:30:12.960] want to draw the whiteboard yeah someone
+
+[00:30:15.200] asked a really good question that I
+
+[00:30:16.559] think is relevant and going to help us
+
+[00:30:17.840] out so the question someone asked um
+
+[00:30:20.320] Jonathan asked like what's the advantage
+
+[00:30:21.600] of using small number big agents versus
+
+[00:30:23.840] a large number of smaller agents and I
+
+[00:30:26.240] think the analogy that everyone should
+
+[00:30:27.520] use is that these systems are really
+
+[00:30:29.600] about like we these systems are all
+
+[00:30:31.520] fallible they fail all the time so let's
+
+[00:30:34.240] look at if we use a small number of big
+
+[00:30:35.919] agents you end up with a curve curve
+
+[00:30:37.600] that looks like this. You have some
+
+[00:30:39.360] distribution of how well it works and
+
+[00:30:41.440] you have a wider array of things that
+
+[00:30:43.120] you might work well on, but you also
+
+[00:30:44.799] have a wider array of things you will
+
+[00:30:46.159] work poorly on. If you use a large
+
+[00:30:48.320] number of small agents, then you
+
+[00:30:50.480] basically change the distribution to
+
+[00:30:51.919] look like this. You'll work better in
+
+[00:30:54.960] certain areas and you may not work as
+
+[00:30:57.320] broadly. But if you build it really
+
+[00:30:59.360] well, you can actually make a curve. If
+
+[00:31:02.080] you the more engineering you put into
+
+[00:31:03.760] it, you can basically change that curve
+
+[00:31:05.760] into something that looks like this. You
+
+[00:31:07.279] can make it wider and taller as you
+
+[00:31:09.960] wish. And that's really the difference.
+
+[00:31:12.720] It's like the amount of engineering
+
+[00:31:14.159] effort you put into it. The orange curve
+
+[00:31:16.480] is no engineering effort. Let the model
+
+[00:31:18.159] do everything. The green curve is some
+
+[00:31:20.159] engineering effort. The red curve or
+
+[00:31:22.000] pink curve, I can't see on my screen's
+
+[00:31:23.679] pink is is more engineering effort. And
+
+[00:31:26.880] that's how you scale up these systems.
+
+[00:31:28.399] It's like databases. The way you make a
+
+[00:31:29.919] database go scale to like five nines is
+
+[00:31:32.720] you just put more engineering behind it.
+
+[00:31:35.039] You can make it really damn good. It
+
+[00:31:38.080] just uh amount of engineering and same
+
+[00:31:41.600] thing is true here. Hopefully it answers
+
+[00:31:43.840] Jonathan.
+
+[00:31:46.080] Awesome. All right, let's write some
+
+[00:31:47.600] code. Let's write some code. This is my
+
+[00:31:49.200] favorite part. Um okay, cool. So, uh
+
+[00:31:51.760] what I have here is a empty TypeScript
+
+[00:31:54.240] project. Um, we're gonna do TypeScript
+
+[00:31:56.240] today because I wanted to coin flip and
+
+[00:31:58.159] uh we've been doing a lot of Python
+
+[00:31:59.640] lately. So, uh, what I'm gonna do is,
+
+[00:32:04.000] uh, I'm gonna just start grabbing files,
+
+[00:32:06.320] uh, for this walkthrough. We're going to
+
+[00:32:08.159] start with just a really simple, uh,
+
+[00:32:10.320] hello world. So, literally, here's our
+
+[00:32:12.880] script. I can run it with, uh, let make
+
+[00:32:15.760] that terminal a little bit
+
+[00:32:17.640] bigger. Um, so if I run this script, uh,
+
+[00:32:21.279] it just prints hello world, right?
+
+[00:32:23.279] Great. We can commit that. That's all
+
+[00:32:25.519] we've That's all we've done so
+
+[00:32:27.880] far.
+
+[00:32:29.640] Um, sorry. Um, the next thing I'm going
+
+[00:32:32.799] to do is I'm going to install BAML,
+
+[00:32:35.519] which is what we'll be using for
+
+[00:32:36.640] prompting our agent and building our
+
+[00:32:38.240] determine next step prompt. Um, and
+
+[00:32:41.279] there is one default file that comes
+
+[00:32:43.360] when you do that BAML in it. That is the
+
+[00:32:45.120] resume that I'm going to uh close out.
+
+[00:32:48.080] So now we have in our BAML source we
+
+[00:32:50.559] have clients which is things that talk
+
+[00:32:52.000] to LLMs and then we have generators
+
+[00:32:53.840] which is some BAML config. I'm going to
+
+[00:32:56.559] write a really simple agent here um that
+
+[00:33:00.240] basically just has one tool call which
+
+[00:33:02.559] is we'll call it done for now but it's
+
+[00:33:04.480] basically respond to the user.
+
+[00:33:07.799] Let's yep. So we have a prompt called
+
+[00:33:11.279] determine next step. Um, and it is
+
+[00:33:14.559] basically can return one type which is
+
+[00:33:16.559] done for now where the model will
+
+[00:33:18.320] declare its intent and then we'll just
+
+[00:33:19.600] get the message that it wants to send.
+
+[00:33:21.279] You want to zoom out a little bit? Yeah,
+
+[00:33:24.320] there we go. Cool. There we go. And do
+
+[00:33:26.720] you want to click on open playground so
+
+[00:33:28.240] people can just read the prompt fully
+
+[00:33:29.679] for that one test case a little bit
+
+[00:33:31.279] better? Yeah. Yeah. Okay. Yeah. There
+
+[00:33:32.720] you
+
+[00:33:33.720] go. So, um, the system messages you're a
+
+[00:33:37.039] helpful assistant. We'll go in and show
+
+[00:33:38.399] you how like we'll, as an example, we'll
+
+[00:33:40.240] add reasoning and some fancy stuff to
+
+[00:33:41.840] this prompt. We'll add more tools and
+
+[00:33:43.279] types to it. Um, but you can basically
+
+[00:33:45.360] say, hey, you're working on this thread.
+
+[00:33:46.880] If we wanted to test this or play with
+
+[00:33:48.559] this, um, you know, we can run it and it
+
+[00:33:51.360] says, hey, here's our answer. So, if we
+
+[00:33:52.960] wanted to give it other instructions
+
+[00:33:54.320] like talk like a pirate,
+
+[00:33:57.600] save this and we can run it again. And
+
+[00:33:59.600] now it's going to talk like a pirate.
+
+[00:34:01.519] Great. And I want to highlight this.
+
+[00:34:03.519] This is one of your factors. Respond to
+
+[00:34:05.840] agents with tools. Instead of having it
+
+[00:34:08.560] just respond as a string, we could
+
+[00:34:10.240] change the return type of determine next
+
+[00:34:11.919] step to not be deter done for now, but
+
+[00:34:14.240] instead be a string. Can you make that a
+
+[00:34:15.919] string type? And press play. We could do
+
+[00:34:18.760] this. Like that's totally a valid way to
+
+[00:34:21.440] do this, but by using a tool, we're able
+
+[00:34:25.520] to get a couple of wins for users, which
+
+[00:34:27.679] is now we can just render the message
+
+[00:34:30.240] field to the user. Exactly. Um, so I'm
+
+[00:34:35.119] going to generate the uh models for this
+
+[00:34:38.879] uh the TypeScript code for this and then
+
+[00:34:42.079] I'm going to enable the BAML debug
+
+[00:34:43.839] logging and I'm going to add a couple of
+
+[00:34:47.280] TypeScript files. So we're going to add
+
+[00:34:50.159] we we're going to add a CLI which
+
+[00:34:52.879] basically just pulls a user message off
+
+[00:34:54.960] the command line, turns it into this
+
+[00:34:57.040] thread object that we'll get into a sec
+
+[00:34:58.960] and sends it to our agent. And then our
+
+[00:35:01.520] index.ts TS is going to call that CLI
+
+[00:35:04.680] function. Um, the agent itself is pretty
+
+[00:35:07.760] simple. I'm going to start here. This
+
+[00:35:08.800] this is called agent loop. This actually
+
+[00:35:10.160] doesn't do any Oops, sorry. Close that
+
+[00:35:12.160] out. This doesn't do any looping yet.
+
+[00:35:14.480] It's just going to call our determine
+
+[00:35:16.000] next step and then it's going to uh
+
+[00:35:18.480] return it. Um, we have this thread
+
+[00:35:21.359] object which is just a li list of
+
+[00:35:23.040] events. Um, which we'll get into, but
+
+[00:35:24.880] this is like the items in our context
+
+[00:35:27.040] window. And so when I run this quickly,
+
+[00:35:30.960] I'll show you
+
+[00:35:34.079] um if we can say
+
+[00:35:36.280] hello, what happens is we have kind of
+
+[00:35:38.640] the BAML logs will actually output the
+
+[00:35:40.720] prompt that was passed in. So here's the
+
+[00:35:42.560] thread we actually gave to the agent in
+
+[00:35:44.320] our determine next step prompt. Um we
+
+[00:35:46.960] serialize that for the agent and then uh
+
+[00:35:49.760] so we build this thread and it gets
+
+[00:35:51.680] passed in as JSON and then we ask it
+
+[00:35:54.160] what the schema should be and it says
+
+[00:35:55.760] cool. So I can say, you
+
+[00:35:57.800] know, hello, talk like a
+
+[00:36:01.240] pirate, this is the best the best LM
+
+[00:36:03.920] example that exists. There we go. So now
+
+[00:36:06.400] it output this thing and we just kind of
+
+[00:36:07.760] print it out. So that's our that's our
+
+[00:36:11.280] literally natural language to tool
+
+[00:36:12.880] calls. The only tool right now is done
+
+[00:36:14.560] for now, but um we'll add more tools in
+
+[00:36:16.560] a sec.
+
+[00:36:19.079] Um Carl, while you get your next step
+
+[00:36:21.440] set up, I'll describe Carlos as like
+
+[00:36:23.440] BAML code is interpreted. So, BAML code
+
+[00:36:25.119] is just uh code that you write and then
+
+[00:36:27.839] we use that command line tool that
+
+[00:36:29.920] Dexter ran BAML CLI generate to convert
+
+[00:36:32.400] BML code into native TypeScript code.
+
+[00:36:35.839] Yes. So, if I if I were to actually use
+
+[00:36:38.320] the native like uh VS code clickth
+
+[00:36:40.800] through, you can see here's the
+
+[00:36:41.839] generated code that got generated from
+
+[00:36:43.760] this function. Yeah. And u people might
+
+[00:36:47.760] be wondering like why the heck do you
+
+[00:36:49.040] use BAML for this? Um yeah, go ahead. uh
+
+[00:36:53.920] you should probably tell them but like
+
+[00:36:55.760] the main reason I think Dex and I first
+
+[00:36:57.280] met is one we're just YC founders but
+
+[00:37:00.320] two the part about BAML that makes it
+
+[00:37:01.920] easier for people is just that it gives
+
+[00:37:03.680] you full control over the prompt like
+
+[00:37:05.760] the fact that the entire prompt is
+
+[00:37:08.160] accessible to Dexter and he can see it
+
+[00:37:09.839] and modify there's no default things
+
+[00:37:11.440] built in the prompt is where the is
+
+[00:37:13.440] where like why it becomes useful and I
+
+[00:37:15.040] think as we do unions it's going to be a
+
+[00:37:16.480] lot more interesting so let's go on to
+
+[00:37:18.240] the next part yeah and if you yeah if
+
+[00:37:20.480] you come back over this and you go watch
+
+[00:37:22.560] the recording. Watch this and then go
+
+[00:37:24.640] back and watch the We've already done
+
+[00:37:26.079] factors one, two, and three. And we're
+
+[00:37:27.520] about to do factor 4. Yeah. Um
+
+[00:37:30.079] demonstrated in here. So, um we'll
+
+[00:37:32.000] commit that. Here's the kind of diff of
+
+[00:37:33.680] everything that we did. Um so, now we're
+
+[00:37:35.839] going to add uh what I'm going to call
+
+[00:37:37.520] the calculator tool. And so, this is
+
+[00:37:40.240] just uh again a bunch of structured
+
+[00:37:42.240] outputs defined in BAML. That is the add
+
+[00:37:44.640] tool, subtract tool, the multiply tool,
+
+[00:37:46.960] and the divide tool. Um pretty simple
+
+[00:37:49.440] stuff. And then what we're going to do
+
+[00:37:51.359] is we're going to update our agent.baml
+
+[00:37:53.760] to return either done for now or
+
+[00:37:56.560] calculator
+
+[00:37:58.920] tools. That's it. Um did you define
+
+[00:38:02.160] calculator? Oh, we need to Yeah, there
+
+[00:38:04.640] we go. Oh, it's calculator tools plural.
+
+[00:38:06.800] That's why. Okay, cool. Um and so if we
+
+[00:38:10.320] regenerate our our code here, um there
+
+[00:38:14.720] now we can ask the agent. We're not even
+
+[00:38:16.720] going to change the TypeScript code.
+
+[00:38:17.839] We're just changing the basically by
+
+[00:38:19.200] changing the tools that gets passed into
+
+[00:38:20.720] here, it changes our prompt. And so this
+
+[00:38:23.119] is just prompt engineering right now.
+
+[00:38:25.119] Yeah. Um and so now you can see the
+
+[00:38:27.200] prompt is going to ask it to answer in
+
+[00:38:28.880] any one of these schemas. So I can run
+
+[00:38:31.920] and add it. And uh again, we're not
+
+[00:38:34.079] actually doing anything with this
+
+[00:38:35.520] output, but this is factor one. We turn
+
+[00:38:37.280] natural language into a structured
+
+[00:38:39.119] object that says add three and four. And
+
+[00:38:41.599] this is like the most important part.
+
+[00:38:43.359] We're the lime remember is not calling
+
+[00:38:45.839] the tool. It is simply returning a data
+
+[00:38:48.400] model that I then interpret as a thing I
+
+[00:38:51.119] can do something with. It's like any
+
+[00:38:53.839] other API call. It's just a stateless
+
+[00:38:55.839] API call that we were able to convert
+
+[00:38:57.599] the model into. Yep. So here's the only
+
+[00:39:00.079] change we made is we added tools and we
+
+[00:39:01.680] told the LM it can return those tools as
+
+[00:39:04.000] well. Yeah. Um now let's actually go
+
+[00:39:07.040] process that. Um
+
+[00:39:14.630] so I'm going to update our agent.ts.
+
+[00:39:14.640] And essentially now we've updated this
+
+[00:39:16.480] to have a full what we call like agent
+
+[00:39:19.560] loop
+
+[00:39:22.440] where yeah okay that looks
+
+[00:39:26.040] good. Did we not generate? No I think it
+
+[00:39:29.760] did just there. You probably just didn't
+
+[00:39:32.320] generate there. Okay. Um so now we're
+
+[00:39:35.520] going to get our next step out and we're
+
+[00:39:36.800] going to do a switch statement. We're
+
+[00:39:37.839] going to say if it's done for now we'll
+
+[00:39:39.119] just return the message. If it's add
+
+[00:39:41.760] then we're going to compute the result
+
+[00:39:43.920] one. we add that to our context window
+
+[00:39:45.920] and I'll show you what that looks like
+
+[00:39:46.880] as we go through and then we're going to
+
+[00:39:49.119] push the result onto the context window
+
+[00:39:50.880] and we're going to loop again to the top
+
+[00:39:52.720] and we're going to just check now with
+
+[00:39:54.320] our new thread what's the what's the new
+
+[00:39:56.640] next step
+
+[00:39:58.520] so while Dex runs this and executes this
+
+[00:40:02.400] like one thing to think about is we all
+
+[00:40:03.920] see these frameworks we all see like
+
+[00:40:05.359] lang chains tool calling API we all see
+
+[00:40:07.280] agent api uh we all see like um the
+
+[00:40:11.040] openai API SDK they're all doing this
+
+[00:40:14.400] loop. They're just not giving you
+
+[00:40:16.079] control over the loop. Own the loop. Own
+
+[00:40:19.280] the loop. That's it. It's not that hard.
+
+[00:40:22.160] Um, so here's here's we we passed in our
+
+[00:40:24.960] first prompt and we got out the intent
+
+[00:40:27.040] was add. And then we printed our next
+
+[00:40:28.880] step and our tool response was seven.
+
+[00:40:30.880] Um, we'll turn up the logs in a second.
+
+[00:40:32.400] This will make a little bit more sense.
+
+[00:40:33.839] And then here's the next context window
+
+[00:40:35.359] we put in. We just said display to not
+
+[00:40:37.760] be so dark by chance. Is that possible
+
+[00:40:39.359] in your terminal?
+
+[00:40:41.440] Uh, I was trying to get it better
+
+[00:40:43.520] yesterday. I actually changed a bunch of
+
+[00:40:44.720] my colors to work better with the BAML
+
+[00:40:46.320] output colors. Uh, but you all need a
+
+[00:40:48.640] solarized theme. I will apologize for
+
+[00:40:51.200] that. Uh, ANC color art is very poor as
+
+[00:40:54.160] I've learned. Maybe like black. Yeah,
+
+[00:40:56.000] it's not good.
+
+[00:40:58.000] High contrast. Oh, yeah. There you go.
+
+[00:41:00.880] Uh, you know what? I can't change the
+
+[00:41:02.400] profile of an active shell. Oh, okay.
+
+[00:41:05.359] Never mind. Go on. Sorry, folks. Um, you
+
+[00:41:08.000] can run this code yourself in whatever
+
+[00:41:09.440] show you want though. Um,
+
+[00:41:12.240] so let me turn this off and I'll just
+
+[00:41:13.760] show you kind of how we're logging this
+
+[00:41:14.960] stuff out. Um, can turn it back on. Oh
+
+[00:41:17.520] yeah, we can turn off the log. That's
+
+[00:41:18.560] actually better because then we can see
+
+[00:41:19.760] the tooling part of it. Yeah. So this is
+
+[00:41:22.079] this is just our logs that our
+
+[00:41:23.599] application is printing. And so I asked,
+
+[00:41:25.680] you know, can you add three and four and
+
+[00:41:26.880] then add six to that result. So it it
+
+[00:41:29.040] emitted this attempt. We gave it this
+
+[00:41:30.800] result and then it tried to add them
+
+[00:41:32.160] together and then it gave it this one.
+
+[00:41:33.920] And then we have done for now and it's
+
+[00:41:35.440] good. And you could easily see how we
+
+[00:41:37.200] could build a UI off of this. Like
+
+[00:41:38.640] pretend that this isn't even an outline.
+
+[00:41:40.400] I think the most important part of the
+
+[00:41:41.680] Grock is this doesn't have to be an
+
+[00:41:43.200] outline. I just have a machine that is
+
+[00:41:44.880] outputting events and now I can build a
+
+[00:41:46.880] UI on top of this whether it's a chat
+
+[00:41:48.640] pro chat system or anything else. And
+
+[00:41:51.280] that's all this ends up being.
+
+[00:41:54.000] Um, cool. I'm going to break this uh and
+
+[00:41:56.160] ask it to subtract things. Um, because
+
+[00:41:58.400] we haven't actually implemented we've
+
+[00:41:59.920] only implemented add. So, if it's not
+
+[00:42:01.680] done for now or add, we're just going to
+
+[00:42:03.839] blow up with, you know, unknown intent.
+
+[00:42:05.599] We don't know what that intent is. So,
+
+[00:42:07.839] I'm not going to make you all watch me
+
+[00:42:09.599] code out the handlers for all of these,
+
+[00:42:11.520] but we'll basically pull this into a
+
+[00:42:13.040] function called handle next step. And
+
+[00:42:15.440] that handles add, subtract, multiply,
+
+[00:42:17.680] divide. And so now our loop becomes
+
+[00:42:20.720] determine next step, add that to the
+
+[00:42:22.960] context window, and then handle next
+
+[00:42:25.599] step. So, if it's one of our break-in
+
+[00:42:27.200] conditions, we'll just return. But if
+
+[00:42:29.200] it's one of these four, um, we'll fall
+
+[00:42:30.960] through the switch statement and we'll
+
+[00:42:32.240] do handle next step. And this handle
+
+[00:42:33.839] next step is basically going to append
+
+[00:42:35.520] the thing to the thread and then return
+
+[00:42:37.319] it. That make
+
+[00:42:39.880] sense? So now we can ask it to subtract
+
+[00:42:42.480] three from four. And now we can ask it
+
+[00:42:45.599] to multiply three and
+
+[00:42:47.560] four. And now we can ask it to do big
+
+[00:42:50.240] complicated things like add and multiply
+
+[00:42:52.240] and divide and uh run through all
+
+[00:42:54.680] this. So that's tool calling loop.
+
+[00:42:58.640] There we go. We now we own our control
+
+[00:43:00.240] flow and we can do lots of things. The
+
+[00:43:02.160] the idea of like when we the control of
+
+[00:43:04.720] when we break and return versus when we
+
+[00:43:06.880] continue and loop through I think is
+
+[00:43:08.319] really important and interesting. So
+
+[00:43:10.319] let's let's look at this code a little
+
+[00:43:11.760] bit just so people can see this a little
+
+[00:43:13.280] bit better. Yeah. What do you want to
+
+[00:43:15.680] look at? Just like describe maybe we
+
+[00:43:17.680] should describe to people exactly what
+
+[00:43:18.960] we're doing. So like how are we doing
+
+[00:43:21.000] this? So so our CLI comes through and
+
+[00:43:23.760] takes the input message. We build a
+
+[00:43:25.760] thread with that message and then we pop
+
+[00:43:28.079] and then we hand that off to the loop.
+
+[00:43:29.440] So that's our base
+
+[00:43:31.880] thread. We pass that thread into the LLM
+
+[00:43:35.119] and I'm going to get into testing as the
+
+[00:43:37.040] next thing. So we can actually look at
+
+[00:43:38.319] what some of these prompts are returning
+
+[00:43:39.680] and stuff. But
+
+[00:43:43.319] um yeah, we pass that into the LM. We
+
+[00:43:46.079] get back a next step. Um, when we push
+
+[00:43:49.520] our results on, we want the LM to know
+
+[00:43:51.200] not just what was the result, but also
+
+[00:43:53.280] like what did I call because the LM
+
+[00:43:55.200] doesn't know that it called it. When you
+
+[00:43:56.400] pass the context window back in again,
+
+[00:43:58.240] it only knows what we tell it. And so,
+
+[00:44:00.319] we want to be able to tell it, hey, you
+
+[00:44:02.000] called a tool that is this next step
+
+[00:44:04.400] that is this
+
+[00:44:06.200] um, you know, you called this intent
+
+[00:44:08.920] multiply 34. We can turn on the BMA logs
+
+[00:44:11.920] again so people see the full prompt as
+
+[00:44:13.280] well. the next time it run. Um, actually
+
+[00:44:16.800] what we're going to do just for time,
+
+[00:44:18.319] I'm just going to do it in the test
+
+[00:44:19.520] instead. Oh, better. Um, so I've added a
+
+[00:44:23.839] couple tests to this file. So here's a
+
+[00:44:25.760] math operation here. Um, and so we can
+
+[00:44:30.319] uh pop through here and run this test.
+
+[00:44:33.760] And so basically the prompt that we put
+
+[00:44:35.680] in was, you know, your helpful
+
+[00:44:37.520] assistant, here's the user input, what
+
+[00:44:39.359] should the next step be?
+
+[00:44:42.359] Um, cool. Uh, and then the output was
+
+[00:44:47.200] multiply three and four. Carlos, that's
+
+[00:44:49.520] a great question. Like, why doesn't the
+
+[00:44:50.960] LLM know what tool it's called? Unless
+
+[00:44:53.040] you put something into the context
+
+[00:44:54.640] window of the model. It doesn't know
+
+[00:44:56.319] anything. So, I could have gotten the
+
+[00:44:58.319] answer of maybe add a test case. Ed, do
+
+[00:45:00.720] you have another test case that you want
+
+[00:45:01.760] to add in? Uh, I have a bunch more test
+
+[00:45:04.240] cases. Go on. I'll let you go do that.
+
+[00:45:06.480] All right. All right. Cool. Just just
+
+[00:45:07.839] for the sake of time. Um and happy to
+
+[00:45:09.920] kind of do follow-ups and if people can
+
+[00:45:11.359] we can we have time blocked after if
+
+[00:45:12.640] people want to hang out for questions.
+
+[00:45:14.000] So we can run these tests now. Um we can
+
+[00:45:17.280] also do add what's really interesting
+
+[00:45:18.720] here as far as like being able because
+
+[00:45:20.640] your context window and your input is
+
+[00:45:22.079] just a string. We can make assertions
+
+[00:45:23.760] and basically build really simple evals.
+
+[00:45:26.800] dinga um
+
+[00:45:36.950] and like make assertions about what
+
+[00:45:36.960] the model returns for certain inputs. So
+
+[00:45:39.520] if I change this to add and I run the
+
+[00:45:41.200] test again, this is going to
+
+[00:45:43.079] fail. Um so I can run this every time I
+
+[00:45:45.839] make a change to my prompts. And then we
+
+[00:45:47.680] can also make assertions that like all
+
+[00:45:50.680] right, cursor doesn't know this yet, but
+
+[00:45:53.200] that's fine.
+
+[00:45:56.000] Um so we can make assertions about the
+
+[00:45:58.400] whole thing that the model outputs. Um
+
+[00:46:01.040] and the important part here is like we
+
+[00:46:02.720] don't need LMZ val like when you use
+
+[00:46:05.760] structured outputs you stop you l val
+
+[00:46:08.240] still might be useful but for a lot of
+
+[00:46:10.800] use cases I just need to know that the
+
+[00:46:12.319] intent was correct and the parameters I
+
+[00:46:14.240] got out were correct. That's what I need
+
+[00:46:16.000] to really nail down.
+
+[00:46:18.319] Yeah. So uh let's let's do a test for
+
+[00:46:20.800] the long math thing and this will get to
+
+[00:46:22.240] kind of what you were asking for before.
+
+[00:46:23.440] I'm going to turn the logs back on just
+
+[00:46:24.880] so I can see the prompts that are
+
+[00:46:26.160] getting put in um as it's going through
+
+[00:46:28.880] this. So by the end of this we have this
+
+[00:46:30.319] really long kind of thread as our
+
+[00:46:32.319] prompt.
+
+[00:46:33.620] [Music]
+
+[00:46:44.150] Um and since it's just strings, we can
+
+[00:46:44.160] have cursor format this however we
+
+[00:46:52.069] want. Great. Um, so, so this is what
+
+[00:46:52.079] we're passing into the model on that
+
+[00:46:53.680] last thing. And if we run this test,
+
+[00:46:56.560] we'll see that the output was, "Hey,
+
+[00:46:59.119] we're done." And we got our final
+
+[00:47:00.520] result. But, um, if we took like a
+
+[00:47:04.319] subset of this and we said,
+
+[00:47:07.960] um, let's do you want to remove the tool
+
+[00:47:10.880] response. Yeah, exactly. Um, let's
+
+[00:47:14.079] format this again. Live coding, folks.
+
+[00:47:18.480] And this is like another thing that
+
+[00:47:19.920] Dexter was talking about like you need
+
+[00:47:21.200] to be able to test like we no one knows
+
+[00:47:22.800] what's the best thing for your system.
+
+[00:47:24.960] The only way you can know is to actually
+
+[00:47:26.560] just run the test and like so here's go
+
+[00:47:29.760] ahead Carlo question of like oh sorry
+
+[00:47:32.480] one last thing Carlo has a question like
+
+[00:47:34.319] doesn't know what tool it's called if I
+
+[00:47:36.240] that's what I'm gonna Yeah. Okay cool go
+
+[00:47:37.839] for it go for it. Sorry. Yeah. So I
+
+[00:47:39.440] actually so let's let's just rewind this
+
+[00:47:41.440] a little bit and let's say that we take
+
+[00:47:44.560] away this tool call. So instead of
+
+[00:47:47.520] telling it um I mean it might be smart
+
+[00:47:50.480] enough to figure it out but basically if
+
+[00:47:52.319] we just put the tool responses
+
+[00:47:54.359] in I have no idea what this is gonna
+
+[00:47:56.640] say. I've never tried this. I don't
+
+[00:47:58.000] know. I don't know. I think you but this
+
+[00:48:00.079] is the point is like you should be able
+
+[00:48:01.119] to try everything and you should be able
+
+[00:48:02.319] to see like actually it doesn't matter
+
+[00:48:03.520] the model for a calculator app the
+
+[00:48:05.359] model's smart enough to figure out that
+
+[00:48:06.880] we want to add these things. So multiply
+
+[00:48:08.480] three and four and then add 12 to that
+
+[00:48:10.640] result. Correct. So I think it actually
+
+[00:48:12.319] figured it out in this case because it's
+
+[00:48:14.480] a simple problem. Yeah. And the model is
+
+[00:48:17.920] What model are you using? Can you show
+
+[00:48:19.040] the prompt again? This is uh GPT40.
+
+[00:48:21.760] Okay, cool. Yeah. So, GT4 is try
+
+[00:48:24.000] switching it to Mini and seeing if Mini
+
+[00:48:25.599] it up. But,
+
+[00:48:28.280] um anyways, I hope that answers the
+
+[00:48:30.839] question. Um I'm going to keep rolling
+
+[00:48:33.920] just so that we have more that we can
+
+[00:48:35.599] get to all the topics. Yeah, I want to
+
+[00:48:37.440] talk about the more interesting stuff
+
+[00:48:38.480] you have lined up, too. I know we only
+
+[00:48:39.920] have 10 minutes, so let's keep going.
+
+[00:48:41.920] Cool. Uh, if I can get my shell back in
+
+[00:48:44.240] the right place, we can roll. All right,
+
+[00:48:46.480] cool. Um, so here's like the actual like
+
+[00:48:50.319] big pile of tests. And now we have a
+
+[00:48:52.240] bunch of them. So, let me hide the
+
+[00:48:53.599] playground here.
+
+[00:48:56.760] Um, and so this has like five or six
+
+[00:48:59.520] longer tests. And I can do npx panel CLI
+
+[00:49:02.880] test. And so as we're building this, as
+
+[00:49:04.800] we find things we want to change our
+
+[00:49:06.000] prompt, we can go through all of that.
+
+[00:49:08.400] So I'll commit this again. And in this
+
+[00:49:10.800] chapter, all we changed was
+
+[00:49:12.160] agent.baml.l. We just added a bunch of
+
+[00:49:13.760] tests. We didn't write any TypeScript
+
+[00:49:15.119] code for that
+
+[00:49:16.599] chapter. Um, cool. Let's add another
+
+[00:49:20.000] human tool. So, this is where we talk
+
+[00:49:22.160] about having multi different reasons to
+
+[00:49:23.839] contact a human. There may be a model
+
+[00:49:25.359] saying, "Hey, I need to request more
+
+[00:49:27.160] information." Or there may be like an
+
+[00:49:29.839] intent that is like, "Hey, we're done.
+
+[00:49:31.200] We have the final answer." And your code
+
+[00:49:32.720] might want to handle those things
+
+[00:49:34.079] differently. um either display them
+
+[00:49:36.160] differently or have different workflows
+
+[00:49:37.920] or put in a text box for them to fill
+
+[00:49:39.680] out, whatever it is. Um if you have
+
+[00:49:42.079] control over stuff, then then you can do
+
+[00:49:43.839] it. So, I'm going to regenerate off of
+
+[00:49:46.319] this and we're going to see how that
+
+[00:49:47.880] works. So, what I'm going to do is I'm
+
+[00:49:51.040] sorry, go ahead. Auto regenerating every
+
+[00:49:53.200] time you hit command S anyway. Oh, yeah.
+
+[00:49:56.000] That's true. Anyway, that's fair. Um I
+
+[00:49:59.119] was running this walkthrough from
+
+[00:50:00.319] scripts and stuff, so it didn't have it
+
+[00:50:01.839] in there, but that's fair. Um, so I'm
+
+[00:50:04.240] going to ask it, can you multiply three
+
+[00:50:05.839] and a bunch of garbled nonsense? And
+
+[00:50:08.400] it's going to request more information.
+
+[00:50:10.480] Actually, it's going to keep going over
+
+[00:50:11.520] and over again because we're not
+
+[00:50:12.480] actually handling this in our TypeScript
+
+[00:50:14.000] loop yet. We don't have a case in our
+
+[00:50:15.440] switch statement for this one. But you
+
+[00:50:17.200] can see it's at least output the intent.
+
+[00:50:19.680] It looks like there's some in incomplete
+
+[00:50:22.280] information. So I'm going to come in
+
+[00:50:24.400] here and update our agent and basically
+
+[00:50:26.640] say, you know, in this case, we're going
+
+[00:50:28.480] to handle them the same, which is just
+
+[00:50:30.079] to return the message. and they both
+
+[00:50:31.760] have a field called message. But you can
+
+[00:50:33.680] see us handling those two things
+
+[00:50:35.040] differently. And we're actually able to
+
+[00:50:36.559] use like the static analyzer there. So
+
+[00:50:38.240] that way like TypeScript can tell us
+
+[00:50:39.839] that they both have the same field
+
+[00:50:41.200] message. If you hover over message like
+
+[00:50:42.960] it knows TypeScript isn't yelling at
+
+[00:50:45.319] you because the intent of request
+
+[00:50:48.079] information has a field called message.
+
+[00:50:51.200] Yeah. Because we're in this part of the
+
+[00:50:52.720] switch statement, TypeScript knows that
+
+[00:50:54.559] it's either one of these two things.
+
+[00:50:56.240] Exactly.
+
+[00:50:58.160] Um, cool. And then I'm actually going to
+
+[00:51:02.000] tweak this a little bit more where we're
+
+[00:51:04.240] going to actually have this return the
+
+[00:51:05.680] whole thread. And we'll see why we do
+
+[00:51:07.200] that in a sec. But basically, we want to
+
+[00:51:09.680] know in our CLI whether uh when we run
+
+[00:51:13.760] the loop, we want to know whether it was
+
+[00:51:15.440] request more information or final
+
+[00:51:17.200] answer. So if it's final answer, we're
+
+[00:51:18.400] just going to print it on exit. If it's
+
+[00:51:19.839] request more information, we can
+
+[00:51:21.200] actually like write a function that is
+
+[00:51:23.040] like ask human. In this case, it's just
+
+[00:51:24.720] on the command line, but um this is how
+
+[00:51:27.119] you can take two ways that the model may
+
+[00:51:28.880] want to contact a human and handle them
+
+[00:51:30.400] differently. Dex, can we slow down for
+
+[00:51:32.400] one second before we run the code and
+
+[00:51:34.640] just show the show the data models one
+
+[00:51:37.440] last time just to make it in the in the
+
+[00:51:39.760] in the source code? Yes, in here. Yeah,
+
+[00:51:43.920] let's let's look at like what these
+
+[00:51:45.280] messages are. So, we have a class called
+
+[00:51:47.040] clarification request which has an
+
+[00:51:48.800] intent attached to it called request
+
+[00:51:50.559] with the label request more information.
+
+[00:51:53.359] And then there's another class called
+
+[00:51:55.040] intent uh with intent done for now. And
+
+[00:51:57.760] if you look at the prompt, can we render
+
+[00:51:59.520] the full prompt in the prompt view?
+
+[00:52:02.480] Yeah. Just so people can read it because
+
+[00:52:04.240] I think there's a couple questions about
+
+[00:52:05.599] this. And let's just like hide the test
+
+[00:52:07.119] at the bottom. Yeah.
+
+[00:52:10.079] And let's just like read this. So you
+
+[00:52:12.720] can see the model is kind of letting us
+
+[00:52:15.680] output one of those tools because on
+
+[00:52:17.599] line 19, what Dexter has said is that
+
+[00:52:20.960] the model can respond with two different
+
+[00:52:22.480] ways. Can you respond with human tools
+
+[00:52:24.000] or calculator tools? And can we hover
+
+[00:52:25.359] over human tools? Oh, yeah. Human tools
+
+[00:52:28.319] is defined as we don't hover. Oh,
+
+[00:52:31.119] whatever. Human tools defined as
+
+[00:52:32.559] clarification request or done for now.
+
+[00:52:35.599] So, it must be one of those two data
+
+[00:52:37.200] models. And if you can you change the
+
+[00:52:38.640] data model instead of request more
+
+[00:52:40.000] information to be like request fu just
+
+[00:52:42.800] so people can Yeah, just I think Carlos
+
+[00:52:45.280] is having a go down. Just change the
+
+[00:52:48.079] line instead of intent. Use the word
+
+[00:52:49.760] like intent. Fu fu. Yeah, just change
+
+[00:52:51.839] that string. really briefly. So you can
+
+[00:52:54.079] see that the prompt is updating to mimic
+
+[00:52:55.839] that. That's how the model is getting
+
+[00:52:57.680] this. We're just writing code and the
+
+[00:52:59.599] code is being added to your
+
+[00:53:01.880] prompt. Um and that's how the model is
+
+[00:53:05.359] able to go. You can undo your changes.
+
+[00:53:09.520] Yeah, don't do that because but you can
+
+[00:53:11.359] do your changes. And then if you scroll
+
+[00:53:12.720] down one more time into the prompt, uh
+
+[00:53:16.240] one last thing I want to show ctx format
+
+[00:53:19.040] that is you remove that line really
+
+[00:53:21.040] fast.
+
+[00:53:22.960] Yep. That is what's actually adding the
+
+[00:53:25.680] instructions into the prompt. And if you
+
+[00:53:27.920] add it back, that's all that's doing.
+
+[00:53:30.559] That is taking the return type of the
+
+[00:53:32.240] function and injecting it into the
+
+[00:53:34.000] prompt for you. And so that's a nice
+
+[00:53:37.280] BAML BAML feature that is basically,
+
+[00:53:39.359] hey, based on your return type, what
+
+[00:53:41.359] should what should we tell the model to
+
+[00:53:42.880] output? And then we're just letting the
+
+[00:53:44.800] model do the magic. The model is kind of
+
+[00:53:46.800] telling us what to go do. Yep. Let's go
+
+[00:53:50.079] on. Perfect. I'm going to restore us to
+
+[00:53:51.680] where we were. Yep. Um, so we have our
+
+[00:53:54.319] our loop and stuff. Basically, if the
+
+[00:53:56.000] model outputs this request more
+
+[00:53:57.599] information, we'll ask for info on the
+
+[00:53:59.520] CLI.
+
+[00:54:01.440] Uh, you might want to regenerate. Sorry,
+
+[00:54:03.920] I think you did a Oh, because you we
+
+[00:54:07.599] updated the file and you hit command S,
+
+[00:54:09.040] but then Yeah. Yeah. Yeah. Yeah.
+
+[00:54:15.910] Okay. So, yeah, now it says uh request
+
+[00:54:15.920] more information. I could say use 12
+
+[00:54:17.599] instead.
+
+[00:54:19.440] And now when it's done, it still exits.
+
+[00:54:21.200] So we're handling these two different
+
+[00:54:22.960] requests to for info in different ways.
+
+[00:54:29.510] This is really cool. And like just for
+
+[00:54:29.520] someone just to reemphasize this point.
+
+[00:54:32.160] This is how you in your chat agent that
+
+[00:54:34.480] you're building. You could do this in a
+
+[00:54:36.079] website too. Can you go back to your
+
+[00:54:37.440] loop code that you're doing where you're
+
+[00:54:38.880] actually getting read line like where
+
+[00:54:40.800] you're actually making? Yeah. Exactly.
+
+[00:54:43.119] If we have time today, we only have five
+
+[00:54:45.119] minutes, but if we have time, we can
+
+[00:54:46.480] actually instead of using a CLI loop, we
+
+[00:54:48.559] can make this a web API that is either
+
+[00:54:50.480] synchronous or async like this. The
+
+[00:54:53.440] agent is the agent is decoupled from the
+
+[00:54:56.240] UX so that you can plug this agent into
+
+[00:54:58.559] multiple different interfaces.
+
+[00:55:01.440] Exactly.
+
+[00:55:03.040] And the input to the agent is just a
+
+[00:55:04.800] list of events and the output is
+
+[00:55:08.480] last event that was exactly what what's
+
+[00:55:10.480] the next step and it's up to the
+
+[00:55:12.000] framework can handle it. In this case
+
+[00:55:13.760] it's actually not it's not the last
+
+[00:55:16.079] event it's the full event thread. Yeah.
+
+[00:55:19.040] because then we when we add a when we
+
+[00:55:21.280] get a response from the user we get the
+
+[00:55:23.520] response and that is now coming from um
+
+[00:55:27.520] it's coming from
+
+[00:55:29.240] um just to be very it's coming from like
+
+[00:55:31.839] CLI but it could come from a web API it
+
+[00:55:34.000] could come from a database request it
+
+[00:55:35.280] could come from an event on Slack
+
+[00:55:37.040] doesn't really matter it comes from
+
+[00:55:38.480] somewhere and then all we do as Dex said
+
+[00:55:41.480] is boom we just pass it back to the
+
+[00:55:44.720] agent loop again on line
+
+[00:55:46.920] 29 that's all we're really doing? Yep.
+
+[00:55:50.400] And so then we just we do it we do it
+
+[00:55:52.240] once and then we loop until we get the
+
+[00:55:54.480] done token. Exactly. This could actually
+
+[00:55:56.799] be more clear if we did like not equals.
+
+[00:55:59.520] Yeah. But we can for now optimization.
+
+[00:56:03.359] Um anyways, uh I'm going to add some
+
+[00:56:05.520] test cases for this behavior because I
+
+[00:56:07.200] think it's cool. So now we can see, you
+
+[00:56:09.599] know, if we pass in nonsense and I'm
+
+[00:56:12.000] actually going to change this one to be
+
+[00:56:13.440] not hex because sometimes it sees hex
+
+[00:56:15.200] and gets figured it out. And that's just
+
+[00:56:17.599] testing. Like the only reason you know
+
+[00:56:19.040] that is because you tested that. Yeah.
+
+[00:56:21.040] It's nonsense. It's insufficient. It's
+
+[00:56:22.720] like, oh, it's too smart. It thinks it's
+
+[00:56:24.880] it's it will actually think it's u Yeah.
+
+[00:56:28.000] X code. So, so we can add evals and
+
+[00:56:30.240] guardrails. Now, we make sure if the
+
+[00:56:32.640] math is garbled, it must request more
+
+[00:56:34.720] information. That's what we expect the
+
+[00:56:36.000] agent to do. And if someone changes the
+
+[00:56:37.599] prompt in a way that breaks that, we
+
+[00:56:39.280] will know before that gets merged in
+
+[00:56:41.119] because the unit and then here's one
+
+[00:56:43.520] that shows how it interprets the
+
+[00:56:45.200] clarification. Right? So we gave it some
+
+[00:56:47.000] garbage and then we said you know uh the
+
+[00:56:50.240] model called the tool which was like hey
+
+[00:56:52.000] can you clarify this and then the human
+
+[00:56:53.760] responded with let's try 12 instead and
+
+[00:56:56.079] we can test this one and we can see like
+
+[00:56:58.319] okay cool now it's going to it like
+
+[00:56:59.920] listen to the human's feedback and we
+
+[00:57:01.599] can prove that we're passing the human
+
+[00:57:02.880] info back into the model in the right
+
+[00:57:04.559] way. Um so let's run all of our tests.
+
+[00:57:09.440] While you do that I love the word that
+
+[00:57:10.880] you use. You use the word prove because
+
+[00:57:13.280] that's really what it is. You want to
+
+[00:57:14.880] prove to yourself that it's working.
+
+[00:57:17.799] Yep. So, one of our tests failed. Um, it
+
+[00:57:21.200] was our hello world step. So, now we can
+
+[00:57:22.960] see, okay, we changed our prompt by
+
+[00:57:24.640] changing the structured inputs, but it
+
+[00:57:26.720] broke one of our other tests. So, let's
+
+[00:57:28.000] go look at this. Sometimes you break a
+
+[00:57:29.200] test and it's because you changed the
+
+[00:57:30.559] behavior intentionally, and sometimes
+
+[00:57:31.920] it's because you actually broke
+
+[00:57:33.040] something. So if we just say hello to
+
+[00:57:35.440] the model now that we're telling it that
+
+[00:57:37.680] it can respond with either done for now
+
+[00:57:40.160] or request more information, it's
+
+[00:57:41.599] actually decided that if it doesn't know
+
+[00:57:43.520] what to do, the correct intent is
+
+[00:57:45.520] request more information. So to maintain
+
+[00:57:48.160] this and keep it up, I'm going to come
+
+[00:57:49.359] and update this test because I actually
+
+[00:57:50.720] think that is also the correct answer.
+
+[00:57:52.319] It's like the conversation is still
+
+[00:57:53.760] ongoing. And now we can run this and we
+
+[00:57:55.839] can see that it passes. And by the way,
+
+[00:57:57.200] we could have decided that wasn't the
+
+[00:57:58.640] case and we could go back and change our
+
+[00:58:00.400] prompt for what request more information
+
+[00:58:02.559] means. Can you go back one last one on
+
+[00:58:04.799] one? Go up really fast. Yeah. You want
+
+[00:58:07.200] to change I want to change one prompt at
+
+[00:58:09.760] the top. At the top for your No, no. For
+
+[00:58:11.839] your request more information. Yeah. Add
+
+[00:58:14.160] a description to there. The description
+
+[00:58:15.920] says to clarify mathematical equations.
+
+[00:58:19.119] Yeah. Yeah. To clarify math
+
+[00:58:27.589] stuff. It's a dumb prompt, but like it's
+
+[00:58:27.599] just math stuff, right? Yep. Now, let's
+
+[00:58:30.319] see what the hello test does.
+
+[00:58:37.109] Um, okay. Still still request. It did
+
+[00:58:37.119] actually change what it said about a
+
+[00:58:38.400] math problem though. It said y to
+
+[00:58:40.559] clarify existing math problems.
+
+[00:58:44.559] Do
+
+[00:58:46.520] not so you can come and you can hear
+
+[00:58:48.720] come here and mess with this and you can
+
+[00:58:50.000] write tests. But this is a really
+
+[00:58:51.280] productive way to make changes and
+
+[00:58:53.839] improve your agents over time without um
+
+[00:58:55.760] without losing without losing steam. We
+
+[00:58:57.920] have one minute left. I'm going to power
+
+[00:59:00.160] through the last bit. Uh, inv you got 15
+
+[00:59:02.799] 20 minutes to go over for people who
+
+[00:59:04.079] want to hang out. We'll stay over a
+
+[00:59:05.920] little bit because I u it sounds like
+
+[00:59:07.359] we're getting some really good questions
+
+[00:59:08.640] and we're we'll record the whole thing
+
+[00:59:10.160] and post it on YouTube as well. So,
+
+[00:59:11.520] including the Q&A at the end. Yeah,
+
+[00:59:13.359] folks have to drop. We'll have the
+
+[00:59:14.559] recording of the Q&A. Um, cool. So, now
+
+[00:59:17.920] we fixed all our tests and I'm going to
+
+[00:59:20.720] get out and commit this and quickly we
+
+[00:59:22.079] can review the changes we've made. So,
+
+[00:59:25.119] um, what do we do? We added
+
+[00:59:26.880] clarification request. Um, we changed
+
+[00:59:29.599] the type of our return to include both
+
+[00:59:32.480] of the human tools. We added a couple
+
+[00:59:35.280] tests for the using the clarification
+
+[00:59:38.000] stuff. We updated our test here so that
+
+[00:59:40.720] it passes. Um, we changed our agent loop
+
+[00:59:43.440] to return the whole thread instead of
+
+[00:59:45.520] just the
+
+[00:59:46.520] message. And then we updated our CLI to
+
+[00:59:49.599] kind of power that interactive loop a
+
+[00:59:51.440] little
+
+[00:59:52.440] bit. Cool. Um, now we're going to get
+
+[00:59:55.040] into some fun stuff. These the next two
+
+[00:59:56.640] are really quick, but they're really
+
+[00:59:57.520] worth doing, which is like customizing
+
+[00:59:58.960] your prompt with reasoning. Oh, yeah.
+
+[01:00:01.200] Um, so I'm going to add I'm going to
+
+[01:00:03.760] update our prompt here that we use and
+
+[01:00:05.520] basically just give it this um, you
+
+[01:00:07.839] know, always think about what to do
+
+[01:00:09.280] first, like, you know, these steps.
+
+[01:00:11.440] This, if you watched our reasoning
+
+[01:00:12.559] episode last week, um, this should look
+
+[01:00:14.559] very familiar. If you haven't, go check
+
+[01:00:16.319] it out. But this is a really easy way to
+
+[01:00:18.079] get small models to think and perform
+
+[01:00:21.280] more like reasoning models. So from
+
+[01:00:24.079] here, why you run this code. Um, yeah, a
+
+[01:00:27.680] lot of you are like, why the heck are we
+
+[01:00:29.119] doing dot dot dot? Like what what is
+
+[01:00:30.559] that? That's not really reasoning. Turns
+
+[01:00:32.000] out these models are really really good
+
+[01:00:33.680] at just what we want to tell it is the
+
+[01:00:35.599] structure of how we want it to reason.
+
+[01:00:37.040] In some ways, some format that it might
+
+[01:00:38.640] use. Yeah. And it to go do things. We're
+
+[01:00:41.920] not tell we're not going to prescribe
+
+[01:00:43.359] what it should reason about in any
+
+[01:00:44.960] meaningful way. That's why we're not
+
+[01:00:46.720] using few shot examples. That's why
+
+[01:00:48.240] we're not doing anything. We just want
+
+[01:00:49.280] the model to be like reasonable on its
+
+[01:00:51.040] own.
+
+[01:00:53.920] So, I'm going to pass in a little prompt
+
+[01:00:55.280] here and I'm going to turn on the logs
+
+[01:00:57.319] temporarily. What? Oh, sorry.
+
+[01:01:01.760] You have like Oh, I like that was it was
+
+[01:01:04.240] like trying to do a git operation. I was
+
+[01:01:05.760] like, why are you going to need my keys?
+
+[01:01:07.359] So, here we have printed out um
+
+[01:01:10.400] basically uh you know this and what
+
+[01:01:12.640] should the next step be and then we have
+
+[01:01:14.000] our reasoning prompt. Ah, see it was
+
+[01:01:16.079] working yesterday. Sometimes sometimes
+
+[01:01:17.839] it works, sometimes it doesn't. Can can
+
+[01:01:19.359] you use a can you uh the reason that can
+
+[01:01:21.839] make it a slightly more complex thing?
+
+[01:01:23.760] Um can can you add the can you add the
+
+[01:01:26.880] first four digits of pi together? Make
+
+[01:01:28.880] that the question that you're asking.
+
+[01:01:29.920] No, this prompt is fine. The prompt is
+
+[01:01:31.760] just too simple. The model first four
+
+[01:01:33.920] digits of pi. Yep. Now let's go do
+
+[01:01:38.839] that. So the model determined that it
+
+[01:01:41.680] doesn't need to reasoning at all. That's
+
+[01:01:43.520] why it didn't do it. But now so here now
+
+[01:01:46.000] it's done a bunch of reasoning here.
+
+[01:01:49.680] I will perform the calculation then I
+
+[01:01:51.440] should proceed. So now you have your
+
+[01:01:53.720] reasoning and
+
+[01:01:55.340] [Music]
+
+[01:01:56.920] then yeah each so it is reasoning each
+
+[01:01:59.839] time and there's probably some stuff you
+
+[01:02:01.040] could do to like cache that reasoning
+
+[01:02:02.680] basically. But
+
+[01:02:05.720] um here you can see it's outputting this
+
+[01:02:08.000] and then it has the final JSON here and
+
+[01:02:10.960] then what we pull out with BAML which is
+
+[01:02:12.640] also really cool is just like hey we let
+
+[01:02:14.400] the model output whatever tokens it
+
+[01:02:15.839] wants and then we rip out the actual
+
+[01:02:17.359] JSON and we get the answer. Yeah. So the
+
+[01:02:19.599] user doesn't even have to see the
+
+[01:02:20.880] reasoning. We just get that done for
+
+[01:02:22.640] now. And again I mentioned like oh you
+
+[01:02:25.280] could cache the reasoning and it's like
+
+[01:02:26.720] cool. There's all kinds of ways you
+
+[01:02:28.480] could do that now that you own the loop
+
+[01:02:29.760] in the control flow and customize how
+
+[01:02:31.359] you build your context window. You
+
+[01:02:32.880] nailed it. Speaking of which, let's
+
+[01:02:34.880] customize how we build our context
+
+[01:02:36.480] window. So, um, there are a lot of ways
+
+[01:02:39.839] you can optimize this. Um, but the first
+
+[01:02:42.400] optimization I'm going to make is just
+
+[01:02:44.480] instead of doing raw flat JSON like we
+
+[01:02:47.520] have been doing here, I'll just
+
+[01:02:48.880] stringify the JSON. Probably doesn't
+
+[01:02:50.720] make a difference for the model, but
+
+[01:02:51.839] this is just kind of a demonstration.
+
+[01:02:53.839] Um, so we'll turn on the logs again and
+
+[01:02:55.520] we'll give it this answer and we can see
+
+[01:02:57.680] over time. Definitely makes it more
+
+[01:02:58.960] human readable. So you can see over time
+
+[01:03:02.400] uh here's what was put in user input
+
+[01:03:04.160] tool call tool response tool call tool
+
+[01:03:06.160] response what should the next step be
+
+[01:03:07.839] here's your output and then it says cool
+
+[01:03:10.160] our intent is add and so you can see now
+
+[01:03:12.400] as the it's a little more clear like as
+
+[01:03:14.240] we loop through the context window is
+
+[01:03:16.240] growing and growing and growing but we
+
+[01:03:18.160] still get the same result we're we'll
+
+[01:03:20.000] talk about this a little bit more Carlos
+
+[01:03:21.520] and you want do you have any more
+
+[01:03:22.960] examples of how to serialize the L1
+
+[01:03:25.280] content yeah dude we have a really fun
+
+[01:03:27.280] one this is what I do when I build my
+
+[01:03:28.960] agents I use this thing that's a little
+
+[01:03:30.640] more um
+
+[01:03:31.960] XML. Um and so we have user input and
+
+[01:03:35.760] then as we loop through we have user
+
+[01:03:37.440] input and then we have multiply and then
+
+[01:03:39.039] we have tool response. The point is you
+
+[01:03:41.520] can do whatever you want to take that
+
+[01:03:44.240] list of events in your thread and
+
+[01:03:47.200] serialize it for the LM. So here we're
+
+[01:03:49.200] mapping it to this like serialize one
+
+[01:03:51.200] event function. Can you go back really
+
+[01:03:52.559] fast? I want to highlight something for
+
+[01:03:54.000] people because I think they might not.
+
+[01:03:56.079] Do you see what Dexter did here? He did
+
+[01:03:58.160] multiply a col 3 b col 4 and multiply
+
+[01:04:01.520] it. Can you compare that to the JSON one
+
+[01:04:03.200] that you had above? Oh, are we going to
+
+[01:04:05.039] do the token the token counting thing?
+
+[01:04:07.119] People should look at the tokens. You
+
+[01:04:08.559] don't have to We don't have Should I
+
+[01:04:09.520] drop Let me drop this in the Let me drop
+
+[01:04:11.039] this to the playground. Yeah, we should
+
+[01:04:13.119] do that.
+
+[01:04:14.520] Um, just add it to your test case. Yeah,
+
+[01:04:22.309] it's Yeah, this the serialization is
+
+[01:04:22.319] completely up to you. And if you don't
+
+[01:04:24.000] own it, you're Oh, sorry. I used
+
+[01:04:25.920] that word. We're recording. Uh, I'll
+
+[01:04:27.359] bleep it. But if you don't I already did
+
+[01:04:29.760] too. It's fine. If you don't own the
+
+[01:04:31.520] You'll fit right in. If you don't own
+
+[01:04:33.839] the serialization, you're really not
+
+[01:04:36.000] making life easy for yourself because in
+
+[01:04:38.400] this case, why are we wasting so many
+
+[01:04:40.240] tokens? Uh, yeah, let's just do the
+
+[01:04:41.839] prompt preview. Uh, okay, cool. So,
+
+[01:04:44.880] let's look at the prompt preview and
+
+[01:04:46.799] we'll look at the token view. So, this
+
+[01:04:50.400] is tokens one and we'll look at another
+
+[01:04:52.160] one already has JSON in it. So, we can
+
+[01:04:53.839] just compare these. So, token
+
+[01:04:56.200] visualization. Here we go. Oh, dang. We
+
+[01:04:58.720] don't highlight the tokens correctly.
+
+[01:04:59.920] Um, I'll fix the Hey, I don't think this
+
+[01:05:01.760] is right actually because I think the
+
+[01:05:03.119] XML is supposed to be really efficient,
+
+[01:05:04.640] right? No, no, it is. It is. We just
+
+[01:05:06.720] don't write render the escape characters
+
+[01:05:08.400] correctly. But just so people understand
+
+[01:05:09.920] is like go to the Can you go to the
+
+[01:05:11.760] OpenI tokenizer? I'll fix that, right?
+
+[01:05:13.280] I'll fix that in today's release
+
+[01:05:14.559] actually. Yeah. Um, is that like a web
+
+[01:05:17.200] app or something? Just go to OpenI
+
+[01:05:18.640] tokenizer. This is like one
+
+[01:05:20.680] serialization everyone should think
+
+[01:05:22.400] about is like we can use a serialization
+
+[01:05:24.480] technique of what um yeah that's
+
+[01:05:28.400] basically the view that we're supposed
+
+[01:05:29.359] to have. We just render the quotes the
+
+[01:05:31.520] things incorrectly slightly. Oh because
+
+[01:05:33.359] this is supposed to be HTML as long as
+
+[01:05:36.160] the fix HTML thing will be fixed. Uh so
+
+[01:05:37.920] I'll fix that today. But now post the
+
+[01:05:40.400] JSON view of it. You have a previous
+
+[01:05:41.920] JSON example as well in in your test
+
+[01:05:44.160] cases. Yeah. Yeah. Yeah. Exactly. So
+
+[01:05:46.640] let's get Yeah. This thing grab
+
+[01:05:48.480] anything. It doesn't matter. Yeah. Yeah.
+
+[01:05:52.960] And that's Do you see how every single
+
+[01:05:55.839] quote and everything that we're using,
+
+[01:05:57.359] every time that we put quotes in there,
+
+[01:05:59.839] it's extra tokens. Every time that we
+
+[01:06:02.240] put whites space in there, it might may
+
+[01:06:04.240] or may not be extra tokens. The count of
+
+[01:06:06.079] whites space matters um because we're
+
+[01:06:09.039] using like commas at the end. That's
+
+[01:06:10.799] extra tokens. So, there's small things
+
+[01:06:13.039] that are adding up. And these tokens are
+
+[01:06:15.119] not as trivial as like cost. People
+
+[01:06:16.559] think about costs. It's just the way
+
+[01:06:18.319] that you're explaining the thing to the
+
+[01:06:20.000] model. It has to If Dexter and I were
+
+[01:06:22.160] saying the word like and um every 30
+
+[01:06:24.160] seconds, you would have such a hard time
+
+[01:06:26.000] reading what we're saying. You'd have to
+
+[01:06:27.200] like do so much brain power to just
+
+[01:06:29.200] understand the nuances of our
+
+[01:06:31.160] words. There's just less likes and that
+
+[01:06:35.160] text. That's I love that metaphor likes
+
+[01:06:38.000] and that's great.
+
+[01:06:41.599] Um so you asked like ination
+
+[01:06:43.839] customizable. Yes, you can control it to
+
+[01:06:45.599] do whatever you want.
+
+[01:06:48.240] Yep. And so now we can add some tests
+
+[01:06:50.559] that kind of match this where we've
+
+[01:06:52.000] we've updated our tests to be XML
+
+[01:06:53.680] instead. And you can run these the same
+
+[01:06:55.599] and you can make sure like, hey, we
+
+[01:06:56.720] changed how we format our context
+
+[01:06:57.920] window. Do all our tests still pass?
+
+[01:07:00.240] Which is again what you should always be
+
+[01:07:01.920] doing. Every time you make a change, you
+
+[01:07:03.680] should know, okay, the the same input is
+
+[01:07:05.440] still the same output. Exactly.
+
+[01:07:08.920] Or yes. Cool. Um I think we can uh let's
+
+[01:07:16.480] we can do you want to pause for
+
+[01:07:18.079] questions here? Um or do you want to put
+
+[01:07:20.720] it behind a web server? I want to answer
+
+[01:07:23.359] um location's question of like how do
+
+[01:07:26.160] you build your first agent? This video
+
+[01:07:28.880] that we just made and all the source
+
+[01:07:30.640] code is going to be available for you uh
+
+[01:07:33.680] probably within like by the end of the
+
+[01:07:35.039] day today. So we'll send it out on
+
+[01:07:36.319] email. If you signed up on Luma, you'll
+
+[01:07:37.760] get the email. Um, this is probably
+
+[01:07:40.640] We'll also create a template repo with
+
+[01:07:42.720] this stuff in here so you can just kind
+
+[01:07:44.160] of pick up the calculator tools and
+
+[01:07:45.680] start running with it. Exactly. Um,
+
+[01:07:48.720] yeah. All the code we ever do will
+
+[01:07:50.079] always be open source for AI that works.
+
+[01:07:51.680] Like that's the premise. Like we just
+
+[01:07:53.200] want to share code so we can all learn
+
+[01:07:55.200] the best architecture designs together.
+
+[01:07:58.000] Uh, because as Dex always says, none of
+
+[01:08:00.079] us know what the right answer is. We
+
+[01:08:02.480] just wanna we all just need to figure it
+
+[01:08:04.319] out. And the best way to figure it out
+
+[01:08:05.359] is to
+
+[01:08:07.240] test. Um, let's let's let's uh how about
+
+[01:08:11.520] this? Why don't we take some questions
+
+[01:08:13.440] in the chat? While that happens, why
+
+[01:08:15.440] don't you do the web server stuff? So,
+
+[01:08:16.799] we'll paralyze cool. Web server stuff is
+
+[01:08:18.719] so freaking cool. Uh I me and you were
+
+[01:08:21.920] one of the first people to start
+
+[01:08:23.120] building out this kinds of things and I
+
+[01:08:25.199] think it like blew our minds as we were
+
+[01:08:28.080] building it out and then like it just
+
+[01:08:29.440] became the template for like how I think
+
+[01:08:31.600] we both think about agents. Yep. So if
+
+[01:08:34.880] you anyone has question, type it out.
+
+[01:08:36.880] Dexter is going to do some typing stuff
+
+[01:08:38.640] uh while that happens and then we'll uh
+
+[01:08:41.279] I mean that's it. That's the web server.
+
+[01:08:43.520] Oh, okay. Cool. So we put it behind an
+
+[01:08:45.920] API. Um what we can do is make this like
+
+[01:08:48.960] pause and resumeumable though. Um pause
+
+[01:08:52.080] and resumable. That'd be sick. So uh
+
+[01:08:55.120] here we have we I basically I won't go
+
+[01:08:58.400] in super in-depth on the code, but you
+
+[01:08:59.759] can go read it. We have a thread store
+
+[01:09:01.040] that kind of just stores our things in
+
+[01:09:02.319] memory, but this could be Reddus or
+
+[01:09:03.759] SQLite or wherever you want to put it.
+
+[01:09:05.520] And then we basically have this server
+
+[01:09:06.719] with an endpoint to start a new thread.
+
+[01:09:08.480] This code looks a lot like our CLI code.
+
+[01:09:11.640] Um, and basically if the last data
+
+[01:09:14.880] intent is request more information, we
+
+[01:09:17.440] add kind of a hook to it to basically
+
+[01:09:19.279] tell the client like, hey, when you have
+
+[01:09:21.199] a response to this, post it to this URL.
+
+[01:09:24.080] And then we have another endpoint that
+
+[01:09:25.440] can handle responses. For people that
+
+[01:09:27.359] are familiar like web interface, think
+
+[01:09:28.719] of it like a web hook. Like when GitHub
+
+[01:09:30.319] just you just register your web hook and
+
+[01:09:32.560] that's what we're telling the front end.
+
+[01:09:33.920] It's like when you get an update and it
+
+[01:09:35.679] doesn't have to be a front end. It could
+
+[01:09:36.640] be another backend service. It just says
+
+[01:09:38.319] when you're ready with the answer call
+
+[01:09:40.960] this API and we're just telling it.
+
+[01:09:44.080] So I called with this garbled you know
+
+[01:09:46.640] and XYZ and it's requesting more
+
+[01:09:48.560] information and it says hey when you
+
+[01:09:50.319] have the answer you know you can post it
+
+[01:09:52.480] back and so I will post this back and we
+
+[01:09:55.760] will use this thread ID here and and by
+
+[01:09:59.520] the way this is how we made like a
+
+[01:10:01.040] slightly uh stateful system but because
+
+[01:10:04.800] we save the thread system in our
+
+[01:10:06.880] database but we could may have made it
+
+[01:10:09.120] completely stateless by send object back
+
+[01:10:11.520] instead of a thread ID. we just did this
+
+[01:10:13.679] because it's it's a better API
+
+[01:10:15.280] experience for the end user uh and we
+
+[01:10:17.600] can do migrations on the thread and
+
+[01:10:19.520] everything else. But this context that
+
+[01:10:22.000] we're sharing here today is about owning
+
+[01:10:24.640] the loop. If you own the loop, if you
+
+[01:10:26.719] own the way that the model is being
+
+[01:10:28.600] called, you can build this trivially
+
+[01:10:31.440] because you can use existing paradigms
+
+[01:10:33.199] that you're already familiar with in
+
+[01:10:34.640] software engineering to build your
+
+[01:10:36.480] agent, not have to relearn like this LLM
+
+[01:10:38.960] voodoo magic to go build your agent.
+
+[01:10:41.760] That's all just software. It's all
+
+[01:10:43.600] software. I think we have another thing
+
+[01:10:45.520] that is like we'll I'll probably do a
+
+[01:10:47.520] follow-up or something on like, hey,
+
+[01:10:48.719] what if you have human approval, right?
+
+[01:10:50.400] You can have a tool like divide is
+
+[01:10:52.239] scary. We don't want to run that without
+
+[01:10:53.679] checking with the human because we don't
+
+[01:10:55.040] want to divide by zero error or
+
+[01:10:56.480] something. You have that up. You hit
+
+[01:10:58.000] show them. Uh, no, that's not ready to
+
+[01:10:59.520] go. I mean, we could try to live code it
+
+[01:11:01.040] for the for the extra linkers, but we'll
+
+[01:11:04.000] send it out. We'll send it out or maybe
+
+[01:11:06.080] we can do one a whole episode on just
+
+[01:11:07.920] that because there's so many nuances to
+
+[01:11:09.760] the way that you do human approval that
+
+[01:11:11.440] I think it'd be worth it does it does
+
+[01:11:12.960] get a lot more complex. Yeah. So, and
+
+[01:11:15.679] like this is so like what you saw today
+
+[01:11:18.239] was a lot around like these
+
+[01:11:19.920] infrastructure that we built. This is
+
+[01:11:21.199] the philosophy of BMW and what what
+
+[01:11:23.280] Dexter is going to share about this
+
+[01:11:24.640] human approval stuff is kind of the
+
+[01:11:26.239] whole philosophy behind human layer.
+
+[01:11:28.080] Like if eventually at some point we'll
+
+[01:11:30.199] want one lay layer of control that we
+
+[01:11:32.960] want because no matter how much
+
+[01:11:34.280] engineering we add around these systems
+
+[01:11:37.040] at some point just like in a normal
+
+[01:11:39.199] workflow you want a manual process to
+
+[01:11:41.120] approve it. I don't want my release to
+
+[01:11:43.280] be fully automated no matter how good I
+
+[01:11:44.880] am. I'm paranoid I have a human presence
+
+[01:11:47.520] to release it out so people don't get
+
+[01:11:49.679] versions of BAML automatically. It's
+
+[01:11:51.199] like a manual process no matter how good
+
+[01:11:53.440] our pipelines are. in your LM workflows,
+
+[01:11:56.080] you'll want that. And that's where I
+
+[01:11:57.280] think a tool like human layer really,
+
+[01:11:59.360] really, really shines because no matter
+
+[01:12:02.000] how much engineering you do, at some
+
+[01:12:03.440] point you want to process because you
+
+[01:12:05.120] want liability and other things built in
+
+[01:12:07.920] and that's the value.
+
+[01:12:13.990] Yeah, I think you nailed it. So, there's
+
+[01:12:14.000] much more here and we can get way more
+
+[01:12:15.840] advanced with this and like probably if
+
+[01:12:18.159] we do a follow-up on this, I know we're
+
+[01:12:19.679] gonna, by the way, we're going to take a
+
+[01:12:21.520] break for two weeks after this. Um, so
+
+[01:12:23.840] this has been the kind of first four
+
+[01:12:26.159] episodes of AI that works. We'll call it
+
+[01:12:28.159] season 1. We'll be back in what is it?
+
+[01:12:31.120] Three weeks from today. Three weeks from
+
+[01:12:33.120] today with season two. Um, in some point
+
+[01:12:36.080] in season two, we'll probably do a
+
+[01:12:37.440] follow-up on this and do like, hey, how
+
+[01:12:39.360] do I take my 12actor agent and put it
+
+[01:12:41.679] behind email or put it behind Slack and
+
+[01:12:43.840] deploy it to a place? Because if you
+
+[01:12:45.600] have this and you have these principles,
+
+[01:12:47.600] you can run your agent anywhere. You can
+
+[01:12:49.199] run it as a small component of a bigger
+
+[01:12:51.199] system. Um, and everything just works.
+
+[01:12:53.280] Go back to your server.ts.
+
+[01:12:55.600] Yeah. So, uh, read your server.
+
+[01:13:00.480] Sorry, there was a thing blocking my uh
+
+[01:13:03.360] my UI. Making this a Slack API, some of
+
+[01:13:06.640] you, I'm sure, are are familiar with it.
+
+[01:13:08.320] It's not that hard. Taking that web
+
+[01:13:09.840] request and making a Slack API is really
+
+[01:13:11.520] easy.
+
+[01:13:13.120] So, we're going to go into that and talk
+
+[01:13:14.480] about the nuances though with AI and
+
+[01:13:16.159] Slack because there are nuances that
+
+[01:13:17.600] become different there that are were
+
+[01:13:19.679] very very different than just like a
+
+[01:13:21.760] normal Slack API and that's what I think
+
+[01:13:23.360] like I've seen some of Dexter's work on
+
+[01:13:24.880] this. It's freaking phenomenal.
+
+[01:13:28.400] It's funny. Other questions from
+
+[01:13:30.880] everyone? By the way, I know we spoke
+
+[01:13:32.480] for a long time. It was supposed to be
+
+[01:13:33.760] an hour. We did an hour 15. So, I
+
+[01:13:35.840] apologize for taking 15 minutes extra of
+
+[01:13:37.520] your everyone's time. No, no, no, no.
+
+[01:13:38.960] Don't apologize. You're welcome. These
+
+[01:13:41.120] people got 15 minutes extra content.
+
+[01:13:44.000] That's right. Um, what questions do
+
+[01:13:46.400] people have if they have any? Feel free
+
+[01:13:47.920] to unmute and come on or just uh ask on
+
+[01:13:50.719] chat.
+
+[01:14:00.630] Cool. So, so you guys uh played around
+
+[01:14:00.640] with uh like uh the reasoning models too
+
+[01:14:04.560] and how does they perform here?
+
+[01:14:07.760] So, the beauty is Dexter, do you want to
+
+[01:14:09.840] screen share again? Oh, are we gonna Are
+
+[01:14:12.080] we going to switch? Are we going to put
+
+[01:14:13.199] on uh 03? Make an amazing model. Just
+
+[01:14:15.440] switch it to 03. The beauty is remember
+
+[01:14:17.760] the what you're doing here. Just go to
+
+[01:14:20.480] your agent.ts. Yeah. Yeah. Make your
+
+[01:14:23.199] agent just make it 03. Doesn't matter.
+
+[01:14:25.120] 01. It doesn't matter. Like the way do
+
+[01:14:27.440] 03 mini. I don't think I my verification
+
+[01:14:29.679] went through yet for 03. So, all right.
+
+[01:14:31.679] Then just do baml live. Yeah. Just run a
+
+[01:14:33.840] test case.
+
+[01:14:35.920] Uh let's see. easier. Sure.
+
+[01:14:40.159] And this is a little bit slower because
+
+[01:14:41.440] these models are slightly slower, but
+
+[01:14:42.960] now we got it. So it and you can see
+
+[01:14:46.320] called 03 mini 2025 131. So it's the
+
+[01:14:50.239] model you use is completely independent
+
+[01:14:53.239] of this concept. You can choose any
+
+[01:14:56.159] model of your choice and and you could
+
+[01:14:58.800] write this function with four different
+
+[01:15:00.560] models and run all the models through
+
+[01:15:02.159] the same set of tests. Exactly. So then
+
+[01:15:04.960] you and then you can and you might say
+
+[01:15:06.800] that hey as if I want to have like the
+
+[01:15:08.640] ad tool then I want if I want the ad
+
+[01:15:11.440] tool then I want um then I want to use
+
+[01:15:14.400] this model if I previously you can make
+
+[01:15:16.960] all of this dynamic and it's your choice
+
+[01:15:20.000] and I think a lot of people ask like how
+
+[01:15:22.159] good are people with like uh using
+
+[01:15:24.239] frameworks or anything any framework
+
+[01:15:27.040] that owns that while loop that essential
+
+[01:15:29.520] while loop and doesn't give you full
+
+[01:15:30.960] access to it it's like if you've ever
+
+[01:15:33.280] used So, uh, a CSS
+
+[01:15:36.040] library, a CSS library that doesn't give
+
+[01:15:38.719] you the raw CSS that you can just edit
+
+[01:15:40.560] in your code is way more painful to use
+
+[01:15:43.280] than shad CN where you can just like
+
+[01:15:45.280] have it in your code and edit it. And
+
+[01:15:47.840] that's actually this is I think when we
+
+[01:15:51.600] build more tooling around this, I
+
+[01:15:53.120] basically think what we need is shad CN
+
+[01:15:55.520] for agents. We need something that
+
+[01:15:57.280] scaffolds everything out for you with
+
+[01:15:58.880] some good opinions and a couple
+
+[01:16:00.159] different variations, but then it's your
+
+[01:16:02.159] code and you can do whatever you want
+
+[01:16:03.360] with it. You should wait till we release
+
+[01:16:05.600] packages for BAML. That's basically what
+
+[01:16:07.360] that is.
+
+[01:16:09.199] Sick.
+
+[01:16:12.000] Question for Steve. Got a question.
+
+[01:16:15.280] Uh sort of as an aside, but I noted a
+
+[01:16:18.400] lot of the philosophy you've done in
+
+[01:16:19.520] this series of where you say, "Hey,
+
+[01:16:22.239] expected output and then BAML extracts
+
+[01:16:24.400] it out." I was reading the new prompt
+
+[01:16:26.400] guide for 41 with more literal calls and
+
+[01:16:28.800] it basically sort of says don't do that
+
+[01:16:31.760] or you know a variance of that. I was
+
+[01:16:33.440] wondering your thoughts. Yeah. Bye Bob.
+
+[01:16:35.840] When are you running that new benchmark
+
+[01:16:37.199] to prove that BL's still better at
+
+[01:16:39.120] extraction? Here's the here's what I
+
+[01:16:40.960] would really say. You want to share the
+
+[01:16:42.880] BFCL thing? Uh do you want Okay, I was
+
+[01:16:46.239] gonna Yeah, I'll share I'll screen
+
+[01:16:47.640] share. There's a couple of things. Uh,
+
+[01:16:50.000] one I think um I think uh there's before
+
+[01:16:53.840] I screen okay I'll screen share. Um but
+
+[01:16:55.920] before I go really really into it I want
+
+[01:16:57.600] to I want I think one important thing to
+
+[01:16:59.120] keep in mind for these kinds of
+
+[01:17:00.520] concepts. Am I screen sharing? Cool. Uh
+
+[01:17:03.600] one important thing to keep in mind is
+
+[01:17:05.120] remember everyone's biases. So my bias
+
+[01:17:07.840] is obviously I work on so like be aware
+
+[01:17:09.840] of that. Um OpenAI's bias is they want
+
+[01:17:12.400] to lock you into their SDK. Be aware of
+
+[01:17:14.719] that. Open eyes SDK is very different
+
+[01:17:16.640] than Anthropics SDK. they really want
+
+[01:17:19.520] you to lock in because then you can't
+
+[01:17:21.120] move over. Um, and two, like it's
+
+[01:17:25.280] possible that um, it's definitely
+
+[01:17:28.239] possible that it's better, but
+
+[01:17:30.159] fundamentally it seems unlikely. And the
+
+[01:17:33.360] primary reason that it seems unlikely is
+
+[01:17:40.870] that is just like we run these
+
+[01:17:40.880] benchmarks and every time we run them,
+
+[01:17:42.239] it's pretty much come out in the same
+
+[01:17:43.719] way. Uh, which is what OpenI says is
+
+[01:17:46.560] don't add JSON to your system. And I
+
+[01:17:48.320] agree with them. Do not ask the model to
+
+[01:17:50.480] output JSON and JSON.parse it. That is
+
+[01:17:52.920] bad. That is really, really, really bad.
+
+[01:17:55.840] The model will mess up on JSON,
+
+[01:17:57.760] especially if you have a bunch of escape
+
+[01:17:59.040] characters and everything else. The
+
+[01:18:01.360] difference
+
+[01:18:02.440] is BAML doesn't actually use JSON. So
+
+[01:18:06.159] like in this case, don't
+
+[01:18:08.280] use
+
+[01:18:10.120] quotes around
+
+[01:18:12.760] keys. The model is extracting data from
+
+[01:18:15.199] an image.
+
+[01:18:18.000] It's not use you see it's streaming it's
+
+[01:18:19.760] not using JSON this is not
+
+[01:18:22.600] JSON right so the premise that's saying
+
+[01:18:26.080] that and you can see like it's pretty
+
+[01:18:27.760] complicated there's like there's a whole
+
+[01:18:28.960] string with ands and spaces and
+
+[01:18:30.640] everything it's still pull it out so and
+
+[01:18:33.600] the idea is that like the engineering
+
+[01:18:36.159] work to turn the thing on the left to
+
+[01:18:37.840] the into the thing on the right is not
+
+[01:18:40.480] something that you should do and like if
+
+[01:18:42.320] you are not going if you are not going
+
+[01:18:43.840] to write your own parser you should
+
+[01:18:46.239] probably just let like force the model
+
+[01:18:48.239] to output JSON. Yeah. So if you're if
+
+[01:18:50.400] you're not going to write do the work
+
+[01:18:52.080] that we did behind the scenes, I agree
+
+[01:18:54.080] that their thing is probably way better
+
+[01:18:55.920] than
+
+[01:18:57.800] JSON.parse, right? And if you're going
+
+[01:18:59.760] to do something more sophisticated like
+
+[01:19:01.440] for example like an idea of like
+
+[01:19:02.640] generating code,
+
+[01:19:04.719] uh write me a thing, write like watch
+
+[01:19:08.400] this. Write me a thing that generates
+
+[01:19:11.280] that takes in leak code questions that
+
+[01:19:14.880] takes in a prompt and generates code for
+
+[01:19:19.440] it and generate it takes in a uh text
+
+[01:19:24.400] and
+
+[01:19:25.640] generates Python
+
+[01:19:28.199] code. Right? So what I want is I want to
+
+[01:19:30.320] write an AI pipeline that can take in a
+
+[01:19:32.400] random thing from a user and like
+
+[01:19:33.679] generate some Python code for it.
+
+[01:19:37.120] So this will do its thing. And once
+
+[01:19:39.840] again, this just tool calling this whole
+
+[01:19:41.360] thing. Like what I did here was this was
+
+[01:19:42.800] tool calling that responded to this.
+
+[01:19:44.239] This is another tool call that's
+
+[01:19:45.600] generating actual BAML code for me. And
+
+[01:19:49.120] then this is separate tool call that's
+
+[01:19:50.560] generating the Python code to use that
+
+[01:19:51.840] BML code. These are all just tool calls.
+
+[01:19:54.880] And all I'm doing here when I go do this
+
+[01:19:57.280] is if I were to go and I'll do this in
+
+[01:19:58.960] profit because it's a little bit easier
+
+[01:20:00.159] to go see.
+
+[01:20:11.669] So really use these tools a lot, huh?
+
+[01:20:11.679] Huh? This is impress. You're you're very
+
+[01:20:14.159] quick with this stuff. I gota learn. I
+
+[01:20:15.520] got I got I got I gota jump between
+
+[01:20:17.280] these faster. So now it's going to go
+
+[01:20:18.960] run the code, right? So now it's going
+
+[01:20:20.480] to generate Python code. And check this
+
+[01:20:21.840] out. See how the model did it? It just
+
+[01:20:24.159] responded with a Python code snippet
+
+[01:20:26.159] afterwards as a markdown snippet and it
+
+[01:20:29.040] produced this out. So you're right, JSON
+
+[01:20:31.440] is bad.
+
+[01:20:33.360] But serializing it in a way that the
+
+[01:20:35.120] model can output things and I can go
+
+[01:20:36.960] parse it is useful. And this is getting
+
+[01:20:39.280] that point of like the model's been
+
+[01:20:40.800] trained on a lot more code in markdown
+
+[01:20:42.560] than code in JSON. And so if the model
+
+[01:20:44.560] wants to write code in markdown, you
+
+[01:20:46.000] should let the model write code in
+
+[01:20:47.320] markdown. And then that will give you
+
+[01:20:50.080] better results than constraining its
+
+[01:20:51.679] output and forcing it to use like slash
+
+[01:20:53.600] ends and saying, "Hey, you can't use new
+
+[01:20:55.280] lines." Because then every time the
+
+[01:20:56.719] model wants to output a new line, that
+
+[01:20:58.239] token is going to get zeroed out. and
+
+[01:21:00.320] all the other tokens which were all like
+
+[01:21:02.239] 1% in the sampling, it's just going to
+
+[01:21:04.800] pick a random one of those instead. And
+
+[01:21:06.480] the chance that it picks slashn is like
+
+[01:21:08.480] very low. Yes. Yes. Yes. Yes. Yes. Yes.
+
+[01:21:11.360] Dexter nailed it. So open as guideline I
+
+[01:21:14.080] agree with. JSON is bad. Um but I'm
+
+[01:21:16.960] still not convinced that tool calling is
+
+[01:21:18.320] good because tool calling is basically
+
+[01:21:19.760] doing JSON in a forced way and there's
+
+[01:21:22.000] no way you'll get this large quality of
+
+[01:21:24.400] code out. And the model did this
+
+[01:21:26.640] naturally. This isn't me prompting in
+
+[01:21:28.400] any way. I just like the prompt says
+
+[01:21:31.040] this. This is all the prompt.
+
+[01:21:37.110] That's all. This is the web request
+
+[01:21:37.120] going into the model. There's no tool
+
+[01:21:38.800] calling, nothing else. And the model is
+
+[01:21:40.880] naturally able to say that the best way
+
+[01:21:42.719] I want to output these tokens. The
+
+[01:21:44.560] tokens that are best for me to represent
+
+[01:21:46.719] this data is this.
+
+[01:21:49.920] Yeah, that's some trash JSON. Good job
+
+[01:21:52.560] parsing. That's a good ass parser, dude.
+
+[01:21:55.199] That's a good ass parser. Cool. Um, I
+
+[01:21:58.880] gotta get running. Let's uh let me just
+
+[01:22:01.440] stay on for any more questions that
+
+[01:22:02.800] people might have and then uh I think
+
+[01:22:04.880] we're mostly done. We don't tell the
+
+[01:22:07.199] model how to out how it outputs. We do
+
+[01:22:09.360] we tell it the structure that we wanted
+
+[01:22:10.880] to go have and that's mostly it. So
+
+[01:22:13.360] whatever it outputs you your parser sort
+
+[01:22:15.440] of like um it mostly works.
+
+[01:22:18.639] We've processed like million tens of
+
+[01:22:20.400] million I don't even know like I have no
+
+[01:22:22.239] idea how many data models that we've
+
+[01:22:23.440] gone through at this point. we have but
+
+[01:22:26.080] and Dexter has pushed a lot of limits of
+
+[01:22:27.760] them with his tool calling systems a lot
+
+[01:22:30.400] along with a bunch of other companies
+
+[01:22:31.679] and it's made it um the benchmarks show
+
+[01:22:33.920] that it's good but would in different
+
+[01:22:36.480] LLM models sort of like lean towards
+
+[01:22:38.880] something different. Yeah. So you can
+
+[01:22:40.560] just use a different model and it mostly
+
+[01:22:42.400] works because it's a very unrestricted
+
+[01:22:44.719] parser and there's like you can read our
+
+[01:22:46.320] blog post about it and that'll probably
+
+[01:22:47.520] outline it a little bit better. That's
+
+[01:22:49.199] cool.
+
+[01:22:53.990] Um, any other questions for anyone else
+
+[01:22:54.000] left? I know there's just a few people
+
+[01:22:55.199] and then we'll call it quits and then me
+
+[01:22:56.719] and Death have uh other meetings to
+
+[01:22:58.560] attend to. So, what do you think about
+
+[01:23:01.679] the MCP and the agent development kit?
+
+[01:23:04.960] Uh, do you plan to use it in your uh
+
+[01:23:07.920] products or how do you plan to integrate
+
+[01:23:11.280] with with them?
+
+[01:23:13.360] You want to go first? Okay. This is uh
+
+[01:23:15.920] this is not on behalf of Dexter. This is
+
+[01:23:17.840] my personal opinion of it. So just to be
+
+[01:23:19.600] very very clear and I don't know what
+
+[01:23:21.280] Dexter's opinion is. I don't think we've
+
+[01:23:22.719] explicitly talked about this. It's
+
+[01:23:24.560] complicated. Um yeah I think all those
+
+[01:23:28.639] frameworks are basically just like API
+
+[01:23:30.880] calls around rest
+
+[01:23:33.480] endpoints. Um and like they have some
+
+[01:23:36.639] way to do REST
+
+[01:23:38.199] endpoints and I guess they've made some
+
+[01:23:40.480] decisions around it but I'm not yet
+
+[01:23:42.239] convinced that it's the perfect
+
+[01:23:43.600] decisions. I think like lang chain for
+
+[01:23:45.280] example was very hyped for a while and
+
+[01:23:48.400] clearly doesn't work because of
+
+[01:23:50.239] engineering constraints
+
+[01:23:52.960] um and not really because like I mean
+
+[01:23:54.719] there's value in lang chain too but like
+
+[01:23:56.239] langraph is I think more thought through
+
+[01:23:57.920] than lang chain is is for example what
+
+[01:24:00.080] I'd say think mcp is
+
+[01:24:04.440] uh I wouldn't build a company on it
+
+[01:24:07.120] today is what I would say
+
+[01:24:09.840] um I think it's in anthropic's best
+
+[01:24:12.080] interest for MCP to get adopted because
+
+[01:24:13.920] they're building UIs that everyone uses
+
+[01:24:15.679] and they want to have a standardized way
+
+[01:24:17.040] for people to plug into their UI with
+
+[01:24:18.639] them doing less work. They're kind of
+
+[01:24:20.960] using MCP as a way to build and
+
+[01:24:22.639] bootstrap an app
+
+[01:24:23.960] store is the way that I kind of think
+
+[01:24:26.239] about it. But I'm still not I think when
+
+[01:24:29.840] I look at code, what I look for is
+
+[01:24:31.760] beautiful code and that's where I decide
+
+[01:24:33.440] if something is good or bad. That's like
+
+[01:24:35.199] when I first saw React, it honestly felt
+
+[01:24:37.760] beautiful. Like it was like it's
+
+[01:24:39.360] actually really pretty once you
+
+[01:24:40.880] understand it and I don't look at it.
+
+[01:24:42.320] When I look at lang chain, it doesn't
+
+[01:24:43.520] feel beautiful. That's why I didn't like
+
+[01:24:44.560] it. When I look at paid AI, it doesn't
+
+[01:24:46.320] feel beautiful. There's things about it
+
+[01:24:47.600] that feel a little off. When I go look
+
+[01:24:50.239] at MCP, I have the same feeling. I don't
+
+[01:24:53.120] look at it and be like, "Wow, that's
+
+[01:24:54.719] beautiful
+
+[01:24:56.120] code." And that's kind of where why I'm
+
+[01:24:59.600] not personally like 100% bullish on
+
+[01:25:02.960] let's go do this today. It might prove
+
+[01:25:05.199] to be amazing, but I don't think it's
+
+[01:25:07.760] beautiful today. And be beauty is really
+
+[01:25:09.840] important in code, especially for
+
+[01:25:12.000] frameworks and systems.
+
+[01:25:15.120] Cool. Um, wait, no, I'm gonna give my
+
+[01:25:18.080] MCP rant and then you're up,
+
+[01:25:20.199] Carlos. Uh, I think it's I think
+
+[01:25:22.320] protocols are very powerful. I think we
+
+[01:25:24.880] saw a similar thing play out in the
+
+[01:25:26.080] Kubernetes world, which was basically
+
+[01:25:27.600] like you had this thing called Helm,
+
+[01:25:29.280] which was like super scrappy and didn't
+
+[01:25:31.520] have I think probably arguably all the
+
+[01:25:33.280] right abstractions, but it was at a
+
+[01:25:35.280] level that people could understand it.
+
+[01:25:36.639] it was good enough for people to adopt
+
+[01:25:38.320] and move on to the next thing. And once
+
+[01:25:40.960] it got momentum and everyone was using
+
+[01:25:42.639] it, it was basically locked in. And it
+
+[01:25:44.480] didn't matter that Google came along a
+
+[01:25:46.000] year later and released like a much
+
+[01:25:48.400] better solution for the problem, a much
+
+[01:25:51.040] cleaner protocol, much more well thought
+
+[01:25:52.639] for, a much more like engineer friendly.
+
+[01:25:55.280] It didn't matter. It had already taken
+
+[01:25:56.960] off. So we may MCP may be the thing that
+
+[01:26:00.639] we're stuck with. Not stuck with,
+
+[01:26:02.239] whatever you want to call it. Um, I
+
+[01:26:04.080] think REST is pretty good already. I
+
+[01:26:06.960] don't not 100% sure why we needed it.
+
+[01:26:09.120] There's a lot in it. Um, but we building
+
+[01:26:12.560] stuff on top of MCP. I want to build a
+
+[01:26:14.480] BAML agent that queries MCP tools and
+
+[01:26:17.040] pushes them into the context window as
+
+[01:26:18.639] tools because I'm curious how the actual
+
+[01:26:21.120] performance is because if it's an easy
+
+[01:26:22.719] way to consume APIs, then I will
+
+[01:26:25.600] probably use it. Exactly. Even if it's
+
+[01:26:27.920] not perfect. MCP is basically a REST
+
+[01:26:30.320] service that has a very specific query
+
+[01:26:32.560] that you can make that says tell me all
+
+[01:26:34.239] the other services you have. That's
+
+[01:26:37.239] it. And that sounds useful.
+
+[01:26:41.000] Yep. And oh, the other fun thing if you
+
+[01:26:43.679] want to uh if you want to mess with
+
+[01:26:45.280] people is, you know, MCP servers, most
+
+[01:26:47.040] of them are actually clients. They're
+
+[01:26:49.360] not servers. You don't call them over
+
+[01:26:50.719] the web. You you run them locally on
+
+[01:26:52.800] your machine and then they make the call
+
+[01:26:54.400] to a real server. But that's we won't
+
+[01:26:56.960] get it. That's just a naming thing.
+
+[01:27:00.639] Um any uh Carlos, you had one last
+
+[01:27:02.480] question. Yeah, you sort of answered
+
+[01:27:04.719] that question. I was going to ask
+
+[01:27:06.400] whether um the BAML can be integrated
+
+[01:27:09.600] with MCPAS and I guess um Dexter working
+
+[01:27:12.800] on it if you watch the first. Well, IAS
+
+[01:27:15.360] is is working on it a lot more, but we
+
+[01:27:17.520] should do an episode on that by Bob. We
+
+[01:27:19.280] should be like how do you how do you
+
+[01:27:20.719] great MCP with factor? Yeah. Yeah, we
+
+[01:27:23.440] should go do that. I think that'd be a
+
+[01:27:24.480] fun one. I think especially for like the
+
+[01:27:26.239] next season, we'll go one thing we're
+
+[01:27:28.000] gonna go do, uh, I know a few of you
+
+[01:27:29.760] left. We're gonna go send out a survey
+
+[01:27:31.679] at the end of this with this episode. If
+
+[01:27:33.840] you have time, we'd love like a detailed
+
+[01:27:35.600] response to it. It will just help us
+
+[01:27:37.520] tune the next few things and then it'll
+
+[01:27:39.199] start every Tuesday after that. And you
+
+[01:27:41.120] should expect to see this uh detailed
+
+[01:27:43.600] code examples pretty regularly with Dex
+
+[01:27:45.760] and I.
+
+[01:27:48.239] Amazing.
+
+[01:27:50.000] Thank you. It's been a blast. Thanks
+
+[01:27:51.760] everybody.
+
+[01:27:52.960] Um, and then we'll stop the recording.

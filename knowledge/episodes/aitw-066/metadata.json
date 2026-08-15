@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-066",
+  "episode": 66,
+  "season": 2,
+  "title": "No Vibes Allowed - July Edition",
+  "source_folder": "2026-07-21-no-vibes-july",
+  "recorded_at": "2026-07-21T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate; it may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "rTn8Vhdt-Jo",
+  "youtube_url": "https://www.youtube.com/watch?v=rTn8Vhdt-Jo",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "high",
+  "status": "curated-from-existing-transcript"
+}

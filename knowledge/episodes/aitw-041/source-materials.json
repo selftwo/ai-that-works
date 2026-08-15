@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "primary": [
+    {"path": "2026-01-20-email-is-all-you-need/transcript.txt", "role": "timestamped transcript"},
+    {"path": "2026-01-20-email-is-all-you-need/meta.md", "role": "episode metadata and source links"},
+    {"path": "2026-01-20-email-is-all-you-need/README.md", "role": "episode description and recording link"}
+  ],
+  "supporting": [
+    {"path": "2026-01-20-email-is-all-you-need/email.md", "role": "post-episode editorial summary"},
+    {"path": "2026-01-20-email-is-all-you-need/raw_email.json", "role": "generated email summary draft"}
+  ],
+  "external": [
+    {"url": "https://www.youtube.com/watch?v=zpfXzk-3Yxw", "role": "recording"},
+    {"url": "https://luma.com/email-is-all-you-need", "role": "event page"}
+  ],
+  "missing_expected_support": ["implementation source shown during the episode", "whiteboard or diagram files", "queue tests", "raw live-demo emails"],
+  "link_status": "Source meta.md and README.md agree on the YouTube URL. External links were not fetched during packet creation."
+}

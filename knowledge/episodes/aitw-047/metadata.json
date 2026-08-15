@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-047",
+  "episode": 47,
+  "season": 2,
+  "title": "PII Redaction and Sensitive Data Scrubbing",
+  "source_folder": "2026-03-03-pii-redaction-and-sensitive-data-scrubbing",
+  "recorded_at": "2026-03-03T18:15:00Z",
+  "recorded_at_provenance": "Source catalog event_date from upstream meta.md. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "Ql2gLHWuX7M",
+  "youtube_url": "https://www.youtube.com/watch?v=Ql2gLHWuX7M",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

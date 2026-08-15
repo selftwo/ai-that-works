@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-018",
+  "episode": 14,
+  "season": 2,
+  "title": "Decoding Context Engineering Lessons from Manus",
+  "source_folder": "2025-08-12-manus-context-engineering",
+  "recorded_at": "2025-08-12T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "OaUOHEHtlOU",
+  "youtube_url": "https://www.youtube.com/watch?v=OaUOHEHtlOU",
+  "transcript_origin": "YouTube automatic English captions, imported as timestamped stitched transcript",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-youtube-captions"
+}

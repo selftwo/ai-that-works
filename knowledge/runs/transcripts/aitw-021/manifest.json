@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "episode_guid": "aitw-021",
+  "video_id": "UCqD_KUyUJA",
+  "source_url": "https://www.youtube.com/watch?v=UCqD_KUyUJA",
+  "input_fingerprint": "6ff28acfac212a304d983730827ae3ddc4f0a4dfbdf8565008141ad64d732101",
+  "status": "done",
+  "stages": {
+    "select": {
+      "status": "done",
+      "completed_at": "2026-07-12T16:18:00.597796+00:00"
+    },
+    "inspect_captions": {
+      "status": "done",
+      "selected": [
+        "en",
+        "automatic"
+      ],
+      "source_duration_seconds": 3287.0
+    },
+    "acquire_captions": {
+      "status": "done",
+      "path": "knowledge/runs/transcripts/aitw-021/captions.en.vtt",
+      "language": "en",
+      "kind": "automatic"
+    },
+    "normalize": {
+      "status": "done",
+      "output_dir": "knowledge/episodes/aitw-021/transcripts"
+    },
+    "verify": {
+      "status": "passed",
+      "cue_count": 1509,
+      "first_seconds": 5.99,
+      "last_seconds": 3287.4,
+      "source_duration_seconds": 3287.0,
+      "duration_delta_seconds": 0.40000000000009095,
+      "monotonic": true,
+      "failures": []
+    }
+  },
+  "updated_at": "2026-07-12T16:18:06.598329+00:00"
+}

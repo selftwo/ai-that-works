@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-040",
+  "episode": 40,
+  "season": 2,
+  "title": "Applying 12-Factor Principles to Coding Agent SDKs",
+  "source_folder": "2026-01-13-applying-12-factor-principles-to-coding-agent-sdks",
+  "recorded_at": "2026-01-13T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "qgAny0sEdIk",
+  "youtube_url": "https://www.youtube.com/watch?v=qgAny0sEdIk",
+  "transcript_origin": "upstream timestamped transcript.md",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

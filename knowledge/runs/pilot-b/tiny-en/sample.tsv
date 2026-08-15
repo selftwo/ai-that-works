@@ -1,0 +1,46 @@
+start	end	text
+0	4960	As it shows, I got a ton done, like an unbelievable amount done.
+4960	9360	This is the closed PR's in Lakebed where, reminder, I'm still the only contributor.
+9360	12000	I have not forced this project onto my team yet.
+12000	13400	They don't deserve the slop.
+13400	14400	It's cleaning up fast.
+14400	15560	Thank you, Fable.
+15560	20320	But all of these PR's were done in literally two to three days.
+20320	25120	The sheer volume of work here, especially if you're looking at the ones that actually merged
+25120	31800	like this pile here. It's like I think 11 or 12 PRs that merged all not just in one day,
+31800	37600	but from one thread. And I keep going and I'm on page two. We're still in things from
+37600	43280	two days ago. Then there's a four day ago, one five days ago, then a huge jump to two weeks
+43280	48480	because I was just not really feeling it. When I lost access to this model, I tried to
+48480	52120	run around in circles and get the best stuff I could out of Opus, but it wasn't at the
+52120	53560	the bar I needed to ship.
+53560	56120	It what ended up happening is in this particular project,
+56120	59600	Lakebed, I had a bunch of these PR stack up of work
+59600	62320	that was like 50 to 80% complete,
+62320	64360	but I didn't like the SDK changes it made.
+64360	66960	I didn't really have confidence in the implementation,
+66960	69120	including it up would just take too long.
+69120	71000	And the result was that I kept having ideas,
+71000	74080	I kept making PRs, and they kept sitting there doing nothing.
+74080	78560	I probably had 20 or 30 PRs just sitting in this repo,
+78560	81160	not moving, and the project has been sitting there
+81160	82800	as a result, and I don't like that.
+82800	85040	I really want to ship Lakebed.
+85040	86840	I've talked about what Lakebed is in some other videos.
+86840	88600	I don't want to bog you down the details
+88600	89800	until I actually have it launched.
+89800	91280	I haven't earned the right to market this yet.
+91280	92160	I want it done.
+92160	93800	So we'll do that later.
+93800	95400	But I want to talk about the workflows
+95400	97760	that got me this far in the project,
+97760	99280	as well as some of the cool things I'm doing
+99280	101440	on other projects that I've been working on.
+101440	103160	I'm going to start in a weird place here,
+103160	104680	but I promise it will help.
+104680	106640	I'm going to start with min-maxing tips
+106640	108400	and like cost reduction things
+108400	110960	in order to make sure that when you adopt this workflow,
+110960	113200	you don't immediately bankrupt yourself,
+113200	115600	because if you were to go to the second half of this video
+115600	118440	and skip straight to that part, it will be expensive.
+118440	120400	That's what I did in the first three days.

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID qgAny0sEdIk",
+  "transcript_range": "00:01.207 to 01:17:04.131",
+  "timestamp_order": "passed: 311 timestamps verified as monotonic by knowledge/scripts/verify_transcript.py",
+  "spot_checks": ["compounding step error", "control flow via prompt", "planning context", "structured phase outputs", "background evaluation", "live workflow demo", "dependency checks", "warning-free builds", "closing recommendations"],
+  "timestamped_claim_count": 9,
+  "source_duration_check": "not run: source media was not downloaded",
+  "supporting_material_check": "README.md, meta.md, transcript.md, IMPLEMENTATION_PLAN.md, RALPH.md, email.md, whiteboards.md, source listing, and saved logs were inspected",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "speaker transcription errors", "screen-only evidence", "reported demo and test outcomes were not rerun", "external link availability"]
+}

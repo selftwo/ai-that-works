@@ -1,0 +1,9711 @@
+1
+00:00:06,710 --> 00:00:06,720
+computer. All right, sounds like we got
+
+2
+00:00:06,720 --> 00:00:08,720
+quite a few folks signed up today. I'm
+
+3
+00:00:08,720 --> 00:00:10,160
+really excited to talk about 12 factor
+
+4
+00:00:10,160 --> 00:00:11,920
+agents. How many of you read the blog
+
+5
+00:00:11,920 --> 00:00:14,240
+post? Did everyone read it so far that
+
+6
+00:00:14,240 --> 00:00:17,910
+Dexter made?
+
+7
+00:00:20,630 --> 00:00:20,640
+Nope. Oh, you're you're in for a real
+
+8
+00:00:20,640 --> 00:00:22,880
+treat. The gonna be a good time. One of
+
+9
+00:00:22,880 --> 00:00:24,960
+the one of the most fun blog posts I've
+
+10
+00:00:24,960 --> 00:00:28,240
+read in a while. Um,
+
+11
+00:00:28,240 --> 00:00:29,920
+and it's this interesting concept that
+
+12
+00:00:29,920 --> 00:00:32,239
+we had percolated on for quite a while
+
+13
+00:00:32,239 --> 00:00:33,840
+and then Dexter just put it down to like
+
+14
+00:00:33,840 --> 00:00:35,840
+these beautiful words to really help
+
+15
+00:00:35,840 --> 00:00:38,800
+outline it in a more concrete way.
+
+16
+00:00:38,800 --> 00:00:40,520
+Well, yeah, I
+
+17
+00:00:40,520 --> 00:00:42,960
+think I kind of stumbled on this. We did
+
+18
+00:00:42,960 --> 00:00:44,719
+I think you and me did a hackathon back
+
+19
+00:00:44,719 --> 00:00:47,520
+in like October or November and we were
+
+20
+00:00:47,520 --> 00:00:49,440
+building agents and we were building
+
+21
+00:00:49,440 --> 00:00:50,360
+them from
+
+22
+00:00:50,360 --> 00:00:54,079
+scratch. Uh, and that was kind of the
+
+23
+00:00:54,079 --> 00:00:57,680
+seed and the the initial idea there that
+
+24
+00:00:57,680 --> 00:00:59,520
+I then went and hacked on and talked to
+
+25
+00:00:59,520 --> 00:01:02,199
+a ton a ton of founders
+
+26
+00:01:02,199 --> 00:01:06,080
+and was just trying to trying to figure
+
+27
+00:01:06,080 --> 00:01:08,080
+out what makes what makes good agents
+
+28
+00:01:08,080 --> 00:01:10,400
+and like how can we how can we can
+
+29
+00:01:10,400 --> 00:01:13,840
+distill this down into building blocks.
+
+30
+00:01:13,840 --> 00:01:15,920
+Yeah. Yeah. Like the building blocks I
+
+31
+00:01:15,920 --> 00:01:18,240
+think are that's really what's missing
+
+32
+00:01:18,240 --> 00:01:20,400
+right now.
+
+33
+00:01:20,400 --> 00:01:21,759
+Well, and and so the problem with with
+
+34
+00:01:21,759 --> 00:01:23,360
+not having good building blocks, I
+
+35
+00:01:23,360 --> 00:01:26,560
+think, is you I know we said we're going
+
+36
+00:01:26,560 --> 00:01:27,920
+to wait till people got here, but I'm
+
+37
+00:01:27,920 --> 00:01:30,320
+just going to start going. The problem
+
+38
+00:01:30,320 --> 00:01:31,759
+with not having good building blocks is
+
+39
+00:01:31,759 --> 00:01:34,079
+I think you end up with this problem of
+
+40
+00:01:34,079 --> 00:01:35,119
+you're like, "Oh, I want to build
+
+41
+00:01:35,119 --> 00:01:36,880
+something pretty cool with AI. I want to
+
+42
+00:01:36,880 --> 00:01:38,320
+build something agentic. I want to do
+
+43
+00:01:38,320 --> 00:01:40,320
+something a little bit more than just a
+
+44
+00:01:40,320 --> 00:01:43,119
+chatbot or uh, you know, summarization
+
+45
+00:01:43,119 --> 00:01:45,360
+in my web app." And and so you're like,
+
+46
+00:01:45,360 --> 00:01:49,119
+"Cool, we need an agent." like okay like
+
+47
+00:01:49,119 --> 00:01:50,640
+I don't want to write all this code from
+
+48
+00:01:50,640 --> 00:01:52,159
+scratch really learn it all from
+
+49
+00:01:52,159 --> 00:01:54,479
+scratch. Uh maybe you do, some people
+
+50
+00:01:54,479 --> 00:01:56,079
+do, but a lot of folks are like, "Cool,
+
+51
+00:01:56,079 --> 00:01:58,119
+let's go get some frameworks and some
+
+52
+00:01:58,119 --> 00:02:00,960
+libraries." And I think what it leads
+
+53
+00:02:00,960 --> 00:02:04,079
+you down this path of like, "Hey, let's
+
+54
+00:02:04,079 --> 00:02:07,040
+build rather than like just making our
+
+55
+00:02:07,040 --> 00:02:08,800
+existing software a little more AI
+
+56
+00:02:08,800 --> 00:02:10,840
+integrated." You end up
+
+57
+00:02:10,840 --> 00:02:13,040
+with people who are just like, "Hey,
+
+58
+00:02:13,040 --> 00:02:14,319
+let's go build something from scratch.
+
+59
+00:02:14,319 --> 00:02:16,000
+Let's we're building our agent. We're
+
+60
+00:02:16,000 --> 00:02:17,280
+gonna we have our thing now and we're
+
+61
+00:02:17,280 --> 00:02:19,200
+going to go do green field from scratch.
+
+62
+00:02:19,200 --> 00:02:23,680
+Build an agent." And uh I think what
+
+63
+00:02:23,680 --> 00:02:25,160
+happens
+
+64
+00:02:25,160 --> 00:02:28,720
+is that never works. And what I wanted
+
+65
+00:02:28,720 --> 00:02:30,080
+to figure out was like how can I help
+
+66
+00:02:30,080 --> 00:02:31,360
+people who already have really good
+
+67
+00:02:31,360 --> 00:02:33,920
+software and have ideas about how how AI
+
+68
+00:02:33,920 --> 00:02:36,040
+could make it better
+
+69
+00:02:36,040 --> 00:02:39,120
+and what what things did they need to
+
+70
+00:02:39,120 --> 00:02:41,560
+take from the agent
+
+71
+00:02:41,560 --> 00:02:44,000
+paradigm that they can take one by one
+
+72
+00:02:44,000 --> 00:02:45,599
+that they can take peace meal that they
+
+73
+00:02:45,599 --> 00:02:47,040
+can kind of like just carve up this
+
+74
+00:02:47,040 --> 00:02:49,760
+problem and slowly over time take
+
+75
+00:02:49,760 --> 00:02:52,160
+deterministic code and sprinkle in some
+
+76
+00:02:52,160 --> 00:02:55,120
+LLM calls in the right places to make it
+
+77
+00:02:55,120 --> 00:02:58,160
+really man like magical without tanking
+
+78
+00:02:58,160 --> 00:03:00,480
+the quality or making it unreliable or
+
+79
+00:03:00,480 --> 00:03:02,480
+having this sort of like chat GPT
+
+80
+00:03:02,480 --> 00:03:04,319
+hallucination effect where like one in
+
+81
+00:03:04,319 --> 00:03:05,599
+five times you're like, "Oh, this is
+
+82
+00:03:05,599 --> 00:03:08,080
+useless. This is never going to work."
+
+83
+00:03:08,080 --> 00:03:10,959
+Yeah, I agree. Let's um All right, it's
+
+84
+00:03:10,959 --> 00:03:12,640
+104. Let's do a quick little brief
+
+85
+00:03:12,640 --> 00:03:14,800
+background who we are um to everyone
+
+86
+00:03:14,800 --> 00:03:16,640
+that's on the call and then let's get
+
+87
+00:03:16,640 --> 00:03:18,000
+into it and like what this thing is
+
+88
+00:03:18,000 --> 00:03:21,840
+about. So, cool. Um I'm Vibe. I'm one of
+
+89
+00:03:21,840 --> 00:03:24,400
+the co-creators of BAML. Um, I'm a YC
+
+90
+00:03:24,400 --> 00:03:28,800
+founder from Winter 23 and uh this is my
+
+91
+00:03:28,800 --> 00:03:30,680
+co-host, I guess.
+
+92
+00:03:30,680 --> 00:03:32,760
+Uh, go for
+
+93
+00:03:32,760 --> 00:03:35,680
+it. Uh, what's up? I'm Dex. Uh, I'm the
+
+94
+00:03:35,680 --> 00:03:37,599
+founder of uh, Human Layer, uh, another
+
+95
+00:03:37,599 --> 00:03:40,959
+YC company. Uh, we are working on um,
+
+96
+00:03:40,959 --> 00:03:43,840
+safer, more reliable agents and, uh, how
+
+97
+00:03:43,840 --> 00:03:45,920
+to build agents that can actually get
+
+98
+00:03:45,920 --> 00:03:49,440
+real, meaningful work done. And uh yeah,
+
+99
+00:03:49,440 --> 00:03:51,440
+and the whole point series that we've
+
+100
+00:03:51,440 --> 00:03:53,920
+got here is really just we all see a lot
+
+101
+00:03:53,920 --> 00:03:56,000
+of demos that come with AI and we'd like
+
+102
+00:03:56,000 --> 00:03:58,000
+to go past the demo stage. We've seen uh
+
+103
+00:03:58,000 --> 00:03:59,200
+between Dex and I, we've seen like
+
+104
+00:03:59,200 --> 00:04:00,480
+probably hundreds of companies that have
+
+105
+00:04:00,480 --> 00:04:02,400
+actually shipped to production and found
+
+106
+00:04:02,400 --> 00:04:04,239
+patterns that work and we've found our
+
+107
+00:04:04,239 --> 00:04:06,480
+own techniques that work and we just
+
+108
+00:04:06,480 --> 00:04:07,760
+want to use this session to go share
+
+109
+00:04:07,760 --> 00:04:09,120
+some of those and not really at a high
+
+110
+00:04:09,120 --> 00:04:11,360
+level, but really at the layer of code
+
+111
+00:04:11,360 --> 00:04:14,080
+because honestly, it's just there's a
+
+112
+00:04:14,080 --> 00:04:16,079
+lot of things that talk about the the
+
+113
+00:04:16,079 --> 00:04:18,400
+words behind the AI, but there's not a
+
+114
+00:04:18,400 --> 00:04:19,840
+lot of stuff that talks about the code
+
+115
+00:04:19,840 --> 00:04:21,600
+that we have to go write and that's the
+
+116
+00:04:21,600 --> 00:04:23,199
+whole point of these sessions. So, as
+
+117
+00:04:23,199 --> 00:04:26,400
+you guys have any questions, um, please
+
+118
+00:04:26,400 --> 00:04:28,320
+go ahead and post them in the chat or if
+
+119
+00:04:28,320 --> 00:04:29,440
+you really want, you're welcome to
+
+120
+00:04:29,440 --> 00:04:31,759
+unmute and go ask questions as you go.
+
+121
+00:04:31,759 --> 00:04:33,520
+What we're going to go do is typically
+
+122
+00:04:33,520 --> 00:04:35,040
+we include a whiteboard session and then
+
+123
+00:04:35,040 --> 00:04:36,560
+we also include some coding sessions
+
+124
+00:04:36,560 --> 00:04:37,919
+because whiteboards are just a great way
+
+125
+00:04:37,919 --> 00:04:41,040
+to convey ideas before the code. Um, so
+
+126
+00:04:41,040 --> 00:04:42,479
+be patient. You will see code, we
+
+127
+00:04:42,479 --> 00:04:45,280
+promise. Um, but also the whiteboarding
+
+128
+00:04:45,280 --> 00:04:46,800
+is just to help contextualize and make
+
+129
+00:04:46,800 --> 00:04:49,840
+sure we're on the same page.
+
+130
+00:04:49,840 --> 00:04:52,960
+Cool. Awesome. Let's get today's session
+
+131
+00:04:52,960 --> 00:04:55,199
+I think. Let's get into it. Um little
+
+132
+00:04:55,199 --> 00:05:03,189
+preface. There will be some um question.
+
+133
+00:05:04,950 --> 00:05:04,960
+Okay, let's go on. That's Let's go. All
+
+134
+00:05:04,960 --> 00:05:06,720
+right, we're gonna keep rolling. Let's
+
+135
+00:05:06,720 --> 00:05:09,360
+go into 12 factory. You want to screen?
+
+136
+00:05:09,360 --> 00:05:11,120
+Yep. I'm gonna screen share and um
+
+137
+00:05:11,120 --> 00:05:13,120
+there's gonna be a little bit less uh
+
+138
+00:05:13,120 --> 00:05:15,400
+what I would call
+
+139
+00:05:15,400 --> 00:05:20,909
+um let's
+
+140
+00:05:23,510 --> 00:05:23,520
+see a little bit less of what I would
+
+141
+00:05:23,520 --> 00:05:25,600
+call the like hands-on live
+
+142
+00:05:25,600 --> 00:05:26,960
+whiteboarding just because there's a lot
+
+143
+00:05:26,960 --> 00:05:29,919
+a lot a lot of content to cover. Um and
+
+144
+00:05:29,919 --> 00:05:32,000
+so I'm going to jump through kind of a
+
+145
+00:05:32,000 --> 00:05:33,840
+little bit more of a slideshow kind of
+
+146
+00:05:33,840 --> 00:05:35,680
+thing, but this is all the content in
+
+147
+00:05:35,680 --> 00:05:37,919
+the repo. You can see all of this. Um,
+
+148
+00:05:37,919 --> 00:05:39,440
+so I want to start with kind of like a
+
+149
+00:05:39,440 --> 00:05:41,120
+little bit of like how we got here and
+
+150
+00:05:41,120 --> 00:05:43,039
+how to think about writing code in
+
+151
+00:05:43,039 --> 00:05:44,960
+software. Um, and this is a concept
+
+152
+00:05:44,960 --> 00:05:47,160
+here, this like software is a directed
+
+153
+00:05:47,160 --> 00:05:50,240
+graph. Um, because there's a lot of like
+
+154
+00:05:50,240 --> 00:05:52,080
+frameworks today that help you think in
+
+155
+00:05:52,080 --> 00:05:54,000
+graphs, but at the end of the day, code
+
+156
+00:05:54,000 --> 00:05:55,600
+is a graph. And the theme we're going to
+
+157
+00:05:55,600 --> 00:05:57,759
+keep coming back to here is you want to
+
+158
+00:05:57,759 --> 00:05:59,120
+have control over the code. You want to
+
+159
+00:05:59,120 --> 00:06:00,800
+have hands in the code because that's
+
+160
+00:06:00,800 --> 00:06:02,880
+what gives you the control to add probes
+
+161
+00:06:02,880 --> 00:06:05,120
+and changes and tests and things to help
+
+162
+00:06:05,120 --> 00:06:08,240
+you improve the quality. Um after a
+
+163
+00:06:08,240 --> 00:06:10,000
+while we ended up with these things we
+
+164
+00:06:10,000 --> 00:06:11,680
+call like DAG orchestrators. If you're
+
+165
+00:06:11,680 --> 00:06:13,600
+familiar with your like prefects or your
+
+166
+00:06:13,600 --> 00:06:16,319
+airflows or your um dagsters, these
+
+167
+00:06:16,319 --> 00:06:17,840
+sorts of things where each one of these
+
+168
+00:06:17,840 --> 00:06:20,080
+nodes it's still a directed graph. You
+
+169
+00:06:20,080 --> 00:06:21,919
+still have logic that is moving
+
+170
+00:06:21,919 --> 00:06:23,919
+information whether it's variables or
+
+171
+00:06:23,919 --> 00:06:25,960
+data in a pipeline through different
+
+172
+00:06:25,960 --> 00:06:28,560
+steps. Uh and it's very declarative and
+
+173
+00:06:28,560 --> 00:06:30,319
+deterministic.
+
+174
+00:06:30,319 --> 00:06:33,199
+Um, the promise of agents is essentially
+
+175
+00:06:33,199 --> 00:06:35,280
+like the the real hype around agents is
+
+176
+00:06:35,280 --> 00:06:37,120
+you can take an LLM, you can give it a
+
+177
+00:06:37,120 --> 00:06:38,479
+bag of tools, you can say like here's
+
+178
+00:06:38,479 --> 00:06:40,080
+all the steps you could take. I'm not
+
+179
+00:06:40,080 --> 00:06:41,280
+going to tell you which steps to take
+
+180
+00:06:41,280 --> 00:06:43,360
+and which order to do it in, but here's
+
+181
+00:06:43,360 --> 00:06:44,880
+your goal and here's the steps you can
+
+182
+00:06:44,880 --> 00:06:46,440
+take
+
+183
+00:06:46,440 --> 00:06:49,680
+and like go figure it out basically. And
+
+184
+00:06:49,680 --> 00:06:52,960
+that the LM will traverse the graph,
+
+185
+00:06:52,960 --> 00:06:54,720
+figure out which steps to take in which
+
+186
+00:06:54,720 --> 00:06:57,840
+order and get to that goal. And it might
+
+187
+00:06:57,840 --> 00:06:59,360
+skip some steps as well. I might not
+
+188
+00:06:59,360 --> 00:07:01,360
+need to take all the steps. And the idea
+
+189
+00:07:01,360 --> 00:07:03,120
+here is cool, now I have to write a lot
+
+190
+00:07:03,120 --> 00:07:05,759
+less software. Whether it's like a DAG
+
+191
+00:07:05,759 --> 00:07:08,240
+that is in code or it's a DAG that's in
+
+192
+00:07:08,240 --> 00:07:10,479
+my infrastructure. Conceptually, the
+
+193
+00:07:10,479 --> 00:07:12,400
+agent's going to figure out the ifs and
+
+194
+00:07:12,400 --> 00:07:14,479
+the logic and the and the looping for me
+
+195
+00:07:14,479 --> 00:07:16,240
+instead of me having to go write all of
+
+196
+00:07:16,240 --> 00:07:17,599
+that and test it and make sure it's
+
+197
+00:07:17,599 --> 00:07:19,039
+really really good. And as LM get
+
+198
+00:07:19,039 --> 00:07:20,639
+smarter, they'll be able to handle more
+
+199
+00:07:20,639 --> 00:07:23,800
+and more complex workflows.
+
+200
+00:07:23,800 --> 00:07:26,720
+Um, and the way we model this, um,
+
+201
+00:07:26,720 --> 00:07:27,759
+especially when we talk about like
+
+202
+00:07:27,759 --> 00:07:29,759
+agents, um, and structured outputs is
+
+203
+00:07:29,759 --> 00:07:32,800
+essentially like an agent is just a
+
+204
+00:07:32,800 --> 00:07:35,759
+prompt that determines a next step. And
+
+205
+00:07:35,759 --> 00:07:38,160
+so you have an event and you say, "Hey,
+
+206
+00:07:38,160 --> 00:07:39,759
+LM, what's the next step with this
+
+207
+00:07:39,759 --> 00:07:41,120
+event?" And then the LM might say,
+
+208
+00:07:41,120 --> 00:07:42,720
+"Okay, we have to call this API or we
+
+209
+00:07:42,720 --> 00:07:44,639
+have to kick off this pipeline or we
+
+210
+00:07:44,639 --> 00:07:46,720
+have to update this database." Um, or
+
+211
+00:07:46,720 --> 00:07:47,919
+maybe it's like, "Cool, we're done.
+
+212
+00:07:47,919 --> 00:07:49,440
+We've done those things and now and now
+
+213
+00:07:49,440 --> 00:07:51,039
+we're finished." And just and the way
+
+214
+00:07:51,039 --> 00:07:52,960
+this kind of Sorry, go ahead. Just to
+
+215
+00:07:52,960 --> 00:07:54,240
+really highlight to a lot of people,
+
+216
+00:07:54,240 --> 00:07:55,680
+it's like a lot of people use this word
+
+217
+00:07:55,680 --> 00:07:58,720
+of like the agent is calling the tool.
+
+218
+00:07:58,720 --> 00:08:02,599
+It's not calling the tool. An
+
+219
+00:08:02,599 --> 00:08:06,560
+LLM is really just a really really smart
+
+220
+00:08:06,560 --> 00:08:09,759
+go-to statement. Like in our code, we
+
+221
+00:08:09,759 --> 00:08:11,280
+used to write goto statement. That's
+
+222
+00:08:11,280 --> 00:08:14,000
+really all this boils down to. I love
+
+223
+00:08:14,000 --> 00:08:16,080
+that you said goto because I literally
+
+224
+00:08:16,080 --> 00:08:17,840
+have a blog post I want to write that is
+
+225
+00:08:17,840 --> 00:08:20,080
+like do do you remember that post that
+
+226
+00:08:20,080 --> 00:08:22,639
+was uh goto considered harmful? Yeah.
+
+227
+00:08:22,639 --> 00:08:26,479
+Yeah. Yeah. It's Yeah. What an LM is. So
+
+228
+00:08:26,479 --> 00:08:28,960
+uh I I actually think the concept of
+
+229
+00:08:28,960 --> 00:08:32,320
+tool use is harmful. The idea that a
+
+230
+00:08:32,320 --> 00:08:34,399
+model is smart and is interacting with
+
+231
+00:08:34,399 --> 00:08:37,599
+its environment is actually like it's a
+
+232
+00:08:37,599 --> 00:08:39,120
+little bit of hype. I mean it's you can
+
+233
+00:08:39,120 --> 00:08:40,240
+think about it in that way and it's a
+
+234
+00:08:40,240 --> 00:08:42,399
+good way to like introduce the concept
+
+235
+00:08:42,399 --> 00:08:44,800
+but at the end of the day when a model
+
+236
+00:08:44,800 --> 00:08:48,080
+calls a tool it's taking a bunch of a
+
+237
+00:08:48,080 --> 00:08:50,720
+bunch of input tokens as the prompt and
+
+238
+00:08:50,720 --> 00:08:52,480
+maybe some tokens about what's happened
+
+239
+00:08:52,480 --> 00:08:54,800
+so far and it's outputting JSON that
+
+240
+00:08:54,800 --> 00:08:56,240
+says I think the next step in this
+
+241
+00:08:56,240 --> 00:08:59,680
+workflow is X. We should play the one.
+
+242
+00:08:59,680 --> 00:09:01,519
+Yeah. Yeah. Yeah. Yeah. So the way this
+
+243
+00:09:01,519 --> 00:09:03,680
+works as you kind of uh move through
+
+244
+00:09:03,680 --> 00:09:08,870
+this stuff is
+
+245
+00:09:10,710 --> 00:09:10,720
+um you would you would kind of like pick
+
+246
+00:09:10,720 --> 00:09:13,120
+a step, call an API, and then add that
+
+247
+00:09:13,120 --> 00:09:15,040
+to the context window, feed that new
+
+248
+00:09:15,040 --> 00:09:16,720
+context window in. It says, "Okay, we
+
+249
+00:09:16,720 --> 00:09:18,320
+had this event, we called this API, we
+
+250
+00:09:18,320 --> 00:09:20,000
+got a result." Then the LM is going to
+
+251
+00:09:20,000 --> 00:09:21,600
+say like, "Okay, cool. With that result,
+
+252
+00:09:21,600 --> 00:09:23,680
+I can now kick off a pipeline and get
+
+253
+00:09:23,680 --> 00:09:25,839
+the result of that." And then we add
+
+254
+00:09:25,839 --> 00:09:27,360
+that to the context window. We feed it
+
+255
+00:09:27,360 --> 00:09:30,480
+back into the LLM and we then we update
+
+256
+00:09:30,480 --> 00:09:33,040
+the database and we get the result. And
+
+257
+00:09:33,040 --> 00:09:34,399
+then then we add that to the context
+
+258
+00:09:34,399 --> 00:09:36,320
+window. And then the LLM may say, "Cool,
+
+259
+00:09:36,320 --> 00:09:37,839
+we've done our job." Based on the event,
+
+260
+00:09:37,839 --> 00:09:39,279
+based on the goal, based on this is
+
+261
+00:09:39,279 --> 00:09:41,600
+super generic, but every time you do a
+
+262
+00:09:41,600 --> 00:09:42,880
+tool calling. And if you've built these
+
+263
+00:09:42,880 --> 00:09:45,120
+tool calling loops with the OpenAI APIs
+
+264
+00:09:45,120 --> 00:09:47,120
+or the anthropic APIs, like this, this
+
+265
+00:09:47,120 --> 00:09:49,200
+will seem super familiar. We just want
+
+266
+00:09:49,200 --> 00:09:50,959
+to break this down conceptually into,
+
+267
+00:09:50,959 --> 00:09:53,080
+you know, what is um what is this
+
+268
+00:09:53,080 --> 00:09:56,480
+really? Um, what's the shortcut for
+
+269
+00:09:56,480 --> 00:09:58,800
+opening the file browser? Command B.
+
+270
+00:09:58,800 --> 00:10:00,959
+Command B. I'm trying that. Yeah, there
+
+271
+00:10:00,959 --> 00:10:04,240
+we go. Okay, cool. Thank you. Uh so in
+
+272
+00:10:04,240 --> 00:10:07,519
+this kind of like uh dynamic loop what
+
+273
+00:10:07,519 --> 00:10:09,440
+was materialized is this DAG right the
+
+274
+00:10:09,440 --> 00:10:11,440
+agent figured out the DAG for us. We did
+
+275
+00:10:11,440 --> 00:10:12,720
+this step and then we did this step and
+
+276
+00:10:12,720 --> 00:10:15,360
+then we did this step and uh at the end
+
+277
+00:10:15,360 --> 00:10:16,800
+of the day that's that's kind of that's
+
+278
+00:10:16,800 --> 00:10:18,800
+kind of what happened. Um if we come
+
+279
+00:10:18,800 --> 00:10:20,320
+back to this loop there's basically four
+
+280
+00:10:20,320 --> 00:10:23,519
+components right you have
+
+281
+00:10:23,519 --> 00:10:25,760
+uh you have a prompt and then the
+
+282
+00:10:25,760 --> 00:10:27,360
+prompt's going to output JSON. You have
+
+283
+00:10:27,360 --> 00:10:29,760
+a switch statement which is going to
+
+284
+00:10:29,760 --> 00:10:31,680
+basically say based on the JSON that was
+
+285
+00:10:31,680 --> 00:10:33,680
+output which code path do we want to go
+
+286
+00:10:33,680 --> 00:10:36,800
+down or do we want to exit and then you
+
+287
+00:10:36,800 --> 00:10:38,720
+have how you're building how you tell
+
+288
+00:10:38,720 --> 00:10:40,800
+the model again because this is totally
+
+289
+00:10:40,800 --> 00:10:42,399
+stateless. The only way it knows what
+
+290
+00:10:42,399 --> 00:10:45,600
+happened in the past is if you p pass in
+
+291
+00:10:45,600 --> 00:10:49,200
+tokens strings JSON XML whatever it is
+
+292
+00:10:49,200 --> 00:10:50,959
+uh and tell it what happened before so
+
+293
+00:10:50,959 --> 00:10:52,640
+it can make the decision of the next
+
+294
+00:10:52,640 --> 00:10:55,760
+step and then you have a for loop. The
+
+295
+00:10:55,760 --> 00:10:57,920
+whole idea behind 12 factor agents is
+
+296
+00:10:57,920 --> 00:11:01,000
+really like you're a good
+
+297
+00:11:01,000 --> 00:11:04,800
+engineer. I hope probably you can write
+
+298
+00:11:04,800 --> 00:11:07,279
+a switch statement. You can write a for
+
+299
+00:11:07,279 --> 00:11:10,519
+loop and you can turn some data into a
+
+300
+00:11:10,519 --> 00:11:12,959
+string. And the most important part
+
+301
+00:11:12,959 --> 00:11:16,160
+that's going to control how good your
+
+302
+00:11:16,160 --> 00:11:19,120
+agent is and how good the performance is
+
+303
+00:11:19,120 --> 00:11:22,000
+is this prompt. The prompt of how to
+
+304
+00:11:22,000 --> 00:11:24,079
+behave, how to do it. what's the context
+
+305
+00:11:24,079 --> 00:11:26,800
+that we put in and how to call these
+
+306
+00:11:26,800 --> 00:11:28,959
+tools, the description of the JSON that
+
+307
+00:11:28,959 --> 00:11:31,360
+you're asking it to output. And I I want
+
+308
+00:11:31,360 --> 00:11:32,959
+to highlight one thing here. A lot of
+
+309
+00:11:32,959 --> 00:11:35,200
+people just I I know what you mean when
+
+310
+00:11:35,200 --> 00:11:37,040
+you say prompt, but I think a lot of
+
+311
+00:11:37,040 --> 00:11:38,240
+people are going to assume that prompt
+
+312
+00:11:38,240 --> 00:11:40,320
+means a system prompt all the stuff.
+
+313
+00:11:40,320 --> 00:11:43,040
+That is not what Dexture means. Just to
+
+314
+00:11:43,040 --> 00:11:44,480
+highlight that again, what Dexter are
+
+315
+00:11:44,480 --> 00:11:46,320
+trying to say is it's the full
+
+316
+00:11:46,320 --> 00:11:49,040
+serialization of the state. We talked
+
+317
+00:11:49,040 --> 00:11:50,800
+about this determine next step being
+
+318
+00:11:50,800 --> 00:11:53,760
+completely stateless. Yeah. Context that
+
+319
+00:11:53,760 --> 00:11:55,519
+you're putting into it. Somehow you turn
+
+320
+00:11:55,519 --> 00:11:58,240
+that context into a where are you going
+
+321
+00:11:58,240 --> 00:12:00,160
+to the whiteboard? Someow you're going
+
+322
+00:12:00,160 --> 00:12:02,640
+to turn that context into a string.
+
+323
+00:12:02,640 --> 00:12:03,959
+Somehow you're going to include
+
+324
+00:12:03,959 --> 00:12:06,320
+instructions for what you want the model
+
+325
+00:12:06,320 --> 00:12:09,120
+to do. Somehow you're going to model the
+
+326
+00:12:09,120 --> 00:12:11,720
+exact outputs you want the model to
+
+327
+00:12:11,720 --> 00:12:16,160
+output. All of those things together are
+
+328
+00:12:16,160 --> 00:12:18,639
+the prompt. It is not individualistic.
+
+329
+00:12:18,639 --> 00:12:20,959
+It is not simply to say exactly what the
+
+330
+00:12:20,959 --> 00:12:22,880
+system prompt is. It is everything
+
+331
+00:12:22,880 --> 00:12:24,800
+together. That is what Dexter is trying
+
+332
+00:12:24,800 --> 00:12:26,399
+to highlight of what the prompt is. And
+
+333
+00:12:26,399 --> 00:12:28,000
+even here where you we're using the word
+
+334
+00:12:28,000 --> 00:12:29,680
+system and user prompt because that's
+
+335
+00:12:29,680 --> 00:12:32,160
+just terminology people have used. You
+
+336
+00:12:32,160 --> 00:12:34,320
+may find that putting the entire context
+
+337
+00:12:34,320 --> 00:12:36,240
+into the pure system prompt is going to
+
+338
+00:12:36,240 --> 00:12:38,160
+get you the best response. You may find
+
+339
+00:12:38,160 --> 00:12:39,839
+putting instructions in the user prompt
+
+340
+00:12:39,839 --> 00:12:42,480
+gets you the best response. Even that
+
+341
+00:12:42,480 --> 00:12:44,399
+itself, whether you use the system
+
+342
+00:12:44,399 --> 00:12:46,639
+prompt or the user prompt or what tokens
+
+343
+00:12:46,639 --> 00:12:48,880
+you're using to represent this
+
+344
+00:12:48,880 --> 00:12:51,519
+dramatically makes a difference. And
+
+345
+00:12:51,519 --> 00:12:53,440
+being aware of that fact of like what
+
+346
+00:12:53,440 --> 00:12:55,600
+you're what you're doing here is somehow
+
+347
+00:12:55,600 --> 00:12:57,200
+you're taking a data model that you have
+
+348
+00:12:57,200 --> 00:12:59,040
+that represents a state that you save in
+
+349
+00:12:59,040 --> 00:13:03,040
+your database and turning it into an API
+
+350
+00:13:03,040 --> 00:13:05,600
+call that matches the best output format
+
+351
+00:13:05,600 --> 00:13:08,399
+that you want somehow. That's and the
+
+352
+00:13:08,399 --> 00:13:11,519
+point and the point is not to kind of
+
+353
+00:13:11,519 --> 00:13:13,440
+say there's a right way to do this or
+
+354
+00:13:13,440 --> 00:13:15,360
+there's a right thing to do here. The
+
+355
+00:13:15,360 --> 00:13:17,040
+point is if you think of this whole
+
+356
+00:13:17,040 --> 00:13:20,800
+thing as just one big string. You can do
+
+357
+00:13:20,800 --> 00:13:23,440
+anything you want with this. And I don't
+
+358
+00:13:23,440 --> 00:13:25,600
+know what the best way to handle the
+
+359
+00:13:25,600 --> 00:13:28,399
+prompt for your specific problem. But I
+
+360
+00:13:28,399 --> 00:13:30,160
+know that if you don't have full control
+
+361
+00:13:30,160 --> 00:13:32,240
+over what goes in there in what order
+
+362
+00:13:32,240 --> 00:13:35,279
+with what special tokens, you may be
+
+363
+00:13:35,279 --> 00:13:38,480
+missing out on optimizations that you
+
+364
+00:13:38,480 --> 00:13:40,720
+could make. And so the more control you
+
+365
+00:13:40,720 --> 00:13:42,320
+have, the more ability you have to
+
+366
+00:13:42,320 --> 00:13:45,200
+customize all of this and to take full
+
+367
+00:13:45,200 --> 00:13:47,519
+control, the more likely you're going to
+
+368
+00:13:47,519 --> 00:13:50,000
+be able to get to the best performance
+
+369
+00:13:50,000 --> 00:13:51,920
+for a given task that a model could get.
+
+370
+00:13:51,920 --> 00:13:53,279
+And that's all that we talk about in
+
+371
+00:13:53,279 --> 00:13:54,880
+this show is how do we get the best
+
+372
+00:13:54,880 --> 00:13:56,399
+possible performance out of today's
+
+373
+00:13:56,399 --> 00:13:59,760
+models. Yeah, that's perfect. Yeah, and
+
+374
+00:13:59,760 --> 00:14:01,279
+we'll get into kind of as the models get
+
+375
+00:14:01,279 --> 00:14:03,279
+smarter as well, but um I'm going to
+
+376
+00:14:03,279 --> 00:14:05,519
+quickly run through the 12 factors as we
+
+377
+00:14:05,519 --> 00:14:07,040
+talk about them and we may pause on a
+
+378
+00:14:07,040 --> 00:14:07,920
+couple of them to go a little bit
+
+379
+00:14:07,920 --> 00:14:10,720
+deeper, but um from there from there
+
+380
+00:14:10,720 --> 00:14:13,120
+we'll get into some code. So, uh number
+
+381
+00:14:13,120 --> 00:14:15,920
+one is like natural language uh becoming
+
+382
+00:14:15,920 --> 00:14:18,000
+tool calls. And this one's really really
+
+383
+00:14:18,000 --> 00:14:20,079
+straightforward, but it's basically, you
+
+384
+00:14:20,079 --> 00:14:22,880
+know, taking words from a human and
+
+385
+00:14:22,880 --> 00:14:25,760
+turning them into JSON. That's all we're
+
+386
+00:14:25,760 --> 00:14:26,800
+going to do. We'll go through this in
+
+387
+00:14:26,800 --> 00:14:29,519
+the in the in in the demo. Uh, but being
+
+388
+00:14:29,519 --> 00:14:32,720
+able to take human human words and turn
+
+389
+00:14:32,720 --> 00:14:35,920
+them into actions in the world.
+
+390
+00:14:35,920 --> 00:14:37,279
+Uh, Carlos has a question. Does that
+
+391
+00:14:37,279 --> 00:14:38,480
+mean ditch the frameworks? We'll talk
+
+392
+00:14:38,480 --> 00:14:40,079
+about we'll talk about frameworks in a
+
+393
+00:14:40,079 --> 00:14:42,800
+second. Yeah, we'll have a second coming
+
+394
+00:14:42,800 --> 00:14:45,199
+out about Nobody here is saying ditch
+
+395
+00:14:45,199 --> 00:14:47,760
+the frameworks. I actually think of a
+
+396
+00:14:47,760 --> 00:14:50,399
+lot of this year as like feature
+
+397
+00:14:50,399 --> 00:14:52,800
+requests or like a letter to the
+
+398
+00:14:52,800 --> 00:14:54,720
+builders of frameworks of like the kinds
+
+399
+00:14:54,720 --> 00:14:56,160
+of control knobs that I think they
+
+400
+00:14:56,160 --> 00:14:58,519
+should be exposing.
+
+401
+00:14:58,519 --> 00:15:00,880
+Um, factor two is own your prompts. This
+
+402
+00:15:00,880 --> 00:15:02,079
+is what we just talked about. Basically,
+
+403
+00:15:02,079 --> 00:15:04,040
+like rather than building abstractions
+
+404
+00:15:04,040 --> 00:15:06,079
+around something that's going to build
+
+405
+00:15:06,079 --> 00:15:07,680
+you a great prompt, you can hit a
+
+406
+00:15:07,680 --> 00:15:09,760
+framework like Langchain, like Crua,
+
+407
+00:15:09,760 --> 00:15:11,440
+they all have really, really good prompt
+
+408
+00:15:11,440 --> 00:15:13,440
+engineering primitives built in. And if
+
+409
+00:15:13,440 --> 00:15:14,800
+you're not a good prompt engineer like
+
+410
+00:15:14,800 --> 00:15:16,800
+me, I'm a shitty prompt engineer. You'll
+
+411
+00:15:16,800 --> 00:15:18,480
+you'll see Fibb shout at me for my
+
+412
+00:15:18,480 --> 00:15:21,440
+prompts later today. Uh you can turn
+
+413
+00:15:21,440 --> 00:15:24,079
+some like highle sentences into a banger
+
+414
+00:15:24,079 --> 00:15:25,920
+prompt, which like you'd need months to
+
+415
+00:15:25,920 --> 00:15:27,519
+go to prompt school to learn. I don't
+
+416
+00:15:27,519 --> 00:15:28,959
+know if there's a prompt school, but bye
+
+417
+00:15:28,959 --> 00:15:30,240
+Bob if you're thinking of other schools
+
+418
+00:15:30,240 --> 00:15:33,519
+to do. Um
+
+419
+00:15:33,519 --> 00:15:35,320
+uh but
+
+420
+00:15:35,320 --> 00:15:37,760
+eventually like with the blackbox,
+
+421
+00:15:37,760 --> 00:15:38,639
+you're going to hit the limits and
+
+422
+00:15:38,639 --> 00:15:39,760
+you're going to be reverse engineering.
+
+423
+00:15:39,760 --> 00:15:41,199
+Okay, how does this prompt get built and
+
+424
+00:15:41,199 --> 00:15:42,639
+how do I flip these tokens around so
+
+425
+00:15:42,639 --> 00:15:44,000
+that it happens in the order that I
+
+426
+00:15:44,000 --> 00:15:45,519
+think is actually going to be better?
+
+427
+00:15:45,519 --> 00:15:46,959
+And so at the end of the day, it's
+
+428
+00:15:46,959 --> 00:15:49,440
+really just worth like full ownership.
+
+429
+00:15:49,440 --> 00:15:51,199
+Yeah, it's just like any it's not an
+
+430
+00:15:51,199 --> 00:15:52,399
+additional framework, but you really
+
+431
+00:15:52,399 --> 00:15:54,240
+want you don't you probably don't want
+
+432
+00:15:54,240 --> 00:15:56,560
+to build a prompt from raw strings on
+
+433
+00:15:56,560 --> 00:15:58,880
+your own, but you also don't want a
+
+434
+00:15:58,880 --> 00:16:00,480
+framework that makes it harder for you
+
+435
+00:16:00,480 --> 00:16:03,279
+to own the prompt. That's really what I
+
+436
+00:16:03,279 --> 00:16:05,199
+would look for. like how closely do you
+
+437
+00:16:05,199 --> 00:16:07,279
+own the prompt and how much control do
+
+438
+00:16:07,279 --> 00:16:09,920
+you have over the final prompt that is
+
+439
+00:16:09,920 --> 00:16:12,560
+being sent out? Yeah. And again, this is
+
+440
+00:16:12,560 --> 00:16:13,839
+I don't know what's better, but I know
+
+441
+00:16:13,839 --> 00:16:15,600
+you want to be able to try everything.
+
+442
+00:16:15,600 --> 00:16:17,120
+Yeah.
+
+443
+00:16:17,120 --> 00:16:19,040
+Um, cool. The other one is own your
+
+444
+00:16:19,040 --> 00:16:20,560
+context building. This is you know when
+
+445
+00:16:20,560 --> 00:16:23,040
+we say prompt like this is a kind of a
+
+446
+00:16:23,040 --> 00:16:24,399
+subset of that but it's a very
+
+447
+00:16:24,399 --> 00:16:26,639
+specialized one because I think a lot of
+
+448
+00:16:26,639 --> 00:16:29,440
+people uh think of tool calling and
+
+449
+00:16:29,440 --> 00:16:30,880
+context building as separate from
+
+450
+00:16:30,880 --> 00:16:33,120
+prompting but it's all just tokens going
+
+451
+00:16:33,120 --> 00:16:34,800
+into the model. So if you want to use
+
+452
+00:16:34,800 --> 00:16:37,040
+the standard format of like system user
+
+453
+00:16:37,040 --> 00:16:39,600
+assistant tool assistant tool and like
+
+454
+00:16:39,600 --> 00:16:41,199
+you're giving it back and forth in this
+
+455
+00:16:41,199 --> 00:16:43,680
+official format you could do that. But
+
+456
+00:16:43,680 --> 00:16:45,040
+in this moment when you're giving the
+
+457
+00:16:45,040 --> 00:16:48,959
+model a prompt, your only job is to tell
+
+458
+00:16:48,959 --> 00:16:51,040
+the model what happened so far and ask
+
+459
+00:16:51,040 --> 00:16:52,880
+it what the next step should be. And you
+
+460
+00:16:52,880 --> 00:16:54,720
+can put all of the events of like, hey,
+
+461
+00:16:54,720 --> 00:16:56,240
+what's the weather in Tokyo? Hey, we did
+
+462
+00:16:56,240 --> 00:16:58,079
+a check weather call. Hey, we got a
+
+463
+00:16:58,079 --> 00:16:59,920
+response. Ask the next step. And then we
+
+464
+00:16:59,920 --> 00:17:01,839
+would probably get our final answer. You
+
+465
+00:17:01,839 --> 00:17:03,519
+can do that all in one user message if
+
+466
+00:17:03,519 --> 00:17:05,199
+it works better. And I don't know what's
+
+467
+00:17:05,199 --> 00:17:07,799
+better. Every model is a tool calling
+
+468
+00:17:07,799 --> 00:17:10,319
+model is the way to think about it. As
+
+469
+00:17:10,319 --> 00:17:11,919
+long as you can describe your tools in a
+
+470
+00:17:11,919 --> 00:17:13,039
+good way.
+
+471
+00:17:13,039 --> 00:17:17,039
+Yes, exactly. Um, tools are just
+
+472
+00:17:17,039 --> 00:17:18,319
+structured output. We're going to these
+
+473
+00:17:18,319 --> 00:17:19,679
+are a lot of these are clearly like
+
+474
+00:17:19,679 --> 00:17:21,919
+related and and come together. Um, but
+
+475
+00:17:21,919 --> 00:17:23,600
+whether you're telling OpenAI with a
+
+476
+00:17:23,600 --> 00:17:27,199
+JSON schema to output certain tool to
+
+477
+00:17:27,199 --> 00:17:29,520
+output a function call to a certain
+
+478
+00:17:29,520 --> 00:17:31,600
+function or you're using something like
+
+479
+00:17:31,600 --> 00:17:34,520
+BAML to just ask it to output JSON
+
+480
+00:17:34,520 --> 00:17:37,919
+plane. Um it's all just part of the
+
+481
+00:17:37,919 --> 00:17:39,440
+prompt and then what you do with the
+
+482
+00:17:39,440 --> 00:17:41,039
+output and parsing it and turning it
+
+483
+00:17:41,039 --> 00:17:43,039
+into structured data for your model to
+
+484
+00:17:43,039 --> 00:17:46,799
+use. Um let's find this one. Yeah. So
+
+485
+00:17:46,799 --> 00:17:48,480
+all you have to do is get JSON out of
+
+486
+00:17:48,480 --> 00:17:52,000
+the model. And so thinking about this in
+
+487
+00:17:52,000 --> 00:17:53,440
+terms of special tools or special
+
+488
+00:17:53,440 --> 00:17:56,000
+functions is is can be can be sometimes
+
+489
+00:17:56,000 --> 00:17:58,320
+a little bit uh counterproductive. Yeah.
+
+490
+00:17:58,320 --> 00:17:59,760
+Instead of calling a tool, it's just
+
+491
+00:17:59,760 --> 00:18:01,600
+honestly way easier to say it's a type
+
+492
+00:18:01,600 --> 00:18:03,039
+that I want the model to produce. I want
+
+493
+00:18:03,039 --> 00:18:04,720
+the model to return a class. I want the
+
+494
+00:18:04,720 --> 00:18:06,640
+model to return an array instead of
+
+495
+00:18:06,640 --> 00:18:08,320
+using the special word tool because we
+
+496
+00:18:08,320 --> 00:18:09,919
+have tooling for all the other things
+
+497
+00:18:09,919 --> 00:18:14,080
+pipe systems in the past. Yep. Um, cool.
+
+498
+00:18:14,080 --> 00:18:16,320
+Here's another one. Uh, unify execution
+
+499
+00:18:16,320 --> 00:18:17,840
+state and business state. I'm actually
+
+500
+00:18:17,840 --> 00:18:19,600
+going to do the animation for this one.
+
+501
+00:18:19,600 --> 00:18:22,720
+Um but basically you know as you are
+
+502
+00:18:22,720 --> 00:18:24,480
+iterating through this flow and you have
+
+503
+00:18:24,480 --> 00:18:27,120
+your different JSON outputs um being
+
+504
+00:18:27,120 --> 00:18:29,919
+able to serialize what's happened so far
+
+505
+00:18:29,919 --> 00:18:31,440
+your context window that you're passing
+
+506
+00:18:31,440 --> 00:18:33,559
+into the model
+
+507
+00:18:33,559 --> 00:18:36,799
+um is not just like the business state
+
+508
+00:18:36,799 --> 00:18:38,320
+of what is the model thinking about and
+
+509
+00:18:38,320 --> 00:18:42,160
+what the logic is but you can if you can
+
+510
+00:18:42,160 --> 00:18:44,720
+you should trivially like make the
+
+511
+00:18:44,720 --> 00:18:46,799
+context window itself be a
+
+512
+00:18:46,799 --> 00:18:48,640
+representation of your execution state
+
+513
+00:18:48,640 --> 00:18:50,480
+as Well, a lot of these frameworks like
+
+514
+00:18:50,480 --> 00:18:53,600
+uh if you look at something like um lang
+
+515
+00:18:53,600 --> 00:18:55,679
+graph which I I think is very good for a
+
+516
+00:18:55,679 --> 00:18:57,440
+lot of reasons but you have kind of two
+
+517
+00:18:57,440 --> 00:18:59,520
+states here. You have the graph state
+
+518
+00:18:59,520 --> 00:19:02,880
+and then you have the like uh like the
+
+519
+00:19:02,880 --> 00:19:04,400
+object that flow you have your business
+
+520
+00:19:04,400 --> 00:19:05,760
+state right you have like the object
+
+521
+00:19:05,760 --> 00:19:07,919
+that flows through the graph and this is
+
+522
+00:19:07,919 --> 00:19:10,240
+usually like some strruct that is just
+
+523
+00:19:10,240 --> 00:19:12,320
+like messages and it's a list of
+
+524
+00:19:12,320 --> 00:19:13,840
+messages and you can store other things
+
+525
+00:19:13,840 --> 00:19:15,520
+on here as well like you know pending
+
+526
+00:19:15,520 --> 00:19:18,520
+tool calls or something like that.
+
+527
+00:19:18,520 --> 00:19:21,120
+Um, but basically your like business
+
+528
+00:19:21,120 --> 00:19:23,440
+state of what what the model operates on
+
+529
+00:19:23,440 --> 00:19:25,679
+is separate from this big I don't have a
+
+530
+00:19:25,679 --> 00:19:27,200
+screenshot of it, but there's this huge
+
+531
+00:19:27,200 --> 00:19:28,960
+like a bunch of tables that go into
+
+532
+00:19:28,960 --> 00:19:31,360
+SQLite or Postgress or whatever it is
+
+533
+00:19:31,360 --> 00:19:33,280
+that kind of outline every single step
+
+534
+00:19:33,280 --> 00:19:35,600
+that's been taken. If you can unify
+
+535
+00:19:35,600 --> 00:19:36,960
+these things, you're going to simplify a
+
+536
+00:19:36,960 --> 00:19:39,039
+lot. There may still be reasons to have
+
+537
+00:19:39,039 --> 00:19:41,280
+this. And this gets back into like own
+
+538
+00:19:41,280 --> 00:19:42,880
+your context window. If you have an
+
+539
+00:19:42,880 --> 00:19:46,160
+object that you control that tracks like
+
+540
+00:19:46,160 --> 00:19:48,240
+the state of your application, you can
+
+541
+00:19:48,240 --> 00:19:50,080
+put methods on it that tell, hey, when
+
+542
+00:19:50,080 --> 00:19:51,679
+we send to the model, just send it this
+
+543
+00:19:51,679 --> 00:19:53,200
+way, like here's how you serialize this
+
+544
+00:19:53,200 --> 00:19:55,120
+for the LM versus here's how you
+
+545
+00:19:55,120 --> 00:19:57,600
+serialize this for rag versus here's how
+
+546
+00:19:57,600 --> 00:19:59,360
+you actually like use this to pump the
+
+547
+00:19:59,360 --> 00:20:02,480
+execution state. Um so it's again it's
+
+548
+00:20:02,480 --> 00:20:04,480
+all about control but if you unify those
+
+549
+00:20:04,480 --> 00:20:06,400
+things then you can get uh you can get a
+
+550
+00:20:06,400 --> 00:20:08,080
+lot of simplicity and you can get this
+
+551
+00:20:08,080 --> 00:20:09,440
+is what a lot of people are doing in
+
+552
+00:20:09,440 --> 00:20:12,000
+terms of just like I think building AI
+
+553
+00:20:12,000 --> 00:20:13,919
+agents in production. Go ahead. The best
+
+554
+00:20:13,919 --> 00:20:16,000
+analogy for this kind of stuff is I
+
+555
+00:20:16,000 --> 00:20:16,960
+don't know if any of you have ever
+
+556
+00:20:16,960 --> 00:20:18,240
+worked on like massively online
+
+557
+00:20:18,240 --> 00:20:20,720
+multiplayer games, but like the way you
+
+558
+00:20:20,720 --> 00:20:22,400
+build these systems is that they're
+
+559
+00:20:22,400 --> 00:20:24,880
+built to have a unified state of source
+
+560
+00:20:24,880 --> 00:20:27,520
+of tree and then you basically use that
+
+561
+00:20:27,520 --> 00:20:31,510
+everyone views and renders.
+
+562
+00:20:32,950 --> 00:20:32,960
+You view that as the thing that everyone
+
+563
+00:20:32,960 --> 00:20:34,799
+that builds and renders and that's just
+
+564
+00:20:34,799 --> 00:20:36,960
+the easiest. If you have like seven
+
+565
+00:20:36,960 --> 00:20:38,159
+different objects that reference the
+
+566
+00:20:38,159 --> 00:20:40,159
+source of truth, you have discrepancies,
+
+567
+00:20:40,159 --> 00:20:41,919
+you have untruths and you you have a
+
+568
+00:20:41,919 --> 00:20:44,799
+really hard time representing the data.
+
+569
+00:20:44,799 --> 00:20:47,120
+But if you have a single state,
+
+570
+00:20:47,120 --> 00:20:49,280
+debugging and everything else building,
+
+571
+00:20:49,280 --> 00:20:50,880
+maintaining our systems becomes a lot
+
+572
+00:20:50,880 --> 00:20:52,720
+easier and that simplicity is really
+
+573
+00:20:52,720 --> 00:20:56,799
+really important. Yeah, nailed it. Um,
+
+574
+00:20:56,799 --> 00:20:58,320
+cool. We're gonna keep running again.
+
+575
+00:20:58,320 --> 00:21:00,880
+Uh, what this lets you do is you can
+
+576
+00:21:00,880 --> 00:21:03,320
+pause and resume with like very simple
+
+577
+00:21:03,320 --> 00:21:06,480
+APIs. So as you're running through this
+
+578
+00:21:06,480 --> 00:21:08,559
+workflow and your model is maybe you
+
+579
+00:21:08,559 --> 00:21:10,679
+know you launch a workflow over rest or
+
+580
+00:21:10,679 --> 00:21:13,360
+MCP and that causes some kind of context
+
+581
+00:21:13,360 --> 00:21:15,360
+to be input into the model maybe it
+
+582
+00:21:15,360 --> 00:21:17,200
+calls a longunning tool and you need to
+
+583
+00:21:17,200 --> 00:21:18,880
+kind of like interrupt or pause your
+
+584
+00:21:18,880 --> 00:21:21,120
+workflow that's great store your context
+
+585
+00:21:21,120 --> 00:21:22,880
+in the database and the fact that you've
+
+586
+00:21:22,880 --> 00:21:25,520
+most recently called a longunning tool
+
+587
+00:21:25,520 --> 00:21:28,480
+and then basically when the job is
+
+588
+00:21:28,480 --> 00:21:30,720
+finished you would post a web hook back
+
+589
+00:21:30,720 --> 00:21:32,320
+use that to pull the state out of the
+
+590
+00:21:32,320 --> 00:21:34,400
+database and then take the result and
+
+591
+00:21:34,400 --> 00:21:36,320
+push it onto the thing and send it back
+
+592
+00:21:36,320 --> 00:21:37,840
+into the model. Man, I wish that thing
+
+593
+00:21:37,840 --> 00:21:41,280
+paused. I think this is it. Yeah. So,
+
+594
+00:21:41,280 --> 00:21:43,039
+essentially like resume later using a
+
+595
+00:21:43,039 --> 00:21:44,640
+state ID that tells it how to pull the
+
+596
+00:21:44,640 --> 00:21:46,320
+context out of the database and then you
+
+597
+00:21:46,320 --> 00:21:48,480
+take the job result. And so you can
+
+598
+00:21:48,480 --> 00:21:50,400
+build if you own this logic here, this
+
+599
+00:21:50,400 --> 00:21:52,559
+API endpoint, you can catch a web hook,
+
+600
+00:21:52,559 --> 00:21:54,480
+you can reassemble the context from the
+
+601
+00:21:54,480 --> 00:21:56,480
+past, you can append the result to it,
+
+602
+00:21:56,480 --> 00:21:58,159
+push it right back into the model, and
+
+603
+00:21:58,159 --> 00:22:00,559
+there's no other execution system.
+
+604
+00:22:00,559 --> 00:22:02,240
+There's no, you know, distributed
+
+605
+00:22:02,240 --> 00:22:04,000
+workflow system that you also have to go
+
+606
+00:22:04,000 --> 00:22:05,600
+integrate into because all we care about
+
+607
+00:22:05,600 --> 00:22:08,080
+is our context window. Exactly. And
+
+608
+00:22:08,080 --> 00:22:09,840
+because it's a stateless function, it
+
+609
+00:22:09,840 --> 00:22:11,360
+doesn't matter. It's really easy to make
+
+610
+00:22:11,360 --> 00:22:13,919
+everything work. Yeah. LMS are
+
+611
+00:22:13,919 --> 00:22:15,440
+stateless. The only Yeah. The only state
+
+612
+00:22:15,440 --> 00:22:17,039
+is basically this context window, which
+
+613
+00:22:17,039 --> 00:22:18,159
+is also nice because it's very
+
+614
+00:22:18,159 --> 00:22:19,679
+inspectable. Like as a human, you can
+
+615
+00:22:19,679 --> 00:22:21,039
+look at it and see, okay, here's what's
+
+616
+00:22:21,039 --> 00:22:22,240
+happening. Here's where it got stuck.
+
+617
+00:22:22,240 --> 00:22:23,679
+Here's where it's looping on an error,
+
+618
+00:22:23,679 --> 00:22:25,360
+whatever it is. Exactly. And as a
+
+619
+00:22:25,360 --> 00:22:26,720
+developer, that means you can build UIs
+
+620
+00:22:26,720 --> 00:22:28,320
+for your tool, for your customers as
+
+621
+00:22:28,320 --> 00:22:30,000
+well to see exactly what's happening on
+
+622
+00:22:30,000 --> 00:22:33,679
+a long running async task. Yeah. Um,
+
+623
+00:22:33,679 --> 00:22:35,280
+this one's subtle. I think we could do a
+
+624
+00:22:35,280 --> 00:22:38,799
+whole 20 minute on just this one. But um
+
+625
+00:22:38,799 --> 00:22:41,039
+basically when a model is making a
+
+626
+00:22:41,039 --> 00:22:43,120
+decision about whether to output a tool
+
+627
+00:22:43,120 --> 00:22:46,559
+call or whether to output plain text,
+
+628
+00:22:46,559 --> 00:22:48,720
+there's like a very very like
+
+629
+00:22:48,720 --> 00:22:51,679
+highweighted like token choice which is
+
+630
+00:22:51,679 --> 00:22:54,320
+like the JSON token or the I'm going to
+
+631
+00:22:54,320 --> 00:22:57,240
+contact a human token
+
+632
+00:22:57,240 --> 00:22:59,919
+um and or sorry not contacting you but
+
+633
+00:22:59,919 --> 00:23:01,520
+I'm gonna output my answer that goes to
+
+634
+00:23:01,520 --> 00:23:04,400
+the chat UI or wherever wherever it is.
+
+635
+00:23:04,400 --> 00:23:06,240
+And um what I've seen a lot of people
+
+636
+00:23:06,240 --> 00:23:08,480
+doing is one there are different reasons
+
+637
+00:23:08,480 --> 00:23:10,320
+you might want to send a note to a human
+
+638
+00:23:10,320 --> 00:23:11,360
+whether it's like requesting
+
+639
+00:23:11,360 --> 00:23:13,840
+clarification or a final answer. And
+
+640
+00:23:13,840 --> 00:23:16,640
+there's also different like types of
+
+641
+00:23:16,640 --> 00:23:19,440
+humans a model might want to contact.
+
+642
+00:23:19,440 --> 00:23:22,400
+And if you want like better AI
+
+643
+00:23:22,400 --> 00:23:24,080
+experiences you need something you need
+
+644
+00:23:24,080 --> 00:23:26,320
+to give the model the option to involve
+
+645
+00:23:26,320 --> 00:23:28,240
+multiple players. And so you have
+
+646
+00:23:28,240 --> 00:23:29,840
+standard tool calls like call a function
+
+647
+00:23:29,840 --> 00:23:31,679
+that's deterministic, but then you
+
+648
+00:23:31,679 --> 00:23:33,200
+basically are having the model declare
+
+649
+00:23:33,200 --> 00:23:36,000
+its intent before it goes in. So it's
+
+650
+00:23:36,000 --> 00:23:38,080
+always outputting JSON. And you have a
+
+651
+00:23:38,080 --> 00:23:42,000
+little bit more um focus on basically
+
+652
+00:23:42,000 --> 00:23:45,200
+this this string of what do we want to
+
+653
+00:23:45,200 --> 00:23:48,080
+do next versus do I want to call a tool
+
+654
+00:23:48,080 --> 00:23:49,840
+or or say something to a human. Does
+
+655
+00:23:49,840 --> 00:23:51,679
+that make sense? I think you're saying
+
+656
+00:23:51,679 --> 00:23:52,799
+almost the right thing. And just like
+
+657
+00:23:52,799 --> 00:23:54,159
+really clarify, I know we keep saying
+
+658
+00:23:54,159 --> 00:23:55,679
+like JSON. What we really mean is we
+
+659
+00:23:55,679 --> 00:23:57,200
+just we're just outputting some specific
+
+660
+00:23:57,200 --> 00:23:58,799
+structure that we want. There's many
+
+661
+00:23:58,799 --> 00:24:01,039
+ways to do the structure. Yeah. Like
+
+662
+00:24:01,039 --> 00:24:02,640
+JSON is one technique that a lot of
+
+663
+00:24:02,640 --> 00:24:04,400
+people know commonly, but there are
+
+664
+00:24:04,400 --> 00:24:05,440
+other techniques that can make it
+
+665
+00:24:05,440 --> 00:24:06,799
+better. But I think what like
+
+666
+00:24:06,799 --> 00:24:08,640
+representing everything with as a tool
+
+667
+00:24:08,640 --> 00:24:11,279
+of like intent and giving the model some
+
+668
+00:24:11,279 --> 00:24:14,480
+way to go do that, then definitely yes.
+
+669
+00:24:14,480 --> 00:24:17,200
+Yeah. Cool. And there's no such Carlos
+
+670
+00:24:17,200 --> 00:24:18,799
+as a great question. Can a human be a
+
+671
+00:24:18,799 --> 00:24:21,120
+tool? So it's universal. There's no such
+
+672
+00:24:21,120 --> 00:24:23,200
+thing as universality with the world of
+
+673
+00:24:23,200 --> 00:24:26,400
+LMS. There's no when when you go to
+
+674
+00:24:26,400 --> 00:24:28,720
+Google search and when I search for like
+
+675
+00:24:28,720 --> 00:24:30,320
+how do I print a string, how do I do
+
+676
+00:24:30,320 --> 00:24:32,640
+like a print statement, I use a lot of
+
+677
+00:24:32,640 --> 00:24:34,960
+Rust code. Google will show me mostly
+
+678
+00:24:34,960 --> 00:24:37,360
+Rust results. When when someone
+
+679
+00:24:37,360 --> 00:24:38,720
+anonymous goes and search, it'll
+
+680
+00:24:38,720 --> 00:24:40,960
+probably show them Python or JavaScript.
+
+681
+00:24:40,960 --> 00:24:43,200
+There's no universality. And for your
+
+682
+00:24:43,200 --> 00:24:45,520
+users and your tooling, you might be
+
+683
+00:24:45,520 --> 00:24:47,120
+using the most average tool. So maybe we
+
+684
+00:24:47,120 --> 00:24:48,960
+can just call it a human. But the more
+
+685
+00:24:48,960 --> 00:24:50,559
+specific you can make it, the more
+
+686
+00:24:50,559 --> 00:24:52,320
+control that you are taking over your
+
+687
+00:24:52,320 --> 00:24:54,240
+system, the more accurate and a better
+
+688
+00:24:54,240 --> 00:24:57,360
+experience you'll provide to your users.
+
+689
+00:24:57,360 --> 00:24:58,720
+But it's all about testing and
+
+690
+00:24:58,720 --> 00:25:00,520
+iterating.
+
+691
+00:25:00,520 --> 00:25:04,480
+Anyone the best tool is is probably not
+
+692
+00:25:04,480 --> 00:25:06,000
+correct because they just don't have the
+
+693
+00:25:06,000 --> 00:25:09,520
+data for your use case. Okay, we got
+
+694
+00:25:09,520 --> 00:25:10,720
+five more minutes for slides and then
+
+695
+00:25:10,720 --> 00:25:11,679
+we're going to jump into code. So, I'm
+
+696
+00:25:11,679 --> 00:25:13,480
+going to fly through some more of these.
+
+697
+00:25:13,480 --> 00:25:16,320
+Um, control flow. I mean, we we've kind
+
+698
+00:25:16,320 --> 00:25:18,000
+of hinted on this a lot, but basically,
+
+699
+00:25:18,000 --> 00:25:20,320
+if you own your control flow, if you own
+
+700
+00:25:20,320 --> 00:25:22,320
+that switch statement, you can decide
+
+701
+00:25:22,320 --> 00:25:24,400
+when to break out into another workflow,
+
+702
+00:25:24,400 --> 00:25:26,799
+when to pause and resume later, when
+
+703
+00:25:26,799 --> 00:25:28,320
+these are all kind of like complement
+
+704
+00:25:28,320 --> 00:25:29,840
+each other. But the idea is you can pick
+
+705
+00:25:29,840 --> 00:25:31,279
+two or three of them at a time and start
+
+706
+00:25:31,279 --> 00:25:34,080
+incorporating them. And so, if you own
+
+707
+00:25:34,080 --> 00:25:36,000
+the switch statement, you can insert
+
+708
+00:25:36,000 --> 00:25:38,799
+little like modes to summarize things or
+
+709
+00:25:38,799 --> 00:25:40,799
+add an LLM as a judge to break out and
+
+710
+00:25:40,799 --> 00:25:42,480
+bring things back in. You can pause and
+
+711
+00:25:42,480 --> 00:25:43,840
+do something asynchronous and then
+
+712
+00:25:43,840 --> 00:25:46,080
+resume later. So this is this is kind of
+
+713
+00:25:46,080 --> 00:25:47,679
+we've gone over this one a little bit.
+
+714
+00:25:47,679 --> 00:25:49,840
+Another thing that I think I is is worth
+
+715
+00:25:49,840 --> 00:25:51,520
+mentioning is this like adding errors
+
+716
+00:25:51,520 --> 00:25:53,840
+onto the context window. If a model
+
+717
+00:25:53,840 --> 00:25:56,400
+calls a tool and that tool is bad,
+
+718
+00:25:56,400 --> 00:25:58,480
+either the API is down or it used bad
+
+719
+00:25:58,480 --> 00:26:01,919
+parameters or whatever it is. Um let's
+
+720
+00:26:01,919 --> 00:26:04,400
+say that result caused an error. We can
+
+721
+00:26:04,400 --> 00:26:05,919
+put that on the context window and hand
+
+722
+00:26:05,919 --> 00:26:08,720
+it back to the LLM and have it say like
+
+723
+00:26:08,720 --> 00:26:09,799
+let's try
+
+724
+00:26:09,799 --> 00:26:12,480
+again. And then maybe that will give it
+
+725
+00:26:12,480 --> 00:26:14,840
+enough to get to success. super s simple
+
+726
+00:26:14,840 --> 00:26:17,360
+concept. Almost every framework already
+
+727
+00:26:17,360 --> 00:26:19,840
+does this. Um, but that's another
+
+728
+00:26:19,840 --> 00:26:21,559
+interesting one that we talk about a
+
+729
+00:26:21,559 --> 00:26:24,080
+lot. Uh, the next one is kind of small
+
+730
+00:26:24,080 --> 00:26:26,159
+focused agents. Again, the longer and
+
+731
+00:26:26,159 --> 00:26:29,200
+bigger you have this like workflow owned
+
+732
+00:26:29,200 --> 00:26:31,039
+by the agent. Um, the more tools you
+
+733
+00:26:31,039 --> 00:26:32,320
+have and the more steps you have, the
+
+734
+00:26:32,320 --> 00:26:33,600
+more likely this thing's going to spin
+
+735
+00:26:33,600 --> 00:26:35,600
+out and fail. Uh, you may say like,
+
+736
+00:26:35,600 --> 00:26:37,600
+well, what if the agents get smarter?
+
+737
+00:26:37,600 --> 00:26:39,360
+Um, this is kind of how I see all this
+
+738
+00:26:39,360 --> 00:26:41,200
+progressing where you have a fully
+
+739
+00:26:41,200 --> 00:26:43,279
+deterministic workflow. You replace
+
+740
+00:26:43,279 --> 00:26:45,039
+small parts of it with agents and then
+
+741
+00:26:45,039 --> 00:26:47,600
+over time you can get bigger and more
+
+742
+00:26:47,600 --> 00:26:48,960
+interesting agents and they start to
+
+743
+00:26:48,960 --> 00:26:52,080
+overlap and maybe in a couple years say
+
+744
+00:26:52,080 --> 00:26:55,200
+what and I think this point what Dexter
+
+745
+00:26:55,200 --> 00:26:58,080
+is saying is that like when when these
+
+746
+00:26:58,080 --> 00:27:00,880
+principles that we're sharing here are
+
+747
+00:27:00,880 --> 00:27:03,120
+not just about like models getting
+
+748
+00:27:03,120 --> 00:27:04,960
+better like Sam Alman might tell you
+
+749
+00:27:04,960 --> 00:27:06,320
+that we have to go wait for the better
+
+750
+00:27:06,320 --> 00:27:08,640
+model it's going to go do everything but
+
+751
+00:27:08,640 --> 00:27:10,640
+that just means that the box gets bigger
+
+752
+00:27:10,640 --> 00:27:13,039
+like this visualization shows.
+
+753
+00:27:13,039 --> 00:27:15,200
+Yeah. And I think remove the need for
+
+754
+00:27:15,200 --> 00:27:18,799
+the box. Yeah. And I think even as the
+
+755
+00:27:18,799 --> 00:27:20,799
+as the models get smarter and you can
+
+756
+00:27:20,799 --> 00:27:22,840
+get better results with less
+
+757
+00:27:22,840 --> 00:27:25,039
+engineering, there will always be tips
+
+758
+00:27:25,039 --> 00:27:26,960
+and tricks that will help you get more
+
+759
+00:27:26,960 --> 00:27:29,600
+out of a given model. And I think the
+
+760
+00:27:29,600 --> 00:27:32,000
+Notebook LM team put this really well. I
+
+761
+00:27:32,000 --> 00:27:33,360
+haven't seen anything on Notebook LM in
+
+762
+00:27:33,360 --> 00:27:34,720
+a while, but when they launched it was
+
+763
+00:27:34,720 --> 00:27:37,520
+super popular. And the reason why it was
+
+764
+00:27:37,520 --> 00:27:40,080
+is because in their own words, the only
+
+765
+00:27:40,080 --> 00:27:42,159
+way to create really impressive or even
+
+766
+00:27:42,159 --> 00:27:45,360
+like magical experiences in AI is to
+
+767
+00:27:45,360 --> 00:27:47,279
+find something that is right at the
+
+768
+00:27:47,279 --> 00:27:50,240
+boundary of what the model is capable of
+
+769
+00:27:50,240 --> 00:27:53,200
+and get it right consistently. And so
+
+770
+00:27:53,200 --> 00:27:54,640
+even as the model gets smarter and you
+
+771
+00:27:54,640 --> 00:27:56,000
+don't need to do so much engineering, if
+
+772
+00:27:56,000 --> 00:27:58,320
+you want to do something that is 10x
+
+773
+00:27:58,320 --> 00:28:00,240
+better than what already exists, you are
+
+774
+00:28:00,240 --> 00:28:01,840
+going to want to do some engineering and
+
+775
+00:28:01,840 --> 00:28:04,159
+you want to have the flexibility to to
+
+776
+00:28:04,159 --> 00:28:06,000
+be intentional about this. And to give
+
+777
+00:28:06,000 --> 00:28:07,520
+everyone like an analogy that I think is
+
+778
+00:28:07,520 --> 00:28:10,320
+relevant to like current software is
+
+779
+00:28:10,320 --> 00:28:12,159
+technically most websites are really
+
+780
+00:28:12,159 --> 00:28:14,640
+just the same thing the different views
+
+781
+00:28:14,640 --> 00:28:17,440
+on similar databases.
+
+782
+00:28:17,440 --> 00:28:19,279
+the way people interface with it makes a
+
+783
+00:28:19,279 --> 00:28:22,240
+huge difference and because it just way
+
+784
+00:28:22,240 --> 00:28:25,200
+that you re like react to a site and the
+
+785
+00:28:25,200 --> 00:28:27,520
+way that you see the data the same is
+
+786
+00:28:27,520 --> 00:28:30,159
+going to be your agentic systems like
+
+787
+00:28:30,159 --> 00:28:32,559
+we're all using the same models quad
+
+788
+00:28:32,559 --> 00:28:34,480
+code versus cursor they're both using
+
+789
+00:28:34,480 --> 00:28:37,760
+sonet 37 there's no difference it's just
+
+790
+00:28:37,760 --> 00:28:39,840
+the the UX and all the engineering in
+
+791
+00:28:39,840 --> 00:28:43,200
+between exactly that is the only thing
+
+792
+00:28:43,200 --> 00:28:44,880
+so like if you want to make a
+
+793
+00:28:44,880 --> 00:28:46,880
+differentiated product there's no moat
+
+794
+00:28:46,880 --> 00:28:48,080
+and saying, "I'm going to use the best
+
+795
+00:28:48,080 --> 00:28:49,760
+model." Everyone has the best model. You
+
+796
+00:28:49,760 --> 00:28:51,440
+assume that and assume people have a
+
+797
+00:28:51,440 --> 00:28:54,159
+better model than you. Yeah. Make a
+
+798
+00:28:54,159 --> 00:28:55,840
+better product anyway. And do that with
+
+799
+00:28:55,840 --> 00:28:57,399
+engineering.
+
+800
+00:28:57,399 --> 00:28:59,679
+Cool. Um, all right. We're going to
+
+801
+00:28:59,679 --> 00:29:01,039
+speed through the last few of these. So,
+
+802
+00:29:01,039 --> 00:29:02,559
+um, yeah, factor 11. Trigger from
+
+803
+00:29:02,559 --> 00:29:04,320
+anywhere. Meet users where they are. I
+
+804
+00:29:04,320 --> 00:29:07,440
+think, uh, chat GBT is the like geo
+
+805
+00:29:07,440 --> 00:29:10,640
+cities era of like AI UX's. There's
+
+806
+00:29:10,640 --> 00:29:12,080
+going to be a lot better ways to
+
+807
+00:29:12,080 --> 00:29:15,520
+interact with AI. Um, I think a lot of
+
+808
+00:29:15,520 --> 00:29:16,399
+people who are building really
+
+809
+00:29:16,399 --> 00:29:17,919
+impressive things are building AIs that
+
+810
+00:29:17,919 --> 00:29:19,600
+you can interact with fully from your
+
+811
+00:29:19,600 --> 00:29:22,720
+email inbox, from Slack, um, from lots
+
+812
+00:29:22,720 --> 00:29:25,919
+of places beyond just a web application.
+
+813
+00:29:25,919 --> 00:29:27,520
+And this one's a bit of a meme, but it's
+
+814
+00:29:27,520 --> 00:29:29,360
+kind of the the culmination of
+
+815
+00:29:29,360 --> 00:29:30,559
+everything else that we've been talking
+
+816
+00:29:30,559 --> 00:29:33,000
+about, which is, you
+
+817
+00:29:33,000 --> 00:29:36,480
+know, LM are stateless, agents can be
+
+818
+00:29:36,480 --> 00:29:38,159
+stateless, you're just operating on a
+
+819
+00:29:38,159 --> 00:29:40,320
+context window. And uh actually someone
+
+820
+00:29:40,320 --> 00:29:41,520
+commented on LinkedIn. I think it's
+
+821
+00:29:41,520 --> 00:29:43,039
+actually because there's multiple steps.
+
+822
+00:29:43,039 --> 00:29:46,240
+It's a transducer, not a reducer. But uh
+
+823
+00:29:46,240 --> 00:29:48,080
+that's that's kind of a good summary.
+
+824
+00:29:48,080 --> 00:29:50,960
+Maybe. All right. We can get into that
+
+825
+00:29:50,960 --> 00:29:53,279
+one later. One second. I just want to
+
+826
+00:29:53,279 --> 00:29:54,880
+appreciate one thing for everyone. Can
+
+827
+00:29:54,880 --> 00:29:56,720
+we appreciate that the naming that Dex
+
+828
+00:29:56,720 --> 00:30:01,909
+used was hex code? That is amazing.
+
+829
+00:30:03,590 --> 00:30:03,600
+Well, I wanted it to sort. I wanted it
+
+830
+00:30:03,600 --> 00:30:04,960
+to make sure. No, I get it. I get it.
+
+831
+00:30:04,960 --> 00:30:06,320
+So, I want everyone to just appreciate
+
+832
+00:30:06,320 --> 00:30:08,799
+that. All right. quick little thing and
+
+833
+00:30:08,799 --> 00:30:11,120
+then can you go to the to the browser
+
+834
+00:30:11,120 --> 00:30:12,960
+really fast your uh drawing thing I just
+
+835
+00:30:12,960 --> 00:30:15,200
+want to draw the whiteboard yeah someone
+
+836
+00:30:15,200 --> 00:30:16,559
+asked a really good question that I
+
+837
+00:30:16,559 --> 00:30:17,840
+think is relevant and going to help us
+
+838
+00:30:17,840 --> 00:30:20,320
+out so the question someone asked um
+
+839
+00:30:20,320 --> 00:30:21,600
+Jonathan asked like what's the advantage
+
+840
+00:30:21,600 --> 00:30:23,840
+of using small number big agents versus
+
+841
+00:30:23,840 --> 00:30:26,240
+a large number of smaller agents and I
+
+842
+00:30:26,240 --> 00:30:27,520
+think the analogy that everyone should
+
+843
+00:30:27,520 --> 00:30:29,600
+use is that these systems are really
+
+844
+00:30:29,600 --> 00:30:31,520
+about like we these systems are all
+
+845
+00:30:31,520 --> 00:30:34,240
+fallible they fail all the time so let's
+
+846
+00:30:34,240 --> 00:30:35,919
+look at if we use a small number of big
+
+847
+00:30:35,919 --> 00:30:37,600
+agents you end up with a curve curve
+
+848
+00:30:37,600 --> 00:30:39,360
+that looks like this. You have some
+
+849
+00:30:39,360 --> 00:30:41,440
+distribution of how well it works and
+
+850
+00:30:41,440 --> 00:30:43,120
+you have a wider array of things that
+
+851
+00:30:43,120 --> 00:30:44,799
+you might work well on, but you also
+
+852
+00:30:44,799 --> 00:30:46,159
+have a wider array of things you will
+
+853
+00:30:46,159 --> 00:30:48,320
+work poorly on. If you use a large
+
+854
+00:30:48,320 --> 00:30:50,480
+number of small agents, then you
+
+855
+00:30:50,480 --> 00:30:51,919
+basically change the distribution to
+
+856
+00:30:51,919 --> 00:30:54,960
+look like this. You'll work better in
+
+857
+00:30:54,960 --> 00:30:57,320
+certain areas and you may not work as
+
+858
+00:30:57,320 --> 00:30:59,360
+broadly. But if you build it really
+
+859
+00:30:59,360 --> 00:31:02,080
+well, you can actually make a curve. If
+
+860
+00:31:02,080 --> 00:31:03,760
+you the more engineering you put into
+
+861
+00:31:03,760 --> 00:31:05,760
+it, you can basically change that curve
+
+862
+00:31:05,760 --> 00:31:07,279
+into something that looks like this. You
+
+863
+00:31:07,279 --> 00:31:09,960
+can make it wider and taller as you
+
+864
+00:31:09,960 --> 00:31:12,720
+wish. And that's really the difference.
+
+865
+00:31:12,720 --> 00:31:14,159
+It's like the amount of engineering
+
+866
+00:31:14,159 --> 00:31:16,480
+effort you put into it. The orange curve
+
+867
+00:31:16,480 --> 00:31:18,159
+is no engineering effort. Let the model
+
+868
+00:31:18,159 --> 00:31:20,159
+do everything. The green curve is some
+
+869
+00:31:20,159 --> 00:31:22,000
+engineering effort. The red curve or
+
+870
+00:31:22,000 --> 00:31:23,679
+pink curve, I can't see on my screen's
+
+871
+00:31:23,679 --> 00:31:26,880
+pink is is more engineering effort. And
+
+872
+00:31:26,880 --> 00:31:28,399
+that's how you scale up these systems.
+
+873
+00:31:28,399 --> 00:31:29,919
+It's like databases. The way you make a
+
+874
+00:31:29,919 --> 00:31:32,720
+database go scale to like five nines is
+
+875
+00:31:32,720 --> 00:31:35,039
+you just put more engineering behind it.
+
+876
+00:31:35,039 --> 00:31:38,080
+You can make it really damn good. It
+
+877
+00:31:38,080 --> 00:31:41,600
+just uh amount of engineering and same
+
+878
+00:31:41,600 --> 00:31:43,840
+thing is true here. Hopefully it answers
+
+879
+00:31:43,840 --> 00:31:46,080
+Jonathan.
+
+880
+00:31:46,080 --> 00:31:47,600
+Awesome. All right, let's write some
+
+881
+00:31:47,600 --> 00:31:49,200
+code. Let's write some code. This is my
+
+882
+00:31:49,200 --> 00:31:51,760
+favorite part. Um okay, cool. So, uh
+
+883
+00:31:51,760 --> 00:31:54,240
+what I have here is a empty TypeScript
+
+884
+00:31:54,240 --> 00:31:56,240
+project. Um, we're gonna do TypeScript
+
+885
+00:31:56,240 --> 00:31:58,159
+today because I wanted to coin flip and
+
+886
+00:31:58,159 --> 00:31:59,640
+uh we've been doing a lot of Python
+
+887
+00:31:59,640 --> 00:32:04,000
+lately. So, uh, what I'm gonna do is,
+
+888
+00:32:04,000 --> 00:32:06,320
+uh, I'm gonna just start grabbing files,
+
+889
+00:32:06,320 --> 00:32:08,159
+uh, for this walkthrough. We're going to
+
+890
+00:32:08,159 --> 00:32:10,320
+start with just a really simple, uh,
+
+891
+00:32:10,320 --> 00:32:12,880
+hello world. So, literally, here's our
+
+892
+00:32:12,880 --> 00:32:15,760
+script. I can run it with, uh, let make
+
+893
+00:32:15,760 --> 00:32:17,640
+that terminal a little bit
+
+894
+00:32:17,640 --> 00:32:21,279
+bigger. Um, so if I run this script, uh,
+
+895
+00:32:21,279 --> 00:32:23,279
+it just prints hello world, right?
+
+896
+00:32:23,279 --> 00:32:25,519
+Great. We can commit that. That's all
+
+897
+00:32:25,519 --> 00:32:27,880
+we've That's all we've done so
+
+898
+00:32:27,880 --> 00:32:29,640
+far.
+
+899
+00:32:29,640 --> 00:32:32,799
+Um, sorry. Um, the next thing I'm going
+
+900
+00:32:32,799 --> 00:32:35,519
+to do is I'm going to install BAML,
+
+901
+00:32:35,519 --> 00:32:36,640
+which is what we'll be using for
+
+902
+00:32:36,640 --> 00:32:38,240
+prompting our agent and building our
+
+903
+00:32:38,240 --> 00:32:41,279
+determine next step prompt. Um, and
+
+904
+00:32:41,279 --> 00:32:43,360
+there is one default file that comes
+
+905
+00:32:43,360 --> 00:32:45,120
+when you do that BAML in it. That is the
+
+906
+00:32:45,120 --> 00:32:48,080
+resume that I'm going to uh close out.
+
+907
+00:32:48,080 --> 00:32:50,559
+So now we have in our BAML source we
+
+908
+00:32:50,559 --> 00:32:52,000
+have clients which is things that talk
+
+909
+00:32:52,000 --> 00:32:53,840
+to LLMs and then we have generators
+
+910
+00:32:53,840 --> 00:32:56,559
+which is some BAML config. I'm going to
+
+911
+00:32:56,559 --> 00:33:00,240
+write a really simple agent here um that
+
+912
+00:33:00,240 --> 00:33:02,559
+basically just has one tool call which
+
+913
+00:33:02,559 --> 00:33:04,480
+is we'll call it done for now but it's
+
+914
+00:33:04,480 --> 00:33:07,799
+basically respond to the user.
+
+915
+00:33:07,799 --> 00:33:11,279
+Let's yep. So we have a prompt called
+
+916
+00:33:11,279 --> 00:33:14,559
+determine next step. Um, and it is
+
+917
+00:33:14,559 --> 00:33:16,559
+basically can return one type which is
+
+918
+00:33:16,559 --> 00:33:18,320
+done for now where the model will
+
+919
+00:33:18,320 --> 00:33:19,600
+declare its intent and then we'll just
+
+920
+00:33:19,600 --> 00:33:21,279
+get the message that it wants to send.
+
+921
+00:33:21,279 --> 00:33:24,320
+You want to zoom out a little bit? Yeah,
+
+922
+00:33:24,320 --> 00:33:26,720
+there we go. Cool. There we go. And do
+
+923
+00:33:26,720 --> 00:33:28,240
+you want to click on open playground so
+
+924
+00:33:28,240 --> 00:33:29,679
+people can just read the prompt fully
+
+925
+00:33:29,679 --> 00:33:31,279
+for that one test case a little bit
+
+926
+00:33:31,279 --> 00:33:32,720
+better? Yeah. Yeah. Okay. Yeah. There
+
+927
+00:33:32,720 --> 00:33:33,720
+you
+
+928
+00:33:33,720 --> 00:33:37,039
+go. So, um, the system messages you're a
+
+929
+00:33:37,039 --> 00:33:38,399
+helpful assistant. We'll go in and show
+
+930
+00:33:38,399 --> 00:33:40,240
+you how like we'll, as an example, we'll
+
+931
+00:33:40,240 --> 00:33:41,840
+add reasoning and some fancy stuff to
+
+932
+00:33:41,840 --> 00:33:43,279
+this prompt. We'll add more tools and
+
+933
+00:33:43,279 --> 00:33:45,360
+types to it. Um, but you can basically
+
+934
+00:33:45,360 --> 00:33:46,880
+say, hey, you're working on this thread.
+
+935
+00:33:46,880 --> 00:33:48,559
+If we wanted to test this or play with
+
+936
+00:33:48,559 --> 00:33:51,360
+this, um, you know, we can run it and it
+
+937
+00:33:51,360 --> 00:33:52,960
+says, hey, here's our answer. So, if we
+
+938
+00:33:52,960 --> 00:33:54,320
+wanted to give it other instructions
+
+939
+00:33:54,320 --> 00:33:57,600
+like talk like a pirate,
+
+940
+00:33:57,600 --> 00:33:59,600
+save this and we can run it again. And
+
+941
+00:33:59,600 --> 00:34:01,519
+now it's going to talk like a pirate.
+
+942
+00:34:01,519 --> 00:34:03,519
+Great. And I want to highlight this.
+
+943
+00:34:03,519 --> 00:34:05,840
+This is one of your factors. Respond to
+
+944
+00:34:05,840 --> 00:34:08,560
+agents with tools. Instead of having it
+
+945
+00:34:08,560 --> 00:34:10,240
+just respond as a string, we could
+
+946
+00:34:10,240 --> 00:34:11,919
+change the return type of determine next
+
+947
+00:34:11,919 --> 00:34:14,240
+step to not be deter done for now, but
+
+948
+00:34:14,240 --> 00:34:15,919
+instead be a string. Can you make that a
+
+949
+00:34:15,919 --> 00:34:18,760
+string type? And press play. We could do
+
+950
+00:34:18,760 --> 00:34:21,440
+this. Like that's totally a valid way to
+
+951
+00:34:21,440 --> 00:34:25,520
+do this, but by using a tool, we're able
+
+952
+00:34:25,520 --> 00:34:27,679
+to get a couple of wins for users, which
+
+953
+00:34:27,679 --> 00:34:30,240
+is now we can just render the message
+
+954
+00:34:30,240 --> 00:34:35,119
+field to the user. Exactly. Um, so I'm
+
+955
+00:34:35,119 --> 00:34:38,879
+going to generate the uh models for this
+
+956
+00:34:38,879 --> 00:34:42,079
+uh the TypeScript code for this and then
+
+957
+00:34:42,079 --> 00:34:43,839
+I'm going to enable the BAML debug
+
+958
+00:34:43,839 --> 00:34:47,280
+logging and I'm going to add a couple of
+
+959
+00:34:47,280 --> 00:34:50,159
+TypeScript files. So we're going to add
+
+960
+00:34:50,159 --> 00:34:52,879
+we we're going to add a CLI which
+
+961
+00:34:52,879 --> 00:34:54,960
+basically just pulls a user message off
+
+962
+00:34:54,960 --> 00:34:57,040
+the command line, turns it into this
+
+963
+00:34:57,040 --> 00:34:58,960
+thread object that we'll get into a sec
+
+964
+00:34:58,960 --> 00:35:01,520
+and sends it to our agent. And then our
+
+965
+00:35:01,520 --> 00:35:04,680
+index.ts TS is going to call that CLI
+
+966
+00:35:04,680 --> 00:35:07,760
+function. Um, the agent itself is pretty
+
+967
+00:35:07,760 --> 00:35:08,800
+simple. I'm going to start here. This
+
+968
+00:35:08,800 --> 00:35:10,160
+this is called agent loop. This actually
+
+969
+00:35:10,160 --> 00:35:12,160
+doesn't do any Oops, sorry. Close that
+
+970
+00:35:12,160 --> 00:35:14,480
+out. This doesn't do any looping yet.
+
+971
+00:35:14,480 --> 00:35:16,000
+It's just going to call our determine
+
+972
+00:35:16,000 --> 00:35:18,480
+next step and then it's going to uh
+
+973
+00:35:18,480 --> 00:35:21,359
+return it. Um, we have this thread
+
+974
+00:35:21,359 --> 00:35:23,040
+object which is just a li list of
+
+975
+00:35:23,040 --> 00:35:24,880
+events. Um, which we'll get into, but
+
+976
+00:35:24,880 --> 00:35:27,040
+this is like the items in our context
+
+977
+00:35:27,040 --> 00:35:30,960
+window. And so when I run this quickly,
+
+978
+00:35:30,960 --> 00:35:34,079
+I'll show you
+
+979
+00:35:34,079 --> 00:35:36,280
+um if we can say
+
+980
+00:35:36,280 --> 00:35:38,640
+hello, what happens is we have kind of
+
+981
+00:35:38,640 --> 00:35:40,720
+the BAML logs will actually output the
+
+982
+00:35:40,720 --> 00:35:42,560
+prompt that was passed in. So here's the
+
+983
+00:35:42,560 --> 00:35:44,320
+thread we actually gave to the agent in
+
+984
+00:35:44,320 --> 00:35:46,960
+our determine next step prompt. Um we
+
+985
+00:35:46,960 --> 00:35:49,760
+serialize that for the agent and then uh
+
+986
+00:35:49,760 --> 00:35:51,680
+so we build this thread and it gets
+
+987
+00:35:51,680 --> 00:35:54,160
+passed in as JSON and then we ask it
+
+988
+00:35:54,160 --> 00:35:55,760
+what the schema should be and it says
+
+989
+00:35:55,760 --> 00:35:57,800
+cool. So I can say, you
+
+990
+00:35:57,800 --> 00:36:01,240
+know, hello, talk like a
+
+991
+00:36:01,240 --> 00:36:03,920
+pirate, this is the best the best LM
+
+992
+00:36:03,920 --> 00:36:06,400
+example that exists. There we go. So now
+
+993
+00:36:06,400 --> 00:36:07,760
+it output this thing and we just kind of
+
+994
+00:36:07,760 --> 00:36:11,280
+print it out. So that's our that's our
+
+995
+00:36:11,280 --> 00:36:12,880
+literally natural language to tool
+
+996
+00:36:12,880 --> 00:36:14,560
+calls. The only tool right now is done
+
+997
+00:36:14,560 --> 00:36:16,560
+for now, but um we'll add more tools in
+
+998
+00:36:16,560 --> 00:36:19,079
+a sec.
+
+999
+00:36:19,079 --> 00:36:21,440
+Um Carl, while you get your next step
+
+1000
+00:36:21,440 --> 00:36:23,440
+set up, I'll describe Carlos as like
+
+1001
+00:36:23,440 --> 00:36:25,119
+BAML code is interpreted. So, BAML code
+
+1002
+00:36:25,119 --> 00:36:27,839
+is just uh code that you write and then
+
+1003
+00:36:27,839 --> 00:36:29,920
+we use that command line tool that
+
+1004
+00:36:29,920 --> 00:36:32,400
+Dexter ran BAML CLI generate to convert
+
+1005
+00:36:32,400 --> 00:36:35,839
+BML code into native TypeScript code.
+
+1006
+00:36:35,839 --> 00:36:38,320
+Yes. So, if I if I were to actually use
+
+1007
+00:36:38,320 --> 00:36:40,800
+the native like uh VS code clickth
+
+1008
+00:36:40,800 --> 00:36:41,839
+through, you can see here's the
+
+1009
+00:36:41,839 --> 00:36:43,760
+generated code that got generated from
+
+1010
+00:36:43,760 --> 00:36:47,760
+this function. Yeah. And u people might
+
+1011
+00:36:47,760 --> 00:36:49,040
+be wondering like why the heck do you
+
+1012
+00:36:49,040 --> 00:36:53,920
+use BAML for this? Um yeah, go ahead. uh
+
+1013
+00:36:53,920 --> 00:36:55,760
+you should probably tell them but like
+
+1014
+00:36:55,760 --> 00:36:57,280
+the main reason I think Dex and I first
+
+1015
+00:36:57,280 --> 00:37:00,320
+met is one we're just YC founders but
+
+1016
+00:37:00,320 --> 00:37:01,920
+two the part about BAML that makes it
+
+1017
+00:37:01,920 --> 00:37:03,680
+easier for people is just that it gives
+
+1018
+00:37:03,680 --> 00:37:05,760
+you full control over the prompt like
+
+1019
+00:37:05,760 --> 00:37:08,160
+the fact that the entire prompt is
+
+1020
+00:37:08,160 --> 00:37:09,839
+accessible to Dexter and he can see it
+
+1021
+00:37:09,839 --> 00:37:11,440
+and modify there's no default things
+
+1022
+00:37:11,440 --> 00:37:13,440
+built in the prompt is where the is
+
+1023
+00:37:13,440 --> 00:37:15,040
+where like why it becomes useful and I
+
+1024
+00:37:15,040 --> 00:37:16,480
+think as we do unions it's going to be a
+
+1025
+00:37:16,480 --> 00:37:18,240
+lot more interesting so let's go on to
+
+1026
+00:37:18,240 --> 00:37:20,480
+the next part yeah and if you yeah if
+
+1027
+00:37:20,480 --> 00:37:22,560
+you come back over this and you go watch
+
+1028
+00:37:22,560 --> 00:37:24,640
+the recording. Watch this and then go
+
+1029
+00:37:24,640 --> 00:37:26,079
+back and watch the We've already done
+
+1030
+00:37:26,079 --> 00:37:27,520
+factors one, two, and three. And we're
+
+1031
+00:37:27,520 --> 00:37:30,079
+about to do factor 4. Yeah. Um
+
+1032
+00:37:30,079 --> 00:37:32,000
+demonstrated in here. So, um we'll
+
+1033
+00:37:32,000 --> 00:37:33,680
+commit that. Here's the kind of diff of
+
+1034
+00:37:33,680 --> 00:37:35,839
+everything that we did. Um so, now we're
+
+1035
+00:37:35,839 --> 00:37:37,520
+going to add uh what I'm going to call
+
+1036
+00:37:37,520 --> 00:37:40,240
+the calculator tool. And so, this is
+
+1037
+00:37:40,240 --> 00:37:42,240
+just uh again a bunch of structured
+
+1038
+00:37:42,240 --> 00:37:44,640
+outputs defined in BAML. That is the add
+
+1039
+00:37:44,640 --> 00:37:46,960
+tool, subtract tool, the multiply tool,
+
+1040
+00:37:46,960 --> 00:37:49,440
+and the divide tool. Um pretty simple
+
+1041
+00:37:49,440 --> 00:37:51,359
+stuff. And then what we're going to do
+
+1042
+00:37:51,359 --> 00:37:53,760
+is we're going to update our agent.baml
+
+1043
+00:37:53,760 --> 00:37:56,560
+to return either done for now or
+
+1044
+00:37:56,560 --> 00:37:58,920
+calculator
+
+1045
+00:37:58,920 --> 00:38:02,160
+tools. That's it. Um did you define
+
+1046
+00:38:02,160 --> 00:38:04,640
+calculator? Oh, we need to Yeah, there
+
+1047
+00:38:04,640 --> 00:38:06,800
+we go. Oh, it's calculator tools plural.
+
+1048
+00:38:06,800 --> 00:38:10,320
+That's why. Okay, cool. Um and so if we
+
+1049
+00:38:10,320 --> 00:38:14,720
+regenerate our our code here, um there
+
+1050
+00:38:14,720 --> 00:38:16,720
+now we can ask the agent. We're not even
+
+1051
+00:38:16,720 --> 00:38:17,839
+going to change the TypeScript code.
+
+1052
+00:38:17,839 --> 00:38:19,200
+We're just changing the basically by
+
+1053
+00:38:19,200 --> 00:38:20,720
+changing the tools that gets passed into
+
+1054
+00:38:20,720 --> 00:38:23,119
+here, it changes our prompt. And so this
+
+1055
+00:38:23,119 --> 00:38:25,119
+is just prompt engineering right now.
+
+1056
+00:38:25,119 --> 00:38:27,200
+Yeah. Um and so now you can see the
+
+1057
+00:38:27,200 --> 00:38:28,880
+prompt is going to ask it to answer in
+
+1058
+00:38:28,880 --> 00:38:31,920
+any one of these schemas. So I can run
+
+1059
+00:38:31,920 --> 00:38:34,079
+and add it. And uh again, we're not
+
+1060
+00:38:34,079 --> 00:38:35,520
+actually doing anything with this
+
+1061
+00:38:35,520 --> 00:38:37,280
+output, but this is factor one. We turn
+
+1062
+00:38:37,280 --> 00:38:39,119
+natural language into a structured
+
+1063
+00:38:39,119 --> 00:38:41,599
+object that says add three and four. And
+
+1064
+00:38:41,599 --> 00:38:43,359
+this is like the most important part.
+
+1065
+00:38:43,359 --> 00:38:45,839
+We're the lime remember is not calling
+
+1066
+00:38:45,839 --> 00:38:48,400
+the tool. It is simply returning a data
+
+1067
+00:38:48,400 --> 00:38:51,119
+model that I then interpret as a thing I
+
+1068
+00:38:51,119 --> 00:38:53,839
+can do something with. It's like any
+
+1069
+00:38:53,839 --> 00:38:55,839
+other API call. It's just a stateless
+
+1070
+00:38:55,839 --> 00:38:57,599
+API call that we were able to convert
+
+1071
+00:38:57,599 --> 00:39:00,079
+the model into. Yep. So here's the only
+
+1072
+00:39:00,079 --> 00:39:01,680
+change we made is we added tools and we
+
+1073
+00:39:01,680 --> 00:39:04,000
+told the LM it can return those tools as
+
+1074
+00:39:04,000 --> 00:39:07,040
+well. Yeah. Um now let's actually go
+
+1075
+00:39:07,040 --> 00:39:12,150
+process that. Um
+
+1076
+00:39:14,630 --> 00:39:14,640
+so I'm going to update our agent.ts.
+
+1077
+00:39:14,640 --> 00:39:16,480
+And essentially now we've updated this
+
+1078
+00:39:16,480 --> 00:39:19,560
+to have a full what we call like agent
+
+1079
+00:39:19,560 --> 00:39:22,440
+loop
+
+1080
+00:39:22,440 --> 00:39:26,040
+where yeah okay that looks
+
+1081
+00:39:26,040 --> 00:39:29,760
+good. Did we not generate? No I think it
+
+1082
+00:39:29,760 --> 00:39:32,320
+did just there. You probably just didn't
+
+1083
+00:39:32,320 --> 00:39:35,520
+generate there. Okay. Um so now we're
+
+1084
+00:39:35,520 --> 00:39:36,800
+going to get our next step out and we're
+
+1085
+00:39:36,800 --> 00:39:37,839
+going to do a switch statement. We're
+
+1086
+00:39:37,839 --> 00:39:39,119
+going to say if it's done for now we'll
+
+1087
+00:39:39,119 --> 00:39:41,760
+just return the message. If it's add
+
+1088
+00:39:41,760 --> 00:39:43,920
+then we're going to compute the result
+
+1089
+00:39:43,920 --> 00:39:45,920
+one. we add that to our context window
+
+1090
+00:39:45,920 --> 00:39:46,880
+and I'll show you what that looks like
+
+1091
+00:39:46,880 --> 00:39:49,119
+as we go through and then we're going to
+
+1092
+00:39:49,119 --> 00:39:50,880
+push the result onto the context window
+
+1093
+00:39:50,880 --> 00:39:52,720
+and we're going to loop again to the top
+
+1094
+00:39:52,720 --> 00:39:54,320
+and we're going to just check now with
+
+1095
+00:39:54,320 --> 00:39:56,640
+our new thread what's the what's the new
+
+1096
+00:39:56,640 --> 00:39:58,520
+next step
+
+1097
+00:39:58,520 --> 00:40:02,400
+so while Dex runs this and executes this
+
+1098
+00:40:02,400 --> 00:40:03,920
+like one thing to think about is we all
+
+1099
+00:40:03,920 --> 00:40:05,359
+see these frameworks we all see like
+
+1100
+00:40:05,359 --> 00:40:07,280
+lang chains tool calling API we all see
+
+1101
+00:40:07,280 --> 00:40:11,040
+agent api uh we all see like um the
+
+1102
+00:40:11,040 --> 00:40:14,400
+openai API SDK they're all doing this
+
+1103
+00:40:14,400 --> 00:40:16,079
+loop. They're just not giving you
+
+1104
+00:40:16,079 --> 00:40:19,280
+control over the loop. Own the loop. Own
+
+1105
+00:40:19,280 --> 00:40:22,160
+the loop. That's it. It's not that hard.
+
+1106
+00:40:22,160 --> 00:40:24,960
+Um, so here's here's we we passed in our
+
+1107
+00:40:24,960 --> 00:40:27,040
+first prompt and we got out the intent
+
+1108
+00:40:27,040 --> 00:40:28,880
+was add. And then we printed our next
+
+1109
+00:40:28,880 --> 00:40:30,880
+step and our tool response was seven.
+
+1110
+00:40:30,880 --> 00:40:32,400
+Um, we'll turn up the logs in a second.
+
+1111
+00:40:32,400 --> 00:40:33,839
+This will make a little bit more sense.
+
+1112
+00:40:33,839 --> 00:40:35,359
+And then here's the next context window
+
+1113
+00:40:35,359 --> 00:40:37,760
+we put in. We just said display to not
+
+1114
+00:40:37,760 --> 00:40:39,359
+be so dark by chance. Is that possible
+
+1115
+00:40:39,359 --> 00:40:41,440
+in your terminal?
+
+1116
+00:40:41,440 --> 00:40:43,520
+Uh, I was trying to get it better
+
+1117
+00:40:43,520 --> 00:40:44,720
+yesterday. I actually changed a bunch of
+
+1118
+00:40:44,720 --> 00:40:46,320
+my colors to work better with the BAML
+
+1119
+00:40:46,320 --> 00:40:48,640
+output colors. Uh, but you all need a
+
+1120
+00:40:48,640 --> 00:40:51,200
+solarized theme. I will apologize for
+
+1121
+00:40:51,200 --> 00:40:54,160
+that. Uh, ANC color art is very poor as
+
+1122
+00:40:54,160 --> 00:40:56,000
+I've learned. Maybe like black. Yeah,
+
+1123
+00:40:56,000 --> 00:40:58,000
+it's not good.
+
+1124
+00:40:58,000 --> 00:41:00,880
+High contrast. Oh, yeah. There you go.
+
+1125
+00:41:00,880 --> 00:41:02,400
+Uh, you know what? I can't change the
+
+1126
+00:41:02,400 --> 00:41:05,359
+profile of an active shell. Oh, okay.
+
+1127
+00:41:05,359 --> 00:41:08,000
+Never mind. Go on. Sorry, folks. Um, you
+
+1128
+00:41:08,000 --> 00:41:09,440
+can run this code yourself in whatever
+
+1129
+00:41:09,440 --> 00:41:12,240
+show you want though. Um,
+
+1130
+00:41:12,240 --> 00:41:13,760
+so let me turn this off and I'll just
+
+1131
+00:41:13,760 --> 00:41:14,960
+show you kind of how we're logging this
+
+1132
+00:41:14,960 --> 00:41:17,520
+stuff out. Um, can turn it back on. Oh
+
+1133
+00:41:17,520 --> 00:41:18,560
+yeah, we can turn off the log. That's
+
+1134
+00:41:18,560 --> 00:41:19,760
+actually better because then we can see
+
+1135
+00:41:19,760 --> 00:41:22,079
+the tooling part of it. Yeah. So this is
+
+1136
+00:41:22,079 --> 00:41:23,599
+this is just our logs that our
+
+1137
+00:41:23,599 --> 00:41:25,680
+application is printing. And so I asked,
+
+1138
+00:41:25,680 --> 00:41:26,880
+you know, can you add three and four and
+
+1139
+00:41:26,880 --> 00:41:29,040
+then add six to that result. So it it
+
+1140
+00:41:29,040 --> 00:41:30,800
+emitted this attempt. We gave it this
+
+1141
+00:41:30,800 --> 00:41:32,160
+result and then it tried to add them
+
+1142
+00:41:32,160 --> 00:41:33,920
+together and then it gave it this one.
+
+1143
+00:41:33,920 --> 00:41:35,440
+And then we have done for now and it's
+
+1144
+00:41:35,440 --> 00:41:37,200
+good. And you could easily see how we
+
+1145
+00:41:37,200 --> 00:41:38,640
+could build a UI off of this. Like
+
+1146
+00:41:38,640 --> 00:41:40,400
+pretend that this isn't even an outline.
+
+1147
+00:41:40,400 --> 00:41:41,680
+I think the most important part of the
+
+1148
+00:41:41,680 --> 00:41:43,200
+Grock is this doesn't have to be an
+
+1149
+00:41:43,200 --> 00:41:44,880
+outline. I just have a machine that is
+
+1150
+00:41:44,880 --> 00:41:46,880
+outputting events and now I can build a
+
+1151
+00:41:46,880 --> 00:41:48,640
+UI on top of this whether it's a chat
+
+1152
+00:41:48,640 --> 00:41:51,280
+pro chat system or anything else. And
+
+1153
+00:41:51,280 --> 00:41:54,000
+that's all this ends up being.
+
+1154
+00:41:54,000 --> 00:41:56,160
+Um, cool. I'm going to break this uh and
+
+1155
+00:41:56,160 --> 00:41:58,400
+ask it to subtract things. Um, because
+
+1156
+00:41:58,400 --> 00:41:59,920
+we haven't actually implemented we've
+
+1157
+00:41:59,920 --> 00:42:01,680
+only implemented add. So, if it's not
+
+1158
+00:42:01,680 --> 00:42:03,839
+done for now or add, we're just going to
+
+1159
+00:42:03,839 --> 00:42:05,599
+blow up with, you know, unknown intent.
+
+1160
+00:42:05,599 --> 00:42:07,839
+We don't know what that intent is. So,
+
+1161
+00:42:07,839 --> 00:42:09,599
+I'm not going to make you all watch me
+
+1162
+00:42:09,599 --> 00:42:11,520
+code out the handlers for all of these,
+
+1163
+00:42:11,520 --> 00:42:13,040
+but we'll basically pull this into a
+
+1164
+00:42:13,040 --> 00:42:15,440
+function called handle next step. And
+
+1165
+00:42:15,440 --> 00:42:17,680
+that handles add, subtract, multiply,
+
+1166
+00:42:17,680 --> 00:42:20,720
+divide. And so now our loop becomes
+
+1167
+00:42:20,720 --> 00:42:22,960
+determine next step, add that to the
+
+1168
+00:42:22,960 --> 00:42:25,599
+context window, and then handle next
+
+1169
+00:42:25,599 --> 00:42:27,200
+step. So, if it's one of our break-in
+
+1170
+00:42:27,200 --> 00:42:29,200
+conditions, we'll just return. But if
+
+1171
+00:42:29,200 --> 00:42:30,960
+it's one of these four, um, we'll fall
+
+1172
+00:42:30,960 --> 00:42:32,240
+through the switch statement and we'll
+
+1173
+00:42:32,240 --> 00:42:33,839
+do handle next step. And this handle
+
+1174
+00:42:33,839 --> 00:42:35,520
+next step is basically going to append
+
+1175
+00:42:35,520 --> 00:42:37,319
+the thing to the thread and then return
+
+1176
+00:42:37,319 --> 00:42:39,880
+it. That make
+
+1177
+00:42:39,880 --> 00:42:42,480
+sense? So now we can ask it to subtract
+
+1178
+00:42:42,480 --> 00:42:45,599
+three from four. And now we can ask it
+
+1179
+00:42:45,599 --> 00:42:47,560
+to multiply three and
+
+1180
+00:42:47,560 --> 00:42:50,240
+four. And now we can ask it to do big
+
+1181
+00:42:50,240 --> 00:42:52,240
+complicated things like add and multiply
+
+1182
+00:42:52,240 --> 00:42:54,680
+and divide and uh run through all
+
+1183
+00:42:54,680 --> 00:42:58,640
+this. So that's tool calling loop.
+
+1184
+00:42:58,640 --> 00:43:00,240
+There we go. We now we own our control
+
+1185
+00:43:00,240 --> 00:43:02,160
+flow and we can do lots of things. The
+
+1186
+00:43:02,160 --> 00:43:04,720
+the idea of like when we the control of
+
+1187
+00:43:04,720 --> 00:43:06,880
+when we break and return versus when we
+
+1188
+00:43:06,880 --> 00:43:08,319
+continue and loop through I think is
+
+1189
+00:43:08,319 --> 00:43:10,319
+really important and interesting. So
+
+1190
+00:43:10,319 --> 00:43:11,760
+let's let's look at this code a little
+
+1191
+00:43:11,760 --> 00:43:13,280
+bit just so people can see this a little
+
+1192
+00:43:13,280 --> 00:43:15,680
+bit better. Yeah. What do you want to
+
+1193
+00:43:15,680 --> 00:43:17,680
+look at? Just like describe maybe we
+
+1194
+00:43:17,680 --> 00:43:18,960
+should describe to people exactly what
+
+1195
+00:43:18,960 --> 00:43:21,000
+we're doing. So like how are we doing
+
+1196
+00:43:21,000 --> 00:43:23,760
+this? So so our CLI comes through and
+
+1197
+00:43:23,760 --> 00:43:25,760
+takes the input message. We build a
+
+1198
+00:43:25,760 --> 00:43:28,079
+thread with that message and then we pop
+
+1199
+00:43:28,079 --> 00:43:29,440
+and then we hand that off to the loop.
+
+1200
+00:43:29,440 --> 00:43:31,880
+So that's our base
+
+1201
+00:43:31,880 --> 00:43:35,119
+thread. We pass that thread into the LLM
+
+1202
+00:43:35,119 --> 00:43:37,040
+and I'm going to get into testing as the
+
+1203
+00:43:37,040 --> 00:43:38,319
+next thing. So we can actually look at
+
+1204
+00:43:38,319 --> 00:43:39,680
+what some of these prompts are returning
+
+1205
+00:43:39,680 --> 00:43:43,319
+and stuff. But
+
+1206
+00:43:43,319 --> 00:43:46,079
+um yeah, we pass that into the LM. We
+
+1207
+00:43:46,079 --> 00:43:49,520
+get back a next step. Um, when we push
+
+1208
+00:43:49,520 --> 00:43:51,200
+our results on, we want the LM to know
+
+1209
+00:43:51,200 --> 00:43:53,280
+not just what was the result, but also
+
+1210
+00:43:53,280 --> 00:43:55,200
+like what did I call because the LM
+
+1211
+00:43:55,200 --> 00:43:56,400
+doesn't know that it called it. When you
+
+1212
+00:43:56,400 --> 00:43:58,240
+pass the context window back in again,
+
+1213
+00:43:58,240 --> 00:44:00,319
+it only knows what we tell it. And so,
+
+1214
+00:44:00,319 --> 00:44:02,000
+we want to be able to tell it, hey, you
+
+1215
+00:44:02,000 --> 00:44:04,400
+called a tool that is this next step
+
+1216
+00:44:04,400 --> 00:44:06,200
+that is this
+
+1217
+00:44:06,200 --> 00:44:08,920
+um, you know, you called this intent
+
+1218
+00:44:08,920 --> 00:44:11,920
+multiply 34. We can turn on the BMA logs
+
+1219
+00:44:11,920 --> 00:44:13,280
+again so people see the full prompt as
+
+1220
+00:44:13,280 --> 00:44:16,800
+well. the next time it run. Um, actually
+
+1221
+00:44:16,800 --> 00:44:18,319
+what we're going to do just for time,
+
+1222
+00:44:18,319 --> 00:44:19,520
+I'm just going to do it in the test
+
+1223
+00:44:19,520 --> 00:44:23,839
+instead. Oh, better. Um, so I've added a
+
+1224
+00:44:23,839 --> 00:44:25,760
+couple tests to this file. So here's a
+
+1225
+00:44:25,760 --> 00:44:30,319
+math operation here. Um, and so we can
+
+1226
+00:44:30,319 --> 00:44:33,760
+uh pop through here and run this test.
+
+1227
+00:44:33,760 --> 00:44:35,680
+And so basically the prompt that we put
+
+1228
+00:44:35,680 --> 00:44:37,520
+in was, you know, your helpful
+
+1229
+00:44:37,520 --> 00:44:39,359
+assistant, here's the user input, what
+
+1230
+00:44:39,359 --> 00:44:42,359
+should the next step be?
+
+1231
+00:44:42,359 --> 00:44:47,200
+Um, cool. Uh, and then the output was
+
+1232
+00:44:47,200 --> 00:44:49,520
+multiply three and four. Carlos, that's
+
+1233
+00:44:49,520 --> 00:44:50,960
+a great question. Like, why doesn't the
+
+1234
+00:44:50,960 --> 00:44:53,040
+LLM know what tool it's called? Unless
+
+1235
+00:44:53,040 --> 00:44:54,640
+you put something into the context
+
+1236
+00:44:54,640 --> 00:44:56,319
+window of the model. It doesn't know
+
+1237
+00:44:56,319 --> 00:44:58,319
+anything. So, I could have gotten the
+
+1238
+00:44:58,319 --> 00:45:00,720
+answer of maybe add a test case. Ed, do
+
+1239
+00:45:00,720 --> 00:45:01,760
+you have another test case that you want
+
+1240
+00:45:01,760 --> 00:45:04,240
+to add in? Uh, I have a bunch more test
+
+1241
+00:45:04,240 --> 00:45:06,480
+cases. Go on. I'll let you go do that.
+
+1242
+00:45:06,480 --> 00:45:07,839
+All right. All right. Cool. Just just
+
+1243
+00:45:07,839 --> 00:45:09,920
+for the sake of time. Um and happy to
+
+1244
+00:45:09,920 --> 00:45:11,359
+kind of do follow-ups and if people can
+
+1245
+00:45:11,359 --> 00:45:12,640
+we can we have time blocked after if
+
+1246
+00:45:12,640 --> 00:45:14,000
+people want to hang out for questions.
+
+1247
+00:45:14,000 --> 00:45:17,280
+So we can run these tests now. Um we can
+
+1248
+00:45:17,280 --> 00:45:18,720
+also do add what's really interesting
+
+1249
+00:45:18,720 --> 00:45:20,640
+here as far as like being able because
+
+1250
+00:45:20,640 --> 00:45:22,079
+your context window and your input is
+
+1251
+00:45:22,079 --> 00:45:23,760
+just a string. We can make assertions
+
+1252
+00:45:23,760 --> 00:45:26,800
+and basically build really simple evals.
+
+1253
+00:45:26,800 --> 00:45:34,390
+dinga um
+
+1254
+00:45:36,950 --> 00:45:36,960
+and like make assertions about what
+
+1255
+00:45:36,960 --> 00:45:39,520
+the model returns for certain inputs. So
+
+1256
+00:45:39,520 --> 00:45:41,200
+if I change this to add and I run the
+
+1257
+00:45:41,200 --> 00:45:43,079
+test again, this is going to
+
+1258
+00:45:43,079 --> 00:45:45,839
+fail. Um so I can run this every time I
+
+1259
+00:45:45,839 --> 00:45:47,680
+make a change to my prompts. And then we
+
+1260
+00:45:47,680 --> 00:45:50,680
+can also make assertions that like all
+
+1261
+00:45:50,680 --> 00:45:53,200
+right, cursor doesn't know this yet, but
+
+1262
+00:45:53,200 --> 00:45:56,000
+that's fine.
+
+1263
+00:45:56,000 --> 00:45:58,400
+Um so we can make assertions about the
+
+1264
+00:45:58,400 --> 00:46:01,040
+whole thing that the model outputs. Um
+
+1265
+00:46:01,040 --> 00:46:02,720
+and the important part here is like we
+
+1266
+00:46:02,720 --> 00:46:05,760
+don't need LMZ val like when you use
+
+1267
+00:46:05,760 --> 00:46:08,240
+structured outputs you stop you l val
+
+1268
+00:46:08,240 --> 00:46:10,800
+still might be useful but for a lot of
+
+1269
+00:46:10,800 --> 00:46:12,319
+use cases I just need to know that the
+
+1270
+00:46:12,319 --> 00:46:14,240
+intent was correct and the parameters I
+
+1271
+00:46:14,240 --> 00:46:16,000
+got out were correct. That's what I need
+
+1272
+00:46:16,000 --> 00:46:18,319
+to really nail down.
+
+1273
+00:46:18,319 --> 00:46:20,800
+Yeah. So uh let's let's do a test for
+
+1274
+00:46:20,800 --> 00:46:22,240
+the long math thing and this will get to
+
+1275
+00:46:22,240 --> 00:46:23,440
+kind of what you were asking for before.
+
+1276
+00:46:23,440 --> 00:46:24,880
+I'm going to turn the logs back on just
+
+1277
+00:46:24,880 --> 00:46:26,160
+so I can see the prompts that are
+
+1278
+00:46:26,160 --> 00:46:28,880
+getting put in um as it's going through
+
+1279
+00:46:28,880 --> 00:46:30,319
+this. So by the end of this we have this
+
+1280
+00:46:30,319 --> 00:46:32,319
+really long kind of thread as our
+
+1281
+00:46:32,319 --> 00:46:33,620
+prompt.
+
+1282
+00:46:33,620 --> 00:46:41,470
+[Music]
+
+1283
+00:46:44,150 --> 00:46:44,160
+Um and since it's just strings, we can
+
+1284
+00:46:44,160 --> 00:46:48,430
+have cursor format this however we
+
+1285
+00:46:52,069 --> 00:46:52,079
+want. Great. Um, so, so this is what
+
+1286
+00:46:52,079 --> 00:46:53,680
+we're passing into the model on that
+
+1287
+00:46:53,680 --> 00:46:56,560
+last thing. And if we run this test,
+
+1288
+00:46:56,560 --> 00:46:59,119
+we'll see that the output was, "Hey,
+
+1289
+00:46:59,119 --> 00:47:00,520
+we're done." And we got our final
+
+1290
+00:47:00,520 --> 00:47:04,319
+result. But, um, if we took like a
+
+1291
+00:47:04,319 --> 00:47:07,960
+subset of this and we said,
+
+1292
+00:47:07,960 --> 00:47:10,880
+um, let's do you want to remove the tool
+
+1293
+00:47:10,880 --> 00:47:14,079
+response. Yeah, exactly. Um, let's
+
+1294
+00:47:14,079 --> 00:47:18,480
+format this again. Live coding, folks.
+
+1295
+00:47:18,480 --> 00:47:19,920
+And this is like another thing that
+
+1296
+00:47:19,920 --> 00:47:21,200
+Dexter was talking about like you need
+
+1297
+00:47:21,200 --> 00:47:22,800
+to be able to test like we no one knows
+
+1298
+00:47:22,800 --> 00:47:24,960
+what's the best thing for your system.
+
+1299
+00:47:24,960 --> 00:47:26,560
+The only way you can know is to actually
+
+1300
+00:47:26,560 --> 00:47:29,760
+just run the test and like so here's go
+
+1301
+00:47:29,760 --> 00:47:32,480
+ahead Carlo question of like oh sorry
+
+1302
+00:47:32,480 --> 00:47:34,319
+one last thing Carlo has a question like
+
+1303
+00:47:34,319 --> 00:47:36,240
+doesn't know what tool it's called if I
+
+1304
+00:47:36,240 --> 00:47:37,839
+that's what I'm gonna Yeah. Okay cool go
+
+1305
+00:47:37,839 --> 00:47:39,440
+for it go for it. Sorry. Yeah. So I
+
+1306
+00:47:39,440 --> 00:47:41,440
+actually so let's let's just rewind this
+
+1307
+00:47:41,440 --> 00:47:44,560
+a little bit and let's say that we take
+
+1308
+00:47:44,560 --> 00:47:47,520
+away this tool call. So instead of
+
+1309
+00:47:47,520 --> 00:47:50,480
+telling it um I mean it might be smart
+
+1310
+00:47:50,480 --> 00:47:52,319
+enough to figure it out but basically if
+
+1311
+00:47:52,319 --> 00:47:54,359
+we just put the tool responses
+
+1312
+00:47:54,359 --> 00:47:56,640
+in I have no idea what this is gonna
+
+1313
+00:47:56,640 --> 00:47:58,000
+say. I've never tried this. I don't
+
+1314
+00:47:58,000 --> 00:48:00,079
+know. I don't know. I think you but this
+
+1315
+00:48:00,079 --> 00:48:01,119
+is the point is like you should be able
+
+1316
+00:48:01,119 --> 00:48:02,319
+to try everything and you should be able
+
+1317
+00:48:02,319 --> 00:48:03,520
+to see like actually it doesn't matter
+
+1318
+00:48:03,520 --> 00:48:05,359
+the model for a calculator app the
+
+1319
+00:48:05,359 --> 00:48:06,880
+model's smart enough to figure out that
+
+1320
+00:48:06,880 --> 00:48:08,480
+we want to add these things. So multiply
+
+1321
+00:48:08,480 --> 00:48:10,640
+three and four and then add 12 to that
+
+1322
+00:48:10,640 --> 00:48:12,319
+result. Correct. So I think it actually
+
+1323
+00:48:12,319 --> 00:48:14,480
+figured it out in this case because it's
+
+1324
+00:48:14,480 --> 00:48:17,920
+a simple problem. Yeah. And the model is
+
+1325
+00:48:17,920 --> 00:48:19,040
+What model are you using? Can you show
+
+1326
+00:48:19,040 --> 00:48:21,760
+the prompt again? This is uh GPT40.
+
+1327
+00:48:21,760 --> 00:48:24,000
+Okay, cool. Yeah. So, GT4 is try
+
+1328
+00:48:24,000 --> 00:48:25,599
+switching it to Mini and seeing if Mini
+
+1329
+00:48:25,599 --> 00:48:28,280
+it up. But,
+
+1330
+00:48:28,280 --> 00:48:30,839
+um anyways, I hope that answers the
+
+1331
+00:48:30,839 --> 00:48:33,920
+question. Um I'm going to keep rolling
+
+1332
+00:48:33,920 --> 00:48:35,599
+just so that we have more that we can
+
+1333
+00:48:35,599 --> 00:48:37,440
+get to all the topics. Yeah, I want to
+
+1334
+00:48:37,440 --> 00:48:38,480
+talk about the more interesting stuff
+
+1335
+00:48:38,480 --> 00:48:39,920
+you have lined up, too. I know we only
+
+1336
+00:48:39,920 --> 00:48:41,920
+have 10 minutes, so let's keep going.
+
+1337
+00:48:41,920 --> 00:48:44,240
+Cool. Uh, if I can get my shell back in
+
+1338
+00:48:44,240 --> 00:48:46,480
+the right place, we can roll. All right,
+
+1339
+00:48:46,480 --> 00:48:50,319
+cool. Um, so here's like the actual like
+
+1340
+00:48:50,319 --> 00:48:52,240
+big pile of tests. And now we have a
+
+1341
+00:48:52,240 --> 00:48:53,599
+bunch of them. So, let me hide the
+
+1342
+00:48:53,599 --> 00:48:56,760
+playground here.
+
+1343
+00:48:56,760 --> 00:48:59,520
+Um, and so this has like five or six
+
+1344
+00:48:59,520 --> 00:49:02,880
+longer tests. And I can do npx panel CLI
+
+1345
+00:49:02,880 --> 00:49:04,800
+test. And so as we're building this, as
+
+1346
+00:49:04,800 --> 00:49:06,000
+we find things we want to change our
+
+1347
+00:49:06,000 --> 00:49:08,400
+prompt, we can go through all of that.
+
+1348
+00:49:08,400 --> 00:49:10,800
+So I'll commit this again. And in this
+
+1349
+00:49:10,800 --> 00:49:12,160
+chapter, all we changed was
+
+1350
+00:49:12,160 --> 00:49:13,760
+agent.baml.l. We just added a bunch of
+
+1351
+00:49:13,760 --> 00:49:15,119
+tests. We didn't write any TypeScript
+
+1352
+00:49:15,119 --> 00:49:16,599
+code for that
+
+1353
+00:49:16,599 --> 00:49:20,000
+chapter. Um, cool. Let's add another
+
+1354
+00:49:20,000 --> 00:49:22,160
+human tool. So, this is where we talk
+
+1355
+00:49:22,160 --> 00:49:23,839
+about having multi different reasons to
+
+1356
+00:49:23,839 --> 00:49:25,359
+contact a human. There may be a model
+
+1357
+00:49:25,359 --> 00:49:27,160
+saying, "Hey, I need to request more
+
+1358
+00:49:27,160 --> 00:49:29,839
+information." Or there may be like an
+
+1359
+00:49:29,839 --> 00:49:31,200
+intent that is like, "Hey, we're done.
+
+1360
+00:49:31,200 --> 00:49:32,720
+We have the final answer." And your code
+
+1361
+00:49:32,720 --> 00:49:34,079
+might want to handle those things
+
+1362
+00:49:34,079 --> 00:49:36,160
+differently. um either display them
+
+1363
+00:49:36,160 --> 00:49:37,920
+differently or have different workflows
+
+1364
+00:49:37,920 --> 00:49:39,680
+or put in a text box for them to fill
+
+1365
+00:49:39,680 --> 00:49:42,079
+out, whatever it is. Um if you have
+
+1366
+00:49:42,079 --> 00:49:43,839
+control over stuff, then then you can do
+
+1367
+00:49:43,839 --> 00:49:46,319
+it. So, I'm going to regenerate off of
+
+1368
+00:49:46,319 --> 00:49:47,880
+this and we're going to see how that
+
+1369
+00:49:47,880 --> 00:49:51,040
+works. So, what I'm going to do is I'm
+
+1370
+00:49:51,040 --> 00:49:53,200
+sorry, go ahead. Auto regenerating every
+
+1371
+00:49:53,200 --> 00:49:56,000
+time you hit command S anyway. Oh, yeah.
+
+1372
+00:49:56,000 --> 00:49:59,119
+That's true. Anyway, that's fair. Um I
+
+1373
+00:49:59,119 --> 00:50:00,319
+was running this walkthrough from
+
+1374
+00:50:00,319 --> 00:50:01,839
+scripts and stuff, so it didn't have it
+
+1375
+00:50:01,839 --> 00:50:04,240
+in there, but that's fair. Um, so I'm
+
+1376
+00:50:04,240 --> 00:50:05,839
+going to ask it, can you multiply three
+
+1377
+00:50:05,839 --> 00:50:08,400
+and a bunch of garbled nonsense? And
+
+1378
+00:50:08,400 --> 00:50:10,480
+it's going to request more information.
+
+1379
+00:50:10,480 --> 00:50:11,520
+Actually, it's going to keep going over
+
+1380
+00:50:11,520 --> 00:50:12,480
+and over again because we're not
+
+1381
+00:50:12,480 --> 00:50:14,000
+actually handling this in our TypeScript
+
+1382
+00:50:14,000 --> 00:50:15,440
+loop yet. We don't have a case in our
+
+1383
+00:50:15,440 --> 00:50:17,200
+switch statement for this one. But you
+
+1384
+00:50:17,200 --> 00:50:19,680
+can see it's at least output the intent.
+
+1385
+00:50:19,680 --> 00:50:22,280
+It looks like there's some in incomplete
+
+1386
+00:50:22,280 --> 00:50:24,400
+information. So I'm going to come in
+
+1387
+00:50:24,400 --> 00:50:26,640
+here and update our agent and basically
+
+1388
+00:50:26,640 --> 00:50:28,480
+say, you know, in this case, we're going
+
+1389
+00:50:28,480 --> 00:50:30,079
+to handle them the same, which is just
+
+1390
+00:50:30,079 --> 00:50:31,760
+to return the message. and they both
+
+1391
+00:50:31,760 --> 00:50:33,680
+have a field called message. But you can
+
+1392
+00:50:33,680 --> 00:50:35,040
+see us handling those two things
+
+1393
+00:50:35,040 --> 00:50:36,559
+differently. And we're actually able to
+
+1394
+00:50:36,559 --> 00:50:38,240
+use like the static analyzer there. So
+
+1395
+00:50:38,240 --> 00:50:39,839
+that way like TypeScript can tell us
+
+1396
+00:50:39,839 --> 00:50:41,200
+that they both have the same field
+
+1397
+00:50:41,200 --> 00:50:42,960
+message. If you hover over message like
+
+1398
+00:50:42,960 --> 00:50:45,319
+it knows TypeScript isn't yelling at
+
+1399
+00:50:45,319 --> 00:50:48,079
+you because the intent of request
+
+1400
+00:50:48,079 --> 00:50:51,200
+information has a field called message.
+
+1401
+00:50:51,200 --> 00:50:52,720
+Yeah. Because we're in this part of the
+
+1402
+00:50:52,720 --> 00:50:54,559
+switch statement, TypeScript knows that
+
+1403
+00:50:54,559 --> 00:50:56,240
+it's either one of these two things.
+
+1404
+00:50:56,240 --> 00:50:58,160
+Exactly.
+
+1405
+00:50:58,160 --> 00:51:02,000
+Um, cool. And then I'm actually going to
+
+1406
+00:51:02,000 --> 00:51:04,240
+tweak this a little bit more where we're
+
+1407
+00:51:04,240 --> 00:51:05,680
+going to actually have this return the
+
+1408
+00:51:05,680 --> 00:51:07,200
+whole thread. And we'll see why we do
+
+1409
+00:51:07,200 --> 00:51:09,680
+that in a sec. But basically, we want to
+
+1410
+00:51:09,680 --> 00:51:13,760
+know in our CLI whether uh when we run
+
+1411
+00:51:13,760 --> 00:51:15,440
+the loop, we want to know whether it was
+
+1412
+00:51:15,440 --> 00:51:17,200
+request more information or final
+
+1413
+00:51:17,200 --> 00:51:18,400
+answer. So if it's final answer, we're
+
+1414
+00:51:18,400 --> 00:51:19,839
+just going to print it on exit. If it's
+
+1415
+00:51:19,839 --> 00:51:21,200
+request more information, we can
+
+1416
+00:51:21,200 --> 00:51:23,040
+actually like write a function that is
+
+1417
+00:51:23,040 --> 00:51:24,720
+like ask human. In this case, it's just
+
+1418
+00:51:24,720 --> 00:51:27,119
+on the command line, but um this is how
+
+1419
+00:51:27,119 --> 00:51:28,880
+you can take two ways that the model may
+
+1420
+00:51:28,880 --> 00:51:30,400
+want to contact a human and handle them
+
+1421
+00:51:30,400 --> 00:51:32,400
+differently. Dex, can we slow down for
+
+1422
+00:51:32,400 --> 00:51:34,640
+one second before we run the code and
+
+1423
+00:51:34,640 --> 00:51:37,440
+just show the show the data models one
+
+1424
+00:51:37,440 --> 00:51:39,760
+last time just to make it in the in the
+
+1425
+00:51:39,760 --> 00:51:43,920
+in the source code? Yes, in here. Yeah,
+
+1426
+00:51:43,920 --> 00:51:45,280
+let's let's look at like what these
+
+1427
+00:51:45,280 --> 00:51:47,040
+messages are. So, we have a class called
+
+1428
+00:51:47,040 --> 00:51:48,800
+clarification request which has an
+
+1429
+00:51:48,800 --> 00:51:50,559
+intent attached to it called request
+
+1430
+00:51:50,559 --> 00:51:53,359
+with the label request more information.
+
+1431
+00:51:53,359 --> 00:51:55,040
+And then there's another class called
+
+1432
+00:51:55,040 --> 00:51:57,760
+intent uh with intent done for now. And
+
+1433
+00:51:57,760 --> 00:51:59,520
+if you look at the prompt, can we render
+
+1434
+00:51:59,520 --> 00:52:02,480
+the full prompt in the prompt view?
+
+1435
+00:52:02,480 --> 00:52:04,240
+Yeah. Just so people can read it because
+
+1436
+00:52:04,240 --> 00:52:05,599
+I think there's a couple questions about
+
+1437
+00:52:05,599 --> 00:52:07,119
+this. And let's just like hide the test
+
+1438
+00:52:07,119 --> 00:52:10,079
+at the bottom. Yeah.
+
+1439
+00:52:10,079 --> 00:52:12,720
+And let's just like read this. So you
+
+1440
+00:52:12,720 --> 00:52:15,680
+can see the model is kind of letting us
+
+1441
+00:52:15,680 --> 00:52:17,599
+output one of those tools because on
+
+1442
+00:52:17,599 --> 00:52:20,960
+line 19, what Dexter has said is that
+
+1443
+00:52:20,960 --> 00:52:22,480
+the model can respond with two different
+
+1444
+00:52:22,480 --> 00:52:24,000
+ways. Can you respond with human tools
+
+1445
+00:52:24,000 --> 00:52:25,359
+or calculator tools? And can we hover
+
+1446
+00:52:25,359 --> 00:52:28,319
+over human tools? Oh, yeah. Human tools
+
+1447
+00:52:28,319 --> 00:52:31,119
+is defined as we don't hover. Oh,
+
+1448
+00:52:31,119 --> 00:52:32,559
+whatever. Human tools defined as
+
+1449
+00:52:32,559 --> 00:52:35,599
+clarification request or done for now.
+
+1450
+00:52:35,599 --> 00:52:37,200
+So, it must be one of those two data
+
+1451
+00:52:37,200 --> 00:52:38,640
+models. And if you can you change the
+
+1452
+00:52:38,640 --> 00:52:40,000
+data model instead of request more
+
+1453
+00:52:40,000 --> 00:52:42,800
+information to be like request fu just
+
+1454
+00:52:42,800 --> 00:52:45,280
+so people can Yeah, just I think Carlos
+
+1455
+00:52:45,280 --> 00:52:48,079
+is having a go down. Just change the
+
+1456
+00:52:48,079 --> 00:52:49,760
+line instead of intent. Use the word
+
+1457
+00:52:49,760 --> 00:52:51,839
+like intent. Fu fu. Yeah, just change
+
+1458
+00:52:51,839 --> 00:52:54,079
+that string. really briefly. So you can
+
+1459
+00:52:54,079 --> 00:52:55,839
+see that the prompt is updating to mimic
+
+1460
+00:52:55,839 --> 00:52:57,680
+that. That's how the model is getting
+
+1461
+00:52:57,680 --> 00:52:59,599
+this. We're just writing code and the
+
+1462
+00:52:59,599 --> 00:53:01,880
+code is being added to your
+
+1463
+00:53:01,880 --> 00:53:05,359
+prompt. Um and that's how the model is
+
+1464
+00:53:05,359 --> 00:53:09,520
+able to go. You can undo your changes.
+
+1465
+00:53:09,520 --> 00:53:11,359
+Yeah, don't do that because but you can
+
+1466
+00:53:11,359 --> 00:53:12,720
+do your changes. And then if you scroll
+
+1467
+00:53:12,720 --> 00:53:16,240
+down one more time into the prompt, uh
+
+1468
+00:53:16,240 --> 00:53:19,040
+one last thing I want to show ctx format
+
+1469
+00:53:19,040 --> 00:53:21,040
+that is you remove that line really
+
+1470
+00:53:21,040 --> 00:53:22,960
+fast.
+
+1471
+00:53:22,960 --> 00:53:25,680
+Yep. That is what's actually adding the
+
+1472
+00:53:25,680 --> 00:53:27,920
+instructions into the prompt. And if you
+
+1473
+00:53:27,920 --> 00:53:30,559
+add it back, that's all that's doing.
+
+1474
+00:53:30,559 --> 00:53:32,240
+That is taking the return type of the
+
+1475
+00:53:32,240 --> 00:53:34,000
+function and injecting it into the
+
+1476
+00:53:34,000 --> 00:53:37,280
+prompt for you. And so that's a nice
+
+1477
+00:53:37,280 --> 00:53:39,359
+BAML BAML feature that is basically,
+
+1478
+00:53:39,359 --> 00:53:41,359
+hey, based on your return type, what
+
+1479
+00:53:41,359 --> 00:53:42,880
+should what should we tell the model to
+
+1480
+00:53:42,880 --> 00:53:44,800
+output? And then we're just letting the
+
+1481
+00:53:44,800 --> 00:53:46,800
+model do the magic. The model is kind of
+
+1482
+00:53:46,800 --> 00:53:50,079
+telling us what to go do. Yep. Let's go
+
+1483
+00:53:50,079 --> 00:53:51,680
+on. Perfect. I'm going to restore us to
+
+1484
+00:53:51,680 --> 00:53:54,319
+where we were. Yep. Um, so we have our
+
+1485
+00:53:54,319 --> 00:53:56,000
+our loop and stuff. Basically, if the
+
+1486
+00:53:56,000 --> 00:53:57,599
+model outputs this request more
+
+1487
+00:53:57,599 --> 00:53:59,520
+information, we'll ask for info on the
+
+1488
+00:53:59,520 --> 00:54:01,440
+CLI.
+
+1489
+00:54:01,440 --> 00:54:03,920
+Uh, you might want to regenerate. Sorry,
+
+1490
+00:54:03,920 --> 00:54:07,599
+I think you did a Oh, because you we
+
+1491
+00:54:07,599 --> 00:54:09,040
+updated the file and you hit command S,
+
+1492
+00:54:09,040 --> 00:54:12,829
+but then Yeah. Yeah. Yeah. Yeah.
+
+1493
+00:54:15,910 --> 00:54:15,920
+Okay. So, yeah, now it says uh request
+
+1494
+00:54:15,920 --> 00:54:17,599
+more information. I could say use 12
+
+1495
+00:54:17,599 --> 00:54:19,440
+instead.
+
+1496
+00:54:19,440 --> 00:54:21,200
+And now when it's done, it still exits.
+
+1497
+00:54:21,200 --> 00:54:22,960
+So we're handling these two different
+
+1498
+00:54:22,960 --> 00:54:28,309
+requests to for info in different ways.
+
+1499
+00:54:29,510 --> 00:54:29,520
+This is really cool. And like just for
+
+1500
+00:54:29,520 --> 00:54:32,160
+someone just to reemphasize this point.
+
+1501
+00:54:32,160 --> 00:54:34,480
+This is how you in your chat agent that
+
+1502
+00:54:34,480 --> 00:54:36,079
+you're building. You could do this in a
+
+1503
+00:54:36,079 --> 00:54:37,440
+website too. Can you go back to your
+
+1504
+00:54:37,440 --> 00:54:38,880
+loop code that you're doing where you're
+
+1505
+00:54:38,880 --> 00:54:40,800
+actually getting read line like where
+
+1506
+00:54:40,800 --> 00:54:43,119
+you're actually making? Yeah. Exactly.
+
+1507
+00:54:43,119 --> 00:54:45,119
+If we have time today, we only have five
+
+1508
+00:54:45,119 --> 00:54:46,480
+minutes, but if we have time, we can
+
+1509
+00:54:46,480 --> 00:54:48,559
+actually instead of using a CLI loop, we
+
+1510
+00:54:48,559 --> 00:54:50,480
+can make this a web API that is either
+
+1511
+00:54:50,480 --> 00:54:53,440
+synchronous or async like this. The
+
+1512
+00:54:53,440 --> 00:54:56,240
+agent is the agent is decoupled from the
+
+1513
+00:54:56,240 --> 00:54:58,559
+UX so that you can plug this agent into
+
+1514
+00:54:58,559 --> 00:55:01,440
+multiple different interfaces.
+
+1515
+00:55:01,440 --> 00:55:03,040
+Exactly.
+
+1516
+00:55:03,040 --> 00:55:04,800
+And the input to the agent is just a
+
+1517
+00:55:04,800 --> 00:55:08,480
+list of events and the output is
+
+1518
+00:55:08,480 --> 00:55:10,480
+last event that was exactly what what's
+
+1519
+00:55:10,480 --> 00:55:12,000
+the next step and it's up to the
+
+1520
+00:55:12,000 --> 00:55:13,760
+framework can handle it. In this case
+
+1521
+00:55:13,760 --> 00:55:16,079
+it's actually not it's not the last
+
+1522
+00:55:16,079 --> 00:55:19,040
+event it's the full event thread. Yeah.
+
+1523
+00:55:19,040 --> 00:55:21,280
+because then we when we add a when we
+
+1524
+00:55:21,280 --> 00:55:23,520
+get a response from the user we get the
+
+1525
+00:55:23,520 --> 00:55:27,520
+response and that is now coming from um
+
+1526
+00:55:27,520 --> 00:55:29,240
+it's coming from
+
+1527
+00:55:29,240 --> 00:55:31,839
+um just to be very it's coming from like
+
+1528
+00:55:31,839 --> 00:55:34,000
+CLI but it could come from a web API it
+
+1529
+00:55:34,000 --> 00:55:35,280
+could come from a database request it
+
+1530
+00:55:35,280 --> 00:55:37,040
+could come from an event on Slack
+
+1531
+00:55:37,040 --> 00:55:38,480
+doesn't really matter it comes from
+
+1532
+00:55:38,480 --> 00:55:41,480
+somewhere and then all we do as Dex said
+
+1533
+00:55:41,480 --> 00:55:44,720
+is boom we just pass it back to the
+
+1534
+00:55:44,720 --> 00:55:46,920
+agent loop again on line
+
+1535
+00:55:46,920 --> 00:55:50,400
+29 that's all we're really doing? Yep.
+
+1536
+00:55:50,400 --> 00:55:52,240
+And so then we just we do it we do it
+
+1537
+00:55:52,240 --> 00:55:54,480
+once and then we loop until we get the
+
+1538
+00:55:54,480 --> 00:55:56,799
+done token. Exactly. This could actually
+
+1539
+00:55:56,799 --> 00:55:59,520
+be more clear if we did like not equals.
+
+1540
+00:55:59,520 --> 00:56:03,359
+Yeah. But we can for now optimization.
+
+1541
+00:56:03,359 --> 00:56:05,520
+Um anyways, uh I'm going to add some
+
+1542
+00:56:05,520 --> 00:56:07,200
+test cases for this behavior because I
+
+1543
+00:56:07,200 --> 00:56:09,599
+think it's cool. So now we can see, you
+
+1544
+00:56:09,599 --> 00:56:12,000
+know, if we pass in nonsense and I'm
+
+1545
+00:56:12,000 --> 00:56:13,440
+actually going to change this one to be
+
+1546
+00:56:13,440 --> 00:56:15,200
+not hex because sometimes it sees hex
+
+1547
+00:56:15,200 --> 00:56:17,599
+and gets figured it out. And that's just
+
+1548
+00:56:17,599 --> 00:56:19,040
+testing. Like the only reason you know
+
+1549
+00:56:19,040 --> 00:56:21,040
+that is because you tested that. Yeah.
+
+1550
+00:56:21,040 --> 00:56:22,720
+It's nonsense. It's insufficient. It's
+
+1551
+00:56:22,720 --> 00:56:24,880
+like, oh, it's too smart. It thinks it's
+
+1552
+00:56:24,880 --> 00:56:28,000
+it's it will actually think it's u Yeah.
+
+1553
+00:56:28,000 --> 00:56:30,240
+X code. So, so we can add evals and
+
+1554
+00:56:30,240 --> 00:56:32,640
+guardrails. Now, we make sure if the
+
+1555
+00:56:32,640 --> 00:56:34,720
+math is garbled, it must request more
+
+1556
+00:56:34,720 --> 00:56:36,000
+information. That's what we expect the
+
+1557
+00:56:36,000 --> 00:56:37,599
+agent to do. And if someone changes the
+
+1558
+00:56:37,599 --> 00:56:39,280
+prompt in a way that breaks that, we
+
+1559
+00:56:39,280 --> 00:56:41,119
+will know before that gets merged in
+
+1560
+00:56:41,119 --> 00:56:43,520
+because the unit and then here's one
+
+1561
+00:56:43,520 --> 00:56:45,200
+that shows how it interprets the
+
+1562
+00:56:45,200 --> 00:56:47,000
+clarification. Right? So we gave it some
+
+1563
+00:56:47,000 --> 00:56:50,240
+garbage and then we said you know uh the
+
+1564
+00:56:50,240 --> 00:56:52,000
+model called the tool which was like hey
+
+1565
+00:56:52,000 --> 00:56:53,760
+can you clarify this and then the human
+
+1566
+00:56:53,760 --> 00:56:56,079
+responded with let's try 12 instead and
+
+1567
+00:56:56,079 --> 00:56:58,319
+we can test this one and we can see like
+
+1568
+00:56:58,319 --> 00:56:59,920
+okay cool now it's going to it like
+
+1569
+00:56:59,920 --> 00:57:01,599
+listen to the human's feedback and we
+
+1570
+00:57:01,599 --> 00:57:02,880
+can prove that we're passing the human
+
+1571
+00:57:02,880 --> 00:57:04,559
+info back into the model in the right
+
+1572
+00:57:04,559 --> 00:57:09,440
+way. Um so let's run all of our tests.
+
+1573
+00:57:09,440 --> 00:57:10,880
+While you do that I love the word that
+
+1574
+00:57:10,880 --> 00:57:13,280
+you use. You use the word prove because
+
+1575
+00:57:13,280 --> 00:57:14,880
+that's really what it is. You want to
+
+1576
+00:57:14,880 --> 00:57:17,799
+prove to yourself that it's working.
+
+1577
+00:57:17,799 --> 00:57:21,200
+Yep. So, one of our tests failed. Um, it
+
+1578
+00:57:21,200 --> 00:57:22,960
+was our hello world step. So, now we can
+
+1579
+00:57:22,960 --> 00:57:24,640
+see, okay, we changed our prompt by
+
+1580
+00:57:24,640 --> 00:57:26,720
+changing the structured inputs, but it
+
+1581
+00:57:26,720 --> 00:57:28,000
+broke one of our other tests. So, let's
+
+1582
+00:57:28,000 --> 00:57:29,200
+go look at this. Sometimes you break a
+
+1583
+00:57:29,200 --> 00:57:30,559
+test and it's because you changed the
+
+1584
+00:57:30,559 --> 00:57:31,920
+behavior intentionally, and sometimes
+
+1585
+00:57:31,920 --> 00:57:33,040
+it's because you actually broke
+
+1586
+00:57:33,040 --> 00:57:35,440
+something. So if we just say hello to
+
+1587
+00:57:35,440 --> 00:57:37,680
+the model now that we're telling it that
+
+1588
+00:57:37,680 --> 00:57:40,160
+it can respond with either done for now
+
+1589
+00:57:40,160 --> 00:57:41,599
+or request more information, it's
+
+1590
+00:57:41,599 --> 00:57:43,520
+actually decided that if it doesn't know
+
+1591
+00:57:43,520 --> 00:57:45,520
+what to do, the correct intent is
+
+1592
+00:57:45,520 --> 00:57:48,160
+request more information. So to maintain
+
+1593
+00:57:48,160 --> 00:57:49,359
+this and keep it up, I'm going to come
+
+1594
+00:57:49,359 --> 00:57:50,720
+and update this test because I actually
+
+1595
+00:57:50,720 --> 00:57:52,319
+think that is also the correct answer.
+
+1596
+00:57:52,319 --> 00:57:53,760
+It's like the conversation is still
+
+1597
+00:57:53,760 --> 00:57:55,839
+ongoing. And now we can run this and we
+
+1598
+00:57:55,839 --> 00:57:57,200
+can see that it passes. And by the way,
+
+1599
+00:57:57,200 --> 00:57:58,640
+we could have decided that wasn't the
+
+1600
+00:57:58,640 --> 00:58:00,400
+case and we could go back and change our
+
+1601
+00:58:00,400 --> 00:58:02,559
+prompt for what request more information
+
+1602
+00:58:02,559 --> 00:58:04,799
+means. Can you go back one last one on
+
+1603
+00:58:04,799 --> 00:58:07,200
+one? Go up really fast. Yeah. You want
+
+1604
+00:58:07,200 --> 00:58:09,760
+to change I want to change one prompt at
+
+1605
+00:58:09,760 --> 00:58:11,839
+the top. At the top for your No, no. For
+
+1606
+00:58:11,839 --> 00:58:14,160
+your request more information. Yeah. Add
+
+1607
+00:58:14,160 --> 00:58:15,920
+a description to there. The description
+
+1608
+00:58:15,920 --> 00:58:19,119
+says to clarify mathematical equations.
+
+1609
+00:58:19,119 --> 00:58:25,069
+Yeah. Yeah. To clarify math
+
+1610
+00:58:27,589 --> 00:58:27,599
+stuff. It's a dumb prompt, but like it's
+
+1611
+00:58:27,599 --> 00:58:30,319
+just math stuff, right? Yep. Now, let's
+
+1612
+00:58:30,319 --> 00:58:34,150
+see what the hello test does.
+
+1613
+00:58:37,109 --> 00:58:37,119
+Um, okay. Still still request. It did
+
+1614
+00:58:37,119 --> 00:58:38,400
+actually change what it said about a
+
+1615
+00:58:38,400 --> 00:58:40,559
+math problem though. It said y to
+
+1616
+00:58:40,559 --> 00:58:44,559
+clarify existing math problems.
+
+1617
+00:58:44,559 --> 00:58:46,520
+Do
+
+1618
+00:58:46,520 --> 00:58:48,720
+not so you can come and you can hear
+
+1619
+00:58:48,720 --> 00:58:50,000
+come here and mess with this and you can
+
+1620
+00:58:50,000 --> 00:58:51,280
+write tests. But this is a really
+
+1621
+00:58:51,280 --> 00:58:53,839
+productive way to make changes and
+
+1622
+00:58:53,839 --> 00:58:55,760
+improve your agents over time without um
+
+1623
+00:58:55,760 --> 00:58:57,920
+without losing without losing steam. We
+
+1624
+00:58:57,920 --> 00:59:00,160
+have one minute left. I'm going to power
+
+1625
+00:59:00,160 --> 00:59:02,799
+through the last bit. Uh, inv you got 15
+
+1626
+00:59:02,799 --> 00:59:04,079
+20 minutes to go over for people who
+
+1627
+00:59:04,079 --> 00:59:05,920
+want to hang out. We'll stay over a
+
+1628
+00:59:05,920 --> 00:59:07,359
+little bit because I u it sounds like
+
+1629
+00:59:07,359 --> 00:59:08,640
+we're getting some really good questions
+
+1630
+00:59:08,640 --> 00:59:10,160
+and we're we'll record the whole thing
+
+1631
+00:59:10,160 --> 00:59:11,520
+and post it on YouTube as well. So,
+
+1632
+00:59:11,520 --> 00:59:13,359
+including the Q&A at the end. Yeah,
+
+1633
+00:59:13,359 --> 00:59:14,559
+folks have to drop. We'll have the
+
+1634
+00:59:14,559 --> 00:59:17,920
+recording of the Q&A. Um, cool. So, now
+
+1635
+00:59:17,920 --> 00:59:20,720
+we fixed all our tests and I'm going to
+
+1636
+00:59:20,720 --> 00:59:22,079
+get out and commit this and quickly we
+
+1637
+00:59:22,079 --> 00:59:25,119
+can review the changes we've made. So,
+
+1638
+00:59:25,119 --> 00:59:26,880
+um, what do we do? We added
+
+1639
+00:59:26,880 --> 00:59:29,599
+clarification request. Um, we changed
+
+1640
+00:59:29,599 --> 00:59:32,480
+the type of our return to include both
+
+1641
+00:59:32,480 --> 00:59:35,280
+of the human tools. We added a couple
+
+1642
+00:59:35,280 --> 00:59:38,000
+tests for the using the clarification
+
+1643
+00:59:38,000 --> 00:59:40,720
+stuff. We updated our test here so that
+
+1644
+00:59:40,720 --> 00:59:43,440
+it passes. Um, we changed our agent loop
+
+1645
+00:59:43,440 --> 00:59:45,520
+to return the whole thread instead of
+
+1646
+00:59:45,520 --> 00:59:46,520
+just the
+
+1647
+00:59:46,520 --> 00:59:49,599
+message. And then we updated our CLI to
+
+1648
+00:59:49,599 --> 00:59:51,440
+kind of power that interactive loop a
+
+1649
+00:59:51,440 --> 00:59:52,440
+little
+
+1650
+00:59:52,440 --> 00:59:55,040
+bit. Cool. Um, now we're going to get
+
+1651
+00:59:55,040 --> 00:59:56,640
+into some fun stuff. These the next two
+
+1652
+00:59:56,640 --> 00:59:57,520
+are really quick, but they're really
+
+1653
+00:59:57,520 --> 00:59:58,960
+worth doing, which is like customizing
+
+1654
+00:59:58,960 --> 01:00:01,200
+your prompt with reasoning. Oh, yeah.
+
+1655
+01:00:01,200 --> 01:00:03,760
+Um, so I'm going to add I'm going to
+
+1656
+01:00:03,760 --> 01:00:05,520
+update our prompt here that we use and
+
+1657
+01:00:05,520 --> 01:00:07,839
+basically just give it this um, you
+
+1658
+01:00:07,839 --> 01:00:09,280
+know, always think about what to do
+
+1659
+01:00:09,280 --> 01:00:11,440
+first, like, you know, these steps.
+
+1660
+01:00:11,440 --> 01:00:12,559
+This, if you watched our reasoning
+
+1661
+01:00:12,559 --> 01:00:14,559
+episode last week, um, this should look
+
+1662
+01:00:14,559 --> 01:00:16,319
+very familiar. If you haven't, go check
+
+1663
+01:00:16,319 --> 01:00:18,079
+it out. But this is a really easy way to
+
+1664
+01:00:18,079 --> 01:00:21,280
+get small models to think and perform
+
+1665
+01:00:21,280 --> 01:00:24,079
+more like reasoning models. So from
+
+1666
+01:00:24,079 --> 01:00:27,680
+here, why you run this code. Um, yeah, a
+
+1667
+01:00:27,680 --> 01:00:29,119
+lot of you are like, why the heck are we
+
+1668
+01:00:29,119 --> 01:00:30,559
+doing dot dot dot? Like what what is
+
+1669
+01:00:30,559 --> 01:00:32,000
+that? That's not really reasoning. Turns
+
+1670
+01:00:32,000 --> 01:00:33,680
+out these models are really really good
+
+1671
+01:00:33,680 --> 01:00:35,599
+at just what we want to tell it is the
+
+1672
+01:00:35,599 --> 01:00:37,040
+structure of how we want it to reason.
+
+1673
+01:00:37,040 --> 01:00:38,640
+In some ways, some format that it might
+
+1674
+01:00:38,640 --> 01:00:41,920
+use. Yeah. And it to go do things. We're
+
+1675
+01:00:41,920 --> 01:00:43,359
+not tell we're not going to prescribe
+
+1676
+01:00:43,359 --> 01:00:44,960
+what it should reason about in any
+
+1677
+01:00:44,960 --> 01:00:46,720
+meaningful way. That's why we're not
+
+1678
+01:00:46,720 --> 01:00:48,240
+using few shot examples. That's why
+
+1679
+01:00:48,240 --> 01:00:49,280
+we're not doing anything. We just want
+
+1680
+01:00:49,280 --> 01:00:51,040
+the model to be like reasonable on its
+
+1681
+01:00:51,040 --> 01:00:53,920
+own.
+
+1682
+01:00:53,920 --> 01:00:55,280
+So, I'm going to pass in a little prompt
+
+1683
+01:00:55,280 --> 01:00:57,319
+here and I'm going to turn on the logs
+
+1684
+01:00:57,319 --> 01:01:01,760
+temporarily. What? Oh, sorry.
+
+1685
+01:01:01,760 --> 01:01:04,240
+You have like Oh, I like that was it was
+
+1686
+01:01:04,240 --> 01:01:05,760
+like trying to do a git operation. I was
+
+1687
+01:01:05,760 --> 01:01:07,359
+like, why are you going to need my keys?
+
+1688
+01:01:07,359 --> 01:01:10,400
+So, here we have printed out um
+
+1689
+01:01:10,400 --> 01:01:12,640
+basically uh you know this and what
+
+1690
+01:01:12,640 --> 01:01:14,000
+should the next step be and then we have
+
+1691
+01:01:14,000 --> 01:01:16,079
+our reasoning prompt. Ah, see it was
+
+1692
+01:01:16,079 --> 01:01:17,839
+working yesterday. Sometimes sometimes
+
+1693
+01:01:17,839 --> 01:01:19,359
+it works, sometimes it doesn't. Can can
+
+1694
+01:01:19,359 --> 01:01:21,839
+you use a can you uh the reason that can
+
+1695
+01:01:21,839 --> 01:01:23,760
+make it a slightly more complex thing?
+
+1696
+01:01:23,760 --> 01:01:26,880
+Um can can you add the can you add the
+
+1697
+01:01:26,880 --> 01:01:28,880
+first four digits of pi together? Make
+
+1698
+01:01:28,880 --> 01:01:29,920
+that the question that you're asking.
+
+1699
+01:01:29,920 --> 01:01:31,760
+No, this prompt is fine. The prompt is
+
+1700
+01:01:31,760 --> 01:01:33,920
+just too simple. The model first four
+
+1701
+01:01:33,920 --> 01:01:38,839
+digits of pi. Yep. Now let's go do
+
+1702
+01:01:38,839 --> 01:01:41,680
+that. So the model determined that it
+
+1703
+01:01:41,680 --> 01:01:43,520
+doesn't need to reasoning at all. That's
+
+1704
+01:01:43,520 --> 01:01:46,000
+why it didn't do it. But now so here now
+
+1705
+01:01:46,000 --> 01:01:49,680
+it's done a bunch of reasoning here.
+
+1706
+01:01:49,680 --> 01:01:51,440
+I will perform the calculation then I
+
+1707
+01:01:51,440 --> 01:01:53,720
+should proceed. So now you have your
+
+1708
+01:01:53,720 --> 01:01:55,340
+reasoning and
+
+1709
+01:01:55,340 --> 01:01:56,920
+[Music]
+
+1710
+01:01:56,920 --> 01:01:59,839
+then yeah each so it is reasoning each
+
+1711
+01:01:59,839 --> 01:02:01,040
+time and there's probably some stuff you
+
+1712
+01:02:01,040 --> 01:02:02,680
+could do to like cache that reasoning
+
+1713
+01:02:02,680 --> 01:02:05,720
+basically. But
+
+1714
+01:02:05,720 --> 01:02:08,000
+um here you can see it's outputting this
+
+1715
+01:02:08,000 --> 01:02:10,960
+and then it has the final JSON here and
+
+1716
+01:02:10,960 --> 01:02:12,640
+then what we pull out with BAML which is
+
+1717
+01:02:12,640 --> 01:02:14,400
+also really cool is just like hey we let
+
+1718
+01:02:14,400 --> 01:02:15,839
+the model output whatever tokens it
+
+1719
+01:02:15,839 --> 01:02:17,359
+wants and then we rip out the actual
+
+1720
+01:02:17,359 --> 01:02:19,599
+JSON and we get the answer. Yeah. So the
+
+1721
+01:02:19,599 --> 01:02:20,880
+user doesn't even have to see the
+
+1722
+01:02:20,880 --> 01:02:22,640
+reasoning. We just get that done for
+
+1723
+01:02:22,640 --> 01:02:25,280
+now. And again I mentioned like oh you
+
+1724
+01:02:25,280 --> 01:02:26,720
+could cache the reasoning and it's like
+
+1725
+01:02:26,720 --> 01:02:28,480
+cool. There's all kinds of ways you
+
+1726
+01:02:28,480 --> 01:02:29,760
+could do that now that you own the loop
+
+1727
+01:02:29,760 --> 01:02:31,359
+in the control flow and customize how
+
+1728
+01:02:31,359 --> 01:02:32,880
+you build your context window. You
+
+1729
+01:02:32,880 --> 01:02:34,880
+nailed it. Speaking of which, let's
+
+1730
+01:02:34,880 --> 01:02:36,480
+customize how we build our context
+
+1731
+01:02:36,480 --> 01:02:39,839
+window. So, um, there are a lot of ways
+
+1732
+01:02:39,839 --> 01:02:42,400
+you can optimize this. Um, but the first
+
+1733
+01:02:42,400 --> 01:02:44,480
+optimization I'm going to make is just
+
+1734
+01:02:44,480 --> 01:02:47,520
+instead of doing raw flat JSON like we
+
+1735
+01:02:47,520 --> 01:02:48,880
+have been doing here, I'll just
+
+1736
+01:02:48,880 --> 01:02:50,720
+stringify the JSON. Probably doesn't
+
+1737
+01:02:50,720 --> 01:02:51,839
+make a difference for the model, but
+
+1738
+01:02:51,839 --> 01:02:53,839
+this is just kind of a demonstration.
+
+1739
+01:02:53,839 --> 01:02:55,520
+Um, so we'll turn on the logs again and
+
+1740
+01:02:55,520 --> 01:02:57,680
+we'll give it this answer and we can see
+
+1741
+01:02:57,680 --> 01:02:58,960
+over time. Definitely makes it more
+
+1742
+01:02:58,960 --> 01:03:02,400
+human readable. So you can see over time
+
+1743
+01:03:02,400 --> 01:03:04,160
+uh here's what was put in user input
+
+1744
+01:03:04,160 --> 01:03:06,160
+tool call tool response tool call tool
+
+1745
+01:03:06,160 --> 01:03:07,839
+response what should the next step be
+
+1746
+01:03:07,839 --> 01:03:10,160
+here's your output and then it says cool
+
+1747
+01:03:10,160 --> 01:03:12,400
+our intent is add and so you can see now
+
+1748
+01:03:12,400 --> 01:03:14,240
+as the it's a little more clear like as
+
+1749
+01:03:14,240 --> 01:03:16,240
+we loop through the context window is
+
+1750
+01:03:16,240 --> 01:03:18,160
+growing and growing and growing but we
+
+1751
+01:03:18,160 --> 01:03:20,000
+still get the same result we're we'll
+
+1752
+01:03:20,000 --> 01:03:21,520
+talk about this a little bit more Carlos
+
+1753
+01:03:21,520 --> 01:03:22,960
+and you want do you have any more
+
+1754
+01:03:22,960 --> 01:03:25,280
+examples of how to serialize the L1
+
+1755
+01:03:25,280 --> 01:03:27,280
+content yeah dude we have a really fun
+
+1756
+01:03:27,280 --> 01:03:28,960
+one this is what I do when I build my
+
+1757
+01:03:28,960 --> 01:03:30,640
+agents I use this thing that's a little
+
+1758
+01:03:30,640 --> 01:03:31,960
+more um
+
+1759
+01:03:31,960 --> 01:03:35,760
+XML. Um and so we have user input and
+
+1760
+01:03:35,760 --> 01:03:37,440
+then as we loop through we have user
+
+1761
+01:03:37,440 --> 01:03:39,039
+input and then we have multiply and then
+
+1762
+01:03:39,039 --> 01:03:41,520
+we have tool response. The point is you
+
+1763
+01:03:41,520 --> 01:03:44,240
+can do whatever you want to take that
+
+1764
+01:03:44,240 --> 01:03:47,200
+list of events in your thread and
+
+1765
+01:03:47,200 --> 01:03:49,200
+serialize it for the LM. So here we're
+
+1766
+01:03:49,200 --> 01:03:51,200
+mapping it to this like serialize one
+
+1767
+01:03:51,200 --> 01:03:52,559
+event function. Can you go back really
+
+1768
+01:03:52,559 --> 01:03:54,000
+fast? I want to highlight something for
+
+1769
+01:03:54,000 --> 01:03:56,079
+people because I think they might not.
+
+1770
+01:03:56,079 --> 01:03:58,160
+Do you see what Dexter did here? He did
+
+1771
+01:03:58,160 --> 01:04:01,520
+multiply a col 3 b col 4 and multiply
+
+1772
+01:04:01,520 --> 01:04:03,200
+it. Can you compare that to the JSON one
+
+1773
+01:04:03,200 --> 01:04:05,039
+that you had above? Oh, are we going to
+
+1774
+01:04:05,039 --> 01:04:07,119
+do the token the token counting thing?
+
+1775
+01:04:07,119 --> 01:04:08,559
+People should look at the tokens. You
+
+1776
+01:04:08,559 --> 01:04:09,520
+don't have to We don't have Should I
+
+1777
+01:04:09,520 --> 01:04:11,039
+drop Let me drop this in the Let me drop
+
+1778
+01:04:11,039 --> 01:04:13,119
+this to the playground. Yeah, we should
+
+1779
+01:04:13,119 --> 01:04:14,520
+do that.
+
+1780
+01:04:14,520 --> 01:04:19,829
+Um, just add it to your test case. Yeah,
+
+1781
+01:04:22,309 --> 01:04:22,319
+it's Yeah, this the serialization is
+
+1782
+01:04:22,319 --> 01:04:24,000
+completely up to you. And if you don't
+
+1783
+01:04:24,000 --> 01:04:25,920
+own it, you're Oh, sorry. I used
+
+1784
+01:04:25,920 --> 01:04:27,359
+that word. We're recording. Uh, I'll
+
+1785
+01:04:27,359 --> 01:04:29,760
+bleep it. But if you don't I already did
+
+1786
+01:04:29,760 --> 01:04:31,520
+too. It's fine. If you don't own the
+
+1787
+01:04:31,520 --> 01:04:33,839
+You'll fit right in. If you don't own
+
+1788
+01:04:33,839 --> 01:04:36,000
+the serialization, you're really not
+
+1789
+01:04:36,000 --> 01:04:38,400
+making life easy for yourself because in
+
+1790
+01:04:38,400 --> 01:04:40,240
+this case, why are we wasting so many
+
+1791
+01:04:40,240 --> 01:04:41,839
+tokens? Uh, yeah, let's just do the
+
+1792
+01:04:41,839 --> 01:04:44,880
+prompt preview. Uh, okay, cool. So,
+
+1793
+01:04:44,880 --> 01:04:46,799
+let's look at the prompt preview and
+
+1794
+01:04:46,799 --> 01:04:50,400
+we'll look at the token view. So, this
+
+1795
+01:04:50,400 --> 01:04:52,160
+is tokens one and we'll look at another
+
+1796
+01:04:52,160 --> 01:04:53,839
+one already has JSON in it. So, we can
+
+1797
+01:04:53,839 --> 01:04:56,200
+just compare these. So, token
+
+1798
+01:04:56,200 --> 01:04:58,720
+visualization. Here we go. Oh, dang. We
+
+1799
+01:04:58,720 --> 01:04:59,920
+don't highlight the tokens correctly.
+
+1800
+01:04:59,920 --> 01:05:01,760
+Um, I'll fix the Hey, I don't think this
+
+1801
+01:05:01,760 --> 01:05:03,119
+is right actually because I think the
+
+1802
+01:05:03,119 --> 01:05:04,640
+XML is supposed to be really efficient,
+
+1803
+01:05:04,640 --> 01:05:06,720
+right? No, no, it is. It is. We just
+
+1804
+01:05:06,720 --> 01:05:08,400
+don't write render the escape characters
+
+1805
+01:05:08,400 --> 01:05:09,920
+correctly. But just so people understand
+
+1806
+01:05:09,920 --> 01:05:11,760
+is like go to the Can you go to the
+
+1807
+01:05:11,760 --> 01:05:13,280
+OpenI tokenizer? I'll fix that, right?
+
+1808
+01:05:13,280 --> 01:05:14,559
+I'll fix that in today's release
+
+1809
+01:05:14,559 --> 01:05:17,200
+actually. Yeah. Um, is that like a web
+
+1810
+01:05:17,200 --> 01:05:18,640
+app or something? Just go to OpenI
+
+1811
+01:05:18,640 --> 01:05:20,680
+tokenizer. This is like one
+
+1812
+01:05:20,680 --> 01:05:22,400
+serialization everyone should think
+
+1813
+01:05:22,400 --> 01:05:24,480
+about is like we can use a serialization
+
+1814
+01:05:24,480 --> 01:05:28,400
+technique of what um yeah that's
+
+1815
+01:05:28,400 --> 01:05:29,359
+basically the view that we're supposed
+
+1816
+01:05:29,359 --> 01:05:31,520
+to have. We just render the quotes the
+
+1817
+01:05:31,520 --> 01:05:33,359
+things incorrectly slightly. Oh because
+
+1818
+01:05:33,359 --> 01:05:36,160
+this is supposed to be HTML as long as
+
+1819
+01:05:36,160 --> 01:05:37,920
+the fix HTML thing will be fixed. Uh so
+
+1820
+01:05:37,920 --> 01:05:40,400
+I'll fix that today. But now post the
+
+1821
+01:05:40,400 --> 01:05:41,920
+JSON view of it. You have a previous
+
+1822
+01:05:41,920 --> 01:05:44,160
+JSON example as well in in your test
+
+1823
+01:05:44,160 --> 01:05:46,640
+cases. Yeah. Yeah. Yeah. Exactly. So
+
+1824
+01:05:46,640 --> 01:05:48,480
+let's get Yeah. This thing grab
+
+1825
+01:05:48,480 --> 01:05:52,960
+anything. It doesn't matter. Yeah. Yeah.
+
+1826
+01:05:52,960 --> 01:05:55,839
+And that's Do you see how every single
+
+1827
+01:05:55,839 --> 01:05:57,359
+quote and everything that we're using,
+
+1828
+01:05:57,359 --> 01:05:59,839
+every time that we put quotes in there,
+
+1829
+01:05:59,839 --> 01:06:02,240
+it's extra tokens. Every time that we
+
+1830
+01:06:02,240 --> 01:06:04,240
+put whites space in there, it might may
+
+1831
+01:06:04,240 --> 01:06:06,079
+or may not be extra tokens. The count of
+
+1832
+01:06:06,079 --> 01:06:09,039
+whites space matters um because we're
+
+1833
+01:06:09,039 --> 01:06:10,799
+using like commas at the end. That's
+
+1834
+01:06:10,799 --> 01:06:13,039
+extra tokens. So, there's small things
+
+1835
+01:06:13,039 --> 01:06:15,119
+that are adding up. And these tokens are
+
+1836
+01:06:15,119 --> 01:06:16,559
+not as trivial as like cost. People
+
+1837
+01:06:16,559 --> 01:06:18,319
+think about costs. It's just the way
+
+1838
+01:06:18,319 --> 01:06:20,000
+that you're explaining the thing to the
+
+1839
+01:06:20,000 --> 01:06:22,160
+model. It has to If Dexter and I were
+
+1840
+01:06:22,160 --> 01:06:24,160
+saying the word like and um every 30
+
+1841
+01:06:24,160 --> 01:06:26,000
+seconds, you would have such a hard time
+
+1842
+01:06:26,000 --> 01:06:27,200
+reading what we're saying. You'd have to
+
+1843
+01:06:27,200 --> 01:06:29,200
+like do so much brain power to just
+
+1844
+01:06:29,200 --> 01:06:31,160
+understand the nuances of our
+
+1845
+01:06:31,160 --> 01:06:35,160
+words. There's just less likes and that
+
+1846
+01:06:35,160 --> 01:06:38,000
+text. That's I love that metaphor likes
+
+1847
+01:06:38,000 --> 01:06:41,599
+and that's great.
+
+1848
+01:06:41,599 --> 01:06:43,839
+Um so you asked like ination
+
+1849
+01:06:43,839 --> 01:06:45,599
+customizable. Yes, you can control it to
+
+1850
+01:06:45,599 --> 01:06:48,240
+do whatever you want.
+
+1851
+01:06:48,240 --> 01:06:50,559
+Yep. And so now we can add some tests
+
+1852
+01:06:50,559 --> 01:06:52,000
+that kind of match this where we've
+
+1853
+01:06:52,000 --> 01:06:53,680
+we've updated our tests to be XML
+
+1854
+01:06:53,680 --> 01:06:55,599
+instead. And you can run these the same
+
+1855
+01:06:55,599 --> 01:06:56,720
+and you can make sure like, hey, we
+
+1856
+01:06:56,720 --> 01:06:57,920
+changed how we format our context
+
+1857
+01:06:57,920 --> 01:07:00,240
+window. Do all our tests still pass?
+
+1858
+01:07:00,240 --> 01:07:01,920
+Which is again what you should always be
+
+1859
+01:07:01,920 --> 01:07:03,680
+doing. Every time you make a change, you
+
+1860
+01:07:03,680 --> 01:07:05,440
+should know, okay, the the same input is
+
+1861
+01:07:05,440 --> 01:07:08,920
+still the same output. Exactly.
+
+1862
+01:07:08,920 --> 01:07:16,480
+Or yes. Cool. Um I think we can uh let's
+
+1863
+01:07:16,480 --> 01:07:18,079
+we can do you want to pause for
+
+1864
+01:07:18,079 --> 01:07:20,720
+questions here? Um or do you want to put
+
+1865
+01:07:20,720 --> 01:07:23,359
+it behind a web server? I want to answer
+
+1866
+01:07:23,359 --> 01:07:26,160
+um location's question of like how do
+
+1867
+01:07:26,160 --> 01:07:28,880
+you build your first agent? This video
+
+1868
+01:07:28,880 --> 01:07:30,640
+that we just made and all the source
+
+1869
+01:07:30,640 --> 01:07:33,680
+code is going to be available for you uh
+
+1870
+01:07:33,680 --> 01:07:35,039
+probably within like by the end of the
+
+1871
+01:07:35,039 --> 01:07:36,319
+day today. So we'll send it out on
+
+1872
+01:07:36,319 --> 01:07:37,760
+email. If you signed up on Luma, you'll
+
+1873
+01:07:37,760 --> 01:07:40,640
+get the email. Um, this is probably
+
+1874
+01:07:40,640 --> 01:07:42,720
+We'll also create a template repo with
+
+1875
+01:07:42,720 --> 01:07:44,160
+this stuff in here so you can just kind
+
+1876
+01:07:44,160 --> 01:07:45,680
+of pick up the calculator tools and
+
+1877
+01:07:45,680 --> 01:07:48,720
+start running with it. Exactly. Um,
+
+1878
+01:07:48,720 --> 01:07:50,079
+yeah. All the code we ever do will
+
+1879
+01:07:50,079 --> 01:07:51,680
+always be open source for AI that works.
+
+1880
+01:07:51,680 --> 01:07:53,200
+Like that's the premise. Like we just
+
+1881
+01:07:53,200 --> 01:07:55,200
+want to share code so we can all learn
+
+1882
+01:07:55,200 --> 01:07:58,000
+the best architecture designs together.
+
+1883
+01:07:58,000 --> 01:08:00,079
+Uh, because as Dex always says, none of
+
+1884
+01:08:00,079 --> 01:08:02,480
+us know what the right answer is. We
+
+1885
+01:08:02,480 --> 01:08:04,319
+just wanna we all just need to figure it
+
+1886
+01:08:04,319 --> 01:08:05,359
+out. And the best way to figure it out
+
+1887
+01:08:05,359 --> 01:08:07,240
+is to
+
+1888
+01:08:07,240 --> 01:08:11,520
+test. Um, let's let's let's uh how about
+
+1889
+01:08:11,520 --> 01:08:13,440
+this? Why don't we take some questions
+
+1890
+01:08:13,440 --> 01:08:15,440
+in the chat? While that happens, why
+
+1891
+01:08:15,440 --> 01:08:16,799
+don't you do the web server stuff? So,
+
+1892
+01:08:16,799 --> 01:08:18,719
+we'll paralyze cool. Web server stuff is
+
+1893
+01:08:18,719 --> 01:08:21,920
+so freaking cool. Uh I me and you were
+
+1894
+01:08:21,920 --> 01:08:23,120
+one of the first people to start
+
+1895
+01:08:23,120 --> 01:08:25,199
+building out this kinds of things and I
+
+1896
+01:08:25,199 --> 01:08:28,080
+think it like blew our minds as we were
+
+1897
+01:08:28,080 --> 01:08:29,440
+building it out and then like it just
+
+1898
+01:08:29,440 --> 01:08:31,600
+became the template for like how I think
+
+1899
+01:08:31,600 --> 01:08:34,880
+we both think about agents. Yep. So if
+
+1900
+01:08:34,880 --> 01:08:36,880
+you anyone has question, type it out.
+
+1901
+01:08:36,880 --> 01:08:38,640
+Dexter is going to do some typing stuff
+
+1902
+01:08:38,640 --> 01:08:41,279
+uh while that happens and then we'll uh
+
+1903
+01:08:41,279 --> 01:08:43,520
+I mean that's it. That's the web server.
+
+1904
+01:08:43,520 --> 01:08:45,920
+Oh, okay. Cool. So we put it behind an
+
+1905
+01:08:45,920 --> 01:08:48,960
+API. Um what we can do is make this like
+
+1906
+01:08:48,960 --> 01:08:52,080
+pause and resumeumable though. Um pause
+
+1907
+01:08:52,080 --> 01:08:55,120
+and resumable. That'd be sick. So uh
+
+1908
+01:08:55,120 --> 01:08:58,400
+here we have we I basically I won't go
+
+1909
+01:08:58,400 --> 01:08:59,759
+in super in-depth on the code, but you
+
+1910
+01:08:59,759 --> 01:09:01,040
+can go read it. We have a thread store
+
+1911
+01:09:01,040 --> 01:09:02,319
+that kind of just stores our things in
+
+1912
+01:09:02,319 --> 01:09:03,759
+memory, but this could be Reddus or
+
+1913
+01:09:03,759 --> 01:09:05,520
+SQLite or wherever you want to put it.
+
+1914
+01:09:05,520 --> 01:09:06,719
+And then we basically have this server
+
+1915
+01:09:06,719 --> 01:09:08,480
+with an endpoint to start a new thread.
+
+1916
+01:09:08,480 --> 01:09:11,640
+This code looks a lot like our CLI code.
+
+1917
+01:09:11,640 --> 01:09:14,880
+Um, and basically if the last data
+
+1918
+01:09:14,880 --> 01:09:17,440
+intent is request more information, we
+
+1919
+01:09:17,440 --> 01:09:19,279
+add kind of a hook to it to basically
+
+1920
+01:09:19,279 --> 01:09:21,199
+tell the client like, hey, when you have
+
+1921
+01:09:21,199 --> 01:09:24,080
+a response to this, post it to this URL.
+
+1922
+01:09:24,080 --> 01:09:25,440
+And then we have another endpoint that
+
+1923
+01:09:25,440 --> 01:09:27,359
+can handle responses. For people that
+
+1924
+01:09:27,359 --> 01:09:28,719
+are familiar like web interface, think
+
+1925
+01:09:28,719 --> 01:09:30,319
+of it like a web hook. Like when GitHub
+
+1926
+01:09:30,319 --> 01:09:32,560
+just you just register your web hook and
+
+1927
+01:09:32,560 --> 01:09:33,920
+that's what we're telling the front end.
+
+1928
+01:09:33,920 --> 01:09:35,679
+It's like when you get an update and it
+
+1929
+01:09:35,679 --> 01:09:36,640
+doesn't have to be a front end. It could
+
+1930
+01:09:36,640 --> 01:09:38,319
+be another backend service. It just says
+
+1931
+01:09:38,319 --> 01:09:40,960
+when you're ready with the answer call
+
+1932
+01:09:40,960 --> 01:09:44,080
+this API and we're just telling it.
+
+1933
+01:09:44,080 --> 01:09:46,640
+So I called with this garbled you know
+
+1934
+01:09:46,640 --> 01:09:48,560
+and XYZ and it's requesting more
+
+1935
+01:09:48,560 --> 01:09:50,319
+information and it says hey when you
+
+1936
+01:09:50,319 --> 01:09:52,480
+have the answer you know you can post it
+
+1937
+01:09:52,480 --> 01:09:55,760
+back and so I will post this back and we
+
+1938
+01:09:55,760 --> 01:09:59,520
+will use this thread ID here and and by
+
+1939
+01:09:59,520 --> 01:10:01,040
+the way this is how we made like a
+
+1940
+01:10:01,040 --> 01:10:04,800
+slightly uh stateful system but because
+
+1941
+01:10:04,800 --> 01:10:06,880
+we save the thread system in our
+
+1942
+01:10:06,880 --> 01:10:09,120
+database but we could may have made it
+
+1943
+01:10:09,120 --> 01:10:11,520
+completely stateless by send object back
+
+1944
+01:10:11,520 --> 01:10:13,679
+instead of a thread ID. we just did this
+
+1945
+01:10:13,679 --> 01:10:15,280
+because it's it's a better API
+
+1946
+01:10:15,280 --> 01:10:17,600
+experience for the end user uh and we
+
+1947
+01:10:17,600 --> 01:10:19,520
+can do migrations on the thread and
+
+1948
+01:10:19,520 --> 01:10:22,000
+everything else. But this context that
+
+1949
+01:10:22,000 --> 01:10:24,640
+we're sharing here today is about owning
+
+1950
+01:10:24,640 --> 01:10:26,719
+the loop. If you own the loop, if you
+
+1951
+01:10:26,719 --> 01:10:28,600
+own the way that the model is being
+
+1952
+01:10:28,600 --> 01:10:31,440
+called, you can build this trivially
+
+1953
+01:10:31,440 --> 01:10:33,199
+because you can use existing paradigms
+
+1954
+01:10:33,199 --> 01:10:34,640
+that you're already familiar with in
+
+1955
+01:10:34,640 --> 01:10:36,480
+software engineering to build your
+
+1956
+01:10:36,480 --> 01:10:38,960
+agent, not have to relearn like this LLM
+
+1957
+01:10:38,960 --> 01:10:41,760
+voodoo magic to go build your agent.
+
+1958
+01:10:41,760 --> 01:10:43,600
+That's all just software. It's all
+
+1959
+01:10:43,600 --> 01:10:45,520
+software. I think we have another thing
+
+1960
+01:10:45,520 --> 01:10:47,520
+that is like we'll I'll probably do a
+
+1961
+01:10:47,520 --> 01:10:48,719
+follow-up or something on like, hey,
+
+1962
+01:10:48,719 --> 01:10:50,400
+what if you have human approval, right?
+
+1963
+01:10:50,400 --> 01:10:52,239
+You can have a tool like divide is
+
+1964
+01:10:52,239 --> 01:10:53,679
+scary. We don't want to run that without
+
+1965
+01:10:53,679 --> 01:10:55,040
+checking with the human because we don't
+
+1966
+01:10:55,040 --> 01:10:56,480
+want to divide by zero error or
+
+1967
+01:10:56,480 --> 01:10:58,000
+something. You have that up. You hit
+
+1968
+01:10:58,000 --> 01:10:59,520
+show them. Uh, no, that's not ready to
+
+1969
+01:10:59,520 --> 01:11:01,040
+go. I mean, we could try to live code it
+
+1970
+01:11:01,040 --> 01:11:04,000
+for the for the extra linkers, but we'll
+
+1971
+01:11:04,000 --> 01:11:06,080
+send it out. We'll send it out or maybe
+
+1972
+01:11:06,080 --> 01:11:07,920
+we can do one a whole episode on just
+
+1973
+01:11:07,920 --> 01:11:09,760
+that because there's so many nuances to
+
+1974
+01:11:09,760 --> 01:11:11,440
+the way that you do human approval that
+
+1975
+01:11:11,440 --> 01:11:12,960
+I think it'd be worth it does it does
+
+1976
+01:11:12,960 --> 01:11:15,679
+get a lot more complex. Yeah. So, and
+
+1977
+01:11:15,679 --> 01:11:18,239
+like this is so like what you saw today
+
+1978
+01:11:18,239 --> 01:11:19,920
+was a lot around like these
+
+1979
+01:11:19,920 --> 01:11:21,199
+infrastructure that we built. This is
+
+1980
+01:11:21,199 --> 01:11:23,280
+the philosophy of BMW and what what
+
+1981
+01:11:23,280 --> 01:11:24,640
+Dexter is going to share about this
+
+1982
+01:11:24,640 --> 01:11:26,239
+human approval stuff is kind of the
+
+1983
+01:11:26,239 --> 01:11:28,080
+whole philosophy behind human layer.
+
+1984
+01:11:28,080 --> 01:11:30,199
+Like if eventually at some point we'll
+
+1985
+01:11:30,199 --> 01:11:32,960
+want one lay layer of control that we
+
+1986
+01:11:32,960 --> 01:11:34,280
+want because no matter how much
+
+1987
+01:11:34,280 --> 01:11:37,040
+engineering we add around these systems
+
+1988
+01:11:37,040 --> 01:11:39,199
+at some point just like in a normal
+
+1989
+01:11:39,199 --> 01:11:41,120
+workflow you want a manual process to
+
+1990
+01:11:41,120 --> 01:11:43,280
+approve it. I don't want my release to
+
+1991
+01:11:43,280 --> 01:11:44,880
+be fully automated no matter how good I
+
+1992
+01:11:44,880 --> 01:11:47,520
+am. I'm paranoid I have a human presence
+
+1993
+01:11:47,520 --> 01:11:49,679
+to release it out so people don't get
+
+1994
+01:11:49,679 --> 01:11:51,199
+versions of BAML automatically. It's
+
+1995
+01:11:51,199 --> 01:11:53,440
+like a manual process no matter how good
+
+1996
+01:11:53,440 --> 01:11:56,080
+our pipelines are. in your LM workflows,
+
+1997
+01:11:56,080 --> 01:11:57,280
+you'll want that. And that's where I
+
+1998
+01:11:57,280 --> 01:11:59,360
+think a tool like human layer really,
+
+1999
+01:11:59,360 --> 01:12:02,000
+really, really shines because no matter
+
+2000
+01:12:02,000 --> 01:12:03,440
+how much engineering you do, at some
+
+2001
+01:12:03,440 --> 01:12:05,120
+point you want to process because you
+
+2002
+01:12:05,120 --> 01:12:07,920
+want liability and other things built in
+
+2003
+01:12:07,920 --> 01:12:11,830
+and that's the value.
+
+2004
+01:12:13,990 --> 01:12:14,000
+Yeah, I think you nailed it. So, there's
+
+2005
+01:12:14,000 --> 01:12:15,840
+much more here and we can get way more
+
+2006
+01:12:15,840 --> 01:12:18,159
+advanced with this and like probably if
+
+2007
+01:12:18,159 --> 01:12:19,679
+we do a follow-up on this, I know we're
+
+2008
+01:12:19,679 --> 01:12:21,520
+gonna, by the way, we're going to take a
+
+2009
+01:12:21,520 --> 01:12:23,840
+break for two weeks after this. Um, so
+
+2010
+01:12:23,840 --> 01:12:26,159
+this has been the kind of first four
+
+2011
+01:12:26,159 --> 01:12:28,159
+episodes of AI that works. We'll call it
+
+2012
+01:12:28,159 --> 01:12:31,120
+season 1. We'll be back in what is it?
+
+2013
+01:12:31,120 --> 01:12:33,120
+Three weeks from today. Three weeks from
+
+2014
+01:12:33,120 --> 01:12:36,080
+today with season two. Um, in some point
+
+2015
+01:12:36,080 --> 01:12:37,440
+in season two, we'll probably do a
+
+2016
+01:12:37,440 --> 01:12:39,360
+follow-up on this and do like, hey, how
+
+2017
+01:12:39,360 --> 01:12:41,679
+do I take my 12actor agent and put it
+
+2018
+01:12:41,679 --> 01:12:43,840
+behind email or put it behind Slack and
+
+2019
+01:12:43,840 --> 01:12:45,600
+deploy it to a place? Because if you
+
+2020
+01:12:45,600 --> 01:12:47,600
+have this and you have these principles,
+
+2021
+01:12:47,600 --> 01:12:49,199
+you can run your agent anywhere. You can
+
+2022
+01:12:49,199 --> 01:12:51,199
+run it as a small component of a bigger
+
+2023
+01:12:51,199 --> 01:12:53,280
+system. Um, and everything just works.
+
+2024
+01:12:53,280 --> 01:12:55,600
+Go back to your server.ts.
+
+2025
+01:12:55,600 --> 01:13:00,480
+Yeah. So, uh, read your server.
+
+2026
+01:13:00,480 --> 01:13:03,360
+Sorry, there was a thing blocking my uh
+
+2027
+01:13:03,360 --> 01:13:06,640
+my UI. Making this a Slack API, some of
+
+2028
+01:13:06,640 --> 01:13:08,320
+you, I'm sure, are are familiar with it.
+
+2029
+01:13:08,320 --> 01:13:09,840
+It's not that hard. Taking that web
+
+2030
+01:13:09,840 --> 01:13:11,520
+request and making a Slack API is really
+
+2031
+01:13:11,520 --> 01:13:13,120
+easy.
+
+2032
+01:13:13,120 --> 01:13:14,480
+So, we're going to go into that and talk
+
+2033
+01:13:14,480 --> 01:13:16,159
+about the nuances though with AI and
+
+2034
+01:13:16,159 --> 01:13:17,600
+Slack because there are nuances that
+
+2035
+01:13:17,600 --> 01:13:19,679
+become different there that are were
+
+2036
+01:13:19,679 --> 01:13:21,760
+very very different than just like a
+
+2037
+01:13:21,760 --> 01:13:23,360
+normal Slack API and that's what I think
+
+2038
+01:13:23,360 --> 01:13:24,880
+like I've seen some of Dexter's work on
+
+2039
+01:13:24,880 --> 01:13:28,400
+this. It's freaking phenomenal.
+
+2040
+01:13:28,400 --> 01:13:30,880
+It's funny. Other questions from
+
+2041
+01:13:30,880 --> 01:13:32,480
+everyone? By the way, I know we spoke
+
+2042
+01:13:32,480 --> 01:13:33,760
+for a long time. It was supposed to be
+
+2043
+01:13:33,760 --> 01:13:35,840
+an hour. We did an hour 15. So, I
+
+2044
+01:13:35,840 --> 01:13:37,520
+apologize for taking 15 minutes extra of
+
+2045
+01:13:37,520 --> 01:13:38,960
+your everyone's time. No, no, no, no.
+
+2046
+01:13:38,960 --> 01:13:41,120
+Don't apologize. You're welcome. These
+
+2047
+01:13:41,120 --> 01:13:44,000
+people got 15 minutes extra content.
+
+2048
+01:13:44,000 --> 01:13:46,400
+That's right. Um, what questions do
+
+2049
+01:13:46,400 --> 01:13:47,920
+people have if they have any? Feel free
+
+2050
+01:13:47,920 --> 01:13:50,719
+to unmute and come on or just uh ask on
+
+2051
+01:13:50,719 --> 01:13:56,390
+chat.
+
+2052
+01:14:00,630 --> 01:14:00,640
+Cool. So, so you guys uh played around
+
+2053
+01:14:00,640 --> 01:14:04,560
+with uh like uh the reasoning models too
+
+2054
+01:14:04,560 --> 01:14:07,760
+and how does they perform here?
+
+2055
+01:14:07,760 --> 01:14:09,840
+So, the beauty is Dexter, do you want to
+
+2056
+01:14:09,840 --> 01:14:12,080
+screen share again? Oh, are we gonna Are
+
+2057
+01:14:12,080 --> 01:14:13,199
+we going to switch? Are we going to put
+
+2058
+01:14:13,199 --> 01:14:15,440
+on uh 03? Make an amazing model. Just
+
+2059
+01:14:15,440 --> 01:14:17,760
+switch it to 03. The beauty is remember
+
+2060
+01:14:17,760 --> 01:14:20,480
+the what you're doing here. Just go to
+
+2061
+01:14:20,480 --> 01:14:23,199
+your agent.ts. Yeah. Yeah. Make your
+
+2062
+01:14:23,199 --> 01:14:25,120
+agent just make it 03. Doesn't matter.
+
+2063
+01:14:25,120 --> 01:14:27,440
+01. It doesn't matter. Like the way do
+
+2064
+01:14:27,440 --> 01:14:29,679
+03 mini. I don't think I my verification
+
+2065
+01:14:29,679 --> 01:14:31,679
+went through yet for 03. So, all right.
+
+2066
+01:14:31,679 --> 01:14:33,840
+Then just do baml live. Yeah. Just run a
+
+2067
+01:14:33,840 --> 01:14:35,920
+test case.
+
+2068
+01:14:35,920 --> 01:14:40,159
+Uh let's see. easier. Sure.
+
+2069
+01:14:40,159 --> 01:14:41,440
+And this is a little bit slower because
+
+2070
+01:14:41,440 --> 01:14:42,960
+these models are slightly slower, but
+
+2071
+01:14:42,960 --> 01:14:46,320
+now we got it. So it and you can see
+
+2072
+01:14:46,320 --> 01:14:50,239
+called 03 mini 2025 131. So it's the
+
+2073
+01:14:50,239 --> 01:14:53,239
+model you use is completely independent
+
+2074
+01:14:53,239 --> 01:14:56,159
+of this concept. You can choose any
+
+2075
+01:14:56,159 --> 01:14:58,800
+model of your choice and and you could
+
+2076
+01:14:58,800 --> 01:15:00,560
+write this function with four different
+
+2077
+01:15:00,560 --> 01:15:02,159
+models and run all the models through
+
+2078
+01:15:02,159 --> 01:15:04,960
+the same set of tests. Exactly. So then
+
+2079
+01:15:04,960 --> 01:15:06,800
+you and then you can and you might say
+
+2080
+01:15:06,800 --> 01:15:08,640
+that hey as if I want to have like the
+
+2081
+01:15:08,640 --> 01:15:11,440
+ad tool then I want if I want the ad
+
+2082
+01:15:11,440 --> 01:15:14,400
+tool then I want um then I want to use
+
+2083
+01:15:14,400 --> 01:15:16,960
+this model if I previously you can make
+
+2084
+01:15:16,960 --> 01:15:20,000
+all of this dynamic and it's your choice
+
+2085
+01:15:20,000 --> 01:15:22,159
+and I think a lot of people ask like how
+
+2086
+01:15:22,159 --> 01:15:24,239
+good are people with like uh using
+
+2087
+01:15:24,239 --> 01:15:27,040
+frameworks or anything any framework
+
+2088
+01:15:27,040 --> 01:15:29,520
+that owns that while loop that essential
+
+2089
+01:15:29,520 --> 01:15:30,960
+while loop and doesn't give you full
+
+2090
+01:15:30,960 --> 01:15:33,280
+access to it it's like if you've ever
+
+2091
+01:15:33,280 --> 01:15:36,040
+used So, uh, a CSS
+
+2092
+01:15:36,040 --> 01:15:38,719
+library, a CSS library that doesn't give
+
+2093
+01:15:38,719 --> 01:15:40,560
+you the raw CSS that you can just edit
+
+2094
+01:15:40,560 --> 01:15:43,280
+in your code is way more painful to use
+
+2095
+01:15:43,280 --> 01:15:45,280
+than shad CN where you can just like
+
+2096
+01:15:45,280 --> 01:15:47,840
+have it in your code and edit it. And
+
+2097
+01:15:47,840 --> 01:15:51,600
+that's actually this is I think when we
+
+2098
+01:15:51,600 --> 01:15:53,120
+build more tooling around this, I
+
+2099
+01:15:53,120 --> 01:15:55,520
+basically think what we need is shad CN
+
+2100
+01:15:55,520 --> 01:15:57,280
+for agents. We need something that
+
+2101
+01:15:57,280 --> 01:15:58,880
+scaffolds everything out for you with
+
+2102
+01:15:58,880 --> 01:16:00,159
+some good opinions and a couple
+
+2103
+01:16:00,159 --> 01:16:02,159
+different variations, but then it's your
+
+2104
+01:16:02,159 --> 01:16:03,360
+code and you can do whatever you want
+
+2105
+01:16:03,360 --> 01:16:05,600
+with it. You should wait till we release
+
+2106
+01:16:05,600 --> 01:16:07,360
+packages for BAML. That's basically what
+
+2107
+01:16:07,360 --> 01:16:09,199
+that is.
+
+2108
+01:16:09,199 --> 01:16:12,000
+Sick.
+
+2109
+01:16:12,000 --> 01:16:15,280
+Question for Steve. Got a question.
+
+2110
+01:16:15,280 --> 01:16:18,400
+Uh sort of as an aside, but I noted a
+
+2111
+01:16:18,400 --> 01:16:19,520
+lot of the philosophy you've done in
+
+2112
+01:16:19,520 --> 01:16:22,239
+this series of where you say, "Hey,
+
+2113
+01:16:22,239 --> 01:16:24,400
+expected output and then BAML extracts
+
+2114
+01:16:24,400 --> 01:16:26,400
+it out." I was reading the new prompt
+
+2115
+01:16:26,400 --> 01:16:28,800
+guide for 41 with more literal calls and
+
+2116
+01:16:28,800 --> 01:16:31,760
+it basically sort of says don't do that
+
+2117
+01:16:31,760 --> 01:16:33,440
+or you know a variance of that. I was
+
+2118
+01:16:33,440 --> 01:16:35,840
+wondering your thoughts. Yeah. Bye Bob.
+
+2119
+01:16:35,840 --> 01:16:37,199
+When are you running that new benchmark
+
+2120
+01:16:37,199 --> 01:16:39,120
+to prove that BL's still better at
+
+2121
+01:16:39,120 --> 01:16:40,960
+extraction? Here's the here's what I
+
+2122
+01:16:40,960 --> 01:16:42,880
+would really say. You want to share the
+
+2123
+01:16:42,880 --> 01:16:46,239
+BFCL thing? Uh do you want Okay, I was
+
+2124
+01:16:46,239 --> 01:16:47,640
+gonna Yeah, I'll share I'll screen
+
+2125
+01:16:47,640 --> 01:16:50,000
+share. There's a couple of things. Uh,
+
+2126
+01:16:50,000 --> 01:16:53,840
+one I think um I think uh there's before
+
+2127
+01:16:53,840 --> 01:16:55,920
+I screen okay I'll screen share. Um but
+
+2128
+01:16:55,920 --> 01:16:57,600
+before I go really really into it I want
+
+2129
+01:16:57,600 --> 01:16:59,120
+to I want I think one important thing to
+
+2130
+01:16:59,120 --> 01:17:00,520
+keep in mind for these kinds of
+
+2131
+01:17:00,520 --> 01:17:03,600
+concepts. Am I screen sharing? Cool. Uh
+
+2132
+01:17:03,600 --> 01:17:05,120
+one important thing to keep in mind is
+
+2133
+01:17:05,120 --> 01:17:07,840
+remember everyone's biases. So my bias
+
+2134
+01:17:07,840 --> 01:17:09,840
+is obviously I work on so like be aware
+
+2135
+01:17:09,840 --> 01:17:12,400
+of that. Um OpenAI's bias is they want
+
+2136
+01:17:12,400 --> 01:17:14,719
+to lock you into their SDK. Be aware of
+
+2137
+01:17:14,719 --> 01:17:16,640
+that. Open eyes SDK is very different
+
+2138
+01:17:16,640 --> 01:17:19,520
+than Anthropics SDK. they really want
+
+2139
+01:17:19,520 --> 01:17:21,120
+you to lock in because then you can't
+
+2140
+01:17:21,120 --> 01:17:25,280
+move over. Um, and two, like it's
+
+2141
+01:17:25,280 --> 01:17:28,239
+possible that um, it's definitely
+
+2142
+01:17:28,239 --> 01:17:30,159
+possible that it's better, but
+
+2143
+01:17:30,159 --> 01:17:33,360
+fundamentally it seems unlikely. And the
+
+2144
+01:17:33,360 --> 01:17:38,590
+primary reason that it seems unlikely is
+
+2145
+01:17:40,870 --> 01:17:40,880
+that is just like we run these
+
+2146
+01:17:40,880 --> 01:17:42,239
+benchmarks and every time we run them,
+
+2147
+01:17:42,239 --> 01:17:43,719
+it's pretty much come out in the same
+
+2148
+01:17:43,719 --> 01:17:46,560
+way. Uh, which is what OpenI says is
+
+2149
+01:17:46,560 --> 01:17:48,320
+don't add JSON to your system. And I
+
+2150
+01:17:48,320 --> 01:17:50,480
+agree with them. Do not ask the model to
+
+2151
+01:17:50,480 --> 01:17:52,920
+output JSON and JSON.parse it. That is
+
+2152
+01:17:52,920 --> 01:17:55,840
+bad. That is really, really, really bad.
+
+2153
+01:17:55,840 --> 01:17:57,760
+The model will mess up on JSON,
+
+2154
+01:17:57,760 --> 01:17:59,040
+especially if you have a bunch of escape
+
+2155
+01:17:59,040 --> 01:18:01,360
+characters and everything else. The
+
+2156
+01:18:01,360 --> 01:18:02,440
+difference
+
+2157
+01:18:02,440 --> 01:18:06,159
+is BAML doesn't actually use JSON. So
+
+2158
+01:18:06,159 --> 01:18:08,280
+like in this case, don't
+
+2159
+01:18:08,280 --> 01:18:10,120
+use
+
+2160
+01:18:10,120 --> 01:18:12,760
+quotes around
+
+2161
+01:18:12,760 --> 01:18:15,199
+keys. The model is extracting data from
+
+2162
+01:18:15,199 --> 01:18:18,000
+an image.
+
+2163
+01:18:18,000 --> 01:18:19,760
+It's not use you see it's streaming it's
+
+2164
+01:18:19,760 --> 01:18:22,600
+not using JSON this is not
+
+2165
+01:18:22,600 --> 01:18:26,080
+JSON right so the premise that's saying
+
+2166
+01:18:26,080 --> 01:18:27,760
+that and you can see like it's pretty
+
+2167
+01:18:27,760 --> 01:18:28,960
+complicated there's like there's a whole
+
+2168
+01:18:28,960 --> 01:18:30,640
+string with ands and spaces and
+
+2169
+01:18:30,640 --> 01:18:33,600
+everything it's still pull it out so and
+
+2170
+01:18:33,600 --> 01:18:36,159
+the idea is that like the engineering
+
+2171
+01:18:36,159 --> 01:18:37,840
+work to turn the thing on the left to
+
+2172
+01:18:37,840 --> 01:18:40,480
+the into the thing on the right is not
+
+2173
+01:18:40,480 --> 01:18:42,320
+something that you should do and like if
+
+2174
+01:18:42,320 --> 01:18:43,840
+you are not going if you are not going
+
+2175
+01:18:43,840 --> 01:18:46,239
+to write your own parser you should
+
+2176
+01:18:46,239 --> 01:18:48,239
+probably just let like force the model
+
+2177
+01:18:48,239 --> 01:18:50,400
+to output JSON. Yeah. So if you're if
+
+2178
+01:18:50,400 --> 01:18:52,080
+you're not going to write do the work
+
+2179
+01:18:52,080 --> 01:18:54,080
+that we did behind the scenes, I agree
+
+2180
+01:18:54,080 --> 01:18:55,920
+that their thing is probably way better
+
+2181
+01:18:55,920 --> 01:18:57,800
+than
+
+2182
+01:18:57,800 --> 01:18:59,760
+JSON.parse, right? And if you're going
+
+2183
+01:18:59,760 --> 01:19:01,440
+to do something more sophisticated like
+
+2184
+01:19:01,440 --> 01:19:02,640
+for example like an idea of like
+
+2185
+01:19:02,640 --> 01:19:04,719
+generating code,
+
+2186
+01:19:04,719 --> 01:19:08,400
+uh write me a thing, write like watch
+
+2187
+01:19:08,400 --> 01:19:11,280
+this. Write me a thing that generates
+
+2188
+01:19:11,280 --> 01:19:14,880
+that takes in leak code questions that
+
+2189
+01:19:14,880 --> 01:19:19,440
+takes in a prompt and generates code for
+
+2190
+01:19:19,440 --> 01:19:24,400
+it and generate it takes in a uh text
+
+2191
+01:19:24,400 --> 01:19:25,640
+and
+
+2192
+01:19:25,640 --> 01:19:28,199
+generates Python
+
+2193
+01:19:28,199 --> 01:19:30,320
+code. Right? So what I want is I want to
+
+2194
+01:19:30,320 --> 01:19:32,400
+write an AI pipeline that can take in a
+
+2195
+01:19:32,400 --> 01:19:33,679
+random thing from a user and like
+
+2196
+01:19:33,679 --> 01:19:37,120
+generate some Python code for it.
+
+2197
+01:19:37,120 --> 01:19:39,840
+So this will do its thing. And once
+
+2198
+01:19:39,840 --> 01:19:41,360
+again, this just tool calling this whole
+
+2199
+01:19:41,360 --> 01:19:42,800
+thing. Like what I did here was this was
+
+2200
+01:19:42,800 --> 01:19:44,239
+tool calling that responded to this.
+
+2201
+01:19:44,239 --> 01:19:45,600
+This is another tool call that's
+
+2202
+01:19:45,600 --> 01:19:49,120
+generating actual BAML code for me. And
+
+2203
+01:19:49,120 --> 01:19:50,560
+then this is separate tool call that's
+
+2204
+01:19:50,560 --> 01:19:51,840
+generating the Python code to use that
+
+2205
+01:19:51,840 --> 01:19:54,880
+BML code. These are all just tool calls.
+
+2206
+01:19:54,880 --> 01:19:57,280
+And all I'm doing here when I go do this
+
+2207
+01:19:57,280 --> 01:19:58,960
+is if I were to go and I'll do this in
+
+2208
+01:19:58,960 --> 01:20:00,159
+profit because it's a little bit easier
+
+2209
+01:20:00,159 --> 01:20:08,830
+to go see.
+
+2210
+01:20:11,669 --> 01:20:11,679
+So really use these tools a lot, huh?
+
+2211
+01:20:11,679 --> 01:20:14,159
+Huh? This is impress. You're you're very
+
+2212
+01:20:14,159 --> 01:20:15,520
+quick with this stuff. I gota learn. I
+
+2213
+01:20:15,520 --> 01:20:17,280
+got I got I got I gota jump between
+
+2214
+01:20:17,280 --> 01:20:18,960
+these faster. So now it's going to go
+
+2215
+01:20:18,960 --> 01:20:20,480
+run the code, right? So now it's going
+
+2216
+01:20:20,480 --> 01:20:21,840
+to generate Python code. And check this
+
+2217
+01:20:21,840 --> 01:20:24,159
+out. See how the model did it? It just
+
+2218
+01:20:24,159 --> 01:20:26,159
+responded with a Python code snippet
+
+2219
+01:20:26,159 --> 01:20:29,040
+afterwards as a markdown snippet and it
+
+2220
+01:20:29,040 --> 01:20:31,440
+produced this out. So you're right, JSON
+
+2221
+01:20:31,440 --> 01:20:33,360
+is bad.
+
+2222
+01:20:33,360 --> 01:20:35,120
+But serializing it in a way that the
+
+2223
+01:20:35,120 --> 01:20:36,960
+model can output things and I can go
+
+2224
+01:20:36,960 --> 01:20:39,280
+parse it is useful. And this is getting
+
+2225
+01:20:39,280 --> 01:20:40,800
+that point of like the model's been
+
+2226
+01:20:40,800 --> 01:20:42,560
+trained on a lot more code in markdown
+
+2227
+01:20:42,560 --> 01:20:44,560
+than code in JSON. And so if the model
+
+2228
+01:20:44,560 --> 01:20:46,000
+wants to write code in markdown, you
+
+2229
+01:20:46,000 --> 01:20:47,320
+should let the model write code in
+
+2230
+01:20:47,320 --> 01:20:50,080
+markdown. And then that will give you
+
+2231
+01:20:50,080 --> 01:20:51,679
+better results than constraining its
+
+2232
+01:20:51,679 --> 01:20:53,600
+output and forcing it to use like slash
+
+2233
+01:20:53,600 --> 01:20:55,280
+ends and saying, "Hey, you can't use new
+
+2234
+01:20:55,280 --> 01:20:56,719
+lines." Because then every time the
+
+2235
+01:20:56,719 --> 01:20:58,239
+model wants to output a new line, that
+
+2236
+01:20:58,239 --> 01:21:00,320
+token is going to get zeroed out. and
+
+2237
+01:21:00,320 --> 01:21:02,239
+all the other tokens which were all like
+
+2238
+01:21:02,239 --> 01:21:04,800
+1% in the sampling, it's just going to
+
+2239
+01:21:04,800 --> 01:21:06,480
+pick a random one of those instead. And
+
+2240
+01:21:06,480 --> 01:21:08,480
+the chance that it picks slashn is like
+
+2241
+01:21:08,480 --> 01:21:11,360
+very low. Yes. Yes. Yes. Yes. Yes. Yes.
+
+2242
+01:21:11,360 --> 01:21:14,080
+Dexter nailed it. So open as guideline I
+
+2243
+01:21:14,080 --> 01:21:16,960
+agree with. JSON is bad. Um but I'm
+
+2244
+01:21:16,960 --> 01:21:18,320
+still not convinced that tool calling is
+
+2245
+01:21:18,320 --> 01:21:19,760
+good because tool calling is basically
+
+2246
+01:21:19,760 --> 01:21:22,000
+doing JSON in a forced way and there's
+
+2247
+01:21:22,000 --> 01:21:24,400
+no way you'll get this large quality of
+
+2248
+01:21:24,400 --> 01:21:26,640
+code out. And the model did this
+
+2249
+01:21:26,640 --> 01:21:28,400
+naturally. This isn't me prompting in
+
+2250
+01:21:28,400 --> 01:21:31,040
+any way. I just like the prompt says
+
+2251
+01:21:31,040 --> 01:21:35,110
+this. This is all the prompt.
+
+2252
+01:21:37,110 --> 01:21:37,120
+That's all. This is the web request
+
+2253
+01:21:37,120 --> 01:21:38,800
+going into the model. There's no tool
+
+2254
+01:21:38,800 --> 01:21:40,880
+calling, nothing else. And the model is
+
+2255
+01:21:40,880 --> 01:21:42,719
+naturally able to say that the best way
+
+2256
+01:21:42,719 --> 01:21:44,560
+I want to output these tokens. The
+
+2257
+01:21:44,560 --> 01:21:46,719
+tokens that are best for me to represent
+
+2258
+01:21:46,719 --> 01:21:49,920
+this data is this.
+
+2259
+01:21:49,920 --> 01:21:52,560
+Yeah, that's some trash JSON. Good job
+
+2260
+01:21:52,560 --> 01:21:55,199
+parsing. That's a good ass parser, dude.
+
+2261
+01:21:55,199 --> 01:21:58,880
+That's a good ass parser. Cool. Um, I
+
+2262
+01:21:58,880 --> 01:22:01,440
+gotta get running. Let's uh let me just
+
+2263
+01:22:01,440 --> 01:22:02,800
+stay on for any more questions that
+
+2264
+01:22:02,800 --> 01:22:04,880
+people might have and then uh I think
+
+2265
+01:22:04,880 --> 01:22:07,199
+we're mostly done. We don't tell the
+
+2266
+01:22:07,199 --> 01:22:09,360
+model how to out how it outputs. We do
+
+2267
+01:22:09,360 --> 01:22:10,880
+we tell it the structure that we wanted
+
+2268
+01:22:10,880 --> 01:22:13,360
+to go have and that's mostly it. So
+
+2269
+01:22:13,360 --> 01:22:15,440
+whatever it outputs you your parser sort
+
+2270
+01:22:15,440 --> 01:22:18,639
+of like um it mostly works.
+
+2271
+01:22:18,639 --> 01:22:20,400
+We've processed like million tens of
+
+2272
+01:22:20,400 --> 01:22:22,239
+million I don't even know like I have no
+
+2273
+01:22:22,239 --> 01:22:23,440
+idea how many data models that we've
+
+2274
+01:22:23,440 --> 01:22:26,080
+gone through at this point. we have but
+
+2275
+01:22:26,080 --> 01:22:27,760
+and Dexter has pushed a lot of limits of
+
+2276
+01:22:27,760 --> 01:22:30,400
+them with his tool calling systems a lot
+
+2277
+01:22:30,400 --> 01:22:31,679
+along with a bunch of other companies
+
+2278
+01:22:31,679 --> 01:22:33,920
+and it's made it um the benchmarks show
+
+2279
+01:22:33,920 --> 01:22:36,480
+that it's good but would in different
+
+2280
+01:22:36,480 --> 01:22:38,880
+LLM models sort of like lean towards
+
+2281
+01:22:38,880 --> 01:22:40,560
+something different. Yeah. So you can
+
+2282
+01:22:40,560 --> 01:22:42,400
+just use a different model and it mostly
+
+2283
+01:22:42,400 --> 01:22:44,719
+works because it's a very unrestricted
+
+2284
+01:22:44,719 --> 01:22:46,320
+parser and there's like you can read our
+
+2285
+01:22:46,320 --> 01:22:47,520
+blog post about it and that'll probably
+
+2286
+01:22:47,520 --> 01:22:49,199
+outline it a little bit better. That's
+
+2287
+01:22:49,199 --> 01:22:52,229
+cool.
+
+2288
+01:22:53,990 --> 01:22:54,000
+Um, any other questions for anyone else
+
+2289
+01:22:54,000 --> 01:22:55,199
+left? I know there's just a few people
+
+2290
+01:22:55,199 --> 01:22:56,719
+and then we'll call it quits and then me
+
+2291
+01:22:56,719 --> 01:22:58,560
+and Death have uh other meetings to
+
+2292
+01:22:58,560 --> 01:23:01,679
+attend to. So, what do you think about
+
+2293
+01:23:01,679 --> 01:23:04,960
+the MCP and the agent development kit?
+
+2294
+01:23:04,960 --> 01:23:07,920
+Uh, do you plan to use it in your uh
+
+2295
+01:23:07,920 --> 01:23:11,280
+products or how do you plan to integrate
+
+2296
+01:23:11,280 --> 01:23:13,360
+with with them?
+
+2297
+01:23:13,360 --> 01:23:15,920
+You want to go first? Okay. This is uh
+
+2298
+01:23:15,920 --> 01:23:17,840
+this is not on behalf of Dexter. This is
+
+2299
+01:23:17,840 --> 01:23:19,600
+my personal opinion of it. So just to be
+
+2300
+01:23:19,600 --> 01:23:21,280
+very very clear and I don't know what
+
+2301
+01:23:21,280 --> 01:23:22,719
+Dexter's opinion is. I don't think we've
+
+2302
+01:23:22,719 --> 01:23:24,560
+explicitly talked about this. It's
+
+2303
+01:23:24,560 --> 01:23:28,639
+complicated. Um yeah I think all those
+
+2304
+01:23:28,639 --> 01:23:30,880
+frameworks are basically just like API
+
+2305
+01:23:30,880 --> 01:23:33,480
+calls around rest
+
+2306
+01:23:33,480 --> 01:23:36,639
+endpoints. Um and like they have some
+
+2307
+01:23:36,639 --> 01:23:38,199
+way to do REST
+
+2308
+01:23:38,199 --> 01:23:40,480
+endpoints and I guess they've made some
+
+2309
+01:23:40,480 --> 01:23:42,239
+decisions around it but I'm not yet
+
+2310
+01:23:42,239 --> 01:23:43,600
+convinced that it's the perfect
+
+2311
+01:23:43,600 --> 01:23:45,280
+decisions. I think like lang chain for
+
+2312
+01:23:45,280 --> 01:23:48,400
+example was very hyped for a while and
+
+2313
+01:23:48,400 --> 01:23:50,239
+clearly doesn't work because of
+
+2314
+01:23:50,239 --> 01:23:52,960
+engineering constraints
+
+2315
+01:23:52,960 --> 01:23:54,719
+um and not really because like I mean
+
+2316
+01:23:54,719 --> 01:23:56,239
+there's value in lang chain too but like
+
+2317
+01:23:56,239 --> 01:23:57,920
+langraph is I think more thought through
+
+2318
+01:23:57,920 --> 01:24:00,080
+than lang chain is is for example what
+
+2319
+01:24:00,080 --> 01:24:04,440
+I'd say think mcp is
+
+2320
+01:24:04,440 --> 01:24:07,120
+uh I wouldn't build a company on it
+
+2321
+01:24:07,120 --> 01:24:09,840
+today is what I would say
+
+2322
+01:24:09,840 --> 01:24:12,080
+um I think it's in anthropic's best
+
+2323
+01:24:12,080 --> 01:24:13,920
+interest for MCP to get adopted because
+
+2324
+01:24:13,920 --> 01:24:15,679
+they're building UIs that everyone uses
+
+2325
+01:24:15,679 --> 01:24:17,040
+and they want to have a standardized way
+
+2326
+01:24:17,040 --> 01:24:18,639
+for people to plug into their UI with
+
+2327
+01:24:18,639 --> 01:24:20,960
+them doing less work. They're kind of
+
+2328
+01:24:20,960 --> 01:24:22,639
+using MCP as a way to build and
+
+2329
+01:24:22,639 --> 01:24:23,960
+bootstrap an app
+
+2330
+01:24:23,960 --> 01:24:26,239
+store is the way that I kind of think
+
+2331
+01:24:26,239 --> 01:24:29,840
+about it. But I'm still not I think when
+
+2332
+01:24:29,840 --> 01:24:31,760
+I look at code, what I look for is
+
+2333
+01:24:31,760 --> 01:24:33,440
+beautiful code and that's where I decide
+
+2334
+01:24:33,440 --> 01:24:35,199
+if something is good or bad. That's like
+
+2335
+01:24:35,199 --> 01:24:37,760
+when I first saw React, it honestly felt
+
+2336
+01:24:37,760 --> 01:24:39,360
+beautiful. Like it was like it's
+
+2337
+01:24:39,360 --> 01:24:40,880
+actually really pretty once you
+
+2338
+01:24:40,880 --> 01:24:42,320
+understand it and I don't look at it.
+
+2339
+01:24:42,320 --> 01:24:43,520
+When I look at lang chain, it doesn't
+
+2340
+01:24:43,520 --> 01:24:44,560
+feel beautiful. That's why I didn't like
+
+2341
+01:24:44,560 --> 01:24:46,320
+it. When I look at paid AI, it doesn't
+
+2342
+01:24:46,320 --> 01:24:47,600
+feel beautiful. There's things about it
+
+2343
+01:24:47,600 --> 01:24:50,239
+that feel a little off. When I go look
+
+2344
+01:24:50,239 --> 01:24:53,120
+at MCP, I have the same feeling. I don't
+
+2345
+01:24:53,120 --> 01:24:54,719
+look at it and be like, "Wow, that's
+
+2346
+01:24:54,719 --> 01:24:56,120
+beautiful
+
+2347
+01:24:56,120 --> 01:24:59,600
+code." And that's kind of where why I'm
+
+2348
+01:24:59,600 --> 01:25:02,960
+not personally like 100% bullish on
+
+2349
+01:25:02,960 --> 01:25:05,199
+let's go do this today. It might prove
+
+2350
+01:25:05,199 --> 01:25:07,760
+to be amazing, but I don't think it's
+
+2351
+01:25:07,760 --> 01:25:09,840
+beautiful today. And be beauty is really
+
+2352
+01:25:09,840 --> 01:25:12,000
+important in code, especially for
+
+2353
+01:25:12,000 --> 01:25:15,120
+frameworks and systems.
+
+2354
+01:25:15,120 --> 01:25:18,080
+Cool. Um, wait, no, I'm gonna give my
+
+2355
+01:25:18,080 --> 01:25:20,199
+MCP rant and then you're up,
+
+2356
+01:25:20,199 --> 01:25:22,320
+Carlos. Uh, I think it's I think
+
+2357
+01:25:22,320 --> 01:25:24,880
+protocols are very powerful. I think we
+
+2358
+01:25:24,880 --> 01:25:26,080
+saw a similar thing play out in the
+
+2359
+01:25:26,080 --> 01:25:27,600
+Kubernetes world, which was basically
+
+2360
+01:25:27,600 --> 01:25:29,280
+like you had this thing called Helm,
+
+2361
+01:25:29,280 --> 01:25:31,520
+which was like super scrappy and didn't
+
+2362
+01:25:31,520 --> 01:25:33,280
+have I think probably arguably all the
+
+2363
+01:25:33,280 --> 01:25:35,280
+right abstractions, but it was at a
+
+2364
+01:25:35,280 --> 01:25:36,639
+level that people could understand it.
+
+2365
+01:25:36,639 --> 01:25:38,320
+it was good enough for people to adopt
+
+2366
+01:25:38,320 --> 01:25:40,960
+and move on to the next thing. And once
+
+2367
+01:25:40,960 --> 01:25:42,639
+it got momentum and everyone was using
+
+2368
+01:25:42,639 --> 01:25:44,480
+it, it was basically locked in. And it
+
+2369
+01:25:44,480 --> 01:25:46,000
+didn't matter that Google came along a
+
+2370
+01:25:46,000 --> 01:25:48,400
+year later and released like a much
+
+2371
+01:25:48,400 --> 01:25:51,040
+better solution for the problem, a much
+
+2372
+01:25:51,040 --> 01:25:52,639
+cleaner protocol, much more well thought
+
+2373
+01:25:52,639 --> 01:25:55,280
+for, a much more like engineer friendly.
+
+2374
+01:25:55,280 --> 01:25:56,960
+It didn't matter. It had already taken
+
+2375
+01:25:56,960 --> 01:26:00,639
+off. So we may MCP may be the thing that
+
+2376
+01:26:00,639 --> 01:26:02,239
+we're stuck with. Not stuck with,
+
+2377
+01:26:02,239 --> 01:26:04,080
+whatever you want to call it. Um, I
+
+2378
+01:26:04,080 --> 01:26:06,960
+think REST is pretty good already. I
+
+2379
+01:26:06,960 --> 01:26:09,120
+don't not 100% sure why we needed it.
+
+2380
+01:26:09,120 --> 01:26:12,560
+There's a lot in it. Um, but we building
+
+2381
+01:26:12,560 --> 01:26:14,480
+stuff on top of MCP. I want to build a
+
+2382
+01:26:14,480 --> 01:26:17,040
+BAML agent that queries MCP tools and
+
+2383
+01:26:17,040 --> 01:26:18,639
+pushes them into the context window as
+
+2384
+01:26:18,639 --> 01:26:21,120
+tools because I'm curious how the actual
+
+2385
+01:26:21,120 --> 01:26:22,719
+performance is because if it's an easy
+
+2386
+01:26:22,719 --> 01:26:25,600
+way to consume APIs, then I will
+
+2387
+01:26:25,600 --> 01:26:27,920
+probably use it. Exactly. Even if it's
+
+2388
+01:26:27,920 --> 01:26:30,320
+not perfect. MCP is basically a REST
+
+2389
+01:26:30,320 --> 01:26:32,560
+service that has a very specific query
+
+2390
+01:26:32,560 --> 01:26:34,239
+that you can make that says tell me all
+
+2391
+01:26:34,239 --> 01:26:37,239
+the other services you have. That's
+
+2392
+01:26:37,239 --> 01:26:41,000
+it. And that sounds useful.
+
+2393
+01:26:41,000 --> 01:26:43,679
+Yep. And oh, the other fun thing if you
+
+2394
+01:26:43,679 --> 01:26:45,280
+want to uh if you want to mess with
+
+2395
+01:26:45,280 --> 01:26:47,040
+people is, you know, MCP servers, most
+
+2396
+01:26:47,040 --> 01:26:49,360
+of them are actually clients. They're
+
+2397
+01:26:49,360 --> 01:26:50,719
+not servers. You don't call them over
+
+2398
+01:26:50,719 --> 01:26:52,800
+the web. You you run them locally on
+
+2399
+01:26:52,800 --> 01:26:54,400
+your machine and then they make the call
+
+2400
+01:26:54,400 --> 01:26:56,960
+to a real server. But that's we won't
+
+2401
+01:26:56,960 --> 01:27:00,639
+get it. That's just a naming thing.
+
+2402
+01:27:00,639 --> 01:27:02,480
+Um any uh Carlos, you had one last
+
+2403
+01:27:02,480 --> 01:27:04,719
+question. Yeah, you sort of answered
+
+2404
+01:27:04,719 --> 01:27:06,400
+that question. I was going to ask
+
+2405
+01:27:06,400 --> 01:27:09,600
+whether um the BAML can be integrated
+
+2406
+01:27:09,600 --> 01:27:12,800
+with MCPAS and I guess um Dexter working
+
+2407
+01:27:12,800 --> 01:27:15,360
+on it if you watch the first. Well, IAS
+
+2408
+01:27:15,360 --> 01:27:17,520
+is is working on it a lot more, but we
+
+2409
+01:27:17,520 --> 01:27:19,280
+should do an episode on that by Bob. We
+
+2410
+01:27:19,280 --> 01:27:20,719
+should be like how do you how do you
+
+2411
+01:27:20,719 --> 01:27:23,440
+great MCP with factor? Yeah. Yeah, we
+
+2412
+01:27:23,440 --> 01:27:24,480
+should go do that. I think that'd be a
+
+2413
+01:27:24,480 --> 01:27:26,239
+fun one. I think especially for like the
+
+2414
+01:27:26,239 --> 01:27:28,000
+next season, we'll go one thing we're
+
+2415
+01:27:28,000 --> 01:27:29,760
+gonna go do, uh, I know a few of you
+
+2416
+01:27:29,760 --> 01:27:31,679
+left. We're gonna go send out a survey
+
+2417
+01:27:31,679 --> 01:27:33,840
+at the end of this with this episode. If
+
+2418
+01:27:33,840 --> 01:27:35,600
+you have time, we'd love like a detailed
+
+2419
+01:27:35,600 --> 01:27:37,520
+response to it. It will just help us
+
+2420
+01:27:37,520 --> 01:27:39,199
+tune the next few things and then it'll
+
+2421
+01:27:39,199 --> 01:27:41,120
+start every Tuesday after that. And you
+
+2422
+01:27:41,120 --> 01:27:43,600
+should expect to see this uh detailed
+
+2423
+01:27:43,600 --> 01:27:45,760
+code examples pretty regularly with Dex
+
+2424
+01:27:45,760 --> 01:27:48,239
+and I.
+
+2425
+01:27:48,239 --> 01:27:50,000
+Amazing.
+
+2426
+01:27:50,000 --> 01:27:51,760
+Thank you. It's been a blast. Thanks
+
+2427
+01:27:51,760 --> 01:27:52,960
+everybody.
+
+2428
+01:27:52,960 --> 01:27:56,560
+Um, and then we'll stop the recording.

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID IkSEXg6f4KY",
+  "transcript_range": "00:01.470 to 01:06:50.490",
+  "timestamp_order": "passed: knowledge/scripts/verify_transcript.py found 223 monotonic timestamps",
+  "spot_checks": ["automated feedback", "shared prompt overfitting", "Pareto frontier", "reachable types", "editable optimizer prompts", "test source feedback", "custom checks", "human prompt review", "type contracts"],
+  "timestamped_claim_count": 9,
+  "source_duration_check": "not run: source media was not downloaded",
+  "json_validation": "passed: all JSON parsed with python3 -m json.tool and all 9 JSONL records parsed individually",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "speaker attribution during shared-screen sections", "screen-only evidence", "prerelease product behavior", "research terminology"]
+}

@@ -1,0 +1,6523 @@
+1
+00:00:03,030 --> 00:00:03,040
+Everyone, uh, welcome to another episode
+
+2
+00:00:03,040 --> 00:00:07,759
+of AI that works. We are back and I
+
+3
+00:00:07,759 --> 00:00:10,559
+think today one of the key things that
+
+4
+00:00:10,559 --> 00:00:12,800
+I'm really, really excited to talk about
+
+5
+00:00:12,800 --> 00:00:15,120
+is a concept that has come up a few
+
+6
+00:00:15,120 --> 00:00:16,720
+times in our past streams, but it's
+
+7
+00:00:16,720 --> 00:00:18,720
+really about how to build working AI
+
+8
+00:00:18,720 --> 00:00:20,240
+pipelines.
+
+9
+00:00:20,240 --> 00:00:22,000
+Um, so for everyone that hasn't attended
+
+10
+00:00:22,000 --> 00:00:23,680
+before, this is a show called AI that
+
+11
+00:00:23,680 --> 00:00:26,240
+works. Every week we run a live
+
+12
+00:00:26,240 --> 00:00:28,320
+conversation where our goal is to talk
+
+13
+00:00:28,320 --> 00:00:29,679
+about how to build a pipeline that
+
+14
+00:00:29,679 --> 00:00:31,359
+actually can make real productive
+
+15
+00:00:31,359 --> 00:00:33,680
+examples. If you find this sort of stuff
+
+16
+00:00:33,680 --> 00:00:36,239
+interesting, check out our link and
+
+17
+00:00:36,239 --> 00:00:38,000
+we'll usually post new events there. And
+
+18
+00:00:38,000 --> 00:00:39,840
+we run this every single Tuesday at 10
+
+19
+00:00:39,840 --> 00:00:42,079
+a.m. uh for about an hour and the goal
+
+20
+00:00:42,079 --> 00:00:45,440
+is to get to coding as soon as possible.
+
+21
+00:00:45,440 --> 00:00:47,360
+My name is Vivof uh on the side. I work
+
+22
+00:00:47,360 --> 00:00:50,719
+on BAML. Um and today I have with me
+
+23
+00:00:50,719 --> 00:00:52,879
+special guest uh Dexter sadly can't make
+
+24
+00:00:52,879 --> 00:00:54,239
+it today. So, for all of you that are
+
+25
+00:00:54,239 --> 00:00:56,320
+hoping to see him, I'm really sorry
+
+26
+00:00:56,320 --> 00:00:57,920
+you're stuck with just myself, but
+
+27
+00:00:57,920 --> 00:01:00,640
+luckily we have Anders on um to make it
+
+28
+00:01:00,640 --> 00:01:03,520
+a lot more interesting and fun.
+
+29
+00:01:03,520 --> 00:01:04,640
+>> Yeah.
+
+30
+00:01:04,640 --> 00:01:05,600
+>> Anders, do you want to give a quick
+
+31
+00:01:05,600 --> 00:01:07,280
+intro about yourself? Uh I know you're a
+
+32
+00:01:07,280 --> 00:01:10,080
+YC founder. I have gotten to know you uh
+
+33
+00:01:10,080 --> 00:01:12,560
+for quite some time now. Um
+
+34
+00:01:12,560 --> 00:01:13,439
+>> Yeah.
+
+35
+00:01:13,439 --> 00:01:13,920
+>> And
+
+36
+00:01:13,920 --> 00:01:15,760
+>> uh first of all, is my mic working
+
+37
+00:01:15,760 --> 00:01:17,200
+properly?
+
+38
+00:01:17,200 --> 00:01:22,640
+>> Okay. All right. Uh yeah. So yeah, it's
+
+39
+00:01:22,640 --> 00:01:23,759
+been a it's been a while since we known
+
+40
+00:01:23,759 --> 00:01:26,560
+each other now. Um but yeah, so we did
+
+41
+00:01:26,560 --> 00:01:30,240
+the um YCS25 batch, but basically we're
+
+42
+00:01:30,240 --> 00:01:32,400
+building uh SageKit, which is like a
+
+43
+00:01:32,400 --> 00:01:35,439
+workflow automation platform. Uh it's
+
+44
+00:01:35,439 --> 00:01:38,159
+kind of like chat GPT meets Zapier. Like
+
+45
+00:01:38,159 --> 00:01:39,840
+you just sort of chat and it builds you
+
+46
+00:01:39,840 --> 00:01:42,720
+like workflow automations. So yeah,
+
+47
+00:01:42,720 --> 00:01:44,479
+very, you know, key thing to our product
+
+48
+00:01:44,479 --> 00:01:46,079
+experience is just having like a super
+
+49
+00:01:46,079 --> 00:01:48,880
+good like chat experience, right? So
+
+50
+00:01:48,880 --> 00:01:50,159
+there's a lot of things involved in sort
+
+51
+00:01:50,159 --> 00:01:53,840
+of making that kind of experience good,
+
+52
+00:01:53,840 --> 00:01:57,759
+right? And uh like making sure that
+
+53
+00:01:57,759 --> 00:02:00,240
+yeah, users always have sort of the
+
+54
+00:02:00,240 --> 00:02:02,799
+right thing happen at the right time
+
+55
+00:02:02,799 --> 00:02:04,719
+when they're on our platform. So
+
+56
+00:02:04,719 --> 00:02:06,640
+>> yeah, and I think the first time we met
+
+57
+00:02:06,640 --> 00:02:08,160
+is actually when you were working on a
+
+58
+00:02:08,160 --> 00:02:09,599
+thing called magnitude back at that
+
+59
+00:02:09,599 --> 00:02:12,000
+time. Um, and I and for everyone else
+
+60
+00:02:12,000 --> 00:02:13,040
+that we're going to talk about today is
+
+61
+00:02:13,040 --> 00:02:14,160
+we're going to talk about event- driven
+
+62
+00:02:14,160 --> 00:02:15,280
+actions. And why are we going to talk
+
+63
+00:02:15,280 --> 00:02:16,879
+about event- driven actions? Well,
+
+64
+00:02:16,879 --> 00:02:18,080
+because I think it's one of the most
+
+65
+00:02:18,080 --> 00:02:20,000
+interesting ways to go model how to go
+
+66
+00:02:20,000 --> 00:02:23,280
+build agents behind the scene. And we'll
+
+67
+00:02:23,280 --> 00:02:24,400
+get to the whiteboards really fast
+
+68
+00:02:24,400 --> 00:02:26,879
+before we get to coding in a second. But
+
+69
+00:02:26,879 --> 00:02:28,160
+the reason that we brought Anders on
+
+70
+00:02:28,160 --> 00:02:30,480
+today is because I think Anders built
+
+71
+00:02:30,480 --> 00:02:32,239
+their first thing called Magnitude as I
+
+72
+00:02:32,239 --> 00:02:33,360
+mentioned before, which was an open
+
+73
+00:02:33,360 --> 00:02:34,800
+source system. And I think you guys did
+
+74
+00:02:34,800 --> 00:02:36,560
+pretty well in Hacker News. They got a
+
+75
+00:02:36,560 --> 00:02:39,040
+bunch of GitHub stars around it. Um, and
+
+76
+00:02:39,040 --> 00:02:41,280
+I think the way I described it was kind
+
+77
+00:02:41,280 --> 00:02:43,840
+of like browser based but worked. Uh,
+
+78
+00:02:43,840 --> 00:02:44,400
+but worked.
+
+79
+00:02:44,400 --> 00:02:45,760
+>> Yeah, that's that's a good way to
+
+80
+00:02:45,760 --> 00:02:47,680
+describe it. Basically,
+
+81
+00:02:47,680 --> 00:02:49,200
+>> it's just like the I think you hit
+
+82
+00:02:49,200 --> 00:02:50,720
+number one on all the benchmarks for a
+
+83
+00:02:50,720 --> 00:02:53,990
+while.
+
+84
+00:02:55,830 --> 00:02:55,840
+>> Still are number one on the benchmarks.
+
+85
+00:02:55,840 --> 00:02:57,599
+Um, I know a bunch of the YC companies
+
+86
+00:02:57,599 --> 00:02:59,200
+that are in that space all use you guys.
+
+87
+00:02:59,200 --> 00:03:00,640
+I know a lot of startups down there used
+
+88
+00:03:00,640 --> 00:03:02,080
+you guys.
+
+89
+00:03:02,080 --> 00:03:04,159
+>> Um, and I happened to meet you because
+
+90
+00:03:04,159 --> 00:03:05,760
+uh I guess you were using BAML at the
+
+91
+00:03:05,760 --> 00:03:07,519
+time to go build it. But through that
+
+92
+00:03:07,519 --> 00:03:08,879
+interaction, I think eventually you
+
+93
+00:03:08,879 --> 00:03:10,239
+settled on this interesting really
+
+94
+00:03:10,239 --> 00:03:13,200
+interesting product idea which was along
+
+95
+00:03:13,200 --> 00:03:15,840
+the lines of I think we had a whiteboard
+
+96
+00:03:15,840 --> 00:03:18,239
+conversations once about it uh while we
+
+97
+00:03:18,239 --> 00:03:19,280
+were hanging out about how to build
+
+98
+00:03:19,280 --> 00:03:21,440
+event- driven actions and I remember we
+
+99
+00:03:21,440 --> 00:03:22,640
+were just like vibing and conver
+
+100
+00:03:22,640 --> 00:03:23,760
+conversing about it but it sounds like
+
+101
+00:03:23,760 --> 00:03:26,560
+you guys did it to like the nth degree.
+
+102
+00:03:26,560 --> 00:03:30,000
+>> Yeah. Before we get really into it, how
+
+103
+00:03:30,000 --> 00:03:31,840
+about we just show people what it feels
+
+104
+00:03:31,840 --> 00:03:32,959
+like and then we can talk about
+
+105
+00:03:32,959 --> 00:03:34,000
+technical architecture and everything
+
+106
+00:03:34,000 --> 00:03:36,720
+else once people get a sense of what's
+
+107
+00:03:36,720 --> 00:03:38,480
+like what does it mean to have an event
+
+108
+00:03:38,480 --> 00:03:40,560
+action because I think it can feel so
+
+109
+00:03:40,560 --> 00:03:42,879
+ambiguous along the way,
+
+110
+00:03:42,879 --> 00:03:46,239
+>> right? Yeah. Um should I go and share
+
+111
+00:03:46,239 --> 00:03:46,879
+here?
+
+112
+00:03:46,879 --> 00:04:03,110
+>> Yeah, go for it. Screen share.
+
+113
+00:04:05,670 --> 00:04:05,680
+Oh, shoot. I gota rejoin real quick.
+
+114
+00:04:05,680 --> 00:04:08,319
+>> Cool.
+
+115
+00:04:08,319 --> 00:04:10,319
+>> While everyone else is on here, uh, for
+
+116
+00:04:10,319 --> 00:04:12,000
+everyone else that's joining, um, how
+
+117
+00:04:12,000 --> 00:04:13,439
+many of you have actually built event-
+
+118
+00:04:13,439 --> 00:04:15,040
+driven actions by chance? Has anyone
+
+119
+00:04:15,040 --> 00:04:16,639
+built a kind of system that can be
+
+120
+00:04:16,639 --> 00:04:18,560
+really almost feel natural? I think the
+
+121
+00:04:18,560 --> 00:04:19,840
+closest that I have seen is probably
+
+122
+00:04:19,840 --> 00:04:22,400
+quad code to where you can interact with
+
+123
+00:04:22,400 --> 00:04:24,080
+it as it's going. And that was one of
+
+124
+00:04:24,080 --> 00:04:26,080
+the first innovations that they had. I
+
+125
+00:04:26,080 --> 00:04:27,520
+think that's what made quad code
+
+126
+00:04:27,520 --> 00:04:29,680
+personally so good. And then obviously
+
+127
+00:04:29,680 --> 00:04:30,960
+cursor copied it, everyone else copied
+
+128
+00:04:30,960 --> 00:04:32,240
+it. And everyone had the very simple
+
+129
+00:04:32,240 --> 00:04:33,759
+thing that you could do which is as you
+
+130
+00:04:33,759 --> 00:04:36,400
+typed code you actually could cancel the
+
+131
+00:04:36,400 --> 00:04:38,320
+previous message and make it go work.
+
+132
+00:04:38,320 --> 00:04:39,520
+But Claude did something very
+
+133
+00:04:39,520 --> 00:04:40,960
+interesting on launch which was it cued
+
+134
+00:04:40,960 --> 00:04:43,759
+a message. And that behavior pattern I
+
+135
+00:04:43,759 --> 00:04:46,080
+thought of queuing messages was
+
+136
+00:04:46,080 --> 00:04:48,080
+foundationally different than everything
+
+137
+00:04:48,080 --> 00:04:51,120
+else in a very subtle but massive way. I
+
+138
+00:04:51,120 --> 00:04:53,759
+think very similar to
+
+139
+00:04:53,759 --> 00:04:55,520
+a lot of the great UI innovations like
+
+140
+00:04:55,520 --> 00:04:57,840
+Amazon's oneclick buy. So subtle the
+
+141
+00:04:57,840 --> 00:04:58,960
+fact that you can just one click check
+
+142
+00:04:58,960 --> 00:05:00,240
+out without having to do anything else.
+
+143
+00:05:00,240 --> 00:05:01,680
+But it makes a huge difference. And I
+
+144
+00:05:01,680 --> 00:05:05,040
+think in AI stuff event driven and like
+
+145
+00:05:05,040 --> 00:05:07,440
+interruptions and queuing all these
+
+146
+00:05:07,440 --> 00:05:08,639
+other behaviors are really the
+
+147
+00:05:08,639 --> 00:05:09,919
+difference between like an okay app
+
+148
+00:05:09,919 --> 00:05:12,560
+versus an amazing app.
+
+149
+00:05:12,560 --> 00:05:14,160
+We've got someone working on it right
+
+150
+00:05:14,160 --> 00:05:18,000
+now. Um that's that's great. Um so
+
+151
+00:05:18,000 --> 00:05:19,520
+Andrew, let's show the demo and show how
+
+152
+00:05:19,520 --> 00:05:22,263
+it works and how it feels.
+
+153
+00:05:22,263 --> 00:05:22,560
+[clears throat]
+
+154
+00:05:22,560 --> 00:05:25,199
+>> Yeah. So
+
+155
+00:05:25,199 --> 00:05:27,840
+first of all,
+
+156
+00:05:27,840 --> 00:05:29,520
+generally speaking, right? So this is
+
+157
+00:05:29,520 --> 00:05:33,840
+like our our sort of chat experience,
+
+158
+00:05:33,840 --> 00:05:35,039
+right?
+
+159
+00:05:35,039 --> 00:05:37,360
+So let's say what I want to do is I want
+
+160
+00:05:37,360 --> 00:05:41,280
+to go scrape Reddit uh subreddit for
+
+161
+00:05:41,280 --> 00:05:43,520
+r/lang chain for everyone complaining
+
+162
+00:05:43,520 --> 00:05:45,840
+about structured outputs or complaining
+
+163
+00:05:45,840 --> 00:05:49,919
+about lang. Let's do that.
+
+164
+00:05:49,919 --> 00:05:51,840
+Uh and the categor and categorize the
+
+165
+00:05:51,840 --> 00:05:54,000
+types of complaints.
+
+166
+00:05:54,000 --> 00:05:55,919
+>> Okay,
+
+167
+00:05:55,919 --> 00:06:03,350
+we'll ask it a question after.
+
+168
+00:06:05,189 --> 00:06:05,199
+So, okay, let's let's make a
+
+169
+00:06:05,199 --> 00:06:08,080
+modification.
+
+170
+00:06:08,080 --> 00:06:09,520
+>> So, that's interesting. What you do is
+
+171
+00:06:09,520 --> 00:06:10,960
+you actually ban the inputs during
+
+172
+00:06:10,960 --> 00:06:12,160
+certain time periods when you don't
+
+173
+00:06:12,160 --> 00:06:13,600
+allow interruptions.
+
+174
+00:06:13,600 --> 00:06:18,710
+>> Yeah.
+
+175
+00:06:21,110 --> 00:06:21,120
+Okay. So, let me extend the plan there.
+
+176
+00:06:21,120 --> 00:06:24,240
+So, okay. So, just to be clear, yeah, we
+
+177
+00:06:24,240 --> 00:06:27,039
+don't um basically over the past couple
+
+178
+00:06:27,039 --> 00:06:30,560
+days, I was rethinking how sort of the
+
+179
+00:06:30,560 --> 00:06:32,479
+events should work in the chat and like
+
+180
+00:06:32,479 --> 00:06:34,560
+how we should best enable like stopping
+
+181
+00:06:34,560 --> 00:06:36,479
+and interruption and queuing messages
+
+182
+00:06:36,479 --> 00:06:37,840
+and stuff like that.
+
+183
+00:06:37,840 --> 00:06:40,720
+>> So, this is um not actually in our
+
+184
+00:06:40,720 --> 00:06:42,240
+production chat app yet, but I have like
+
+185
+00:06:42,240 --> 00:06:44,319
+another demo that's just like I
+
+186
+00:06:44,319 --> 00:06:46,240
+basically used when I was prototyping
+
+187
+00:06:46,240 --> 00:06:46,880
+the new
+
+188
+00:06:46,880 --> 00:06:47,199
+>> Yeah.
+
+189
+00:06:47,199 --> 00:06:49,199
+>> sort of architecture. Um, but this is
+
+190
+00:06:49,199 --> 00:06:50,720
+just sort of a general idea of like the
+
+191
+00:06:50,720 --> 00:06:52,560
+types of flows that you have in sort of
+
+192
+00:06:52,560 --> 00:06:54,080
+a very interactive chat app. So it's
+
+193
+00:06:54,080 --> 00:06:55,680
+like you have, you know, back and forth
+
+194
+00:06:55,680 --> 00:06:56,960
+messages, you have, you know, plan
+
+195
+00:06:56,960 --> 00:06:58,880
+approvals and stuff like that. You know,
+
+196
+00:06:58,880 --> 00:07:00,080
+a lot of the same stuff that you have in
+
+197
+00:07:00,080 --> 00:07:02,400
+like interfaces like cloud code and that
+
+198
+00:07:02,400 --> 00:07:04,240
+kind of thing.
+
+199
+00:07:04,240 --> 00:07:06,479
+And so if you weren't logged into like
+
+200
+00:07:06,479 --> 00:07:08,000
+some of these apps, sometimes you would
+
+201
+00:07:08,000 --> 00:07:09,919
+get like ooth flows happening in the
+
+202
+00:07:09,919 --> 00:07:12,639
+middle here. So there's a lot of like um
+
+203
+00:07:12,639 --> 00:07:14,479
+complex states that kind of come up
+
+204
+00:07:14,479 --> 00:07:16,160
+that'll just sort of like happen in the
+
+205
+00:07:16,160 --> 00:07:18,479
+chat. So it gets sort of like
+
+206
+00:07:18,479 --> 00:07:21,039
+interesting to basically manage all that
+
+207
+00:07:21,039 --> 00:07:23,039
+state and like figure out what should be
+
+208
+00:07:23,039 --> 00:07:24,960
+happening at a given time like at a
+
+209
+00:07:24,960 --> 00:07:26,160
+certain time like should the user be
+
+210
+00:07:26,160 --> 00:07:27,440
+able to send a message? Should they be
+
+211
+00:07:27,440 --> 00:07:29,840
+able to interrupt it? Should they be
+
+212
+00:07:29,840 --> 00:07:33,599
+able to authorize with a certain like a
+
+213
+00:07:33,599 --> 00:07:35,759
+connection?
+
+214
+00:07:35,759 --> 00:07:38,160
+Um and yeah, so there we go. So it's
+
+215
+00:07:38,160 --> 00:07:39,840
+it's basically just built a workflow for
+
+216
+00:07:39,840 --> 00:07:42,080
+us. And this is sort of like a summary
+
+217
+00:07:42,080 --> 00:07:43,520
+of what it's going to do. So it'll like
+
+218
+00:07:43,520 --> 00:07:46,960
+use Reddit. um review them for
+
+219
+00:07:46,960 --> 00:07:49,120
+complaints and it'll use like Gemini to
+
+220
+00:07:49,120 --> 00:07:51,919
+analyze them and then it will format
+
+221
+00:07:51,919 --> 00:07:54,560
+that. So yeah, we can just run that
+
+222
+00:07:54,560 --> 00:07:56,639
+basically. So it just builds it all
+
+223
+00:07:56,639 --> 00:08:00,319
+completely on its own
+
+224
+00:08:00,319 --> 00:08:02,560
+and then we run it and it's basically
+
+225
+00:08:02,560 --> 00:08:04,319
+like
+
+226
+00:08:04,319 --> 00:08:06,720
+using the Reddit
+
+227
+00:08:06,720 --> 00:08:08,800
+connector to
+
+228
+00:08:08,800 --> 00:08:10,400
+list the posts and then it's making a
+
+229
+00:08:10,400 --> 00:08:13,360
+bunch of AI calls to analyze them for
+
+230
+00:08:13,360 --> 00:08:15,120
+complaints. Makes sense.
+
+231
+00:08:15,120 --> 00:08:16,240
+>> Yeah.
+
+232
+00:08:16,240 --> 00:08:19,759
+>> So, how do we um how so talk to me about
+
+233
+00:08:19,759 --> 00:08:21,840
+how you what do where would you add
+
+234
+00:08:21,840 --> 00:08:23,039
+interruptions? Because we've talked
+
+235
+00:08:23,039 --> 00:08:26,240
+about this a bit and I think you have um
+
+236
+00:08:26,240 --> 00:08:27,599
+like interruptions and queuing. So, it
+
+237
+00:08:27,599 --> 00:08:28,800
+sounds like I can definitely send a
+
+238
+00:08:28,800 --> 00:08:30,479
+bunch of messages, but this looks very
+
+239
+00:08:30,479 --> 00:08:31,599
+linear,
+
+240
+00:08:31,599 --> 00:08:33,680
+>> right? Yeah. So, what you really want to
+
+241
+00:08:33,680 --> 00:08:35,039
+be able to do, right, and which we're
+
+242
+00:08:35,039 --> 00:08:37,919
+adding like tomorrow or something, um is
+
+243
+00:08:37,919 --> 00:08:39,919
+you want to be able to just queue up
+
+244
+00:08:39,919 --> 00:08:41,200
+messages however much you want. Like
+
+245
+00:08:41,200 --> 00:08:42,320
+right now if I like type another
+
+246
+00:08:42,320 --> 00:08:43,440
+message,
+
+247
+00:08:43,440 --> 00:08:44,640
+>> it should just do stuff.
+
+248
+00:08:44,640 --> 00:08:46,240
+>> It should it should just do stuff,
+
+249
+00:08:46,240 --> 00:08:46,959
+right?
+
+250
+00:08:46,959 --> 00:08:47,440
+>> Yeah.
+
+251
+00:08:47,440 --> 00:08:48,959
+>> And it's like I can send another
+
+252
+00:08:48,959 --> 00:08:49,920
+message, but I can't send another
+
+253
+00:08:49,920 --> 00:08:51,120
+message here. Right now it's just an
+
+254
+00:08:51,120 --> 00:08:52,240
+invalid state.
+
+255
+00:08:52,240 --> 00:08:52,560
+>> Yeah.
+
+256
+00:08:52,560 --> 00:08:54,640
+>> Um but ideally like Yeah. You know,
+
+257
+00:08:54,640 --> 00:08:56,000
+people want to be able to like send more
+
+258
+00:08:56,000 --> 00:08:57,200
+messages like maybe they have a thought
+
+259
+00:08:57,200 --> 00:08:58,800
+while it's building. So they want to
+
+260
+00:08:58,800 --> 00:09:02,800
+keep be able to like send things. So um
+
+261
+00:09:02,800 --> 00:09:06,880
+here's like right just a demo of sort of
+
+262
+00:09:06,880 --> 00:09:09,600
+what the new uh architecture vaguely
+
+263
+00:09:09,600 --> 00:09:12,240
+looks like that's sort of like very just
+
+264
+00:09:12,240 --> 00:09:14,240
+event to the max.
+
+265
+00:09:14,240 --> 00:09:16,720
+>> Yeah. Let me zoom in. This is a
+
+266
+00:09:16,720 --> 00:09:18,160
+>> and then we'll take a look at the code
+
+267
+00:09:18,160 --> 00:09:20,399
+pretty soon too. But I think this is
+
+268
+00:09:20,399 --> 00:09:22,480
+this I think it's
+
+269
+00:09:22,480 --> 00:09:24,240
+>> uh what one thing I find really
+
+270
+00:09:24,240 --> 00:09:25,680
+fascinating is always when we're able to
+
+271
+00:09:25,680 --> 00:09:27,279
+go look into this in a deep way and just
+
+272
+00:09:27,279 --> 00:09:29,360
+go check this out.
+
+273
+00:09:29,360 --> 00:09:33,120
+>> Yeah. So, if I, you know, I say hi, and
+
+274
+00:09:33,120 --> 00:09:34,800
+there's not a lot of scrolling here, but
+
+275
+00:09:34,800 --> 00:09:36,480
+you can see it stream back a response,
+
+276
+00:09:36,480 --> 00:09:37,760
+and these are all just sort of like
+
+277
+00:09:37,760 --> 00:09:40,480
+events like coming from, you know, the
+
+278
+00:09:40,480 --> 00:09:42,959
+LLM that are eventually streaming into
+
+279
+00:09:42,959 --> 00:09:46,240
+the chat. Um, but right, we might have
+
+280
+00:09:46,240 --> 00:09:47,360
+other types of events. So, it's like
+
+281
+00:09:47,360 --> 00:09:51,040
+tell me a long story. It's like another
+
+282
+00:09:51,040 --> 00:09:55,120
+type of event is like interruption,
+
+283
+00:09:55,120 --> 00:09:58,160
+right? So if we interrupt
+
+284
+00:09:58,160 --> 00:10:00,720
+that happens sort of concurrently during
+
+285
+00:10:00,720 --> 00:10:02,800
+this process of streaming and then the
+
+286
+00:10:02,800 --> 00:10:04,000
+question is like okay how do you deal
+
+287
+00:10:04,000 --> 00:10:05,760
+with that event in the context of like
+
+288
+00:10:05,760 --> 00:10:08,480
+okay we're also streaming from the LLM
+
+289
+00:10:08,480 --> 00:10:10,480
+um so like what's happening now based on
+
+290
+00:10:10,480 --> 00:10:12,080
+those events that occurred right those
+
+291
+00:10:12,080 --> 00:10:14,640
+like the sort of source of truth um in
+
+292
+00:10:14,640 --> 00:10:16,480
+terms of like we started the LLM
+
+293
+00:10:16,480 --> 00:10:19,040
+response it gave these chunks at this
+
+294
+00:10:19,040 --> 00:10:21,200
+point in time the user pressed the stop
+
+295
+00:10:21,200 --> 00:10:23,200
+button what should happen now right so
+
+296
+00:10:23,200 --> 00:10:25,680
+it's like basically react acts to that
+
+297
+00:10:25,680 --> 00:10:28,240
+it's like okay I need to stop you know
+
+298
+00:10:28,240 --> 00:10:31,120
+listening to the LLM I need to you know
+
+299
+00:10:31,120 --> 00:10:33,200
+present some sort of message that sort
+
+300
+00:10:33,200 --> 00:10:36,480
+of reflects what the user did um and
+
+301
+00:10:36,480 --> 00:10:40,000
+then you know put the user back in a
+
+302
+00:10:40,000 --> 00:10:41,200
+valid state where they can send more
+
+303
+00:10:41,200 --> 00:10:43,680
+messages. So yeah, the user can also
+
+304
+00:10:43,680 --> 00:10:45,839
+just, you know,
+
+305
+00:10:45,839 --> 00:10:48,079
+ceue up messages as well, right? And you
+
+306
+00:10:48,079 --> 00:10:49,519
+sort of have to think about like what
+
+307
+00:10:49,519 --> 00:10:51,440
+you want the behavior for queuing to be
+
+308
+00:10:51,440 --> 00:10:53,040
+like,
+
+309
+00:10:53,040 --> 00:10:54,399
+uh, we sort of followed like the cloud
+
+310
+00:10:54,399 --> 00:10:55,600
+code model here where it's like if you
+
+311
+00:10:55,600 --> 00:10:57,360
+send a message, it will start like
+
+312
+00:10:57,360 --> 00:10:58,640
+responding to it and then if you like
+
+313
+00:10:58,640 --> 00:11:00,640
+queue up more messages,
+
+314
+00:11:00,640 --> 00:11:04,560
+it's like tell me a long story.
+
+315
+00:11:04,560 --> 00:11:07,519
+uh if you like send a bunch of messages
+
+316
+00:11:07,519 --> 00:11:09,600
+during this point, it'll just sort of
+
+317
+00:11:09,600 --> 00:11:12,800
+like accumulate those and then once the
+
+318
+00:11:12,800 --> 00:11:17,839
+LM is done with its story, uh these will
+
+319
+00:11:17,839 --> 00:11:20,160
+basically all like resolve into the
+
+320
+00:11:20,160 --> 00:11:22,240
+context window. So it will like see all
+
+321
+00:11:22,240 --> 00:11:27,360
+of these at once and then respond again.
+
+322
+00:11:27,360 --> 00:11:29,120
+>> So I guess what I would say is like
+
+323
+00:11:29,120 --> 00:11:30,320
+let's talk about this a little bit more.
+
+324
+00:11:30,320 --> 00:11:31,680
+So what I'm going to do is I want to
+
+325
+00:11:31,680 --> 00:11:33,760
+maybe we should jump to whiteboards
+
+326
+00:11:33,760 --> 00:11:35,279
+because I think that often it might be
+
+327
+00:11:35,279 --> 00:11:36,720
+easier way to go describe this kind of
+
+328
+00:11:36,720 --> 00:11:38,399
+state because as we go see this
+
+329
+00:11:38,399 --> 00:11:39,920
+>> there's a lot of complicated things that
+
+330
+00:11:39,920 --> 00:11:41,600
+are happening. One is I I have this chat
+
+331
+00:11:41,600 --> 00:11:43,440
+thread this chat thread that's running
+
+332
+00:11:43,440 --> 00:11:44,720
+all the time. I'm guessing in some
+
+333
+00:11:44,720 --> 00:11:46,320
+backend API call because it can't run
+
+334
+00:11:46,320 --> 00:11:47,680
+directly from the front end.
+
+335
+00:11:47,680 --> 00:11:49,680
+>> Yep. And then some it sounds like the
+
+336
+00:11:49,680 --> 00:11:51,279
+most complicated thing here is what I'm
+
+337
+00:11:51,279 --> 00:11:52,560
+really doing is I'm sending a bunch of
+
+338
+00:11:52,560 --> 00:11:54,880
+commands from the front end and then I
+
+339
+00:11:54,880 --> 00:11:56,959
+have to update the world view and
+
+340
+00:11:56,959 --> 00:11:58,640
+somehow send a Wii view of the world
+
+341
+00:11:58,640 --> 00:11:59,839
+view back to the front end.
+
+342
+00:11:59,839 --> 00:12:01,839
+>> The analogy that I've always personally
+
+343
+00:12:01,839 --> 00:12:04,079
+found here is actually video games. If
+
+344
+00:12:04,079 --> 00:12:05,440
+you ever play like a multiplayer video
+
+345
+00:12:05,440 --> 00:12:07,279
+game of any kind,
+
+346
+00:12:07,279 --> 00:12:09,360
+>> that is, I think, the closest analogy to
+
+347
+00:12:09,360 --> 00:12:11,200
+building these kinds of agentic systems
+
+348
+00:12:11,200 --> 00:12:13,360
+because like for example, we might have
+
+349
+00:12:13,360 --> 00:12:15,680
+totally different lags in the world. And
+
+350
+00:12:15,680 --> 00:12:18,480
+what if I'm running and you like shoot
+
+351
+00:12:18,480 --> 00:12:19,600
+me
+
+352
+00:12:19,600 --> 00:12:22,000
+>> in your in your scope? It might actually
+
+353
+00:12:22,000 --> 00:12:23,440
+look like you actually landed the shot
+
+354
+00:12:23,440 --> 00:12:25,200
+and you killed me, but from my
+
+355
+00:12:25,200 --> 00:12:26,959
+perspective, I'm lagging in the world
+
+356
+00:12:26,959 --> 00:12:29,519
+view, it didn't actually hit me.
+
+357
+00:12:29,519 --> 00:12:29,920
+>> So,
+
+358
+00:12:29,920 --> 00:12:33,120
+>> right. Like what video games actually do
+
+359
+00:12:33,120 --> 00:12:34,880
+is they actually say we favor the person
+
+360
+00:12:34,880 --> 00:12:36,480
+that is like killing the person because
+
+361
+00:12:36,480 --> 00:12:38,800
+if it looks like they killed you,
+
+362
+00:12:38,800 --> 00:12:40,320
+>> it should actually kill you even if you
+
+363
+00:12:40,320 --> 00:12:42,880
+can't tell. And they actually correct in
+
+364
+00:12:42,880 --> 00:12:45,440
+that way because it feels really bad to
+
+365
+00:12:45,440 --> 00:12:46,880
+feel like you did the right thing and
+
+366
+00:12:46,880 --> 00:12:49,279
+then someone else uh because of their
+
+367
+00:12:49,279 --> 00:12:51,839
+internet lag didn't and world state kind
+
+368
+00:12:51,839 --> 00:12:54,240
+of lied based on what you thought.
+
+369
+00:12:54,240 --> 00:12:55,920
+>> Right.
+
+370
+00:12:55,920 --> 00:12:57,519
+>> Yeah. Yeah. It's basically like right
+
+371
+00:12:57,519 --> 00:12:59,120
+you have all these events happening,
+
+372
+00:12:59,120 --> 00:13:01,600
+right? And it's like what you show to
+
+373
+00:13:01,600 --> 00:13:03,920
+the user is always some variation of a
+
+374
+00:13:03,920 --> 00:13:06,000
+lie, right? It's like it's not the exact
+
+375
+00:13:06,000 --> 00:13:07,519
+you're not showing them literally every
+
+376
+00:13:07,519 --> 00:13:09,279
+single thing that happened, right? It's
+
+377
+00:13:09,279 --> 00:13:11,360
+like if you showed them like the exact
+
+378
+00:13:11,360 --> 00:13:13,440
+like function calling format that the
+
+379
+00:13:13,440 --> 00:13:16,240
+LLM used and the exact tool results that
+
+380
+00:13:16,240 --> 00:13:18,000
+the LM got back and all this kind of
+
+381
+00:13:18,000 --> 00:13:19,920
+stuff like basically what you want the
+
+382
+00:13:19,920 --> 00:13:23,600
+user to perceive is like different from
+
+383
+00:13:23,600 --> 00:13:25,279
+the truth and it's different from what
+
+384
+00:13:25,279 --> 00:13:27,040
+you want the LM to see also. So it's
+
+385
+00:13:27,040 --> 00:13:28,480
+like everyone see needs a different
+
+386
+00:13:28,480 --> 00:13:30,079
+version of the truth and so it's like
+
+387
+00:13:30,079 --> 00:13:31,360
+how do you manage that and then how do
+
+388
+00:13:31,360 --> 00:13:32,959
+you manage like the concurrency and
+
+389
+00:13:32,959 --> 00:13:34,000
+stuff?
+
+390
+00:13:34,000 --> 00:13:37,279
+>> Yeah. So what we should do is um we
+
+391
+00:13:37,279 --> 00:13:39,680
+should actually go ahead and um talk
+
+392
+00:13:39,680 --> 00:13:41,519
+through what's it called? Let me open
+
+393
+00:13:41,519 --> 00:13:42,639
+the whiteboard really fast so we can
+
+394
+00:13:42,639 --> 00:13:43,680
+actually draw this out because I think
+
+395
+00:13:43,680 --> 00:13:45,279
+it's going to be a lot better.
+
+396
+00:13:45,279 --> 00:13:46,959
+>> Um and I'll send you the link as well.
+
+397
+00:13:46,959 --> 00:13:49,040
+Give me one second.
+
+398
+00:13:49,040 --> 00:13:51,040
+>> Share screen.
+
+399
+00:13:51,040 --> 00:13:55,430
+Skelelet draw
+
+400
+00:14:10,949 --> 00:14:10,959
+Uh sorry about this. Dexter usually does
+
+401
+00:14:10,959 --> 00:14:15,110
+this stuff [laughter]
+
+402
+00:14:23,269 --> 00:14:23,279
+and then I'll send this to you uh only.
+
+403
+00:14:23,279 --> 00:14:24,959
+So while we're actually going to go talk
+
+404
+00:14:24,959 --> 00:14:28,000
+about this
+
+405
+00:14:28,000 --> 00:14:29,360
+what we really want to do is we want to
+
+406
+00:14:29,360 --> 00:14:31,680
+figure out a way to go draw this out
+
+407
+00:14:31,680 --> 00:14:34,000
+from a system architecture. So what we
+
+408
+00:14:34,000 --> 00:14:36,480
+have is we have a front end. And in our
+
+409
+00:14:36,480 --> 00:14:38,240
+front end, what we're going to want to
+
+410
+00:14:38,240 --> 00:14:40,240
+do is we're going to want to send a
+
+411
+00:14:40,240 --> 00:14:42,639
+regular system of events to our back
+
+412
+00:14:42,639 --> 00:14:46,320
+end. And once we send system of data to
+
+413
+00:14:46,320 --> 00:14:48,079
+our back end, what we want to make sure
+
+414
+00:14:48,079 --> 00:14:50,800
+is whatever this is triggering should
+
+415
+00:14:50,800 --> 00:14:55,920
+not directly trigger the actual um
+
+416
+00:14:55,920 --> 00:14:57,920
+it should not trigger the direct uh
+
+417
+00:14:57,920 --> 00:14:59,600
+what's it called? The direct agent loop.
+
+418
+00:14:59,600 --> 00:15:00,959
+because if it triggers a direct agent
+
+419
+00:15:00,959 --> 00:15:03,199
+loop and it responds directly to to the
+
+420
+00:15:03,199 --> 00:15:06,160
+user in a very linear way, we can no
+
+421
+00:15:06,160 --> 00:15:08,880
+longer interrupt the system. So what we
+
+422
+00:15:08,880 --> 00:15:11,519
+need to make sure that we do is we need
+
+423
+00:15:11,519 --> 00:15:13,440
+to go ahead and somehow send data from
+
+424
+00:15:13,440 --> 00:15:17,440
+the front end to the back end.
+
+425
+00:15:17,440 --> 00:15:19,440
+And once the back end is gone, this
+
+426
+00:15:19,440 --> 00:15:21,839
+needs to kick off some task in some form
+
+427
+00:15:21,839 --> 00:15:24,480
+factor where this will go write
+
+428
+00:15:24,480 --> 00:15:26,720
+information
+
+429
+00:15:26,720 --> 00:15:29,600
+to some central database.
+
+430
+00:15:29,600 --> 00:15:32,720
+get task and then somehow this database
+
+431
+00:15:32,720 --> 00:15:35,120
+is or database like thing and somehow
+
+432
+00:15:35,120 --> 00:15:36,880
+this front end will listen to state
+
+433
+00:15:36,880 --> 00:15:40,000
+actions coming from the uh database and
+
+434
+00:15:40,000 --> 00:15:42,320
+now what you can do at least and correct
+
+435
+00:15:42,320 --> 00:15:44,160
+me if you're if I'm wrong on this Anders
+
+436
+00:15:44,160 --> 00:15:45,120
+and you guys do something different
+
+437
+00:15:45,120 --> 00:15:46,079
+because I think it'd be a very
+
+438
+00:15:46,079 --> 00:15:49,040
+interesting conversation to have is as
+
+439
+00:15:49,040 --> 00:15:51,440
+events come in as new events come in you
+
+440
+00:15:51,440 --> 00:15:53,120
+can basically have your agent task
+
+441
+00:15:53,120 --> 00:15:58,000
+somehow be loading these events from uh
+
+442
+00:15:58,000 --> 00:16:00,639
+new events Oh, sorry. New can also be
+
+443
+00:16:00,639 --> 00:16:01,839
+written to the database and then your
+
+444
+00:16:01,839 --> 00:16:03,440
+agent task can also have a readwrite
+
+445
+00:16:03,440 --> 00:16:06,240
+system from here somehow.
+
+446
+00:16:06,240 --> 00:16:07,519
+>> Great. Yeah.
+
+447
+00:16:07,519 --> 00:16:09,040
+>> Go ahead.
+
+448
+00:16:09,040 --> 00:16:11,839
+>> Yeah. So, yeah, the way I think about
+
+449
+00:16:11,839 --> 00:16:14,800
+this, right, is that right, the event
+
+450
+00:16:14,800 --> 00:16:16,320
+the event stream and the events
+
+451
+00:16:16,320 --> 00:16:17,920
+produced, they're coming from a lot of
+
+452
+00:16:17,920 --> 00:16:19,360
+different places actually, right? And
+
+453
+00:16:19,360 --> 00:16:19,920
+it's like,
+
+454
+00:16:19,920 --> 00:16:21,040
+>> okay,
+
+455
+00:16:21,040 --> 00:16:22,959
+>> um, so it's like you have different sort
+
+456
+00:16:22,959 --> 00:16:24,800
+of types of events that I that I think
+
+457
+00:16:24,800 --> 00:16:28,399
+about, right? So this is like um Right.
+
+458
+00:16:28,399 --> 00:16:30,720
+So this is what like the user over here.
+
+459
+00:16:30,720 --> 00:16:33,360
+This is uh
+
+460
+00:16:33,360 --> 00:16:36,480
+right. So I mean obviously we have you
+
+461
+00:16:36,480 --> 00:16:39,839
+know an LLM in here.
+
+462
+00:16:39,839 --> 00:16:41,440
+>> This is a very different style. It's
+
+463
+00:16:41,440 --> 00:16:43,471
+going to be an interesting graph. Uh
+
+464
+00:16:43,471 --> 00:16:44,399
+[laughter]
+
+465
+00:16:44,399 --> 00:16:45,600
+>> I can fix that. You can just keep
+
+466
+00:16:45,600 --> 00:16:46,240
+drawing. I'll fix.
+
+467
+00:16:46,240 --> 00:16:47,759
+>> Okay.
+
+468
+00:16:47,759 --> 00:16:49,199
+Right. But we have a lot of different
+
+469
+00:16:49,199 --> 00:16:50,560
+things like contributing to the event
+
+470
+00:16:50,560 --> 00:16:51,920
+stream. Right. So it's like we obviously
+
+471
+00:16:51,920 --> 00:16:56,399
+have an LLM in here. Um we have you know
+
+472
+00:16:56,399 --> 00:16:58,399
+we have some kind of strategy for
+
+473
+00:16:58,399 --> 00:16:59,680
+especially with streaming like we
+
+474
+00:16:59,680 --> 00:17:01,519
+usually have some sort of way of like
+
+475
+00:17:01,519 --> 00:17:04,400
+interpreting or like parsing um what the
+
+476
+00:17:04,400 --> 00:17:06,240
+LM is doing. So usually it's actually
+
+477
+00:17:06,240 --> 00:17:08,000
+like this. It's like we're doing that
+
+478
+00:17:08,000 --> 00:17:09,679
+and then that's going into the event
+
+479
+00:17:09,679 --> 00:17:12,559
+stream. Um
+
+480
+00:17:12,559 --> 00:17:15,520
+and then we sometimes have you know like
+
+481
+00:17:15,520 --> 00:17:17,520
+handling for like doing different like
+
+482
+00:17:17,520 --> 00:17:19,439
+tool calls or other things. So it's like
+
+483
+00:17:19,439 --> 00:17:21,520
+we have some like
+
+484
+00:17:21,520 --> 00:17:23,280
+tool calls and maybe sometimes the
+
+485
+00:17:23,280 --> 00:17:25,839
+parser goes and does a tool call first
+
+486
+00:17:25,839 --> 00:17:27,520
+and then that becomes sort of like an
+
+487
+00:17:27,520 --> 00:17:29,679
+event, right? So it's like there's a lot
+
+488
+00:17:29,679 --> 00:17:31,360
+of different things that can sort of
+
+489
+00:17:31,360 --> 00:17:33,679
+contribute to that, right? And so sort
+
+490
+00:17:33,679 --> 00:17:35,600
+of think what the the confusing part
+
+491
+00:17:35,600 --> 00:17:38,720
+becomes is like okay, how do you
+
+492
+00:17:38,720 --> 00:17:41,600
+um who's sort of in control? Like what's
+
+493
+00:17:41,600 --> 00:17:42,960
+like what's in control of this whole
+
+494
+00:17:42,960 --> 00:17:45,520
+like loop? Uh how do things like feed
+
+495
+00:17:45,520 --> 00:17:47,600
+events into each other?
+
+496
+00:17:47,600 --> 00:17:50,559
+um and and sort of what happens there.
+
+497
+00:17:50,559 --> 00:17:52,720
+So
+
+498
+00:17:52,720 --> 00:17:54,720
+yeah, the the way like there's a lot of
+
+499
+00:17:54,720 --> 00:17:56,320
+different ways that you can structure
+
+500
+00:17:56,320 --> 00:17:58,080
+that, right? So it's like we have sort
+
+501
+00:17:58,080 --> 00:17:59,840
+of
+
+502
+00:17:59,840 --> 00:18:01,360
+in this, you know, little diagram, we
+
+503
+00:18:01,360 --> 00:18:02,880
+just have this event stream thing here,
+
+504
+00:18:02,880 --> 00:18:04,880
+but it's like
+
+505
+00:18:04,880 --> 00:18:07,919
+um there's different ways that you could
+
+506
+00:18:07,919 --> 00:18:10,480
+do that, right? could be like
+
+507
+00:18:10,480 --> 00:18:14,240
+one sort of continuous sort of event
+
+508
+00:18:14,240 --> 00:18:17,919
+stream from like LLM to like parser to
+
+509
+00:18:17,919 --> 00:18:22,720
+like um some sort of representation for
+
+510
+00:18:22,720 --> 00:18:25,919
+both the user and for the
+
+511
+00:18:25,919 --> 00:18:28,080
+LLM, right? So it's like you have
+
+512
+00:18:28,080 --> 00:18:29,760
+different ways that you need to display
+
+513
+00:18:29,760 --> 00:18:31,760
+the event stream.
+
+514
+00:18:31,760 --> 00:18:35,190
+Um,
+
+515
+00:18:36,789 --> 00:18:36,799
+and
+
+516
+00:18:36,799 --> 00:18:39,760
+yeah, so I'd say like you basically
+
+517
+00:18:39,760 --> 00:18:40,880
+yeah, you basically have things that add
+
+518
+00:18:40,880 --> 00:18:43,280
+to the event stream in different ways
+
+519
+00:18:43,280 --> 00:18:44,400
+and you have things that need to like
+
+520
+00:18:44,400 --> 00:18:45,760
+perceive that event stream is like the
+
+521
+00:18:45,760 --> 00:18:47,039
+main idea I would say.
+
+522
+00:18:47,039 --> 00:18:48,880
+>> So is is the right way to think about
+
+523
+00:18:48,880 --> 00:18:50,640
+this? You basically have a function in
+
+524
+00:18:50,640 --> 00:18:52,000
+your code somewhere else. So an event
+
+525
+00:18:52,000 --> 00:18:55,200
+handler that takes in some event kind of
+
+526
+00:18:55,200 --> 00:18:57,760
+some any of the many events that you
+
+527
+00:18:57,760 --> 00:19:00,640
+have and then based on the event kind.
+
+528
+00:19:00,640 --> 00:19:02,400
+Oh, this is center text. We did not want
+
+529
+00:19:02,400 --> 00:19:04,400
+that. What you end up doing is you end
+
+530
+00:19:04,400 --> 00:19:06,880
+up basically saying, hey, if it's an LLM
+
+531
+00:19:06,880 --> 00:19:08,883
+stream, if it's an LLM event,
+
+532
+00:19:08,883 --> 00:19:10,320
+[clears throat] I should say like a
+
+533
+00:19:10,320 --> 00:19:14,000
+parsed event, then you do something else
+
+534
+00:19:14,000 --> 00:19:16,400
+where like maybe it's like write send to
+
+535
+00:19:16,400 --> 00:19:18,799
+UI
+
+536
+00:19:18,799 --> 00:19:20,880
+of some kind. Otherwise, like if it's
+
+537
+00:19:20,880 --> 00:19:24,400
+like a if it's a tool tool response of
+
+538
+00:19:24,400 --> 00:19:28,240
+some kind, you say like do action where
+
+539
+00:19:28,240 --> 00:19:30,400
+you do the next action over here,
+
+540
+00:19:30,400 --> 00:19:31,120
+>> right?
+
+541
+00:19:31,120 --> 00:19:32,799
+>> And you go fill this out. And then if
+
+542
+00:19:32,799 --> 00:19:37,360
+it's like if user request,
+
+543
+00:19:37,360 --> 00:19:41,120
+>> you end up saying something like Q uh
+
+544
+00:19:41,120 --> 00:19:42,799
+action of some kind where you like cue
+
+545
+00:19:42,799 --> 00:19:44,960
+an action. And this is basically it's
+
+546
+00:19:44,960 --> 00:19:47,120
+triggering a almost like a cron job
+
+547
+00:19:47,120 --> 00:19:50,148
+that's running all the time where like
+
+548
+00:19:50,148 --> 00:19:51,520
+[snorts] every single system that you
+
+549
+00:19:51,520 --> 00:19:53,200
+have like every agent task isn't
+
+550
+00:19:53,200 --> 00:19:55,280
+actually a whole loop. It's actually a
+
+551
+00:19:55,280 --> 00:19:56,720
+system that's just adding a new event
+
+552
+00:19:56,720 --> 00:19:58,559
+through a massive like event log of
+
+553
+00:19:58,559 --> 00:19:59,600
+what's happening.
+
+554
+00:19:59,600 --> 00:20:02,160
+>> Exactly. Yeah. I think basically the way
+
+555
+00:20:02,160 --> 00:20:04,240
+I think about it is like Yeah. It's like
+
+556
+00:20:04,240 --> 00:20:06,720
+a reactive system. So it's like it's not
+
+557
+00:20:06,720 --> 00:20:09,360
+instead of like thinking about it as
+
+558
+00:20:09,360 --> 00:20:13,200
+like a while loop um it's more like cues
+
+559
+00:20:13,200 --> 00:20:14,880
+of events.
+
+560
+00:20:14,880 --> 00:20:18,000
+>> Yeah. So your worldview model so that's
+
+561
+00:20:18,000 --> 00:20:19,280
+interesting. It's a it's actually a
+
+562
+00:20:19,280 --> 00:20:20,559
+different worldview model than what I've
+
+563
+00:20:20,559 --> 00:20:22,559
+used in the in the past where like my
+
+564
+00:20:22,559 --> 00:20:23,840
+way of representing the worldview has
+
+565
+00:20:23,840 --> 00:20:25,039
+actually been like I have a giant state
+
+566
+00:20:25,039 --> 00:20:26,400
+object that represents the state of the
+
+567
+00:20:26,400 --> 00:20:29,840
+world of some kind. It sounds like your
+
+568
+00:20:29,840 --> 00:20:32,080
+world view is actually you have like an
+
+569
+00:20:32,080 --> 00:20:34,320
+a ve or an array.
+
+570
+00:20:34,320 --> 00:20:36,880
+>> Yep. of actions that have happened in
+
+571
+00:20:36,880 --> 00:20:38,320
+the past and this is what represents
+
+572
+00:20:38,320 --> 00:20:39,520
+your state. It's not to say either one
+
+573
+00:20:39,520 --> 00:20:41,679
+is good or bad but this is what you
+
+574
+00:20:41,679 --> 00:20:43,200
+found is really easy because then what
+
+575
+00:20:43,200 --> 00:20:46,080
+you say is for example the way that you
+
+576
+00:20:46,080 --> 00:20:48,640
+pro tell me if this is wrong or not. The
+
+577
+00:20:48,640 --> 00:20:50,320
+way that you implement queuing is that
+
+578
+00:20:50,320 --> 00:20:54,720
+you say like a Q event
+
+579
+00:20:54,720 --> 00:20:56,480
+is a thing that gets pushed into your
+
+580
+00:20:56,480 --> 00:20:59,280
+array and once the next action finishes
+
+581
+00:20:59,280 --> 00:21:00,720
+you go back and you see if there's any
+
+582
+00:21:00,720 --> 00:21:01,679
+cute events that are not
+
+583
+00:21:01,679 --> 00:21:03,760
+>> done yet. Right. Yeah. It's it's very
+
+584
+00:21:03,760 --> 00:21:05,840
+sort of native to that system, right? So
+
+585
+00:21:05,840 --> 00:21:07,840
+yeah, so what we had sort of in the past
+
+586
+00:21:07,840 --> 00:21:09,919
+was sort of more like a state based
+
+587
+00:21:09,919 --> 00:21:11,679
+model where we just have a state and we
+
+588
+00:21:11,679 --> 00:21:14,159
+mutate it and it's you know it's you
+
+589
+00:21:14,159 --> 00:21:15,520
+know very reasonable kind of makes sense
+
+590
+00:21:15,520 --> 00:21:17,840
+like you can just sort of change the
+
+591
+00:21:17,840 --> 00:21:19,440
+state as needed react to that you know
+
+592
+00:21:19,440 --> 00:21:21,600
+do think different things depending on
+
+593
+00:21:21,600 --> 00:21:24,080
+what that state is at the current time
+
+594
+00:21:24,080 --> 00:21:25,360
+uh and that kind of thing. But the
+
+595
+00:21:25,360 --> 00:21:27,600
+problem is like what we did more and
+
+596
+00:21:27,600 --> 00:21:30,720
+more over time is like we started uh
+
+597
+00:21:30,720 --> 00:21:32,159
+sort of mixing these paradigms because
+
+598
+00:21:32,159 --> 00:21:34,000
+it's like oh well we need like a whole
+
+599
+00:21:34,000 --> 00:21:35,600
+like log of everything that happened in
+
+600
+00:21:35,600 --> 00:21:38,640
+the chat so that we can like view it
+
+601
+00:21:38,640 --> 00:21:40,559
+right in the chat and also the LLM needs
+
+602
+00:21:40,559 --> 00:21:41,919
+to be able to perceive it in a certain
+
+603
+00:21:41,919 --> 00:21:43,760
+way in terms of like converting that to
+
+604
+00:21:43,760 --> 00:21:45,039
+something that goes in the context
+
+605
+00:21:45,039 --> 00:21:48,640
+window. Um
+
+606
+00:21:48,640 --> 00:21:51,200
+and then it became very unwieldy to like
+
+607
+00:21:51,200 --> 00:21:54,320
+maintain both like these events that are
+
+608
+00:21:54,320 --> 00:21:56,320
+like the source of truth for like what
+
+609
+00:21:56,320 --> 00:21:58,799
+happened and then also like a separate
+
+610
+00:21:58,799 --> 00:22:01,039
+state which is like we have to keep it
+
+611
+00:22:01,039 --> 00:22:03,440
+synchronized with like what happened and
+
+612
+00:22:03,440 --> 00:22:06,159
+then so basically
+
+613
+00:22:06,159 --> 00:22:08,159
+um what I wanted to do instead was just
+
+614
+00:22:08,159 --> 00:22:11,280
+like okay what if everything is just
+
+615
+00:22:11,280 --> 00:22:13,200
+basically a pure function of the events
+
+616
+00:22:13,200 --> 00:22:16,559
+that actually occurred. Um, and so like
+
+617
+00:22:16,559 --> 00:22:19,120
+you can have like representations of
+
+618
+00:22:19,120 --> 00:22:20,880
+state in this model where you sort of
+
+619
+00:22:20,880 --> 00:22:22,559
+centralize around events still, but
+
+620
+00:22:22,559 --> 00:22:24,960
+they're just like
+
+621
+00:22:24,960 --> 00:22:27,760
+functions of that event.
+
+622
+00:22:27,760 --> 00:22:29,280
+>> Describe I'm going to try and describe
+
+623
+00:22:29,280 --> 00:22:30,640
+what a user might do and how someone
+
+624
+00:22:30,640 --> 00:22:31,840
+else can view the code and then we'll
+
+625
+00:22:31,840 --> 00:22:33,679
+take a look at the code really fast. So
+
+626
+00:22:33,679 --> 00:22:34,960
+in this case, what I have is a user
+
+627
+00:22:34,960 --> 00:22:36,320
+started off with some user event with
+
+628
+00:22:36,320 --> 00:22:37,600
+some request. Maybe it's as simple as
+
+629
+00:22:37,600 --> 00:22:39,760
+just like hello and your agent started
+
+630
+00:22:39,760 --> 00:22:42,480
+responding with like hello how really
+
+631
+00:22:42,480 --> 00:22:44,480
+fast and then right at that point the
+
+632
+00:22:44,480 --> 00:22:46,720
+user said wait. So there and if they
+
+633
+00:22:46,720 --> 00:22:48,640
+cued the event, the behavior ends up I'm
+
+634
+00:22:48,640 --> 00:22:50,080
+guessing something like this where you
+
+635
+00:22:50,080 --> 00:22:52,080
+get a bunch more stream text of some
+
+636
+00:22:52,080 --> 00:22:53,120
+other text
+
+637
+00:22:53,120 --> 00:22:55,760
+>> and at some point your state engine
+
+638
+00:22:55,760 --> 00:22:58,559
+recognizes that like obviously when
+
+639
+00:22:58,559 --> 00:23:00,159
+you're streaming you can also say like
+
+640
+00:23:00,159 --> 00:23:02,799
+done streaming
+
+641
+00:23:02,799 --> 00:23:05,600
+and now your user invent uh uh your
+
+642
+00:23:05,600 --> 00:23:07,760
+agent system can say as soon as it the
+
+643
+00:23:07,760 --> 00:23:10,480
+event handler for the done event goes
+
+644
+00:23:10,480 --> 00:23:12,320
+and checks the queue for this specific
+
+645
+00:23:12,320 --> 00:23:15,120
+user ID or this specific conversation ID
+
+646
+00:23:15,120 --> 00:23:15,919
+and says
+
+647
+00:23:15,919 --> 00:23:18,000
+Q event. Well, let's give this event an
+
+648
+00:23:18,000 --> 00:23:21,520
+ID of like ID of some kind. Sorry, let
+
+649
+00:23:21,520 --> 00:23:25,280
+me make bigger and too small. ID equals
+
+650
+00:23:25,280 --> 00:23:27,600
+1. And then what I can do is I can say
+
+651
+00:23:27,600 --> 00:23:31,520
+like handle uh handled event and now I
+
+652
+00:23:31,520 --> 00:23:34,480
+can handle event id equals 1 where it'll
+
+653
+00:23:34,480 --> 00:23:36,720
+actually treat this and transform this
+
+654
+00:23:36,720 --> 00:23:40,640
+into another user event of like wait
+
+655
+00:23:40,640 --> 00:23:44,000
+at this point. And now
+
+656
+00:23:44,000 --> 00:23:45,520
+this has basically been handled. So now
+
+657
+00:23:45,520 --> 00:23:47,039
+the system will start streaming and send
+
+658
+00:23:47,039 --> 00:23:48,880
+the response into the user.
+
+659
+00:23:48,880 --> 00:23:51,440
+>> Right. One way to handle a queueing.
+
+660
+00:23:51,440 --> 00:23:53,440
+>> Yeah. But yeah, the main the main thing
+
+661
+00:23:53,440 --> 00:23:57,760
+here is that um when this queue event
+
+662
+00:23:57,760 --> 00:24:01,200
+happens, right, we have to immediately
+
+663
+00:24:01,200 --> 00:24:04,320
+right interrupt whatever thread or is
+
+664
+00:24:04,320 --> 00:24:06,000
+going on that's handling the streaming
+
+665
+00:24:06,000 --> 00:24:08,640
+part, right? And ignore the rest of it
+
+666
+00:24:08,640 --> 00:24:11,039
+right away. Well, no, not the interrupt.
+
+667
+00:24:11,039 --> 00:24:14,240
+The queue event.
+
+668
+00:24:14,240 --> 00:24:14,880
+>> Oh,
+
+669
+00:24:14,880 --> 00:24:15,520
+>> yeah. Sorry.
+
+670
+00:24:15,520 --> 00:24:17,200
+>> You mean just literally?
+
+671
+00:24:17,200 --> 00:24:18,559
+>> Oh, yeah.
+
+672
+00:24:18,559 --> 00:24:19,760
+>> Oh, oh yeah. Oh, yeah. Yeah. My bad.
+
+673
+00:24:19,760 --> 00:24:21,360
+Yeah. For queuing events. Yeah. Yeah.
+
+674
+00:24:21,360 --> 00:24:23,919
+Yeah. So, yeah, we let it keep going.
+
+675
+00:24:23,919 --> 00:24:24,880
+Um,
+
+676
+00:24:24,880 --> 00:24:26,559
+>> on the other hand, let's talk about the
+
+677
+00:24:26,559 --> 00:24:28,000
+second part, which is interrupt event.
+
+678
+00:24:28,000 --> 00:24:29,279
+Let's say the user sent this as an
+
+679
+00:24:29,279 --> 00:24:31,520
+interrupt instead
+
+680
+00:24:31,520 --> 00:24:33,840
+of Q. Oops.
+
+681
+00:24:33,840 --> 00:24:36,240
+Interrupt.
+
+682
+00:24:36,240 --> 00:24:38,400
+Well, interrupts are I think very very
+
+683
+00:24:38,400 --> 00:24:40,240
+similar to queuing in that same in that
+
+684
+00:24:40,240 --> 00:24:43,039
+same form factor where oh sorry one
+
+685
+00:24:43,039 --> 00:24:46,789
+second. Um
+
+686
+00:24:48,710 --> 00:24:48,720
+I have to reload the page so my view
+
+687
+00:24:48,720 --> 00:24:52,950
+length is better
+
+688
+00:24:56,630 --> 00:24:56,640
+go back to the right area. Click on new.
+
+689
+00:24:56,640 --> 00:24:58,240
+So interrupt is very very similar to
+
+690
+00:24:58,240 --> 00:25:00,240
+queuing where instead of queuing the
+
+691
+00:25:00,240 --> 00:25:02,159
+event though all these systems that come
+
+692
+00:25:02,159 --> 00:25:04,960
+in what you can tell your back end is
+
+693
+00:25:04,960 --> 00:25:07,600
+hey don't add these events to my I mean
+
+694
+00:25:07,600 --> 00:25:08,880
+you can cancel it as well but you can
+
+695
+00:25:08,880 --> 00:25:11,840
+also just say like just don't add these
+
+696
+00:25:11,840 --> 00:25:13,520
+to the queue like basically don't add
+
+697
+00:25:13,520 --> 00:25:15,200
+them into the queue and spin up a new
+
+698
+00:25:15,200 --> 00:25:18,240
+event as if this happened. And you can
+
+699
+00:25:18,240 --> 00:25:20,880
+do what's interesting here is you can
+
+700
+00:25:20,880 --> 00:25:22,320
+choose how you handle these previous
+
+701
+00:25:22,320 --> 00:25:24,320
+events. You can choose to maintain them
+
+702
+00:25:24,320 --> 00:25:26,320
+in the record or you can actually say
+
+703
+00:25:26,320 --> 00:25:29,200
+that actually you know what I am these
+
+704
+00:25:29,200 --> 00:25:31,520
+are bad so I will just like delete them
+
+705
+00:25:31,520 --> 00:25:33,039
+after the fact even though they
+
+706
+00:25:33,039 --> 00:25:34,880
+technically exist in the record and my
+
+707
+00:25:34,880 --> 00:25:38,799
+the my world view when I query and when
+
+708
+00:25:38,799 --> 00:25:40,640
+I show in the UI how to represent this
+
+709
+00:25:40,640 --> 00:25:43,520
+this exists but I don't render it or I
+
+710
+00:25:43,520 --> 00:25:44,880
+can delete it and purge it from the
+
+711
+00:25:44,880 --> 00:25:47,039
+event record in any way myself.
+
+712
+00:25:47,039 --> 00:25:48,320
+>> Yeah. Exactly. And I think that's the
+
+713
+00:25:48,320 --> 00:25:49,600
+nice thing about this type of system,
+
+714
+00:25:49,600 --> 00:25:52,080
+right, is that you can basically just
+
+715
+00:25:52,080 --> 00:25:55,279
+look at what happens and sort of have
+
+716
+00:25:55,279 --> 00:25:58,799
+however you handle events decide like
+
+717
+00:25:58,799 --> 00:26:03,120
+what what is supposed to be viewed or
+
+718
+00:26:03,120 --> 00:26:05,919
+perceived when like you know this type
+
+719
+00:26:05,919 --> 00:26:08,320
+of situation happens where you have like
+
+720
+00:26:08,320 --> 00:26:10,240
+okay these events were streamed but then
+
+721
+00:26:10,240 --> 00:26:12,159
+the interrupt happened. It's like okay
+
+722
+00:26:12,159 --> 00:26:14,080
+do I just ignore the ones that happened
+
+723
+00:26:14,080 --> 00:26:16,960
+after that? Do I ignore all of them? And
+
+724
+00:26:16,960 --> 00:26:19,360
+you can sort of you know implement that
+
+725
+00:26:19,360 --> 00:26:21,679
+however you want.
+
+726
+00:26:21,679 --> 00:26:23,360
+>> Yeah. And like once you model the world
+
+727
+00:26:23,360 --> 00:26:24,480
+in this way where it's just like a
+
+728
+00:26:24,480 --> 00:26:26,080
+sequence of elements that are being
+
+729
+00:26:26,080 --> 00:26:28,159
+collected and like drawn upon like
+
+730
+00:26:28,159 --> 00:26:30,000
+writing code for this is actually very
+
+731
+00:26:30,000 --> 00:26:31,760
+simple. I'm guessing like this code
+
+732
+00:26:31,760 --> 00:26:35,120
+system is not that hard. And in terms of
+
+733
+00:26:35,120 --> 00:26:37,120
+actually you like rendering in the UI
+
+734
+00:26:37,120 --> 00:26:39,120
+well that's also very easy because you
+
+735
+00:26:39,120 --> 00:26:40,799
+just say how do I render the sequence of
+
+736
+00:26:40,799 --> 00:26:42,480
+events? And
+
+737
+00:26:42,480 --> 00:26:43,919
+>> you can do that in any which way that
+
+738
+00:26:43,919 --> 00:26:45,440
+you want as a developer. You can render
+
+739
+00:26:45,440 --> 00:26:47,279
+like and show the stream text. We know
+
+740
+00:26:47,279 --> 00:26:49,919
+how to do that. You can render and show
+
+741
+00:26:49,919 --> 00:26:51,600
+um show cute events. You can not show
+
+742
+00:26:51,600 --> 00:26:53,440
+cute events. You can show interruptions.
+
+743
+00:26:53,440 --> 00:26:55,360
+You can show middle states. You can show
+
+744
+00:26:55,360 --> 00:26:57,840
+like the entire conversation history.
+
+745
+00:26:57,840 --> 00:26:59,840
+You can go back and fork at any point
+
+746
+00:26:59,840 --> 00:27:02,240
+because it's just copy this screenshot,
+
+747
+00:27:02,240 --> 00:27:04,640
+copy this action array of everything up
+
+748
+00:27:04,640 --> 00:27:06,640
+before this event and start copying from
+
+749
+00:27:06,640 --> 00:27:08,000
+here.
+
+750
+00:27:08,000 --> 00:27:09,279
+>> Yeah. Yeah. I'd say there's like a
+
+751
+00:27:09,279 --> 00:27:11,120
+little bit of like
+
+752
+00:27:11,120 --> 00:27:14,240
+just like
+
+753
+00:27:14,240 --> 00:27:16,240
+setup in terms of thinking about your
+
+754
+00:27:16,240 --> 00:27:19,039
+agent as a sequence of events and not as
+
+755
+00:27:19,039 --> 00:27:21,600
+like just oh I have state and I mutate
+
+756
+00:27:21,600 --> 00:27:23,039
+it but like once you start thinking
+
+757
+00:27:23,039 --> 00:27:26,000
+about it that way yeah you get a lot of
+
+758
+00:27:26,000 --> 00:27:27,679
+>> benefits from that like you know some of
+
+759
+00:27:27,679 --> 00:27:28,960
+the things you mentioned
+
+760
+00:27:28,960 --> 00:27:30,240
+>> you know what this really reminds me of
+
+761
+00:27:30,240 --> 00:27:31,360
+this really reminds me of how like
+
+762
+00:27:31,360 --> 00:27:32,880
+database transactions are made.
+
+763
+00:27:32,880 --> 00:27:34,960
+>> Yeah. um in some ways where like you
+
+764
+00:27:34,960 --> 00:27:36,640
+basically have in a lot of ways you just
+
+765
+00:27:36,640 --> 00:27:38,320
+write a bunch of logs to some event file
+
+766
+00:27:38,320 --> 00:27:39,919
+and eventually the database becomes like
+
+767
+00:27:39,919 --> 00:27:41,679
+consistent on its own by saying like
+
+768
+00:27:41,679 --> 00:27:43,200
+these event files eventually have to be
+
+769
+00:27:43,200 --> 00:27:44,799
+recorded in the database
+
+770
+00:27:44,799 --> 00:27:46,880
+>> with some yeah it's kind of like that in
+
+771
+00:27:46,880 --> 00:27:51,120
+a way yeah um right yeah so you can yeah
+
+772
+00:27:51,120 --> 00:27:52,640
+like yeah the key things that you can
+
+773
+00:27:52,640 --> 00:27:56,000
+really get out of this are you have sort
+
+774
+00:27:56,000 --> 00:27:57,600
+of right you have the one source of
+
+775
+00:27:57,600 --> 00:27:59,600
+events instead of like state that you're
+
+776
+00:27:59,600 --> 00:28:01,039
+mutating on the back end state that
+
+777
+00:28:01,039 --> 00:28:03,039
+you're mutating on the front end those
+
+778
+00:28:03,039 --> 00:28:04,240
+might get out of sync, right? You have
+
+779
+00:28:04,240 --> 00:28:05,600
+all sorts of like weird things. It's
+
+780
+00:28:05,600 --> 00:28:07,360
+like everything just driven by sort of
+
+781
+00:28:07,360 --> 00:28:09,600
+this one engine that's handling the
+
+782
+00:28:09,600 --> 00:28:11,520
+events and that kind of thing and it can
+
+783
+00:28:11,520 --> 00:28:13,520
+just send like okay front end like you
+
+784
+00:28:13,520 --> 00:28:15,360
+should look like this at this point in
+
+785
+00:28:15,360 --> 00:28:18,159
+time based on the events.
+
+786
+00:28:18,159 --> 00:28:19,600
+>> I'm actually really curious to see what
+
+787
+00:28:19,600 --> 00:28:20,880
+this code ends up looking like in
+
+788
+00:28:20,880 --> 00:28:22,640
+practice. Someone asked a really
+
+789
+00:28:22,640 --> 00:28:23,760
+important question before we go into
+
+790
+00:28:23,760 --> 00:28:24,880
+that
+
+791
+00:28:24,880 --> 00:28:28,480
+>> um which is do you store the same events
+
+792
+00:28:28,480 --> 00:28:31,039
+in the same table in a database? I my
+
+793
+00:28:31,039 --> 00:28:33,200
+hunch says probably yes. I suspect your
+
+794
+00:28:33,200 --> 00:28:35,919
+database is basically a union of events.
+
+795
+00:28:35,919 --> 00:28:38,159
+>> Yeah, it's literally just the way the
+
+796
+00:28:38,159 --> 00:28:40,000
+way I've done this is it just it's just
+
+797
+00:28:40,000 --> 00:28:43,279
+one array of events just in a you know
+
+798
+00:28:43,279 --> 00:28:47,679
+database column. It's just um
+
+799
+00:28:47,679 --> 00:28:48,880
+>> I'm guessing you're you're
+
+800
+00:28:48,880 --> 00:28:50,880
+>> just like a discriminated union of
+
+801
+00:28:50,880 --> 00:28:53,520
+different like event types. Um, that's
+
+802
+00:28:53,520 --> 00:28:57,350
+it.
+
+803
+00:28:59,029 --> 00:28:59,039
+>> And I'm guessing it it's just basically
+
+804
+00:28:59,039 --> 00:29:01,600
+like event and then you do a group by
+
+805
+00:29:01,600 --> 00:29:03,279
+user ID and convo ID and now you have
+
+806
+00:29:03,279 --> 00:29:04,640
+your entire event history for every
+
+807
+00:29:04,640 --> 00:29:06,240
+single and like time stamp and obviously
+
+808
+00:29:06,240 --> 00:29:08,159
+all the metadata.
+
+809
+00:29:08,159 --> 00:29:09,760
+>> Yep. Yeah. So that's basically what it
+
+810
+00:29:09,760 --> 00:29:12,080
+is. Yeah. So you just an array of events
+
+811
+00:29:12,080 --> 00:29:14,080
+and so the representation is like
+
+812
+00:29:14,080 --> 00:29:16,240
+extremely simple, right? You can just
+
+813
+00:29:16,240 --> 00:29:17,679
+load those events and do whatever you
+
+814
+00:29:17,679 --> 00:29:18,399
+want with them.
+
+815
+00:29:18,399 --> 00:29:19,760
+>> Yeah. And you can load as many of the
+
+816
+00:29:19,760 --> 00:29:20,880
+events you want. You can get the most
+
+817
+00:29:20,880 --> 00:29:22,960
+recent 50. You can get the most, you can
+
+818
+00:29:22,960 --> 00:29:24,960
+get all of them forever. You the first
+
+819
+00:29:24,960 --> 00:29:28,480
+10, the last 10. It's all up to you.
+
+820
+00:29:28,480 --> 00:29:30,720
+>> Yeah. And it's extremely like uh
+
+821
+00:29:30,720 --> 00:29:33,360
+debugable and testable as well. Um, like
+
+822
+00:29:33,360 --> 00:29:35,360
+when you think about like one one thing
+
+823
+00:29:35,360 --> 00:29:38,240
+that was hard when we were sort of
+
+824
+00:29:38,240 --> 00:29:40,880
+>> building our our chat is just like it's
+
+825
+00:29:40,880 --> 00:29:42,880
+hard to test it without like running the
+
+826
+00:29:42,880 --> 00:29:44,799
+the back end and the front end and and
+
+827
+00:29:44,799 --> 00:29:46,399
+like testing different scenarios like
+
+828
+00:29:46,399 --> 00:29:48,159
+manually and that kind of thing like
+
+829
+00:29:48,159 --> 00:29:49,679
+with sort of a traditional system where
+
+830
+00:29:49,679 --> 00:29:51,600
+you have some sort of state that you're
+
+831
+00:29:51,600 --> 00:29:53,600
+managing on the back end and on the
+
+832
+00:29:53,600 --> 00:29:55,360
+front end that's trying to synchronize
+
+833
+00:29:55,360 --> 00:29:57,120
+because you don't really know from the
+
+834
+00:29:57,120 --> 00:29:59,120
+backend code alone what the front end is
+
+835
+00:29:59,120 --> 00:30:01,039
+going to look like at any point in time.
+
+836
+00:30:01,039 --> 00:30:03,440
+But if you have sort of everything
+
+837
+00:30:03,440 --> 00:30:05,360
+driven by the events and like your back
+
+838
+00:30:05,360 --> 00:30:06,880
+end is basically just telling what your
+
+839
+00:30:06,880 --> 00:30:08,000
+front end and what it should look like
+
+840
+00:30:08,000 --> 00:30:09,840
+exactly at any point in time based on
+
+841
+00:30:09,840 --> 00:30:12,559
+those then it becomes very testable
+
+842
+00:30:12,559 --> 00:30:13,600
+because you can just write tests that
+
+843
+00:30:13,600 --> 00:30:14,880
+are like okay at this point in time I
+
+844
+00:30:14,880 --> 00:30:16,559
+expect the interrupt button to be
+
+845
+00:30:16,559 --> 00:30:18,320
+available or not based on these events
+
+846
+00:30:18,320 --> 00:30:18,960
+that occurred.
+
+847
+00:30:18,960 --> 00:30:21,120
+>> It's it's another analogy for this for
+
+848
+00:30:21,120 --> 00:30:22,399
+me is like very similar to like use
+
+849
+00:30:22,399 --> 00:30:24,720
+state and react. When I write use state
+
+850
+00:30:24,720 --> 00:30:26,880
+and react I can like how do I debug
+
+851
+00:30:26,880 --> 00:30:28,240
+state that is bad? Well, I usually just
+
+852
+00:30:28,240 --> 00:30:29,520
+hardcode the initial condition of the
+
+853
+00:30:29,520 --> 00:30:31,360
+state. I say change the state to this
+
+854
+00:30:31,360 --> 00:30:32,559
+like just show me what the rendering
+
+855
+00:30:32,559 --> 00:30:34,000
+looks like and then I debug it really
+
+856
+00:30:34,000 --> 00:30:35,279
+easily.
+
+857
+00:30:35,279 --> 00:30:37,840
+>> Um because like React just says assume I
+
+858
+00:30:37,840 --> 00:30:40,000
+have state of this shape and now render
+
+859
+00:30:40,000 --> 00:30:41,840
+it however I want and it's a really easy
+
+860
+00:30:41,840 --> 00:30:44,080
+transaction for me to go make as a
+
+861
+00:30:44,080 --> 00:30:46,559
+developer.
+
+862
+00:30:46,559 --> 00:30:50,080
+Um we should uh we should get the code.
+
+863
+00:30:50,080 --> 00:30:51,600
+Uh we got like two interesting questions
+
+864
+00:30:51,600 --> 00:30:52,799
+while you set up the code and you go
+
+865
+00:30:52,799 --> 00:30:54,320
+screen share for that. Take over my
+
+866
+00:30:54,320 --> 00:30:56,159
+screen share while you go do that. Yeah,
+
+867
+00:30:56,159 --> 00:30:58,880
+>> which is um where do we persist the
+
+868
+00:30:58,880 --> 00:31:01,760
+context for LLMs in this case? And I
+
+869
+00:31:01,760 --> 00:31:03,440
+think this is a really interesting
+
+870
+00:31:03,440 --> 00:31:04,960
+question that all people ask, but this
+
+871
+00:31:04,960 --> 00:31:06,559
+goes back to how we we've talked about
+
+872
+00:31:06,559 --> 00:31:08,799
+this in the episode quite a few times,
+
+873
+00:31:08,799 --> 00:31:10,880
+which is what the heck is an agent?
+
+874
+00:31:10,880 --> 00:31:14,159
+Well, let me see if I can pull that up.
+
+875
+00:31:14,159 --> 00:31:16,960
+We talked about this in the 12 uh
+
+876
+00:31:16,960 --> 00:31:19,760
+factors um selecting thousand tools from
+
+877
+00:31:19,760 --> 00:31:21,360
+MCP
+
+878
+00:31:21,360 --> 00:31:23,360
+uh tool. Let me pull this up really
+
+879
+00:31:23,360 --> 00:31:24,640
+fast. I'm gonna take I'm gonna take over
+
+880
+00:31:24,640 --> 00:31:26,240
+the screen share for one more second.
+
+881
+00:31:26,240 --> 00:31:28,080
+>> Okay, my bad.
+
+882
+00:31:28,080 --> 00:31:32,480
+>> It's okay. Um screen
+
+883
+00:31:32,480 --> 00:31:33,919
+we talked about in this episode
+
+884
+00:31:33,919 --> 00:31:36,159
+actually. And when you go think about an
+
+885
+00:31:36,159 --> 00:31:38,320
+agent loop really fast, what I have
+
+886
+00:31:38,320 --> 00:31:42,960
+personally found is u take it here
+
+887
+00:31:42,960 --> 00:31:46,399
+really fast. Sorry.
+
+888
+00:31:46,399 --> 00:31:48,640
+You can view every single agent as
+
+889
+00:31:48,640 --> 00:31:51,200
+basically a thing a model as just a
+
+890
+00:31:51,200 --> 00:31:53,360
+thing whose only job it is to do which
+
+891
+00:31:53,360 --> 00:31:56,000
+is
+
+892
+00:31:56,000 --> 00:31:58,880
+close up. You take some context window
+
+893
+00:31:58,880 --> 00:32:00,320
+that you're building up over time and
+
+894
+00:32:00,320 --> 00:32:01,840
+you ask the model to do something that
+
+895
+00:32:01,840 --> 00:32:03,600
+is very stateless which is determine the
+
+896
+00:32:03,600 --> 00:32:05,039
+next step. See the question that you're
+
+897
+00:32:05,039 --> 00:32:06,480
+asking is how do you build your context
+
+898
+00:32:06,480 --> 00:32:09,440
+window? Well, your context window is
+
+899
+00:32:09,440 --> 00:32:12,559
+also really just a projection of this
+
+900
+00:32:12,559 --> 00:32:14,880
+state. You take this state and you turn
+
+901
+00:32:14,880 --> 00:32:17,200
+it into a chat prompt of some kind. And
+
+902
+00:32:17,200 --> 00:32:18,320
+that's just a function that you can
+
+903
+00:32:18,320 --> 00:32:20,399
+write which says or turn your action
+
+904
+00:32:20,399 --> 00:32:23,440
+array or event array into a chat prompt.
+
+905
+00:32:23,440 --> 00:32:24,880
+Now, I suspect Andrews will be showing
+
+906
+00:32:24,880 --> 00:32:27,279
+this code when he talks through this.
+
+907
+00:32:27,279 --> 00:32:29,919
+But let's get into it. All yours,
+
+908
+00:32:29,919 --> 00:32:30,559
+Anders.
+
+909
+00:32:30,559 --> 00:32:31,679
+>> All righty.
+
+910
+00:32:31,679 --> 00:32:33,200
+>> And as people have questions, keep
+
+911
+00:32:33,200 --> 00:32:34,720
+sending them. We'll try and uh answer
+
+912
+00:32:34,720 --> 00:32:46,389
+them as fast as we can.
+
+913
+00:32:52,149 --> 00:32:52,159
+>> Yeah. All right. So, here's the code for
+
+914
+00:32:52,159 --> 00:32:54,080
+um sort of that demo that I was showing
+
+915
+00:32:54,080 --> 00:32:54,559
+that
+
+916
+00:32:54,559 --> 00:32:57,039
+>> bun. I love it.
+
+917
+00:32:57,039 --> 00:32:58,399
+>> Where do you see the bun at?
+
+918
+00:32:58,399 --> 00:33:00,000
+>> I thought bun.serve.
+
+919
+00:33:00,000 --> 00:33:01,679
+>> Oh, [laughter]
+
+920
+00:33:01,679 --> 00:33:05,200
+yeah. Bun. Um, so
+
+921
+00:33:05,200 --> 00:33:06,720
+yeah, when I was playing around with
+
+922
+00:33:06,720 --> 00:33:10,000
+sort of the ideas for doing this very,
+
+923
+00:33:10,000 --> 00:33:13,279
+you know, event driven thing, um, one
+
+924
+00:33:13,279 --> 00:33:16,399
+thing that I, you know, had, uh, heard
+
+925
+00:33:16,399 --> 00:33:18,159
+about but not experimented enough with
+
+926
+00:33:18,159 --> 00:33:21,279
+was effect TS. Um, and so I'm I'm an
+
+927
+00:33:21,279 --> 00:33:24,640
+effect TS newbie. Um but for people who
+
+928
+00:33:24,640 --> 00:33:26,399
+don't know it's like you know a library
+
+929
+00:33:26,399 --> 00:33:28,320
+that makes it
+
+930
+00:33:28,320 --> 00:33:28,880
+>> hard
+
+931
+00:33:28,880 --> 00:33:32,799
+>> gives gives gives a lot of tools um for
+
+932
+00:33:32,799 --> 00:33:35,519
+for TypeScript in terms of doing a lot
+
+933
+00:33:35,519 --> 00:33:37,440
+of different stuff like error handling
+
+934
+00:33:37,440 --> 00:33:39,679
+but also like streams and just like
+
+935
+00:33:39,679 --> 00:33:41,279
+piping things between other things and
+
+936
+00:33:41,279 --> 00:33:42,480
+just like all sorts of different like
+
+937
+00:33:42,480 --> 00:33:44,000
+transformations.
+
+938
+00:33:44,000 --> 00:33:46,240
+And so
+
+939
+00:33:46,240 --> 00:33:47,919
+um
+
+940
+00:33:47,919 --> 00:33:50,320
+yeah, basically it became like obvious
+
+941
+00:33:50,320 --> 00:33:52,080
+that like it was like a pretty good way
+
+942
+00:33:52,080 --> 00:33:54,480
+to structured this type of system where
+
+943
+00:33:54,480 --> 00:33:56,240
+you have sort of inherently like a lot
+
+944
+00:33:56,240 --> 00:33:58,640
+of streams of events like feeding into
+
+945
+00:33:58,640 --> 00:34:00,640
+each other uh and different stuff like
+
+946
+00:34:00,640 --> 00:34:04,799
+that. So yeah, this is a very like this
+
+947
+00:34:04,799 --> 00:34:09,040
+demo is like very eventt. So um yeah,
+
+948
+00:34:09,040 --> 00:34:12,000
+basically like how this has been like
+
+949
+00:34:12,000 --> 00:34:14,399
+structured here is just like effectively
+
+950
+00:34:14,399 --> 00:34:17,599
+like the the the the back end here
+
+951
+00:34:17,599 --> 00:34:20,800
+that's actually receiving the websocket
+
+952
+00:34:20,800 --> 00:34:22,079
+connections from the front end and it's
+
+953
+00:34:22,079 --> 00:34:25,440
+running the whole chat has basically
+
+954
+00:34:25,440 --> 00:34:29,440
+these different like services that are
+
+955
+00:34:29,440 --> 00:34:31,599
+at any time going to basically observe
+
+956
+00:34:31,599 --> 00:34:34,000
+events and like maybe produce events
+
+957
+00:34:34,000 --> 00:34:38,240
+also. Um, and so
+
+958
+00:34:38,240 --> 00:34:40,320
+these are all sort of controlled by like
+
+959
+00:34:40,320 --> 00:34:43,599
+an event bus which is like going to be
+
+960
+00:34:43,599 --> 00:34:45,599
+getting different events from like the
+
+961
+00:34:45,599 --> 00:34:47,200
+front end. Say a user sends a chat
+
+962
+00:34:47,200 --> 00:34:49,520
+message that will go in here, right? So
+
+963
+00:34:49,520 --> 00:34:51,280
+it's like let's take a look at a
+
+964
+00:34:51,280 --> 00:34:57,430
+specific example. Um,
+
+965
+00:34:59,670 --> 00:34:59,680
+yeah. So it's like basically when
+
+966
+00:34:59,680 --> 00:35:01,359
+something wants to send an event back
+
+967
+00:35:01,359 --> 00:35:04,720
+into sort of the engine that's has these
+
+968
+00:35:04,720 --> 00:35:07,040
+different things perceiving the events
+
+969
+00:35:07,040 --> 00:35:09,040
+uh it can use this event bus it can like
+
+970
+00:35:09,040 --> 00:35:11,200
+publish the event and it will basically
+
+971
+00:35:11,200 --> 00:35:15,440
+be subscribed to by the other things. Um
+
+972
+00:35:15,440 --> 00:35:18,790
+so
+
+973
+00:35:20,790 --> 00:35:20,800
+>> so let's take a look at some of the
+
+974
+00:35:20,800 --> 00:35:22,320
+events if you're down. Why don't we look
+
+975
+00:35:22,320 --> 00:35:22,640
+at
+
+976
+00:35:22,640 --> 00:35:25,040
+>> Yeah. Yeah. Let's start with um the
+
+977
+00:35:25,040 --> 00:35:26,560
+events right. So yeah. So here's what
+
+978
+00:35:26,560 --> 00:35:27,599
+some of the events looks like for
+
+979
+00:35:27,599 --> 00:35:31,440
+example. Um
+
+980
+00:35:31,440 --> 00:35:32,960
+so basically these are all the types of
+
+981
+00:35:32,960 --> 00:35:35,440
+events that can live in this event bus
+
+982
+00:35:35,440 --> 00:35:37,839
+and can be like sent to it as sort of
+
+983
+00:35:37,839 --> 00:35:41,359
+like from external source or like
+
+984
+00:35:41,359 --> 00:35:44,640
+um sent from one of these event handlers
+
+985
+00:35:44,640 --> 00:35:46,880
+back into the system to be you know
+
+986
+00:35:46,880 --> 00:35:49,280
+transformed or something. Um, so like
+
+987
+00:35:49,280 --> 00:35:50,720
+user message, you know, obviously that's
+
+988
+00:35:50,720 --> 00:35:52,720
+like going to come from the front end.
+
+989
+00:35:52,720 --> 00:35:54,800
+Um, and it's going to sort of go into
+
+990
+00:35:54,800 --> 00:35:56,960
+the system and it'll be reacted to in
+
+991
+00:35:56,960 --> 00:35:58,160
+some way or another depending on like
+
+992
+00:35:58,160 --> 00:36:00,320
+what's currently going on. So like if we
+
+993
+00:36:00,320 --> 00:36:03,440
+look at
+
+994
+00:36:03,440 --> 00:36:05,839
+like what's Oh man, I've got like Hold
+
+995
+00:36:05,839 --> 00:36:11,510
+on. Just delete this.
+
+996
+00:36:13,589 --> 00:36:13,599
+>> You can just filter forts files. Just
+
+997
+00:36:13,599 --> 00:36:16,720
+hit the down arrow on the left or the
+
+998
+00:36:16,720 --> 00:36:18,560
+dot dot dots.
+
+999
+00:36:18,560 --> 00:36:26,550
+if you need
+
+1000
+00:36:28,550 --> 00:36:28,560
+>> it or might be TSX if you're looking for
+
+1001
+00:36:28,560 --> 00:36:30,560
+your front end.
+
+1002
+00:36:30,560 --> 00:36:32,480
+>> Uh
+
+1003
+00:36:32,480 --> 00:36:36,720
+>> no, but it's like um yeah, so it's like
+
+1004
+00:36:36,720 --> 00:36:38,320
+this is like the message function that's
+
+1005
+00:36:38,320 --> 00:36:41,599
+just like on the server itself. So like
+
+1006
+00:36:41,599 --> 00:36:43,359
+when it gets a websocket message from
+
+1007
+00:36:43,359 --> 00:36:46,320
+the front end that's like I want to send
+
+1008
+00:36:46,320 --> 00:36:48,160
+a user message then it will basically
+
+1009
+00:36:48,160 --> 00:36:52,960
+like publish that to the event bus right
+
+1010
+00:36:52,960 --> 00:36:57,440
+and so we can see like what uses that
+
+1011
+00:36:57,440 --> 00:37:00,800
+right so we have basically
+
+1012
+00:37:00,800 --> 00:37:03,200
+a subscriber to that event bus right
+
+1013
+00:37:03,200 --> 00:37:06,000
+which is like this messages state
+
+1014
+00:37:06,000 --> 00:37:08,079
+service right and basically what this is
+
+1015
+00:37:08,079 --> 00:37:10,160
+just trying to do at any time is
+
+1016
+00:37:10,160 --> 00:37:11,680
+actually basically trying to like
+
+1017
+00:37:11,680 --> 00:37:14,640
+perceive like a current state out of
+
+1018
+00:37:14,640 --> 00:37:17,599
+what events are being streamed that have
+
+1019
+00:37:17,599 --> 00:37:19,359
+to do with that are like message related
+
+1020
+00:37:19,359 --> 00:37:20,960
+right so it's like user message or like
+
+1021
+00:37:20,960 --> 00:37:23,520
+different like LLM chunks or other
+
+1022
+00:37:23,520 --> 00:37:24,720
+things
+
+1023
+00:37:24,720 --> 00:37:26,480
+>> so basically right
+
+1024
+00:37:26,480 --> 00:37:28,000
+>> and this is interesting so it's not that
+
+1025
+00:37:28,000 --> 00:37:30,079
+you don't have a state object it's that
+
+1026
+00:37:30,079 --> 00:37:31,839
+you don't keep the state object as your
+
+1027
+00:37:31,839 --> 00:37:33,200
+representation of truth
+
+1028
+00:37:33,200 --> 00:37:36,000
+>> you have an you have an event history
+
+1029
+00:37:36,000 --> 00:37:38,000
+>> and you turn the event history into a
+
+1030
+00:37:38,000 --> 00:37:39,760
+state object in every single every
+
+1031
+00:37:39,760 --> 00:37:42,000
+single time you do something with it.
+
+1032
+00:37:42,000 --> 00:37:42,320
+>> Exactly.
+
+1033
+00:37:42,320 --> 00:37:44,160
+>> So then you're now you say now given the
+
+1034
+00:37:44,160 --> 00:37:45,760
+state object now what's the next action?
+
+1035
+00:37:45,760 --> 00:37:47,119
+>> Right. Yeah. You could right. So you
+
+1036
+00:37:47,119 --> 00:37:50,320
+could imagine like in a sort of normal
+
+1037
+00:37:50,320 --> 00:37:52,720
+like um state based system where you
+
+1038
+00:37:52,720 --> 00:37:54,480
+just sort of like mutating state you
+
+1039
+00:37:54,480 --> 00:37:56,400
+would like you would just have an object
+
+1040
+00:37:56,400 --> 00:37:57,839
+like this and you would just initialize
+
+1041
+00:37:57,839 --> 00:37:59,839
+it to this and then like you would be
+
+1042
+00:37:59,839 --> 00:38:02,880
+like whenever you finish streaming a
+
+1043
+00:38:02,880 --> 00:38:04,320
+message you'd like append it to this
+
+1044
+00:38:04,320 --> 00:38:06,640
+list or something. Um, and like whenever
+
+1045
+00:38:06,640 --> 00:38:08,560
+you get a message and you look at
+
+1046
+00:38:08,560 --> 00:38:09,440
+everything and you're like, "Oh, I think
+
+1047
+00:38:09,440 --> 00:38:10,720
+this should be cued." You would add it
+
+1048
+00:38:10,720 --> 00:38:12,000
+to here instead. And then you'd like
+
+1049
+00:38:12,000 --> 00:38:14,400
+move it between these or something. So
+
+1050
+00:38:14,400 --> 00:38:15,839
+all we're really doing here is like
+
+1051
+00:38:15,839 --> 00:38:17,920
+we're saying, "Okay, we're still going
+
+1052
+00:38:17,920 --> 00:38:19,359
+to like this is still helpful to like
+
+1053
+00:38:19,359 --> 00:38:21,119
+perceive something as like a state of
+
+1054
+00:38:21,119 --> 00:38:21,520
+like
+
+1055
+00:38:21,520 --> 00:38:21,920
+>> yeah,
+
+1056
+00:38:21,920 --> 00:38:23,839
+>> different things in a certain context,
+
+1057
+00:38:23,839 --> 00:38:26,480
+but we can construct that purely from
+
+1058
+00:38:26,480 --> 00:38:28,079
+the events that are actually happening
+
+1059
+00:38:28,079 --> 00:38:29,920
+in a specific way. So that's what this
+
+1060
+00:38:29,920 --> 00:38:31,280
+is really doing here, right? this
+
+1061
+00:38:31,280 --> 00:38:33,520
+message state thing is it's just
+
+1062
+00:38:33,520 --> 00:38:36,560
+perceiving the event stream as like
+
+1063
+00:38:36,560 --> 00:38:38,000
+what's currently going on with the
+
+1064
+00:38:38,000 --> 00:38:40,640
+messages. Um so like are we streaming
+
+1065
+00:38:40,640 --> 00:38:43,280
+are any of them cued? Um like how many
+
+1066
+00:38:43,280 --> 00:38:44,720
+tokens are we using? Like all that kind
+
+1067
+00:38:44,720 --> 00:38:45,920
+of stuff
+
+1068
+00:38:45,920 --> 00:38:48,480
+>> and this can change at any time because
+
+1069
+00:38:48,480 --> 00:38:50,160
+you're just it's just a simplified view
+
+1070
+00:38:50,160 --> 00:38:51,760
+of the event history because you're like
+
+1071
+00:38:51,760 --> 00:38:53,599
+I don't want to look at the act the time
+
+1072
+00:38:53,599 --> 00:38:55,040
+at which cute events happen. I just want
+
+1073
+00:38:55,040 --> 00:38:56,560
+to like pull out all the cute events and
+
+1074
+00:38:56,560 --> 00:38:59,200
+just have them available really fast.
+
+1075
+00:38:59,200 --> 00:39:01,200
+>> Exactly. Yeah. you can just decide
+
+1076
+00:39:01,200 --> 00:39:03,359
+exactly what this needs to be like what
+
+1077
+00:39:03,359 --> 00:39:05,040
+what information is important to hold on
+
+1078
+00:39:05,040 --> 00:39:07,680
+to and that kind of stuff right so yeah
+
+1079
+00:39:07,680 --> 00:39:09,280
+and then so like an example of like
+
+1080
+00:39:09,280 --> 00:39:11,839
+something you'd actually do right I is
+
+1081
+00:39:11,839 --> 00:39:14,800
+like if we look at
+
+1082
+00:39:14,800 --> 00:39:16,320
+what's actually happening here right so
+
+1083
+00:39:16,320 --> 00:39:19,040
+it's like processing
+
+1084
+00:39:19,040 --> 00:39:23,040
+user messages so this is a specific
+
+1085
+00:39:23,040 --> 00:39:27,040
+stream for just the events that have
+
+1086
+00:39:27,040 --> 00:39:28,880
+that type user message these are
+
+1087
+00:39:28,880 --> 00:39:29,760
+basically
+
+1088
+00:39:29,760 --> 00:39:31,359
+coming from the front end through the
+
+1089
+00:39:31,359 --> 00:39:34,320
+websocket. Um, and basically we have the
+
+1090
+00:39:34,320 --> 00:39:38,480
+stream to handle those specifically. Um,
+
+1091
+00:39:38,480 --> 00:39:41,440
+and basically based on our current
+
+1092
+00:39:41,440 --> 00:39:42,720
+state, right? So we're looking at our
+
+1093
+00:39:42,720 --> 00:39:44,240
+current state like if we're streaming
+
+1094
+00:39:44,240 --> 00:39:45,920
+and that kind of stuff. So if we're
+
+1095
+00:39:45,920 --> 00:39:49,119
+currently streaming, we aren't going to
+
+1096
+00:39:49,119 --> 00:39:50,160
+send it right away. We're not aren't
+
+1097
+00:39:50,160 --> 00:39:51,599
+going to trigger the LM to start
+
+1098
+00:39:51,599 --> 00:39:53,520
+streaming again. We're just going to
+
+1099
+00:39:53,520 --> 00:39:54,800
+update it and we're going to put that in
+
+1100
+00:39:54,800 --> 00:39:56,800
+the ceued user messages, right? instead
+
+1101
+00:39:56,800 --> 00:40:00,160
+of the the normal messages and otherwise
+
+1102
+00:40:00,160 --> 00:40:01,920
+right we just add it to sort of the
+
+1103
+00:40:01,920 --> 00:40:03,839
+normal message array sort of the history
+
+1104
+00:40:03,839 --> 00:40:07,280
+here and in addition right we also have
+
+1105
+00:40:07,280 --> 00:40:10,640
+sort of an effect right so we also
+
+1106
+00:40:10,640 --> 00:40:14,160
+trigger the LLM right to respond right
+
+1107
+00:40:14,160 --> 00:40:15,920
+which is the sort of this utility here
+
+1108
+00:40:15,920 --> 00:40:19,040
+which again is checking some things and
+
+1109
+00:40:19,040 --> 00:40:23,359
+then it's producing another event right
+
+1110
+00:40:23,359 --> 00:40:25,040
+so
+
+1111
+00:40:25,040 --> 00:40:29,040
+it's like if we get a message and
+
+1112
+00:40:29,040 --> 00:40:32,480
+um you know it's not currently streaming
+
+1113
+00:40:32,480 --> 00:40:35,359
+then we're going to
+
+1114
+00:40:35,359 --> 00:40:36,960
+cue
+
+1115
+00:40:36,960 --> 00:40:40,320
+this event right lm response started and
+
+1116
+00:40:40,320 --> 00:40:42,523
+that's going to basically trigger an LM
+
+1117
+00:40:42,523 --> 00:40:44,320
+[clears throat] response. So we could we
+
+1118
+00:40:44,320 --> 00:40:45,760
+could trace that further here if we
+
+1119
+00:40:45,760 --> 00:40:46,480
+wanted.
+
+1120
+00:40:46,480 --> 00:40:48,400
+>> And the reason and just to be very clear
+
+1121
+00:40:48,400 --> 00:40:50,480
+like the reason we add that LM response
+
+1122
+00:40:50,480 --> 00:40:51,920
+started is because we want to somehow
+
+1123
+00:40:51,920 --> 00:40:54,320
+show in our UI that we've we've handled
+
+1124
+00:40:54,320 --> 00:40:55,920
+the message in some way or the message
+
+1125
+00:40:55,920 --> 00:40:57,760
+is like addressed and we should show
+
+1126
+00:40:57,760 --> 00:41:00,640
+some UI indicator to the user or like we
+
+1127
+00:41:00,640 --> 00:41:02,160
+shouldn't cue we shouldn't just run
+
+1128
+00:41:02,160 --> 00:41:03,119
+another message right now because
+
+1129
+00:41:03,119 --> 00:41:04,480
+there's something else in progress at
+
+1130
+00:41:04,480 --> 00:41:05,040
+this moment.
+
+1131
+00:41:05,040 --> 00:41:06,400
+>> Right? So it serves a dual purpose,
+
+1132
+00:41:06,400 --> 00:41:07,839
+right? So first of all, yeah, it could
+
+1133
+00:41:07,839 --> 00:41:09,599
+be represented in the UI if we wanted,
+
+1134
+00:41:09,599 --> 00:41:13,119
+but also it means that we can delegate
+
+1135
+00:41:13,119 --> 00:41:15,520
+sort of what it means to start an LLM
+
+1136
+00:41:15,520 --> 00:41:17,920
+response to like another part of the
+
+1137
+00:41:17,920 --> 00:41:19,520
+codebase, right? Which is like more
+
+1138
+00:41:19,520 --> 00:41:21,119
+dedicated for that purpose, right? So
+
+1139
+00:41:21,119 --> 00:41:23,040
+that's what like this is here, right? So
+
+1140
+00:41:23,040 --> 00:41:25,520
+it's like um that goes back into the
+
+1141
+00:41:25,520 --> 00:41:29,599
+event bus and now the LLM service picks
+
+1142
+00:41:29,599 --> 00:41:32,400
+it up, right? So this is not a thing
+
+1143
+00:41:32,400 --> 00:41:34,560
+responsible for maintaining chat state
+
+1144
+00:41:34,560 --> 00:41:37,040
+anymore, but this is um a thing
+
+1145
+00:41:37,040 --> 00:41:40,000
+responsible for basically managing a
+
+1146
+00:41:40,000 --> 00:41:42,720
+stream of chunks that come back from an
+
+1147
+00:41:42,720 --> 00:41:44,720
+LLM and deciding what to do with them.
+
+1148
+00:41:44,720 --> 00:41:46,960
+Right? So again, we're subscribing to
+
+1149
+00:41:46,960 --> 00:41:52,560
+the LLM response started event and then
+
+1150
+00:41:52,560 --> 00:41:53,839
+basically we're going to listen to that
+
+1151
+00:41:53,839 --> 00:41:56,720
+and then when we get one of those types
+
+1152
+00:41:56,720 --> 00:42:00,079
+of events
+
+1153
+00:42:00,079 --> 00:42:01,520
+we're going to do a few different
+
+1154
+00:42:01,520 --> 00:42:03,920
+things, right? So first of all, we
+
+1155
+00:42:03,920 --> 00:42:06,160
+reference actually a different state,
+
+1156
+00:42:06,160 --> 00:42:08,560
+right? And this is sort of a a state
+
+1157
+00:42:08,560 --> 00:42:11,440
+managed by another service, right? LM
+
+1158
+00:42:11,440 --> 00:42:12,800
+memory state which is sort of the
+
+1159
+00:42:12,800 --> 00:42:16,640
+perception of the messages as context
+
+1160
+00:42:16,640 --> 00:42:18,640
+which we can look at in a second but
+
+1161
+00:42:18,640 --> 00:42:21,280
+basically that gets like messages that
+
+1162
+00:42:21,280 --> 00:42:24,319
+are nice for the LLM um and they're sort
+
+1163
+00:42:24,319 --> 00:42:26,880
+of like in a a format that's ready to go
+
+1164
+00:42:26,880 --> 00:42:28,720
+for that um
+
+1165
+00:42:28,720 --> 00:42:30,400
+>> and and the idea is that you can remove
+
+1166
+00:42:30,400 --> 00:42:32,800
+all the croft and state signal like you
+
+1167
+00:42:32,800 --> 00:42:34,400
+don't for getting messages in the
+
+1168
+00:42:34,400 --> 00:42:35,680
+current state you really only want the
+
+1169
+00:42:35,680 --> 00:42:38,319
+final LM response from every LM past LM
+
+1170
+00:42:38,319 --> 00:42:40,240
+interaction you want the chat thread
+
+1171
+00:42:40,240 --> 00:42:41,839
+with the most recent views. So
+
+1172
+00:42:41,839 --> 00:42:43,599
+interruptions and stream text and
+
+1173
+00:42:43,599 --> 00:42:45,680
+everything else is removed and you
+
+1174
+00:42:45,680 --> 00:42:47,200
+really want to simplify this.
+
+1175
+00:42:47,200 --> 00:42:49,440
+>> You can decide like exactly what you
+
+1176
+00:42:49,440 --> 00:42:52,880
+want to go into the context window,
+
+1177
+00:42:52,880 --> 00:42:54,400
+right? It's like very explicit. Like
+
+1178
+00:42:54,400 --> 00:42:56,240
+it's not like a lot of the times like I
+
+1179
+00:42:56,240 --> 00:42:57,280
+feel like when you're building an agent
+
+1180
+00:42:57,280 --> 00:42:58,720
+loop, the easiest thing to do is just
+
+1181
+00:42:58,720 --> 00:43:01,119
+like you're just appending messages to
+
+1182
+00:43:01,119 --> 00:43:03,520
+like a list when it's like you know use
+
+1183
+00:43:03,520 --> 00:43:06,480
+like ro user this content, ro assistant
+
+1184
+00:43:06,480 --> 00:43:08,800
+this content and then everything is
+
+1185
+00:43:08,800 --> 00:43:10,240
+coupled together. like your control loop
+
+1186
+00:43:10,240 --> 00:43:12,240
+is like looking at those messages and
+
+1187
+00:43:12,240 --> 00:43:14,160
+like deciding what to do based on what
+
+1188
+00:43:14,160 --> 00:43:16,160
+those look like. You're feeding them to
+
+1189
+00:43:16,160 --> 00:43:18,079
+your LLM. You're trying to display them
+
+1190
+00:43:18,079 --> 00:43:20,400
+on the UI, but like when your agent gets
+
+1191
+00:43:20,400 --> 00:43:23,680
+more complex, these sort of states
+
+1192
+00:43:23,680 --> 00:43:25,520
+diverge. Like what you want to show on
+
+1193
+00:43:25,520 --> 00:43:27,200
+your UI is no longer the same as what
+
+1194
+00:43:27,200 --> 00:43:30,160
+you want to show to the LLM. Um, and so
+
+1195
+00:43:30,160 --> 00:43:32,960
+it makes more sense to produce those
+
+1196
+00:43:32,960 --> 00:43:34,560
+states instead.
+
+1197
+00:43:34,560 --> 00:43:35,119
+>> Projections.
+
+1198
+00:43:35,119 --> 00:43:35,839
+>> Yeah. Different.
+
+1199
+00:43:35,839 --> 00:43:37,440
+>> I think there's a really question that's
+
+1200
+00:43:37,440 --> 00:43:39,040
+happening here because I think
+
+1201
+00:43:39,040 --> 00:43:41,359
+>> I I think I see what you're doing. You
+
+1202
+00:43:41,359 --> 00:43:43,040
+basically have this giant event catalog
+
+1203
+00:43:43,040 --> 00:43:44,800
+and based on different use cases, you're
+
+1204
+00:43:44,800 --> 00:43:47,119
+turning it into different subsets of
+
+1205
+00:43:47,119 --> 00:43:48,880
+that catalog based on how you want to go
+
+1206
+00:43:48,880 --> 00:43:49,599
+use it.
+
+1207
+00:43:49,599 --> 00:43:52,560
+>> So case of a new user event comes in,
+
+1208
+00:43:52,560 --> 00:43:54,560
+what you want to ask yourself is the
+
+1209
+00:43:54,560 --> 00:43:56,160
+only thing you really care about is, is
+
+1210
+00:43:56,160 --> 00:43:58,400
+anything active happening right now? If
+
+1211
+00:43:58,400 --> 00:43:59,920
+something active is happening right now,
+
+1212
+00:43:59,920 --> 00:44:02,400
+the new user message is a cued message.
+
+1213
+00:44:02,400 --> 00:44:04,000
+>> If nothing active is happening right
+
+1214
+00:44:04,000 --> 00:44:06,800
+now, the new user message is the next
+
+1215
+00:44:06,800 --> 00:44:09,599
+action that should happen next. And I
+
+1216
+00:44:09,599 --> 00:44:12,400
+think while and right over here, you did
+
+1217
+00:44:12,400 --> 00:44:14,960
+another projection where you said the LM
+
+1218
+00:44:14,960 --> 00:44:16,640
+is going to interact. So I want a subset
+
+1219
+00:44:16,640 --> 00:44:17,760
+of the messages that I want to send to
+
+1220
+00:44:17,760 --> 00:44:18,960
+the LM. But I think there's something
+
+1221
+00:44:18,960 --> 00:44:21,040
+that might be confusing a few folks
+
+1222
+00:44:21,040 --> 00:44:22,880
+really fast, which is a really important
+
+1223
+00:44:22,880 --> 00:44:23,680
+question.
+
+1224
+00:44:23,680 --> 00:44:26,079
+>> When do they get persisted? Like I get
+
+1225
+00:44:26,079 --> 00:44:27,520
+that I could keep this thing in memory,
+
+1226
+00:44:27,520 --> 00:44:28,880
+but like do you save this into a
+
+1227
+00:44:28,880 --> 00:44:30,319
+database anywhere right now? And if you
+
+1228
+00:44:30,319 --> 00:44:32,640
+don't, where would you because how does
+
+1229
+00:44:32,640 --> 00:44:33,680
+that work?
+
+1230
+00:44:33,680 --> 00:44:36,000
+>> Right? So in this like demo code,
+
+1231
+00:44:36,000 --> 00:44:38,560
+there's it's just all in memory, right?
+
+1232
+00:44:38,560 --> 00:44:40,319
+But it's it's very easy to
+
+1233
+00:44:40,319 --> 00:44:41,920
+>> can you show the data structure that
+
+1234
+00:44:41,920 --> 00:44:43,359
+keeps everything in memory because I
+
+1235
+00:44:43,359 --> 00:44:44,800
+think that would also make it a lot more
+
+1236
+00:44:44,800 --> 00:44:46,400
+clear.
+
+1237
+00:44:46,400 --> 00:44:50,240
+>> Yeah. I mean effect doing some magic.
+
+1238
+00:44:50,240 --> 00:44:53,359
+>> So it's it's effect doing some magic.
+
+1239
+00:44:53,359 --> 00:44:53,599
+Okay.
+
+1240
+00:44:53,599 --> 00:44:55,680
+>> So, it's it's all being basically it's
+
+1241
+00:44:55,680 --> 00:44:59,280
+all persisted in memory basically in the
+
+1242
+00:44:59,280 --> 00:45:01,359
+like the stream buffers and that kind of
+
+1243
+00:45:01,359 --> 00:45:04,560
+thing. Um, from my limited understanding
+
+1244
+00:45:04,560 --> 00:45:06,160
+of effect at least I think that I think
+
+1245
+00:45:06,160 --> 00:45:08,480
+that's where it lives.
+
+1246
+00:45:08,480 --> 00:45:09,200
+>> Right. But
+
+1247
+00:45:09,200 --> 00:45:11,280
+>> but if you were to save in a database,
+
+1248
+00:45:11,280 --> 00:45:12,720
+can you show the pointing code when you
+
+1249
+00:45:12,720 --> 00:45:14,240
+would do this? I suspect it's an event
+
+1250
+00:45:14,240 --> 00:45:15,200
+bus,
+
+1251
+00:45:15,200 --> 00:45:19,920
+>> right? Yeah. So, you could do this. Um,
+
+1252
+00:45:19,920 --> 00:45:22,480
+>> I suspect if someone publishes a new
+
+1253
+00:45:22,480 --> 00:45:25,280
+event, I suspect you do it on publish.
+
+1254
+00:45:25,280 --> 00:45:27,200
+>> So, you could do it on publish, right?
+
+1255
+00:45:27,200 --> 00:45:28,560
+But it's like it depends on the
+
+1256
+00:45:28,560 --> 00:45:30,160
+frequency of persistence that you want
+
+1257
+00:45:30,160 --> 00:45:31,520
+and and sometimes, right, you don't want
+
+1258
+00:45:31,520 --> 00:45:32,880
+to persist everything right away because
+
+1259
+00:45:32,880 --> 00:45:34,400
+it's like you could have sort of invalid
+
+1260
+00:45:34,400 --> 00:45:36,640
+states like you imagine like
+
+1261
+00:45:36,640 --> 00:45:38,720
+>> um if someone's just interrupted an LM
+
+1262
+00:45:38,720 --> 00:45:40,079
+in the middle of a bunch of stuff, like
+
+1263
+00:45:40,079 --> 00:45:42,079
+it's like, oh, do you want to persist it
+
+1264
+00:45:42,079 --> 00:45:43,359
+there or do you want to wait for like
+
+1265
+00:45:43,359 --> 00:45:46,000
+the LM to finish its turn? or like if an
+
+1266
+00:45:46,000 --> 00:45:48,079
+LM is like in the middle of streaming
+
+1267
+00:45:48,079 --> 00:45:49,200
+like it doesn't really make sense to
+
+1268
+00:45:49,200 --> 00:45:51,119
+persist it on every chunk right so it's
+
+1269
+00:45:51,119 --> 00:45:52,560
+like you have to decide like when does
+
+1270
+00:45:52,560 --> 00:45:55,760
+it make sense to persist it um but
+
+1271
+00:45:55,760 --> 00:45:59,040
+basically yeah you could have
+
+1272
+00:45:59,040 --> 00:46:00,720
+um one way to do it was just like you
+
+1273
+00:46:00,720 --> 00:46:03,599
+just have a subscriber to um all the
+
+1274
+00:46:03,599 --> 00:46:07,520
+events right and you just have like
+
+1275
+00:46:07,520 --> 00:46:08,640
+basically
+
+1276
+00:46:08,640 --> 00:46:10,400
+>> and can you show let me just write some
+
+1277
+00:46:10,400 --> 00:46:12,160
+pseudo code really fast or maybe let's
+
+1278
+00:46:12,160 --> 00:46:13,760
+write let's write the code really fast I
+
+1279
+00:46:13,760 --> 00:46:15,359
+would show how it get persistent in
+
+1280
+00:46:15,359 --> 00:46:17,280
+effect. I think also for those of you
+
+1281
+00:46:17,280 --> 00:46:18,880
+that don't know, effect is actually a
+
+1282
+00:46:18,880 --> 00:46:21,119
+pretty good library. Um, if you're
+
+1283
+00:46:21,119 --> 00:46:22,720
+trying to build extremely resilient
+
+1284
+00:46:22,720 --> 00:46:25,520
+system, uh, effect will make it easier
+
+1285
+00:46:25,520 --> 00:46:27,040
+to go do that kind of thing. And in the
+
+1286
+00:46:27,040 --> 00:46:28,319
+world of LMS where you have a lot of
+
+1287
+00:46:28,319 --> 00:46:30,079
+error handling, it is easier. But that
+
+1288
+00:46:30,079 --> 00:46:33,280
+said, it is a long to learn. Uh, so
+
+1289
+00:46:33,280 --> 00:46:35,200
+>> let's ask let's ask Claude code because
+
+1290
+00:46:35,200 --> 00:46:37,119
+I I'm not very good at writing effect,
+
+1291
+00:46:37,119 --> 00:46:38,560
+but Claude is pretty good at it.
+
+1292
+00:46:38,560 --> 00:46:42,069
+>> I I [laughter]
+
+1293
+00:46:46,550 --> 00:46:46,560
+love it. How would we persist uh all
+
+1294
+00:46:46,560 --> 00:46:51,760
+events in the event bus so we can
+
+1295
+00:46:51,760 --> 00:46:54,319
+reload the chat later?
+
+1296
+00:46:54,319 --> 00:46:56,800
+>> Yeah, there you go. Um it'll figure it
+
+1297
+00:46:56,800 --> 00:46:58,720
+out. Um and it will go write the code
+
+1298
+00:46:58,720 --> 00:47:00,400
+and I think can you and we'll be able to
+
+1299
+00:47:00,400 --> 00:47:02,079
+see a git diff really fast as well. So
+
+1300
+00:47:02,079 --> 00:47:03,599
+that'll be able to just look at the
+
+1301
+00:47:03,599 --> 00:47:05,599
+diff. So that will give a little
+
+1302
+00:47:05,599 --> 00:47:07,200
+>> while that's running. Thank you for
+
+1303
+00:47:07,200 --> 00:47:08,720
+queuing that up. Let's go continue
+
+1304
+00:47:08,720 --> 00:47:09,760
+reading the code.
+
+1305
+00:47:09,760 --> 00:47:13,280
+>> Yep. Um, so yeah, maybe we could look at
+
+1306
+00:47:13,280 --> 00:47:15,200
+another example of sort of one of those
+
+1307
+00:47:15,200 --> 00:47:15,680
+projections.
+
+1308
+00:47:15,680 --> 00:47:17,200
+>> Let's look at I think there I think the
+
+1309
+00:47:17,200 --> 00:47:18,400
+question there was actually really good,
+
+1310
+00:47:18,400 --> 00:47:19,839
+which was how does this actually go into
+
+1311
+00:47:19,839 --> 00:47:22,319
+an LM? I I think we should go look I
+
+1312
+00:47:22,319 --> 00:47:23,920
+want to see your projection of what
+
+1313
+00:47:23,920 --> 00:47:25,839
+events are you discarding when you
+
+1314
+00:47:25,839 --> 00:47:28,480
+create this giant event array from all
+
+1315
+00:47:28,480 --> 00:47:30,560
+the possible events to the LM memory
+
+1316
+00:47:30,560 --> 00:47:32,000
+state. And you can if you could put side
+
+1317
+00:47:32,000 --> 00:47:33,839
+by side the LM memory state that you're
+
+1318
+00:47:33,839 --> 00:47:35,839
+building and on the other side if you
+
+1319
+00:47:35,839 --> 00:47:37,760
+can put the
+
+1320
+00:47:37,760 --> 00:47:39,599
+um and on the other side you can put all
+
+1321
+00:47:39,599 --> 00:47:41,040
+the events. So we can actually just like
+
+1322
+00:47:41,040 --> 00:47:42,240
+see it side by side. I think it' be
+
+1323
+00:47:42,240 --> 00:47:43,280
+really cool.
+
+1324
+00:47:43,280 --> 00:47:45,200
+>> And could you hit command? Yes, exactly.
+
+1325
+00:47:45,200 --> 00:47:46,720
+Thank you.
+
+1326
+00:47:46,720 --> 00:47:52,309
+>> Oops.
+
+1327
+00:47:56,230 --> 00:47:56,240
+There we go. Um, right. So I mean in
+
+1328
+00:47:56,240 --> 00:47:59,119
+this example, right, the the
+
+1329
+00:47:59,119 --> 00:48:01,520
+events for the LM are we're just sort of
+
+1330
+00:48:01,520 --> 00:48:03,440
+rendering it out to just a simple
+
+1331
+00:48:03,440 --> 00:48:04,480
+message with,
+
+1332
+00:48:04,480 --> 00:48:06,319
+>> you know, user assistant role and just
+
+1333
+00:48:06,319 --> 00:48:08,079
+string content, right? And then we have
+
+1334
+00:48:08,079 --> 00:48:09,440
+all these types of events that could be
+
+1335
+00:48:09,440 --> 00:48:12,560
+encountered sort of over the over the
+
+1336
+00:48:12,560 --> 00:48:16,560
+time where it processes events. Um
+
+1337
+00:48:16,560 --> 00:48:19,359
+and yeah, [snorts] so what we do is we
+
+1338
+00:48:19,359 --> 00:48:21,280
+basically just
+
+1339
+00:48:21,280 --> 00:48:23,520
+we can listen to the specific events
+
+1340
+00:48:23,520 --> 00:48:25,920
+that we care about or not. But in this
+
+1341
+00:48:25,920 --> 00:48:28,480
+case, we're actually looking at the
+
+1342
+00:48:28,480 --> 00:48:29,839
+message state. So we're actually looking
+
+1343
+00:48:29,839 --> 00:48:32,720
+at another state in this state, right?
+
+1344
+00:48:32,720 --> 00:48:34,960
+So we're looking at the messages state,
+
+1345
+00:48:34,960 --> 00:48:38,640
+which we looked at earlier. um which
+
+1346
+00:48:38,640 --> 00:48:42,079
+again is basically just keeping track of
+
+1347
+00:48:42,079 --> 00:48:43,760
+a list of messages and some other
+
+1348
+00:48:43,760 --> 00:48:45,280
+information.
+
+1349
+00:48:45,280 --> 00:48:46,800
+And because that's really the only thing
+
+1350
+00:48:46,800 --> 00:48:48,480
+that we care about for showing the LLM
+
+1351
+00:48:48,480 --> 00:48:50,400
+in this case as well, it makes more
+
+1352
+00:48:50,400 --> 00:48:52,400
+sense to just
+
+1353
+00:48:52,400 --> 00:48:54,720
+um look at that than like redo all that
+
+1354
+00:48:54,720 --> 00:48:56,800
+logic of like trying to figure out when
+
+1355
+00:48:56,800 --> 00:48:58,480
+a chunk should be appended to the last
+
+1356
+00:48:58,480 --> 00:48:59,839
+message and like all this different
+
+1357
+00:48:59,839 --> 00:49:04,800
+stuff. So the LLM memory state here
+
+1358
+00:49:04,800 --> 00:49:07,839
+which is constructing the specific
+
+1359
+00:49:07,839 --> 00:49:10,079
+messages for the LLM is just going to
+
+1360
+00:49:10,079 --> 00:49:12,559
+tap into that state that we've already
+
+1361
+00:49:12,559 --> 00:49:15,839
+constructed. So it's just mapping those
+
+1362
+00:49:15,839 --> 00:49:19,280
+messages that are in that state
+
+1363
+00:49:19,280 --> 00:49:22,000
+to right these simple versions that can
+
+1364
+00:49:22,000 --> 00:49:24,960
+be passed to an LM. So uh in this demo
+
+1365
+00:49:24,960 --> 00:49:26,880
+right we have sort of text events which
+
+1366
+00:49:26,880 --> 00:49:29,119
+are just like you know from the user to
+
+1367
+00:49:29,119 --> 00:49:31,280
+the LM or the LM to the user right just
+
+1368
+00:49:31,280 --> 00:49:32,880
+sort of standard messages
+
+1369
+00:49:32,880 --> 00:49:34,800
+>> or we have like function calls right so
+
+1370
+00:49:34,800 --> 00:49:37,119
+it's like basically we parsed the LLM
+
+1371
+00:49:37,119 --> 00:49:38,880
+response and we decided okay this is a
+
+1372
+00:49:38,880 --> 00:49:39,680
+function call
+
+1373
+00:49:39,680 --> 00:49:41,280
+>> on that format function call so people
+
+1374
+00:49:41,280 --> 00:49:42,720
+can go see this I think it's going to
+
+1375
+00:49:42,720 --> 00:49:45,040
+help make it a lot more tangible
+
+1376
+00:49:45,040 --> 00:49:48,160
+>> yeah so this is like basically the the
+
+1377
+00:49:48,160 --> 00:49:51,359
+function syntax that we told the len to
+
+1378
+00:49:51,359 --> 00:49:54,160
+use for context text here, right? So we
+
+1379
+00:49:54,160 --> 00:49:56,960
+we told it to use this sort of XML
+
+1380
+00:49:56,960 --> 00:49:58,640
+format,
+
+1381
+00:49:58,640 --> 00:50:00,640
+right? So when the LM responds and wants
+
+1382
+00:50:00,640 --> 00:50:01,920
+to call a function, it does something
+
+1383
+00:50:01,920 --> 00:50:05,200
+like this. And so when we and so we
+
+1384
+00:50:05,200 --> 00:50:06,640
+parse that out, right? And we can
+
+1385
+00:50:06,640 --> 00:50:08,240
+validate the parameters and that kind of
+
+1386
+00:50:08,240 --> 00:50:10,480
+stuff. But then we instead of storing it
+
+1387
+00:50:10,480 --> 00:50:12,480
+directly and sort of feeding it back
+
+1388
+00:50:12,480 --> 00:50:13,920
+since we want it to be sort of this
+
+1389
+00:50:13,920 --> 00:50:18,800
+clean um format as an event we have to
+
+1390
+00:50:18,800 --> 00:50:21,599
+just reconstruct what we want the LM to
+
+1391
+00:50:21,599 --> 00:50:25,119
+see that it's set right so basically
+
+1392
+00:50:25,119 --> 00:50:28,800
+we're we're reconstructing that format
+
+1393
+00:50:28,800 --> 00:50:31,520
+for the function call here. So that's
+
+1394
+00:50:31,520 --> 00:50:32,880
+just so you can keep everything be
+
+1395
+00:50:32,880 --> 00:50:34,640
+really in sync with what you're with
+
+1396
+00:50:34,640 --> 00:50:36,160
+what you wanted to do. And you could
+
+1397
+00:50:36,160 --> 00:50:37,359
+have done this and you could have done
+
+1398
+00:50:37,359 --> 00:50:38,720
+this in many which ways, but you're I'm
+
+1399
+00:50:38,720 --> 00:50:40,160
+guessing you just found that since
+
+1400
+00:50:40,160 --> 00:50:42,559
+you're doing codegen, I'm guessing XML
+
+1401
+00:50:42,559 --> 00:50:43,680
+works pretty well.
+
+1402
+00:50:43,680 --> 00:50:47,920
+>> Yeah. So this is this is um the same
+
+1403
+00:50:47,920 --> 00:50:50,720
+uh XML format that like anthropic models
+
+1404
+00:50:50,720 --> 00:50:53,119
+use internally. So we just imitate that.
+
+1405
+00:50:53,119 --> 00:50:54,640
+>> Good to mimic it. Exactly. Yes.
+
+1406
+00:50:54,640 --> 00:50:55,839
+Especially if you're using anthropic
+
+1407
+00:50:55,839 --> 00:50:57,040
+models, you should just mimic whatever
+
+1408
+00:50:57,040 --> 00:50:57,760
+they're doing.
+
+1409
+00:50:57,760 --> 00:50:59,920
+>> Yep. So that's why we have that specific
+
+1410
+00:50:59,920 --> 00:51:01,440
+format there.
+
+1411
+00:51:01,440 --> 00:51:03,680
+>> So it sounds like really I think the big
+
+1412
+00:51:03,680 --> 00:51:05,440
+takeaway for almost everyone that's on
+
+1413
+00:51:05,440 --> 00:51:07,359
+this and like what if you're down to you
+
+1414
+00:51:07,359 --> 00:51:08,720
+should commit this code to the AI that
+
+1415
+00:51:08,720 --> 00:51:10,559
+works repo in the folder for today's
+
+1416
+00:51:10,559 --> 00:51:12,079
+event. I think people might have fun
+
+1417
+00:51:12,079 --> 00:51:13,359
+running this code and playing out with
+
+1418
+00:51:13,359 --> 00:51:14,720
+them for themselves and just like
+
+1419
+00:51:14,720 --> 00:51:16,559
+understanding what's happening.
+
+1420
+00:51:16,559 --> 00:51:17,359
+>> Yeah, sure.
+
+1421
+00:51:17,359 --> 00:51:20,480
+>> Um but just things like some final
+
+1422
+00:51:20,480 --> 00:51:22,000
+closing thoughts as we're out here. And
+
+1423
+00:51:22,000 --> 00:51:23,359
+also if people have questions, feel free
+
+1424
+00:51:23,359 --> 00:51:24,880
+to chime in. Uh we've got a pretty hard
+
+1425
+00:51:24,880 --> 00:51:26,319
+stop today, so we'll be stopping right
+
+1426
+00:51:26,319 --> 00:51:29,440
+on time. Um,
+
+1427
+00:51:29,440 --> 00:51:31,520
+so what's the big takeaway here? How
+
+1428
+00:51:31,520 --> 00:51:33,760
+hard in your mind? How hard is this to
+
+1429
+00:51:33,760 --> 00:51:36,880
+build? Like on a scale of 1 to 10, 10
+
+1430
+00:51:36,880 --> 00:51:38,800
+being like Linux.
+
+1431
+00:51:38,800 --> 00:51:41,839
+>> So I think I think the the real question
+
+1432
+00:51:41,839 --> 00:51:45,599
+here is like how complicated is your
+
+1433
+00:51:45,599 --> 00:51:48,800
+agent? Like how many interactions and
+
+1434
+00:51:48,800 --> 00:51:50,960
+like possible states are there at any
+
+1435
+00:51:50,960 --> 00:51:53,760
+point in time, right? And like like if
+
+1436
+00:51:53,760 --> 00:51:55,359
+you're building a simple, you know, back
+
+1437
+00:51:55,359 --> 00:51:57,440
+and forth chat agent, like this is like
+
+1438
+00:51:57,440 --> 00:51:58,960
+completely overkill, you know? It's like
+
+1439
+00:51:58,960 --> 00:52:00,400
+you can just you can just store the
+
+1440
+00:52:00,400 --> 00:52:03,440
+messages and and and just show that and
+
+1441
+00:52:03,440 --> 00:52:05,359
+to the user, show that to the LM, like
+
+1442
+00:52:05,359 --> 00:52:06,319
+whatever.
+
+1443
+00:52:06,319 --> 00:52:07,920
+>> Um
+
+1444
+00:52:07,920 --> 00:52:10,559
+but yeah, we're I mean, the reason that
+
+1445
+00:52:10,559 --> 00:52:12,240
+I I started thinking about this in the
+
+1446
+00:52:12,240 --> 00:52:15,040
+first place is that um we were just sort
+
+1447
+00:52:15,040 --> 00:52:16,559
+of, you know, we have so many different
+
+1448
+00:52:16,559 --> 00:52:19,119
+things going on in our chat UI and our
+
+1449
+00:52:19,119 --> 00:52:20,720
+product because like you know, we have
+
+1450
+00:52:20,720 --> 00:52:23,200
+like um You can screen share again and
+
+1451
+00:52:23,200 --> 00:52:25,119
+show show what you mean.
+
+1452
+00:52:25,119 --> 00:52:34,470
+>> Right. So
+
+1453
+00:52:35,670 --> 00:52:35,680
+>> we have a lot of different things. You
+
+1454
+00:52:35,680 --> 00:52:37,440
+can build you can build a full plan. You
+
+1455
+00:52:37,440 --> 00:52:39,040
+can run it could be running code and
+
+1456
+00:52:39,040 --> 00:52:40,720
+maybe you want to change the code. Maybe
+
+1457
+00:52:40,720 --> 00:52:42,000
+you want to change the pipeline while
+
+1458
+00:52:42,000 --> 00:52:43,760
+it's running the pipeline.
+
+1459
+00:52:43,760 --> 00:52:46,400
+>> Like that's very complicated interaction
+
+1460
+00:52:46,400 --> 00:52:48,000
+to model.
+
+1461
+00:52:48,000 --> 00:52:51,520
+>> Yeah. It's like I could be like um also
+
+1462
+00:52:51,520 --> 00:52:54,000
+email this to myself.
+
+1463
+00:52:54,000 --> 00:52:54,640
+>> Yeah.
+
+1464
+00:52:54,640 --> 00:52:56,079
+>> And it's like okay now it has to think
+
+1465
+00:52:56,079 --> 00:52:58,000
+about like
+
+1466
+00:52:58,000 --> 00:52:59,520
+>> it has to think about like okay what's
+
+1467
+00:52:59,520 --> 00:53:01,359
+what's in the current workflow like how
+
+1468
+00:53:01,359 --> 00:53:03,119
+do I
+
+1469
+00:53:03,119 --> 00:53:04,960
+>> oh yeah it's also seeing like errors.
+
+1470
+00:53:04,960 --> 00:53:06,880
+It's also perceiving errors like from
+
+1471
+00:53:06,880 --> 00:53:09,040
+the workflow runs like when we run it it
+
+1472
+00:53:09,040 --> 00:53:10,400
+will also like know about what happened
+
+1473
+00:53:10,400 --> 00:53:12,160
+during the run. So it's like making a
+
+1474
+00:53:12,160 --> 00:53:14,319
+fix based on that.
+
+1475
+00:53:14,319 --> 00:53:15,680
+the the thing I think that would really
+
+1476
+00:53:15,680 --> 00:53:17,280
+suck about that which is you said also
+
+1477
+00:53:17,280 --> 00:53:18,640
+emailed to myself maybe you've been
+
+1478
+00:53:18,640 --> 00:53:20,400
+running the pipeline for like 15 minutes
+
+1479
+00:53:20,400 --> 00:53:22,000
+already and it's been running and
+
+1480
+00:53:22,000 --> 00:53:24,000
+collecting a bunch of data and now it's
+
+1481
+00:53:24,000 --> 00:53:25,200
+basically just going to throw all that
+
+1482
+00:53:25,200 --> 00:53:27,520
+away and make a whole new pipeline and
+
+1483
+00:53:27,520 --> 00:53:29,520
+then say now let's run it again
+
+1484
+00:53:29,520 --> 00:53:31,359
+>> and whereas if you did it with your
+
+1485
+00:53:31,359 --> 00:53:33,040
+event driven system you could say this
+
+1486
+00:53:33,040 --> 00:53:34,960
+is this is how I want to modify the
+
+1487
+00:53:34,960 --> 00:53:36,400
+pipeline you could run another event
+
+1488
+00:53:36,400 --> 00:53:38,079
+that says what's a diff of this new
+
+1489
+00:53:38,079 --> 00:53:40,559
+pipeline versus the old pipeline the
+
+1490
+00:53:40,559 --> 00:53:44,800
+diff is very small and now you and now
+
+1491
+00:53:44,800 --> 00:53:46,800
+it's basically just kind of working
+
+1492
+00:53:46,800 --> 00:53:48,000
+along the way.
+
+1493
+00:53:48,000 --> 00:53:49,680
+>> Yeah. Yeah. But basically, right? Yeah.
+
+1494
+00:53:49,680 --> 00:53:51,359
+We we have like a lot of different types
+
+1495
+00:53:51,359 --> 00:53:52,800
+of interactions happening, right? It's
+
+1496
+00:53:52,800 --> 00:53:54,640
+like it's editing. So, under the under
+
+1497
+00:53:54,640 --> 00:53:56,000
+the hood, this is basically like a
+
+1498
+00:53:56,000 --> 00:53:57,680
+coding agent. Like the workflow is code
+
+1499
+00:53:57,680 --> 00:53:58,960
+and it's editing it.
+
+1500
+00:53:58,960 --> 00:53:59,280
+>> Yeah.
+
+1501
+00:53:59,280 --> 00:54:00,960
+>> Um, so it's it's like a coding agent,
+
+1502
+00:54:00,960 --> 00:54:02,720
+but then it's also like adding these
+
+1503
+00:54:02,720 --> 00:54:04,880
+connectors which require like a specific
+
+1504
+00:54:04,880 --> 00:54:06,800
+OOTH flow, which requires like human
+
+1505
+00:54:06,800 --> 00:54:08,559
+approval, and then it's also like
+
+1506
+00:54:08,559 --> 00:54:10,240
+proposing these plans and it's like,
+
+1507
+00:54:10,240 --> 00:54:11,760
+okay, the user has to approve or reject
+
+1508
+00:54:11,760 --> 00:54:13,520
+those. And it's like okay if they
+
+1509
+00:54:13,520 --> 00:54:15,839
+approve them it has to also ask for the
+
+1510
+00:54:15,839 --> 00:54:17,200
+ooth and then what happens if they
+
+1511
+00:54:17,200 --> 00:54:19,280
+reject one of those. It's like all these
+
+1512
+00:54:19,280 --> 00:54:22,079
+like different variations of state and
+
+1513
+00:54:22,079 --> 00:54:24,319
+it it gets like really unwieldy if you
+
+1514
+00:54:24,319 --> 00:54:25,839
+don't have sort of a system for like
+
+1515
+00:54:25,839 --> 00:54:27,599
+understanding it right and I think
+
+1516
+00:54:27,599 --> 00:54:29,280
+having sort of everything be a
+
+1517
+00:54:29,280 --> 00:54:31,280
+projection of the events allows you to
+
+1518
+00:54:31,280 --> 00:54:34,000
+like have very clear views of those
+
+1519
+00:54:34,000 --> 00:54:36,400
+events in the exact ways that you need
+
+1520
+00:54:36,400 --> 00:54:38,319
+to actually understand what's going on.
+
+1521
+00:54:38,319 --> 00:54:39,760
+I think it's kind of like React, right?
+
+1522
+00:54:39,760 --> 00:54:41,760
+Technically, use state is really really
+
+1523
+00:54:41,760 --> 00:54:43,440
+overkill. All you want to do is build a
+
+1524
+00:54:43,440 --> 00:54:44,319
+website,
+
+1525
+00:54:44,319 --> 00:54:45,760
+>> but it turns out the minute you add
+
+1526
+00:54:45,760 --> 00:54:48,640
+interactivity, it's there's no simpler
+
+1527
+00:54:48,640 --> 00:54:51,280
+way. And that little bit of complexity
+
+1528
+00:54:51,280 --> 00:54:54,079
+just makes it a lot easier to build that
+
+1529
+00:54:54,079 --> 00:54:56,640
+website in the way that we want to.
+
+1530
+00:54:56,640 --> 00:54:59,680
+>> But over here, you really, it's the same
+
+1531
+00:54:59,680 --> 00:55:01,280
+thing. Like yes, it's a little complex
+
+1532
+00:55:01,280 --> 00:55:02,640
+to think about everything as a
+
+1533
+00:55:02,640 --> 00:55:04,880
+projection from like your event history
+
+1534
+00:55:04,880 --> 00:55:06,640
+and your event array, but once you've
+
+1535
+00:55:06,640 --> 00:55:08,960
+done that, you really have a beautifully
+
+1536
+00:55:08,960 --> 00:55:10,880
+simple system where everything is really
+
+1537
+00:55:10,880 --> 00:55:12,480
+just a readonly interaction on the
+
+1538
+00:55:12,480 --> 00:55:14,079
+current view of the world.
+
+1539
+00:55:14,079 --> 00:55:15,680
+>> Here's my current worldview. Go do
+
+1540
+00:55:15,680 --> 00:55:16,960
+something with it. Here's my current
+
+1541
+00:55:16,960 --> 00:55:19,440
+worldview and it keeps changing. And
+
+1542
+00:55:19,440 --> 00:55:20,640
+someone asked a really good question.
+
+1543
+00:55:20,640 --> 00:55:22,880
+It's like, could tools also write events
+
+1544
+00:55:22,880 --> 00:55:24,480
+to the stream? The answer is yes. They
+
+1545
+00:55:24,480 --> 00:55:26,559
+definitely could because there's just
+
+1546
+00:55:26,559 --> 00:55:28,319
+they're just adding events to this
+
+1547
+00:55:28,319 --> 00:55:31,040
+database that we have. Uh if I were to
+
+1548
+00:55:31,040 --> 00:55:34,240
+share screen again, one second.
+
+1549
+00:55:34,240 --> 00:55:34,720
+Yep.
+
+1550
+00:55:34,720 --> 00:55:36,319
+>> If we go back to what we were sharing
+
+1551
+00:55:36,319 --> 00:55:38,960
+over here, what everything is doing is
+
+1552
+00:55:38,960 --> 00:55:41,280
+fundamentally we're just adding data to
+
+1553
+00:55:41,280 --> 00:55:43,520
+this database which is user ID, convoy
+
+1554
+00:55:43,520 --> 00:55:45,119
+ID, and event. And you just keep pushing
+
+1555
+00:55:45,119 --> 00:55:46,880
+more and more data into that. And that
+
+1556
+00:55:46,880 --> 00:55:48,319
+is your current worldview. And the next
+
+1557
+00:55:48,319 --> 00:55:50,559
+time your system runs or handles on
+
+1558
+00:55:50,559 --> 00:55:52,960
+events, you just go do that. If any of
+
+1559
+00:55:52,960 --> 00:55:54,240
+you have ever built like an event
+
+1560
+00:55:54,240 --> 00:55:55,920
+handler or web hook service, that's
+
+1561
+00:55:55,920 --> 00:55:57,200
+basically what you're doing. An event
+
+1562
+00:55:57,200 --> 00:55:59,119
+comes in, handle the event, you get the
+
+1563
+00:55:59,119 --> 00:56:01,760
+world view, and you go do stuff with it.
+
+1564
+00:56:01,760 --> 00:56:04,240
+>> It's funnily enough, this paradigm
+
+1565
+00:56:04,240 --> 00:56:05,760
+exists in so many elements software. The
+
+1566
+00:56:05,760 --> 00:56:07,440
+more and more I think about it,
+
+1567
+00:56:07,440 --> 00:56:07,839
+>> yeah.
+
+1568
+00:56:07,839 --> 00:56:10,160
+>> Um like the more I'm thinking like this
+
+1569
+00:56:10,160 --> 00:56:11,680
+is just everywhere.
+
+1570
+00:56:11,680 --> 00:56:13,440
+>> It's just that most of us haven't had to
+
+1571
+00:56:13,440 --> 00:56:14,799
+write code that has dealt with this, so
+
+1572
+00:56:14,799 --> 00:56:16,960
+it feels really foreign. But all of us
+
+1573
+00:56:16,960 --> 00:56:18,799
+have used code that has done this in
+
+1574
+00:56:18,799 --> 00:56:21,149
+some form factor or another.
+
+1575
+00:56:21,149 --> 00:56:21,359
+[clears throat]
+
+1576
+00:56:21,359 --> 00:56:23,040
+>> Yeah.
+
+1577
+00:56:23,040 --> 00:56:24,880
+Yeah, it's just sort of like it's a
+
+1578
+00:56:24,880 --> 00:56:28,319
+product of right the the chat loop gets
+
+1579
+00:56:28,319 --> 00:56:30,079
+really complex and ugly.
+
+1580
+00:56:30,079 --> 00:56:32,000
+>> The chat loop is so disgusting to
+
+1581
+00:56:32,000 --> 00:56:33,119
+maintain forever
+
+1582
+00:56:33,119 --> 00:56:35,520
+>> and it's just like ew like what I'm I'm
+
+1583
+00:56:35,520 --> 00:56:37,040
+like holding these events like I have
+
+1584
+00:56:37,040 --> 00:56:39,280
+this chat history. So basically before I
+
+1585
+00:56:39,280 --> 00:56:41,280
+was like had this like you know history
+
+1586
+00:56:41,280 --> 00:56:43,440
+of events for the UI I had like event
+
+1587
+00:56:43,440 --> 00:56:44,880
+like or like messages for the UI
+
+1588
+00:56:44,880 --> 00:56:46,640
+messages for the LM some sort of like
+
+1589
+00:56:46,640 --> 00:56:48,480
+mutated you know mutated state that's
+
+1590
+00:56:48,480 --> 00:56:49,839
+like tracking other things and it's just
+
+1591
+00:56:49,839 --> 00:56:51,520
+like gez like I can't even think about
+
+1592
+00:56:51,520 --> 00:56:53,119
+like what's happening at any point in
+
+1593
+00:56:53,119 --> 00:56:55,280
+time. So it's just like very very
+
+1594
+00:56:55,280 --> 00:56:57,119
+non-productive at some point when the
+
+1595
+00:56:57,119 --> 00:56:59,119
+when the chat agent gets complex enough.
+
+1596
+00:56:59,119 --> 00:57:00,880
+So yeah.
+
+1597
+00:57:00,880 --> 00:57:02,559
+>> Um so I think we're gonna have to close
+
+1598
+00:57:02,559 --> 00:57:04,319
+it off here. I've got a sadly a hard
+
+1599
+00:57:04,319 --> 00:57:06,559
+stop today. Uh normally we will stay on
+
+1600
+00:57:06,559 --> 00:57:09,040
+for questions and answers. Now if any of
+
+1601
+00:57:09,040 --> 00:57:12,559
+you um do have more questions about this
+
+1602
+00:57:12,559 --> 00:57:14,480
+definitely definitely uh we'll send out
+
+1603
+00:57:14,480 --> 00:57:15,920
+an email update with this and send your
+
+1604
+00:57:15,920 --> 00:57:17,119
+questions there. You can definitely ask
+
+1605
+00:57:17,119 --> 00:57:20,160
+questions on the BAML Discord as well.
+
+1606
+00:57:20,160 --> 00:57:21,599
+We'll post a link on there in a second
+
+1607
+00:57:21,599 --> 00:57:24,480
+as well. Um and you can find the link on
+
+1608
+00:57:24,480 --> 00:57:25,599
+there if you want to sign up for next
+
+1609
+00:57:25,599 --> 00:57:26,559
+week's episode. We're going to have
+
+1610
+00:57:26,559 --> 00:57:28,559
+another really fun episode. Uh sign up
+
+1611
+00:57:28,559 --> 00:57:31,119
+on our link over here. This has been AI
+
+1612
+00:57:31,119 --> 00:57:32,799
+Networks. We've got Anders over here
+
+1613
+00:57:32,799 --> 00:57:34,720
+helping us go. actually wrote a whole
+
+1614
+00:57:34,720 --> 00:57:36,559
+demo, made it work, showed a ventor in
+
+1615
+00:57:36,559 --> 00:57:39,920
+action a really cool way. So, uh, thank
+
+1616
+00:57:39,920 --> 00:57:41,440
+you for making time for that. Follow
+
+1617
+00:57:41,440 --> 00:57:43,119
+them on Twitter, check out their demo,
+
+1618
+00:57:43,119 --> 00:57:44,319
+check out their product. It's really
+
+1619
+00:57:44,319 --> 00:57:45,599
+freaking cool. It gets really deep. And
+
+1620
+00:57:45,599 --> 00:57:47,440
+I'm super excited once you have it the
+
+1621
+00:57:47,440 --> 00:57:48,720
+event driven loop you show in the demo
+
+1622
+00:57:48,720 --> 00:57:50,240
+of live in the code. It's going to make
+
+1623
+00:57:50,240 --> 00:57:53,520
+it even more fun to play around with.
+
+1624
+00:57:53,520 --> 00:57:55,520
+Uh, but for everyone else, thank you for
+
+1625
+00:57:55,520 --> 00:57:56,720
+making time out of your day to come
+
+1626
+00:57:56,720 --> 00:57:58,720
+listen to us. Um, this has been fun.
+
+1627
+00:57:58,720 --> 00:57:59,440
+>> Yeah,
+
+1628
+00:57:59,440 --> 00:58:02,160
+>> another episode out the out the window.
+
+1629
+00:58:02,160 --> 00:58:03,520
+All right, we'll send an email update to
+
+1630
+00:58:03,520 --> 00:58:05,440
+everyone that's watching. Uh, thank you
+
+1631
+00:58:05,440 --> 00:58:08,319
+everyone.

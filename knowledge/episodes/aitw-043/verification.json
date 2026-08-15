@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-043",
+  "status": "verified",
+  "checks": {
+    "required_files_present": true,
+    "json_valid": true,
+    "jsonl_valid": true,
+    "claim_count": 7,
+    "timestamps_monotonic": true,
+    "timestamp_spans_valid": true,
+    "source_paths_present": true
+  },
+  "limitations": [
+    "Transcript wording and speaker labels may contain transcription errors.",
+    "Demonstrations and speaker reports were not independently reproduced.",
+    "Exact recording start and transcript generation history are not recorded upstream."
+  ]
+}

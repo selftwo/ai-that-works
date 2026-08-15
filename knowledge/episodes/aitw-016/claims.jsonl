@@ -1,0 +1,6 @@
+{"kind":"observed","claim":"The speakers maintain task specific private benchmarks for testing new models.","start":"00:03:30","end":"00:04:22","confidence":"high","source":"knowledge/episodes/aitw-016/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Accuracy is defined in relation to the product and user behavior.","start":"00:08:31","end":"00:16:18","confidence":"medium","source":"knowledge/episodes/aitw-016/transcripts/stitched.txt"}
+{"kind":"observed","claim":"The tool runs common prompts and examples across multiple model configurations.","start":"00:18:44","end":"00:30:12","confidence":"high","source":"knowledge/episodes/aitw-016/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Latency and cost are considered with output quality when choosing a model.","start":"00:31:08","end":"00:38:47","confidence":"high","source":"knowledge/episodes/aitw-016/transcripts/stitched.txt"}
+{"kind":"observed","claim":"Side by side output review retains human judgment for subjective differences.","start":"00:39:20","end":"00:50:31","confidence":"medium","source":"knowledge/episodes/aitw-016/transcripts/stitched.txt"}
+{"kind":"observed","claim":"The speakers recommend starting with a bespoke evaluation tool for the current comparison.","start":"00:52:08","end":"01:02:42","confidence":"high","source":"knowledge/episodes/aitw-016/transcripts/stitched.txt"}

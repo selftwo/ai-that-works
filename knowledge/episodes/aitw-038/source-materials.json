@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-038",
+  "materials": [
+    {"path": "2025-12-30-founding-boundary/transcript.md", "role": "primary timestamped transcript", "authority": "upstream"},
+    {"path": "2025-12-30-founding-boundary/README.md", "role": "episode overview and links", "authority": "upstream"},
+    {"path": "2025-12-30-founding-boundary/meta.md", "role": "identity, date, and media links", "authority": "upstream"}
+  ],
+  "excluded": ["event registration page", "remote whiteboard content", "screen demonstrations not stored in the episode folder"]
+}

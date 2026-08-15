@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-044",
+  "episode": 44,
+  "season": 2,
+  "title": "Agentic Backpressure Deep Dive",
+  "source_folder": "2026-02-10-agentic-backpressure-deep-dive",
+  "recorded_at": "2026-02-10T18:00:00Z",
+  "recorded_at_provenance": "Source catalog event_date from upstream meta.md. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "Zx_GOhGik0o",
+  "youtube_url": "https://www.youtube.com/watch?v=Zx_GOhGik0o",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

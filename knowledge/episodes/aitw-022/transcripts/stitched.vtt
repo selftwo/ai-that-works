@@ -1,0 +1,4546 @@
+WEBVTT
+
+00:00:01.429 --> 00:00:01.439
+Oh, wait. We're waiting for the
+
+00:00:01.439 --> 00:00:03.919
+recording. There we go. What's up? I'm
+
+00:00:03.919 --> 00:00:05.920
+Dex. Uh, this is the AI that works show
+
+00:00:05.920 --> 00:00:07.520
+where we teach you real hands-on
+
+00:00:07.520 --> 00:00:10.559
+advanced AI coding, AI implementation,
+
+00:00:10.559 --> 00:00:12.800
+AI pipeline, AI engineering, context
+
+00:00:12.800 --> 00:00:16.240
+engineering, um, real world solutions to
+
+00:00:16.240 --> 00:00:19.279
+building uh, really good AI apps. Hi,
+
+00:00:19.279 --> 00:00:21.520
+Bob. What do I have to add there?
+
+00:00:21.520 --> 00:00:23.519
+>> I think that's it. I think today is
+
+00:00:23.519 --> 00:00:25.519
+going to be
+
+00:00:25.519 --> 00:00:27.760
+one an episode that will be I think
+
+00:00:27.760 --> 00:00:29.760
+hopefully educational to a lot of people
+
+00:00:29.760 --> 00:00:32.800
+which is more about streaming and how
+
+00:00:32.800 --> 00:00:37.360
+streaming can make your app a lot more
+
+00:00:37.360 --> 00:00:39.200
+feel almost like a whole different
+
+00:00:39.200 --> 00:00:42.719
+application uh with and without it and I
+
+00:00:42.719 --> 00:00:44.960
+think it's one second I'm gonna get this
+
+00:00:44.960 --> 00:00:48.399
+I'm gonna open the end um okay there we
+
+00:00:48.399 --> 00:00:49.200
+go
+
+00:00:49.200 --> 00:00:50.800
+>> yeah this is a really cool topic that
+
+00:00:50.800 --> 00:00:52.800
+I'm really excited about um I think it
+
+00:00:52.800 --> 00:00:54.320
+goes really under the hood of some of
+
+00:00:54.320 --> 00:00:56.640
+the like weird hard annoying problems
+
+00:00:56.640 --> 00:00:59.039
+with using LMS and especially like
+
+00:00:59.039 --> 00:01:01.760
+creating really good UX's when LMS are
+
+00:01:01.760 --> 00:01:04.799
+streaming like partial JSON objects and
+
+00:01:04.799 --> 00:01:06.880
+how you can show incremental progress
+
+00:01:06.880 --> 00:01:09.360
+updates in your UI and in your app or on
+
+00:01:09.360 --> 00:01:12.080
+your CLI well without having to wait for
+
+00:01:12.080 --> 00:01:14.080
+the entire JSON object to be streamed
+
+00:01:14.080 --> 00:01:15.200
+out.
+
+00:01:15.200 --> 00:01:17.119
+>> Exactly. But before when we go into
+
+00:01:17.119 --> 00:01:18.080
+this, typically you start with
+
+00:01:18.080 --> 00:01:19.840
+whiteboards, but today I want to do
+
+00:01:19.840 --> 00:01:21.040
+something different. And I want to start
+
+00:01:21.040 --> 00:01:23.680
+with examples. I want to go straight to
+
+00:01:23.680 --> 00:01:25.360
+our example and just show a couple
+
+00:01:25.360 --> 00:01:28.080
+examples along the way. And before we do
+
+00:01:28.080 --> 00:01:29.759
+any of this stuff, let's just go look at
+
+00:01:29.759 --> 00:01:31.280
+chatbt.
+
+00:01:31.280 --> 00:01:33.920
+When any of us ever use chatbt and I ask
+
+00:01:33.920 --> 00:01:35.439
+it to go do something, and I'm using the
+
+00:01:35.439 --> 00:01:37.119
+thinking model right now. It's like
+
+00:01:37.119 --> 00:01:43.680
+explain why traits are not good for LLMs
+
+00:01:43.680 --> 00:01:47.119
+for LM generated
+
+00:01:47.119 --> 00:01:51.759
+generated code and I'll add the more
+
+00:01:51.759 --> 00:01:54.079
+and I go do this. This whole experience
+
+00:01:54.079 --> 00:01:56.880
+that's designed by chatbt is actually
+
+00:01:56.880 --> 00:01:58.399
+goes through and tells you oh you're
+
+00:01:58.399 --> 00:01:59.759
+thinking you can look at the thinking
+
+00:01:59.759 --> 00:02:01.200
+code. You can see what it's going to be
+
+00:02:01.200 --> 00:02:03.040
+thinking along the way. If you want, you
+
+00:02:03.040 --> 00:02:05.360
+can opt in and skip thinking and go
+
+00:02:05.360 --> 00:02:08.879
+straight to content generation.
+
+00:02:08.879 --> 00:02:10.800
+This is all content that actually and
+
+00:02:10.800 --> 00:02:12.000
+right over here made a section for what
+
+00:02:12.000 --> 00:02:13.680
+it is. It's actually I can click on and
+
+00:02:13.680 --> 00:02:14.959
+see exactly what it's thinking for
+
+00:02:14.959 --> 00:02:17.120
+different steps of the way. Why it does
+
+00:02:17.120 --> 00:02:19.680
+this is because the generation of code
+
+00:02:19.680 --> 00:02:21.440
+is all based on the same thing that we
+
+00:02:21.440 --> 00:02:23.520
+have when we first build websites, which
+
+00:02:23.520 --> 00:02:26.560
+is response time. anytime I I've never
+
+00:02:26.560 --> 00:02:28.480
+met someone I've never met a single
+
+00:02:28.480 --> 00:02:31.599
+major website provider that says, "Hey,
+
+00:02:31.599 --> 00:02:34.400
+Google loaded fast enough. If you go to
+
+00:02:34.400 --> 00:02:35.920
+google.com and you search something and
+
+00:02:35.920 --> 00:02:38.720
+you say like, uh, dogs,
+
+00:02:38.720 --> 00:02:40.640
+they talk about their search time." I
+
+00:02:40.640 --> 00:02:41.920
+guess not anymore, but like there's
+
+00:02:41.920 --> 00:02:43.840
+never been a single time where they've
+
+00:02:43.840 --> 00:02:46.160
+stopped optimizing load times on Google.
+
+00:02:46.160 --> 00:02:47.680
+There's never been a single website that
+
+00:02:47.680 --> 00:02:49.440
+does that. Similarly for your LM
+
+00:02:49.440 --> 00:02:51.840
+generation code, there's no point at
+
+00:02:51.840 --> 00:02:53.519
+which no matter how fast the models are
+
+00:02:53.519 --> 00:02:55.440
+that it will be fast enough because the
+
+00:02:55.440 --> 00:02:57.760
+fastest thing you could have done is as
+
+00:02:57.760 --> 00:02:59.599
+soon as the you before the user even
+
+00:02:59.599 --> 00:03:00.800
+typed out the question, know what
+
+00:03:00.800 --> 00:03:02.159
+question they were going to ask, have
+
+00:03:02.159 --> 00:03:04.000
+the answer already ready and load it up
+
+00:03:04.000 --> 00:03:06.159
+into their machine. The next best thing
+
+00:03:06.159 --> 00:03:08.800
+you can do is take their answer and take
+
+00:03:08.800 --> 00:03:10.080
+the question that as soon as they type
+
+00:03:10.080 --> 00:03:12.000
+it, have the answer already ready on
+
+00:03:12.000 --> 00:03:14.720
+their exact machine in the exact app in
+
+00:03:14.720 --> 00:03:17.680
+memory, load it up and answer it back.
+
+00:03:17.680 --> 00:03:18.800
+At some point, you're going to go down
+
+00:03:18.800 --> 00:03:20.640
+and make a network call and that will
+
+00:03:20.640 --> 00:03:23.280
+always be slow even if the LMS are
+
+00:03:23.280 --> 00:03:25.040
+instantaneous. And the thing is that
+
+00:03:25.040 --> 00:03:26.800
+today's models are all based on token
+
+00:03:26.800 --> 00:03:29.360
+generation models. So the mechanisms
+
+00:03:29.360 --> 00:03:31.440
+that you use to go and display these
+
+00:03:31.440 --> 00:03:34.080
+responses makes a huge difference. If I
+
+00:03:34.080 --> 00:03:35.360
+couldn't see what these thought
+
+00:03:35.360 --> 00:03:38.239
+processes were along the way, it makes
+
+00:03:38.239 --> 00:03:38.640
+it
+
+00:03:38.640 --> 00:03:40.239
+>> you just get pissed off and you drop.
+
+00:03:40.239 --> 00:03:41.280
+You'd be like, I don't have time for
+
+00:03:41.280 --> 00:03:42.959
+this. I just see a spinner, right? And
+
+00:03:42.959 --> 00:03:44.159
+so, okay, so you're talking about like
+
+00:03:44.159 --> 00:03:46.000
+basically this the more you can show
+
+00:03:46.000 --> 00:03:47.760
+something happen, the earlier you can
+
+00:03:47.760 --> 00:03:49.040
+show something happening, even if it
+
+00:03:49.040 --> 00:03:52.080
+isn't the final answer, the more likely
+
+00:03:52.080 --> 00:03:53.519
+people will actually sit there and wait
+
+00:03:53.519 --> 00:03:56.319
+for it to finish. And going back to the
+
+00:03:56.319 --> 00:03:58.879
+theme of our previous last uh last
+
+00:03:58.879 --> 00:04:00.400
+conversation and the conversation before
+
+00:04:00.400 --> 00:04:02.560
+that, this UX is important for
+
+00:04:02.560 --> 00:04:05.040
+steerability. You're not only helping
+
+00:04:05.040 --> 00:04:06.959
+the person be entertained along the way,
+
+00:04:06.959 --> 00:04:08.640
+you're helping them have confidence that
+
+00:04:08.640 --> 00:04:10.000
+this thing that is going to take a
+
+00:04:10.000 --> 00:04:12.799
+couple seconds to run. It's actually
+
+00:04:12.799 --> 00:04:14.000
+going to give them something that's
+
+00:04:14.000 --> 00:04:15.760
+worthwhile and worth sticking around
+
+00:04:15.760 --> 00:04:19.199
+for. It's like the little doping giving.
+
+00:04:19.199 --> 00:04:20.880
+>> So if I see the thoughts are wrong, I
+
+00:04:20.880 --> 00:04:22.240
+might just like exit. I mean, I do this
+
+00:04:22.240 --> 00:04:23.600
+with cloud code all the time. you exit
+
+00:04:23.600 --> 00:04:24.639
+out and you'd be like, "Nope, nope,
+
+00:04:24.639 --> 00:04:26.000
+that's wrong." Like, "Let me go and
+
+00:04:26.000 --> 00:04:27.440
+start over." without having to wait for
+
+00:04:27.440 --> 00:04:29.040
+it to do the whole thing.
+
+00:04:29.040 --> 00:04:30.720
+>> Exactly. That's one of the things I find
+
+00:04:30.720 --> 00:04:32.479
+very frustrating about sometimes using
+
+00:04:32.479 --> 00:04:34.479
+cursor, for example, because it doesn't
+
+00:04:34.479 --> 00:04:36.960
+give me a good incremental UX. So then
+
+00:04:36.960 --> 00:04:38.560
+I'm kind of stuck trying to digest all
+
+00:04:38.560 --> 00:04:40.000
+the information and resteer it
+
+00:04:40.000 --> 00:04:42.320
+correctly. But one of the cool things
+
+00:04:42.320 --> 00:04:44.080
+cursor has done is they let you go back
+
+00:04:44.080 --> 00:04:45.919
+and click on a point and checkpoint your
+
+00:04:45.919 --> 00:04:47.759
+code and go back to that point in the
+
+00:04:47.759 --> 00:04:50.320
+codebase. It's very, very similar for
+
+00:04:50.320 --> 00:04:52.080
+anything else. So let's take something
+
+00:04:52.080 --> 00:04:54.080
+really really simple like ré parsing for
+
+00:04:54.080 --> 00:04:55.680
+example.
+
+00:04:55.680 --> 00:04:58.160
+If I were to do any sort of ré parsing
+
+00:04:58.160 --> 00:05:00.240
+and typically you ask an LM to extract
+
+00:05:00.240 --> 00:05:03.199
+information. We all know that an LM can
+
+00:05:03.199 --> 00:05:04.800
+information markdown and we can render
+
+00:05:04.800 --> 00:05:07.520
+the markdown in a useful way
+
+00:05:07.520 --> 00:05:13.039
+that is totally valid. But this markdown
+
+00:05:13.039 --> 00:05:14.720
+uh even if I go render in a really
+
+00:05:14.720 --> 00:05:16.880
+pretty markdown format and I syntax and
+
+00:05:16.880 --> 00:05:19.600
+like bolded etc is just going to be a
+
+00:05:19.600 --> 00:05:21.919
+lot less attractive than something
+
+00:05:21.919 --> 00:05:23.280
+that's actually like for example these
+
+00:05:23.280 --> 00:05:25.360
+are real hyperlinks I can click on this
+
+00:05:25.360 --> 00:05:27.039
+hyperlink is broken. I can even give you
+
+00:05:27.039 --> 00:05:28.560
+a little notification that's an invalid
+
+00:05:28.560 --> 00:05:32.800
+URL. The skills can be listed as tags
+
+00:05:32.800 --> 00:05:36.240
+experiences can be listed in more drop-
+
+00:05:36.240 --> 00:05:38.240
+down form in a more visually appealing
+
+00:05:38.240 --> 00:05:39.919
+format. There's a reason most websites
+
+00:05:39.919 --> 00:05:42.400
+aren't plain text or plain HTML. They
+
+00:05:42.400 --> 00:05:44.960
+have like CSS on it because style does
+
+00:05:44.960 --> 00:05:47.680
+matter. But if I were to go and stream
+
+00:05:47.680 --> 00:05:49.680
+this, I have a couple options. This is
+
+00:05:49.680 --> 00:05:52.160
+easy to stream. I just render it as it
+
+00:05:52.160 --> 00:05:55.360
+comes out and the markdown naturally
+
+00:05:55.360 --> 00:05:58.000
+streams token-wise. This gets a lot more
+
+00:05:58.000 --> 00:06:00.000
+complicated. So, we're going to talk
+
+00:06:00.000 --> 00:06:01.840
+about how it actually looks to go and
+
+00:06:01.840 --> 00:06:04.479
+build more stable streaming systems
+
+00:06:04.479 --> 00:06:06.560
+along the way over here. And there's a
+
+00:06:06.560 --> 00:06:06.880
+very
+
+00:06:06.880 --> 00:06:08.880
+>> Okay, so you're you're converting to
+
+00:06:08.880 --> 00:06:10.880
+some sort of structured output under the
+
+00:06:10.880 --> 00:06:12.720
+hood and then you have a renderer like
+
+00:06:12.720 --> 00:06:14.240
+React components or something that take
+
+00:06:14.240 --> 00:06:16.240
+that like JSON object and turn it into
+
+00:06:16.240 --> 00:06:18.160
+this like beautiful view.
+
+00:06:18.160 --> 00:06:20.080
+>> Exactly. And if we go take something a
+
+00:06:20.080 --> 00:06:21.199
+little bit more complicated like a
+
+00:06:21.199 --> 00:06:23.360
+recipe generator, when you go do
+
+00:06:23.360 --> 00:06:25.280
+something like this, chat GBT is
+
+00:06:25.280 --> 00:06:26.960
+definitely just rendering tokens, but
+
+00:06:26.960 --> 00:06:28.720
+what this allows me to build is very
+
+00:06:28.720 --> 00:06:31.759
+interactive components where even while
+
+00:06:31.759 --> 00:06:34.240
+it's streaming, I can actually interact
+
+00:06:34.240 --> 00:06:36.639
+with it. Okay. So, pause this. So,
+
+00:06:36.639 --> 00:06:38.639
+you're you're running the slider is
+
+00:06:38.639 --> 00:06:40.960
+basically how many servings do I want?
+
+00:06:40.960 --> 00:06:42.960
+And you're basically at any given point,
+
+00:06:42.960 --> 00:06:45.520
+you're able to combine logic that's
+
+00:06:45.520 --> 00:06:48.000
+interactive in the UI with whatever
+
+00:06:48.000 --> 00:06:50.319
+incremental output has to date been
+
+00:06:50.319 --> 00:06:52.000
+streamed by the LLM
+
+00:06:52.000 --> 00:06:54.400
+>> and it updates in real time. Okay.
+
+00:06:54.400 --> 00:06:58.720
+>> Exactly. So, if I if I and this is the
+
+00:06:58.720 --> 00:07:00.319
+beauty of doing things like this is the
+
+00:07:00.319 --> 00:07:02.560
+code is actually not complex. So,
+
+00:07:02.560 --> 00:07:05.120
+everyone I think should be able to build
+
+00:07:05.120 --> 00:07:08.639
+applications like this along the way,
+
+00:07:08.639 --> 00:07:10.240
+but I'm just going to do a really quick
+
+00:07:10.240 --> 00:07:11.599
+thing to talk about what this is and
+
+00:07:11.599 --> 00:07:15.520
+what the data separation path is. So, if
+
+00:07:15.520 --> 00:07:17.520
+we're down here and we have like our UI,
+
+00:07:17.520 --> 00:07:19.120
+which is a React component. Let's we'll
+
+00:07:19.120 --> 00:07:21.440
+use a recipe as an example. I don't know
+
+00:07:21.440 --> 00:07:22.960
+how to spell, but we'll assume that
+
+00:07:22.960 --> 00:07:24.479
+spelling is not a thing that I have to
+
+00:07:24.479 --> 00:07:27.360
+care about anymore thanks to LMS. Um, we
+
+00:07:27.360 --> 00:07:30.479
+have a recipe example. And what does a
+
+00:07:30.479 --> 00:07:32.560
+recipe take in? Well, this renderer
+
+00:07:32.560 --> 00:07:39.029
+takes in a type of recipe.
+
+00:07:41.909 --> 00:07:41.919
+This takes in a recipe data model. And a
+
+00:07:41.919 --> 00:07:45.120
+recipe data model is just a class or I
+
+00:07:45.120 --> 00:07:48.639
+guess interface in JavaScript TypeScript
+
+00:07:48.639 --> 00:07:53.360
+that has a name string
+
+00:07:53.360 --> 00:07:58.230
+uh number of servings
+
+00:08:00.550 --> 00:08:00.560
+in
+
+00:08:00.560 --> 00:08:02.560
+and on top of that it's going to have a
+
+00:08:02.560 --> 00:08:07.189
+couple more things which are ingredients
+
+00:08:11.029 --> 00:08:11.039
+which is going to be a string array
+
+00:08:11.039 --> 00:08:15.520
+And it's going to have a instructions
+
+00:08:15.520 --> 00:08:19.039
+finger array as well. Well, all of us
+
+00:08:19.039 --> 00:08:20.720
+know how to render this type. I don't
+
+00:08:20.720 --> 00:08:22.080
+have to write the react for code for
+
+00:08:22.080 --> 00:08:24.479
+this. Any chat GBT model can do this.
+
+00:08:24.479 --> 00:08:26.000
+So, all I need to be able to do is
+
+00:08:26.000 --> 00:08:29.919
+provide some sort of backend service
+
+00:08:29.919 --> 00:08:32.240
+that can somehow produce this recipe
+
+00:08:32.240 --> 00:08:35.760
+type. And if I am able to do that, then
+
+00:08:35.760 --> 00:08:38.640
+this UI should just work. and any
+
+00:08:38.640 --> 00:08:40.640
+interactivity I build on this, for
+
+00:08:40.640 --> 00:08:44.399
+example, a recipe slider that multiplies
+
+00:08:44.399 --> 00:08:46.320
+um oops, ingredients is wrong. We'll
+
+00:08:46.320 --> 00:08:49.040
+need something else.
+
+00:08:49.040 --> 00:08:50.800
+Um, in order to make this interactive
+
+00:08:50.800 --> 00:08:52.160
+based on number of servings, I actually
+
+00:08:52.160 --> 00:08:56.000
+need to uh change my data model a little
+
+00:08:56.000 --> 00:09:03.110
+bit
+
+00:09:06.389 --> 00:09:06.399
+and I need to write it
+
+00:09:06.399 --> 00:09:07.920
+>> where ingredients needs to be a list of
+
+00:09:07.920 --> 00:09:09.519
+items.
+
+00:09:09.519 --> 00:09:12.399
+But if I did this, it should be possible
+
+00:09:12.399 --> 00:09:14.080
+to make for me to make an interactive
+
+00:09:14.080 --> 00:09:15.519
+recipe view pretty straight in a
+
+00:09:15.519 --> 00:09:17.600
+straightforward manner.
+
+00:09:17.600 --> 00:09:19.040
+This is really clear how I would turn
+
+00:09:19.040 --> 00:09:21.279
+this into React components and render
+
+00:09:21.279 --> 00:09:22.959
+the different things and however I
+
+00:09:22.959 --> 00:09:24.720
+wanted and I could have the slider logic
+
+00:09:24.720 --> 00:09:26.000
+and stuff.
+
+00:09:26.000 --> 00:09:28.320
+>> Exactly. The problem however that I'll
+
+00:09:28.320 --> 00:09:31.040
+run into is
+
+00:09:31.040 --> 00:09:33.440
+right now as as of right now if I had an
+
+00:09:33.440 --> 00:09:36.640
+LLM generate a recipe type I won't
+
+00:09:36.640 --> 00:09:38.240
+actually be able to send it to the model
+
+00:09:38.240 --> 00:09:40.720
+until it's done.
+
+00:09:40.720 --> 00:09:42.480
+So that's kind of the problem that I
+
+00:09:42.480 --> 00:09:43.839
+want to talk about today. How do you get
+
+00:09:43.839 --> 00:09:45.360
+around this? And how do you make it so
+
+00:09:45.360 --> 00:09:47.839
+that this interactive component doesn't
+
+00:09:47.839 --> 00:09:51.200
+turn into a nightmare of code?
+
+00:09:51.200 --> 00:09:51.600
+>> Uh,
+
+00:09:51.600 --> 00:09:53.279
+>> can I change this to interface real
+
+00:09:53.279 --> 00:09:54.720
+quick? That's going to bother me.
+
+00:09:54.720 --> 00:09:57.839
+>> Sorry. Yes. Uh, that's a good point.
+
+00:09:57.839 --> 00:09:59.760
+Um, and we really, really want to go
+
+00:09:59.760 --> 00:10:01.279
+nail this problem. The thing is, this
+
+00:10:01.279 --> 00:10:02.640
+problem is actually really quite easy.
+
+00:10:02.640 --> 00:10:04.959
+It's not that hard. Um, and I think
+
+00:10:04.959 --> 00:10:07.360
+we'll be able to do this in real time
+
+00:10:07.360 --> 00:10:10.240
+when I screen share over here. Let me
+
+00:10:10.240 --> 00:10:11.760
+pull this up over here. Give me one
+
+00:10:11.760 --> 00:10:17.430
+second.
+
+00:10:19.269 --> 00:10:19.279
+Okay. And then let me screen share my
+
+00:10:19.279 --> 00:10:21.600
+actual VS Code to show how we'll turn
+
+00:10:21.600 --> 00:10:25.509
+this thing into code.
+
+00:10:28.949 --> 00:10:28.959
+Share VS Code. Actually, I'll just share
+
+00:10:28.959 --> 00:10:31.120
+my whole desktop. And again, as per
+
+00:10:31.120 --> 00:10:32.720
+usual, if you see anything you're not
+
+00:10:32.720 --> 00:10:34.000
+supposed to see, please let us know.
+
+00:10:34.000 --> 00:10:37.040
+We'll clip it from the video and um
+
+00:10:37.040 --> 00:10:40.000
+we'll keep going.
+
+00:10:40.000 --> 00:10:42.560
+So right over here I have a very very
+
+00:10:42.560 --> 00:10:45.279
+basic uh next.js app that I just made.
+
+00:10:45.279 --> 00:10:47.519
+You can see if I have the commands that
+
+00:10:47.519 --> 00:10:50.320
+I ran. I basically just ran pnvpm create
+
+00:10:50.320 --> 00:10:54.240
+next app and added baml into it. Um and
+
+00:10:54.240 --> 00:10:56.399
+the only thing I'm going to do is I'm
+
+00:10:56.399 --> 00:10:57.760
+going to go ahead and just start off
+
+00:10:57.760 --> 00:11:00.320
+first with just a example of the exact
+
+00:11:00.320 --> 00:11:03.440
+thing that we did which is recipes.
+
+00:11:03.440 --> 00:11:07.750
+I can't type.
+
+00:11:10.069 --> 00:11:10.079
+My computer doesn't let me type. Okay,
+
+00:11:10.079 --> 00:11:13.430
+that works.
+
+00:11:19.269 --> 00:11:19.279
+I'm going to zoom in and write this over
+
+00:11:19.279 --> 00:11:22.880
+here. We want to start off with function
+
+00:11:22.880 --> 00:11:29.269
+generate. Oh, there you go. Okay, cool.
+
+00:11:32.710 --> 00:11:32.720
+name string ingredients
+
+00:11:32.720 --> 00:11:36.790
+uh servings
+
+00:11:39.750 --> 00:11:39.760
+and then class ingredient. Okay, cool.
+
+00:11:39.760 --> 00:11:41.360
+It kind of figured it out over here
+
+00:11:41.360 --> 00:11:42.959
+anyway. I didn't have to write any code
+
+00:11:42.959 --> 00:11:46.000
+which is kind of nice.
+
+00:11:46.000 --> 00:11:48.160
+Cool. And let's just play around with
+
+00:11:48.160 --> 00:11:49.839
+this prompt really fast and see what we
+
+00:11:49.839 --> 00:11:52.640
+do. Uh let me know if this font size is
+
+00:11:52.640 --> 00:11:55.120
+acceptable for everyone else.
+
+00:11:55.120 --> 00:11:56.160
+Yeah.
+
+00:11:56.160 --> 00:11:57.920
+>> So, right over here, we're going to make
+
+00:11:57.920 --> 00:11:59.600
+a recipe. And this will be like, let's
+
+00:11:59.600 --> 00:12:03.040
+say like uh I love SOG paneer. Uh that's
+
+00:12:03.040 --> 00:12:04.320
+what I had for dinner last night. So,
+
+00:12:04.320 --> 00:12:06.560
+let's let's use that.
+
+00:12:06.560 --> 00:12:09.519
+>> I want a recipe for so paneer.
+
+00:12:09.519 --> 00:12:10.000
+>> All right.
+
+00:12:10.000 --> 00:12:11.839
+>> When I go run this, uh someone's
+
+00:12:11.839 --> 00:12:14.079
+talking. Can you mute them, Dex? Okay.
+
+00:12:14.079 --> 00:12:14.639
+>> Yeah, I got it.
+
+00:12:14.639 --> 00:12:16.160
+>> Go run this. The first thing that's
+
+00:12:16.160 --> 00:12:17.680
+going to happen is the model's going to
+
+00:12:17.680 --> 00:12:19.680
+start generating stuff.
+
+00:12:19.680 --> 00:12:21.200
+>> And I'm going to try and show some
+
+00:12:21.200 --> 00:12:23.120
+subtle stuff along the way. So you can
+
+00:12:23.120 --> 00:12:24.480
+see how it's streaming and how it's
+
+00:12:24.480 --> 00:12:25.440
+actually rendering stuff. I don't know
+
+00:12:25.440 --> 00:12:26.880
+if you guys caught that. I'll rerun it
+
+00:12:26.880 --> 00:12:30.230
+really fast.
+
+00:12:31.269 --> 00:12:31.279
+So you can see how it's streaming.
+
+00:12:31.279 --> 00:12:33.200
+>> Okay. So on the on on the left you have
+
+00:12:33.200 --> 00:12:36.000
+broken JSON and on the right you're kind
+
+00:12:36.000 --> 00:12:38.560
+of just like always producing a valid
+
+00:12:38.560 --> 00:12:39.680
+object. Right.
+
+00:12:39.680 --> 00:12:41.519
+>> Exactly. So this is pretty much a
+
+00:12:41.519 --> 00:12:43.920
+guarantee that BAML does for you. So now
+
+00:12:43.920 --> 00:12:45.360
+you don't have to worry about this. But
+
+00:12:45.360 --> 00:12:46.639
+there's something that kind of bothers
+
+00:12:46.639 --> 00:12:49.120
+me over here, which is ingredients don't
+
+00:12:49.120 --> 00:12:50.800
+really mean anything until the full
+
+00:12:50.800 --> 00:12:53.120
+ingredient has come out of it. I don't
+
+00:12:53.120 --> 00:12:56.399
+really want ingredient to be used. I
+
+00:12:56.399 --> 00:12:58.000
+don't really care if the name is paneer,
+
+00:12:58.000 --> 00:13:00.240
+but the quantity is uh is not yet
+
+00:13:00.240 --> 00:13:02.000
+defined because the model's only printed
+
+00:13:02.000 --> 00:13:04.560
+out these tokens. How could I do that?
+
+00:13:04.560 --> 00:13:07.360
+Well, one thing you can do is we can
+
+00:13:07.360 --> 00:13:10.160
+just tell the model that, hey, this
+
+00:13:10.160 --> 00:13:12.240
+thing only should come out when it's
+
+00:13:12.240 --> 00:13:15.040
+actually done. So every ingredient will
+
+00:13:15.040 --> 00:13:16.639
+only stream as it's done. So I'll show
+
+00:13:16.639 --> 00:13:19.120
+you what that means. Now you'll notice
+
+00:13:19.120 --> 00:13:21.440
+the streaming mechanism only prints out
+
+00:13:21.440 --> 00:13:23.600
+the whole object instead of partially
+
+00:13:23.600 --> 00:13:25.200
+regardless of what the model is doing
+
+00:13:25.200 --> 00:13:28.160
+along the way. So what this does is it
+
+00:13:28.160 --> 00:13:30.399
+actually gives you good guarantees on
+
+00:13:30.399 --> 00:13:33.040
+the types of the object over there. On
+
+00:13:33.040 --> 00:13:34.639
+the other hand, instructions, I'm
+
+00:13:34.639 --> 00:13:36.240
+actually very happy to have these stream
+
+00:13:36.240 --> 00:13:37.600
+out along the way because they're long
+
+00:13:37.600 --> 00:13:40.079
+forms of text. So it's not that useful
+
+00:13:40.079 --> 00:13:42.639
+for me to have it.
+
+00:13:42.639 --> 00:13:46.000
+That said, the serving size is almost an
+
+00:13:46.000 --> 00:13:48.800
+essential necessary thing that I need.
+
+00:13:48.800 --> 00:13:50.639
+So why don't we also tell the model that
+
+00:13:50.639 --> 00:13:53.040
+hey this thing cannot be null when it's
+
+00:13:53.040 --> 00:13:54.880
+processing it needs to be at least
+
+00:13:54.880 --> 00:13:57.440
+somewhat present. So now when I actually
+
+00:13:57.440 --> 00:13:59.440
+run this even if the model has dumped
+
+00:13:59.440 --> 00:14:01.519
+out some tokens until the serving size
+
+00:14:01.519 --> 00:14:04.000
+has appeared nothing will be rendered at
+
+00:14:04.000 --> 00:14:06.480
+all to the model. So it allows me to go
+
+00:14:06.480 --> 00:14:09.360
+and control this purely by giving some
+
+00:14:09.360 --> 00:14:12.560
+minor annotations into the code. what
+
+00:14:12.560 --> 00:14:15.839
+these small things I did make a huge
+
+00:14:15.839 --> 00:14:18.560
+impact in exactly how
+
+00:14:18.560 --> 00:14:20.320
+>> the stuff is actually going to be
+
+00:14:20.320 --> 00:14:23.040
+rendered in the UX that happens.
+
+00:14:23.040 --> 00:14:25.360
+>> So you don't push an an ingredient into
+
+00:14:25.360 --> 00:14:27.199
+the final object until the whole
+
+00:14:27.199 --> 00:14:29.519
+ingredient object has been streamed.
+
+00:14:29.519 --> 00:14:31.040
+>> Exactly.
+
+00:14:31.040 --> 00:14:32.399
+>> Okay.
+
+00:14:32.399 --> 00:14:35.440
+>> Sick. I haven't gone super deep on this
+
+00:14:35.440 --> 00:14:37.600
+part of BAML or doing this like
+
+00:14:37.600 --> 00:14:40.160
+otherwise. I know like AI AI SDK has
+
+00:14:40.160 --> 00:14:42.240
+some stuff that kind of does this. Um,
+
+00:14:42.240 --> 00:14:44.480
+but this is really cool to see.
+
+00:14:44.480 --> 00:14:46.079
+>> I'll show you the exact manifestation.
+
+00:14:46.079 --> 00:14:47.600
+And this is really subtle, so see if you
+
+00:14:47.600 --> 00:14:51.440
+can catch it. Um, of what this actually
+
+00:14:51.440 --> 00:14:53.199
+does.
+
+00:14:53.199 --> 00:14:55.519
+Let's see if the images load. Once I do,
+
+00:14:55.519 --> 00:14:58.320
+give it a second. There we go. Okay.
+
+00:14:58.320 --> 00:14:59.920
+See if you guys can see what's happening
+
+00:14:59.920 --> 00:15:02.480
+over here.
+
+00:15:02.480 --> 00:15:05.199
+Anyone have a guess?
+
+00:15:05.199 --> 00:15:07.040
+I'm just streaming numbers and a plot
+
+00:15:07.040 --> 00:15:09.360
+line. I'm plotting uh how many
+
+00:15:09.360 --> 00:15:11.600
+tablespoons of water are there on Earth
+
+00:15:11.600 --> 00:15:13.519
+and I'm accumulating numbers. And here I
+
+00:15:13.519 --> 00:15:15.360
+asked it to list out a bunch of XYZ
+
+00:15:15.360 --> 00:15:20.550
+coordinates.
+
+00:15:22.150 --> 00:15:22.160
+>> All right. Where's our super cracked
+
+00:15:22.160 --> 00:15:29.110
+chat? Tell us what's going on here.
+
+00:15:31.670 --> 00:15:31.680
+>> So exactly it it defaults to zero.
+
+00:15:31.680 --> 00:15:33.839
+That's part one. The other thing it's
+
+00:15:33.839 --> 00:15:35.600
+doing is while the numbers are actually
+
+00:15:35.600 --> 00:15:37.600
+generated, LLM spit out numbers from
+
+00:15:37.600 --> 00:15:39.120
+left to right, which is reasonable.
+
+00:15:39.120 --> 00:15:40.959
+That's how I write them as well. So, it
+
+00:15:40.959 --> 00:15:42.880
+actually renders a five, then a 53, then
+
+00:15:42.880 --> 00:15:45.680
+a 530, and a 53,000. It actually makes
+
+00:15:45.680 --> 00:15:49.360
+for a very, very, very jarring
+
+00:15:49.360 --> 00:15:52.720
+uh UX on there. But what if you said
+
+00:15:52.720 --> 00:15:54.959
+that, hey, numbers can't actually stream
+
+00:15:54.959 --> 00:15:58.480
+until they're fully done by default?
+
+00:15:58.480 --> 00:16:01.120
+Well, once you do that, you now get a
+
+00:16:01.120 --> 00:16:02.399
+view like this. It's a little bit
+
+00:16:02.399 --> 00:16:03.920
+slower,
+
+00:16:03.920 --> 00:16:06.320
+but every single point is rendered at
+
+00:16:06.320 --> 00:16:08.240
+the exact same point that it needs to be
+
+00:16:08.240 --> 00:16:10.800
+on the XYZ axis without you having to
+
+00:16:10.800 --> 00:16:13.120
+think about it. And what this means is
+
+00:16:13.120 --> 00:16:15.279
+there's no point at which rendering this
+
+00:16:15.279 --> 00:16:18.160
+graph that it's invalid or incorrect.
+
+00:16:18.160 --> 00:16:19.519
+There's no such thing as an invalid
+
+00:16:19.519 --> 00:16:22.160
+state. It's incomplete, but there's no
+
+00:16:22.160 --> 00:16:23.839
+invalid states like this where it's like
+
+00:16:23.839 --> 00:16:27.600
+slowly hopping up to the right digit.
+
+00:16:27.600 --> 00:16:30.560
+And more tangibly, what this leads to is
+
+00:16:30.560 --> 00:16:32.320
+if I was rendering this graph, which is
+
+00:16:32.320 --> 00:16:34.560
+just book popularity over time. You can
+
+00:16:34.560 --> 00:16:38.000
+see how this would be much much harder
+
+00:16:38.000 --> 00:16:41.120
+to deal with without you having to think
+
+00:16:41.120 --> 00:16:42.720
+if you had to think about this along the
+
+00:16:42.720 --> 00:16:44.800
+way. This axis would just not work cuz
+
+00:16:44.800 --> 00:16:47.920
+you'd render at one. So your graph yaxis
+
+00:16:47.920 --> 00:16:50.079
+would snap all the way to the left and
+
+00:16:50.079 --> 00:16:53.199
+then go all the way down along the way.
+
+00:16:53.199 --> 00:16:54.320
+>> Question in the chat. How do you
+
+00:16:54.320 --> 00:16:57.600
+determine when a number is complete?
+
+00:16:57.600 --> 00:17:00.079
+a lot of algorithms uh that we've built
+
+00:17:00.079 --> 00:17:01.519
+out there. You can go read the BAML
+
+00:17:01.519 --> 00:17:03.199
+source code. But the idea is that if we
+
+00:17:03.199 --> 00:17:05.199
+know what fields what fields are in a
+
+00:17:05.199 --> 00:17:06.559
+data type or something else, we can
+
+00:17:06.559 --> 00:17:08.319
+basically run a bunch of heristics to
+
+00:17:08.319 --> 00:17:09.839
+know if a number is complete along the
+
+00:17:09.839 --> 00:17:12.400
+way or not. For example,
+
+00:17:12.400 --> 00:17:14.400
+>> the simple the simple version. Yeah, go
+
+00:17:14.400 --> 00:17:15.280
+ahead.
+
+00:17:15.280 --> 00:17:16.720
+>> Let's take an let's take an example of
+
+00:17:16.720 --> 00:17:19.280
+like an integer for example. If I'm I'll
+
+00:17:19.280 --> 00:17:21.839
+draw on my screen. If an example is like
+
+00:17:21.839 --> 00:17:24.319
+if you know that the type is an integer
+
+00:17:24.319 --> 00:17:26.559
+and the model spit out one two three,
+
+00:17:26.559 --> 00:17:27.919
+you don't actually know if it's complete
+
+00:17:27.919 --> 00:17:30.160
+yet. But if the model put a comma there,
+
+00:17:30.160 --> 00:17:32.880
+you also don't know if it's complete. If
+
+00:17:32.880 --> 00:17:35.200
+a model put a period there, you also
+
+00:17:35.200 --> 00:17:36.880
+don't know if it's complete because you
+
+00:17:36.880 --> 00:17:39.919
+could be in Europe um or you could be in
+
+00:17:39.919 --> 00:17:43.919
+Europe instead of um in America because
+
+00:17:43.919 --> 00:17:45.280
+periods don't mean something else. But
+
+00:17:45.280 --> 00:17:46.320
+on the other hand, if the model put a
+
+00:17:46.320 --> 00:17:47.360
+question mark there, you know it's
+
+00:17:47.360 --> 00:17:49.440
+complete.
+
+00:17:49.440 --> 00:17:51.280
+So you can kind of have intuition about
+
+00:17:51.280 --> 00:17:54.960
+how numbers are going to be dealt with
+
+00:17:54.960 --> 00:17:56.799
+uh in different contexts based on what
+
+00:17:56.799 --> 00:17:59.120
+you know
+
+00:17:59.120 --> 00:18:01.280
+and we just have done a lot of this work
+
+00:18:01.280 --> 00:18:06.070
+under the hood for you.
+
+00:18:07.909 --> 00:18:07.919
+>> Uh kind of
+
+00:18:07.919 --> 00:18:09.200
+>> right like I would be looking for a
+
+00:18:09.200 --> 00:18:11.679
+comma, right? It was like if I integer
+
+00:18:11.679 --> 00:18:13.360
+specifically integer and JSON I feel
+
+00:18:13.360 --> 00:18:14.799
+like is an easy one. You're like okay
+
+00:18:14.799 --> 00:18:16.640
+when is the field like JSON has a field
+
+00:18:16.640 --> 00:18:18.240
+terminator which is a comma in most
+
+00:18:18.240 --> 00:18:20.320
+cases or a like closed bracket for the
+
+00:18:20.320 --> 00:18:23.039
+object.
+
+00:18:23.039 --> 00:18:25.280
+>> Exactly. So let me let me go into
+
+00:18:25.280 --> 00:18:26.480
+Exactly. So that's kind of how we can
+
+00:18:26.480 --> 00:18:28.240
+build intuition hunches around this. Let
+
+00:18:28.240 --> 00:18:29.760
+me clear my notation.
+
+00:18:29.760 --> 00:18:32.720
+>> So we need reax or grammar for every
+
+00:18:32.720 --> 00:18:34.960
+data type basically. I'll clear it.
+
+00:18:34.960 --> 00:18:36.160
+>> Yeah, that's kind of what the BAML
+
+00:18:36.160 --> 00:18:37.679
+parser does under the hood. But what
+
+00:18:37.679 --> 00:18:39.360
+this lets you do is I want you guys to
+
+00:18:39.360 --> 00:18:40.880
+take a look at this UI really fast and
+
+00:18:40.880 --> 00:18:42.320
+see if you can catch the difference. and
+
+00:18:42.320 --> 00:18:44.080
+it's named incorrectly, object and
+
+00:18:44.080 --> 00:18:46.160
+array. But there's a very subtle
+
+00:18:46.160 --> 00:18:52.230
+difference here.
+
+00:18:55.110 --> 00:18:55.120
+>> I like the I like the the second one
+
+00:18:55.120 --> 00:18:57.360
+better. I like the array one better.
+
+00:18:57.360 --> 00:19:01.590
+>> What do you like about it better?
+
+00:19:04.470 --> 00:19:04.480
+>> I I don't know. It just feels more pol I
+
+00:19:04.480 --> 00:19:05.520
+mean the other one is like more
+
+00:19:05.520 --> 00:19:07.440
+interactive. It has more like the where
+
+00:19:07.440 --> 00:19:10.559
+the token stream one by one. It feels
+
+00:19:10.559 --> 00:19:14.880
+more but like just feels super polished.
+
+00:19:14.880 --> 00:19:18.080
+>> I think it's just I think what I
+
+00:19:18.080 --> 00:19:20.480
+>> what I would describe it as is u Andre
+
+00:19:20.480 --> 00:19:22.160
+Karpathi talks about this autonomy
+
+00:19:22.160 --> 00:19:24.720
+slider all the time. But here we kind of
+
+00:19:24.720 --> 00:19:26.640
+have like this UX slider of how much
+
+00:19:26.640 --> 00:19:28.799
+streaming do you want to do? The object
+
+00:19:28.799 --> 00:19:31.039
+one is basically full streaming. Stream
+
+00:19:31.039 --> 00:19:32.960
+every token as soon as it comes there
+
+00:19:32.960 --> 00:19:36.160
+like show the user everything. The array
+
+00:19:36.160 --> 00:19:37.520
+one is somewhere down here which says,
+
+00:19:37.520 --> 00:19:39.280
+hey, I'm only going to show you cards as
+
+00:19:39.280 --> 00:19:42.000
+they finish and nothing else. And a
+
+00:19:42.000 --> 00:19:43.280
+totally different approach would be,
+
+00:19:43.280 --> 00:19:44.640
+hey, I'll show you nothing until it's
+
+00:19:44.640 --> 00:19:46.080
+completely done and then I'll show you
+
+00:19:46.080 --> 00:19:48.559
+the whole thing all at once. It's not to
+
+00:19:48.559 --> 00:19:50.000
+say any one of these are better or
+
+00:19:50.000 --> 00:19:53.120
+worse, but definitely your users will
+
+00:19:53.120 --> 00:19:55.679
+have a preference for different ones of
+
+00:19:55.679 --> 00:19:57.600
+them. And what you'll want to do is
+
+00:19:57.600 --> 00:20:00.080
+you'll want the ability to control that
+
+00:20:00.080 --> 00:20:01.840
+very trivially. So you can actually go
+
+00:20:01.840 --> 00:20:05.600
+ahead and decide what you do.
+
+00:20:05.600 --> 00:20:07.200
+>> I would almost want like I feel like
+
+00:20:07.200 --> 00:20:08.559
+something in the middle would be really
+
+00:20:08.559 --> 00:20:10.400
+good. Like not don't stream every single
+
+00:20:10.400 --> 00:20:12.559
+token, but like show the header and then
+
+00:20:12.559 --> 00:20:14.320
+once all the text is there, show all the
+
+00:20:14.320 --> 00:20:16.320
+text in one go. Like the streaming every
+
+00:20:16.320 --> 00:20:18.720
+token just feels like chat GPT and it
+
+00:20:18.720 --> 00:20:21.360
+feels like every AI app I've ever seen.
+
+00:20:21.360 --> 00:20:23.840
+The second one feels like it is real
+
+00:20:23.840 --> 00:20:25.600
+time and I can tell it's AI. Maybe if
+
+00:20:25.600 --> 00:20:27.440
+there's like a spinner here after each
+
+00:20:27.440 --> 00:20:30.640
+one of these. But like I I yeah I think
+
+00:20:30.640 --> 00:20:32.159
+there's like yeah having I think I think
+
+00:20:32.159 --> 00:20:33.679
+your point about like having control and
+
+00:20:33.679 --> 00:20:35.919
+granularity on every field is is the
+
+00:20:35.919 --> 00:20:37.679
+right one to be focusing on.
+
+00:20:37.679 --> 00:20:39.120
+>> Exactly. And I think the point here is
+
+00:20:39.120 --> 00:20:40.880
+like the thing that differentiates most
+
+00:20:40.880 --> 00:20:44.799
+AI applications today is purely the UX
+
+00:20:44.799 --> 00:20:47.360
+and this is a big part of the UX of how
+
+00:20:47.360 --> 00:20:49.280
+you're actually streaming stuff around.
+
+00:20:49.280 --> 00:20:51.039
+So why don't we take this example that
+
+00:20:51.039 --> 00:20:52.559
+we're building out here, the recipe
+
+00:20:52.559 --> 00:20:55.440
+example to fruition and just complete it
+
+00:20:55.440 --> 00:20:59.440
+uh in complete it.
+
+00:20:59.440 --> 00:21:01.600
+Let's do this.
+
+00:21:01.600 --> 00:21:03.520
+So what we have here is we have a
+
+00:21:03.520 --> 00:21:05.120
+function called generate recipe. It's
+
+00:21:05.120 --> 00:21:06.400
+going to take in a recipe produce a
+
+00:21:06.400 --> 00:21:08.960
+recipe data model. We put some streaming
+
+00:21:08.960 --> 00:21:10.640
+traits around it. So we actually get to
+
+00:21:10.640 --> 00:21:12.320
+know that hey servings it won't pop up
+
+00:21:12.320 --> 00:21:15.840
+until servings are complete. Um, let's
+
+00:21:15.840 --> 00:21:17.760
+also guarantee that name will also exist
+
+00:21:17.760 --> 00:21:19.440
+at all points. Like this data model is
+
+00:21:19.440 --> 00:21:20.880
+kind of useless until the name and the
+
+00:21:20.880 --> 00:21:23.360
+servings are done.
+
+00:21:23.360 --> 00:21:25.039
+Uh, ingredients, they don't have to be
+
+00:21:25.039 --> 00:21:26.799
+done. Uh, they don't have to like I
+
+00:21:26.799 --> 00:21:28.480
+don't I'm okay if the ingredients aren't
+
+00:21:28.480 --> 00:21:29.840
+yet started, but I definitely want to
+
+00:21:29.840 --> 00:21:31.760
+make sure that ingredients only pop in
+
+00:21:31.760 --> 00:21:34.320
+as an ingredient is fully complete. And
+
+00:21:34.320 --> 00:21:35.360
+lastly, I want to make sure that
+
+00:21:35.360 --> 00:21:38.159
+instructions only pop in uh can stream
+
+00:21:38.159 --> 00:21:39.360
+as much as they want. I don't really
+
+00:21:39.360 --> 00:21:42.159
+care. So, let's build a UI for this um
+
+00:21:42.159 --> 00:21:46.149
+really quickly.
+
+00:21:48.630 --> 00:21:48.640
+layout.tsx page.tsx.
+
+00:21:48.640 --> 00:21:50.320
+Um, so I'll just do this in the main
+
+00:21:50.320 --> 00:21:53.200
+React app because I why not? So the
+
+00:21:53.200 --> 00:22:01.750
+first thing I'll do is import.
+
+00:22:03.669 --> 00:22:03.679
+>> Okay. So this is and this is I guess is
+
+00:22:03.679 --> 00:22:06.720
+using the built-in BAML generator for
+
+00:22:06.720 --> 00:22:09.280
+creating for creating like React hooks
+
+00:22:09.280 --> 00:22:10.799
+that you can use to stream this stuff
+
+00:22:10.799 --> 00:22:11.919
+down.
+
+00:22:11.919 --> 00:22:13.760
+>> Exactly. So it's just it will just do
+
+00:22:13.760 --> 00:22:15.760
+we'll do purely purely on the react side
+
+00:22:15.760 --> 00:22:16.799
+but we don't have to think about
+
+00:22:16.799 --> 00:22:18.320
+anything
+
+00:22:18.320 --> 00:22:22.149
+from
+
+00:22:35.510 --> 00:22:35.520
+client slash react slash hooks
+
+00:22:35.520 --> 00:22:38.240
+use generate recipe
+
+00:22:38.240 --> 00:22:41.750
+>> nice
+
+00:22:45.270 --> 00:22:45.280
+And what I have here is I've used
+
+00:22:45.280 --> 00:22:46.799
+generate recipe. This thing is going to
+
+00:22:46.799 --> 00:22:48.640
+spit out data to me. It's either going
+
+00:22:48.640 --> 00:22:51.440
+to be a recipe type or undefined.
+
+00:22:51.440 --> 00:22:54.960
+And I think it streams by default.
+
+00:22:54.960 --> 00:22:58.720
+So, and the type of data is going to be
+
+00:22:58.720 --> 00:23:01.280
+as you can see name is guaranteed. Uh
+
+00:23:01.280 --> 00:23:04.400
+where is this? Oh, sorry.
+
+00:23:04.400 --> 00:23:07.200
+If data
+
+00:23:07.200 --> 00:23:12.159
+data name is guaranteed to be there as
+
+00:23:12.159 --> 00:23:16.000
+it's filled in name dot
+
+00:23:16.000 --> 00:23:18.240
+name
+
+00:23:18.240 --> 00:23:21.679
+ingredients.m mapap
+
+00:23:21.679 --> 00:23:24.240
+I
+
+00:23:24.240 --> 00:23:25.600
+and all these are guaranteed to be
+
+00:23:25.600 --> 00:23:28.320
+completed along the way. So I actually
+
+00:23:28.320 --> 00:23:29.840
+don't have to worry about streaming over
+
+00:23:29.840 --> 00:23:31.440
+here because this thing will just do the
+
+00:23:31.440 --> 00:23:33.200
+streaming work for me and it basically
+
+00:23:33.200 --> 00:23:34.799
+guarantees that my type system matches
+
+00:23:34.799 --> 00:23:37.760
+the type I have over here. In theory, if
+
+00:23:37.760 --> 00:23:40.400
+I remove this and I only use
+
+00:23:40.400 --> 00:23:44.080
+ingredients, then unit should become oh
+
+00:23:44.080 --> 00:23:47.830
+data is
+
+00:23:54.149 --> 00:23:54.159
+when I'm writing ingredients unit
+
+00:23:54.159 --> 00:23:58.080
+becomes uh where is this?
+
+00:23:58.080 --> 00:23:59.360
+Let me just make sure the types.
+
+00:23:59.360 --> 00:24:00.640
+>> Okay. So the the point here while you're
+
+00:24:00.640 --> 00:24:01.600
+while while you're fixing that I guess
+
+00:24:01.600 --> 00:24:03.120
+the point here is that you don't have to
+
+00:24:03.120 --> 00:24:05.840
+put like question mark everywhere to do
+
+00:24:05.840 --> 00:24:08.000
+these like optional checks on everything
+
+00:24:08.000 --> 00:24:09.679
+because you're like okay once once an
+
+00:24:09.679 --> 00:24:13.200
+item is in that array I can guarantee
+
+00:24:13.200 --> 00:24:15.919
+from the parser that that field will be
+
+00:24:15.919 --> 00:24:18.000
+non-null rather than having to be like
+
+00:24:18.000 --> 00:24:19.440
+okay if this is true then show it
+
+00:24:19.440 --> 00:24:20.720
+otherwise don't show it and have all
+
+00:24:20.720 --> 00:24:22.559
+these like conditional checks down like
+
+00:24:22.559 --> 00:24:24.880
+streaming into my render function or
+
+00:24:24.880 --> 00:24:26.559
+leaking down into my render function
+
+00:24:26.559 --> 00:24:27.440
+basically
+
+00:24:27.440 --> 00:24:29.039
+>> I can put all that logic declar
+
+00:24:29.039 --> 00:24:31.840
+comparatively in my class definitions.
+
+00:24:31.840 --> 00:24:36.640
+>> As 408, is that right?
+
+00:24:36.640 --> 00:24:38.320
+>> Sorry, I write a lot more Python code
+
+00:24:38.320 --> 00:24:40.720
+than type code.
+
+00:24:40.720 --> 00:24:42.400
+>> Scale issue.
+
+00:24:42.400 --> 00:24:46.390
+>> Yeah, probably
+
+00:24:49.430 --> 00:24:49.440
+uh ingredient. Yeah, when I go do this,
+
+00:24:49.440 --> 00:24:51.200
+unit becomes like optional when I'm
+
+00:24:51.200 --> 00:24:52.799
+actually returning this type along the
+
+00:24:52.799 --> 00:24:55.360
+way. So, let me catch up to what we're
+
+00:24:55.360 --> 00:24:57.440
+doing again. So what we're doing here is
+
+00:24:57.440 --> 00:24:59.360
+we're calling the generate recipe method
+
+00:24:59.360 --> 00:25:01.760
+we have in a streaming mechanism. For
+
+00:25:01.760 --> 00:25:03.200
+every single instance that we get of the
+
+00:25:03.200 --> 00:25:04.799
+stream, we loop through every ingredient
+
+00:25:04.799 --> 00:25:08.000
+and we see unit. Unit is a string or
+
+00:25:08.000 --> 00:25:10.720
+undefined. But if we go back here and we
+
+00:25:10.720 --> 00:25:12.240
+actually say that ingredient can only
+
+00:25:12.240 --> 00:25:16.240
+pop in when it's done. Then in theory,
+
+00:25:16.240 --> 00:25:17.600
+unit should actually no longer be
+
+00:25:17.600 --> 00:25:19.600
+undefined. It should only be defined at
+
+00:25:19.600 --> 00:25:22.400
+compile time. And that is exactly I
+
+00:25:22.400 --> 00:25:24.880
+think what happens.
+
+00:25:24.880 --> 00:25:26.240
+There we go. That's exactly what
+
+00:25:26.240 --> 00:25:27.840
+happened. So unit now becomes known at
+
+00:25:27.840 --> 00:25:29.279
+compile time. So now I when I do
+
+00:25:29.279 --> 00:25:30.799
+rendering, I know how to render
+
+00:25:30.799 --> 00:25:32.159
+ingredients and I just render an
+
+00:25:32.159 --> 00:25:34.080
+ingredient with this thing. So when I
+
+00:25:34.080 --> 00:25:35.600
+actually render the new quantity, I can
+
+00:25:35.600 --> 00:25:39.039
+do unit quantity times
+
+00:25:39.039 --> 00:25:42.559
+uh dunk dot servings. And this is
+
+00:25:42.559 --> 00:25:44.640
+guaranteed to be a number. There's no
+
+00:25:44.640 --> 00:25:46.480
+streaming constraints. So I get a lot of
+
+00:25:46.480 --> 00:25:48.080
+simplicity. Otherwise, what I would have
+
+00:25:48.080 --> 00:25:50.159
+to do if I didn't have all these things
+
+00:25:50.159 --> 00:25:53.200
+on here.
+
+00:25:53.200 --> 00:25:54.799
+>> Okay. Okay. And the is the chunk going
+
+00:25:54.799 --> 00:25:57.360
+to be the incrementally updated object,
+
+00:25:57.360 --> 00:25:59.679
+right? It's not it's not just the like
+
+00:25:59.679 --> 00:26:01.760
+diff of the tokens that were sent. It's
+
+00:26:01.760 --> 00:26:03.600
+literally every chunk that comes off of
+
+00:26:03.600 --> 00:26:05.760
+that iterator in in Typescript is going
+
+00:26:05.760 --> 00:26:08.159
+to be the full object.
+
+00:26:08.159 --> 00:26:09.919
+>> Exactly. Otherwise, now to build a
+
+00:26:09.919 --> 00:26:11.600
+reactive component, I have to write some
+
+00:26:11.600 --> 00:26:13.760
+code like this. And if every single time
+
+00:26:13.760 --> 00:26:14.799
+I want to build some sort of
+
+00:26:14.799 --> 00:26:16.559
+interactivity, I have to write code like
+
+00:26:16.559 --> 00:26:19.520
+this, I basically won't do it because
+
+00:26:19.520 --> 00:26:21.679
+I've made life a lot harder for myself.
+
+00:26:21.679 --> 00:26:24.640
+So what I find is adding a few type
+
+00:26:24.640 --> 00:26:27.919
+constraints on here can go a long way in
+
+00:26:27.919 --> 00:26:29.360
+terms of making life easier for
+
+00:26:29.360 --> 00:26:31.679
+developers to actually go ahead and
+
+00:26:31.679 --> 00:26:33.200
+build the system that they want under
+
+00:26:33.200 --> 00:26:35.279
+the hood because now this thing reflects
+
+00:26:35.279 --> 00:26:37.919
+the type system correctly and I'm
+
+00:26:37.919 --> 00:26:40.320
+reflecting my UX in the type system. So
+
+00:26:40.320 --> 00:26:42.240
+now rendering a UI object off of this
+
+00:26:42.240 --> 00:26:44.159
+ingredient type is just infinitely
+
+00:26:44.159 --> 00:26:45.039
+easier
+
+00:26:45.039 --> 00:26:47.360
+>> because yeah, what I can do now is I can
+
+00:26:47.360 --> 00:26:50.159
+say Oops. Yeah, let's I would love to
+
+00:26:50.159 --> 00:26:52.159
+see this like mixed in with a nonI
+
+00:26:52.159 --> 00:26:54.240
+generated variable like your slider or
+
+00:26:54.240 --> 00:26:55.360
+something.
+
+00:26:55.360 --> 00:26:57.600
+>> Well, exactly. So now you just do like
+
+00:26:57.600 --> 00:26:59.039
+you say something like this. So let me
+
+00:26:59.039 --> 00:27:00.720
+show you that code. I'm going to go
+
+00:27:00.720 --> 00:27:03.600
+write this over here.
+
+00:27:03.600 --> 00:27:06.400
+There we go. Okay. Um so when I go write
+
+00:27:06.400 --> 00:27:09.360
+this, I'm going to say like
+
+00:27:09.360 --> 00:27:14.390
+state uh servings.
+
+00:27:28.230 --> 00:27:28.240
+>> Oh, I see. Okay. So, you have a state
+
+00:27:28.240 --> 00:27:29.440
+thing here. Cool.
+
+00:27:29.440 --> 00:27:31.679
+>> I have a state right over here. And what
+
+00:27:31.679 --> 00:27:36.310
+I will do here is I'll say like
+
+00:27:38.310 --> 00:27:38.320
+now I have to actually make another
+
+00:27:38.320 --> 00:27:49.510
+object.
+
+00:27:51.269 --> 00:27:51.279
+And then you're going to iterate over
+
+00:27:51.279 --> 00:27:53.440
+this.
+
+00:27:53.440 --> 00:27:54.960
+And because I'm doing the partial
+
+00:27:54.960 --> 00:27:56.320
+version of it, I'm going to render a
+
+00:27:56.320 --> 00:28:01.590
+recipe from the partial versions of it.
+
+00:28:09.590 --> 00:28:09.600
+I don't suppose this uh Okay. Well, I
+
+00:28:09.600 --> 00:28:12.000
+will
+
+00:28:12.000 --> 00:28:14.799
+Sorry, I uh finish the original demo and
+
+00:28:14.799 --> 00:28:16.240
+then uh and then we can come here and
+
+00:28:16.240 --> 00:28:17.039
+make it toggleable.
+
+00:28:17.039 --> 00:28:18.559
+>> Well, I can I can write the UI type out
+
+00:28:18.559 --> 00:28:20.640
+really fast. It's not good.
+
+00:28:20.640 --> 00:28:21.360
+>> Yeah.
+
+00:28:21.360 --> 00:28:22.640
+>> So, what I'll do over here is now I'll
+
+00:28:22.640 --> 00:28:25.200
+do this and I'll do use effect as long
+
+00:28:25.200 --> 00:28:28.000
+as I have stream data. What I'll do is I
+
+00:28:28.000 --> 00:28:32.549
+will take the serving scale and I'll say
+
+00:28:34.470 --> 00:28:34.480
+sets
+
+00:28:34.480 --> 00:28:36.559
+set recipe.
+
+00:28:36.559 --> 00:28:44.870
+>> Yep.
+
+00:28:45.990 --> 00:28:46.000
+They're right over here. I'm going to go
+
+00:28:46.000 --> 00:28:47.679
+multiply this together.
+
+00:28:47.679 --> 00:28:48.640
+>> And as soon as I
+
+00:28:48.640 --> 00:28:50.799
+>> Okay, so you're just basically
+
+00:28:50.799 --> 00:28:52.640
+>> overwriting the recipe and then mapping
+
+00:28:52.640 --> 00:28:54.880
+it in to update the quantity.
+
+00:28:54.880 --> 00:28:57.520
+>> Uh I'm actually silly. I've I haven't
+
+00:28:57.520 --> 00:28:59.039
+written front end code in a very long
+
+00:28:59.039 --> 00:29:01.919
+time.
+
+00:29:01.919 --> 00:29:05.600
+I'll do this. I have to import this.
+
+00:29:05.600 --> 00:29:07.440
+Uh as soon as I get streamed, I do this.
+
+00:29:07.440 --> 00:29:12.399
+And now what I will do is
+
+00:29:12.399 --> 00:29:14.320
+I don't actually know how to build a
+
+00:29:14.320 --> 00:29:19.350
+renderer in
+
+00:29:21.830 --> 00:29:21.840
+>> I'm sure I'm sure uh I'm sure Claude can
+
+00:29:21.840 --> 00:29:22.640
+help you out with this.
+
+00:29:22.640 --> 00:29:24.640
+>> There you go. I'm just going to go fill
+
+00:29:24.640 --> 00:29:25.919
+this in. It's going to fill it in for
+
+00:29:25.919 --> 00:29:31.279
+me. I like if not recipe. Cool.
+
+00:29:31.279 --> 00:29:37.110
+Uh
+
+00:29:38.630 --> 00:29:38.640
+um and I'm going to go fill this out.
+
+00:29:38.640 --> 00:29:40.559
+And what I'll say is ingredients will
+
+00:29:40.559 --> 00:29:43.600
+convert over here. Um
+
+00:29:43.600 --> 00:29:45.120
+e
+
+00:29:45.120 --> 00:29:47.360
+add a little bit of space.
+
+00:29:47.360 --> 00:29:50.950
+Oops.
+
+00:29:59.669 --> 00:29:59.679
+There you go.
+
+00:29:59.679 --> 00:30:02.080
+And now I've built myself a nice little
+
+00:30:02.080 --> 00:30:05.440
+unified symbol right over here.
+
+00:30:05.440 --> 00:30:07.440
+>> Oh man, we got some React experts in the
+
+00:30:07.440 --> 00:30:08.480
+crowd telling you that.
+
+00:30:08.480 --> 00:30:09.919
+>> Yeah. So I apologize for not being a
+
+00:30:09.919 --> 00:30:12.559
+React expert. Um, but what you
+
+00:30:12.559 --> 00:30:14.480
+>> we will push this code. You should put a
+
+00:30:14.480 --> 00:30:17.039
+PR in and uh update it to be more
+
+00:30:17.039 --> 00:30:19.120
+correct.
+
+00:30:19.120 --> 00:30:20.799
+>> Uh what you do over here is you just do
+
+00:30:20.799 --> 00:30:21.840
+you just take the quantity and just
+
+00:30:21.840 --> 00:30:23.120
+multiply by the serving skill and then
+
+00:30:23.120 --> 00:30:25.520
+you can turn this into a slider in React
+
+00:30:25.520 --> 00:30:27.360
+along the way and go do this. So if I
+
+00:30:27.360 --> 00:30:29.840
+actually were to show you the real code,
+
+00:30:29.840 --> 00:30:32.399
+um I actually wrote this code with
+
+00:30:32.399 --> 00:30:35.840
+actual react and you can go
+
+00:30:35.840 --> 00:30:37.440
+the exactly what we do where we actually
+
+00:30:37.440 --> 00:30:38.880
+have like we do the exact same thing
+
+00:30:38.880 --> 00:30:41.360
+that I was showing earlier which is we
+
+00:30:41.360 --> 00:30:42.880
+have servings that we set over here then
+
+00:30:42.880 --> 00:30:44.399
+we have servings ratio and then we
+
+00:30:44.399 --> 00:30:45.840
+basically use a slider to go and change
+
+00:30:45.840 --> 00:30:47.440
+the ratio along the way and that sets
+
+00:30:47.440 --> 00:30:50.240
+the number of servings. So the initial
+
+00:30:50.240 --> 00:30:52.000
+state is always set by the recipe
+
+00:30:52.000 --> 00:30:54.480
+providing me a number of servings. And
+
+00:30:54.480 --> 00:30:57.200
+then we just use the serving state to
+
+00:30:57.200 --> 00:31:00.080
+tell me what I'm doing.
+
+00:31:00.080 --> 00:31:02.640
+And what this lets me do is when I go do
+
+00:31:02.640 --> 00:31:05.039
+this, I just take
+
+00:31:05.039 --> 00:31:07.360
+if uh where is this? Sorry, let me find
+
+00:31:07.360 --> 00:31:10.389
+this.
+
+00:31:11.990 --> 00:31:12.000
+Every single time I list out an
+
+00:31:12.000 --> 00:31:13.840
+ingredient recipe, I just list it out
+
+00:31:13.840 --> 00:31:15.600
+with the ratio of the serving ratio. And
+
+00:31:15.600 --> 00:31:18.080
+that solves the problem for me. If I go
+
+00:31:18.080 --> 00:31:19.279
+down to here and I show you what this
+
+00:31:19.279 --> 00:31:24.320
+code looks like. Oops. Over here.
+
+00:31:24.320 --> 00:31:28.880
+This thing render.
+
+00:31:28.880 --> 00:31:30.399
+We made too many abstractions when we
+
+00:31:30.399 --> 00:31:32.640
+did this.
+
+00:31:32.640 --> 00:31:33.840
+>> Yeah, actually like you probably don't
+
+00:31:33.840 --> 00:31:35.360
+even need to use effect if you're just
+
+00:31:35.360 --> 00:31:37.919
+computing it live in the thing. But
+
+00:31:37.919 --> 00:31:39.600
+>> yeah, probably not. Uh, well, we use a
+
+00:31:39.600 --> 00:31:42.240
+slider to go do it. So I maybe we do. I
+
+00:31:42.240 --> 00:31:44.320
+have no idea. I'm not a React expert. I
+
+00:31:44.320 --> 00:31:46.320
+do mostly Rust code sadly. But we're
+
+00:31:46.320 --> 00:31:47.679
+able to is we just take the amount and
+
+00:31:47.679 --> 00:31:49.440
+we just like format it according to
+
+00:31:49.440 --> 00:31:50.960
+this.
+
+00:31:50.960 --> 00:31:52.320
+>> And
+
+00:31:52.320 --> 00:31:55.039
+>> the reason that we do format amount is
+
+00:31:55.039 --> 00:31:57.360
+because it turned out that when you
+
+00:31:57.360 --> 00:31:59.120
+actually multiply numbers together, you
+
+00:31:59.120 --> 00:32:00.640
+actually don't get nice fractions. And
+
+00:32:00.640 --> 00:32:03.200
+what I wanted to do over here in this
+
+00:32:03.200 --> 00:32:05.760
+UI, if you take a look at this is notice
+
+00:32:05.760 --> 00:32:07.039
+what I actually do is I actually have
+
+00:32:07.039 --> 00:32:12.000
+like halves with like proper UTF UTF8
+
+00:32:12.000 --> 00:32:15.360
+half tokens and 14 tokens and etc.
+
+00:32:15.360 --> 00:32:17.039
+So I actually wanted the fractions to
+
+00:32:17.039 --> 00:32:19.519
+look good. So we did a little bit more
+
+00:32:19.519 --> 00:32:21.440
+effort to take the fraction you have and
+
+00:32:21.440 --> 00:32:22.960
+actually render in a really really nice
+
+00:32:22.960 --> 00:32:24.880
+way.
+
+00:32:24.880 --> 00:32:26.480
+>> But again, these sort of things aren't
+
+00:32:26.480 --> 00:32:27.760
+possible. And there's nothing I can do
+
+00:32:27.760 --> 00:32:29.519
+in the LM prompting to actually make it
+
+00:32:29.519 --> 00:32:31.200
+render this out in the right way.
+
+00:32:31.200 --> 00:32:32.320
+There's just it's just not possible.
+
+00:32:32.320 --> 00:32:35.039
+>> Also, if you have a scale that can
+
+00:32:35.039 --> 00:32:38.240
+measure four and 38 grams of something,
+
+00:32:38.240 --> 00:32:39.919
+there's might be other problems going
+
+00:32:39.919 --> 00:32:40.399
+on.
+
+00:32:40.399 --> 00:32:42.159
+>> Oh, my skill can do that. You just need
+
+00:32:42.159 --> 00:32:44.559
+a better You just need to cook more.
+
+00:32:44.559 --> 00:32:47.360
+Um, but I I think a large part about
+
+00:32:47.360 --> 00:32:48.960
+what the conversation today is about is
+
+00:32:48.960 --> 00:32:50.640
+really around like designing these UXs
+
+00:32:50.640 --> 00:32:51.919
+and different challenges that you can
+
+00:32:51.919 --> 00:32:53.679
+have. So, one of the most basic things
+
+00:32:53.679 --> 00:32:56.240
+we showed you is you can go and control
+
+00:32:56.240 --> 00:32:57.679
+exactly how you're streaming along the
+
+00:32:57.679 --> 00:33:00.000
+way. But I think another thing that's
+
+00:33:00.000 --> 00:33:01.120
+worth talking about is actually like
+
+00:33:01.120 --> 00:33:03.120
+what is the implication of this?
+
+00:33:03.120 --> 00:33:05.039
+Assuming you can go build this, what are
+
+00:33:05.039 --> 00:33:07.919
+interesting UI things you can do to
+
+00:33:07.919 --> 00:33:09.440
+actually make life better for your
+
+00:33:09.440 --> 00:33:12.000
+users? Because building is one part, but
+
+00:33:12.000 --> 00:33:13.200
+another thing you can do in this
+
+00:33:13.200 --> 00:33:15.360
+approach is now let's say I'm building
+
+00:33:15.360 --> 00:33:17.039
+an invoice generator. So we've all seen
+
+00:33:17.039 --> 00:33:19.360
+a lot of invoice generators. If I'm
+
+00:33:19.360 --> 00:33:20.720
+actually streaming out objects and I
+
+00:33:20.720 --> 00:33:22.880
+have certain things be like editable.
+
+00:33:22.880 --> 00:33:25.200
+What I could actually do in this in this
+
+00:33:25.200 --> 00:33:27.279
+UI, imagine this is an invoice thing is
+
+00:33:27.279 --> 00:33:28.960
+or but in the same case of recipes, I
+
+00:33:28.960 --> 00:33:30.960
+could actually put an edit icon right
+
+00:33:30.960 --> 00:33:32.640
+next to chicken breast and say I'm going
+
+00:33:32.640 --> 00:33:34.799
+to edit chicken breast and replace what
+
+00:33:34.799 --> 00:33:36.960
+500g is because I know the real answer
+
+00:33:36.960 --> 00:33:38.880
+should actually be like 750 grams for
+
+00:33:38.880 --> 00:33:40.640
+four servings
+
+00:33:40.640 --> 00:33:42.240
+or the unit should actually be like one
+
+00:33:42.240 --> 00:33:45.519
+breast or two breasts instead of 500
+
+00:33:45.519 --> 00:33:47.600
+gram of chicken breast. So, I can
+
+00:33:47.600 --> 00:33:49.919
+actually make edit uh UI components that
+
+00:33:49.919 --> 00:33:52.720
+are editor editor only edit the state of
+
+00:33:52.720 --> 00:33:54.080
+this. And even though the LM is
+
+00:33:54.080 --> 00:33:55.200
+constantly going to be spitting out
+
+00:33:55.200 --> 00:33:57.919
+chicken breast 500 grams, I have edited
+
+00:33:57.919 --> 00:34:02.799
+it to be one breast or um Thank you.
+
+00:34:02.799 --> 00:34:04.399
+I've edited it to be a single amount.
+
+00:34:04.399 --> 00:34:05.840
+So, if you're building any sort of
+
+00:34:05.840 --> 00:34:07.279
+application, you can actually like build
+
+00:34:07.279 --> 00:34:09.919
+a user interactivity flow much much much
+
+00:34:09.919 --> 00:34:12.000
+sooner than you think. So, if you're
+
+00:34:12.000 --> 00:34:14.000
+doing I know folks that are running like
+
+00:34:14.000 --> 00:34:15.520
+that are generating like on the order of
+
+00:34:15.520 --> 00:34:18.240
+like 8 to 5,000 5 to 8,000 tokens out of
+
+00:34:18.240 --> 00:34:20.000
+LLMs.
+
+00:34:20.000 --> 00:34:22.079
+If your user can only interact with your
+
+00:34:22.079 --> 00:34:23.919
+component at the end of 5,000 or 8,000
+
+00:34:23.919 --> 00:34:25.520
+tokens, you've basically built an async
+
+00:34:25.520 --> 00:34:26.800
+workflow.
+
+00:34:26.800 --> 00:34:29.760
+>> Like your user is basically tab and come
+
+00:34:29.760 --> 00:34:31.359
+back to it later,
+
+00:34:31.359 --> 00:34:33.359
+>> which is a totally different mindset to
+
+00:34:33.359 --> 00:34:34.399
+go in.
+
+00:34:34.399 --> 00:34:37.919
+>> If um let's say my code a bit a lot of
+
+00:34:37.919 --> 00:34:39.359
+your engineers, you've probably seen
+
+00:34:39.359 --> 00:34:41.200
+this one.
+
+00:34:41.200 --> 00:34:43.359
+um my code is compiling
+
+00:34:43.359 --> 00:34:46.560
+>> um my tokens are my LM is generating
+
+00:34:46.560 --> 00:34:48.480
+like my tokens are streaming it's the
+
+00:34:48.480 --> 00:34:50.960
+same thing like the gap is long enough
+
+00:34:50.960 --> 00:34:54.079
+your users will leave and go do my AI is
+
+00:34:54.079 --> 00:34:56.000
+thinking exactly your users will leave
+
+00:34:56.000 --> 00:34:58.320
+and go do something else and it doesn't
+
+00:34:58.320 --> 00:34:59.839
+matter if you made it a little bit
+
+00:34:59.839 --> 00:35:02.480
+faster because fundamentally what's
+
+00:35:02.480 --> 00:35:05.119
+going to happen is your user is
+
+00:35:05.119 --> 00:35:07.760
+distracted. So, if you can keep your
+
+00:35:07.760 --> 00:35:10.240
+user more engaged, you can actually lead
+
+00:35:10.240 --> 00:35:12.480
+to a higher outcome workflow much much
+
+00:35:12.480 --> 00:35:14.880
+much faster. And for anyone that's
+
+00:35:14.880 --> 00:35:16.640
+building agent code, you're basically
+
+00:35:16.640 --> 00:35:18.400
+doing structured outputs all the time.
+
+00:35:18.400 --> 00:35:19.520
+You're basically just streaming
+
+00:35:19.520 --> 00:35:20.720
+structured outputs. That's what tool
+
+00:35:20.720 --> 00:35:21.280
+calls are
+
+00:35:21.280 --> 00:35:22.880
+>> cuz yeah, you're showing the tools,
+
+00:35:22.880 --> 00:35:23.920
+you're showing the thinking, you're
+
+00:35:23.920 --> 00:35:25.359
+showing the like, okay, here's what's
+
+00:35:25.359 --> 00:35:27.119
+happening. No, I love this. This is this
+
+00:35:27.119 --> 00:35:28.320
+is sick. I've been meaning to play with
+
+00:35:28.320 --> 00:35:29.520
+this for a while and I haven't had a
+
+00:35:29.520 --> 00:35:31.040
+chance to. Um, are you guys still
+
+00:35:31.040 --> 00:35:32.240
+talking about that? You showed me like a
+
+00:35:32.240 --> 00:35:34.800
+to-do app a while ago which was like
+
+00:35:34.800 --> 00:35:37.119
+even more interactive, right?
+
+00:35:37.119 --> 00:35:38.480
+>> Is that still live? Is that still
+
+00:35:38.480 --> 00:35:39.280
+kicking?
+
+00:35:39.280 --> 00:35:39.760
+>> I think so.
+
+00:35:39.760 --> 00:35:41.200
+>> And then we should probably we should
+
+00:35:41.200 --> 00:35:43.599
+probably transition to uh questions and
+
+00:35:43.599 --> 00:35:44.560
+stuff.
+
+00:35:44.560 --> 00:35:46.160
+>> Yes. So, let's see if I can get this
+
+00:35:46.160 --> 00:35:49.520
+to-do app kicking. Um so, like this is
+
+00:35:49.520 --> 00:35:50.960
+one example what you can do with a to-do
+
+00:35:50.960 --> 00:35:52.880
+app. And again, these structured
+
+00:35:52.880 --> 00:35:56.480
+outputs, let me refresh this.
+
+00:35:56.480 --> 00:35:58.480
+Um sadly, this is not maintained by my
+
+00:35:58.480 --> 00:36:00.960
+team. is maintained by me and I am not a
+
+00:36:00.960 --> 00:36:02.320
+very good reactive and probably we
+
+00:36:02.320 --> 00:36:03.760
+should put someone on this in a better
+
+00:36:03.760 --> 00:36:06.560
+way. Uh so I'm going to go run this
+
+00:36:06.560 --> 00:36:11.440
+really fast. It's like I'm a um I want
+
+00:36:11.440 --> 00:36:15.920
+steps I want by things to get better at
+
+00:36:15.920 --> 00:36:18.160
+chess.
+
+00:36:18.160 --> 00:36:19.520
+And so when you do some sort of
+
+00:36:19.520 --> 00:36:20.720
+streaming here, you can see that this
+
+00:36:20.720 --> 00:36:25.349
+thing is actually uh
+
+00:36:29.990 --> 00:36:30.000
+create five steps. No, create five
+
+00:36:30.000 --> 00:36:33.750
+steps.
+
+00:36:36.230 --> 00:36:36.240
+Remove
+
+00:36:36.240 --> 00:36:38.240
+that task.
+
+00:36:38.240 --> 00:36:45.430
+Five steps.
+
+00:36:47.589 --> 00:36:47.599
+No, this did not work. Did not. Let me
+
+00:36:47.599 --> 00:36:49.520
+reset this.
+
+00:36:49.520 --> 00:36:50.960
+>> I thought you just put in your to-do
+
+00:36:50.960 --> 00:36:52.480
+items and then you like tell it what's
+
+00:36:52.480 --> 00:37:01.700
+been done.
+
+00:37:13.190 --> 00:37:13.200
+>> We swapped this to use a really dumb
+
+00:37:13.200 --> 00:37:14.800
+model and I was curious how that would
+
+00:37:14.800 --> 00:37:17.119
+behave. There you go.
+
+00:37:17.119 --> 00:37:17.599
+Okay.
+
+00:37:17.599 --> 00:37:19.599
+>> So, what did what and you guys saw
+
+00:37:19.599 --> 00:37:20.480
+something kind of interesting here,
+
+00:37:20.480 --> 00:37:22.560
+which is this thing actually streams
+
+00:37:22.560 --> 00:37:24.320
+everything.
+
+00:37:24.320 --> 00:37:28.240
+This thing only streams as it comes out.
+
+00:37:28.240 --> 00:37:32.800
+I'm a pro chess player.
+
+00:37:32.800 --> 00:37:35.359
+I'm a pro.
+
+00:37:35.359 --> 00:37:38.240
+I do chess.
+
+00:37:38.240 --> 00:37:40.800
+I think this will work. And what's
+
+00:37:40.800 --> 00:37:42.160
+interesting here is actually adds
+
+00:37:42.160 --> 00:37:44.400
+another tag to it dynamically along the
+
+00:37:44.400 --> 00:37:47.520
+way. But now as a you as a as a user I
+
+00:37:47.520 --> 00:37:49.119
+can say like I actually just did this
+
+00:37:49.119 --> 00:37:51.920
+myself or I can uncheck this. So I've
+
+00:37:51.920 --> 00:37:53.520
+built interactivity into an application
+
+00:37:53.520 --> 00:37:55.839
+that is almost typically only LM
+
+00:37:55.839 --> 00:37:59.760
+powered. If I go through and said like
+
+00:37:59.760 --> 00:38:01.760
+I reviewed
+
+00:38:01.760 --> 00:38:06.470
+games yesterday
+
+00:38:08.150 --> 00:38:08.160
+and all of this is actually just
+
+00:38:08.160 --> 00:38:10.880
+streaming streaming results. It doesn't
+
+00:38:10.880 --> 00:38:12.560
+feel like it. It feels like it's an
+
+00:38:12.560 --> 00:38:14.560
+agent, but I'm actually streaming
+
+00:38:14.560 --> 00:38:17.119
+everything, the entire background. And
+
+00:38:17.119 --> 00:38:18.560
+that's what makes it, I think, feel a
+
+00:38:18.560 --> 00:38:21.119
+lot more natural. It is very, very
+
+00:38:21.119 --> 00:38:22.400
+similar to the example that I was
+
+00:38:22.400 --> 00:38:23.520
+showing over here, which is the
+
+00:38:23.520 --> 00:38:27.440
+difference between this versus this.
+
+00:38:27.440 --> 00:38:29.920
+I have chosen to be on the more the left
+
+00:38:29.920 --> 00:38:31.599
+hand side of the streaming here, where I
+
+00:38:31.599 --> 00:38:33.440
+don't want to stream everything. I only
+
+00:38:33.440 --> 00:38:37.040
+want to stream a couple of things.
+
+00:38:37.040 --> 00:38:41.270
+>> This is dope.
+
+00:38:43.430 --> 00:38:43.440
+But I'll open up to questions today. Uh
+
+00:38:43.440 --> 00:38:45.359
+Dex, firstly, what are your thoughts on
+
+00:38:45.359 --> 00:38:47.040
+this kind of stuff? H how do you
+
+00:38:47.040 --> 00:38:48.640
+envision people using these kinds of
+
+00:38:48.640 --> 00:38:51.119
+tools?
+
+00:38:51.119 --> 00:38:52.720
+>> Uh I mean, I'm obsessed with coding
+
+00:38:52.720 --> 00:38:54.160
+agents, so I'm just kind of sitting
+
+00:38:54.160 --> 00:38:56.640
+around thinking about like almost none
+
+00:38:56.640 --> 00:38:58.400
+of them support streaming. Codeex kind
+
+00:38:58.400 --> 00:39:00.480
+of does, but it's a mess. And like I
+
+00:39:00.480 --> 00:39:02.160
+would love it. I think open code has
+
+00:39:02.160 --> 00:39:03.680
+some good streaming stuff in it, but
+
+00:39:03.680 --> 00:39:06.400
+it's like there's there's so much you
+
+00:39:06.400 --> 00:39:09.839
+can do to make the UI more interesting
+
+00:39:09.839 --> 00:39:11.599
+when you give kind of the model a
+
+00:39:11.599 --> 00:39:13.440
+stateful object to interact with and
+
+00:39:13.440 --> 00:39:16.480
+either like patch and send updates to or
+
+00:39:16.480 --> 00:39:18.880
+uh it almost feels like I don't know I'm
+
+00:39:18.880 --> 00:39:21.119
+I'm I'm getting like flashbacks to 10
+
+00:39:21.119 --> 00:39:22.640
+years ago when I was like learning about
+
+00:39:22.640 --> 00:39:24.720
+the React virtual DOM and you basically
+
+00:39:24.720 --> 00:39:26.800
+just have like a system interacting with
+
+00:39:26.800 --> 00:39:29.680
+like a set of state um and it feels much
+
+00:39:29.680 --> 00:39:31.200
+more like if you're building browser
+
+00:39:31.200 --> 00:39:33.040
+like the browser was designed to handle
+
+00:39:33.040 --> 00:39:35.760
+this kind of stuff. And I feel like
+
+00:39:35.760 --> 00:39:37.520
+we're in like the stone age in terms of
+
+00:39:37.520 --> 00:39:39.599
+hooking LLM up to be able to interact
+
+00:39:39.599 --> 00:39:42.480
+with visual state in that world.
+
+00:39:42.480 --> 00:39:45.200
+>> What's really interesting actually on
+
+00:39:45.200 --> 00:39:47.200
+that idea is I' I know a couple of
+
+00:39:47.200 --> 00:39:49.359
+people that do this, which is
+
+00:39:49.359 --> 00:39:51.119
+ingredients are really just an array of
+
+00:39:51.119 --> 00:39:53.680
+items.
+
+00:39:53.680 --> 00:39:55.119
+But there are a lot of scenarios where
+
+00:39:55.119 --> 00:39:57.280
+you ask an LLM to talk about generate an
+
+00:39:57.280 --> 00:40:00.079
+array of items. But if you know that the
+
+00:40:00.079 --> 00:40:01.920
+items are only coming in as they
+
+00:40:01.920 --> 00:40:04.720
+complete, you can actually kick off
+
+00:40:04.720 --> 00:40:06.640
+future workflows
+
+00:40:06.640 --> 00:40:08.640
+on top of those items. So if you're
+
+00:40:08.640 --> 00:40:10.560
+going to run like a if if you're going
+
+00:40:10.560 --> 00:40:14.880
+to run like a item uh what
+
+00:40:14.880 --> 00:40:16.800
+>> oh like emit the item and then go do a
+
+00:40:16.800 --> 00:40:18.880
+deep research to like hydrate it with
+
+00:40:18.880 --> 00:40:20.560
+like links that I can click on to learn
+
+00:40:20.560 --> 00:40:22.560
+more or something.
+
+00:40:22.560 --> 00:40:24.000
+Like if you were going to go write this
+
+00:40:24.000 --> 00:40:27.839
+kind of task, it's like uh it like use
+
+00:40:27.839 --> 00:40:31.680
+LM for research
+
+00:40:31.680 --> 00:40:34.880
+on I typically this thing would be a
+
+00:40:34.880 --> 00:40:36.320
+thing that you would have like think
+
+00:40:36.320 --> 00:40:37.839
+about your latency workflow here. You'd
+
+00:40:37.839 --> 00:40:39.680
+have to generate every item and then go
+
+00:40:39.680 --> 00:40:42.480
+do this. But now you can actually go
+
+00:40:42.480 --> 00:40:45.119
+build this out really really easily
+
+00:40:45.119 --> 00:40:47.760
+simply by running an iteration loop on
+
+00:40:47.760 --> 00:40:52.550
+every single item that comes through.
+
+00:40:55.030 --> 00:40:55.040
+So like the speed boost that you get is
+
+00:40:55.040 --> 00:40:59.920
+just insanely high along the way.
+
+00:40:59.920 --> 00:41:01.760
+Uh and I think coding agents especially
+
+00:41:01.760 --> 00:41:04.640
+can make a lot of uh benefit from this.
+
+00:41:04.640 --> 00:41:06.800
+Um someone asked a really interesting
+
+00:41:06.800 --> 00:41:08.240
+question. You talk about birectional
+
+00:41:08.240 --> 00:41:09.839
+communication managing state between the
+
+00:41:09.839 --> 00:41:11.200
+front end and the back end.
+
+00:41:11.200 --> 00:41:12.880
+>> Thoughts about a couple of different
+
+00:41:12.880 --> 00:41:14.079
+things.
+
+00:41:14.079 --> 00:41:16.560
+Um, birectional state is a thing we
+
+00:41:16.560 --> 00:41:18.640
+talked about a lot last episode as well
+
+00:41:18.640 --> 00:41:20.480
+and the voice agents and in the
+
+00:41:20.480 --> 00:41:22.160
+interruptability thing. So, I'll pull
+
+00:41:22.160 --> 00:41:27.750
+that up really fast.
+
+00:41:30.550 --> 00:41:30.560
+Also, Dex, is your website up? We should
+
+00:41:30.560 --> 00:41:32.400
+give you an exact one to one copy of
+
+00:41:32.400 --> 00:41:34.079
+this stuff.
+
+00:41:34.079 --> 00:41:36.880
+>> Oh, yeah.
+
+00:41:36.880 --> 00:41:38.240
+>> I actually load up everything down here
+
+00:41:38.240 --> 00:41:39.920
+and I think we have whiteboards where we
+
+00:41:39.920 --> 00:41:41.359
+talked about how birectional agents
+
+00:41:41.359 --> 00:41:43.280
+work. It's actually a pretty complicated
+
+00:41:43.280 --> 00:41:45.440
+system to go build out because the
+
+00:41:45.440 --> 00:41:47.280
+fundamental problem is biirectional
+
+00:41:47.280 --> 00:41:49.200
+stuff especially when you're streaming
+
+00:41:49.200 --> 00:41:51.599
+is choosing exactly when you interrupt
+
+00:41:51.599 --> 00:41:53.280
+the thing that's streaming to inject the
+
+00:41:53.280 --> 00:41:55.680
+new information. um if that's of
+
+00:41:55.680 --> 00:41:59.280
+interest at this concept uh episode 19
+
+00:41:59.280 --> 00:42:00.640
+interruptible agents probably talks
+
+00:42:00.640 --> 00:42:02.400
+about it in a lot more detail albeit
+
+00:42:02.400 --> 00:42:05.839
+it's a very specific use case of how you
+
+00:42:05.839 --> 00:42:08.720
+um how you actually how you do it in
+
+00:42:08.720 --> 00:42:10.800
+terms of interruptions but the exact
+
+00:42:10.800 --> 00:42:12.240
+same things in terms of birectional
+
+00:42:12.240 --> 00:42:14.400
+you're basically interrupting the stream
+
+00:42:14.400 --> 00:42:17.440
+to go rest steer it in some other way
+
+00:42:17.440 --> 00:42:19.680
+>> I have one question for you before we
+
+00:42:19.680 --> 00:42:21.599
+get into the rest of the questions did
+
+00:42:21.599 --> 00:42:24.560
+you just ask me if my website was up
+
+00:42:24.560 --> 00:42:27.839
+>> for the code for the code thing. Uh it's
+
+00:42:27.839 --> 00:42:29.839
+>> Oh, you mean the new the new website?
+
+00:42:29.839 --> 00:42:32.240
+>> Yes, the new one. It's so freaking cool.
+
+00:42:32.240 --> 00:42:33.599
+>> It's coming. It's coming. We're going to
+
+00:42:33.599 --> 00:42:36.400
+ship it Friday. Uh keep an eye on Hacker
+
+00:42:36.400 --> 00:42:39.200
+News on Monday. Um there will be fun
+
+00:42:39.200 --> 00:42:41.440
+things, fun fun announcements coming.
+
+00:42:41.440 --> 00:42:43.280
+>> Okay, you should copy and paste the
+
+00:42:43.280 --> 00:42:45.200
+podcast page and put it on so then you
+
+00:42:45.200 --> 00:42:46.560
+have access to it. It's all This
+
+00:42:46.560 --> 00:42:49.680
+website's open source.
+
+00:42:49.680 --> 00:42:50.160
+>> Amazing.
+
+00:42:50.160 --> 00:42:51.599
+>> Yes. It was not meant to be a shots
+
+00:42:51.599 --> 00:42:53.119
+fired at is your website. And so I'm
+
+00:42:53.119 --> 00:42:54.640
+just excited to talk about it more. So I
+
+00:42:54.640 --> 00:42:56.880
+was like, I'll link you to it.
+
+00:42:56.880 --> 00:43:01.440
+>> Um, okay. Ice dev2 dev said I'm
+
+00:43:01.440 --> 00:43:03.440
+>> sorry. I'm just making sure answer's
+
+00:43:03.440 --> 00:43:04.400
+question as well.
+
+00:43:04.400 --> 00:43:06.400
+>> You didn't comment on Agui, which I'm
+
+00:43:06.400 --> 00:43:09.280
+curious your thoughts.
+
+00:43:09.280 --> 00:43:11.839
+>> Let me go pull it up really fast. I
+
+00:43:11.839 --> 00:43:13.440
+don't think I've seen AGUI. I'll pull it
+
+00:43:13.440 --> 00:43:15.440
+up so everyone can see what it is.
+
+00:43:15.440 --> 00:43:19.440
+>> This is the like co-pilot kit project,
+
+00:43:19.440 --> 00:43:24.069
+>> which is awesome.
+
+00:43:26.390 --> 00:43:26.400
+Okay, let's look at it. Um, it's a
+
+00:43:26.400 --> 00:43:28.160
+standard protocol to help you go manage
+
+00:43:28.160 --> 00:43:30.880
+information through your application.
+
+00:43:30.880 --> 00:43:32.880
+Um, I haven't used it, so I don't have a
+
+00:43:32.880 --> 00:43:35.280
+strong opinion right now. Um, I don't
+
+00:43:35.280 --> 00:43:37.200
+really know how they do it. I think the
+
+00:43:37.200 --> 00:43:38.960
+hardest parts about these systems isn't
+
+00:43:38.960 --> 00:43:41.280
+actually like the isn't the hardest way
+
+00:43:41.280 --> 00:43:42.880
+to sync these systems isn't actually
+
+00:43:42.880 --> 00:43:45.119
+about sending data. Isn't actually about
+
+00:43:45.119 --> 00:43:46.560
+like the UI and everything else.
+
+00:43:46.560 --> 00:43:48.000
+Building UI, there's lots of frameworks
+
+00:43:48.000 --> 00:43:49.359
+that go do that. This might be one of
+
+00:43:49.359 --> 00:43:51.520
+them. The hardest things about it is
+
+00:43:51.520 --> 00:43:54.079
+actually like the mechanics of how you
+
+00:43:54.079 --> 00:43:56.480
+write it. So for example, the fact that
+
+00:43:56.480 --> 00:43:58.160
+I could actually like not know this and
+
+00:43:58.160 --> 00:43:59.680
+only use like the done version of the
+
+00:43:59.680 --> 00:44:01.760
+ingredient type and I get the type
+
+00:44:01.760 --> 00:44:03.040
+safety instead of having to write
+
+00:44:03.040 --> 00:44:05.839
+something like
+
+00:44:05.839 --> 00:44:06.640
+uh instead of
+
+00:44:06.640 --> 00:44:08.800
+>> you have like six different renderers in
+
+00:44:08.800 --> 00:44:10.319
+these all these different conditional
+
+00:44:10.319 --> 00:44:11.920
+blocks of like okay if we have this show
+
+00:44:11.920 --> 00:44:13.599
+this we have this show this otherwise
+
+00:44:13.599 --> 00:44:15.440
+show nothing and all that stuff.
+
+00:44:15.440 --> 00:44:17.040
+>> Exactly. It's all about like the
+
+00:44:17.040 --> 00:44:18.800
+question like if I have to write like
+
+00:44:18.800 --> 00:44:20.079
+for example if I have to write something
+
+00:44:20.079 --> 00:44:22.000
+like
+
+00:44:22.000 --> 00:44:24.560
+stream data ingredients on map and I if
+
+00:44:24.560 --> 00:44:26.160
+the way I have to write this is I can't
+
+00:44:26.160 --> 00:44:27.359
+actually write this I have to write
+
+00:44:27.359 --> 00:44:29.440
+something like
+
+00:44:29.440 --> 00:44:33.670
+this
+
+00:44:35.510 --> 00:44:35.520
+then I've kind of lost the benefit of
+
+00:44:35.520 --> 00:44:37.119
+any framework there's no framework that
+
+00:44:37.119 --> 00:44:40.720
+I can really use where if I have to go
+
+00:44:40.720 --> 00:44:42.880
+it's just the ergonomics of writing this
+
+00:44:42.880 --> 00:44:44.960
+code is very challenging
+
+00:44:44.960 --> 00:44:46.880
+>> it's declaring You're doing you're doing
+
+00:44:46.880 --> 00:44:48.800
+declarative versus imperative and we all
+
+00:44:48.800 --> 00:44:50.160
+we all know I don't know if there's any
+
+00:44:50.160 --> 00:44:51.839
+list pads in here but we all love
+
+00:44:51.839 --> 00:44:53.359
+declarative code over here.
+
+00:44:53.359 --> 00:44:55.839
+>> Yeah. Yeah. I think so like I don't know
+
+00:44:55.839 --> 00:44:57.200
+if the framework actually supports like
+
+00:44:57.200 --> 00:44:59.359
+types and propagating types correctly
+
+00:44:59.359 --> 00:45:01.200
+but if it does it it would be that's
+
+00:45:01.200 --> 00:45:02.640
+really the most important part about
+
+00:45:02.640 --> 00:45:04.880
+doing this stuff in my opinion.
+
+00:45:04.880 --> 00:45:07.440
+>> Um I think we covered decision workflows
+
+00:45:07.440 --> 00:45:09.200
+that can update based on inputs to
+
+00:45:09.200 --> 00:45:10.800
+previous steps. I think the to-do app
+
+00:45:10.800 --> 00:45:12.960
+covers that well. Um, could this be the
+
+00:45:12.960 --> 00:45:15.920
+AI equivalent of progressive disclosure
+
+00:45:15.920 --> 00:45:18.240
+UI pattern? Meaning, could streaming be
+
+00:45:18.240 --> 00:45:19.839
+used to reduce cognitive lo while
+
+00:45:19.839 --> 00:45:21.280
+showing the essentials to start and
+
+00:45:21.280 --> 00:45:22.560
+letting the user choose what they want
+
+00:45:22.560 --> 00:45:24.480
+to see?
+
+00:45:24.480 --> 00:45:25.839
+>> Yeah, I don't I don't know who said
+
+00:45:25.839 --> 00:45:27.280
+that, but that is probably that's a
+
+00:45:27.280 --> 00:45:29.280
+great way to put it of what I think the
+
+00:45:29.280 --> 00:45:32.720
+power of streaming is uh for AI
+
+00:45:32.720 --> 00:45:35.680
+applications.
+
+00:45:35.680 --> 00:45:37.200
+Um, and then there's someone talking
+
+00:45:37.200 --> 00:45:39.119
+about letting the AI design the UI
+
+00:45:39.119 --> 00:45:41.280
+itself instead of just managing the
+
+00:45:41.280 --> 00:45:44.079
+data. Uh, I think my take on that is
+
+00:45:44.079 --> 00:45:46.480
+probably like I wouldn't put that in a
+
+00:45:46.480 --> 00:45:47.920
+production app that I wanted to sell to
+
+00:45:47.920 --> 00:45:49.440
+people, but I bet you could do it for
+
+00:45:49.440 --> 00:45:50.960
+certain use cases and it would look
+
+00:45:50.960 --> 00:45:51.839
+really dope.
+
+00:45:51.839 --> 00:45:53.760
+>> Well, actually, Dex, I have a way to do
+
+00:45:53.760 --> 00:45:55.200
+this that I think would be really
+
+00:45:55.200 --> 00:45:56.400
+freaking cool.
+
+00:45:56.400 --> 00:45:56.880
+>> So,
+
+00:45:56.880 --> 00:45:57.520
+>> okay,
+
+00:45:57.520 --> 00:45:59.520
+>> I know that I know the shape of my data
+
+00:45:59.520 --> 00:46:01.359
+over here, right? As long as I know the
+
+00:46:01.359 --> 00:46:02.640
+type of my data,
+
+00:46:02.640 --> 00:46:04.640
+>> what I could do is I could say, "Hey,
+
+00:46:04.640 --> 00:46:06.720
+hey, model, I have a type that is
+
+00:46:06.720 --> 00:46:08.960
+described with this interface. Can you
+
+00:46:08.960 --> 00:46:10.480
+give me a React component that takes in
+
+00:46:10.480 --> 00:46:12.560
+that interface and renders it?"
+
+00:46:12.560 --> 00:46:14.560
+>> There's some people doing that.
+
+00:46:14.560 --> 00:46:16.160
+>> Like there's some I think like the Tambo
+
+00:46:16.160 --> 00:46:18.400
+guys are working on that.
+
+00:46:18.400 --> 00:46:20.560
+>> Yeah. And I actually think it's a great
+
+00:46:20.560 --> 00:46:22.079
+idea long term because what's
+
+00:46:22.079 --> 00:46:23.280
+interesting now is I can actually have
+
+00:46:23.280 --> 00:46:25.520
+one model generate the data and a second
+
+00:46:25.520 --> 00:46:28.720
+model render it. And the rendering is a
+
+00:46:28.720 --> 00:46:30.480
+one-time task. As soon as I know what
+
+00:46:30.480 --> 00:46:32.240
+the shape of my data model is, I can
+
+00:46:32.240 --> 00:46:33.920
+actually like pull it out and I just
+
+00:46:33.920 --> 00:46:35.680
+render that React component dynamically
+
+00:46:35.680 --> 00:46:37.359
+every single time.
+
+00:46:37.359 --> 00:46:39.680
+>> This is like the um like the dynamic
+
+00:46:39.680 --> 00:46:41.520
+extraction example almost where you're
+
+00:46:41.520 --> 00:46:43.440
+like, okay, here's the here's the
+
+00:46:43.440 --> 00:46:45.760
+document, generate a schema, and then do
+
+00:46:45.760 --> 00:46:47.599
+the extraction, right?
+
+00:46:47.599 --> 00:46:50.720
+>> Exactly. So I want I'll run this again.
+
+00:46:50.720 --> 00:46:52.079
+So like what I'm going to do here is I'm
+
+00:46:52.079 --> 00:46:53.200
+going to take this invoice. I'm going to
+
+00:46:53.200 --> 00:46:55.280
+go run it out. And what I'm doing here
+
+00:46:55.280 --> 00:46:56.800
+is I'm first having the model spit out
+
+00:46:56.800 --> 00:46:58.400
+what it thinks of what it thinks the
+
+00:46:58.400 --> 00:47:00.640
+schema of this data type is. And it does
+
+00:47:00.640 --> 00:47:02.560
+that and it builds out the schema. And I
+
+00:47:02.560 --> 00:47:04.480
+run a secondary task to actually extract
+
+00:47:04.480 --> 00:47:06.560
+data from the schema.
+
+00:47:06.560 --> 00:47:06.960
+>> Now,
+
+00:47:06.960 --> 00:47:08.800
+>> and so you use the schema to render this
+
+00:47:08.800 --> 00:47:11.920
+UI. And then you just render. Yeah.
+
+00:47:11.920 --> 00:47:13.760
+>> And the third task I could have done is
+
+00:47:13.760 --> 00:47:15.680
+say, hey, I have this schema I'm going
+
+00:47:15.680 --> 00:47:18.960
+to produce. Give me a React component
+
+00:47:18.960 --> 00:47:21.359
+that takes the schema and renders it.
+
+00:47:21.359 --> 00:47:24.880
+And if I did that 100% I can make this a
+
+00:47:24.880 --> 00:47:26.319
+lot prettier. In fact, I should probably
+
+00:47:26.319 --> 00:47:27.760
+do that. I think this example would be
+
+00:47:27.760 --> 00:47:30.079
+so much more fun if I built that in. You
+
+00:47:30.079 --> 00:47:31.440
+could see something even
+
+00:47:31.440 --> 00:47:32.800
+>> You should have a third button here that
+
+00:47:32.800 --> 00:47:34.720
+is like dynamic render and it's like
+
+00:47:34.720 --> 00:47:36.160
+different every time.
+
+00:47:36.160 --> 00:47:38.640
+>> Exactly. Yeah. Um because like the AI is
+
+00:47:38.640 --> 00:47:39.839
+generating the React component that
+
+00:47:39.839 --> 00:47:41.760
+renders that type, but it's different
+
+00:47:41.760 --> 00:47:44.000
+but stable. And that's an important
+
+00:47:44.000 --> 00:47:47.599
+distinction to make along the way.
+
+00:47:47.599 --> 00:47:49.920
+>> So that's cool. Yeah, whoever asked that
+
+00:47:49.920 --> 00:47:51.680
+question like 100% you can do this and I
+
+00:47:51.680 --> 00:47:52.720
+think you can do it in a way that's
+
+00:47:52.720 --> 00:47:55.520
+actually good as long as this place that
+
+00:47:55.520 --> 00:47:57.440
+you start with is actually a type system
+
+00:47:57.440 --> 00:48:00.319
+and not really arbitrary code. Whether
+
+00:48:00.319 --> 00:48:02.240
+the type system is described in JSON
+
+00:48:02.240 --> 00:48:03.839
+schema, whether it's described in Zod,
+
+00:48:03.839 --> 00:48:05.119
+whether it's described in BAML doesn't
+
+00:48:05.119 --> 00:48:07.119
+really matter. But the premise of what
+
+00:48:07.119 --> 00:48:10.960
+you do with it is um is that you use the
+
+00:48:10.960 --> 00:48:12.960
+type system to power what the AI does
+
+00:48:12.960 --> 00:48:15.760
+rather than uh rather than just do it
+
+00:48:15.760 --> 00:48:19.190
+with vibes.
+
+00:48:21.990 --> 00:48:22.000
+sick. Uh there's a lot of chatter, but I
+
+00:48:22.000 --> 00:48:23.440
+don't see any more questions. Anybody
+
+00:48:23.440 --> 00:48:26.400
+got any last minute things? Otherwise,
+
+00:48:26.400 --> 00:48:28.880
+VIB Bob, let us know what uh the big
+
+00:48:28.880 --> 00:48:31.520
+takeaway here is.
+
+00:48:31.520 --> 00:48:32.640
+>> I'll wait one more second and see if
+
+00:48:32.640 --> 00:48:33.599
+there's any more questions. But
+
+00:48:33.599 --> 00:48:35.040
+otherwise, like really the big takeaway
+
+00:48:35.040 --> 00:48:36.319
+is like when you're designing your AI
+
+00:48:36.319 --> 00:48:38.000
+applications, spend a couple more
+
+00:48:38.000 --> 00:48:39.680
+minutes thinking about what the UX is.
+
+00:48:39.680 --> 00:48:41.839
+And then like if it's easy enough, if
+
+00:48:41.839 --> 00:48:43.440
+it's literally as easy as writing one
+
+00:48:43.440 --> 00:48:46.160
+line of code to make your object stream
+
+00:48:46.160 --> 00:48:48.960
+to like and feel more ergonomic, just go
+
+00:48:48.960 --> 00:48:51.680
+do it. It's not hard. It's really really
+
+00:48:51.680 --> 00:48:53.200
+easy to make your applications feel
+
+00:48:53.200 --> 00:48:55.280
+natural.
+
+00:48:55.280 --> 00:48:57.359
+Um, could this be used to optimize token
+
+00:48:57.359 --> 00:48:59.599
+usage? Streaming really doesn't optimize
+
+00:48:59.599 --> 00:49:02.000
+token usage in any way. Uh, so I don't
+
+00:49:02.000 --> 00:49:04.319
+think there's that would be orthogonal
+
+00:49:04.319 --> 00:49:07.359
+things that you could do to make uh
+
+00:49:07.359 --> 00:49:09.599
+better. If anything, streaming lets you
+
+00:49:09.599 --> 00:49:11.599
+use more tokens without having the user
+
+00:49:11.599 --> 00:49:13.359
+have to wait. Like you can like stream
+
+00:49:13.359 --> 00:49:14.480
+out the thing and then be like, "Okay,
+
+00:49:14.480 --> 00:49:15.520
+now we're doing the research." And
+
+00:49:15.520 --> 00:49:17.119
+you're burning lots of tokens to improve
+
+00:49:17.119 --> 00:49:19.040
+the quality iteratively over time while
+
+00:49:19.040 --> 00:49:20.800
+not having the user have to wait 20
+
+00:49:20.800 --> 00:49:23.680
+minutes for deep research.
+
+00:49:23.680 --> 00:49:26.319
+>> Uh this Rolando said something really
+
+00:49:26.319 --> 00:49:27.680
+interesting over here. You can guard
+
+00:49:27.680 --> 00:49:29.200
+rail the design with a design system
+
+00:49:29.200 --> 00:49:30.880
+instead of generating schema. And I
+
+00:49:30.880 --> 00:49:32.000
+would generate a layout kind of like
+
+00:49:32.000 --> 00:49:33.359
+this. So,
+
+00:49:33.359 --> 00:49:35.119
+>> so you already have the components, but
+
+00:49:35.119 --> 00:49:37.440
+it's taking from your design library to
+
+00:49:37.440 --> 00:49:39.520
+to actually render the stuff. I like
+
+00:49:39.520 --> 00:49:41.200
+that. That's sick. Awesome.
+
+00:49:41.200 --> 00:49:42.480
+>> Exactly. So, then you could have a form
+
+00:49:42.480 --> 00:49:43.920
+that literally matches the theme of your
+
+00:49:43.920 --> 00:49:44.880
+website. And if you're using something
+
+00:49:44.880 --> 00:49:46.240
+like Shad CN, that's kind of what you're
+
+00:49:46.240 --> 00:49:48.000
+doing manually as a developer, but now
+
+00:49:48.000 --> 00:49:49.520
+you just tell the AI to only use these
+
+00:49:49.520 --> 00:49:51.280
+specific components and boom, it fits in
+
+00:49:51.280 --> 00:49:55.040
+right away. So, it's even more it's even
+
+00:49:55.040 --> 00:49:57.200
+more like tied together. And I think
+
+00:49:57.200 --> 00:49:59.440
+like personally for me, this is what I'm
+
+00:49:59.440 --> 00:50:00.800
+most excited about AI and I think we're
+
+00:50:00.800 --> 00:50:02.559
+not really there yet as generally
+
+00:50:02.559 --> 00:50:04.720
+engineering teams because the complexity
+
+00:50:04.720 --> 00:50:07.839
+of doing this stuff is like like I said
+
+00:50:07.839 --> 00:50:09.680
+if every single time I want to stream
+
+00:50:09.680 --> 00:50:11.040
+something and make it slightly better I
+
+00:50:11.040 --> 00:50:13.920
+have to do like five extra tokens or my
+
+00:50:13.920 --> 00:50:16.160
+my app is going to re yell at me because
+
+00:50:16.160 --> 00:50:18.480
+TypeScript says no. I'm just not going
+
+00:50:18.480 --> 00:50:20.160
+to do this thing especially if streaming
+
+00:50:20.160 --> 00:50:22.319
+partial JSON is hard. But if it's really
+
+00:50:22.319 --> 00:50:24.079
+easy and I can add one line of code to
+
+00:50:24.079 --> 00:50:25.760
+do the thing to make it do the behavior
+
+00:50:25.760 --> 00:50:28.319
+I want, I'll do it more correctly. It's
+
+00:50:28.319 --> 00:50:30.000
+the exact same thing of like why use
+
+00:50:30.000 --> 00:50:32.079
+state and react makes it way easier to
+
+00:50:32.079 --> 00:50:34.000
+build reactive apps because I don't have
+
+00:50:34.000 --> 00:50:35.839
+to think about like I just change the
+
+00:50:35.839 --> 00:50:37.440
+state and somehow React will rerender
+
+00:50:37.440 --> 00:50:38.720
+the home component and do the right
+
+00:50:38.720 --> 00:50:42.079
+thing. My brain cycles don't go on it.
+
+00:50:42.079 --> 00:50:43.359
+And I think that's the same thing over
+
+00:50:43.359 --> 00:50:44.720
+here as a developer. You probably don't
+
+00:50:44.720 --> 00:50:45.839
+want to spend brain cycles thinking
+
+00:50:45.839 --> 00:50:47.200
+about how to do partial streaming or any
+
+00:50:47.200 --> 00:50:48.559
+of this stuff. You just kind of want it
+
+00:50:48.559 --> 00:50:51.200
+to work.
+
+00:50:51.200 --> 00:50:52.960
+Oh yeah, there's there's so much cool
+
+00:50:52.960 --> 00:50:54.800
+stuff to build.
+
+00:50:54.800 --> 00:50:57.040
+>> Yeah, I think so too. I we have a couple
+
+00:50:57.040 --> 00:50:57.920
+more things that we've been thinking
+
+00:50:57.920 --> 00:50:59.440
+about how streaming works for like long
+
+00:50:59.440 --> 00:51:01.119
+agentic systems. So maybe we'll do a
+
+00:51:01.119 --> 00:51:02.720
+future episode on that.
+
+00:51:02.720 --> 00:51:05.040
+>> Uh but that is also a whole different
+
+00:51:05.040 --> 00:51:09.280
+ballgame of how you go do that.
+
+00:51:09.280 --> 00:51:11.599
+Um Tambo UI is pretty cool. If you
+
+00:51:11.599 --> 00:51:12.800
+haven't checked it out, they do some
+
+00:51:12.800 --> 00:51:14.240
+interesting stuff for generating UI
+
+00:51:14.240 --> 00:51:16.319
+components on the fly.
+
+00:51:16.319 --> 00:51:17.920
+>> Yeah.
+
+00:51:17.920 --> 00:51:19.119
+Um,
+
+00:51:19.119 --> 00:51:20.640
+>> sick y'all. This was dope. Thank you,
+
+00:51:20.640 --> 00:51:22.720
+Vib. I have been looking forward to this
+
+00:51:22.720 --> 00:51:24.160
+episode for a while.
+
+00:51:24.160 --> 00:51:26.800
+>> Where do you actually persist results?
+
+00:51:26.800 --> 00:51:29.280
+Um, so just for more context on how this
+
+00:51:29.280 --> 00:51:31.440
+thing works.
+
+00:51:31.440 --> 00:51:33.680
+Uh, this use generated recipe actually
+
+00:51:33.680 --> 00:51:35.760
+comes from the BAML code you write. But
+
+00:51:35.760 --> 00:51:37.440
+under the hood, what we do is we
+
+00:51:37.440 --> 00:51:39.280
+actually codegen BML code. We actually
+
+00:51:39.280 --> 00:51:42.800
+codegen react code and we code genen
+
+00:51:42.800 --> 00:51:46.000
+react server action code
+
+00:51:46.000 --> 00:51:48.960
+that actually does the uh that actually
+
+00:51:48.960 --> 00:51:50.559
+makes the calls for you and then does
+
+00:51:50.559 --> 00:51:51.760
+all the work behind the scenes to
+
+00:51:51.760 --> 00:51:52.880
+propagate data straight to the front
+
+00:51:52.880 --> 00:51:54.880
+end. So there's a server action file and
+
+00:51:54.880 --> 00:51:58.400
+a um and a hook that gets codegen. So
+
+00:51:58.400 --> 00:52:00.000
+then when you use this it's actually the
+
+00:52:00.000 --> 00:52:03.440
+data is living in the hook itself. Um if
+
+00:52:03.440 --> 00:52:04.800
+you go read this code somewhere down.
+
+00:52:04.800 --> 00:52:06.400
+>> Okay. So if I wanted to, I mean that
+
+00:52:06.400 --> 00:52:08.240
+server action was pretty pretty small.
+
+00:52:08.240 --> 00:52:10.000
+Like if I wanted to, I could stream it
+
+00:52:10.000 --> 00:52:11.680
+and like shim part of it out to a
+
+00:52:11.680 --> 00:52:13.119
+database and stream the rest of it down
+
+00:52:13.119 --> 00:52:14.720
+to a UI if I wanted to. Right.
+
+00:52:14.720 --> 00:52:15.200
+>> Exactly.
+
+00:52:15.200 --> 00:52:18.400
+>> Do like optimistic updates basically.
+
+00:52:18.400 --> 00:52:21.920
+>> Um are there any um security
+
+00:52:21.920 --> 00:52:23.839
+implications to be aware of with
+
+00:52:23.839 --> 00:52:26.960
+streaming? Um no, I don't think so. I
+
+00:52:26.960 --> 00:52:28.400
+mean, sometimes you might like, for
+
+00:52:28.400 --> 00:52:31.520
+example, you might want to be really um
+
+00:52:31.520 --> 00:52:33.760
+I can think of a couple actually that
+
+00:52:33.760 --> 00:52:35.920
+will happen in like eventual apps. Like,
+
+00:52:35.920 --> 00:52:38.000
+for example, sometimes I want to hide
+
+00:52:38.000 --> 00:52:39.839
+some secret words and I don't want to
+
+00:52:39.839 --> 00:52:42.720
+show them off to users. Um, and I think
+
+00:52:42.720 --> 00:52:44.880
+the most the easiest example of this is
+
+00:52:44.880 --> 00:52:47.359
+like when an LM is streaming markdown,
+
+00:52:47.359 --> 00:52:49.599
+sometimes you'll see it go from like
+
+00:52:49.599 --> 00:52:51.760
+title here and before it actually makes
+
+00:52:51.760 --> 00:52:53.520
+the title bold, it just spits out like
+
+00:52:53.520 --> 00:52:56.079
+asteris title and then eventually it
+
+00:52:56.079 --> 00:52:58.000
+snaps to bold and I'm doing this and I
+
+00:52:58.000 --> 00:52:59.920
+kind of as a user I kind of wish I never
+
+00:52:59.920 --> 00:53:02.880
+rendered the asterisk at all. I just
+
+00:53:02.880 --> 00:53:05.760
+waited until the title word popped in.
+
+00:53:05.760 --> 00:53:08.160
+Um, and you could do the same thing with
+
+00:53:08.160 --> 00:53:09.520
+like rendering some sort of sensitive
+
+00:53:09.520 --> 00:53:10.960
+data where like for example a password
+
+00:53:10.960 --> 00:53:12.800
+field should not render the raw password
+
+00:53:12.800 --> 00:53:15.280
+until the password field is complete and
+
+00:53:15.280 --> 00:53:16.800
+it should render as dots and the user
+
+00:53:16.800 --> 00:53:18.640
+should opt into seeing it like envirs or
+
+00:53:18.640 --> 00:53:20.480
+something else.
+
+00:53:20.480 --> 00:53:22.800
+Um, you probably would have to do a
+
+00:53:22.800 --> 00:53:24.079
+little bit more engineering work to go
+
+00:53:24.079 --> 00:53:26.160
+solve that problem on your own in some
+
+00:53:26.160 --> 00:53:27.520
+use case. Like if you have a raw text
+
+00:53:27.520 --> 00:53:28.800
+field and you want to just hide parts of
+
+00:53:28.800 --> 00:53:30.160
+it, that's just not a thing you can do.
+
+00:53:30.160 --> 00:53:32.160
+But it it's not really a major security
+
+00:53:32.160 --> 00:53:33.200
+flaw because the data is available
+
+00:53:33.200 --> 00:53:35.119
+anyway. It's in the raw text. If you
+
+00:53:35.119 --> 00:53:37.359
+wanted to cancel the data generation
+
+00:53:37.359 --> 00:53:39.599
+like for example chat GBT does this
+
+00:53:39.599 --> 00:53:41.119
+where like if you if you start talking
+
+00:53:41.119 --> 00:53:42.400
+about things it's not supposed to talk
+
+00:53:42.400 --> 00:53:44.400
+about and it starts answering in the
+
+00:53:44.400 --> 00:53:44.880
+middle
+
+00:53:44.880 --> 00:53:46.960
+>> it dies midstream right it's just like
+
+00:53:46.960 --> 00:53:48.400
+oh nope
+
+00:53:48.400 --> 00:53:50.400
+>> exactly so the way you solve that
+
+00:53:50.400 --> 00:53:52.160
+problem if you go back and look at our
+
+00:53:52.160 --> 00:53:54.800
+interruptions video episode 19 I think
+
+00:53:54.800 --> 00:53:56.400
+is
+
+00:53:56.400 --> 00:53:57.760
+you have to go interrupt the stream you
+
+00:53:57.760 --> 00:53:59.119
+have to be monitoring the stream and
+
+00:53:59.119 --> 00:54:00.880
+checking for something in an invalid way
+
+00:54:00.880 --> 00:54:03.520
+and then go cancel it. Uh but that's the
+
+00:54:03.520 --> 00:54:05.359
+only real way to go do this. There's no
+
+00:54:05.359 --> 00:54:07.440
+inherent security problems in streaming
+
+00:54:07.440 --> 00:54:09.200
+itself.
+
+00:54:09.200 --> 00:54:10.960
+Uh does this work with Tanstack? Yeah,
+
+00:54:10.960 --> 00:54:12.480
+it should it should work with Tanstack
+
+00:54:12.480 --> 00:54:14.160
+as well. But you don't really need to
+
+00:54:14.160 --> 00:54:17.200
+use Tanstack uh for at least these calls
+
+00:54:17.200 --> 00:54:18.559
+because these calls are just calling the
+
+00:54:18.559 --> 00:54:21.359
+LM directly in the server action itself.
+
+00:54:21.359 --> 00:54:22.800
+So you don't have to make a use query
+
+00:54:22.800 --> 00:54:25.440
+mechanism out of it along the way. It's
+
+00:54:25.440 --> 00:54:27.280
+kind of a self-contained hook for every
+
+00:54:27.280 --> 00:54:31.510
+function that you define.
+
+00:54:33.430 --> 00:54:33.440
+Sick. Cool. I think that puts us at
+
+00:54:33.440 --> 00:54:34.319
+time.
+
+00:54:34.319 --> 00:54:36.880
+>> I am extremely jetlagged. So, uh, today
+
+00:54:36.880 --> 00:54:38.559
+we're going to go and reset this and I'm
+
+00:54:38.559 --> 00:54:42.000
+going to go get some rest. But it was
+
+00:54:42.000 --> 00:54:43.520
+tons of fun. Thank you everyone for
+
+00:54:43.520 --> 00:54:46.079
+joining. Dexter
+
+00:54:46.079 --> 00:54:46.720
+>> super fun.
+
+00:54:46.720 --> 00:54:49.200
+>> Real quick announcement. We are changing
+
+00:54:49.200 --> 00:54:51.119
+we are changing the platform up next
+
+00:54:51.119 --> 00:54:52.240
+week. We're going to try to move this to
+
+00:54:52.240 --> 00:54:53.680
+Streamyard. So, they do have live
+
+00:54:53.680 --> 00:54:55.119
+streaming. Um, there will be a better
+
+00:54:55.119 --> 00:54:57.200
+chat experience. The recordings will be
+
+00:54:57.200 --> 00:55:00.240
+much higher quality. Uh so thank you all
+
+00:55:00.240 --> 00:55:02.640
+for the first I think it was episode 20
+
+00:55:02.640 --> 00:55:04.640
+episode 21. Everyone here for supporting
+
+00:55:04.640 --> 00:55:06.559
+and being a part of this community and
+
+00:55:06.559 --> 00:55:08.160
+giving us the bringing us your energy
+
+00:55:08.160 --> 00:55:09.599
+and your great questions. We're going to
+
+00:55:09.599 --> 00:55:12.319
+double down on the show and maybe uh
+
+00:55:12.319 --> 00:55:13.440
+give you all a little bit better
+
+00:55:13.440 --> 00:55:15.040
+production quality going forward. So
+
+00:55:15.040 --> 00:55:16.240
+super stoked about that.
+
+00:55:16.240 --> 00:55:18.720
+>> Yeah, we are too. Um and also like
+
+00:55:18.720 --> 00:55:20.720
+firstly thank you everyone. We just hit
+
+00:55:20.720 --> 00:55:23.040
+I was going to make I totally forgot the
+
+00:55:23.040 --> 00:55:25.359
+beginning. like we've uh we just crossed
+
+00:55:25.359 --> 00:55:28.400
+1.5K subs and that is awesome to see
+
+00:55:28.400 --> 00:55:29.839
+everyone supporting us and actually
+
+00:55:29.839 --> 00:55:31.040
+watching these videos that start off
+
+00:55:31.040 --> 00:55:33.040
+with just me and Dexter talking at each
+
+00:55:33.040 --> 00:55:36.800
+other for an hour about weird AI topics.
+
+00:55:36.800 --> 00:55:37.119
+Um
+
+00:55:37.119 --> 00:55:38.559
+>> a lot of shouting. It wasn't just
+
+00:55:38.559 --> 00:55:39.760
+talking.
+
+00:55:39.760 --> 00:55:41.599
+>> We're both very passionate humans as you
+
+00:55:41.599 --> 00:55:42.960
+as most people can probably tell at this
+
+00:55:42.960 --> 00:55:44.000
+point. Um,
+
+00:55:44.000 --> 00:55:46.319
+>> we're still learning to share the toys.
+
+00:55:46.319 --> 00:55:49.599
+>> And please keep sending um topic ideas
+
+00:55:49.599 --> 00:55:52.880
+if you ever want on our on the GitHub
+
+00:55:52.880 --> 00:55:54.559
+for AI that works. If you ever have
+
+00:55:54.559 --> 00:55:55.599
+topic ideas that you think would be
+
+00:55:55.599 --> 00:55:57.359
+awesome to see, like post them on there.
+
+00:55:57.359 --> 00:55:59.200
+If some code feels unflushed out,
+
+00:55:59.200 --> 00:56:00.720
+comment. We'll do our best to make sure
+
+00:56:00.720 --> 00:56:03.520
+that it's actually helpful and guiding
+
+00:56:03.520 --> 00:56:06.880
+people in the way that they want. But
+
+00:56:06.880 --> 00:56:08.880
+this was great, Dexter, as always.
+
+00:56:08.880 --> 00:56:10.799
+>> Awesome. Thanks everybody. Catch you all
+
+00:56:10.799 --> 00:56:13.839
+next week.

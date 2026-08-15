@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-063",
+  "episode": 63,
+  "season": 2,
+  "title": "Software Factory for Agent Tools",
+  "source_folder": "2026-06-23-software-factory-for-agent-tools",
+  "recorded_at": "2026-06-23T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "485FGIq8LKM",
+  "youtube_url": "https://www.youtube.com/watch?v=485FGIq8LKM",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

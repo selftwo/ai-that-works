@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID LEOA19Ss9lc",
+  "transcript_range": "00:01.538 to 00:56:09.368",
+  "timestamp_order": "passed: knowledge/scripts/verify_transcript.py found 194 monotonic timestamps",
+  "spot_checks": ["direct career path", "developer productivity", "HumanLayer approval flow", "framework mismatch", "MCP boundary", "fresh context research", "expert pairing", "cofounder selection", "customer feedback loop"],
+  "timestamped_claim_count": 9,
+  "source_duration_check": "not run: source media was not downloaded",
+  "json_validation": "passed: all JSON parsed with python3 -m json.tool and all 9 JSONL records parsed individually",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "proper noun transcription", "founder narrative not independently corroborated", "future product status", "screen-only evidence"]
+}

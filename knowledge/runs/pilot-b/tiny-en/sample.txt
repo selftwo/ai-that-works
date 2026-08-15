@@ -1,0 +1,45 @@
+As it shows, I got a ton done, like an unbelievable amount done.
+This is the closed PR's in Lakebed where, reminder, I'm still the only contributor.
+I have not forced this project onto my team yet.
+They don't deserve the slop.
+It's cleaning up fast.
+Thank you, Fable.
+But all of these PR's were done in literally two to three days.
+The sheer volume of work here, especially if you're looking at the ones that actually merged
+like this pile here. It's like I think 11 or 12 PRs that merged all not just in one day,
+but from one thread. And I keep going and I'm on page two. We're still in things from
+two days ago. Then there's a four day ago, one five days ago, then a huge jump to two weeks
+because I was just not really feeling it. When I lost access to this model, I tried to
+run around in circles and get the best stuff I could out of Opus, but it wasn't at the
+the bar I needed to ship.
+It what ended up happening is in this particular project,
+Lakebed, I had a bunch of these PR stack up of work
+that was like 50 to 80% complete,
+but I didn't like the SDK changes it made.
+I didn't really have confidence in the implementation,
+including it up would just take too long.
+And the result was that I kept having ideas,
+I kept making PRs, and they kept sitting there doing nothing.
+I probably had 20 or 30 PRs just sitting in this repo,
+not moving, and the project has been sitting there
+as a result, and I don't like that.
+I really want to ship Lakebed.
+I've talked about what Lakebed is in some other videos.
+I don't want to bog you down the details
+until I actually have it launched.
+I haven't earned the right to market this yet.
+I want it done.
+So we'll do that later.
+But I want to talk about the workflows
+that got me this far in the project,
+as well as some of the cool things I'm doing
+on other projects that I've been working on.
+I'm going to start in a weird place here,
+but I promise it will help.
+I'm going to start with min-maxing tips
+and like cost reduction things
+in order to make sure that when you adopt this workflow,
+you don't immediately bankrupt yourself,
+because if you were to go to the second half of this video
+and skip straight to that part, it will be expensive.
+That's what I did in the first three days.

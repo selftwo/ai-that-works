@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-043",
+  "episode": 43,
+  "season": 2,
+  "title": "Prompting Is Becoming a Product Surface",
+  "source_folder": "2026-02-03-prompting-is-becoming-a-product-surface",
+  "recorded_at": "2026-02-03T18:00:00Z",
+  "recorded_at_provenance": "Source catalog event_date from upstream meta.md. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "qdfwmYTO0Aw",
+  "youtube_url": "https://www.youtube.com/watch?v=qdfwmYTO0Aw",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

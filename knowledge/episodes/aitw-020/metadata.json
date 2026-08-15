@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-020",
+  "episode": 16,
+  "season": 2,
+  "title": "Claude for Non-Code Tasks",
+  "source_folder": "2025-08-26-claude-for-non-code-workflows",
+  "recorded_at": "2025-08-26T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "NJcph4j9sNg",
+  "youtube_url": "https://www.youtube.com/watch?v=NJcph4j9sNg",
+  "transcript_origin": "YouTube automatic English captions, imported as timestamped stitched transcript",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-youtube-captions"
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-049",
+  "episode": 49,
+  "season": 2,
+  "title": "Prompt Injections and Guardrails",
+  "source_folder": "2026-03-17-prompt-injections-guardrails",
+  "recorded_at": "2026-03-17T18:00:00Z",
+  "recorded_at_provenance": "Source catalog event_date from upstream meta.md. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "zU8GpxgYDvc",
+  "youtube_url": "https://www.youtube.com/watch?v=zU8GpxgYDvc",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}

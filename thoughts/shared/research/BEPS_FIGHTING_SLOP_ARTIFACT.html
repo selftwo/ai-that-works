@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BEPS &amp; Fighting Slop with Slop — Open Implementation Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #171b24;
+      --surface-2: #1e2430;
+      --border: #2a3344;
+      --text: #e8ecf4;
+      --muted: #9aa7bd;
+      --accent: #6ee7b7;
+      --accent-dim: #34d399;
+      --warn: #fbbf24;
+      --danger: #f87171;
+      --info: #60a5fa;
+      --purple: #c084fc;
+      --radius: 12px;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      --max: 920px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, rgba(52, 211, 153, 0.12), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 0%, rgba(96, 165, 250, 0.08), transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 17, 23, 0.85);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem 1rem;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0;
+      max-width: 52ch;
+      font-size: 0.95rem;
+    }
+
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    nav.toc a {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.3rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    nav.toc a:hover {
+      color: var(--text);
+      border-color: var(--accent-dim);
+      background: rgba(52, 211, 153, 0.08);
+    }
+
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    section {
+      margin-bottom: 2.75rem;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 0 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin: 1.5rem 0 0.65rem;
+      color: var(--accent);
+    }
+
+    p { margin: 0 0 1rem; }
+
+    .lead {
+      font-size: 1.08rem;
+      color: #d5dce8;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.15rem;
+    }
+
+    .card h4 {
+      margin: 0 0 0.45rem;
+      font-size: 0.95rem;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .tag.observed { background: rgba(96, 165, 250, 0.15); color: var(--info); }
+    .tag.inferred { background: rgba(192, 132, 252, 0.15); color: var(--purple); }
+    .tag.action { background: rgba(52, 211, 153, 0.15); color: var(--accent); }
+
+    blockquote {
+      margin: 1.25rem 0;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--accent-dim);
+      background: var(--surface);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #d8dee9;
+      font-style: italic;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 0.65rem;
+      font-style: normal;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .diagram-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .flow-step {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+
+    .flow-arrow { color: var(--muted); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    code, .mono {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.88em;
+    }
+
+    code {
+      background: var(--surface-2);
+      padding: 0.12rem 0.35rem;
+      border-radius: 4px;
+      color: #a5f3fc;
+    }
+
+    pre {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      overflow-x: auto;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+    }
+
+    ul, ol { margin: 0 0 1rem; padding-left: 1.25rem; }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent-dim); }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .checklist li {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      padding: 0.65rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .checklist li:hover { border-color: var(--accent-dim); }
+    .checklist li.done { opacity: 0.65; }
+    .checklist li.done .check-label { text-decoration: line-through; }
+
+    .checklist input {
+      margin-top: 0.25rem;
+      accent-color: var(--accent-dim);
+      cursor: pointer;
+    }
+
+    .tier {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+
+    .tier-header {
+      padding: 0.85rem 1rem;
+      background: var(--surface-2);
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .tier-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .tier-0 .tier-badge { background: rgba(52, 211, 153, 0.2); color: var(--accent); }
+    .tier-1 .tier-badge { background: rgba(96, 165, 250, 0.2); color: var(--info); }
+    .tier-2 .tier-badge { background: rgba(251, 191, 36, 0.2); color: var(--warn); }
+
+    .tier-body { padding: 1rem 1.1rem 1.1rem; background: var(--surface); }
+
+    .callout {
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      margin: 1.25rem 0;
+      border: 1px solid;
+    }
+
+    .callout.warn {
+      background: rgba(251, 191, 36, 0.08);
+      border-color: rgba(251, 191, 36, 0.35);
+    }
+
+    .callout.info {
+      background: rgba(96, 165, 250, 0.08);
+      border-color: rgba(96, 165, 250, 0.35);
+    }
+
+    .callout strong { display: block; margin-bottom: 0.35rem; }
+
+    .sources {
+      font-size: 0.88rem;
+    }
+
+    .sources a {
+      color: var(--info);
+      word-break: break-all;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 600px) {
+      .flow { flex-direction: column; align-items: stretch; }
+      .flow-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="eyebrow">ai-that-works corpus · research artifact</div>
+      <h1>BEPS &amp; Fighting Slop with Slop</h1>
+      <p class="subtitle">What BoundaryML built, why it works, and how you can implement the same patterns in open form — without cloning their stack.</p>
+      <nav class="toc" aria-label="Sections">
+        <a href="#tl-dr">TL;DR</a>
+        <a href="#what">What BEPS is</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#methods">Design methods</a>
+        <a href="#implement">Implement yourself</a>
+        <a href="#anti">Anti-patterns</a>
+        <a href="#sources">Sources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="tl-dr">
+      <h2>TL;DR</h2>
+      <p class="lead">
+        <strong>BEPS</strong> (BAML Enhancement Proposals) is BoundaryML's internal design-doc platform: a readable web viewer, Slack notifications, versioned comment threads, and agent-friendly export — maintained almost entirely by coding agents, not humans. The team calls the approach <strong>"fighting slop with slop"</strong>: accept messy AI-generated tooling code if the <em>workflow</em> produces high-quality design artifacts and eventually high-quality shipped product.
+      </p>
+      <div class="card-grid">
+        <div class="card">
+          <span class="tag observed">Observed</span>
+          <h4>Output &gt; infra purity</h4>
+          <p>Vaibhav does not read or hand-maintain BEPS source. Agents add features via Slack requests.</p>
+        </div>
+        <div class="card">
+          <span class="tag observed">Observed</span>
+          <h4>Git is wrong for this loop</h4>
+          <p>Linear doc history + inline comments beat PR-based markdown for collaborative design review.</p>
+        </div>
+        <div class="card">
+          <span class="tag action">Takeaway</span>
+          <h4>Design splits execution</h4>
+          <p>Hard problems aren't one-shot. Well-scoped design chunks become one-shot for agents.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="what">
+      <h2>What BEPS is (and what you might have meant)</h2>
+      <p>This repo has <strong>no product named "demorer" or "docs viewer tester."</strong> Those likely map to:</p>
+      <table>
+        <thead>
+          <tr><th>Likely term</th><th>What it is in the corpus</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Docs viewer / reviewer</td>
+            <td>BEPS web UI at <a href="https://beps.boundaryml.com">beps.boundaryml.com</a> — read design docs, comment, browse versions</td>
+          </tr>
+          <tr>
+            <td>Platform / demo repo</td>
+            <td><strong>BEPS platform</strong> — open source in the BAML monorepo (<code>BEPS</code> folder)</td>
+          </tr>
+          <tr>
+            <td>Sync / test layer</td>
+            <td>CLI <code>bep pull</code> / <code>bep push</code> — AI-written Python that keeps local markdown in sync with the web app</td>
+          </tr>
+          <tr>
+            <td>Boundary / Vaibhav</td>
+            <td>BoundaryML team; Vaibhav Gupta demos and owns the workflow</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Surfaces in the BEPS system</h3>
+      <div class="diagram-wrap">
+        <div class="flow">
+          <span class="flow-step">Author + Claude (local markdown)</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">CLI sync (bep pull/push)</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">Web viewer + comments</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">Slack threads</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">Export zip → agent_context.md</span>
+        </div>
+      </div>
+
+      <h3>Features worth copying (conceptually)</h3>
+      <ul>
+        <li><strong>Readability first</strong> — pretty navigation beats GitHub issues for complex design</li>
+        <li><strong>draft → proposed</strong> — author attests doc is ready for team consumption</li>
+        <li><strong>Per-version comment chains</strong> — old versions read-only but preserved</li>
+        <li><strong>"Good for LLM" markers</strong> — sections other authors/agents pull as reference</li>
+        <li><strong>Full export bundle</strong> — all BEPs, versions, discussions, comments in one folder tree</li>
+        <li><strong>Slack as notification bus</strong> — no custom notification system to build</li>
+        <li><strong>GitHub OAuth</strong> — team auto-joins on company email domain</li>
+      </ul>
+    </section>
+
+    <section id="philosophy">
+      <h2>Fighting slop with slop</h2>
+      <blockquote>
+        "We generate slop code and don't care what it does. As long as the workflow is good, we're very happy. This is what we mean by fighting slop with slop."
+        <cite>— Vaibhav, 2026-04-28-no-vibes-design-docs</cite>
+      </blockquote>
+
+      <p>The paradox is intentional:</p>
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Quality bar</th><th>Who maintains it</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Internal tooling (BEPS app, sync CLI)</td>
+            <td>Low — "pure AI slop mess"</td>
+            <td>Coding agents triggered from Slack</td>
+          </tr>
+          <tr>
+            <td>Design docs (BEPs)</td>
+            <td>High — dense examples, explicit decisions</td>
+            <td>Human + Claude, reviewed by team</td>
+          </tr>
+          <tr>
+            <td>Shipped product (BAML language)</td>
+            <td>Production — on-call quality</td>
+            <td>Human-owned implementation after design gate</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <strong>Boundary condition</strong>
+        This only works when tooling is <em>not customer-facing</em> and the workflow is simple enough that slop can't silently corrupt the artifact you care about. The gate is: does broken tooling block good docs, or just annoy you briefly?
+      </div>
+
+      <h3>When to apply this vs. when not to</h3>
+      <ul>
+        <li><strong>Apply:</strong> one-off CLIs, export scripts, internal dashboards, sync glue, Slack bots</li>
+        <li><strong>Don't apply:</strong> auth, billing, customer data paths, anything with on-call pages</li>
+        <li><strong>Hybrid:</strong> use agents to scaffold, then add deterministic checks (types, tests) on the small surface that must not drift</li>
+      </ul>
+    </section>
+
+    <section id="workflow">
+      <h2>The workflow they actually run</h2>
+
+      <h3>1. Author locally with agents</h3>
+      <p>Vaibhav edits markdown with Claude while the BEPS web app holds the canonical readable copy. He spends 50%+ of time on design docs, not typing production code.</p>
+
+      <h3>2. Sync without caring about script quality</h3>
+      <p><code>bep pull</code> detects drift (e.g. readme lines removed). Claude resolves the diff. Vaibhav explicitly says he doesn't know what the Python looks like — the workflow is the product.</p>
+
+      <h3>3. Review on the web, discuss in Slack</h3>
+      <p>When a doc moves to <code>proposed</code>, team members read in the UI. Slack threads mirror activity. No built-in "request review from X" — they @ people in Slack.</p>
+
+      <h3>4. Export for agent context</h3>
+      <p>Two export modes:</p>
+      <ul>
+        <li><strong>All BEPs zip</strong> — cross-BEP context when designing new features</li>
+        <li><strong>Single BEP export</strong> — all versions + comments baked into <code>agent_context.md</code></li>
+      </ul>
+
+      <h3>5. Extract meetings into docs</h3>
+      <p>After a design huddle, paste the full meeting transcript (Granola) into Claude and ask it to re-outline the BEP with implicit decisions made explicit — cancellation semantics, shared futures, double-await rules, etc.</p>
+
+      <h3>6. Rewrite major revisions as v2</h3>
+      <p>For complex docs, in-place editing produces incoherent patches. Create <code>v2</code> and rewrite rather than patch — same reason you'd rewrite tech-debt-heavy code.</p>
+    </section>
+
+    <section id="methods">
+      <h2>Design-doc methods (independent of BEPS)</h2>
+      <p>These practices transfer even if you never deploy their platform:</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <h4>Decision inventory</h4>
+          <p>List implicit choices one-by-one (spawn vs async, cancellation propagation, shared state).</p>
+        </div>
+        <div class="card">
+          <h4>Prior-art subpages</h4>
+          <p>Keep the main doc linear; put "why not Go ctx / AbortController" on linked pages.</p>
+        </div>
+        <div class="card">
+          <h4>Example density</h4>
+          <p>Middleware BEP-style: real code for retry, timeout, circuit breaker — not "Express has this."</p>
+        </div>
+        <div class="card">
+          <h4>Chunk for one-shot impl</h4>
+          <p>Four days designing threading → five implementable chunks an agent can take separately.</p>
+        </div>
+        <div class="card">
+          <h4>Post-ship reconciliation</h4>
+          <p>Periodically ask an agent to diff accepted BEPs against implementation.</p>
+        </div>
+        <div class="card">
+          <h4>Linear history</h4>
+          <p>No divergent branches on design truth — push-only versioning for the doc corpus.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="implement">
+      <h2>Implement it yourself (open form)</h2>
+      <p>You don't need to clone BEPS. You need the <strong>separation of concerns</strong>: human-readable review surface, agent-editable source, export bundle, notification hook, and permission to write slop glue.</p>
+
+      <div class="tier tier-0">
+        <div class="tier-header">
+          <span>Tier 0 — This week, no new app</span>
+          <span class="tier-badge">~2–4 hours</span>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li><strong>Folder convention:</strong> <code>design/</code> with <code>DRAFT-*.md</code> and <code>PROPOSED-*.md</code> prefixes (or YAML frontmatter <code>status: draft|proposed|accepted</code>)</li>
+            <li><strong>Export script (agent-written):</strong> one Python/bash command that concatenates all docs + git log into <code>agent_context.md</code></li>
+            <li><strong>Review ritual:</strong> move to proposed only after author checklist; ping reviewers in Slack/Discord with link to rendered markdown (GitHub preview or static site)</li>
+            <li><strong>Meeting → doc:</strong> paste transcript; prompt: "List implicit decisions not yet in the doc; propose v2 outline"</li>
+          </ul>
+          <pre># Minimal export (agent can flesh this out)
+find design -name '*.md' | sort | while read f; do
+  echo "--- FILE: $f ---"; cat "$f"; echo
+done > agent_context.md</pre>
+        </div>
+      </div>
+
+      <div class="tier tier-1">
+        <div class="tier-header">
+          <span>Tier 1 — Lightweight internal viewer</span>
+          <span class="tier-badge">~1–2 days slop</span>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li><strong>Static generator:</strong> md → HTML via Eleventy, VitePress, or Obsidian Publish-style export — optimize for reading, not editing</li>
+            <li><strong>Comments:</strong> GitHub Discussions per doc, or Hypothesis-style inline, or a Google Doc mirror for comment phase only</li>
+            <li><strong>Versions:</strong> filename suffix <code>feature-v3.md</code> or git tags per proposed snapshot — avoid editing old versions</li>
+            <li><strong>Slack webhook:</strong> on proposed transition, post title + link + @reviewers</li>
+            <li><strong>Agent sync CLI:</strong> tell Claude "make pull/push that diffs local md vs exported JSON from viewer" — do not code-review the CLI</li>
+          </ul>
+          <div class="callout info">
+            <strong>Open-form stack examples</strong>
+            Markdown source in git · MkDocs/VitePress for pretty read · <code>agent_context.md</code> export · Slack incoming webhook · optional Supabase/SQLite for comment metadata if Git feels wrong
+          </div>
+        </div>
+      </div>
+
+      <div class="tier tier-2">
+        <div class="tier-header">
+          <span>Tier 2 — BEPS-shaped platform (if you outgrow Tier 1)</span>
+          <span class="tier-badge">Agent-maintained</span>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li>Web app: doc list, version timeline, threaded comments, draft/proposed/accepted states</li>
+            <li>Export API: zip with folder tree matching BEPS export shape</li>
+            <li>CLI: <code>doc pull</code> / <code>doc push</code> with deterministic diff + agent-assisted merge</li>
+            <li>Auth: GitHub OAuth; team membership via email domain or org</li>
+            <li><strong>Maintenance model:</strong> file issues to your coding agent; humans never open the web app codebase except for security</li>
+          </ul>
+          <p>Study the live reference: <a href="https://beps.boundaryml.com">beps.boundaryml.com</a> · BAML repo <code>BEPS</code> folder · episode recording below.</p>
+        </div>
+      </div>
+
+      <h3>Your implementation checklist</h3>
+      <p><small>Check items off — saved in this browser only.</small></p>
+      <ul class="checklist" id="impl-checklist">
+        <li><input type="checkbox" id="c1" /><label class="check-label" for="c1">Define doc statuses: draft → proposed → accepted → implemented</label></li>
+        <li><input type="checkbox" id="c2" /><label class="check-label" for="c2">Add author attestation before proposed (checklist or sign-off line)</label></li>
+        <li><input type="checkbox" id="c3" /><label class="check-label" for="c3">Build one-command <code>agent_context.md</code> export</label></li>
+        <li><input type="checkbox" id="c4" /><label class="check-label" for="c4">Wire Slack/Discord notification on proposed</label></li>
+        <li><input type="checkbox" id="c5" /><label class="check-label" for="c5">Separate "main decision doc" from "prior art / appendix" pages</label></li>
+        <li><input type="checkbox" id="c6" /><label class="check-label" for="c6">Process: meeting transcript → explicit decision list → doc v2</label></li>
+        <li><input type="checkbox" id="c7" /><label class="check-label" for="c7">Rule: major rewrites get new version file, not in-place patch</label></li>
+        <li><input type="checkbox" id="c8" /><label class="check-label" for="c8">Agent-written sync CLI — accept slop, validate workflow not code style</label></li>
+        <li><input type="checkbox" id="c9" /><label class="check-label" for="c9">Quarterly: agent reconciles accepted docs vs codebase</label></li>
+        <li><input type="checkbox" id="c10" /><label class="check-label" for="c10">Draw the line: which internal tools get slop vs production rigor</label></li>
+      </ul>
+
+      <h3>Starter prompts you can paste today</h3>
+      <pre>Make a bash script `design-export` that walks ./design/**/*.md,
+prepends YAML frontmatter as comments, and writes agent_context.md
+with a table of contents at the top. Handle missing frontmatter gracefully.
+I will not review your code — only test the workflow.</pre>
+
+      <pre>I pasted a design meeting transcript below. Extract:
+1) decisions made but not written in the doc
+2) open questions still unresolved
+3) a v2 outline with one section per explicit decision
+Do not merge into the existing doc — propose a clean rewrite structure.</pre>
+
+      <pre>Build a minimal `design pull` CLI in Python: compare local design/*.md
+to a JSON snapshot from [my viewer URL]. Print human-readable drift.
+Use Claude/API only for merge suggestions when I pass --fix.</pre>
+    </section>
+
+    <section id="anti">
+      <h2>Anti-patterns &amp; caveats</h2>
+      <ul>
+        <li><strong>Slop creep:</strong> internal tools that touch production data or auth — keep those typed and tested</li>
+        <li><strong>Git for everything:</strong> comment threads on long-lived design docs break down in PR diffs (they said this explicitly)</li>
+        <li><strong>In-place AI edits on hard docs:</strong> produces inconsistent structure — rewrite v2 instead</li>
+        <li><strong>Skipping proposed gate:</strong> team reads half-baked docs; review habit dies</li>
+        <li><strong>No export path:</strong> web-only docs trap knowledge where agents can't edit</li>
+        <li><strong>Documentation as source of truth for code:</strong> Vaibhav clones language repos and asks Claude how things work — docs drift; code doesn't lie</li>
+      </ul>
+
+      <h3>Related "slop" tactics elsewhere in the corpus</h3>
+      <table>
+        <thead>
+          <tr><th>Tactic</th><th>Source</th><th>Use when</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fight slop with slop (internal tools)</td>
+            <td>2026-04-28-no-vibes-design-docs</td>
+            <td>Workflow glue, not product code</td>
+          </tr>
+          <tr>
+            <td>"This sounds like AI slop — diagnose why"</td>
+            <td>2026-02-17-automating-aitw</td>
+            <td>Content/email quality loops</td>
+          </tr>
+          <tr>
+            <td>Deterministic backpressure (types, tests)</td>
+            <td>2026-02-10-agentic-backpressure</td>
+            <td>When model self-judgment isn't trustworthy</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="sources">
+      <h2>Sources in ai-that-works</h2>
+      <ul class="sources">
+        <li><a href="https://github.com/ai-that-works/ai-that-works/tree/main/2026-04-28-no-vibes-design-docs">2026-04-28-no-vibes-design-docs/</a> — canonical episode (README, transcript, clips, email)</li>
+        <li><a href="https://www.youtube.com/watch?v=KCqsoXveqiI">YouTube recording</a></li>
+        <li><a href="https://beps.boundaryml.com">beps.boundaryml.com</a> — live BEPS viewer</li>
+        <li>2026-04-11-unconf-sf/output/xposts/vaibhav_fighting_slop.md — unconf talk title</li>
+        <li>2025-12-09-git-worktrees/transcript.md (~52:24) — BEPS diff view demo</li>
+        <li>2026-03-31-no-vibes-march/transcript.txt (~756) — spec origin on BEPS site</li>
+        <li>AGENT_NAVIGATION_INDEX.md — Read Review cluster points here for doc-review mechanics</li>
+      </ul>
+      <p style="margin-top:1.5rem;color:var(--muted);font-size:0.88rem;">
+        Artifact generated from corpus research · 2026-07-02 · Not affiliated with BoundaryML — synthesis for personal implementation.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    BEPS &amp; Fighting Slop with Slop — open implementation guide
+  </footer>
+
+  <script>
+    (function () {
+      const KEY = "beps-artifact-checklist";
+      const boxes = document.querySelectorAll("#impl-checklist input[type=checkbox]");
+      const saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+
+      boxes.forEach((box) => {
+        if (saved[box.id]) {
+          box.checked = true;
+          box.closest("li")?.classList.add("done");
+        }
+        box.addEventListener("change", () => {
+          const state = {};
+          boxes.forEach((b) => { state[b.id] = b.checked; });
+          localStorage.setItem(KEY, JSON.stringify(state));
+          box.closest("li")?.classList.toggle("done", box.checked);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

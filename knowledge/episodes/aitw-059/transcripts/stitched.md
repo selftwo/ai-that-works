@@ -1,0 +1,4087 @@
+# No Vibes Allowed: Performance Engineering
+
+
+
+Source: YouTube captions (automatic:en)
+
+
+
+[00:00:01.510] Performance engineering isn't just about
+
+[00:00:01.520] making things fast, memory efficient, or
+
+[00:00:03.080] anything else. It's about this really
+
+[00:00:04.480] good feedback loop where you build
+
+[00:00:06.200] data-driven decisions to make your
+
+[00:00:08.000] codebase better.
+
+[00:00:08.880] >> It's so crazy. It's like one late night
+
+[00:00:11.440] prompt is the difference between good
+
+[00:00:14.280] and bad.
+
+[00:00:15.000] >> One line of code. You have to read lines
+
+[00:00:16.760] extremely carefully. I actually find
+
+[00:00:18.360] performance engineering is a great way
+
+[00:00:19.920] to like force yourself to read stuff
+
+[00:00:21.600] because everything is measurable, so you
+
+[00:00:23.280] can actually [music] like become better
+
+[00:00:24.480] at agentic engineering. All right, hello
+
+[00:00:26.320] everyone. Today we're going to go talk a
+
+[00:00:27.600] little bit about performance engineering
+
+[00:00:29.280] and show exactly how we're going to go
+
+[00:00:31.960] and make this
+
+[00:00:33.720] make it possible to leverage Claude and
+
+[00:00:36.080] other AI tools to make your systems a
+
+[00:00:38.320] lot faster. We go into two things. We go
+
+[00:00:40.320] into how we make strings faster in the
+
+[00:00:42.040] BAML VM. If you don't know what VM is,
+
+[00:00:44.360] it's a virtual machine very similar to
+
+[00:00:46.800] pi how Python and JavaScript run your
+
+[00:00:49.160] code on any host environment. We do the
+
+[00:00:51.840] same thing here.
+
+[00:00:53.080] And then the other thing we'll go into
+
+[00:00:54.400] is how we build a profiler and kind of
+
+[00:00:55.880] the approaches that we have and like the
+
+[00:00:57.160] level of detail that you need. Hopefully
+
+[00:00:58.960] by the end of it you're motivated enough
+
+[00:01:00.400] to go and try performance engineering on
+
+[00:01:01.840] your own and we give a little a few tips
+
+[00:01:03.880] on how you can go do that as well.
+
+[00:01:05.720] Check it out. How's everyone doing
+
+[00:01:07.360] today?
+
+[00:01:08.920] Make sure that's you specifically cuz no
+
+[00:01:10.720] one else can talk.
+
+[00:01:11.560] >> Oh, cuz the chat can't talk. I was like
+
+[00:01:13.520] waiting for you to read in the chat. All
+
+[00:01:15.000] right, we're going to assume everybody
+
+[00:01:16.160] in the chat is doing freaking great.
+
+[00:01:18.640] I'm doing great.
+
+[00:01:20.680] I just had a video crew in here for like
+
+[00:01:23.080] 10 hours, 12 hours, 10 hours yesterday.
+
+[00:01:26.200] Um
+
+[00:01:27.520] it was it was a good time.
+
+[00:01:29.800] We're getting ready to do a very fun fun
+
+[00:01:32.360] launch soon, so uh
+
+[00:01:33.880] >> I'm excited.
+
+[00:01:34.640] >> to be great. But I didn't get to write
+
+[00:01:36.160] any code and I'm really excited to write
+
+[00:01:37.440] code all day today. And so I figured
+
+[00:01:39.280] what better way to warm up than learn
+
+[00:01:42.280] from one of the greats. Vaibhav, you
+
+[00:01:43.480] want to tell us what we're doing today?
+
+[00:01:44.680] >> Yeah, today is going to be a fun little
+
+[00:01:47.680] episode called no vibes allowed.
+
+[00:01:50.000] Every month or so or like four to six
+
+[00:01:51.960] weeks we do an episode where we just
+
+[00:01:53.240] like code together for a bit. We We chat
+
+[00:01:55.320] about our best practices, how we how we
+
+[00:01:58.480] do things on our team, how we do things
+
+[00:01:59.920] on your team, and just like trade notes.
+
+[00:02:02.320] Uh one of my favorite sessions here is
+
+[00:02:03.920] like always to just swap notes with
+
+[00:02:05.320] Dexter because I always learn something
+
+[00:02:07.160] new different from what he's doing.
+
+[00:02:09.440] Today, I wanted to share something that
+
+[00:02:11.360] is
+
+[00:02:13.080] probably very different than what most
+
+[00:02:14.920] people do with cloud code, which is high
+
+[00:02:17.120] performance engineering. Like how do you
+
+[00:02:19.040] make stuff really freaking fast?
+
+[00:02:22.120] >> Okay.
+
+[00:02:22.680] >> And I think there's all this stuff going
+
+[00:02:24.000] on with Bun doing all their ports like
+
+[00:02:26.040] Rust, and they make their like sizes
+
+[00:02:27.800] smaller for their binary, and they do
+
+[00:02:30.160] um they make their code faster, and they
+
+[00:02:31.959] make like image processing better. And
+
+[00:02:33.280] like how do they actually do this?
+
+[00:02:35.040] Turns out we do a lot of this work on
+
+[00:02:36.200] our team, too. So, I figured why not
+
+[00:02:37.640] just share some of the practices and how
+
+[00:02:39.120] we go about this and like where
+
+[00:02:41.680] where AI is good, where AI is not good,
+
+[00:02:43.280] and how you actually have to like catch
+
+[00:02:44.600] some of these contexts around.
+
+[00:02:46.080] >> Ooh, I feel like we're in for some uh
+
+[00:02:48.200] some back pressure today.
+
+[00:02:49.600] >> I have got a lot of back pressure.
+
+[00:02:52.360] >> Yeah.
+
+[00:02:52.760] >> I've also got tons of content that I've
+
+[00:02:55.600] actually already kind of been working
+
+[00:02:57.360] on, so
+
+[00:02:58.920] uh
+
+[00:02:59.720] I actually have like real work to share
+
+[00:03:01.080] with everyone about how we go do this
+
+[00:03:02.880] and just like how in-depth it gets cuz
+
+[00:03:04.800] it gets
+
+[00:03:06.400] performance engineering is one of the
+
+[00:03:07.720] few things that you cannot fake. There's
+
+[00:03:09.760] no metric that you can be like you're
+
+[00:03:11.040] slightly better. It's pure numbers. It's
+
+[00:03:13.360] totally unfakeable, so you just have to
+
+[00:03:14.959] do it right.
+
+[00:03:15.720] >> Amazing.
+
+[00:03:16.720] >> The hard part here is AI is actually
+
+[00:03:18.400] incredibly bad
+
+[00:03:20.560] at making really good performance
+
+[00:03:22.320] engineering decisions by default, and
+
+[00:03:25.600] that's because performance engineering
+
+[00:03:27.800] is inherently
+
+[00:03:29.160] the act of doing things that are usually
+
+[00:03:30.800] dangerous and not very safe
+
+[00:03:33.360] uh to get like the last ounce of
+
+[00:03:34.880] performance.
+
+[00:03:35.880] >> Ah, okay.
+
+[00:03:37.440] >> Yeah, and when you do that, the model
+
+[00:03:38.640] will do things that is like it's fast,
+
+[00:03:40.959] it's consistent. Um and it will do them
+
+[00:03:44.160] in like in reality, they don't work. Um
+
+[00:03:46.519] so, I want to share some of that context
+
+[00:03:47.720] today.
+
+[00:03:48.239] >> Amazing. And this is bringing me back a
+
+[00:03:49.720] little bit to uh the like performance
+
+[00:03:52.280] engineering in C class that I probably
+
+[00:03:54.640] took in undergrad a decade ago
+
+[00:03:57.920] of like random like I mean I'm sure
+
+[00:03:59.680] there's a bunch of naive techniques like
+
+[00:04:01.520] oh let's unroll the for loop into like
+
+[00:04:04.160] eight eight like blocks of eight or
+
+[00:04:05.960] whatever it is or let's to avoid like
+
+[00:04:08.400] the instruction pointer changes and
+
+[00:04:09.920] things like this but I'm sure we're
+
+[00:04:11.400] going to do something much more
+
+[00:04:12.160] sophisticated than that today. I can't
+
+[00:04:14.040] wait to see it. I did drop a new
+
+[00:04:15.680] whiteboard that is not shared with
+
+[00:04:17.040] everybody into the chat if you want to
+
+[00:04:18.600] use that one.
+
+[00:04:20.040] There we go.
+
+[00:04:20.519] >> Let's do it.
+
+[00:04:21.120] >> I don't know if we're whiteboarding or
+
+[00:04:22.240] if we're jumping straight to code today
+
+[00:04:23.360] though.
+
+[00:04:23.800] >> I'll do a little bit of whiteboard just
+
+[00:04:24.960] cuz it helps people have the context for
+
+[00:04:26.520] like how we go do this.
+
+[00:04:27.880] >> Cool.
+
+[00:04:28.440] >> So first things first
+
+[00:04:30.280] like what are we performance optimizing?
+
+[00:04:32.720] One of the things that we have in our
+
+[00:04:34.200] code base is a I'm going to move this
+
+[00:04:36.480] whiteboard here.
+
+[00:04:37.760] One of the things we have is basically a
+
+[00:04:38.919] virtual machine. A virtual machine is a
+
+[00:04:40.640] thing that takes in like assembly
+
+[00:04:43.360] equivalent of assembly
+
+[00:04:45.280] and basically says like
+
+[00:04:47.600] it does like fetch if you've ever taken
+
+[00:04:49.640] an operating systems class
+
+[00:04:54.310] decode
+
+[00:04:54.320] >> you by the way how did you get your
+
+[00:04:56.040] Excalidraw color scheme to be literally
+
+[00:04:58.400] the worst color combo in history of
+
+[00:05:00.440] orange
+
+[00:05:00.520] >> Oh I don't know what's happening.
+
+[00:05:03.160] >> I'm changing it to black because I can't
+
+[00:05:05.240] I can't look at that.
+
+[00:05:06.480] >> Okay, I fixed it.
+
+[00:05:09.080] Clearly I don't make a diagrams.
+
+[00:05:11.000] Fetch execute decode it's kind of like
+
+[00:05:12.800] the way to think about this and I guess
+
+[00:05:14.440] there's like a store instruction here.
+
+[00:05:16.840] Um
+
+[00:05:18.240] and like this is basically what every
+
+[00:05:19.600] computer does whenever it's executing
+
+[00:05:21.040] instructions. It looks at the
+
+[00:05:22.160] instruction figures out which
+
+[00:05:23.240] instruction it first gets the
+
+[00:05:24.720] instruction figures out which
+
+[00:05:26.360] instruction is it. Are you trying to do
+
+[00:05:27.680] like an add? Are you trying to do like a
+
+[00:05:29.040] move where you're moving a variable from
+
+[00:05:30.960] one to another? Are you doing a
+
+[00:05:33.200] Are you doing a store where you're
+
+[00:05:35.360] saving stuff to memory or loading stuff
+
+[00:05:37.480] from memory? Executing is doing the
+
+[00:05:39.400] actual execution so like if you're
+
+[00:05:41.560] adding two variables together the
+
+[00:05:42.880] execution is a part that actually adds
+
+[00:05:44.480] the two variables together.
+
+[00:05:46.200] And then a store is when you actually
+
+[00:05:47.600] save the computer result back to memory.
+
+[00:05:51.080] Going to do this. If you have a right
+
+[00:05:52.560] Python code, you have right JavaScript
+
+[00:05:54.280] code, or you have right Java code, this
+
+[00:05:56.240] is really the operation that's happening
+
+[00:05:57.800] under the hood to go do this stuff and
+
+[00:05:59.800] like make make it work across virtual
+
+[00:06:02.560] memory, make it work across different
+
+[00:06:04.320] operating systems, etc. The JVM does
+
+[00:06:06.240] something similar as well.
+
+[00:06:08.040] >> So for store in this case, would that be
+
+[00:06:10.120] like a store it back to a register, or
+
+[00:06:12.560] is this like cuz so this is like
+
+[00:06:14.880] executing a single instruction,
+
+[00:06:16.760] basically?
+
+[00:06:17.880] >> Yeah, yeah, yeah. But so this depends.
+
+[00:06:19.520] Are you running a virtual machine, are
+
+[00:06:20.840] you running like a actual machine? If
+
+[00:06:22.520] you're running a virtual machine, then
+
+[00:06:23.720] it's storing into memory in some model
+
+[00:06:26.040] of a register or equivalent of there's
+
+[00:06:27.720] like register VM, stack VMs, whatever.
+
+[00:06:30.120] Uh if you're running assembly
+
+[00:06:30.960] instructions, it actually saves it to
+
+[00:06:32.160] like physical memory. Or technically
+
+[00:06:34.280] virtual memory, but like you get the
+
+[00:06:35.360] point. There's
+
+[00:06:36.560] you don't actually have access to
+
+[00:06:38.400] physical page table
+
+[00:06:40.120] physical pages unless you really want
+
+[00:06:41.480] to.
+
+[00:06:42.400] >> Yeah.
+
+[00:06:42.640] >> Yeah. Um so this is kind of how you can
+
+[00:06:45.680] think about this operation stuff.
+
+[00:06:48.120] Um now, the problem is I'm sure as you
+
+[00:06:50.800] can tell, our computers are only your
+
+[00:06:53.280] programs will only ever be as fast as
+
+[00:06:55.400] this system is.
+
+[00:06:57.080] So if any of these things are very slow,
+
+[00:06:59.320] your system will be slow.
+
+[00:07:01.200] Now, for those of you that don't know,
+
+[00:07:03.480] uh in performance engineering, there's
+
+[00:07:04.800] basically three things you have to care
+
+[00:07:06.040] about.
+
+[00:07:10.750] Caches.
+
+[00:07:10.760] You want your cache to be good.
+
+[00:07:13.040] So like
+
+[00:07:14.760] Do
+
+[00:07:16.160] we
+
+[00:07:17.080] I'll hear. Use
+
+[00:07:19.880] more caches.
+
+[00:07:27.390] >> Do you have the concept of L1, L2, L3 in
+
+[00:07:27.400] your VM, or is that like kind of
+
+[00:07:29.919] >> that's a hardware construct.
+
+[00:07:31.600] >> Yeah, okay.
+
+[00:07:32.200] >> There's basically a couple things.
+
+[00:07:33.480] There's basically like use more caches,
+
+[00:07:35.360] do less work.
+
+[00:07:37.600] All right. Um
+
+[00:07:39.320] trying to remember the third one, but I
+
+[00:07:40.400] can't. Uh I'll remember at some point.
+
+[00:07:42.480] But there's basically these three things
+
+[00:07:44.400] that you going to optimize for and
+
+[00:07:46.080] there's nothing else that you can really
+
+[00:07:48.520] um
+
+[00:07:49.200] really uh really do in a better way.
+
+[00:07:52.800] And if you don't do one of these three
+
+[00:07:54.320] things, your code will not be faster.
+
+[00:07:57.040] Um the Oh.
+
+[00:07:59.440] Oh, yeah. I I guess technically it's
+
+[00:08:00.960] like this one.
+
+[00:08:06.270] This is kind of related to caches, but
+
+[00:08:06.280] it's slightly different. But it's like
+
+[00:08:07.800] effectively it's like use less things on
+
+[00:08:09.320] the heap. The more things you have on
+
+[00:08:10.800] the heap, the worse it is.
+
+[00:08:13.000] Um so, if you don't do these things,
+
+[00:08:15.480] your code will basically just be slow.
+
+[00:08:17.080] And if you do these things, your code
+
+[00:08:18.680] can only be as fast as these things are
+
+[00:08:21.160] fast effectively.
+
+[00:08:23.320] So, when we think about how to do
+
+[00:08:24.800] performance engineering any sort of run
+
+[00:08:26.200] time, any sort of stuff, the first thing
+
+[00:08:27.960] you have to do is actually measure. So,
+
+[00:08:29.760] we talked about back pressure, so you
+
+[00:08:31.120] build measurements. So, let's look at
+
+[00:08:32.800] how we do measurements really fast.
+
+[00:08:36.320] Where is this? I need This is a nice
+
+[00:08:38.520] little Claude code thing I've been
+
+[00:08:39.599] trying. But where is the other one?
+
+[00:08:42.120] I just need a terminal.
+
+[00:08:47.630] >> Oh, I see these guys on Twitter all the
+
+[00:08:47.640] time.
+
+[00:08:49.120] >> I've Yeah, it's a new little UI. I don't
+
+[00:08:50.920] mind trying new UIs and I learn
+
+[00:08:52.280] something interesting every time I try
+
+[00:08:53.680] something.
+
+[00:08:54.800] I do like the fact that I can see
+
+[00:08:56.880] >> and session grouping and they have the
+
+[00:08:58.320] file tree. Can you actually open files?
+
+[00:09:00.920] >> Um I I you can open files and that's
+
+[00:09:03.160] pretty nice. Oh, you guys will see the
+
+[00:09:04.839] actual the actual design docs all only
+
+[00:09:06.960] live in one place cuz there's I cannot
+
+[00:09:08.720] build the good design docs anywhere
+
+[00:09:09.920] else.
+
+[00:09:11.080] Um but um Claude Claude is still useful
+
+[00:09:13.880] for like various things. Like the things
+
+[00:09:15.120] that I'm about to do is definitely
+
+[00:09:16.160] useful.
+
+[00:09:17.360] So, like one of the things that we have
+
+[00:09:19.160] is these benchmarks that
+
+[00:09:20.680] >> Do it.
+
+[00:09:22.000] >> These benchmarks take a while to run, so
+
+[00:09:23.480] I just want to pull them up.
+
+[00:09:25.360] Um
+
+[00:09:26.800] So, one of the things that we have is we
+
+[00:09:28.160] actually have a script
+
+[00:09:30.520] that's only purpose
+
+[00:09:33.200] Control O.
+
+[00:09:34.800] That's only purpose is actually to help
+
+[00:09:36.520] benchmark.
+
+[00:09:38.960] Um BAML against like all sorts of
+
+[00:09:40.920] things. We BAML We benchmark BAML
+
+[00:09:42.760] against our own baseline relative
+
+[00:09:44.240] itself. We benchmark BAML against
+
+[00:09:46.400] Python. We benchmark BAML against Node.
+
+[00:09:48.520] We benchmark BAML against Bun. We
+
+[00:09:50.480] actually built a lot of tooling.
+
+[00:09:52.120] >> so this table is readable, dude? Sorry.
+
+[00:09:55.720] >> Let me find you another version of this
+
+[00:09:57.360] table that is actually readable.
+
+[00:10:02.670] I run This is all I've been doing for
+
+[00:10:02.680] the last few days.
+
+[00:10:04.040] Uh
+
+[00:10:05.760] And if I can't, I will just rerun this
+
+[00:10:07.280] table again because I know what command
+
+[00:10:08.640] it is.
+
+[00:10:26.550] What is a PWD?
+
+[00:10:26.560] Man, the problem with all these systems
+
+[00:10:28.000] is finding like stuff like the PWD is
+
+[00:10:30.240] very hard. Copy path, okay.
+
+[00:10:33.760] And then we'll go here.
+
+[00:10:47.790] All right. And then we'll just run this.
+
+[00:10:47.800] And this should probably do some stuff.
+
+[00:10:49.800] Okay. This will run some stuff behind
+
+[00:10:51.400] the scenes and it'll show some
+
+[00:10:52.360] benchmarks.
+
+[00:10:53.480] Uh but we actually spent some time real
+
+[00:10:55.400] time building some tooling that actually
+
+[00:10:56.920] does this and I'll show you what this
+
+[00:10:58.000] tooling does.
+
+[00:10:59.600] >> I was going to say what what are we
+
+[00:11:00.480] benchmarking? You say benchmark BAML
+
+[00:11:01.920] against a bunch of other languages. What
+
+[00:11:03.560] what are we benchmarking? Is this like
+
+[00:11:07.760] Oh, it's fit fit Fibonacci. Okay, cool.
+
+[00:11:10.320] >> So, it's actually not just Fibonacci.
+
+[00:11:11.520] And this is the amazing part about all
+
+[00:11:13.680] these stuff.
+
+[00:11:14.800] We actually have a bunch of workloads
+
+[00:11:16.080] that we've defined.
+
+[00:11:17.400] So, like there's workloads like
+
+[00:11:18.360] Fibonacci recursive. So, we're like it
+
+[00:11:20.280] let's try Fibonacci in the recursive
+
+[00:11:21.680] pattern. And this checks how expensive
+
+[00:11:23.240] it is is it to call functions inside of
+
+[00:11:25.120] BAML.
+
+[00:11:26.080] There's benchmarks against calling
+
+[00:11:27.200] Fibonacci in an in a
+
+[00:11:29.760] What This
+
+[00:11:30.760] There's like the pi And then we have the
+
+[00:11:32.120] Python equivalent, we have the bam
+
+[00:11:33.360] equivalent, and we have the TypeScript
+
+[00:11:35.240] equivalent for all of them.
+
+[00:11:37.120] Then we have the iterative version of
+
+[00:11:38.920] Fibonacci. Let's go calculate how
+
+[00:11:40.400] expensive that is.
+
+[00:11:41.320] >> like tail recursion or whatever.
+
+[00:11:43.600] >> Yeah, exactly.
+
+[00:11:44.200] >> doesn't have tail recursion, right?
+
+[00:11:46.320] >> Yeah, it just does like temporary. What
+
+[00:11:47.960] do you mean by tail recursion?
+
+[00:11:49.800] >> Of like where you when you do the
+
+[00:11:51.120] recursive call, it can basically like
+
+[00:11:53.320] replace instead of like creating a new
+
+[00:11:55.680] stack frame, it can just replace the
+
+[00:11:57.440] current stack frame.
+
+[00:11:59.520] >> Oh, I see.
+
+[00:12:00.040] >> Like an optimization that you can do in
+
+[00:12:01.320] like C and languages like that. I don't
+
+[00:12:02.720] think Python supports it.
+
+[00:12:04.080] >> interesting.
+
+[00:12:05.120] Um interesting.
+
+[00:12:06.560] Um so you can do stuff here. Uh we just
+
+[00:12:09.200] measure this. We measure all sorts of
+
+[00:12:10.640] things like what is it like to traverse
+
+[00:12:12.720] a binary tree, what is it like to to
+
+[00:12:14.960] like a nested for loop with like various
+
+[00:12:16.560] counters.
+
+[00:12:17.720] We basically just came up like what
+
+[00:12:19.200] happens with closures.
+
+[00:12:20.680] Do clo- Are closures expensive? Are
+
+[00:12:22.840] variable captures? If, else, and a whole
+
+[00:12:24.760] bunch of other scenarios.
+
+[00:12:27.560] Uh and you just go and measure every
+
+[00:12:28.840] single thing you want to go measure, and
+
+[00:12:30.320] that tells you how expensive things are.
+
+[00:12:32.840] And if you don't
+
+[00:12:33.920] >> memory usage? Are you measuring timing?
+
+[00:12:36.320] Are you measuring
+
+[00:12:37.280] >> Timing.
+
+[00:12:37.600] >> What are you measuring here?
+
+[00:12:38.080] >> Timing is the main thing we measure
+
+[00:12:39.200] right now. We're not We don't care about
+
+[00:12:41.000] optimizing for memory, though we're
+
+[00:12:42.320] pretty good. But we do measure timing.
+
+[00:12:44.760] >> And in general, I have lots of memory.
+
+[00:12:46.720] If you can make it run faster and use
+
+[00:12:48.640] more memory, I would rather have it be
+
+[00:12:49.960] fast.
+
+[00:12:50.960] >> Yeah, exactly. So we're basically
+
+[00:12:52.720] measuring timing right now. We will
+
+[00:12:54.360] eventually measure memory. We measure
+
+[00:12:55.680] binary size and stuff, too, but we're
+
+[00:12:57.080] pretty good on binary size. So I don't
+
+[00:12:58.320] really It's not a thing that we're
+
+[00:12:59.480] optimizing for.
+
+[00:13:01.040] But once you've measured that,
+
+[00:13:03.360] if you don't actually spend the time to
+
+[00:13:04.920] build that sort of system in place where
+
+[00:13:07.480] you're actually measuring stuff, you
+
+[00:13:09.040] basically will end up with a loop that
+
+[00:13:10.400] has no usage. And one of the things that
+
+[00:13:12.760] I I ran into, and this is what part of
+
+[00:13:14.880] what this PR fixes, is
+
+[00:13:16.839] we didn't have standard deviations here.
+
+[00:13:18.760] And if you don't have standard
+
+[00:13:19.520] deviations, then you can't possibly
+
+[00:13:21.480] measure exactly how much noise you have
+
+[00:13:23.640] in your system, and then and can't tell
+
+[00:13:25.760] where the actual difference is relative
+
+[00:13:27.920] to anything else. And that's really
+
+[00:13:29.200] important to go spend time doing.
+
+[00:13:31.480] So, we just had to go do that. We had to
+
+[00:13:32.840] add like a standard deviation in there.
+
+[00:13:35.280] And you can you'll probably notice that
+
+[00:13:36.560] like Bammel has various standard
+
+[00:13:37.800] deviations built into it.
+
+[00:13:40.320] Um but this is just like a small little
+
+[00:13:43.400] script that we built and as soon as the
+
+[00:13:44.520] results come out, we can actually go
+
+[00:13:45.560] into the details of like one one of the
+
+[00:13:47.640] performance optimizations we did and how
+
+[00:13:49.600] much effort it took to make this
+
+[00:13:50.800] actually work.
+
+[00:13:52.120] I'll give you guys a teaser while this
+
+[00:13:53.240] is running cuz
+
+[00:13:54.680] the hardest part about performance
+
+[00:13:56.320] benchmarks and what I'm currently
+
+[00:13:57.720] struggling with with Claude
+
+[00:13:59.640] is just how long it takes
+
+[00:14:02.120] to actually run them.
+
+[00:14:04.200] Um and then Claude's iteration loop just
+
+[00:14:06.120] like
+
+[00:14:06.960] completely dies. And the thing is you
+
+[00:14:08.840] can't even run them in parallel because
+
+[00:14:10.520] if you run them in parallel,
+
+[00:14:12.440] you actually affect the CPU in the
+
+[00:14:13.800] profiling.
+
+[00:14:15.080] So, you can't actually do any of this
+
+[00:14:16.200] stuff in parallel as well. So, it's kind
+
+[00:14:17.520] of a pain in the ass.
+
+[00:14:18.080] >> Oh, okay. Yeah, so you have to run
+
+[00:14:20.800] everything in sequence because you don't
+
+[00:14:23.280] want them competing for resources on
+
+[00:14:25.360] your machine and that impacts the actual
+
+[00:14:27.720] like end-to-end wall time.
+
+[00:14:29.839] >> Exactly.
+
+[00:14:31.080] And like right over here, for example,
+
+[00:14:32.240] like you can see like our function
+
+[00:14:33.760] dispatch is extremely expensive. So,
+
+[00:14:36.040] we're working on making this faster. The
+
+[00:14:37.920] things I worked on were like
+
+[00:14:38.800] string-related stuff right now. So, it's
+
+[00:14:40.400] really fast we made strings extremely
+
+[00:14:42.120] fast in Bammel.
+
+[00:14:43.920] Um but what's been really interesting is
+
+[00:14:46.440] I want to show you kind of the process
+
+[00:14:48.040] of how long it takes to make something
+
+[00:14:49.680] better.
+
+[00:14:51.160] Uh similar use case would be like a SQL
+
+[00:14:52.720] query optimization. Exactly. If you want
+
+[00:14:54.480] to do a SQL query optimization, you kind
+
+[00:14:55.960] of need to do the same thing.
+
+[00:14:57.800] Um and if you were going to do a SQL
+
+[00:14:59.920] query optimization, you'd build the same
+
+[00:15:01.200] thing. You'd build some sort of
+
+[00:15:02.080] benchmark suite that actually
+
+[00:15:03.600] understands the workload. I call these
+
+[00:15:05.120] workloads.
+
+[00:15:06.280] That understands the workload of what
+
+[00:15:07.600] you're doing.
+
+[00:15:09.960] Um and then once you understand the
+
+[00:15:11.200] workload what you're doing, you can
+
+[00:15:12.160] actually just
+
+[00:15:13.080] build a short little script that
+
+[00:15:14.760] actually puts a summary table down below
+
+[00:15:16.760] like this.
+
+[00:15:17.880] And then what's interesting is Claude
+
+[00:15:19.360] code has learned to basically only
+
+[00:15:20.800] capture this by searching for a vertical
+
+[00:15:22.320] bar.
+
+[00:15:23.160] It grabs for vertical bar, finds this
+
+[00:15:25.000] table, and then just gives me a summary
+
+[00:15:26.680] of the actual impact.
+
+[00:15:28.600] But, it's really useful that we actually
+
+[00:15:29.920] just capture this data. One of the
+
+[00:15:31.280] mistakes that I learned, and I've I
+
+[00:15:33.080] learned this more and more as I do
+
+[00:15:34.240] performance engineering,
+
+[00:15:35.880] is I wish we had originally saved all
+
+[00:15:37.520] this stuff to JSON all the time by
+
+[00:15:39.200] default. So, now we just save this to
+
+[00:15:40.600] JSON all the time by default.
+
+[00:15:42.960] And that way, if Claude needs to re-get
+
+[00:15:44.480] some of the data,
+
+[00:15:45.720] it actually just gets the data instead
+
+[00:15:47.640] of having to um rerun the whole
+
+[00:15:49.840] benchmark, which as you saw, took like
+
+[00:15:52.760] at least like 2 minutes or 3 minutes,
+
+[00:15:55.360] maybe longer, to actually go run this
+
+[00:15:57.040] all the way through.
+
+[00:15:59.480] Um so, that's been uh that was like a
+
+[00:16:01.400] really quick, easy learning. Like,
+
+[00:16:02.840] serialize your performance benchmarks as
+
+[00:16:04.720] much as possible, as much so you can
+
+[00:16:06.680] like quickly refer to them one at a
+
+[00:16:08.240] time.
+
+[00:16:09.920] But, I want to show you how long the
+
+[00:16:10.880] process actually took. So, one of the
+
+[00:16:12.480] things I did is I made strings way
+
+[00:16:14.520] faster in BAML.
+
+[00:16:16.280] Um as a part of making strings faster in
+
+[00:16:18.240] BAML, where's the speed
+
+[00:16:20.120] >> Yeah, do you have the before and after
+
+[00:16:21.880] result, or is this just compared to
+
+[00:16:23.640] other languages?
+
+[00:16:25.680] >> Uh I have before and after, too. There's
+
+[00:16:27.400] a baseline thing in here.
+
+[00:16:29.480] Here, I I will ask Claude to describe to
+
+[00:16:31.440] me how much faster I made this.
+
+[00:16:36.390] Claude.
+
+[00:16:36.400] >> So, baseline is the BAML baseline?
+
+[00:16:39.320] >> Explain
+
+[00:16:40.520] the impact.
+
+[00:16:42.200] Baseline is against like our main
+
+[00:16:43.640] branch, effectively.
+
+[00:16:46.080] Like, baseline is what the main branch
+
+[00:16:47.520] is, and then the non-baseline
+
+[00:16:51.280] >> Exactly. The BAML is the uh
+
+[00:16:53.520] non-baseline.
+
+[00:16:55.160] So, I'll give you the baseline. But,
+
+[00:16:56.720] while we do this, I want to show you
+
+[00:16:57.720] kind of how we did this and like what
+
+[00:16:59.280] the research requirement is to make
+
+[00:17:00.680] strings faster.
+
+[00:17:02.520] Uh
+
+[00:17:04.079] Why can I
+
+[00:17:05.760] open
+
+[00:17:08.199] I can't open
+
+[00:17:10.839] I can't open
+
+[00:17:11.520] >> to archive task extra?
+
+[00:17:13.600] >> Open archive task.
+
+[00:17:15.240] >> You should command K.
+
+[00:17:18.280] >> I'll try again. It was not clicking
+
+[00:17:19.880] through.
+
+[00:17:23.270] That's the first time I've ever seen
+
+[00:17:23.280] >> to use my product on stream, you you
+
+[00:17:25.120] have to only use it when it's working.
+
+[00:17:26.720] You can't use it when it's bugged.
+
+[00:17:28.011] [laughter]
+
+[00:17:29.720] >> I got our code task. So, one of the
+
+[00:17:32.040] things I was working on is
+
+[00:17:34.200] where's the strings one?
+
+[00:17:37.280] What is this organized by recency?
+
+[00:17:39.920] >> Yeah.
+
+[00:17:41.440] >> Oh, maybe strings is like that.
+
+[00:17:42.960] >> If you hit command K, I think it will
+
+[00:17:44.840] search all sessions.
+
+[00:17:52.230] >> Okay, what is going on here? Um I put
+
+[00:17:52.240] together I want to show you this ticket
+
+[00:17:54.120] of what kind of ticket I got.
+
+[00:17:56.480] So, basically I did a whole bunch of
+
+[00:17:58.080] work with cloud code to just
+
+[00:17:59.880] independently research how strings work.
+
+[00:18:02.640] And when I did strings work, I basically
+
+[00:18:05.560] I'll show you how strings perform and
+
+[00:18:07.040] like why strings are slow in general.
+
+[00:18:10.000] Um
+
+[00:18:14.750] And so, for example, one of the things I
+
+[00:18:14.760] was able to do with this current work is
+
+[00:18:16.040] I made strings roughly six times faster
+
+[00:18:19.520] um in like concat use cases. And
+
+[00:18:21.960] obviously, if you concat less things,
+
+[00:18:23.240] it's like three times faster. But so,
+
+[00:18:24.600] basically it scales
+
+[00:18:26.280] uh as you keep uh stacking strings
+
+[00:18:28.840] because we reduce memory allocations.
+
+[00:18:30.920] And like building short strings is about
+
+[00:18:32.400] two times faster. So, basically like
+
+[00:18:34.160] effectively like almost twice as fast as
+
+[00:18:37.400] um Python.
+
+[00:18:39.400] In the case of making our strings uh
+
+[00:18:42.000] in the case of our like how good strings
+
+[00:18:43.600] are in BAML.
+
+[00:18:44.200] >> Is this specifically like concatenating
+
+[00:18:46.440] strings?
+
+[00:18:48.040] >> And allocating strings and like building
+
+[00:18:49.680] strings and a few other things in here.
+
+[00:18:51.200] But basically like the usage of strings.
+
+[00:18:52.920] Why do we do this? Well, because like if
+
+[00:18:54.200] you're in a language that's Well, if
+
+[00:18:55.480] you're going to use a lot of strings in
+
+[00:18:56.480] your language cuz you have a lot of
+
+[00:18:57.400] prompts, you have large strings, you
+
+[00:18:58.560] have slices, you have all these other
+
+[00:18:59.880] things out here. I've also made slices
+
+[00:19:02.160] >> like token chunks and all this kind of
+
+[00:19:04.240] stuff, right?
+
+[00:19:05.600] >> Exactly. And I've made like slices in
+
+[00:19:07.320] BAML much faster, too. I don't have a I
+
+[00:19:08.960] don't have a workload for this, but I'll
+
+[00:19:10.680] produce that in a second. Make a
+
+[00:19:12.960] workload
+
+[00:19:14.600] that will show how much better
+
+[00:19:18.840] slicing parts of a large string is.
+
+[00:19:24.320] And cool.
+
+[00:19:25.280] They'll go do that.
+
+[00:19:26.680] Um so, when we made slicing everything
+
+[00:19:28.800] better, how do we do this? Well, I
+
+[00:19:30.560] didn't I I mean, I had some ideas. The
+
+[00:19:32.640] reason strings were expensive is because
+
+[00:19:34.240] we were allocating a whole chunk of
+
+[00:19:35.440] memory the whole time through. And
+
+[00:19:36.440] remember, rule number one, allocate less
+
+[00:19:38.360] memory. Um and that's use the heap less.
+
+[00:19:41.640] So, when we did this, all I really did
+
+[00:19:43.360] was I told Claude to go research this.
+
+[00:19:46.000] And then, even though I have ideas and I
+
+[00:19:47.600] have biases, I actually try my best not
+
+[00:19:49.560] to bring them in. And instead, what I
+
+[00:19:51.040] have Claude do is I have Claude go
+
+[00:19:52.440] research a couple of things. Go research
+
+[00:19:54.760] every possible optimization crate in
+
+[00:19:56.520] Rust, because I'm not while I do write a
+
+[00:19:58.560] lot of Rust, I don't know everything in
+
+[00:20:00.160] Rust. I don't know every crate that
+
+[00:20:01.200] people already used. So, I had to go do
+
+[00:20:03.120] that.
+
+[00:20:04.040] I had to go understand the memory layout
+
+[00:20:05.360] of everything.
+
+[00:20:06.720] And understand the clone cost. I had to
+
+[00:20:09.120] understand the worst parts, the worst
+
+[00:20:11.120] offenders of strings in the Rust code
+
+[00:20:13.000] base.
+
+[00:20:14.000] I had to go understand like where we're
+
+[00:20:15.720] allocating too much memory that we don't
+
+[00:20:17.040] actually need.
+
+[00:20:18.200] And where we're holding onto memory. And
+
+[00:20:19.760] then, I had it go allocate I had it go
+
+[00:20:21.520] research exactly how V8
+
+[00:20:24.200] and uh it's somewhere in here.
+
+[00:20:26.320] I had to go research exactly how V8 and
+
+[00:20:28.880] Python both do string optimizations. And
+
+[00:20:31.680] for that, I have a
+
+[00:20:34.200] special thing where I have
+
+[00:20:37.000] LS
+
+[00:20:39.080] repos/CPython.
+
+[00:20:41.160] And I literally have the entire Python
+
+[00:20:43.680] library code base just downloaded onto
+
+[00:20:45.520] here. And then, I have the same thing.
+
+[00:20:47.520] >> Oh, amazing.
+
+[00:20:49.880] >> repos/V8.
+
+[00:20:52.280] And I have the entire V8 repo down here.
+
+[00:20:54.120] So, even though V8 is well documented,
+
+[00:20:55.840] even though CPython are well documented,
+
+[00:20:57.680] nothing is better than the source of
+
+[00:20:58.760] truth. So, literally just spinning up
+
+[00:21:00.320] research has to go understand exactly
+
+[00:21:01.800] how they work. Just saves me so much
+
+[00:21:04.240] time
+
+[00:21:05.280] that I don't even have to make
+
+[00:21:06.160] decisions. I don't really have to learn,
+
+[00:21:07.600] and then all I have to do is go
+
+[00:21:08.720] understand what are the trade-offs that
+
+[00:21:10.600] it's going to make.
+
+[00:21:11.920] And then once it does this, I basically
+
+[00:21:13.480] have Claude put together a giant table
+
+[00:21:16.160] of all the possible things that we
+
+[00:21:17.560] should do. And I also had to go
+
+[00:21:19.680] listen to Lua, because Lua is actually a
+
+[00:21:21.680] pretty interesting language in terms of
+
+[00:21:23.240] how it does optimizations.
+
+[00:21:25.280] And then I actually just let it run
+
+[00:21:26.560] through the
+
+[00:21:28.280] what's RPI process. And once I did the
+
+[00:21:30.160] RPI process, I did the next thing. I
+
+[00:21:32.200] spent a lot of time in design.
+
+[00:21:34.440] You know what this is?
+
+[00:21:35.000] >> Chat boxes. If you've ever seen me go do
+
+[00:21:37.360] stuff
+
+[00:21:38.360] on here, my design stage is super long.
+
+[00:21:41.760] And the reason the design stage is super
+
+[00:21:43.080] long is
+
+[00:21:44.720] I'll show you what it does.
+
+[00:21:47.160] I found some bugs in here.
+
+[00:21:50.040] Is I realized that some of the stuff
+
+[00:21:51.800] that it's actually doing is actually not
+
+[00:21:54.080] actually
+
+[00:21:55.240] perfect.
+
+[00:21:56.600] And specifically one of the mistakes
+
+[00:21:58.240] that it made was it was trying to change
+
+[00:22:00.080] how maps work in BAML to accommodate for
+
+[00:22:02.600] how
+
+[00:22:03.800] um for how like V8 does certain things,
+
+[00:22:06.360] and we didn't want to go do that.
+
+[00:22:08.280] So I had to go actually undo that and
+
+[00:22:09.880] catch that around. There's a couple and
+
+[00:22:11.760] that changed performance criteria. We
+
+[00:22:14.040] also have threading, and neither V8 nor
+
+[00:22:15.760] Python actually have true threading.
+
+[00:22:17.400] They Python uses the GIL, and V8 uses
+
+[00:22:20.320] like a single event loop on a single
+
+[00:22:21.840] worker.
+
+[00:22:23.000] >> Yep.
+
+[00:22:23.320] >> So we don't have we have slightly
+
+[00:22:25.520] different constraints that they kind of
+
+[00:22:26.720] have to work on.
+
+[00:22:29.080] And one of the And once you go down this
+
+[00:22:31.000] loop though, it actually is really easy
+
+[00:22:34.000] to have a model make some amount of
+
+[00:22:35.920] decisions
+
+[00:22:37.320] fairly I want to go show some of the
+
+[00:22:38.720] decisions that are actually useful.
+
+[00:22:40.720] To make most kinds of decisions fairly
+
+[00:22:42.880] automatically
+
+[00:22:44.200] without really being included uh in the
+
+[00:22:48.120] loop as a human.
+
+[00:22:49.680] Cuz what I have is I have a
+
+[00:22:51.440] Good.
+
+[00:22:52.040] >> Sorry, keep keep keep going. I have I
+
+[00:22:53.640] have this is I have an interesting
+
+[00:22:55.080] thought here.
+
+[00:22:55.920] >> Yeah. The main things that Remember,
+
+[00:22:58.160] because I know the principles, useless
+
+[00:22:59.640] memory,
+
+[00:23:01.000] like use better caches, all I do is I
+
+[00:23:03.760] just try and in uh uh instantiate
+
+[00:23:05.960] principles into here and like because
+
+[00:23:07.560] this is super sensitive work, I actually
+
+[00:23:09.320] do read every line of like code snippet
+
+[00:23:11.080] that Sand Dog has.
+
+[00:23:13.000] And one of the early things that has is
+
+[00:23:14.640] heart starting to hardcode variables.
+
+[00:23:16.800] If it hardcodes variables, that means
+
+[00:23:18.720] it's going to screw up later down the
+
+[00:23:20.360] line. Because if the number 70 isn't
+
+[00:23:22.360] correct, I need to change it to like 56.
+
+[00:23:24.480] Cloud will technically do that, but if
+
+[00:23:25.960] it misses one, then my performance
+
+[00:23:27.840] characteristics downstream are going to
+
+[00:23:29.280] be messed up and then during
+
+[00:23:31.120] implementation of verification, the
+
+[00:23:32.400] agent will not work.
+
+[00:23:34.280] >> So you actually designing the code
+
+[00:23:36.720] changes or you also I'm curious like cuz
+
+[00:23:39.480] my my mental model of how this might
+
+[00:23:41.080] work is sort of like, "Hey, here's a
+
+[00:23:43.000] bunch of approaches we could try."
+
+[00:23:45.680] Um, and I don't know what the actual
+
+[00:23:47.360] like correct approach is because we have
+
+[00:23:49.520] to kind of benchmark against it to see.
+
+[00:23:51.520] Are you relying on the model having
+
+[00:23:53.320] actually like an understanding like
+
+[00:23:55.880] of the exact inner workings of the VM or
+
+[00:23:58.400] are you like There's two ways you could
+
+[00:24:00.120] do this. You could do the design
+
+[00:24:00.960] discussion and you could design exactly
+
+[00:24:02.600] what you want to do
+
+[00:24:04.160] uh and then you could tell the model to
+
+[00:24:05.240] go build it or you could
+
+[00:24:07.640] design like the criteria and the
+
+[00:24:09.560] feedback loop and then include a bunch
+
+[00:24:13.320] of like things to try and then your
+
+[00:24:16.440] implementation becomes a little less of
+
+[00:24:18.240] like, "Hey, here's a specific list of
+
+[00:24:20.200] things that we're going to go do." and
+
+[00:24:21.480] it becomes a little more of like, "Hey,
+
+[00:24:23.480] cool. Here's how you're going to know if
+
+[00:24:24.680] it's working. Here's 30 different like
+
+[00:24:26.880] dimensions along which to experiment."
+
+[00:24:29.280] >> I I To be completely honest, I don't
+
+[00:24:31.560] think there's like 30 different
+
+[00:24:32.560] dimensions on which to experiment. Most
+
+[00:24:34.640] things.
+
+[00:24:36.240] >> But I don't I don't even think there are
+
+[00:24:37.280] that many. Like most things have a
+
+[00:24:39.120] well-defined problem. Very, very few
+
+[00:24:41.240] things are truly novel and require um
+
+[00:24:45.160] Of all the three that I recommended,
+
+[00:24:48.720] this one
+
+[00:24:50.480] uh
+
+[00:24:51.640] There's like there's like a secret one
+
+[00:24:54.320] here that like very few times comes up,
+
+[00:24:56.360] which is like
+
+[00:24:57.680] do different work.
+
+[00:25:00.680] >> Right. That's the novel one. That's like
+
+[00:25:02.440] the inverse square root kind of thing,
+
+[00:25:04.240] right?
+
+[00:25:04.760] >> Yeah, like you you can do this. Uh but
+
+[00:25:07.520] this is just so rare in my experience.
+
+[00:25:09.520] We've done this a couple times.
+
+[00:25:11.480] But it's just so rare that I don't
+
+[00:25:13.360] usually bring this up. And most stuff in
+
+[00:25:15.680] performance engineering can be
+
+[00:25:16.680] researched.
+
+[00:25:17.800] >> Should we talk about the fast inverse
+
+[00:25:19.680] square root as an example of that or do
+
+[00:25:21.400] you want to just do concretely like what
+
+[00:25:23.000] you did?
+
+[00:25:24.400] >> Well, we can talk about that in a
+
+[00:25:25.640] second. Uh I want to share like examples
+
+[00:25:27.800] of like the techniques that we found
+
+[00:25:29.120] very useful. So like I think if someone
+
+[00:25:31.520] is going to do some of this stuff, what
+
+[00:25:33.520] I would recommend is like if you know
+
+[00:25:35.000] how you're going to go measure this,
+
+[00:25:36.840] what I would personally do is if I have
+
+[00:25:38.320] three different ideas, like what you're
+
+[00:25:40.000] suggesting Dexter, I would actually do
+
+[00:25:41.400] three different design design
+
+[00:25:42.920] discussions.
+
+[00:25:44.560] I would spin up three different
+
+[00:25:45.560] workspaces, three different tasks that
+
+[00:25:46.920] are not polluted with each other, and
+
+[00:25:48.160] maybe have some shared context. But I
+
+[00:25:50.640] should do the complete three completely
+
+[00:25:52.840] different design discussions and spin up
+
+[00:25:54.680] three different work trees that all
+
+[00:25:56.120] build all of them.
+
+[00:25:57.600] But remember, you can't actually run all
+
+[00:25:59.520] of them in parallel on your machines
+
+[00:26:01.800] because you have to be careful about
+
+[00:26:03.040] what workloads you're running on your
+
+[00:26:04.160] machine to actually profile this.
+
+[00:26:06.440] >> Yep.
+
+[00:26:06.720] >> The best thing you can actually do to
+
+[00:26:07.920] profile is have dedicated hardware that
+
+[00:26:09.560] you're running profile tests on. That's
+
+[00:26:11.240] what we should really do.
+
+[00:26:13.000] And I'll show you my next task of why
+
+[00:26:14.720] we're doing this in a second.
+
+[00:26:16.880] But it really the trick here is like you
+
+[00:26:18.880] have to be super detail-oriented. You
+
+[00:26:20.600] actually have to go uh there's like a
+
+[00:26:22.640] bug that the LLVM made somewhere in
+
+[00:26:23.920] here.
+
+[00:26:24.880] Uh
+
+[00:26:25.640] and like I mean it was like one sentence
+
+[00:26:27.480] of a bug that changed what data
+
+[00:26:28.960] structure I was going to use, whether it
+
+[00:26:30.160] was going to be like like a locked or an
+
+[00:26:32.040] atomic.
+
+[00:26:33.840] And because of that single bug would
+
+[00:26:35.840] have changed exactly how um
+
+[00:26:39.120] the exactly how
+
+[00:26:40.880] uh how efficient it would have been.
+
+[00:26:43.600] And if we didn't do that correctly Oh
+
+[00:26:44.880] wait, here we go. There's like another
+
+[00:26:46.480] bug that we have.
+
+[00:26:48.040] Um like for example, one of the things
+
+[00:26:49.560] that we had here was if you think about
+
+[00:26:51.240] like the memory layout, we have like an
+
+[00:26:52.600] object type and the actual string type.
+
+[00:26:55.200] And the amount of memory that our object
+
+[00:26:57.000] type was taking
+
+[00:26:58.600] was I think like 70 bytes or something.
+
+[00:27:01.120] And our string Go ahead.
+
+[00:27:03.520] >> I was going to say, can can you draw
+
+[00:27:04.760] some of this? Like your your conceptual
+
+[00:27:08.440] um
+
+[00:27:08.920] >> Let me just pull up the code. It might
+
+[00:27:10.440] be easier.
+
+[00:27:11.480] >> Okay.
+
+[00:27:12.800] Also, I don't know. There's a There's a
+
+[00:27:14.080] There's a new feature I can show you,
+
+[00:27:15.480] which is like uh using HTML mock-ups
+
+[00:27:18.880] inline to like
+
+[00:27:20.240] >> Oh, zoom
+
+[00:27:21.360] in.
+
+[00:27:21.960] >> Um yeah, let's try it.
+
+[00:27:24.080] So, I mean, uh you can go to this
+
+[00:27:25.360] conversation if you have some context.
+
+[00:27:27.800] >> I have all the context here.
+
+[00:27:29.840] >> Yeah, it's like, "Hey, can you
+
+[00:27:32.240] >> But, I want to
+
+[00:27:34.080] >> Yeah.
+
+[00:27:35.840] >> Is this forking now?
+
+[00:27:37.840] >> Uh yes, you're forking from that last
+
+[00:27:40.280] user message there.
+
+[00:27:41.680] >> Can you draw what user make a
+
+[00:27:44.240] >> I'll just do this. It's fine. Can you
+
+[00:27:45.800] draw how
+
+[00:27:47.360] uh Bexter works? It's memory layout.
+
+[00:27:56.710] >> I'll give you a magic word.
+
+[00:27:56.720] >> Okay.
+
+[00:27:57.920] >> Uh use an inline HTML mock-up.
+
+[00:28:12.070] >> That cool. I'll do that.
+
+[00:28:12.080] >> Oh, so it can actually So, it can
+
+[00:28:13.160] actually do like we we
+
+[00:28:15.560] We'll We'll see how this works. We're
+
+[00:28:16.880] still tuning the actual like how do you
+
+[00:28:18.600] get it to do the thing and
+
+[00:28:20.000] >> How does it decide when to do the thing?
+
+[00:28:22.520] Um but there's a syntax that it can send
+
+[00:28:25.400] in assistant messages that is like
+
+[00:28:27.200] display an HTML image in the in the
+
+[00:28:29.880] actual stream.
+
+[00:28:31.640] >> That's cool. Okay, well, we'll see if it
+
+[00:28:33.240] if it does that. Um but while it pulls
+
+[00:28:35.480] that up
+
+[00:28:36.640] somewhere in here I have like Bexter or
+
+[00:28:38.280] something.
+
+[00:28:39.800] >> Yeah.
+
+[00:28:41.920] Bexter
+
+[00:28:42.560] >> hard to find code. I don't even know how
+
+[00:28:44.640] to find code in here.
+
+[00:28:45.880] >> Command P.
+
+[00:28:52.950] >> And then because this thing doesn't have
+
+[00:28:52.960] an L speed, it's very annoying.
+
+[00:28:55.680] Oh, there we go. Okay.
+
+[00:28:57.800] Um so one of the things that we do in
+
+[00:28:59.360] strings, so again, remember, you want to
+
+[00:29:01.280] leave use this memory hit the cache
+
+[00:29:02.680] more. So our strings are now like single
+
+[00:29:04.520] allocated immutable strings.
+
+[00:29:06.560] What that means is in languages like uh
+
+[00:29:10.200] Rust, one of the things that you can do
+
+[00:29:12.200] in your strings is you can write
+
+[00:29:13.520] something like
+
+[00:29:15.240] like
+
+[00:29:16.800] let's
+
+[00:29:18.160] let my string
+
+[00:29:21.000] and this is not real Rust code, ABC, and
+
+[00:29:24.440] then you can do my string
+
+[00:29:27.480] 0 equals A.
+
+[00:29:30.040] This is like a thing you're not allowed
+
+[00:29:31.080] to do. Strings are allowed to be mutable
+
+[00:29:32.680] and they don't work. In Python and
+
+[00:29:34.960] JavaScript and like most um
+
+[00:29:37.640] interpreted languages, you actually
+
+[00:29:38.960] can't do this. Strings become immutable.
+
+[00:29:42.000] And what happens when you actually go do
+
+[00:29:43.600] when you do like a dot concat,
+
+[00:29:47.240] uh
+
+[00:29:48.560] is you actually produce a new string
+
+[00:29:50.440] here rather than allocating to that
+
+[00:29:52.320] existing string's memory in place.
+
+[00:29:55.240] So you're not referencing the same
+
+[00:29:56.400] thing, you're actually just producing a
+
+[00:29:57.440] new string.
+
+[00:29:58.760] >> Right.
+
+[00:29:58.960] >> One of the things that we do here is and
+
+[00:30:00.760] similarly when you do a slice, my string
+
+[00:30:03.600] >> the pointer to point to the new object,
+
+[00:30:05.480] basically.
+
+[00:30:06.280] >> Yeah. Like if you do a slice of the
+
+[00:30:08.000] string, let's say like this goes on for
+
+[00:30:09.680] like like 100 more characters,
+
+[00:30:12.600] if you like the first five characters of
+
+[00:30:14.560] the string,
+
+[00:30:15.960] now what this means is if this is
+
+[00:30:17.280] immutable, instead of actually copying
+
+[00:30:19.120] the string and copying the first five
+
+[00:30:20.720] characters over,
+
+[00:30:22.200] you can actually just
+
+[00:30:23.880] say, "Nope, we'll just remember the
+
+[00:30:25.960] number of how many characters we have
+
+[00:30:28.080] and keep the same pointer, so we're only
+
+[00:30:30.280] we're really not duplicating the string
+
+[00:30:32.680] over and over again."
+
+[00:30:33.800] >> This is very like C-like, right? Where
+
+[00:30:35.640] you just you store it as like the
+
+[00:30:37.120] pointer to the wherever the first
+
+[00:30:38.520] character is in memory and then and know
+
+[00:30:40.240] the length.
+
+[00:30:41.480] >> Exactly. So this is actually actually
+
+[00:30:43.360] exactly how uh
+
+[00:30:45.520] V8 and Python all work.
+
+[00:30:48.280] But again, once I did the research and I
+
+[00:30:50.040] was able to go confirm all this, then we
+
+[00:30:52.440] basically just went through and were
+
+[00:30:53.480] able to say, "Okay, well, there's a nice
+
+[00:30:54.840] little optimization we can do, which is
+
+[00:30:56.560] for strings that are super short, we
+
+[00:30:58.480] actually don't allocate them on the
+
+[00:30:59.680] heap, we just allocate them onto a stack
+
+[00:31:01.440] with whatever capacity we have left in
+
+[00:31:03.120] this array."
+
+[00:31:04.440] For strings that are big, they're like
+
+[00:31:05.920] heap allocated. For slices,
+
+[00:31:08.720] they point to an original string, but
+
+[00:31:10.960] then they tell us exactly what the
+
+[00:31:12.120] offset and the length of the slices. So,
+
+[00:31:14.240] it kind of looks like a slice.
+
+[00:31:17.120] Uh and then we also keep a hash around.
+
+[00:31:19.160] We'll talk about why we keep the hash
+
+[00:31:20.320] around. Concatenation is kind of
+
+[00:31:21.840] similar. Instead of actually
+
+[00:31:23.320] concatenating a string at any given
+
+[00:31:25.240] time,
+
+[00:31:26.680] what we actually do is we just say a
+
+[00:31:28.720] concatenation is just a thing that
+
+[00:31:30.560] points to two different strings.
+
+[00:31:35.030] >> Oh, interesting.
+
+[00:31:35.040] >> then and then at any point if you ever
+
+[00:31:37.680] access them, then we'll convert it from
+
+[00:31:39.880] a like a writable access,
+
+[00:31:42.880] then we'll convert it from a deferred
+
+[00:31:44.280] string to an to an actual allocated
+
+[00:31:46.040] string.
+
+[00:31:48.160] >> Fascinating.
+
+[00:31:48.640] >> And then did you get this from V8 or
+
+[00:31:51.000] Python or is this like an old
+
+[00:31:52.600] >> this
+
+[00:31:53.920] V8 also does this, but not as nicely
+
+[00:31:56.040] because we're in in C. We're running in
+
+[00:31:57.880] Rust, so we can do something a lot less
+
+[00:31:59.680] a little bit more performance
+
+[00:32:01.640] and not not.
+
+[00:32:02.800] >> Nice.
+
+[00:32:03.560] >> And then the hash trick was actually
+
+[00:32:05.160] something that I just directly copied
+
+[00:32:06.520] from V8. That was really clever. So,
+
+[00:32:08.480] strings are expensive to hash,
+
+[00:32:10.040] especially big strings, it becomes an
+
+[00:32:11.880] O(n) operation. If you store the hash,
+
+[00:32:14.360] that's only after usage, it becomes an
+
+[00:32:16.600] O(1) operation.
+
+[00:32:19.440] So, it's just really convenient to go do
+
+[00:32:20.880] this. So, you get like a lazy hash.
+
+[00:32:23.720] >> This is using more caches.
+
+[00:32:26.480] >> This is using more caches. Well,
+
+[00:32:28.280] >> And hash is really useful cuz you need
+
+[00:32:30.480] it to build as like if you're using
+
+[00:32:32.400] strings as map keys, you need you need
+
+[00:32:34.160] that hash.
+
+[00:32:35.440] >> Yeah, exactly. If you want to do like
+
+[00:32:37.040] string comparison, the hash is a great
+
+[00:32:38.560] comparison mechanism. It's like it's
+
+[00:32:40.720] basically like a really fast way to do
+
+[00:32:42.640] all sorts of things on strings and in a
+
+[00:32:44.840] language in a world where we use prompts
+
+[00:32:46.720] as all sorts of things, every single
+
+[00:32:48.080] microsecond counts.
+
+[00:32:50.040] So, you get like just way faster
+
+[00:32:51.800] speed-ups.
+
+[00:32:53.000] >> On that I don't think that
+
+[00:32:54.160] >> worked.
+
+[00:32:58.630] Did it work?
+
+[00:32:58.640] >> I put another prompt in the chat that
+
+[00:33:00.200] you should grab instead.
+
+[00:33:02.360] In the public chat.
+
+[00:33:05.240] >> Okay.
+
+[00:33:06.080] So, hopefully this kind of helps explain
+
+[00:33:09.000] kind of like what the
+
+[00:33:11.000] what the trade-offs here are and how we
+
+[00:33:12.360] did performance optimization for
+
+[00:33:13.520] strings. Basically, build a really good
+
+[00:33:15.960] data set and build really good
+
+[00:33:17.560] representative workloads.
+
+[00:33:19.520] Build a quick eval suite that systems
+
+[00:33:22.120] can run on.
+
+[00:33:23.400] Understand that you can't actually like
+
+[00:33:25.120] multitask performance unless you have
+
+[00:33:26.840] dedicated hardware.
+
+[00:33:28.880] Um and then
+
+[00:33:30.840] then just read really, really carefully
+
+[00:33:33.040] and keep on asking Claude to explain
+
+[00:33:35.200] other state-of-the-art that is already
+
+[00:33:37.480] doing certain things so you don't have
+
+[00:33:38.680] to reinvent everything on the fly and
+
+[00:33:40.200] you have Claude as a really good
+
+[00:33:41.280] reference example behind the scenes.
+
+[00:33:44.680] So, that's basically the TLDR. Now, I
+
+[00:33:46.640] think there's another thing while this
+
+[00:33:48.000] is running.
+
+[00:33:49.240] >> Yep.
+
+[00:33:49.520] >> That's worth thinking about. So, once I
+
+[00:33:50.760] did this
+
+[00:33:52.280] the next thing I realized is holy cow,
+
+[00:33:54.840] this is not going to work.
+
+[00:33:56.600] So, we actually just want to build a
+
+[00:33:57.520] profiler
+
+[00:33:58.760] um into the language itself.
+
+[00:34:00.920] >> So, you don't have to like run these
+
+[00:34:02.520] slow ass like black box benchmarks.
+
+[00:34:05.480] >> Exactly. Cuz if I can build a profiler
+
+[00:34:07.280] into the language itself, then I can go
+
+[00:34:08.720] do this. So, again, how did I go do
+
+[00:34:10.360] this? I didn't actually build a
+
+[00:34:11.399] profiler. I This is again comes from
+
+[00:34:13.480] like a background Claude discussion that
+
+[00:34:15.360] I had that took like an hour and a half.
+
+[00:34:17.760] I had to go look at my existing
+
+[00:34:19.120] architecture and actually like draw
+
+[00:34:20.200] things out to go explain things.
+
+[00:34:22.720] And then I basically just told it it's
+
+[00:34:24.240] like the rules are I want to have zero
+
+[00:34:26.200] allocations.
+
+[00:34:27.560] Like I basically don't want to have any
+
+[00:34:28.919] allocations that are ever happening
+
+[00:34:30.200] unless I really need to and I to
+
+[00:34:31.520] serialize things.
+
+[00:34:33.120] >> Inside the inside the profiler itself?
+
+[00:34:36.679] >> Exactly.
+
+[00:34:37.840] I want to have no overhead when I'm
+
+[00:34:39.399] disabling this. Effectively no overhead.
+
+[00:34:41.639] Like I'm okay with like half a
+
+[00:34:43.560] nanosecond, but effectively no overhead.
+
+[00:34:46.800] Um I want to make sure that like nothing
+
+[00:34:48.480] is ever in the hot path is ever being
+
+[00:34:50.440] blocked. And then I want to make sure
+
+[00:34:51.879] that like no um
+
+[00:34:53.800] yeah, we don't have like a limit of like
+
+[00:34:55.200] how much of a stack depth we want to be
+
+[00:34:56.720] able to track infinite call stacks all
+
+[00:34:58.440] the way through it. And it's we want it
+
+[00:34:59.680] to still be fast.
+
+[00:35:01.400] And then I
+
+[00:35:02.480] I did all of this uh and I did a lot of
+
+[00:35:04.000] research here ahead of time.
+
+[00:35:06.080] Then even after this, where's my ticket?
+
+[00:35:08.800] Oops.
+
+[00:35:10.800] There's one more ticket that I Oh, this
+
+[00:35:12.720] is actually comes from a separate work
+
+[00:35:14.240] item. Let me open this.
+
+[00:35:23.230] After all this work, I had a This is a
+
+[00:35:23.240] much shallower ticket. I I left a note
+
+[00:35:25.480] for it. I have a CPython and V8
+
+[00:35:27.080] available in these places.
+
+[00:35:29.280] So then I made it do a bunch of
+
+[00:35:30.520] research.
+
+[00:35:31.760] Um and and there's initial research
+
+[00:35:33.400] actually for whatever reason refused to
+
+[00:35:34.920] look at C8 and Python. So I made it stop
+
+[00:35:37.640] and I said, "Actually go look up V8 and
+
+[00:35:39.600] Python and go look up exactly what they
+
+[00:35:41.280] do."
+
+[00:35:42.480] After it did that,
+
+[00:35:44.320] uh it produced a design discussion.
+
+[00:35:46.560] Um and then after it produced a design
+
+[00:35:47.960] discussion, you'll notice this one is
+
+[00:35:49.120] really short
+
+[00:35:50.560] because I kind of wanted the research
+
+[00:35:51.920] prompt as my basis here because again
+
+[00:35:53.440] I'm doing a lot more research here than
+
+[00:35:55.080] I am actual work. So this is where it's
+
+[00:35:57.280] like a little bit fuzzy how you have to
+
+[00:35:58.760] use these AI tools.
+
+[00:36:00.440] So I went back to the research prompt
+
+[00:36:02.960] and I actually made it iterate with me
+
+[00:36:04.600] for a long time. I actually fed the
+
+[00:36:07.040] design doc into it
+
+[00:36:09.040] as an input.
+
+[00:36:10.400] And once I had enough context and enough
+
+[00:36:12.600] trust about the system,
+
+[00:36:14.560] and the model got a lot of things wrong
+
+[00:36:17.040] uh because this was even more sensitive
+
+[00:36:19.000] than the string work. There's not that
+
+[00:36:20.600] much work that replicates this.
+
+[00:36:23.360] Uh this is somewhat novel because what
+
+[00:36:25.480] is expensive
+
+[00:36:27.000] I'll give everyone
+
+[00:36:28.640] a quick little primer.
+
+[00:36:31.080] The way Python works is
+
+[00:36:34.200] Python basically says whenever you call
+
+[00:36:36.880] a function and you call the call
+
+[00:36:38.400] function instruction
+
+[00:36:40.160] you pass in a few parameters to it like
+
+[00:36:42.240] the function name and the args and
+
+[00:36:43.680] whatever. Function name, args,
+
+[00:36:46.560] etc.
+
+[00:36:48.720] And I'll show you something interesting
+
+[00:36:49.600] about what Python does.
+
+[00:36:51.280] When you actually call a function, it
+
+[00:36:52.760] actually replaces the call function
+
+[00:36:54.480] instruction at runtime with a
+
+[00:36:57.640] call function instrumented.
+
+[00:37:01.240] >> Huh.
+
+[00:37:02.440] >> And this thing is slow. So there's
+
+[00:37:04.000] basically
+
+[00:37:05.320] it doesn't wrap it. It's a totally
+
+[00:37:06.600] different instruction.
+
+[00:37:08.280] So there's like Python bytecode that's
+
+[00:37:10.040] kind of doing this stuff and like
+
+[00:37:11.200] there's a int fetch instruction that's
+
+[00:37:13.080] called call function.
+
+[00:37:14.600] When you set a thing that's like
+
+[00:37:17.320] the sys.set
+
+[00:37:20.200] uh tracing or something, set uh tra- I
+
+[00:37:23.640] forgot the exact name.
+
+[00:37:25.040] >> Yeah.
+
+[00:37:25.280] >> go do this, it finds your Python
+
+[00:37:26.920] bytecode that you wrote.
+
+[00:37:28.840] It saves it in a different memory
+
+[00:37:30.720] location. Says, "Hey, this function now
+
+[00:37:32.360] actually just this op code now points to
+
+[00:37:34.320] this op code instead."
+
+[00:37:36.720] So this is why Python tracing can give
+
+[00:37:38.880] you extremely rich detail, like exactly
+
+[00:37:41.240] what line of code you're running.
+
+[00:37:43.480] And every other ounce of detail on it.
+
+[00:37:46.440] But it also adds a 100x delay on how
+
+[00:37:49.880] much slower it is than the regular call
+
+[00:37:51.440] function.
+
+[00:37:52.720] >> Oh, no.
+
+[00:37:53.240] >> So it's extremely rich. But 100 times
+
+[00:37:55.320] slower.
+
+[00:37:56.880] So that's obviously bad for various
+
+[00:37:59.640] reasons.
+
+[00:38:00.680] Um JavaScript has a totally different
+
+[00:38:02.560] system. So this has extremely high
+
+[00:38:04.280] coverage and you can build really
+
+[00:38:05.680] interesting tooling on it, like what
+
+[00:38:07.360] line of code is slow in my code.
+
+[00:38:10.360] Uh in JavaScript's code base is actually
+
+[00:38:12.160] totally separate. JavaScript code base
+
+[00:38:13.920] and JavaScript is
+
+[00:38:15.360] like V8 is incredibly amazing beast cuz
+
+[00:38:17.920] it does things like jit and a whole
+
+[00:38:19.240] bunch of other stuff.
+
+[00:38:21.000] Actually it something else. Uh there's
+
+[00:38:22.480] also like some other trampoline stuff
+
+[00:38:24.160] that it does here to
+
+[00:38:25.680] help uh sysprofiles work.
+
+[00:38:28.520] What JavaScript says is, "Hey, instead
+
+[00:38:30.120] of actually doing this,
+
+[00:38:31.640] I'm just going to have a sample thread
+
+[00:38:38.590] that runs like at let's say one every 1
+
+[00:38:38.600] millisecond
+
+[00:38:40.080] and just probes at the call stack in a
+
+[00:38:42.040] really safe way and just like copies and
+
+[00:38:44.040] pastes it in a good way.
+
+[00:38:47.160] So, while this is extremely expensive,
+
+[00:38:49.280] this is much, much cheaper and they've
+
+[00:38:51.040] done a lot of memory optimizations to
+
+[00:38:52.560] not have to copy everything under the
+
+[00:38:54.280] hood. What this does mean though is in
+
+[00:38:56.280] practice you can miss some functions
+
+[00:38:57.880] that you might be calling and not have
+
+[00:38:59.280] really clear understanding of this.
+
+[00:39:02.080] Uh and again, both of these work for
+
+[00:39:03.800] various constraints, but the primary
+
+[00:39:05.440] constraint that both these come with is
+
+[00:39:06.920] that they're all single-threaded
+
+[00:39:08.040] systems.
+
+[00:39:10.240] And if you want to have extremely high
+
+[00:39:11.880] coverage while doing really good
+
+[00:39:13.880] profiling, you kind of need to be really
+
+[00:39:15.600] detailed. So, this is kind of where I
+
+[00:39:16.960] found that like handling that event
+
+[00:39:20.080] coming in loses a lot of context
+
+[00:39:23.040] because we're not a single-threaded
+
+[00:39:24.240] system.
+
+[00:39:25.880] So, in this workload I actually had no
+
+[00:39:27.480] choice
+
+[00:39:28.640] but to actually go incredibly deep and
+
+[00:39:30.600] just like have it actually like
+
+[00:39:33.120] uh I'll show you where where can I show
+
+[00:39:34.400] this?
+
+[00:39:35.360] I have some chat items.
+
+[00:39:37.360] Um
+
+[00:39:38.480] like for example, like it just this was
+
+[00:39:40.280] me typing it like 10 hours ago. So, like
+
+[00:39:43.640] at 12:56 I was slightly delirious when
+
+[00:39:46.200] I'm typing.
+
+[00:39:47.440] As you can tell over here.
+
+[00:39:50.000] Um but the cloud literally understands
+
+[00:39:51.480] it pretty well.
+
+[00:39:52.800] I literally have to be like, "Hey,
+
+[00:39:54.600] yeah, this is not even close." I
+
+[00:39:56.000] literally have to be like, "Oh, this is
+
+[00:39:57.440] this even going to work for virtual
+
+[00:39:58.560] threads?" Um it doesn't because
+
+[00:40:01.720] the data it's storing assumes like a
+
+[00:40:03.280] single thread.
+
+[00:40:05.120] >> Oops.
+
+[00:40:05.720] >> So, once it caught that it was like,
+
+[00:40:07.400] "Oh, yeah, it won't actually work for
+
+[00:40:08.640] this." And then it was like, "Oh, here's
+
+[00:40:09.960] the core difference." And it started
+
+[00:40:11.040] going to this. But like the key part
+
+[00:40:12.360] here is you don't actually have to know
+
+[00:40:13.480] all the details. You have to catch just
+
+[00:40:15.120] key things that are going to mess it up
+
+[00:40:16.560] completely.
+
+[00:40:18.640] >> Yeah, this is a really interesting like
+
+[00:40:20.480] you're demonstrating really interesting
+
+[00:40:21.640] concept that I'm like I've been trying
+
+[00:40:23.480] to
+
+[00:40:24.600] um
+
+[00:40:25.640] like articulate recently
+
+[00:40:28.960] um
+
+[00:40:29.600] which is like comes from the core of
+
+[00:40:31.840] like 12 factor agents and and all this
+
+[00:40:33.840] stuff which is like LLMs are really good
+
+[00:40:35.880] at turning
+
+[00:40:37.240] one type of data into another type of
+
+[00:40:39.040] data. Whether it's like a string user
+
+[00:40:40.760] message and turning it into structured
+
+[00:40:42.480] output for formatting whether it's
+
+[00:40:44.440] taking a bunch of information and
+
+[00:40:46.000] summarizing it down whether it's taking
+
+[00:40:48.400] a couple ideas and turning it in blowing
+
+[00:40:50.960] it up into a big slop shitty Twitter
+
+[00:40:53.000] article. Like whatever it is it's like
+
+[00:40:55.280] agents are just like data reformatters
+
+[00:40:58.000] and so in any prompt to an LLM you're
+
+[00:41:00.800] basically taking like the information
+
+[00:41:03.000] that's in the weights which for a
+
+[00:41:04.360] generic agent is like the entire
+
+[00:41:06.600] internet
+
+[00:41:07.680] plus the user's prompt and then it's
+
+[00:41:09.840] going to and maybe some like context
+
+[00:41:11.600] you're injecting like memories or rag or
+
+[00:41:13.480] whatever it is and it's going to
+
+[00:41:15.000] transform according to your prompt and
+
+[00:41:17.200] the input context and the weights is
+
+[00:41:19.360] going to like transform that into
+
+[00:41:21.120] something else. Whether it's structured
+
+[00:41:23.080] or unstructured whether it's a summary
+
+[00:41:24.680] or an expansion uh and I think we do the
+
+[00:41:27.680] same thing with coding agents. I use a
+
+[00:41:29.520] phrase like agents are basically code
+
+[00:41:31.120] rotators where you take the weights
+
+[00:41:33.480] which is the entire internet plus a
+
+[00:41:35.800] bunch of like information that is built
+
+[00:41:37.880] into it in the like sweet bench RL
+
+[00:41:40.200] torment nexus. So it's like basically
+
+[00:41:42.760] you take the entire internet and then
+
+[00:41:44.600] you take like Django and Redis and some
+
+[00:41:46.280] other really big code bases and then you
+
+[00:41:48.360] take your prompt and you take what code
+
+[00:41:50.560] did the agent find and then you wrote in
+
+[00:41:53.280] your code base. So it's like taking your
+
+[00:41:54.960] patterns or in your case you're taking
+
+[00:41:56.560] code from other VMs and other programs
+
+[00:41:59.120] and you're taking that and then you're
+
+[00:42:00.800] rotating it into fit into the target
+
+[00:42:03.440] place which is like code for your VM.
+
+[00:42:06.400] >> Yep. And like
+
+[00:42:08.240] models are phenomenal at this but
+
+[00:42:10.080] they're only going to be as good as like
+
+[00:42:12.080] the key decisions that you can make. So
+
+[00:42:13.680] like in a high-risk task like this one,
+
+[00:42:16.480] you just have to be able to find these
+
+[00:42:17.920] key things. Like I may not know
+
+[00:42:19.520] everything about how like
+
+[00:42:21.720] Rust async works all down to the
+
+[00:42:23.720] nitty-gritty of how Rust actually like
+
+[00:42:25.200] schedules like specific uh
+
+[00:42:28.120] like hardware instruction or like a some
+
+[00:42:29.600] instructions cuz like I just haven't
+
+[00:42:31.040] spent time on that yet. But I do know
+
+[00:42:32.920] roughly the fact that we're
+
+[00:42:34.080] multi-threaded. I know that we have
+
+[00:42:35.480] virtual threads and I know we're not
+
+[00:42:36.880] pinned to OS threads. So I need to make
+
+[00:42:38.760] sure the VM can actually recognize this
+
+[00:42:40.360] and go find out what it does. And once
+
+[00:42:42.120] it shows me this diagram,
+
+[00:42:44.320] I actually have really high confidence
+
+[00:42:46.280] that it understood the problem that we
+
+[00:42:47.800] have.
+
+[00:42:49.120] And once I understand this, it's like
+
+[00:42:50.560] great. I I may not even read everything
+
+[00:42:53.240] at the same time.
+
+[00:42:54.800] Um I'm even okay and then obviously like
+
+[00:42:56.640] Windows is a whole different ballgame.
+
+[00:42:58.160] That's like totally messed up for
+
+[00:42:59.600] different reasons.
+
+[00:43:00.880] Uh and same with WASM and everything
+
+[00:43:02.240] else. But I don't actually have to read
+
+[00:43:03.720] all this. I just kind of need to
+
+[00:43:04.720] understand this and really think
+
+[00:43:06.160] carefully about like how does it do
+
+[00:43:07.480] this? And once it does this,
+
+[00:43:10.080] I actually need to say
+
+[00:43:11.760] uh like right over here, I found another
+
+[00:43:13.000] thing.
+
+[00:43:14.160] I was like, oh. And this is like a
+
+[00:43:15.560] really subtle thing. And again, I'm
+
+[00:43:16.800] typing it like the middle of the night
+
+[00:43:17.960] so like my brain is uh very very
+
+[00:43:19.840] limited. Um but luckily I can do this
+
+[00:43:22.440] now. I used to not be able to code that
+
+[00:43:24.080] late, but now I can. And how did I know
+
+[00:43:25.440] this? Well, I looked at this code.
+
+[00:43:27.680] Uh not this one.
+
+[00:43:29.000] Uh
+
+[00:43:30.040] one of these codes. I looked at this
+
+[00:43:32.680] Where did it go?
+
+[00:43:34.080] I looked at one of these code snippets.
+
+[00:43:37.040] And like what I do is while it's
+
+[00:43:38.200] generating the next thing, I just looked
+
+[00:43:39.320] at this code and I was like, hey.
+
+[00:43:41.840] This thing is a pretty big array on the
+
+[00:43:44.480] stack. So that likely means that it's
+
+[00:43:46.560] going to be heap allocated. And every
+
+[00:43:48.680] time this is heap allocated,
+
+[00:43:50.760] uh that means that this is going to be
+
+[00:43:52.920] an expensive allocation. Because max
+
+[00:43:54.760] stack depth, like how big do you think a
+
+[00:43:56.160] stack can get? It's like 50,000
+
+[00:43:57.800] elements.
+
+[00:43:59.000] Like you don't want that on your stack
+
+[00:44:00.320] even if you do cuz it's going to blow
+
+[00:44:01.520] out every it's going to blow out your
+
+[00:44:02.760] whole cache even if you do this.
+
+[00:44:05.280] So what we need to be careful about is
+
+[00:44:06.680] like I don't think that this should be
+
+[00:44:07.880] allocated every single time I call this
+
+[00:44:09.920] function. This should be a single
+
+[00:44:11.080] allocation once for the lifetime of the
+
+[00:44:12.920] thread.
+
+[00:44:14.000] Like, this is a worker thread that comes
+
+[00:44:15.760] up every single time, so I should not
+
+[00:44:17.000] reallocate this again.
+
+[00:44:18.840] And this is just me staring at this. So,
+
+[00:44:20.600] once I decide that, while the while all
+
+[00:44:22.480] this stuff is happening, I just went
+
+[00:44:24.040] back and stared at it and I was like,
+
+[00:44:25.080] "Okay, cool. Let me just tell you that."
+
+[00:44:27.000] >> This is so crazy. It's like one like
+
+[00:44:29.840] >> one line of code
+
+[00:44:30.520] >> practically typed late-night prompt is
+
+[00:44:33.240] the difference between good and bad. And
+
+[00:44:35.920] it's like, "Okay, cool. So, like the AI
+
+[00:44:38.440] models are really good at certain
+
+[00:44:39.760] things." And I'm I'm just curious like,
+
+[00:44:42.120] if you weren't sitting there driving
+
+[00:44:44.080] this, what would have happened? Like,
+
+[00:44:46.240] would this have just ended up in a dead
+
+[00:44:47.720] end? Like
+
+[00:44:49.320] >> Yeah, cuz it would it would do all the
+
+[00:44:50.760] work and then I'd measure and I'm like,
+
+[00:44:52.000] "Oh, it's not faster." So, you can
+
+[00:44:54.040] actually do that with these pro
+
+[00:44:55.240] programs. You can't just be like, "Oh,
+
+[00:44:56.480] it's not faster." and say that's good
+
+[00:44:57.720] enough. You actually have to go ahead
+
+[00:44:59.320] and spend time like reading some of this
+
+[00:45:01.040] code when you're doing performance
+
+[00:45:02.280] engineering work.
+
+[00:45:03.760] And that's why like Jared, you'll notice
+
+[00:45:05.440] when he talks about like Bun and all the
+
+[00:45:06.680] stuff he does, he still reads a lot of
+
+[00:45:08.040] PRs.
+
+[00:45:09.360] It's because this stuff is super
+
+[00:45:11.040] sensitive to like data races. It's super
+
+[00:45:13.200] sensitive to like seg-faulting. It's
+
+[00:45:15.000] super sensitive to like not being
+
+[00:45:16.400] performant cuz of one line of code.
+
+[00:45:22.870] So, when we go
+
+[00:45:22.880] it did a bunch of work over here. And
+
+[00:45:24.600] then what's interesting is as it did all
+
+[00:45:26.400] this, it's so and like I literally like
+
+[00:45:29.520] And again, do I trust this?
+
+[00:45:31.680] Like, probably
+
+[00:45:33.600] is my intuition. But, the important part
+
+[00:45:36.040] is now that I've primed it to think
+
+[00:45:37.400] about allocations, I trust this.
+
+[00:45:39.640] And then I literally and then it starts
+
+[00:45:41.160] to research how V8 does it and I'm like,
+
+[00:45:42.440] "Great. Now I know what data sets it's
+
+[00:45:44.120] referring to and its context window when
+
+[00:45:46.040] it does this." So, I have again, higher
+
+[00:45:48.080] confidence that it's good, but not
+
+[00:45:49.560] perfect.
+
+[00:45:51.240] And then when it actually does this, I
+
+[00:45:52.600] do a
+
+[00:45:54.360] uh I do another thing and I'm like,
+
+[00:45:55.840] "Okay. Well, one of the mistakes that it
+
+[00:45:57.880] made was let's just track call stacks."
+
+[00:46:00.760] And it started tracking only 12 call
+
+[00:46:02.760] stacks in here.
+
+[00:46:04.600] Um there's somewhere in here. It was
+
+[00:46:06.040] like I'll only track I think it may it
+
+[00:46:08.280] made a content of this. I was like, oh
+
+[00:46:11.040] it will only track 12 call 12 frames
+
+[00:46:14.000] like 12 call stacks.
+
+[00:46:15.760] is two wins and like
+
+[00:46:17.920] if the stack is deeper than 12, truncate
+
+[00:46:19.800] it. I'm like, what? You can't just
+
+[00:46:20.840] truncate Like it just made a totally
+
+[00:46:22.960] incorrect assumption this one line. 12
+
+[00:46:25.040] is enough for 99% of animal stacks in
+
+[00:46:27.057] >> [laughter]
+
+[00:46:27.160] >> It's not enough. Like it
+
+[00:46:33.310] You know, I was just like You So you can
+
+[00:46:33.320] see how if you miss
+
+[00:46:34.280] >> my part.
+
+[00:46:35.800] >> You can see how if you miss something
+
+[00:46:37.760] really
+
+[00:46:39.040] really detailed in the work, it can make
+
+[00:46:41.000] something really foundationally
+
+[00:46:42.280] incorrect. And I think performance
+
+[00:46:44.240] engineering is one of the few places
+
+[00:46:45.960] where this stuff pops up really easily.
+
+[00:46:50.200] This happens in every single ounce of
+
+[00:46:52.720] software engineering with AI. It has one
+
+[00:46:54.640] or two sentences that are just subtly
+
+[00:46:56.240] wrong.
+
+[00:46:57.320] And most of the time it doesn't matter.
+
+[00:46:59.360] But I think that's why we see more and
+
+[00:47:00.880] more slop everywhere. And then in
+
+[00:47:02.880] performance and and I ship slop too. I'm
+
+[00:47:04.680] guilty of this too. But in performance
+
+[00:47:06.440] engineering, I'm like super mentally
+
+[00:47:08.000] aware.
+
+[00:47:09.200] Uh even though even though my brain is
+
+[00:47:11.000] clearly can't type correctly, but at
+
+[00:47:12.680] least I'm super mentally aware of
+
+[00:47:13.960] looking for certain things that I know
+
+[00:47:15.400] are problematic.
+
+[00:47:17.960] And then once I did this, I was like it
+
+[00:47:19.360] was like, yes, recursive JSON
+
+[00:47:20.720] serialization nested objects is easily
+
+[00:47:22.440] 50 to 200 call stacks.
+
+[00:47:24.360] Like super trivially possible.
+
+[00:47:26.520] >> Yeah.
+
+[00:47:27.600] >> Um
+
+[00:47:28.680] So then I actually went through and did
+
+[00:47:29.960] the right thing. Good.
+
+[00:47:31.600] >> I'd be I'd be really interested to also
+
+[00:47:34.200] see the like HTML like drawing of like
+
+[00:47:37.720] draw me like a history of how this
+
+[00:47:39.680] design evolved over time.
+
+[00:47:41.640] >> Yeah, let's do it.
+
+[00:47:43.120] >> Um
+
+[00:47:45.240] And just you can use this like and show
+
+[00:47:47.080] it to me as a task artifact.
+
+[00:47:50.880] Yeah, how this design evolved over time.
+
+[00:48:05.310] Alt over time.
+
+[00:48:05.320] Show Yeah.
+
+[00:48:06.240] >> Uh
+
+[00:48:06.920] >> Yep, exactly. Perfect.
+
+[00:48:08.520] >> I hope. And there's a lot of work I did
+
+[00:48:10.560] in here, but eventually you guys have
+
+[00:48:12.120] seen this technique before. What I do is
+
+[00:48:14.160] I'll often write I'll take all this
+
+[00:48:16.320] learnings and everything I have. I had
+
+[00:48:18.000] it separately research how V8 and
+
+[00:48:19.800] everything works and I started writing
+
+[00:48:20.960] tickets.
+
+[00:48:22.080] I started writing a whole new ticket
+
+[00:48:23.440] from scratch. As for my
+
+[00:48:25.080] >> Yep. ticket until I was pretty happy
+
+[00:48:26.680] with it.
+
+[00:48:28.280] And like this one is way more detailed,
+
+[00:48:29.800] but then I noticed like
+
+[00:48:31.560] firstly did some weird segmentation with
+
+[00:48:33.440] V1 V2. So then I was like that's
+
+[00:48:35.640] completely garbage. I want like a pure
+
+[00:48:37.120] ticket.
+
+[00:48:38.360] Uh and then it was like
+
+[00:48:39.680] >> You'll figure out the like slicing of
+
+[00:48:42.280] milestones later basically.
+
+[00:48:44.040] >> Exactly. I don't want to deal with this.
+
+[00:48:44.920] I want to do everything. And then I'm
+
+[00:48:46.560] had to go do all of this. Um
+
+[00:48:49.560] I had actually now it actually
+
+[00:48:50.600] summarized why V8 doesn't actually work,
+
+[00:48:52.240] what's problematic with it, etc. etc.
+
+[00:48:55.080] I had some architecture diagram, but
+
+[00:48:56.480] this even had some more problems.
+
+[00:48:58.720] So then eventually I actually I did
+
+[00:48:59.920] another set of conversations that I
+
+[00:49:01.600] actually built ticket for. And ticket
+
+[00:49:02.920] four is actually quite good.
+
+[00:49:04.600] Um and it it should I think lead to a
+
+[00:49:06.920] good actual work task. So then I took
+
+[00:49:09.880] this ticket.
+
+[00:49:12.000] >> And that was the seed for your next
+
+[00:49:13.760] task.
+
+[00:49:18.990] >> Uh we're actually like okay, now that I
+
+[00:49:19.000] have this ticket, now let's go ahead and
+
+[00:49:20.520] put together a real ticket to make it
+
+[00:49:22.240] actually work.
+
+[00:49:22.840] >> Let's Let's see if that one produced. I
+
+[00:49:24.760] think it did finish making the making
+
+[00:49:26.680] the visualization, right?
+
+[00:49:29.760] >> Oh, that's kind of cool.
+
+[00:49:31.160] >> so it looks like All right, let's see.
+
+[00:49:32.680] You can full screen this.
+
+[00:49:38.830] >> So yeah, this actually like this
+
+[00:49:38.840] probably a better description than
+
+[00:49:39.840] anything I did. This is really cool
+
+[00:49:40.720] texture.
+
+[00:49:41.440] >> I was going to say this is like instead
+
+[00:49:42.600] of making you Excalidraw the whole
+
+[00:49:44.000] thing, I'll bet Claude can draw it.
+
+[00:49:45.800] >> Yeah, exactly. And it will do a better
+
+[00:49:47.200] job. And you can This is kind of cool.
+
+[00:49:49.560] This actually It you exactly kind of the
+
+[00:49:51.040] differences we made.
+
+[00:49:53.280] Uh let me see if I can describe this.
+
+[00:49:54.800] And it shows you like the four types of
+
+[00:49:56.000] strings where like a string short
+
+[00:49:57.680] strings are basically allocated directly
+
+[00:49:59.520] in the stack. There's no heap
+
+[00:50:00.640] allocation.
+
+[00:50:02.160] Substring views are basically a parent
+
+[00:50:04.280] plus offset and um length over here.
+
+[00:50:08.400] Immutable strings are basically pointers
+
+[00:50:10.360] and they're ref counted all the way
+
+[00:50:11.320] down. So, clones are cheap.
+
+[00:50:13.560] And then concatenation strings are
+
+[00:50:14.720] either like
+
+[00:50:16.400] either they're a copy and paste of a
+
+[00:50:17.960] back string, so one of these four
+
+[00:50:19.600] variants, or they're actually allocated
+
+[00:50:21.600] right in place.
+
+[00:50:22.880] >> Yep.
+
+[00:50:23.880] >> And actually talks about like where the
+
+[00:50:25.840] performance winner happens as well,
+
+[00:50:27.280] which is kind of nice. This is actually
+
+[00:50:28.640] really cool.
+
+[00:50:30.160] >> Yeah. We've been doing this a lot. This
+
+[00:50:31.840] is also also like I know you don't do a
+
+[00:50:34.240] lot of UI work, but we're also using
+
+[00:50:35.840] these in a lot of places. It's like
+
+[00:50:37.280] instead of going and writing a bunch of
+
+[00:50:38.680] react like just like align visually with
+
+[00:50:41.640] me. Show me what we think the UI is
+
+[00:50:43.080] going to look like before we actually as
+
+[00:50:44.760] part of the design discussion.
+
+[00:50:46.200] >> This is actually really cool. Uh
+
+[00:50:48.000] this is actually really cool.
+
+[00:50:49.680] >> Yeah. We like this. This is uh yeah,
+
+[00:50:51.760] especially if you want to present this
+
+[00:50:53.000] to somebody else or something and you
+
+[00:50:54.880] have a ton of context baked into either
+
+[00:50:57.360] an implementation or results or a design
+
+[00:51:00.240] discussion. This could be a really
+
+[00:51:01.360] powerful way of like basically I mean
+
+[00:51:03.640] every the key to doing hard [ __ ] with
+
+[00:51:05.640] LLMs is like how can you maximize your
+
+[00:51:07.800] alignment with the LLM? How can you
+
+[00:51:09.480] catch where it was wrong and how can you
+
+[00:51:11.200] basically like make sure that you're
+
+[00:51:12.720] doing the right kind of thinking without
+
+[00:51:14.800] you know
+
+[00:51:15.120] >> Yep.
+
+[00:51:15.560] >> Not everybody has the vibe of superpower
+
+[00:51:17.520] of staying up until 1:00 in the morning
+
+[00:51:18.960] reading C code until you figure it out.
+
+[00:51:21.960] >> Technically Rust. And like
+
+[00:51:23.560] >> Yeah, sure.
+
+[00:51:23.880] >> For example, like here's one of the cool
+
+[00:51:25.360] things that we did. We like uh for those
+
+[00:51:27.240] of you who know our JavaScript and is
+
+[00:51:28.720] famously um
+
+[00:51:30.560] known for like being incredibly fast
+
+[00:51:32.360] because of JIT. Like our string stuff is
+
+[00:51:34.360] now like just purely faster than even
+
+[00:51:36.000] like Bun's version of JIT.
+
+[00:51:38.120] We're like around
+
+[00:51:40.080] the 4 second 30% faster than like Bun's
+
+[00:51:42.280] version of JIT.
+
+[00:51:44.000] Which is for an interpreted language I
+
+[00:51:45.560] think quite hard to go do.
+
+[00:51:47.600] >> Yeah.
+
+[00:51:48.520] That's cool.
+
+[00:51:49.160] >> No.
+
+[00:51:50.360] Let's go back and like take a look at
+
+[00:51:51.920] this though. This I think is going to be
+
+[00:51:53.400] much more interesting.
+
+[00:52:01.070] Um
+
+[00:52:01.080] Let me see if I can find any interesting
+
+[00:52:02.920] visuals here that are actually worth
+
+[00:52:04.760] spinning off into.
+
+[00:52:07.280] >> I mean you could also ask it to iterate
+
+[00:52:08.640] on it and be like I want more boxes and
+
+[00:52:10.040] lines or like show me how the stack is
+
+[00:52:11.920] laid out or whatever.
+
+[00:52:17.790] >> Um let me see. I It's try Yeah, let me
+
+[00:52:17.800] do it.
+
+[00:52:24.070] Instead of using markdown visuals inside
+
+[00:52:24.080] of each of the things, can you please
+
+[00:52:25.280] just draw like actual React components
+
+[00:52:27.120] that connect together with boxes and
+
+[00:52:28.480] lines?
+
+[00:52:34.910] >> That's not React, but it's just HTML.
+
+[00:52:34.920] >> Yeah, there you go.
+
+[00:52:35.760] >> And that was boxes and lines.
+
+[00:52:37.400] >> Nice.
+
+[00:52:37.680] >> Yeah, cool. Uh it'll be way easier to
+
+[00:52:39.320] see.
+
+[00:52:40.320] But like honestly, this is kind of the
+
+[00:52:42.160] work that it comes to performance
+
+[00:52:43.240] engineering. You don't actually do any
+
+[00:52:44.360] of it. You just like sit You have to
+
+[00:52:45.960] read lines extremely carefully. If you
+
+[00:52:47.840] want to practice how to get better with
+
+[00:52:49.160] agents,
+
+[00:52:50.240] I actually find performance engineering
+
+[00:52:51.640] is a great way to like basically like
+
+[00:52:54.200] wake yourself up and force yourself to
+
+[00:52:56.160] read stuff because everything is
+
+[00:52:57.600] measurable. So, you can actually like
+
+[00:52:58.840] get become better at agentic
+
+[00:53:00.360] engineering.
+
+[00:53:01.160] >> Because you have feedback. You have like
+
+[00:53:03.480] kind of forces you to learn like okay, I
+
+[00:53:05.480] had all this thing and I thought we had
+
+[00:53:06.720] alignment and I thought we had a good
+
+[00:53:07.800] idea and it didn't actually go any
+
+[00:53:08.800] faster. So, it gives you feedback on how
+
+[00:53:10.760] you are interfacing with the agent in
+
+[00:53:12.560] the like upstream steps.
+
+[00:53:14.360] >> Yeah, and I have like all sorts of
+
+[00:53:15.640] things that I've thrown out because like
+
+[00:53:16.960] I built something and like it was I was
+
+[00:53:19.120] like I was doing a jit stuff over here.
+
+[00:53:21.360] I was trying a few other things.
+
+[00:53:23.880] I don't know. I have some other I
+
+[00:53:24.960] probably they're probably like expired
+
+[00:53:26.240] tasks.
+
+[00:53:28.400] But I have a bunch of our card tasks but
+
+[00:53:29.520] I was I was just trying to make it
+
+[00:53:30.400] faster. And like what I do is I just
+
+[00:53:32.000] like go see this and like okay, is it
+
+[00:53:33.480] faster or not? I think one of them is
+
+[00:53:34.760] like length.
+
+[00:53:41.190] Uh if I length type I Is this it?
+
+[00:53:41.200] No, that's not it. I don't know. I have
+
+[00:53:42.760] something in here where I have like uh
+
+[00:53:44.400] where I was trying to make objects
+
+[00:53:45.440] faster and like you throw away your call
+
+[00:53:46.720] the time and that just teaches you more
+
+[00:53:47.880] about the system under the hood.
+
+[00:53:49.760] Everyone should go try doing some sort
+
+[00:53:51.680] of performance engineering on their own.
+
+[00:53:52.960] I think it's a phenomenal
+
+[00:53:54.920] it's probably the best use of time that
+
+[00:53:56.080] you can have to like really practice
+
+[00:53:57.840] agentic engineering.
+
+[00:54:00.240] >> Yeah, this is cool, man. I
+
+[00:54:02.760] uh
+
+[00:54:03.960] I mean, I remember when we first
+
+[00:54:06.080] one of the first times we hung out you
+
+[00:54:07.600] were just like you should go learn to do
+
+[00:54:08.880] a thing that like seems hard but like
+
+[00:54:10.600] anyone can learn to do anything. And I
+
+[00:54:12.200] think one of your favorite things was
+
+[00:54:13.200] like, "Yeah."
+
+[00:54:14.120] >> You're like 2 years ago I learned to
+
+[00:54:15.240] build a database. I just wanted to learn
+
+[00:54:16.720] everything about databases and on this
+
+[00:54:18.920] caching and spooling and tables and
+
+[00:54:20.480] optimization and queries and all this
+
+[00:54:22.080] stuff. And so I just learned it. And a
+
+[00:54:23.840] lot of people think that like, "Oh, I'll
+
+[00:54:24.920] never be a database engineer." But like
+
+[00:54:26.560] you can go learn anything. And now at
+
+[00:54:28.160] Agents you can actually like just go
+
+[00:54:30.080] read all the source code and understand
+
+[00:54:31.920] all the secret sauce and learn about the
+
+[00:54:33.720] magic tricks that they're doing and what
+
+[00:54:35.400] works and what's not and like where
+
+[00:54:36.800] they're being pragmatic and what the
+
+[00:54:38.200] theory underneath it all is. So, I I
+
+[00:54:40.200] don't know I don't know this is really
+
+[00:54:41.520] cool.
+
+[00:54:42.640] >> There's no freaking way I would have
+
+[00:54:45.160] ever known how like Python does
+
+[00:54:47.920] trampolining to make it work for like
+
+[00:54:50.520] how how does like there's a tool on
+
+[00:54:52.160] Linux called perf?
+
+[00:54:53.840] How does Python, which is an interpreted
+
+[00:54:55.600] language, attach your function calls to
+
+[00:54:58.160] perf? I was like,
+
+[00:54:59.800] that's insane. That was insane to me.
+
+[00:55:02.040] And when I learned I was like, "Oh,
+
+[00:55:02.960] that's so cool."
+
+[00:55:04.960] Um and it just wouldn't have been
+
+[00:55:05.960] possible.
+
+[00:55:07.240] >> Deshawn has a question, how do how do we
+
+[00:55:08.880] start with it? I imagine
+
+[00:55:11.160] how do we start with learning
+
+[00:55:12.400] performance engineering? Do you have any
+
+[00:55:13.920] good like toy problems for people to go
+
+[00:55:16.040] tackle?
+
+[00:55:17.080] >> I I think toy problems actually don't
+
+[00:55:18.680] work for performance engineering. What
+
+[00:55:20.000] you should do is you should take one
+
+[00:55:21.160] part of your system that needs to get
+
+[00:55:22.880] better.
+
+[00:55:24.320] And then what you should first start
+
+[00:55:26.080] doing and like if anyone's building like
+
+[00:55:27.920] an AI agent, an AI agent is a perfect
+
+[00:55:30.160] place to think about performance
+
+[00:55:31.320] engineering.
+
+[00:55:32.840] Because if you think about performance
+
+[00:55:35.000] engineering it an AI agent,
+
+[00:55:37.240] Uh, here's what you can do.
+
+[00:55:39.240] Uh, you can you basically have to think
+
+[00:55:41.160] about it's a black box that you don't
+
+[00:55:42.480] really understand. You have no idea what
+
+[00:55:43.840] the model does or how it does it. You
+
+[00:55:45.400] have cost and latency concerns.
+
+[00:55:48.000] So, what you should you do?
+
+[00:55:49.720] Build a benchmark suite that helps you
+
+[00:55:51.000] profile the workload of your AI agent.
+
+[00:55:53.360] That is a very useful skill set. As soon
+
+[00:55:56.000] as you build a benchmark suite, build
+
+[00:55:57.720] the metrics you want to measure. So,
+
+[00:55:59.520] build how much cost you're taking, build
+
+[00:56:01.040] how many tool call turns you're making,
+
+[00:56:02.520] build how many uh, user turns you're
+
+[00:56:04.800] making.
+
+[00:56:05.800] And you can measure all of these as
+
+[00:56:07.080] performance engineering. You can measure
+
+[00:56:08.400] time if you want.
+
+[00:56:10.280] But you don't have to measure time. Like
+
+[00:56:11.560] if I were Claude code, how do I measure
+
+[00:56:13.040] this? Well,
+
+[00:56:14.240] one easy way to know this is I would
+
+[00:56:15.760] probably track every single time a bash
+
+[00:56:17.360] command calls git commit.
+
+[00:56:19.120] I would track that and I would treat
+
+[00:56:20.480] that as a good signal that things were
+
+[00:56:22.200] successfully done.
+
+[00:56:23.800] And then I'd scour the web for things
+
+[00:56:25.880] that are committed by Claude code and
+
+[00:56:27.360] see if I can associate my tokens with
+
+[00:56:29.640] web commits and see if I can associate
+
+[00:56:32.400] them and now I have a final bridge of
+
+[00:56:34.000] whether or not something was merged. So,
+
+[00:56:35.840] now I have a soft filter on whether or
+
+[00:56:37.680] not something was like good session or
+
+[00:56:39.200] bad session.
+
+[00:56:40.960] And then you can performance engineer
+
+[00:56:42.400] that. Performance engineering isn't just
+
+[00:56:44.440] about making things fast, memory
+
+[00:56:45.760] efficient, or anything else. It's about
+
+[00:56:46.880] this really good feedback loop where you
+
+[00:56:49.120] build data-driven decisions to make your
+
+[00:56:51.200] code base better.
+
+[00:56:52.840] It's like how do you start? You pick a
+
+[00:56:54.120] thing where you're willing to invest
+
+[00:56:55.680] time, money, and resources into
+
+[00:56:58.840] to build a data set. And wherever you're
+
+[00:57:01.000] willing to do that, like
+
+[00:57:03.400] you can performance engineer amazing
+
+[00:57:04.960] things. Yeah, and I want to show this
+
+[00:57:06.640] diagram and see if it pops up.
+
+[00:57:08.600] And if it doesn't, we got 1 minute left.
+
+[00:57:10.600] We'll see if this works. I hate how long
+
+[00:57:12.480] Claude takes. This is like one of my
+
+[00:57:14.320] most annoying things now. I wish we had
+
+[00:57:16.520] a model that was like maybe like 20%
+
+[00:57:18.280] dumber, but like 100% faster.
+
+[00:57:21.320] >> Have you tried Codex 5.5 low?
+
+[00:57:24.320] >> No. I can't. The low The The problem
+
+[00:57:26.880] with lowness is it's not 20% It's not
+
+[00:57:29.400] 20% dumber.
+
+[00:57:30.720] >> It's like 40% dumber.
+
+[00:57:32.400] >> Yeah. And like we said like I said like
+
+[00:57:34.880] one wrong thing and everything is a
+
+[00:57:36.240] waste of time.
+
+[00:57:37.840] I think the way I put it is like the
+
+[00:57:39.960] worst things you can do with your tokens
+
+[00:57:41.840] is spend a lot of tokens generating
+
+[00:57:43.480] wrong code.
+
+[00:57:45.000] >> Yeah.
+
+[00:57:45.440] >> thing you can do is spend a lot of
+
+[00:57:46.840] tokens generating the right code.
+
+[00:57:49.000] And the best thing you can do is spend a
+
+[00:57:50.120] few tokens generating the right code.
+
+[00:57:52.240] >> Yeah.
+
+[00:57:52.720] >> I'm sadly stuck in spend a lot of tokens
+
+[00:57:55.160] to generate the right code.
+
+[00:57:57.000] >> Yeah.
+
+[00:57:57.960] Uh well, it's better than generating the
+
+[00:57:59.240] wrong code.
+
+[00:58:00.400] Uh you're also a lot of
+
+[00:58:02.720] >> Good.
+
+[00:58:03.640] >> Your cash is huge here. You have 300,000
+
+[00:58:06.280] tokens. It's probably part of why it's
+
+[00:58:08.800] >> Yeah, but I don't have a choice. Once I
+
+[00:58:10.400] start doing this kind of work in
+
+[00:58:11.520] performance, it just
+
+[00:58:13.120] the context is so important that even if
+
+[00:58:15.240] it's slightly wrong in the older
+
+[00:58:16.640] context, the newer context is like it
+
+[00:58:18.720] needs all that as background so it
+
+[00:58:20.000] doesn't have to rediscover everything.
+
+[00:58:22.720] I actually don't know how I'd be doing
+
+[00:58:24.200] this work on like our profiler without
+
+[00:58:26.080] like a million context million token
+
+[00:58:27.760] context window. It would I think it'd be
+
+[00:58:29.360] >> just need to go back and forth and
+
+[00:58:31.120] maintain that context for a longer time,
+
+[00:58:33.880] and it's better than compacting or
+
+[00:58:35.480] refreshing or whatever.
+
+[00:58:37.440] >> Well, I just I don't even know if I have
+
+[00:58:39.600] the context.
+
+[00:58:41.040] >> You can just open the HTML. You don't
+
+[00:58:42.480] have to wait for it to dump it.
+
+[00:58:44.680] >> Uh that's kind of cool.
+
+[00:58:45.840] >> Um
+
+[00:58:46.920] Oh, we have some iframe caching issues.
+
+[00:58:49.280] So, right right click somewhere and
+
+[00:58:50.600] actually refresh the page and then
+
+[00:58:51.920] you'll see the new one.
+
+[00:58:53.520] Uh so, outside Yeah, just do reload. Uh
+
+[00:58:55.920] I have a ticket to fix this. Uh iframes
+
+[00:58:58.360] are good in some way. Well, it didn't
+
+[00:59:00.280] actually fix it.
+
+[00:59:02.960] That's crazy.
+
+[00:59:04.800] Did it get an error when it wrote the
+
+[00:59:06.120] file?
+
+[00:59:09.270] >> Nope.
+
+[00:59:09.280] >> When you click on the the tool used
+
+[00:59:11.680] Yeah, look it decided it had to read the
+
+[00:59:13.360] file and then rewrite it again.
+
+[00:59:15.840] This is so [ __ ] stupid.
+
+[00:59:17.760] >> Yeah,
+
+[00:59:18.720] uh the way the way we continue cloud
+
+[00:59:20.200] sessions is like it busts the cash and
+
+[00:59:22.280] then so it tries to write the file You
+
+[00:59:23.760] send a message and then it tries to
+
+[00:59:25.080] write the file and then it says, "Oh,
+
+[00:59:26.880] actually
+
+[00:59:28.360] I you haven't read the file yet."
+
+[00:59:31.080] Uh
+
+[00:59:32.120] because there's no way to like if you if
+
+[00:59:34.120] you if you actually pause the session
+
+[00:59:35.880] such that the cloud process like starts
+
+[00:59:38.120] down even if you resume that session it
+
+[00:59:40.000] loses its whole the cache of what files
+
+[00:59:42.120] have been read and not is
+
+[00:59:43.960] uh
+
+[00:59:44.920] in memory. And so you you lose that
+
+[00:59:46.960] cache. So it's going to try to write it
+
+[00:59:48.400] and then it's going to read it and then
+
+[00:59:49.600] it's going to try to write it again.
+
+[00:59:51.120] >> Okay. Well, we'll see this loads.
+
+[00:59:53.040] But hopefully like this gets people an
+
+[00:59:54.480] idea about you go do this. Um any other
+
+[00:59:56.240] questions from anyone while we're here?
+
+[00:59:57.800] >> Josh has a question about the HL public
+
+[00:59:59.800] version. Uh I'm not going to comment on
+
+[01:00:01.800] that other than keep your eyes on
+
+[01:00:03.760] Twitter the next week or two and uh
+
+[01:00:06.080] there will be some fun stuff coming out
+
+[01:00:07.680] as far as uh
+
+[01:00:09.800] what is uh what is uh what is available
+
+[01:00:12.320] to the more general public. It did write
+
+[01:00:14.840] it. So if you right click and reload
+
+[01:00:16.080] again, maybe we can see it.
+
+[01:00:18.200] >> Let's see.
+
+[01:00:22.270] Yeah.
+
+[01:00:22.280] >> Yeah, there you go.
+
+[01:00:22.880] >> We got more boxes.
+
+[01:00:24.560] Yeah. Um
+
+[01:00:26.280] So, actually I can walk through and see
+
+[01:00:27.720] if I can explain some of this.
+
+[01:00:29.760] Um one of the things about like garbage
+
+[01:00:31.280] collected languages you probably want to
+
+[01:00:32.560] have a profile that tells you how
+
+[01:00:33.840] expensive GC is.
+
+[01:00:35.880] Cuz if you don't know how expensive
+
+[01:00:36.800] garbage collection is, what ends up
+
+[01:00:37.960] happening is whatever function ends up
+
+[01:00:39.640] triggering garbage collection looks like
+
+[01:00:41.040] it took a long time. It's one of the
+
+[01:00:42.600] bugs in like a lot of garbage collected
+
+[01:00:43.960] languages like profiling gets messed up.
+
+[01:00:46.440] >> Oh, no.
+
+[01:00:47.160] >> Um
+
+[01:00:48.320] So actually like if you think about how
+
+[01:00:49.840] this is what I saw earlier, like call
+
+[01:00:52.080] gets rewritten to instrumented call.
+
+[01:00:54.480] >> Mhm.
+
+[01:00:55.000] >> does a bunch of stuff and that call is
+
+[01:00:56.120] like half uh like basically one
+
+[01:00:57.960] microsecond
+
+[01:00:59.360] uh or like up to one microsecond um
+
+[01:01:01.600] to just like go back to the user code
+
+[01:01:03.320] before it does this. It's super slow.
+
+[01:01:06.120] Tracing basically has a thread that runs
+
+[01:01:07.880] on a timer and just like profile stuff
+
+[01:01:10.040] onto a ring buffer. So it's quite fast,
+
+[01:01:12.120] but it's a lot slower.
+
+[01:01:13.880] And so you have to make different
+
+[01:01:14.720] trade-offs. And then we had a bunch of
+
+[01:01:16.160] ideas of how we did this.
+
+[01:01:18.840] And uh it's actually really interesting.
+
+[01:01:20.760] I actually will show this to my team. I
+
+[01:01:22.680] think this is going to be highly useful.
+
+[01:01:23.880] Thank you, Dexter.
+
+[01:01:25.440] This diagram is probably helpful.
+
+[01:01:26.840] >> Listen, man. I'm not building a VM
+
+[01:01:28.280] anytime soon, but uh if we can help the
+
+[01:01:30.360] VM builders build better VMs, then uh
+
+[01:01:32.880] then I've done my job.
+
+[01:01:34.640] >> Yeah, this is actually really useful cuz
+
+[01:01:36.160] I can show people the design thoughts
+
+[01:01:37.600] that I had while I went through this.
+
+[01:01:39.640] >> Yeah, so we're we're working on a new
+
+[01:01:41.280] design
+
+[01:01:42.120] discussion skill that is like
+
+[01:01:43.440] specifically like a technical design doc
+
+[01:01:45.440] that is like prompted and steered to do
+
+[01:01:47.520] a lot of this kind of stuff. So, maybe
+
+[01:01:48.960] maybe the next No Vibes Allowed we'll
+
+[01:01:50.320] demo that.
+
+[01:01:56.510] >> Yeah, that'd be great. Uh I can I can
+
+[01:01:56.520] definitely show like how
+
+[01:01:58.280] I can guarantee that like just show
+
+[01:01:59.920] being able to walk through this
+
+[01:02:01.720] step-by-step with my team would be
+
+[01:02:02.920] highly useful.
+
+[01:02:04.120] Just show them like where the memory is
+
+[01:02:05.800] being allocated and what's expensive
+
+[01:02:07.080] about it.

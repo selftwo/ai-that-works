@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-024",
+  "primary_transcript": "knowledge/episodes/aitw-024/transcripts/stitched.txt",
+  "source_folder": "2025-09-23-evals-for-classification",
+  "materials": [
+    {
+      "path": "2025-09-23-evals-for-classification/README.md",
+      "role": "episode summary and links"
+    },
+    {
+      "path": "2025-09-23-evals-for-classification/meta.md",
+      "role": "episode identity and event metadata"
+    },
+    {
+      "path": "2025-09-23-evals-for-classification/src/main.py",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-09-23-evals-for-classification/src/shared/correctness.py",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-09-23-evals-for-classification/tests/integration/test_pipeline_accuracy.py",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-09-23-evals-for-classification/tests/integration/test_narrowing_accuracy.py",
+      "role": "supporting implementation or workflow evidence"
+    },
+    {
+      "path": "2025-09-23-evals-for-classification/ui/analysis.py",
+      "role": "supporting implementation or workflow evidence"
+    }
+  ],
+  "notes": [
+    "Transcript claims are grounded in timestamped automatic captions.",
+    "Supporting files establish implementation context but do not prove every spoken claim."
+  ]
+}

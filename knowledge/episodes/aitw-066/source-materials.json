@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-066",
+  "primary_transcript": {
+    "path": "2026-07-21-no-vibes-july/transcript.txt",
+    "origin": "upstream",
+    "sha256": "d4d2063d4a7f8df92014e84c1f9beaf993ed954f8fc4ad6ec4e50773f187428c"
+  },
+  "materials": [
+    {"path": "2026-07-21-no-vibes-july/meta.md", "role": "episode metadata"},
+    {"path": "2026-07-21-no-vibes-july/README.md", "role": "upstream summary"},
+    {"path": "2026-07-21-no-vibes-july/email.md", "role": "episode announcement"}
+  ]
+}

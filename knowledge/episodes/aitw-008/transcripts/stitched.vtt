@@ -1,0 +1,5863 @@
+WEBVTT
+
+00:00:02.950 --> 00:00:02.960
+Cool.
+
+00:00:02.960 --> 00:00:05.839
+All right. Amazing.
+
+00:00:05.839 --> 00:00:07.839
+Um, so today we're going to talk about
+
+00:00:07.839 --> 00:00:09.760
+uh one of my favorite topics. I'll let
+
+00:00:09.760 --> 00:00:11.280
+I'll let Vibob te it up a little bit,
+
+00:00:11.280 --> 00:00:14.000
+but um we get more and more requests for
+
+00:00:14.000 --> 00:00:15.519
+this specific topic. And I think it's
+
+00:00:15.519 --> 00:00:16.960
+something we've been dancing around for
+
+00:00:16.960 --> 00:00:19.359
+a while. Um but especially last week, I
+
+00:00:19.359 --> 00:00:20.320
+think there's a lot of people asking,
+
+00:00:20.320 --> 00:00:21.840
+okay, but how do I do this part? How do
+
+00:00:21.840 --> 00:00:23.840
+I do how do I how do I do human in the
+
+00:00:23.840 --> 00:00:24.880
+loop? How do I do human in the loop for
+
+00:00:24.880 --> 00:00:26.240
+tool calls? How do I do human loop for
+
+00:00:26.240 --> 00:00:27.439
+these things? And how do I do it in a
+
+00:00:27.439 --> 00:00:30.080
+production grade way?
+
+00:00:30.080 --> 00:00:33.200
+Exactly. And yeah, and what Dexter and I
+
+00:00:33.200 --> 00:00:34.480
+are here to really talk about is
+
+00:00:34.480 --> 00:00:35.600
+something that you'll see that we
+
+00:00:35.600 --> 00:00:37.840
+mention all the time is a lot of these
+
+00:00:37.840 --> 00:00:39.920
+principles when building with AI agents
+
+00:00:39.920 --> 00:00:41.600
+are not that different than software
+
+00:00:41.600 --> 00:00:44.640
+engineering principles we've all had for
+
+00:00:44.640 --> 00:00:47.680
+the last 30 plus years. We're just here
+
+00:00:47.680 --> 00:00:49.360
+to show how to translate some of these
+
+00:00:49.360 --> 00:00:51.680
+ideas that seem new into ideas that have
+
+00:00:51.680 --> 00:00:53.520
+existed for a long time and how to
+
+00:00:53.520 --> 00:00:55.600
+relate it and then how to use all the
+
+00:00:55.600 --> 00:00:57.680
+tooling that we already know and love
+
+00:00:57.680 --> 00:01:00.000
+and not have to reinvent 50 new vocab
+
+00:01:00.000 --> 00:01:03.039
+words just to use AI because in the end
+
+00:01:03.039 --> 00:01:04.600
+it's all really just
+
+00:01:04.600 --> 00:01:07.680
+software. Um, and today's topic is one
+
+00:01:07.680 --> 00:01:10.159
+that like Dexter said is very popular. a
+
+00:01:10.159 --> 00:01:11.280
+lot of people started mentioning it
+
+00:01:11.280 --> 00:01:12.640
+because this seems to be the real
+
+00:01:12.640 --> 00:01:14.240
+bottleneck
+
+00:01:14.240 --> 00:01:15.680
+uh for a lot of systems. When AI
+
+00:01:15.680 --> 00:01:17.360
+hallucinates a lot, what do you do? You
+
+00:01:17.360 --> 00:01:18.960
+toss a human at it because a human can
+
+00:01:18.960 --> 00:01:20.880
+help out the process. It's kind of
+
+00:01:20.880 --> 00:01:22.680
+similar to what we do in regular
+
+00:01:22.680 --> 00:01:25.680
+processes. Whenever you have a process
+
+00:01:25.680 --> 00:01:28.000
+where you're like detecting uh failure
+
+00:01:28.000 --> 00:01:30.080
+rates, you toss a human at it. You add
+
+00:01:30.080 --> 00:01:32.159
+more process to your process and
+
+00:01:32.159 --> 00:01:33.600
+eventually you have a sequence of steps
+
+00:01:33.600 --> 00:01:36.079
+that makes it more rigorous.
+
+00:01:36.079 --> 00:01:38.159
+One way to make model sequences really
+
+00:01:38.159 --> 00:01:40.720
+rigorous is to put a human in the loop
+
+00:01:40.720 --> 00:01:42.560
+uh and then have a human go and evaluate
+
+00:01:42.560 --> 00:01:45.520
+the system in some ways. So some of the
+
+00:01:45.520 --> 00:01:46.720
+stuff that we'll talk about is really
+
+00:01:46.720 --> 00:01:48.320
+about software architecture design
+
+00:01:48.320 --> 00:01:50.560
+today. And I think one interesting thing
+
+00:01:50.560 --> 00:01:52.720
+that we'll note is there's very little
+
+00:01:52.720 --> 00:01:54.799
+AI involved in actually adding a human
+
+00:01:54.799 --> 00:01:58.000
+in the loop. But you can use AI to make
+
+00:01:58.000 --> 00:02:00.320
+that experience much much more
+
+00:02:00.320 --> 00:02:02.719
+ergonomic. And Dexter is one of the few
+
+00:02:02.719 --> 00:02:04.560
+people that I've seen do this in a way
+
+00:02:04.560 --> 00:02:06.040
+that I think is
+
+00:02:06.040 --> 00:02:08.720
+like really does introduce new design
+
+00:02:08.720 --> 00:02:11.239
+paradigms to the level of
+
+00:02:11.239 --> 00:02:14.080
+like really a human is a new surface
+
+00:02:14.080 --> 00:02:16.000
+area at least from my perspective. I'll
+
+00:02:16.000 --> 00:02:17.520
+let Dexter share his thoughts on it, but
+
+00:02:17.520 --> 00:02:19.440
+I've always thought about like software
+
+00:02:19.440 --> 00:02:22.319
+as all about surface areas. So when like
+
+00:02:22.319 --> 00:02:24.000
+the iPhone came out, we added a new
+
+00:02:24.000 --> 00:02:26.080
+surface area of touchcreens. When the
+
+00:02:26.080 --> 00:02:27.760
+iPad came out, we had a new service here
+
+00:02:27.760 --> 00:02:29.599
+of big touchcreens and those are very
+
+00:02:29.599 --> 00:02:31.440
+different than small touchcreens. That's
+
+00:02:31.440 --> 00:02:33.519
+why iPad apps are uniquely designed.
+
+00:02:33.519 --> 00:02:35.920
+Some games only work on the iPad and
+
+00:02:35.920 --> 00:02:38.480
+others only work on the iPhone just
+
+00:02:38.480 --> 00:02:40.080
+based on where your hands are located.
+
+00:02:40.080 --> 00:02:41.879
+Some games only work on a computer and a
+
+00:02:41.879 --> 00:02:44.640
+mouse. And these kinds of surface areas
+
+00:02:44.640 --> 00:02:46.400
+make a huge difference in how we view
+
+00:02:46.400 --> 00:02:47.920
+it. Same with like TVs. They're just
+
+00:02:47.920 --> 00:02:49.319
+surface areas for the same kind of
+
+00:02:49.319 --> 00:02:52.720
+software. When you as a human Well, and
+
+00:02:52.720 --> 00:02:54.319
+we ended up rearchitecting a lot of
+
+00:02:54.319 --> 00:02:56.560
+software. so that it could work better
+
+00:02:56.560 --> 00:02:58.480
+across all the platforms. And we had to
+
+00:02:58.480 --> 00:03:00.319
+kind of like narrow the generic
+
+00:03:00.319 --> 00:03:02.480
+interface and push more and more
+
+00:03:02.480 --> 00:03:04.480
+specialization out to the edge where the
+
+00:03:04.480 --> 00:03:06.000
+users were interacting with it. Yeah.
+
+00:03:06.000 --> 00:03:07.680
+And we didn't originally do that. Most
+
+00:03:07.680 --> 00:03:10.000
+software is just software. Uh and then
+
+00:03:10.000 --> 00:03:12.800
+eventually to get the 99th like to
+
+00:03:12.800 --> 00:03:14.959
+squeeze more juice and make it more
+
+00:03:14.959 --> 00:03:16.480
+valuable from like the 80th percentile
+
+00:03:16.480 --> 00:03:18.800
+to the 90th percentile, we had to go do
+
+00:03:18.800 --> 00:03:21.440
+that. We do localization in software.
+
+00:03:21.440 --> 00:03:23.360
+Why do we do that? It's purely to make
+
+00:03:23.360 --> 00:03:25.760
+it more ergonomic to certain
+
+00:03:25.760 --> 00:03:28.879
+demographics of users and that enhances
+
+00:03:28.879 --> 00:03:31.440
+business value. Same in the AI agent
+
+00:03:31.440 --> 00:03:34.319
+world. Whenever you add humans into the
+
+00:03:34.319 --> 00:03:36.239
+system, you're just adding more surface
+
+00:03:36.239 --> 00:03:37.879
+area that your software has to start
+
+00:03:37.879 --> 00:03:40.000
+considering when you're going to go
+
+00:03:40.000 --> 00:03:43.840
+build systems. And I think before we go
+
+00:03:43.840 --> 00:03:44.879
+do anything, I think we should just
+
+00:03:44.879 --> 00:03:46.319
+start with a demo today because usually
+
+00:03:46.319 --> 00:03:48.000
+we start with a whiteboard. But I think
+
+00:03:48.000 --> 00:03:49.760
+today I want to show people so their
+
+00:03:49.760 --> 00:03:52.799
+imagination can start up and go do this.
+
+00:03:52.799 --> 00:03:54.239
+And like I said, Dexter has built tons
+
+00:03:54.239 --> 00:03:56.400
+of these tools. Do you want to show one
+
+00:03:56.400 --> 00:03:58.319
+of the tools off like the demo uh you
+
+00:03:58.319 --> 00:04:00.959
+were working on, Dexter? Oh, you want
+
+00:04:00.959 --> 00:04:02.879
+you want you want to open with that? Um,
+
+00:04:02.879 --> 00:04:04.239
+yeah, we can do that. The best way I
+
+00:04:04.239 --> 00:04:07.920
+think people should just see possible.
+
+00:04:07.920 --> 00:04:09.200
+Okay, cool. I'm going to show you kind
+
+00:04:09.200 --> 00:04:10.519
+of like what we're going to work
+
+00:04:10.519 --> 00:04:14.080
+towards, which is um kind of a thing
+
+00:04:14.080 --> 00:04:15.280
+I've been like dancing around for a
+
+00:04:15.280 --> 00:04:16.959
+while, which is like how do you how do
+
+00:04:16.959 --> 00:04:18.880
+you create agent experiences that aren't
+
+00:04:18.880 --> 00:04:21.840
+locked into the kind of chat GPT style
+
+00:04:21.840 --> 00:04:25.680
+workflow? Um, and I think the most
+
+00:04:25.680 --> 00:04:28.800
+asynchronous, most likefi interface that
+
+00:04:28.800 --> 00:04:32.720
+we can work with um as um almost as an
+
+00:04:32.720 --> 00:04:34.720
+exercise, I don't actually expect a lot
+
+00:04:34.720 --> 00:04:36.160
+of you to go build agents that work this
+
+00:04:36.160 --> 00:04:38.080
+way, uh but is over email. I build all
+
+00:04:38.080 --> 00:04:40.320
+my agents to work over email. Um, but
+
+00:04:40.320 --> 00:04:42.400
+this is an idea of a use case that is
+
+00:04:42.400 --> 00:04:45.360
+like much more asynchronous. Um, you
+
+00:04:45.360 --> 00:04:46.800
+have software that's going to get to a
+
+00:04:46.800 --> 00:04:48.560
+point where it needs to get input from a
+
+00:04:48.560 --> 00:04:50.160
+human. Um, whether it's get permission
+
+00:04:50.160 --> 00:04:52.160
+for something or just kind of respond to
+
+00:04:52.160 --> 00:04:54.240
+a request and then that's going to go to
+
+00:04:54.240 --> 00:04:55.680
+a human and you might not get a response
+
+00:04:55.680 --> 00:04:59.040
+for hours or days. And so in that world,
+
+00:04:59.040 --> 00:05:00.479
+you have to think differently about how
+
+00:05:00.479 --> 00:05:02.639
+you design your software versus, you
+
+00:05:02.639 --> 00:05:04.560
+know, if I'm just talking to a chatbot
+
+00:05:04.560 --> 00:05:07.039
+that I built in Verselai or whatever and
+
+00:05:07.039 --> 00:05:08.240
+I'm going to close the window and stop
+
+00:05:08.240 --> 00:05:09.680
+the server and come back later, right?
+
+00:05:09.680 --> 00:05:10.960
+Like it's only valuable in that
+
+00:05:10.960 --> 00:05:12.280
+synchronous use
+
+00:05:12.280 --> 00:05:14.880
+case. Um,
+
+00:05:14.880 --> 00:05:17.680
+let's screen share. And by the way, I
+
+00:05:17.680 --> 00:05:19.039
+know all of you can go watch these on
+
+00:05:19.039 --> 00:05:20.720
+YouTube. So the benefit of actually
+
+00:05:20.720 --> 00:05:22.000
+being on the call is you can ask
+
+00:05:22.000 --> 00:05:24.160
+questions, you can hop in, you can you
+
+00:05:24.160 --> 00:05:25.759
+can make it interactive as you want, you
+
+00:05:25.759 --> 00:05:27.039
+can guide the conversation. what do you
+
+00:05:27.039 --> 00:05:29.120
+want to go do? So, go do that. If you
+
+00:05:29.120 --> 00:05:30.240
+see something, you're like, I want to
+
+00:05:30.240 --> 00:05:31.840
+pop in, ask a question, raise your hand,
+
+00:05:31.840 --> 00:05:34.720
+unmute your mic, and just ask. These
+
+00:05:34.720 --> 00:05:36.240
+conversations are so much more fun when
+
+00:05:36.240 --> 00:05:37.520
+we actually like guide it in the way
+
+00:05:37.520 --> 00:05:40.600
+that the audience wants to go.
+
+00:05:40.600 --> 00:05:45.240
+Cool. Um, so I'm guess going to
+
+00:05:45.240 --> 00:05:49.120
+share one window for now. Um, so this is
+
+00:05:49.120 --> 00:05:53.520
+just my Gmail. Um, and what we've done
+
+00:05:53.520 --> 00:05:54.759
+is,
+
+00:05:54.759 --> 00:05:59.440
+uh, oh man, let's just go ahead. You
+
+00:05:59.440 --> 00:06:02.960
+have an AI that works agent, right? Um,
+
+00:06:02.960 --> 00:06:05.000
+yeah. Yeah. Yeah, that's what it's
+
+00:06:05.000 --> 00:06:08.080
+called. AI. Yeah. Here we go. So, we
+
+00:06:08.080 --> 00:06:10.240
+made this agent called AI that works.
+
+00:06:10.240 --> 00:06:13.080
+Um, and we've given it its own email
+
+00:06:13.080 --> 00:06:15.440
+address. And I It's got access to a
+
+00:06:15.440 --> 00:06:17.840
+couple tools. Can you do some math for
+
+00:06:17.840 --> 00:06:19.759
+me? It's some basic calculator tools and
+
+00:06:19.759 --> 00:06:22.000
+stuff like this. Um, but we can
+
+00:06:22.000 --> 00:06:25.280
+basically say, you know, can you add 10
+
+00:06:25.280 --> 00:06:26.520
+and
+
+00:06:26.520 --> 00:06:28.960
+12? And what's going to happen here is
+
+00:06:28.960 --> 00:06:31.280
+this going to cause an event to land in
+
+00:06:31.280 --> 00:06:33.039
+our server. And we'll get into kind of
+
+00:06:33.039 --> 00:06:34.639
+how all that we're going to actually re
+
+00:06:34.639 --> 00:06:36.960
+Oh, sorry. I'm not sharing right now.
+
+00:06:36.960 --> 00:06:43.830
+Yeah, let's share the whole thing. Um,
+
+00:06:45.590 --> 00:06:45.600
+and remember all these are the things
+
+00:06:45.600 --> 00:06:47.039
+that we like to do is we like to use
+
+00:06:47.039 --> 00:06:48.479
+really really basic tools in the
+
+00:06:48.479 --> 00:06:50.479
+beginning like add and math because it
+
+00:06:50.479 --> 00:06:53.039
+makes it so unambiguous
+
+00:06:53.039 --> 00:06:55.759
+on what tool is supposed to do otherwise
+
+00:06:55.759 --> 00:06:58.720
+there's a lot of things that can happen.
+
+00:06:58.720 --> 00:07:00.479
+So if you've been to the 12actor agents
+
+00:07:00.479 --> 00:07:02.080
+workshop you've seen us kind of build
+
+00:07:02.080 --> 00:07:03.440
+out these prompts and these prompt
+
+00:07:03.440 --> 00:07:04.800
+templates and BAML and stuff like that.
+
+00:07:04.800 --> 00:07:06.000
+And we'll get under the under the weeds
+
+00:07:06.000 --> 00:07:07.280
+of what that looks like. Um, but we'll
+
+00:07:07.280 --> 00:07:09.039
+see the model kind of finished here and
+
+00:07:09.039 --> 00:07:11.520
+said, "Okay, now we're done for now."
+
+00:07:11.520 --> 00:07:14.240
+Um, if I go to my sent mail here, it's
+
+00:07:14.240 --> 00:07:15.919
+come back and it's responded to me. And
+
+00:07:15.919 --> 00:07:18.479
+I can say, you know, can you divide the
+
+00:07:18.479 --> 00:07:20.960
+result by 12? And one thing I'll note is
+
+00:07:20.960 --> 00:07:23.599
+we've, as an example of a scary tool
+
+00:07:23.599 --> 00:07:25.280
+that needs human approval, we use
+
+00:07:25.280 --> 00:07:27.039
+division because division might explode
+
+00:07:27.039 --> 00:07:29.039
+if you divide by zero or something.
+
+00:07:29.039 --> 00:07:30.880
+Obviously, it's not uh but it's again,
+
+00:07:30.880 --> 00:07:32.720
+we like VBO said, we like to use toy
+
+00:07:32.720 --> 00:07:35.120
+examples so it's very clear to you all
+
+00:07:35.120 --> 00:07:36.479
+what's part of what we're trying to
+
+00:07:36.479 --> 00:07:38.560
+demonstrate and what's kind of like you
+
+00:07:38.560 --> 00:07:40.160
+can go swap in your own stuff here for
+
+00:07:40.160 --> 00:07:42.510
+this
+
+00:07:45.909 --> 00:07:45.919
+later. Does that make sense so far?
+
+00:07:45.919 --> 00:07:47.199
+Let's see the division. Let's see the
+
+00:07:47.199 --> 00:07:49.680
+human in the loop. Let's see it do it.
+
+00:07:49.680 --> 00:07:51.680
+So when this thing outputs divide, we've
+
+00:07:51.680 --> 00:07:53.199
+got some special logic where we say,
+
+00:07:53.199 --> 00:07:54.879
+okay, that tool deterministically
+
+00:07:54.879 --> 00:07:56.479
+requires approval. Every time the model
+
+00:07:56.479 --> 00:07:58.319
+calls that tool, we need to ask for
+
+00:07:58.319 --> 00:07:59.520
+permission. And so that's going to call
+
+00:07:59.520 --> 00:08:01.039
+our deterministic code. And we'll see
+
+00:08:01.039 --> 00:08:02.879
+our new new new agent. And it's saying,
+
+00:08:02.879 --> 00:08:05.039
+"Hey, we want to run this." And I can
+
+00:08:05.039 --> 00:08:07.680
+give it call something out. Um I want to
+
+00:08:07.680 --> 00:08:11.120
+call something out here. The Can you go
+
+00:08:11.120 --> 00:08:13.280
+scroll up before you go do that? Oh,
+
+00:08:13.280 --> 00:08:16.639
+yeah. Um and so in the first one when we
+
+00:08:16.639 --> 00:08:18.160
+added to add, it just responded with the
+
+00:08:18.160 --> 00:08:19.840
+sum. It did the tool. It did the math.
+
+00:08:19.840 --> 00:08:21.599
+And I want to note the LM didn't
+
+00:08:21.599 --> 00:08:23.120
+actually do the math. We use a tool to
+
+00:08:23.120 --> 00:08:25.039
+do the math. and the LM created a text
+
+00:08:25.039 --> 00:08:28.639
+message from that to go and go return.
+
+00:08:28.639 --> 00:08:30.879
+Now the next thing that we did is we
+
+00:08:30.879 --> 00:08:32.640
+asked it to go divide that and it used
+
+00:08:32.640 --> 00:08:34.560
+that context
+
+00:08:34.560 --> 00:08:36.320
+um to go figure out how to go divide
+
+00:08:36.320 --> 00:08:40.320
+that and then model in this case it
+
+00:08:40.320 --> 00:08:43.519
+actually ahead to the same user. In this
+
+00:08:43.519 --> 00:08:45.120
+case it's going back to the author that
+
+00:08:45.120 --> 00:08:46.720
+asked them to do the command and asked
+
+00:08:46.720 --> 00:08:48.800
+them to validate.
+
+00:08:48.800 --> 00:08:50.080
+What if we wanted someone else to
+
+00:08:50.080 --> 00:08:52.880
+validate the tool instead?
+
+00:08:52.880 --> 00:08:54.399
+Yeah, we'll get into that. That's a
+
+00:08:54.399 --> 00:08:56.680
+great question.
+
+00:08:56.680 --> 00:08:59.360
+Um, so here's our new here's our new
+
+00:08:59.360 --> 00:09:01.760
+message. It took my feedback and it's
+
+00:09:01.760 --> 00:09:03.200
+trying again. So, it didn't do the math
+
+00:09:03.200 --> 00:09:06.240
+yet and I can say like great. Um, and
+
+00:09:06.240 --> 00:09:07.920
+then that that will approve the thing.
+
+00:09:07.920 --> 00:09:09.040
+And someone asked a really good
+
+00:09:09.040 --> 00:09:10.800
+question. One one more question. Someone
+
+00:09:10.800 --> 00:09:14.560
+asked a really good question about us.
+
+00:09:14.560 --> 00:09:16.160
+Can you hit the triple dot? I want to
+
+00:09:16.160 --> 00:09:17.839
+notice this. There's different ways and
+
+00:09:17.839 --> 00:09:20.000
+modalities of approval. Dexter right now
+
+00:09:20.000 --> 00:09:22.320
+is using email, but see that link down
+
+00:09:22.320 --> 00:09:23.839
+here? We could have just as easily
+
+00:09:23.839 --> 00:09:26.480
+clicked that instead and done approval
+
+00:09:26.480 --> 00:09:28.080
+as well. So when you think about
+
+00:09:28.080 --> 00:09:30.720
+approval or rejection, it doesn't h like
+
+00:09:30.720 --> 00:09:33.800
+this is why LMS enhance the human loop
+
+00:09:33.800 --> 00:09:36.160
+experience and don't just like make it
+
+00:09:36.160 --> 00:09:39.440
+possible, they make it different.
+
+00:09:39.440 --> 00:09:41.279
+And this is a thing I say all the time,
+
+00:09:41.279 --> 00:09:43.040
+which is this idea of like we've been
+
+00:09:43.040 --> 00:09:45.120
+sending emails to users from software
+
+00:09:45.120 --> 00:09:47.360
+for over a decade now. It's always been
+
+00:09:47.360 --> 00:09:48.880
+a part of a really important kind of
+
+00:09:48.880 --> 00:09:51.360
+growth loop. But the call to action in
+
+00:09:51.360 --> 00:09:54.480
+all those emails is always click this
+
+00:09:54.480 --> 00:09:56.680
+link and get pulled back into the
+
+00:09:56.680 --> 00:09:59.440
+software which is a thing that the only
+
+00:09:59.440 --> 00:10:01.200
+real option you could do to review a
+
+00:10:01.200 --> 00:10:03.120
+report to see an answer to see whatever
+
+00:10:03.120 --> 00:10:05.600
+it was. Um you would click the link and
+
+00:10:05.600 --> 00:10:06.959
+then you would come into the tool and
+
+00:10:06.959 --> 00:10:08.560
+you would like see exactly what was
+
+00:10:08.560 --> 00:10:09.680
+happening here and you would say okay
+
+00:10:09.680 --> 00:10:11.200
+cool here's the thing and I can interact
+
+00:10:11.200 --> 00:10:15.200
+with it here. Um, now with LLMs, I can
+
+00:10:15.200 --> 00:10:16.880
+just respond with natural language from
+
+00:10:16.880 --> 00:10:19.200
+wherever I already am. And so it's it
+
+00:10:19.200 --> 00:10:21.279
+gives you a way to deploy your software
+
+00:10:21.279 --> 00:10:23.279
+to where your users already are. And I'm
+
+00:10:23.279 --> 00:10:24.720
+seeing more and more apps and more and
+
+00:10:24.720 --> 00:10:26.800
+more founders build really successful AI
+
+00:10:26.800 --> 00:10:29.440
+apps where someone will log in and
+
+00:10:29.440 --> 00:10:32.880
+configure it once and then from then on
+
+00:10:32.880 --> 00:10:34.480
+they just interact with it from other
+
+00:10:34.480 --> 00:10:36.160
+places. And so we'll see because this
+
+00:10:36.160 --> 00:10:37.760
+was approved it was able to run the
+
+00:10:37.760 --> 00:10:40.079
+divide function. Um, and I'm going to
+
+00:10:40.079 --> 00:10:41.600
+answer the first question of the thread
+
+00:10:41.600 --> 00:10:43.440
+uh real quick, but um, anything else
+
+00:10:43.440 --> 00:10:44.640
+quickly before we get into kind of how
+
+00:10:44.640 --> 00:10:46.560
+we're tracking the state here? I want to
+
+00:10:46.560 --> 00:10:48.959
+call one last thing out here, which is
+
+00:10:48.959 --> 00:10:50.800
+Yep. So, the only difference between
+
+00:10:50.800 --> 00:10:52.480
+replying with human in the loop with
+
+00:10:52.480 --> 00:10:54.720
+over email versus clicking the button is
+
+00:10:54.720 --> 00:10:56.839
+clicking the button is like
+
+00:10:56.839 --> 00:10:59.440
+99.9999% going to be correct. It might
+
+00:10:59.440 --> 00:11:00.720
+still be wrong because a human might
+
+00:11:00.720 --> 00:11:02.079
+click the wrong button and there's
+
+00:11:02.079 --> 00:11:05.040
+process that happen. Right. We increase
+
+00:11:05.040 --> 00:11:07.200
+our error rate a little bit by giving
+
+00:11:07.200 --> 00:11:09.120
+the user the convenience of responding
+
+00:11:09.120 --> 00:11:10.880
+in natural language because the model
+
+00:11:10.880 --> 00:11:13.200
+can get that wrong.
+
+00:11:13.200 --> 00:11:14.800
+Yeah. Right. There's a prompt here
+
+00:11:14.800 --> 00:11:16.560
+somewhere that is classifying the
+
+00:11:16.560 --> 00:11:18.320
+human's message as an approval or a
+
+00:11:18.320 --> 00:11:20.959
+rejection. Exactly. So for more nuanced
+
+00:11:20.959 --> 00:11:22.640
+use cases, you may not even want to
+
+00:11:22.640 --> 00:11:25.360
+allow human a human in the loop. You may
+
+00:11:25.360 --> 00:11:27.279
+want to require that the human click the
+
+00:11:27.279 --> 00:11:31.040
+button manually like releasing your prod
+
+00:11:31.040 --> 00:11:34.000
+system to like a million users. you and
+
+00:11:34.000 --> 00:11:34.800
+this is actually something that
+
+00:11:34.800 --> 00:11:36.320
+Anthropic was talking about with the
+
+00:11:36.320 --> 00:11:38.160
+model context protocol stuff and I know
+
+00:11:38.160 --> 00:11:40.720
+we have opinions on this but um they
+
+00:11:40.720 --> 00:11:42.000
+have this thing that they're working on
+
+00:11:42.000 --> 00:11:44.800
+called the elicitation API which is you
+
+00:11:44.800 --> 00:11:46.640
+know we don't want to just ask a
+
+00:11:46.640 --> 00:11:48.079
+question to the user but we actually
+
+00:11:48.079 --> 00:11:50.560
+want to give them some specific like
+
+00:11:50.560 --> 00:11:52.959
+options to choose from and those options
+
+00:11:52.959 --> 00:11:55.040
+might go back to the LM but they might
+
+00:11:55.040 --> 00:11:57.920
+also go back to a deterministic set of
+
+00:11:57.920 --> 00:11:59.680
+code where it's like hey which of these
+
+00:11:59.680 --> 00:12:01.920
+three really expensive ML jobs do you
+
+00:12:01.920 --> 00:12:03.680
+want to launch And you want to be very
+
+00:12:03.680 --> 00:12:06.000
+deterministic that only a human can
+
+00:12:06.000 --> 00:12:08.560
+approve the launch of a expensive ML
+
+00:12:08.560 --> 00:12:12.320
+job. Exactly. Um, now we should talk
+
+00:12:12.320 --> 00:12:14.639
+about the session state and Yeah. Yeah.
+
+00:12:14.639 --> 00:12:16.160
+Yeah. And we'll we'll actually go look
+
+00:12:16.160 --> 00:12:17.440
+at the trace for one of these
+
+00:12:17.440 --> 00:12:19.680
+conversations. So we have this we have
+
+00:12:19.680 --> 00:12:21.680
+this thing that we're using that we're
+
+00:12:21.680 --> 00:12:22.880
+going to build up to, but basically we
+
+00:12:22.880 --> 00:12:24.399
+have this thread store interface where
+
+00:12:24.399 --> 00:12:26.079
+we can create new threads, we can get
+
+00:12:26.079 --> 00:12:28.320
+threads and we can update threads. And
+
+00:12:28.320 --> 00:12:31.600
+this comes back to our um concept from
+
+00:12:31.600 --> 00:12:34.000
+12 factor agents which is like the state
+
+00:12:34.000 --> 00:12:35.920
+doesn't have to be open AAI message
+
+00:12:35.920 --> 00:12:38.160
+chain. It can be any object that you
+
+00:12:38.160 --> 00:12:41.360
+want that you can serialize for the LLM.
+
+00:12:41.360 --> 00:12:43.360
+And so we just storing this in a file.
+
+00:12:43.360 --> 00:12:45.360
+We have the JSON one that like the human
+
+00:12:45.360 --> 00:12:47.440
+can that the that the actual program
+
+00:12:47.440 --> 00:12:49.839
+will use, but then we also just have the
+
+00:12:49.839 --> 00:12:51.760
+raw text version. So we got an email
+
+00:12:51.760 --> 00:12:54.079
+from me to AI that works. Can you do
+
+00:12:54.079 --> 00:12:55.440
+some math for me? And we have the
+
+00:12:55.440 --> 00:12:57.920
+inbound message. And then we called the
+
+00:12:57.920 --> 00:13:00.320
+ad tool and we got a response. And then
+
+00:13:00.320 --> 00:13:02.880
+we called done for now. And that so
+
+00:13:02.880 --> 00:13:05.120
+these different tools, the ad tool just
+
+00:13:05.120 --> 00:13:07.440
+caused us to go do the math and get the
+
+00:13:07.440 --> 00:13:10.240
+response. The done for now tool caused
+
+00:13:10.240 --> 00:13:13.680
+an email to get sent. Um that's this
+
+00:13:13.680 --> 00:13:15.360
+response here, the sum of 10 and 12. So
+
+00:13:15.360 --> 00:13:16.560
+we're we're taking each of these tool
+
+00:13:16.560 --> 00:13:18.160
+calls in the loop and we'll go detangle
+
+00:13:18.160 --> 00:13:19.360
+this and get under the hood and on the
+
+00:13:19.360 --> 00:13:21.440
+whiteboard in a sec. Um but then we got
+
+00:13:21.440 --> 00:13:23.440
+another human response. And so when I'm
+
+00:13:23.440 --> 00:13:25.519
+replying to this thread, the model knows
+
+00:13:25.519 --> 00:13:27.639
+how to route that back to the right
+
+00:13:27.639 --> 00:13:29.839
+conversation. Um, and so you have this
+
+00:13:29.839 --> 00:13:31.600
+divide call and it actually rather than
+
+00:13:31.600 --> 00:13:33.600
+running the call, we got a human
+
+00:13:33.600 --> 00:13:35.600
+response. Hey, you got this feedback.
+
+00:13:35.600 --> 00:13:38.000
+And so at each step along the way, we're
+
+00:13:38.000 --> 00:13:39.839
+passing this into the LLM and this is
+
+00:13:39.839 --> 00:13:42.399
+the prompt that the LLM is seeing.
+
+00:13:42.399 --> 00:13:44.959
+Exactly. Exactly. And I think the key
+
+00:13:44.959 --> 00:13:46.480
+part here is we actually built some
+
+00:13:46.480 --> 00:13:48.160
+debugging tools to help ourselves out
+
+00:13:48.160 --> 00:13:50.320
+here. Like the .txt file is just to make
+
+00:13:50.320 --> 00:13:52.079
+life easier. It's like here's the latest
+
+00:13:52.079 --> 00:13:55.440
+state of the message, but theJSON file
+
+00:13:55.440 --> 00:13:57.440
+is actually the source of truth. Can you
+
+00:13:57.440 --> 00:14:00.079
+click on that really fast?
+
+00:14:00.079 --> 00:14:03.279
+Um, which one? The JSON file.
+
+00:14:03.279 --> 00:14:05.279
+Yeah. Yeah. And I want you guys to
+
+00:14:05.279 --> 00:14:06.800
+notice some of the debugging work that
+
+00:14:06.800 --> 00:14:08.399
+we built here to make this easier. And I
+
+00:14:08.399 --> 00:14:12.000
+say we, this is Dexter mostly. Um, and I
+
+00:14:12.000 --> 00:14:13.360
+think we built the first version of this
+
+00:14:13.360 --> 00:14:15.760
+together. Yeah. Yeah, I know. But still,
+
+00:14:15.760 --> 00:14:17.199
+um, specifically, I want you guys to
+
+00:14:17.199 --> 00:14:19.680
+notice this. Um, this thing is a time
+
+00:14:19.680 --> 00:14:21.440
+stamp that Dexter put on there. Why did
+
+00:14:21.440 --> 00:14:23.199
+he do this? It's because if you're
+
+00:14:23.199 --> 00:14:24.800
+debugging and you just want to quickly
+
+00:14:24.800 --> 00:14:27.120
+find the most recent thread, it is
+
+00:14:27.120 --> 00:14:28.959
+really freaking annoying to search
+
+00:14:28.959 --> 00:14:31.120
+through all a bunch of UU IDs to go find
+
+00:14:31.120 --> 00:14:33.440
+this. This just makes life a 100,000
+
+00:14:33.440 --> 00:14:35.519
+times easier and faster for debugging
+
+00:14:35.519 --> 00:14:37.360
+processes. And that's just software. You
+
+00:14:37.360 --> 00:14:38.959
+could do the same if there were no LLMs
+
+00:14:38.959 --> 00:14:40.800
+involved. You you you and you wanted to
+
+00:14:40.800 --> 00:14:42.000
+dump you didn't want to write a bunch of
+
+00:14:42.000 --> 00:14:43.519
+observability. The idea here is you can
+
+00:14:43.519 --> 00:14:45.279
+drop in whatever observability tool you
+
+00:14:45.279 --> 00:14:46.959
+want. I think even Bam I might even be
+
+00:14:46.959 --> 00:14:49.519
+sending traces to the BAML web app. But
+
+00:14:49.519 --> 00:14:51.600
+the point is is like if you think about
+
+00:14:51.600 --> 00:14:55.680
+your agents as just this sort of um I'm
+
+00:14:55.680 --> 00:14:56.639
+actually going to pull the whiteboard
+
+00:14:56.639 --> 00:14:59.440
+up. Um show the JSON while you do that
+
+00:14:59.440 --> 00:15:00.480
+really fast and then we'll show the
+
+00:15:00.480 --> 00:15:02.560
+whiteboard too. One second. This thing
+
+00:15:02.560 --> 00:15:04.800
+right here is just a SQL table. It's a
+
+00:15:04.800 --> 00:15:06.560
+SQL table of a row of events. It could
+
+00:15:06.560 --> 00:15:08.800
+be a SQL table. In this case, we just
+
+00:15:08.800 --> 00:15:11.199
+did the most simplest backing store
+
+00:15:11.199 --> 00:15:13.920
+possible, which was a file system. In
+
+00:15:13.920 --> 00:15:15.760
+the file system, every single thread has
+
+00:15:15.760 --> 00:15:19.440
+a UUID. Every UID is associated with an
+
+00:15:19.440 --> 00:15:22.560
+email sender and a receiver I and a sub
+
+00:15:22.560 --> 00:15:24.560
+and an email ID, right? Email thread ID
+
+00:15:24.560 --> 00:15:26.240
+is what it's associated with. There's
+
+00:15:26.240 --> 00:15:28.240
+Yeah, there's some like basic basically
+
+00:15:28.240 --> 00:15:30.639
+like the the inbound web hook payload
+
+00:15:30.639 --> 00:15:32.680
+that we're working off of is this
+
+00:15:32.680 --> 00:15:34.560
+conversation.created object. So there's
+
+00:15:34.560 --> 00:15:36.720
+like the from the to the subject and the
+
+00:15:36.720 --> 00:15:38.639
+message. And then if you forward one one
+
+00:15:38.639 --> 00:15:40.000
+use case we can look at a little more
+
+00:15:40.000 --> 00:15:41.360
+advanced is like what if I just want to
+
+00:15:41.360 --> 00:15:42.800
+forward an email to the agent and be
+
+00:15:42.800 --> 00:15:44.320
+like hey can you do the math for these
+
+00:15:44.320 --> 00:15:46.240
+people of this conversation or hey can
+
+00:15:46.240 --> 00:15:48.399
+you create a ticket based on this this
+
+00:15:48.399 --> 00:15:50.160
+like debate we had on our engineering
+
+00:15:50.160 --> 00:15:52.560
+thread and then that's just like more
+
+00:15:52.560 --> 00:15:54.480
+context that you might have to because
+
+00:15:54.480 --> 00:15:57.440
+that other email's thread ID should be
+
+00:15:57.440 --> 00:16:00.560
+pulled in but I think the key part here
+
+00:16:00.560 --> 00:16:02.639
+is a lot
+
+00:16:02.639 --> 00:16:05.440
+a lot of people view all this agent
+
+00:16:05.440 --> 00:16:07.279
+state management as complex
+
+00:16:07.279 --> 00:16:09.600
+But actually instead of even thinking
+
+00:16:09.600 --> 00:16:12.160
+about as agent stuff, what I would do is
+
+00:16:12.160 --> 00:16:15.120
+I would purely think about it as it's
+
+00:16:15.120 --> 00:16:16.800
+just if you had to build a system that
+
+00:16:16.800 --> 00:16:18.639
+was going to show build stuff on top of
+
+00:16:18.639 --> 00:16:20.720
+email, how would you store that data in
+
+00:16:20.720 --> 00:16:23.839
+a database? The fact that an L happened
+
+00:16:23.839 --> 00:16:27.519
+to respond to it is just a user ID maybe
+
+00:16:27.519 --> 00:16:29.279
+with an extra metadata saying this is an
+
+00:16:29.279 --> 00:16:32.079
+agent or this is like this user ID, but
+
+00:16:32.079 --> 00:16:34.720
+like nothing else matters. It's just I
+
+00:16:34.720 --> 00:16:36.240
+want to save something that represents
+
+00:16:36.240 --> 00:16:38.880
+the state of a conversation into a
+
+00:16:38.880 --> 00:16:41.199
+database.
+
+00:16:41.199 --> 00:16:43.279
+Yeah, it's good. Um, and I'll just say
+
+00:16:43.279 --> 00:16:44.639
+like in production we run these agents
+
+00:16:44.639 --> 00:16:46.079
+and we store all this stuff in Reddus.
+
+00:16:46.079 --> 00:16:47.360
+You can store in SQL. You can do
+
+00:16:47.360 --> 00:16:48.800
+whatever you want. This is one of those
+
+00:16:48.800 --> 00:16:51.040
+examples of like you have this interface
+
+00:16:51.040 --> 00:16:52.480
+in the state thing. You can store this
+
+00:16:52.480 --> 00:16:54.160
+stuff however you want as long as it's,
+
+00:16:54.160 --> 00:16:56.240
+you know, as long as you're keeping it.
+
+00:16:56.240 --> 00:16:58.399
+Oh my god, VS Code started doing this
+
+00:16:58.399 --> 00:17:00.880
+lately. Uh, I accidentally click on the
+
+00:17:00.880 --> 00:17:02.480
+author thing and it's half the freaking
+
+00:17:02.480 --> 00:17:04.720
+page. Um, and you notice we store it in
+
+00:17:04.720 --> 00:17:06.640
+JSON and TXT and we do different
+
+00:17:06.640 --> 00:17:08.000
+serializations because they're for
+
+00:17:08.000 --> 00:17:09.520
+different people. But we could write
+
+00:17:09.520 --> 00:17:10.959
+this into a database. We could write
+
+00:17:10.959 --> 00:17:13.679
+this into a memcache store. It it
+
+00:17:13.679 --> 00:17:14.959
+doesn't matter. We could write this on
+
+00:17:14.959 --> 00:17:17.520
+like cold storage iceberg. It it it
+
+00:17:17.520 --> 00:17:20.160
+doesn't matter. So let's talk about how
+
+00:17:20.160 --> 00:17:22.640
+this stuff works. Um, so at the core of
+
+00:17:22.640 --> 00:17:25.760
+our agent is um what we call this like
+
+00:17:25.760 --> 00:17:27.280
+I'll call it the inner loop, the agent
+
+00:17:27.280 --> 00:17:29.360
+loop. Um, and this has a couple
+
+00:17:29.360 --> 00:17:31.360
+different components. And, uh, this
+
+00:17:31.360 --> 00:17:34.720
+comes straight from, um, uh, let me just
+
+00:17:34.720 --> 00:17:38.160
+pop into 12 factor agents. Yes. We got a
+
+00:17:38.160 --> 00:17:39.919
+question. No, I was going to say we can
+
+00:17:39.919 --> 00:17:41.520
+just pop it. We can show them the
+
+00:17:41.520 --> 00:17:44.640
+YouTube video as well if they want. It's
+
+00:17:44.640 --> 00:17:46.480
+basically, and we did all the code for
+
+00:17:46.480 --> 00:17:48.480
+this in like three episodes back or
+
+00:17:48.480 --> 00:17:50.640
+something. Four episodes back. Yeah, we
+
+00:17:50.640 --> 00:17:51.840
+did. We did do all the code. But we're
+
+00:17:51.840 --> 00:17:53.120
+not going to go too deep into it, but I
+
+00:17:53.120 --> 00:17:55.360
+basically like our inner loop is going
+
+00:17:55.360 --> 00:17:58.240
+to be this kind of like fourstep thing.
+
+00:17:58.240 --> 00:18:00.000
+So we have a prompt that is like tell me
+
+00:18:00.000 --> 00:18:02.000
+what the next step is. We have a switch
+
+00:18:02.000 --> 00:18:03.679
+statement which is like okay based on
+
+00:18:03.679 --> 00:18:05.919
+what JSON the model output for the next
+
+00:18:05.919 --> 00:18:07.760
+step. What was the structured output?
+
+00:18:07.760 --> 00:18:09.280
+Then we're going to run some code based
+
+00:18:09.280 --> 00:18:11.919
+on you know whatever that JSON has.
+
+00:18:11.919 --> 00:18:13.360
+Usually there's like an enum that is
+
+00:18:13.360 --> 00:18:14.720
+like the function name or the function
+
+00:18:14.720 --> 00:18:17.679
+type. Um we're going to store as new
+
+00:18:17.679 --> 00:18:18.960
+events happen we store them in the
+
+00:18:18.960 --> 00:18:20.720
+context window. That's that XMLA thing
+
+00:18:20.720 --> 00:18:22.080
+that we showed you. And then we're going
+
+00:18:22.080 --> 00:18:24.000
+to loop basically until we get to the
+
+00:18:24.000 --> 00:18:26.880
+final answer. Um, and the final answer
+
+00:18:26.880 --> 00:18:28.480
+is just another part of a switch
+
+00:18:28.480 --> 00:18:30.880
+statement that happens to not that
+
+00:18:30.880 --> 00:18:32.160
+happens to tell us that the best thing
+
+00:18:32.160 --> 00:18:33.600
+to do is break out of the switch
+
+00:18:33.600 --> 00:18:36.799
+statement. It's not anything special
+
+00:18:36.799 --> 00:18:39.160
+and it's not even actually I would say
+
+00:18:39.160 --> 00:18:41.520
+like this. So this is what I'm going to
+
+00:18:41.520 --> 00:18:43.720
+call the inner
+
+00:18:43.720 --> 00:18:46.160
+loop. And then there's another loop that
+
+00:18:46.160 --> 00:18:48.160
+I call kind of that we'll call like the
+
+00:18:48.160 --> 00:18:51.270
+outer loop.
+
+00:18:52.870 --> 00:18:52.880
+which is okay, we get to our final
+
+00:18:52.880 --> 00:18:54.520
+answer, we go to a
+
+00:18:54.520 --> 00:18:57.600
+human and then a human might respond and
+
+00:18:57.600 --> 00:19:01.280
+push back into this inner loop. Um, and
+
+00:19:01.280 --> 00:19:02.880
+so the agent might go back in and call
+
+00:19:02.880 --> 00:19:05.360
+lots of tools. And so the reasons why an
+
+00:19:05.360 --> 00:19:07.840
+agent might exit out of the loop,
+
+00:19:07.840 --> 00:19:09.440
+there's a couple reasons. So we're going
+
+00:19:09.440 --> 00:19:11.760
+to specialize this a little bit more.
+
+00:19:11.760 --> 00:19:13.120
+Um, and we're basically going to say we
+
+00:19:13.120 --> 00:19:14.160
+have a couple different kinds of things.
+
+00:19:14.160 --> 00:19:16.000
+We have safe tools, things like readonly
+
+00:19:16.000 --> 00:19:17.679
+tools or we say like add, multiply,
+
+00:19:17.679 --> 00:19:19.880
+divide are all safe, but divide is
+
+00:19:19.880 --> 00:19:22.160
+unsafe. And so if we call one of our
+
+00:19:22.160 --> 00:19:24.480
+safe tools, then we're just going to
+
+00:19:24.480 --> 00:19:26.240
+take the result. So we have like our
+
+00:19:26.240 --> 00:19:28.640
+initial request.
+
+00:19:28.640 --> 00:19:30.640
+It's a while loop for now. Just assume
+
+00:19:30.640 --> 00:19:37.190
+while loop. Yeah. Yeah.
+
+00:19:39.190 --> 00:19:39.200
+Result. And then we pass that back in
+
+00:19:39.200 --> 00:19:41.520
+and we say, okay, what's the next step?
+
+00:19:41.520 --> 00:19:44.400
+Um and so this code looks like okay we
+
+00:19:44.400 --> 00:19:46.720
+say determine next step we serialize our
+
+00:19:46.720 --> 00:19:51.830
+thread and this looks like
+
+00:19:56.070 --> 00:19:56.080
+this is essentially a uh oh that's why
+
+00:19:56.080 --> 00:19:58.039
+it didn't show up.
+
+00:19:58.039 --> 00:20:01.120
+Um so you know very simple prompt you
+
+00:20:01.120 --> 00:20:03.120
+can make this much more advanced. I've
+
+00:20:03.120 --> 00:20:04.559
+added some of the stuff from the 12actor
+
+00:20:04.559 --> 00:20:06.400
+agents workshop but you know you're a
+
+00:20:06.400 --> 00:20:07.760
+helpful assistant. You can give it some
+
+00:20:07.760 --> 00:20:10.160
+more behavior stuff. The idea is like
+
+00:20:10.160 --> 00:20:11.760
+when we build this stuff and we ship
+
+00:20:11.760 --> 00:20:14.320
+this code for y'all to use, we're trying
+
+00:20:14.320 --> 00:20:16.320
+to give you a canvas to paint on and
+
+00:20:16.320 --> 00:20:18.880
+give you direct access into the most
+
+00:20:18.880 --> 00:20:21.360
+important parts of the loop because I
+
+00:20:21.360 --> 00:20:23.200
+don't know about you, uh, but I can
+
+00:20:23.200 --> 00:20:24.480
+write a switch statement and I can write
+
+00:20:24.480 --> 00:20:26.160
+a for loop or I can maintain one that's
+
+00:20:26.160 --> 00:20:27.679
+already written. And what you really
+
+00:20:27.679 --> 00:20:29.120
+want to be doing, the thing that's going
+
+00:20:29.120 --> 00:20:33.520
+to determine the accuracy and the like
+
+00:20:33.520 --> 00:20:35.679
+value and the magic of your app is how
+
+00:20:35.679 --> 00:20:37.360
+well you can get the agent to pick the
+
+00:20:37.360 --> 00:20:39.760
+next step while it's in this loop. Uh,
+
+00:20:39.760 --> 00:20:41.200
+and so you want to focus most of your
+
+00:20:41.200 --> 00:20:44.480
+effort there and maintain control over
+
+00:20:44.480 --> 00:20:47.400
+everything else. Yeah, exactly.
+
+00:20:47.400 --> 00:20:49.440
+Um, so we're going to run this, we're
+
+00:20:49.440 --> 00:20:50.240
+going to run this prompt, we're going to
+
+00:20:50.240 --> 00:20:51.520
+get our next step, we'll put it on the
+
+00:20:51.520 --> 00:20:52.960
+thread and then we'll do a switch
+
+00:20:52.960 --> 00:20:55.200
+statement. So, um, we haven't gone
+
+00:20:55.200 --> 00:20:56.720
+through the customer support stuff yet,
+
+00:20:56.720 --> 00:20:58.559
+but, um, basically, if it's done for now
+
+00:20:58.559 --> 00:21:00.000
+or request more information, we return
+
+00:21:00.000 --> 00:21:02.480
+the thread. Also, if it's a scary tool,
+
+00:21:02.480 --> 00:21:04.640
+we return the thread. Um, and in this
+
+00:21:04.640 --> 00:21:06.320
+case, we're not returning any extra
+
+00:21:06.320 --> 00:21:08.559
+information about why we exited because
+
+00:21:08.559 --> 00:21:10.799
+we can tell based on, and I'll show you
+
+00:21:10.799 --> 00:21:14.360
+in the CLI here, basically.
+
+00:21:14.360 --> 00:21:16.960
+Um, and we'll do a multi multiplayer
+
+00:21:16.960 --> 00:21:19.840
+demo as well. Um, but in the CLI, we
+
+00:21:19.840 --> 00:21:20.880
+basically we're going to create a new
+
+00:21:20.880 --> 00:21:22.720
+thread. We'll run it through the agent
+
+00:21:22.720 --> 00:21:24.799
+loop and then we look at the last event
+
+00:21:24.799 --> 00:21:27.919
+and then based on what the last event
+
+00:21:27.919 --> 00:21:30.159
+was. If it was divide, then we're going
+
+00:21:30.159 --> 00:21:31.760
+to ask permission to divide and we might
+
+00:21:31.760 --> 00:21:34.159
+actually go run that function. If it was
+
+00:21:34.159 --> 00:21:36.400
+one of these other ones, then request
+
+00:21:36.400 --> 00:21:37.919
+more information for now. Then we're
+
+00:21:37.919 --> 00:21:39.280
+just going to do this message on the
+
+00:21:39.280 --> 00:21:42.480
+CLI. So I can come here really fast. I
+
+00:21:42.480 --> 00:21:43.760
+want to highlight this code a little
+
+00:21:43.760 --> 00:21:45.520
+more. I just want people to read this a
+
+00:21:45.520 --> 00:21:48.480
+little bit carefully. I want you guys to
+
+00:21:48.480 --> 00:21:49.760
+think about one thing that's really
+
+00:21:49.760 --> 00:21:51.760
+important here. What we're not doing
+
+00:21:51.760 --> 00:21:54.559
+here is we are not doing some voodoo
+
+00:21:54.559 --> 00:21:56.400
+magic with some AI framework. We're not
+
+00:21:56.400 --> 00:21:58.880
+doing something special. We're just
+
+00:21:58.880 --> 00:22:01.760
+saying that this thread is a thing that
+
+00:22:01.760 --> 00:22:03.440
+we can analyze because it's an object
+
+00:22:03.440 --> 00:22:05.760
+that we invented of our own based on the
+
+00:22:05.760 --> 00:22:08.480
+application logic that we need to use
+
+00:22:08.480 --> 00:22:10.159
+and we just said get the very last
+
+00:22:10.159 --> 00:22:12.480
+element of that thread. Then based on
+
+00:22:12.480 --> 00:22:14.400
+the type of messages we have, we know
+
+00:22:14.400 --> 00:22:16.400
+that there there are three special names
+
+00:22:16.400 --> 00:22:18.880
+of messages that we need to handle.
+
+00:22:18.880 --> 00:22:20.880
+One of them is we know that we're here
+
+00:22:20.880 --> 00:22:22.320
+because we know we know that it's one of
+
+00:22:22.320 --> 00:22:23.600
+those because we know we're in the outer
+
+00:22:23.600 --> 00:22:26.000
+loop. The agent loop exited which means
+
+00:22:26.000 --> 00:22:28.480
+we return we the agent output a tool
+
+00:22:28.480 --> 00:22:30.000
+that means okay we need to go to the
+
+00:22:30.000 --> 00:22:31.760
+human. So if it's a safe tool we just
+
+00:22:31.760 --> 00:22:35.120
+call it and loop again. Um but in here
+
+00:22:35.120 --> 00:22:38.400
+we're call this this. Yeah. So basically
+
+00:22:38.400 --> 00:22:40.320
+the idea is like one of the things you
+
+00:22:40.320 --> 00:22:41.919
+should take away from this is like
+
+00:22:41.919 --> 00:22:45.039
+creating the agent. Sorry this one.
+
+00:22:45.039 --> 00:22:48.120
+Yeah. Exact the Y loop. Yeah.
+
+00:22:48.120 --> 00:22:51.200
+Yeah, creating the agent and like its
+
+00:22:51.200 --> 00:22:54.240
+core logic and its set of tools is kind
+
+00:22:54.240 --> 00:22:57.840
+of generic and reusable, but the way
+
+00:22:57.840 --> 00:22:59.679
+that the agent operates in the outer
+
+00:22:59.679 --> 00:23:01.280
+loop is something where you can swap in
+
+00:23:01.280 --> 00:23:02.880
+different interfaces. And so you can
+
+00:23:02.880 --> 00:23:04.880
+have a CLI to interact with the agent,
+
+00:23:04.880 --> 00:23:06.480
+you can have a web app to interact with
+
+00:23:06.480 --> 00:23:08.159
+the agent, or you can do the demo we
+
+00:23:08.159 --> 00:23:09.520
+started with, which is like an email
+
+00:23:09.520 --> 00:23:11.600
+surface area. And we'll get into how the
+
+00:23:11.600 --> 00:23:13.840
+email outer loop looks like. Um um I'll
+
+00:23:13.840 --> 00:23:15.760
+show you the once we get done looking at
+
+00:23:15.760 --> 00:23:18.159
+this code, I'll show also the um the CLI
+
+00:23:18.159 --> 00:23:19.840
+and what that looks like. And I want to
+
+00:23:19.840 --> 00:23:21.360
+I want to highlight this thing like all
+
+00:23:21.360 --> 00:23:22.799
+we're doing here is when we get divide,
+
+00:23:22.799 --> 00:23:24.480
+we just tell the user this is what we're
+
+00:23:24.480 --> 00:23:27.120
+trying to go do. And if if I didn't put
+
+00:23:27.120 --> 00:23:29.760
+this handle this case for divide, then
+
+00:23:29.760 --> 00:23:31.760
+our app wouldn't work because our inner
+
+00:23:31.760 --> 00:23:33.600
+loop says divide needs to exit out, but
+
+00:23:33.600 --> 00:23:36.320
+then this one is not handling divide. So
+
+00:23:36.320 --> 00:23:39.039
+that's an error that I can build by
+
+00:23:39.039 --> 00:23:41.120
+default instead of having to go do it on
+
+00:23:41.120 --> 00:23:43.360
+my own. I just and then I use another LM
+
+00:23:43.360 --> 00:23:45.840
+to actually detect approval or feedback.
+
+00:23:45.840 --> 00:23:47.360
+But I don't have to. I could literally
+
+00:23:47.360 --> 00:23:50.880
+require a explicit checkbox here. That's
+
+00:23:50.880 --> 00:23:52.400
+what it is. We do like press enter to
+
+00:23:52.400 --> 00:23:54.960
+approve or type feedback to cancel.
+
+00:23:54.960 --> 00:23:57.280
+Exactly.
+
+00:23:57.280 --> 00:24:00.240
+Um so ask human CLI is not quite a tool
+
+00:24:00.240 --> 00:24:02.600
+that gets called because when you call a
+
+00:24:02.600 --> 00:24:06.880
+tool inside the loop basically like I
+
+00:24:06.880 --> 00:24:08.080
+want to this this is one really
+
+00:24:08.080 --> 00:24:10.240
+interest. So you could have a scary tool
+
+00:24:10.240 --> 00:24:12.919
+and you could say in the body of this
+
+00:24:12.919 --> 00:24:17.880
+function I want to say like ask human if
+
+00:24:17.880 --> 00:24:21.120
+approved then go do it. The problem here
+
+00:24:21.120 --> 00:24:23.120
+is what happens if I call this scary
+
+00:24:23.120 --> 00:24:26.799
+tool and then the server crashes. Then
+
+00:24:26.799 --> 00:24:28.480
+we're in the middle of a tool call.
+
+00:24:28.480 --> 00:24:30.159
+Let's say the human approves it but the
+
+00:24:30.159 --> 00:24:31.919
+server never like the server crashes
+
+00:24:31.919 --> 00:24:34.640
+before we go do it. When I relaunch
+
+00:24:34.640 --> 00:24:36.480
+this, my context window is just going to
+
+00:24:36.480 --> 00:24:37.760
+have this thing and we're gonna have to
+
+00:24:37.760 --> 00:24:40.400
+drop back into this loop. And so if you
+
+00:24:40.400 --> 00:24:43.200
+want to do asynchronous stuff, basically
+
+00:24:43.200 --> 00:24:46.400
+for scary tools and for human tools,
+
+00:24:46.400 --> 00:24:48.480
+anything basically that might take a
+
+00:24:48.480 --> 00:24:50.000
+long time that you want to be pursu, you
+
+00:24:50.000 --> 00:24:51.279
+could even do this for safe tools,
+
+00:24:51.279 --> 00:24:52.679
+although it's kind of feels like
+
+00:24:52.679 --> 00:24:55.279
+overkill. Um, you want to exit out of
+
+00:24:55.279 --> 00:24:57.760
+this loop so that you stash this thing
+
+00:24:57.760 --> 00:25:00.159
+on the context window and you store the
+
+00:25:00.159 --> 00:25:01.760
+state of like what was the last thing we
+
+00:25:01.760 --> 00:25:03.679
+were doing. Specifically what you do is
+
+00:25:03.679 --> 00:25:05.960
+you edit exactly you just save it to the
+
+00:25:05.960 --> 00:25:09.520
+database and then you do a new trigger
+
+00:25:09.520 --> 00:25:11.200
+and even calling it outer loop is
+
+00:25:11.200 --> 00:25:12.240
+probably like might be a little
+
+00:25:12.240 --> 00:25:14.000
+confusing. What I would say is like the
+
+00:25:14.000 --> 00:25:15.679
+way I think about this is I just exit to
+
+00:25:15.679 --> 00:25:17.679
+a database. Exactly. I just store this
+
+00:25:17.679 --> 00:25:20.799
+to a database somewhere or some file
+
+00:25:20.799 --> 00:25:23.760
+system. Then I trigger another workflow.
+
+00:25:23.760 --> 00:25:25.760
+If you're familiar with like AWS SQS or
+
+00:25:25.760 --> 00:25:28.320
+anything, I basically trigger a second
+
+00:25:28.320 --> 00:25:31.480
+system that says now from
+
+00:25:31.480 --> 00:25:34.720
+here send out an email to this human
+
+00:25:34.720 --> 00:25:37.679
+with this thread ID or the state ID that
+
+00:25:37.679 --> 00:25:40.720
+I have stored. Then that workflow will
+
+00:25:40.720 --> 00:25:43.279
+trigger and then that human will respond
+
+00:25:43.279 --> 00:25:45.520
+and say here's a response to this thread
+
+00:25:45.520 --> 00:25:48.640
+ID. I save that to my database and then
+
+00:25:48.640 --> 00:25:50.720
+I just continue onwards. It's the same
+
+00:25:50.720 --> 00:25:53.919
+as every other sort of process system
+
+00:25:53.919 --> 00:25:56.880
+that I would really be long term. And
+
+00:25:56.880 --> 00:25:57.919
+the fact so this is one of those
+
+00:25:57.919 --> 00:26:00.159
+concepts. Yeah. Go ahead. The fact that
+
+00:26:00.159 --> 00:26:02.400
+it's an AI is just an implementation
+
+00:26:02.400 --> 00:26:04.559
+detail. That's the key part. Don't think
+
+00:26:04.559 --> 00:26:06.880
+of AI as the core part here. It's an
+
+00:26:06.880 --> 00:26:08.960
+implementation detail, not the key part
+
+00:26:08.960 --> 00:26:11.760
+of it of how you orchestrate your
+
+00:26:11.760 --> 00:26:13.200
+workflows. Right? So this is another
+
+00:26:13.200 --> 00:26:16.000
+concept from 12 factor agents that has
+
+00:26:16.000 --> 00:26:17.440
+nothing to do with human in the loop.
+
+00:26:17.440 --> 00:26:18.799
+This is literally just a thing that all
+
+00:26:18.799 --> 00:26:20.400
+of your stuff should do, which is like
+
+00:26:20.400 --> 00:26:22.080
+you should be able to trigger your agent
+
+00:26:22.080 --> 00:26:24.919
+with some programmatic API like REST or
+
+00:26:24.919 --> 00:26:27.440
+MCP. Again, like there's some email
+
+00:26:27.440 --> 00:26:29.120
+processing stuff going on the in the
+
+00:26:29.120 --> 00:26:30.720
+background here, but eventually becomes
+
+00:26:30.720 --> 00:26:33.679
+an HTTP request. Then when you call a
+
+00:26:33.679 --> 00:26:35.520
+longunning tool, whether it's a long
+
+00:26:35.520 --> 00:26:38.480
+long ass workflow or it's just interrupt
+
+00:26:38.480 --> 00:26:40.320
+or it's human human in the loop or
+
+00:26:40.320 --> 00:26:41.919
+whatever it is, you're going to pause
+
+00:26:41.919 --> 00:26:43.760
+your thing. You're going to exit out to
+
+00:26:43.760 --> 00:26:45.120
+what I call the outer loop, which is
+
+00:26:45.120 --> 00:26:46.559
+conceptual, right? There's there's code
+
+00:26:46.559 --> 00:26:48.480
+there. It's just, you know, it's a
+
+00:26:48.480 --> 00:26:51.039
+different layer of the execution state.
+
+00:26:51.039 --> 00:26:52.640
+We'll take the whole context, put in the
+
+00:26:52.640 --> 00:26:54.080
+database, and say, "Hey, we called that
+
+00:26:54.080 --> 00:26:55.919
+long running tool." And then we launch
+
+00:26:55.919 --> 00:26:58.559
+the workflow, and when it's done, it's
+
+00:26:58.559 --> 00:27:02.320
+going to call back to us with uh oh,
+
+00:27:02.320 --> 00:27:04.720
+this shading is weird. Uh it it's going
+
+00:27:04.720 --> 00:27:07.279
+to post a web web hook back with the
+
+00:27:07.279 --> 00:27:09.840
+state ID that we saved to the database
+
+00:27:09.840 --> 00:27:12.640
+and the result of the workflow. And so
+
+00:27:12.640 --> 00:27:14.400
+we can use that state ID to pull our
+
+00:27:14.400 --> 00:27:16.960
+previous context out, push the result
+
+00:27:16.960 --> 00:27:19.360
+onto it, and send it right back into the
+
+00:27:19.360 --> 00:27:21.919
+LM. And this works for anything that is
+
+00:27:21.919 --> 00:27:23.760
+asynchronous. And again, you could do
+
+00:27:23.760 --> 00:27:25.760
+this for every single tool call you do
+
+00:27:25.760 --> 00:27:27.039
+if you want to be like really aggressive
+
+00:27:27.039 --> 00:27:28.720
+with your checkpointing. But if you're
+
+00:27:28.720 --> 00:27:30.159
+doing long running stuff, this is
+
+00:27:30.159 --> 00:27:32.640
+absolutely essential. And again, there
+
+00:27:32.640 --> 00:27:35.360
+are tools like Langraph. There are lots
+
+00:27:35.360 --> 00:27:36.480
+of different things that let you
+
+00:27:36.480 --> 00:27:38.000
+checkpoint workflows. You could look at
+
+00:27:38.000 --> 00:27:39.600
+things like temporal or cadence or
+
+00:27:39.600 --> 00:27:41.440
+whatever it is. We want to ship really
+
+00:27:41.440 --> 00:27:42.720
+simple examples so that you understand
+
+00:27:42.720 --> 00:27:44.880
+the concepts here of just literally just
+
+00:27:44.880 --> 00:27:46.240
+write it to sub file system. You can
+
+00:27:46.240 --> 00:27:48.400
+drop in your own database as as you want
+
+00:27:48.400 --> 00:27:50.880
+to. Exactly. Um and I'm going to I'm
+
+00:27:50.880 --> 00:27:51.760
+going to address some of the question
+
+00:27:51.760 --> 00:27:54.399
+that people have. One is this like
+
+00:27:54.399 --> 00:27:56.799
+local first architectures and CRDT. I
+
+00:27:56.799 --> 00:27:58.799
+don't know what CRDT is. This would be
+
+00:27:58.799 --> 00:28:01.200
+async pattern for workflows. Async isn't
+
+00:28:01.200 --> 00:28:03.840
+the right word because specifically this
+
+00:28:03.840 --> 00:28:06.240
+is not like async. This is more like
+
+00:28:06.240 --> 00:28:08.559
+task control flow. What I'm really doing
+
+00:28:08.559 --> 00:28:10.799
+here is I have a sequence of tasks that
+
+00:28:10.799 --> 00:28:13.640
+starts off some some way to start this
+
+00:28:13.640 --> 00:28:16.480
+job. I just also happen to have another
+
+00:28:16.480 --> 00:28:18.799
+entry point into here that doesn't start
+
+00:28:18.799 --> 00:28:22.720
+from zero. It's exactly it either. And
+
+00:28:22.720 --> 00:28:24.799
+you might even post the entire context
+
+00:28:24.799 --> 00:28:26.000
+window. Other people have done this
+
+00:28:26.000 --> 00:28:27.520
+where like they push the context window
+
+00:28:27.520 --> 00:28:30.240
+into the workflow system and say I store
+
+00:28:30.240 --> 00:28:32.640
+nothing here. It's the workflow systems
+
+00:28:32.640 --> 00:28:34.559
+job when you're done to send the entire
+
+00:28:34.559 --> 00:28:36.480
+previous context window plus the result
+
+00:28:36.480 --> 00:28:40.240
+back in and the cho and the and fact of
+
+00:28:40.240 --> 00:28:42.000
+these matters are like it's all your
+
+00:28:42.000 --> 00:28:43.679
+choice based on your design pattern that
+
+00:28:43.679 --> 00:28:45.760
+you want to go do. So for example, we
+
+00:28:45.760 --> 00:28:48.000
+all have clicked on mail to links and
+
+00:28:48.000 --> 00:28:49.600
+most time when you click a mail to link
+
+00:28:49.600 --> 00:28:51.039
+when you email someone it just opens up
+
+00:28:51.039 --> 00:28:53.200
+a blank thing but every now and then I
+
+00:28:53.200 --> 00:28:55.840
+click one that comes in pre-filled with
+
+00:28:55.840 --> 00:28:58.559
+some subject and body filled in. The
+
+00:28:58.559 --> 00:29:01.440
+whole point of that is there they don't
+
+00:29:01.440 --> 00:29:03.120
+save anything into a database. It's all
+
+00:29:03.120 --> 00:29:05.279
+encoded into the URL and you click on it
+
+00:29:05.279 --> 00:29:07.679
+and that populates all UI providers for
+
+00:29:07.679 --> 00:29:09.080
+what the next email that you're sending
+
+00:29:09.080 --> 00:29:11.200
+out. On the other hand, if you were to
+
+00:29:11.200 --> 00:29:14.159
+file an issue on our GitHub, then we
+
+00:29:14.159 --> 00:29:16.000
+have some templates that we save into a
+
+00:29:16.000 --> 00:29:17.679
+database that you click on that reloads
+
+00:29:17.679 --> 00:29:19.159
+you and let you start from that
+
+00:29:19.159 --> 00:29:21.279
+template. And it's the same idea. We're
+
+00:29:21.279 --> 00:29:22.960
+just saving stuff to a database. Nothing
+
+00:29:22.960 --> 00:29:24.880
+too complex. It just happens that some
+
+00:29:24.880 --> 00:29:29.200
+of these things require long form may
+
+00:29:29.200 --> 00:29:31.200
+wait five days before a human checks
+
+00:29:31.200 --> 00:29:33.919
+that box. And because a human is
+
+00:29:33.919 --> 00:29:35.520
+checking the box, not a person, not an
+
+00:29:35.520 --> 00:29:36.960
+agent or something else, it it may take
+
+00:29:36.960 --> 00:29:38.159
+five days. It may take two weeks because
+
+00:29:38.159 --> 00:29:40.320
+they're on vacation. Who knows? We don't
+
+00:29:40.320 --> 00:29:41.919
+want to have that machine running
+
+00:29:41.919 --> 00:29:44.799
+infinitely on a spin loop until the
+
+00:29:44.799 --> 00:29:46.640
+human does it. So we we changed the
+
+00:29:46.640 --> 00:29:48.480
+software architecture pattern to have
+
+00:29:48.480 --> 00:29:51.919
+two separate entry points that say save,
+
+00:29:51.919 --> 00:29:54.880
+serialize, and then continue. That's it.
+
+00:29:54.880 --> 00:29:56.640
+And I think we need to clarify a couple
+
+00:29:56.640 --> 00:29:57.679
+things to address some of these
+
+00:29:57.679 --> 00:29:59.440
+questions in the chat. Um there's a lot
+
+00:29:59.440 --> 00:30:00.880
+of talking about like should should we
+
+00:30:00.880 --> 00:30:04.799
+make the AI do an unsafe tool or like by
+
+00:30:04.799 --> 00:30:06.480
+like basically having a tool call to
+
+00:30:06.480 --> 00:30:08.760
+fetch previous history from a previous
+
+00:30:08.760 --> 00:30:11.120
+workflow. Um, and like I want to put
+
+00:30:11.120 --> 00:30:12.480
+that together with like I don't see
+
+00:30:12.480 --> 00:30:14.720
+where the tool is made available to the
+
+00:30:14.720 --> 00:30:17.200
+decision loop. And so by Bob, can we
+
+00:30:17.200 --> 00:30:19.360
+clear your drawings? Sorry. I love my
+
+00:30:19.360 --> 00:30:20.880
+drawings.
+
+00:30:20.880 --> 00:30:23.200
+You're a good drawer, dude. You're um
+
+00:30:23.200 --> 00:30:24.080
+we're going to put it in the
+
+00:30:24.080 --> 00:30:27.200
+Metropolitan Museum of Claude.
+
+00:30:27.200 --> 00:30:30.559
+Um I might uh Okay, cool. So let's talk
+
+00:30:30.559 --> 00:30:32.640
+about the decision loop, right? So we're
+
+00:30:32.640 --> 00:30:34.799
+giving this model a couple different
+
+00:30:34.799 --> 00:30:37.200
+sets of tools. We have the add tool,
+
+00:30:37.200 --> 00:30:39.440
+subtract tool, multiply, divide tool.
+
+00:30:39.440 --> 00:30:41.200
+And then we're giving it a couple
+
+00:30:41.200 --> 00:30:44.159
+different um tools that are like either
+
+00:30:44.159 --> 00:30:46.240
+done for now or clarification request.
+
+00:30:46.240 --> 00:30:47.679
+And so we're having the model like kind
+
+00:30:47.679 --> 00:30:49.200
+of declare its intent when it wants to
+
+00:30:49.200 --> 00:30:51.360
+contact a human or exit the loop. It's
+
+00:30:51.360 --> 00:30:53.360
+calling one of these tools, but we don't
+
+00:30:53.360 --> 00:30:55.120
+we don't treat it like we treat most
+
+00:30:55.120 --> 00:30:56.960
+tool calls, which is like the model did
+
+00:30:56.960 --> 00:30:58.080
+a thing, so we're going to call a
+
+00:30:58.080 --> 00:31:00.159
+function map to that. We are doing a
+
+00:31:00.159 --> 00:31:01.760
+very kind of custom switch statement
+
+00:31:01.760 --> 00:31:03.440
+here. We're like based on what
+
+00:31:03.440 --> 00:31:06.000
+structured object was output, we might
+
+00:31:06.000 --> 00:31:08.000
+go call a function and our handle next
+
+00:31:08.000 --> 00:31:09.360
+step is basically just going to switch
+
+00:31:09.360 --> 00:31:12.320
+over the tool type and go run it. But we
+
+00:31:12.320 --> 00:31:15.360
+also might just return the thread. And
+
+00:31:15.360 --> 00:31:16.640
+so let me show you what this looks like
+
+00:31:16.640 --> 00:31:19.840
+in the um in the CLI case just because I
+
+00:31:19.840 --> 00:31:20.880
+keep saying I'm going to show that off
+
+00:31:20.880 --> 00:31:24.830
+and I think it'll make a couple things
+
+00:31:29.110 --> 00:31:29.120
+uh a little more clear. Yes. Yeah, we
+
+00:31:29.120 --> 00:31:30.559
+should just run it. That's probably the
+
+00:31:30.559 --> 00:31:37.029
+easiest way.
+
+00:31:39.750 --> 00:31:39.760
+Um, so we didn't put anything in. I say,
+
+00:31:39.760 --> 00:31:43.360
+you know, add 12 and three, then add f,
+
+00:31:43.360 --> 00:31:44.760
+six to
+
+00:31:44.760 --> 00:31:46.440
+the
+
+00:31:46.440 --> 00:31:49.600
+result. I can't spell
+
+00:31:49.600 --> 00:31:51.760
+and you can you can see what the model
+
+00:31:51.760 --> 00:31:54.399
+is doing. It's literally taking this. We
+
+00:31:54.399 --> 00:31:57.679
+all saw what it just did there. Um,
+
+00:31:57.679 --> 00:32:00.799
+there we go. Gave me the output. Um, and
+
+00:32:00.799 --> 00:32:01.640
+I can
+
+00:32:01.640 --> 00:32:05.840
+say now multiply that by and then I'll
+
+00:32:05.840 --> 00:32:08.159
+just put in some garbage. And so this is
+
+00:32:08.159 --> 00:32:09.360
+going to call a different type of tool
+
+00:32:09.360 --> 00:32:11.120
+which is request more information. But
+
+00:32:11.120 --> 00:32:12.480
+these are both going to have the same
+
+00:32:12.480 --> 00:32:13.840
+effect which is I'm going to get another
+
+00:32:13.840 --> 00:32:17.320
+message printed to the console. Never
+
+00:32:17.320 --> 00:32:21.960
+mind divide the last result by
+
+00:32:21.960 --> 00:32:24.320
+12. And now we're getting our approval
+
+00:32:24.320 --> 00:32:26.399
+step.
+
+00:32:26.399 --> 00:32:31.480
+So, I can say no, use six instead of
+
+00:32:31.480 --> 00:32:33.919
+12. And then I can hit enter and we'll
+
+00:32:33.919 --> 00:32:35.279
+approve that. And then I'm going to get
+
+00:32:35.279 --> 00:32:38.080
+my final answer.
+
+00:32:38.080 --> 00:32:39.519
+Notice one thing special here. When
+
+00:32:39.519 --> 00:32:41.440
+Dexter did that, when he when he said
+
+00:32:41.440 --> 00:32:42.960
+no, swap it out, it actually came back
+
+00:32:42.960 --> 00:32:44.720
+for another approval because divide is
+
+00:32:44.720 --> 00:32:48.000
+still scary. It didn't magically just go
+
+00:32:48.000 --> 00:32:50.159
+and say no. And there's nothing he could
+
+00:32:50.159 --> 00:32:53.840
+have typed into his code to prevent it
+
+00:32:53.840 --> 00:32:56.799
+from actually uh doing that because what
+
+00:32:56.799 --> 00:32:58.399
+it would do is it would actually call
+
+00:32:58.399 --> 00:33:00.240
+the divide tool. It would it would
+
+00:33:00.240 --> 00:33:02.240
+update this thread. Then it would say
+
+00:33:02.240 --> 00:33:05.360
+the next best action is divide no matter
+
+00:33:05.360 --> 00:33:07.440
+what the the get next thing will always
+
+00:33:07.440 --> 00:33:09.360
+be divide. Can you go back to your agent
+
+00:33:09.360 --> 00:33:11.120
+loop really fast? I was trying I was
+
+00:33:11.120 --> 00:33:12.159
+trying to get the I was trying to get
+
+00:33:12.159 --> 00:33:13.440
+the thread in there. I forgot we had
+
+00:33:13.440 --> 00:33:15.039
+that commented out. But you can do the
+
+00:33:15.039 --> 00:33:16.720
+same thread store thing for observe even
+
+00:33:16.720 --> 00:33:18.600
+though this is like really a throwaway
+
+00:33:18.600 --> 00:33:20.640
+conversation. You can you can add that
+
+00:33:20.640 --> 00:33:23.039
+thread store in um if you want to go
+
+00:33:23.039 --> 00:33:24.960
+back to the agent loop really fast and
+
+00:33:24.960 --> 00:33:28.399
+decide. Yeah. Yeah.
+
+00:33:28.399 --> 00:33:31.679
+Um let's go here. Like specifically what
+
+00:33:31.679 --> 00:33:33.519
+happened is once the model has picked
+
+00:33:33.519 --> 00:33:35.840
+divide as the next tool regardless if
+
+00:33:35.840 --> 00:33:38.240
+it's an update or anything else Dexter
+
+00:33:38.240 --> 00:33:41.120
+has enforced in his code I will always
+
+00:33:41.120 --> 00:33:43.840
+require a human approval. There's no
+
+00:33:43.840 --> 00:33:46.000
+there's no prompt injection ever
+
+00:33:46.000 --> 00:33:49.120
+possible that does that breaks that
+
+00:33:49.120 --> 00:33:50.880
+right. It's it's just not possible. It's
+
+00:33:50.880 --> 00:33:53.120
+always deterministic. That's 100. It's
+
+00:33:53.120 --> 00:33:55.519
+just code. It's just software. We've
+
+00:33:55.519 --> 00:33:57.200
+enforced in the software that this rule
+
+00:33:57.200 --> 00:33:59.440
+exists. So there's no risk for divide
+
+00:33:59.440 --> 00:34:02.159
+happening by accident because the only
+
+00:34:02.159 --> 00:34:04.320
+way divide can be triggered is it goes
+
+00:34:04.320 --> 00:34:06.720
+through here. Step back out to the outer
+
+00:34:06.720 --> 00:34:08.320
+loop.
+
+00:34:08.320 --> 00:34:11.760
+Yeah. It goes through there. We return
+
+00:34:11.760 --> 00:34:14.399
+the thread. Then we ask human CLI which
+
+00:34:14.399 --> 00:34:16.240
+is piece of software that we wrote. Just
+
+00:34:16.240 --> 00:34:19.520
+named that. And then here we ask the
+
+00:34:19.520 --> 00:34:22.399
+human via CLI approval to go say yes for
+
+00:34:22.399 --> 00:34:24.480
+sure. And only if the human actually
+
+00:34:24.480 --> 00:34:26.879
+approves it will we run divide. So you
+
+00:34:26.879 --> 00:34:28.639
+could do this for example for refunding
+
+00:34:28.639 --> 00:34:30.960
+a customer order. It is not possible in
+
+00:34:30.960 --> 00:34:32.960
+an automated way to send a customer a
+
+00:34:32.960 --> 00:34:35.760
+refund back. So no matter what happens,
+
+00:34:35.760 --> 00:34:37.280
+no matter what prompt injection happens,
+
+00:34:37.280 --> 00:34:38.960
+it will always go to someone in your
+
+00:34:38.960 --> 00:34:41.440
+support team to actually hit the
+
+00:34:41.440 --> 00:34:43.359
+checkbox before money transfers over
+
+00:34:43.359 --> 00:34:45.760
+back to them. And you can enforce this
+
+00:34:45.760 --> 00:34:47.560
+in a guarantee.
+
+00:34:47.560 --> 00:34:51.599
+Yeah. Um, we could even give that a
+
+00:34:51.599 --> 00:34:54.000
+shot. Do you have the email thing
+
+00:34:54.000 --> 00:34:55.679
+working?
+
+00:34:55.679 --> 00:34:57.720
+Yeah, that'll work.
+
+00:34:57.720 --> 00:35:01.839
+Um, process refund.
+
+00:35:01.839 --> 00:35:03.040
+And by the way, so this one is actually
+
+00:35:03.040 --> 00:35:04.800
+not going to be with the user that we're
+
+00:35:04.800 --> 00:35:07.440
+talking to. This is going to be with the
+
+00:35:07.440 --> 00:35:10.240
+um with some third party. This is
+
+00:35:10.240 --> 00:35:13.640
+another like uh multiplayer example
+
+00:35:13.640 --> 00:35:16.240
+basically. So let's let's do this from
+
+00:35:16.240 --> 00:35:17.520
+the ground up. So we're going to add a
+
+00:35:17.520 --> 00:35:18.800
+tool. We're actually going to remove
+
+00:35:18.800 --> 00:35:20.160
+this because we had this request
+
+00:35:20.160 --> 00:35:21.720
+approval from manager which is again
+
+00:35:21.720 --> 00:35:23.359
+non-deterministic. It only happens if
+
+00:35:23.359 --> 00:35:27.280
+the LLM tries to do it. Um but let's add
+
+00:35:27.280 --> 00:35:32.310
+the refund tool here.
+
+00:35:34.870 --> 00:35:34.880
+Um, and we need a order ID and and
+
+00:35:34.880 --> 00:35:37.760
+things like that. And then we'll pop one
+
+00:35:37.760 --> 00:35:46.670
+step out to our agent loop and we'll
+
+00:35:50.150 --> 00:35:50.160
+say return it for human approval. And
+
+00:35:50.160 --> 00:35:52.320
+then in process refund, we're actually
+
+00:35:52.320 --> 00:35:53.760
+not going to we're not going to ask back
+
+00:35:53.760 --> 00:35:55.280
+to the person we're talking to. We're
+
+00:35:55.280 --> 00:35:58.720
+going to do to a different person. Um, I
+
+00:35:58.720 --> 00:36:03.440
+think we have task manager. Yeah, that's
+
+00:36:03.440 --> 00:36:04.920
+almost
+
+00:36:04.920 --> 00:36:23.710
+it.
+
+00:36:26.310 --> 00:36:26.320
+Um, yeah. So, this is going to ask the
+
+00:36:26.320 --> 00:36:28.160
+manager and um we can do it over email
+
+00:36:28.160 --> 00:36:29.440
+or we can do it over Slack. I did get
+
+00:36:29.440 --> 00:36:33.390
+the Slack thing working.
+
+00:36:35.920 --> 00:36:35.930
+Um and then what is this supposed to
+
+00:36:35.930 --> 00:36:37.560
+[Music]
+
+00:36:37.560 --> 00:36:40.800
+return? Um
+
+00:36:40.800 --> 00:36:42.800
+manager response and then you do some
+
+00:36:42.800 --> 00:36:45.280
+filter approval probably.
+
+00:36:45.280 --> 00:36:47.839
+Yeah. So, this needs to return an
+
+00:36:47.839 --> 00:37:02.310
+approval.
+
+00:37:04.790 --> 00:37:04.800
+We have some new type stuff in here uh
+
+00:37:04.800 --> 00:37:09.320
+going. But let's see what type is
+
+00:37:09.320 --> 00:37:19.430
+this. Okay.
+
+00:37:21.190 --> 00:37:21.200
+Huh? It'll make me feel better if you do
+
+00:37:21.200 --> 00:37:24.640
+or or false instead of exclamation mark.
+
+00:37:24.640 --> 00:37:26.960
+Fine. Vertical bar. Yeah, there you go.
+
+00:37:26.960 --> 00:37:36.349
+Yeah, there we go. Okay.
+
+00:37:41.109 --> 00:37:41.119
+Um, great. So, if it was approved, um,
+
+00:37:41.119 --> 00:37:43.280
+we'll do that. Otherwise, we will return
+
+00:37:43.280 --> 00:37:45.200
+that the user denied it. And in our
+
+00:37:45.200 --> 00:37:46.480
+handle next step, we actually need to
+
+00:37:46.480 --> 00:37:48.880
+handle that process refund now. So if we
+
+00:37:48.880 --> 00:37:50.880
+actually if it actually is approved and
+
+00:37:50.880 --> 00:37:53.359
+we pop back into like we use run this
+
+00:37:53.359 --> 00:37:56.960
+function in the inner loop um we will
+
+00:37:56.960 --> 00:37:59.640
+just push uh you
+
+00:37:59.640 --> 00:38:03.599
+know refund process successfully.
+
+00:38:03.599 --> 00:38:05.599
+Yes. And notice that we're just
+
+00:38:05.599 --> 00:38:07.200
+controlling this. We're not using an LM
+
+00:38:07.200 --> 00:38:08.560
+to generate the response. We didn't do
+
+00:38:08.560 --> 00:38:10.560
+anything. We just we're just dumping out
+
+00:38:10.560 --> 00:38:13.280
+that the refund uh processed
+
+00:38:13.280 --> 00:38:16.390
+successfully.
+
+00:38:17.750 --> 00:38:17.760
+Um, yeah, we're not actually doing the
+
+00:38:17.760 --> 00:38:18.880
+thing, but this is where you would
+
+00:38:18.880 --> 00:38:22.079
+actually go process the refund. And then
+
+00:38:22.079 --> 00:38:24.480
+I think that's it.
+
+00:38:24.480 --> 00:38:26.560
+And try to run this. We'll slow back.
+
+00:38:26.560 --> 00:38:28.560
+We'll There's another type that you have
+
+00:38:28.560 --> 00:38:30.400
+down below.
+
+00:38:30.400 --> 00:38:32.000
+Yeah. What's going on? You have to I
+
+00:38:32.000 --> 00:38:34.480
+think
+
+00:38:34.480 --> 00:38:36.960
+I don't know why. Why is that failing?
+
+00:38:36.960 --> 00:38:41.550
+Oh, you can't call some.
+
+00:38:43.829 --> 00:38:43.839
+Yeah, it's Oh, you know what it is? cuz
+
+00:38:43.839 --> 00:38:46.640
+we have this block twice. Yeah, exactly.
+
+00:38:46.640 --> 00:38:48.320
+There we go. Okay. And you want to
+
+00:38:48.320 --> 00:38:49.599
+delete the responsing at the top
+
+00:38:49.599 --> 00:38:53.520
+probably. Yeah. Yeah. And agent.ts has
+
+00:38:53.520 --> 00:38:56.240
+an error as well. Type systems are
+
+00:38:56.240 --> 00:38:57.920
+great.
+
+00:38:57.920 --> 00:39:00.320
+Yeah, they fix everything. Um, and I
+
+00:39:00.320 --> 00:39:01.599
+want everyone to notice the reason that
+
+00:39:01.599 --> 00:39:03.320
+we know what this
+
+00:39:03.320 --> 00:39:05.079
+is.
+
+00:39:05.079 --> 00:39:07.920
+Um, oh, you got to return the thread.
+
+00:39:07.920 --> 00:39:09.440
+The reason that we know what this is,
+
+00:39:09.440 --> 00:39:11.200
+can you go to the process refund tool
+
+00:39:11.200 --> 00:39:14.400
+definition uh in your uh prompt really
+
+00:39:14.400 --> 00:39:16.800
+fast just in the BAML? Yeah. Yeah. Yeah.
+
+00:39:16.800 --> 00:39:18.480
+So, we just added another cool tool
+
+00:39:18.480 --> 00:39:21.440
+called process refund. That's it. It's
+
+00:39:21.440 --> 00:39:23.119
+just another data model that the model
+
+00:39:23.119 --> 00:39:25.440
+now has availability to itself. And you
+
+00:39:25.440 --> 00:39:28.440
+can see type line
+
+00:39:28.440 --> 00:39:31.520
+22 and that's all we did. Now this tool
+
+00:39:31.520 --> 00:39:33.440
+that we have determine X accept used to
+
+00:39:33.440 --> 00:39:35.200
+have human tools or calculator tools but
+
+00:39:35.200 --> 00:39:37.040
+now has another tool called customer
+
+00:39:37.040 --> 00:39:39.280
+support tools to process refunds. We
+
+00:39:39.280 --> 00:39:41.599
+just added one more and you can actually
+
+00:39:41.599 --> 00:39:42.880
+you want to zoom out. You actually see
+
+00:39:42.880 --> 00:39:45.599
+this. Yeah,
+
+00:39:45.599 --> 00:39:47.040
+you can see this in the prompt now. It's
+
+00:39:47.040 --> 00:39:49.680
+saying you know we put in the user input
+
+00:39:49.680 --> 00:39:51.920
+and then um what should the next step
+
+00:39:51.920 --> 00:39:54.640
+be? So we can even test this with um a
+
+00:39:54.640 --> 00:39:56.960
+little test, right? Just write one. I
+
+00:39:56.960 --> 00:39:58.800
+don't have one ready. Oh, there we go.
+
+00:39:58.800 --> 00:40:01.599
+It actually did it for you. Nice. So, we
+
+00:40:01.599 --> 00:40:04.400
+can run this and we'll see. Okay, cool.
+
+00:40:04.400 --> 00:40:06.079
+The output was, hey, we need the reason
+
+00:40:06.079 --> 00:40:08.480
+for the refund and the amount to be
+
+00:40:08.480 --> 00:40:11.200
+refunded. And so, we can assert that we
+
+00:40:11.200 --> 00:40:12.960
+can write assertions of like, hey, okay,
+
+00:40:12.960 --> 00:40:14.760
+we expect the intent is request more
+
+00:40:14.760 --> 00:40:19.040
+information here. Um,
+
+00:40:19.040 --> 00:40:21.359
+let's make another test case. Yeah, we
+
+00:40:21.359 --> 00:40:23.040
+can make another test case. Yeah, sure.
+
+00:40:23.040 --> 00:40:27.760
+Yeah, details with all details.
+
+00:40:27.760 --> 00:40:30.119
+It's for the jeans.
+
+00:40:30.119 --> 00:40:34.320
+They're too big and baggy. What is this
+
+00:40:34.320 --> 00:40:36.680
+Gen Z
+
+00:40:36.680 --> 00:40:40.750
+nonsense? They were
+
+00:40:43.670 --> 00:40:43.680
+$200. And I think here now we output the
+
+00:40:43.680 --> 00:40:45.960
+intent process
+
+00:40:45.960 --> 00:40:48.640
+refund. Um, and now we can say, okay, if
+
+00:40:48.640 --> 00:40:50.560
+that reason is not good enough, then we
+
+00:40:50.560 --> 00:40:52.240
+can come back and change our prompt and
+
+00:40:52.240 --> 00:40:53.680
+be like, no, the reason has to have all
+
+00:40:53.680 --> 00:40:55.119
+of these characteristics, and we can
+
+00:40:55.119 --> 00:40:56.160
+write tests around that as well. Can you
+
+00:40:56.160 --> 00:40:59.760
+add that to description on line 17?
+
+00:40:59.760 --> 00:41:01.760
+Um,
+
+00:41:01.760 --> 00:41:03.560
+the
+
+00:41:03.560 --> 00:41:09.750
+description should be detailed.
+
+00:41:27.750 --> 00:41:27.760
+Let's see what that does. Let's see.
+
+00:41:27.760 --> 00:41:29.119
+Depending on the model, it will just
+
+00:41:29.119 --> 00:41:31.680
+hallucinate a bunch of extra reasons.
+
+00:41:31.680 --> 00:41:36.829
+Uh, must be 10 reasons verbatim from the
+
+00:41:38.950 --> 00:41:38.960
+customer. And can you make it a string
+
+00:41:38.960 --> 00:41:41.200
+array instead of a string? I'm curious
+
+00:41:41.200 --> 00:41:44.079
+if that makes it I'm curious if that
+
+00:41:44.079 --> 00:41:46.640
+ends up. Yeah. Okay. But then we're
+
+00:41:46.640 --> 00:41:48.319
+going to run this thing. But this is
+
+00:41:48.319 --> 00:41:49.839
+like the popping around different parts
+
+00:41:49.839 --> 00:41:52.079
+of this. And now notice that didn't
+
+00:41:52.079 --> 00:41:53.359
+actually give me 10 reasons. And there
+
+00:41:53.359 --> 00:41:54.880
+might be nothing I can do in prompting
+
+00:41:54.880 --> 00:41:56.960
+world to make this better. So what I
+
+00:41:56.960 --> 00:41:59.839
+could do is I could in my code assert
+
+00:41:59.839 --> 00:42:01.920
+that reasons length is at least 10. And
+
+00:42:01.920 --> 00:42:04.400
+if it's not I change it to a request
+
+00:42:04.400 --> 00:42:05.839
+more information request
+
+00:42:05.839 --> 00:42:07.720
+programmatically in my
+
+00:42:07.720 --> 00:42:10.400
+code without actually relying on you
+
+00:42:10.400 --> 00:42:11.720
+would
+
+00:42:11.720 --> 00:42:17.480
+say you know like handle neck.
+
+00:42:17.480 --> 00:42:20.400
+Exactly. Exactly.
+
+00:42:20.400 --> 00:42:22.480
+And so this is why it's so valuable to
+
+00:42:22.480 --> 00:42:24.960
+have control over the internals and the
+
+00:42:24.960 --> 00:42:27.680
+transition and that uh as we call it the
+
+00:42:27.680 --> 00:42:30.480
+boundary between the LM based code and
+
+00:42:30.480 --> 00:42:32.640
+your deterministic code and to be able
+
+00:42:32.640 --> 00:42:34.640
+to take yeah now get rid of that
+
+00:42:34.640 --> 00:42:36.800
+nonsense and actually change it back to
+
+00:42:36.800 --> 00:42:39.119
+just like reason being a string because
+
+00:42:39.119 --> 00:42:40.720
+like I think this is the whole point
+
+00:42:40.720 --> 00:42:42.800
+about human loop systems like this human
+
+00:42:42.800 --> 00:42:45.520
+loop system is really related to a
+
+00:42:45.520 --> 00:42:48.400
+couple of things but it's not just about
+
+00:42:48.400 --> 00:42:50.560
+just like how do you go do The point is
+
+00:42:50.560 --> 00:42:52.240
+control everything and then you can make
+
+00:42:52.240 --> 00:42:53.760
+the app do whatever the heck you want
+
+00:42:53.760 --> 00:42:55.920
+with plain software. Yeah. And human the
+
+00:42:55.920 --> 00:42:57.920
+loop just becomes yet another way to
+
+00:42:57.920 --> 00:43:00.000
+transition control flow between this
+
+00:43:00.000 --> 00:43:01.280
+tight inner loop where you're calling
+
+00:43:01.280 --> 00:43:04.079
+tools to external systems. And because
+
+00:43:04.079 --> 00:43:07.440
+we own the thread the thread structure
+
+00:43:07.440 --> 00:43:09.119
+and how we do the events and how we
+
+00:43:09.119 --> 00:43:11.280
+serialize this and move this around.
+
+00:43:11.280 --> 00:43:12.920
+It's just
+
+00:43:12.920 --> 00:43:14.720
+software. All right. Should we try to
+
+00:43:14.720 --> 00:43:15.599
+run this? You think it's going to work
+
+00:43:15.599 --> 00:43:17.119
+on the first try? I think so. I think
+
+00:43:17.119 --> 00:43:18.560
+so. I mean, that's the beauty. Like,
+
+00:43:18.560 --> 00:43:20.079
+type systems usually solve most
+
+00:43:20.079 --> 00:43:21.839
+problems.
+
+00:43:21.839 --> 00:43:23.599
+All right. I need a refund for jeans.
+
+00:43:23.599 --> 00:43:24.960
+They're too big. What is this? Gen Z.
+
+00:43:24.960 --> 00:43:27.200
+That's funny. So, it said process
+
+00:43:27.200 --> 00:43:30.480
+refund. Um, yep. So, now it should email
+
+00:43:30.480 --> 00:43:32.520
+you, I believe. I
+
+00:43:32.520 --> 00:43:36.000
+think, let's see. I'm going to check
+
+00:43:36.000 --> 00:43:39.430
+also.
+
+00:43:45.829 --> 00:43:45.839
+here. Here we go. There you go. So,
+
+00:43:45.839 --> 00:43:48.640
+agent support agent needs approval for
+
+00:43:48.640 --> 00:43:51.920
+call this thing and I can say like can
+
+00:43:51.920 --> 00:43:54.319
+you ask them for is this was this one
+
+00:43:54.319 --> 00:43:55.680
+from just now or is this old? Yeah,
+
+00:43:55.680 --> 00:43:58.520
+that's the right one.
+
+00:43:58.520 --> 00:44:02.200
+Okay. What color the genes were
+
+00:44:02.200 --> 00:44:04.720
+first? And so I can reject this and give
+
+00:44:04.720 --> 00:44:07.359
+it feedback. And we can go and look in
+
+00:44:07.359 --> 00:44:09.040
+our thread here and we can go inspect
+
+00:44:09.040 --> 00:44:13.990
+what's happening.
+
+00:44:15.510 --> 00:44:15.520
+And then it asked and then it came back
+
+00:44:15.520 --> 00:44:16.960
+to the user. So it's already come
+
+00:44:16.960 --> 00:44:18.960
+through this. It saw that we we passed
+
+00:44:18.960 --> 00:44:20.480
+this context window. And what also
+
+00:44:20.480 --> 00:44:22.720
+becomes really cool is we can just turn
+
+00:44:22.720 --> 00:44:24.560
+these into test cases really really
+
+00:44:24.560 --> 00:44:26.640
+easily. And so if I want to change the
+
+00:44:26.640 --> 00:44:28.760
+behavior in this
+
+00:44:28.760 --> 00:44:34.430
+case, make this a
+
+00:44:37.109 --> 00:44:37.119
+test. I can quickly just pass this in.
+
+00:44:37.119 --> 00:44:39.119
+And we assert that the intent is request
+
+00:44:39.119 --> 00:44:41.200
+more information, which by the way is
+
+00:44:41.200 --> 00:44:43.040
+exactly what happened here. So, it's
+
+00:44:43.040 --> 00:44:48.349
+asking me what color they were. Neon
+
+00:44:50.150 --> 00:44:50.160
+pink. And then it's going to come
+
+00:44:50.160 --> 00:44:51.240
+through and try
+
+00:44:51.240 --> 00:44:54.400
+again. And we can come through. And
+
+00:44:54.400 --> 00:44:56.160
+again, like we're using human layer to
+
+00:44:56.160 --> 00:44:58.560
+manage this Slack stuff. Um, I think
+
+00:44:58.560 --> 00:45:00.319
+that like most of what we do at human
+
+00:45:00.319 --> 00:45:01.680
+layer is open source. I think that the
+
+00:45:01.680 --> 00:45:03.280
+thing of like wrangling Slack web hooks
+
+00:45:03.280 --> 00:45:04.720
+and moving information around like this
+
+00:45:04.720 --> 00:45:06.720
+is not a fun or interesting part of the
+
+00:45:06.720 --> 00:45:09.200
+job. And so we want to solve that. Um,
+
+00:45:09.200 --> 00:45:10.880
+but I can pop in here and now I can
+
+00:45:10.880 --> 00:45:13.440
+approve this. Um, but you can send this
+
+00:45:13.440 --> 00:45:15.680
+via any email API, any Slack API. You
+
+00:45:15.680 --> 00:45:17.040
+can implement this yourself. This is
+
+00:45:17.040 --> 00:45:19.920
+really all meant to just be conceptual.
+
+00:45:19.920 --> 00:45:22.560
+Exactly. Um, cool. Refund has been
+
+00:45:22.560 --> 00:45:25.040
+processed. Yeah. And now notice here
+
+00:45:25.040 --> 00:45:26.319
+what we did. We just we literally
+
+00:45:26.319 --> 00:45:28.000
+triggered the message that the refund is
+
+00:45:28.000 --> 00:45:29.760
+done. And the LM actually made a nice
+
+00:45:29.760 --> 00:45:31.920
+prettier message for the user from
+
+00:45:31.920 --> 00:45:34.000
+refund done to a nice substantial
+
+00:45:34.000 --> 00:45:36.480
+message that's custom to their needs for
+
+00:45:36.480 --> 00:45:38.880
+the genes. And then it added a nice
+
+00:45:38.880 --> 00:45:40.400
+little helper text cuz like feel free to
+
+00:45:40.400 --> 00:45:41.920
+reach out as well. And we and we could
+
+00:45:41.920 --> 00:45:43.520
+have again could done all this not over
+
+00:45:43.520 --> 00:45:46.319
+CLI over the customer's email. And the
+
+00:45:46.319 --> 00:45:47.839
+whole point is the customer could have
+
+00:45:47.839 --> 00:45:50.319
+initiated all this over email. We would
+
+00:45:50.319 --> 00:45:52.640
+get our emails on our approval request
+
+00:45:52.640 --> 00:45:55.440
+in our system. So a manager is approving
+
+00:45:55.440 --> 00:45:58.079
+it and we go do that. But we all know
+
+00:45:58.079 --> 00:46:00.720
+how to build that as software. The fact
+
+00:46:00.720 --> 00:46:02.160
+that we could have built that
+
+00:46:02.160 --> 00:46:04.720
+independent of LLMs
+
+00:46:04.720 --> 00:46:06.480
+means that we could have we we are
+
+00:46:06.480 --> 00:46:08.480
+simply just doing the same thing where
+
+00:46:08.480 --> 00:46:10.800
+instead of writing the stuff on our own,
+
+00:46:10.800 --> 00:46:13.520
+we're just doing it with pure software
+
+00:46:13.520 --> 00:46:16.240
+here. And what I think Anub asked an
+
+00:46:16.240 --> 00:46:17.280
+interesting question, where does human
+
+00:46:17.280 --> 00:46:18.880
+layer come into play? The whole point is
+
+00:46:18.880 --> 00:46:20.079
+at some point if you want to go
+
+00:46:20.079 --> 00:46:21.599
+integrate with humans and like have
+
+00:46:21.599 --> 00:46:22.960
+humans be a part of the system, you're
+
+00:46:22.960 --> 00:46:24.240
+going to have to build something akin to
+
+00:46:24.240 --> 00:46:27.280
+pedag duty at some point. Uh, from what
+
+00:46:27.280 --> 00:46:29.520
+I see of what Dex has built, and I don't
+
+00:46:29.520 --> 00:46:32.319
+know Dex can speak for himself, but like
+
+00:46:32.319 --> 00:46:34.000
+that's just a lot of code you have to go
+
+00:46:34.000 --> 00:46:36.000
+own and maintain. And like Dex has just
+
+00:46:36.000 --> 00:46:38.800
+built some really nice CLIs and SDKs to
+
+00:46:38.800 --> 00:46:40.480
+help you integrate and manage that
+
+00:46:40.480 --> 00:46:42.359
+system. So like if you want to escalate
+
+00:46:42.359 --> 00:46:45.359
+from the support agent down to like the
+
+00:46:45.359 --> 00:46:46.480
+manager, you're going to have to build
+
+00:46:46.480 --> 00:46:47.760
+that control flow out into your
+
+00:46:47.760 --> 00:46:49.119
+dashboard, you're going to want to have
+
+00:46:49.119 --> 00:46:51.280
+built an audit trail. You'll want you'll
+
+00:46:51.280 --> 00:46:52.960
+want to build Slack integrations. You'll
+
+00:46:52.960 --> 00:46:54.880
+want to build email integrations. You'll
+
+00:46:54.880 --> 00:46:56.160
+want to you'll want to build text
+
+00:46:56.160 --> 00:46:58.319
+integrations and human layer just makes
+
+00:46:58.319 --> 00:47:01.680
+that easy so your code looks simple and
+
+00:47:01.680 --> 00:47:04.240
+you get to just can you show the HL send
+
+00:47:04.240 --> 00:47:06.240
+yeah there you go create function call
+
+00:47:06.240 --> 00:47:09.200
+that code that he has yeah so this is an
+
+00:47:09.200 --> 00:47:11.200
+ask manager where we basically you can
+
+00:47:11.200 --> 00:47:13.040
+configure your channel of like where you
+
+00:47:13.040 --> 00:47:14.800
+how you want to contact the person
+
+00:47:14.800 --> 00:47:16.400
+whether it's email or slack or whatever
+
+00:47:16.400 --> 00:47:20.079
+it is and then you can do this like
+
+00:47:20.079 --> 00:47:22.079
+fetch human approval and we also do in
+
+00:47:22.079 --> 00:47:24.079
+the server when we get to the done for
+
+00:47:24.079 --> 00:47:25.760
+how you can use human layer to kind of
+
+00:47:25.760 --> 00:47:28.160
+like append a message as your like final
+
+00:47:28.160 --> 00:47:29.520
+answer to the thread and wait for a
+
+00:47:29.520 --> 00:47:31.200
+response.
+
+00:47:31.200 --> 00:47:33.119
+It's kind of just like it's just an SDK
+
+00:47:33.119 --> 00:47:35.040
+to help you increase the surface area of
+
+00:47:35.040 --> 00:47:36.400
+ways that you can communicate with your
+
+00:47:36.400 --> 00:47:37.839
+app instead of having to write all that
+
+00:47:37.839 --> 00:47:39.599
+code yourself. You can add the surface
+
+00:47:39.599 --> 00:47:40.960
+area of email. You can add the surface
+
+00:47:40.960 --> 00:47:42.640
+area of Slack. You can add the surface
+
+00:47:42.640 --> 00:47:45.359
+area of text etc so on and so on. You
+
+00:47:45.359 --> 00:47:46.720
+can add the surface area of permission
+
+00:47:46.720 --> 00:47:53.589
+management of escalation flows etc.
+
+00:47:56.630 --> 00:47:56.640
+Does any questions today uh about how
+
+00:47:56.640 --> 00:47:59.200
+how this system works and like how we
+
+00:47:59.200 --> 00:48:02.720
+leverage humans as tools and how by I
+
+00:48:02.720 --> 00:48:05.040
+think I think it might be I'm looking at
+
+00:48:05.040 --> 00:48:07.760
+the question. I think um I I think it
+
+00:48:07.760 --> 00:48:09.200
+might be worth just popping back to the
+
+00:48:09.200 --> 00:48:10.800
+whiteboard and kind of finishing what we
+
+00:48:10.800 --> 00:48:13.280
+were sketching out here. I can find that
+
+00:48:13.280 --> 00:48:14.960
+window. You want to text me a link by
+
+00:48:14.960 --> 00:48:17.920
+the way? Um, and while if people have
+
+00:48:17.920 --> 00:48:19.839
+questions while we go do that, if people
+
+00:48:19.839 --> 00:48:21.359
+have questions and want to hop on and
+
+00:48:21.359 --> 00:48:24.319
+ask a couple, that would be uh very open
+
+00:48:24.319 --> 00:48:30.390
+right now.
+
+00:48:33.109 --> 00:48:33.119
+Yeah, AJ, come on.
+
+00:48:33.119 --> 00:48:35.280
+Uh, yeah. Um, I'm just wondering if the
+
+00:48:35.280 --> 00:48:37.839
+human loop event loop can change the
+
+00:48:37.839 --> 00:48:41.119
+prompt. Uh I'm just I guess just uh from
+
+00:48:41.119 --> 00:48:42.800
+an architectural perspective I'm just
+
+00:48:42.800 --> 00:48:44.240
+wondering what the relationship between
+
+00:48:44.240 --> 00:48:46.559
+the BAML file and the agent plus human
+
+00:48:46.559 --> 00:48:49.599
+in the loop plus tool call is. So uh is
+
+00:48:49.599 --> 00:48:51.160
+there a way
+
+00:48:51.160 --> 00:48:55.040
+during the human in the loop pause to
+
+00:48:55.040 --> 00:48:58.000
+update the prompt of yeah the family
+
+00:48:58.000 --> 00:49:00.480
+file. Um that's remember your prompt is
+
+00:49:00.480 --> 00:49:02.000
+just like variables that you pass into
+
+00:49:02.000 --> 00:49:04.319
+your code. So, one thing you could do is
+
+00:49:04.319 --> 00:49:06.720
+the the text file that Dexter made is
+
+00:49:06.720 --> 00:49:08.160
+just like a Can you show the text file
+
+00:49:08.160 --> 00:49:11.280
+of your current system that you have?
+
+00:49:11.280 --> 00:49:15.280
+Yeah. Oh, the um the thread. Yeah. Yeah.
+
+00:49:15.280 --> 00:49:17.200
+We could eas like this is a UI that
+
+00:49:17.200 --> 00:49:18.720
+Dexter made in some sense. This is a UI.
+
+00:49:18.720 --> 00:49:20.559
+It's text file UI, but it's a UI of the
+
+00:49:20.559 --> 00:49:23.280
+current state in our agent dashboard and
+
+00:49:23.280 --> 00:49:24.800
+we could build our own UI that renders
+
+00:49:24.800 --> 00:49:26.800
+the JSON blob or the database entry in
+
+00:49:26.800 --> 00:49:29.359
+the format that we want for our users.
+
+00:49:29.359 --> 00:49:32.640
+And then what we can do is we could let
+
+00:49:32.640 --> 00:49:34.400
+in the approval process instead of just
+
+00:49:34.400 --> 00:49:36.240
+doing a checkbox yes or no we could
+
+00:49:36.240 --> 00:49:38.160
+literally just let the user let our
+
+00:49:38.160 --> 00:49:41.280
+people edit the prompt or edit the state
+
+00:49:41.280 --> 00:49:43.280
+and that gets passed into the message.
+
+00:49:43.280 --> 00:49:45.599
+We could have them check a box on the
+
+00:49:45.599 --> 00:49:46.880
+state. Right? Can you go back to your
+
+00:49:46.880 --> 00:49:49.599
+JSON blob?
+
+00:49:49.599 --> 00:49:51.680
+We could add more metadata into other
+
+00:49:51.680 --> 00:49:55.440
+than events of like add add really
+
+00:49:55.440 --> 00:49:57.760
+strict prompt in the thread object. Like
+
+00:49:57.760 --> 00:49:59.119
+we could have more metadata into here
+
+00:49:59.119 --> 00:50:00.640
+that we have. We could have less
+
+00:50:00.640 --> 00:50:03.040
+metadata. It's like strict prompt and
+
+00:50:03.040 --> 00:50:05.760
+like boolean true or false. And we pass
+
+00:50:05.760 --> 00:50:08.000
+that into the actual like prompt to go
+
+00:50:08.000 --> 00:50:10.880
+modify it. The way that we serialize the
+
+00:50:10.880 --> 00:50:12.480
+prompt is really exact. And now we
+
+00:50:12.480 --> 00:50:14.559
+trigger a totally different workflow.
+
+00:50:14.559 --> 00:50:17.119
+Maybe exactly determine next step or
+
+00:50:17.119 --> 00:50:20.559
+something. Yeah. Right. Or it's like you
+
+00:50:20.559 --> 00:50:22.559
+know determine next step think harder.
+
+00:50:22.559 --> 00:50:24.160
+Yeah. Exactly. Like it could we could
+
+00:50:24.160 --> 00:50:26.240
+just trigger a totally separate prompt
+
+00:50:26.240 --> 00:50:28.000
+and maybe that or you can do something
+
+00:50:28.000 --> 00:50:29.920
+like uh you know a lot of people have
+
+00:50:29.920 --> 00:50:32.319
+like working agent right and then it's
+
+00:50:32.319 --> 00:50:35.760
+like you know we have our success agent
+
+00:50:35.760 --> 00:50:37.520
+if you want to do multi- aent systems or
+
+00:50:37.520 --> 00:50:39.040
+something you can have a thread and then
+
+00:50:39.040 --> 00:50:40.640
+each agent gets its own thread and you
+
+00:50:40.640 --> 00:50:42.160
+can fork these out and so you can put
+
+00:50:42.160 --> 00:50:44.160
+whatever state you want on here and this
+
+00:50:44.160 --> 00:50:45.599
+is again this is another one of the 12
+
+00:50:45.599 --> 00:50:47.920
+factors I'm not going to it's uh unify
+
+00:50:47.920 --> 00:50:50.400
+execution state and business state which
+
+00:50:50.400 --> 00:50:52.960
+is basically like
+
+00:50:52.960 --> 00:50:54.079
+This one's really short. You can watch
+
+00:50:54.079 --> 00:50:55.119
+the video, but it's basically the idea
+
+00:50:55.119 --> 00:50:57.599
+of like just the thing that manages the
+
+00:50:57.599 --> 00:50:59.280
+workflow and what stage we're in and
+
+00:50:59.280 --> 00:51:01.520
+what's next and how we're operating can
+
+00:51:01.520 --> 00:51:04.640
+be the same as the thing that tracks the
+
+00:51:04.640 --> 00:51:06.319
+data we're passing to the LM. And this
+
+00:51:06.319 --> 00:51:07.599
+is the thing Vibb talks about all the
+
+00:51:07.599 --> 00:51:09.040
+time. We talked about in the first like
+
+00:51:09.040 --> 00:51:11.200
+episode back in March is like you should
+
+00:51:11.200 --> 00:51:13.520
+build an object that you control and
+
+00:51:13.520 --> 00:51:16.480
+create different views into it for your
+
+00:51:16.480 --> 00:51:20.000
+code, for embedding models, for humans,
+
+00:51:20.000 --> 00:51:22.400
+and for LMS. Yeah, but this is kind of
+
+00:51:22.400 --> 00:51:24.240
+the core of your application and if you
+
+00:51:24.240 --> 00:51:26.480
+embrace this then you can do so much.
+
+00:51:26.480 --> 00:51:28.640
+Yeah, this is literally why in BAML we
+
+00:51:28.640 --> 00:51:30.280
+if you go back to the agent function
+
+00:51:30.280 --> 00:51:32.800
+definition why we don't abide by any of
+
+00:51:32.800 --> 00:51:34.800
+the structure. It's like who cares about
+
+00:51:34.800 --> 00:51:36.720
+chat roles? Who cares if it's a user
+
+00:51:36.720 --> 00:51:38.319
+message system message? Some LMs do,
+
+00:51:38.319 --> 00:51:40.800
+some LMS don't. All we care about is
+
+00:51:40.800 --> 00:51:42.240
+this is a function that happens to take
+
+00:51:42.240 --> 00:51:45.000
+in this thread and returns one of these
+
+00:51:45.000 --> 00:51:48.000
+types. How we implement it might be LM
+
+00:51:48.000 --> 00:51:50.319
+specific. It might be totally weird. Who
+
+00:51:50.319 --> 00:51:52.079
+cares? None of us really care about that
+
+00:51:52.079 --> 00:51:54.240
+implementation detail. Or I mean at some
+
+00:51:54.240 --> 00:51:55.440
+point we do because we need to increase
+
+00:51:55.440 --> 00:51:57.359
+our accuracy, but from a user
+
+00:51:57.359 --> 00:51:59.200
+standpoint, people that use these
+
+00:51:59.200 --> 00:52:01.680
+functions, they don't care. They just
+
+00:52:01.680 --> 00:52:03.200
+want to pass in a thread and get one of
+
+00:52:03.200 --> 00:52:05.680
+these types out. And I think what's
+
+00:52:05.680 --> 00:52:07.520
+beautiful about kind of like the Bamy
+
+00:52:07.520 --> 00:52:09.359
+way of making agent is it it actually
+
+00:52:09.359 --> 00:52:10.960
+forces you to write a little bit more
+
+00:52:10.960 --> 00:52:13.599
+code, but you own the code and you can
+
+00:52:13.599 --> 00:52:15.440
+do a lot more interesting fancy stuff,
+
+00:52:15.440 --> 00:52:17.680
+which is again like what you want when
+
+00:52:17.680 --> 00:52:19.599
+you're chasing performance. I think this
+
+00:52:19.599 --> 00:52:20.720
+comes from like the electrical
+
+00:52:20.720 --> 00:52:22.559
+engineering background maybe is you want
+
+00:52:22.559 --> 00:52:24.240
+as many little points in the workflow
+
+00:52:24.240 --> 00:52:25.839
+where you can change things and tweak
+
+00:52:25.839 --> 00:52:28.160
+things and learn about what works better
+
+00:52:28.160 --> 00:52:29.440
+because you're dealing with systems that
+
+00:52:29.440 --> 00:52:32.079
+are nondeterministic. Yeah, Derek has a
+
+00:52:32.079 --> 00:52:37.829
+question. More questions. Let's go.
+
+00:52:40.150 --> 00:52:40.160
+Thanks. Um you really got me going with
+
+00:52:40.160 --> 00:52:43.839
+the jean scenario and the hot pink. Um,
+
+00:52:43.839 --> 00:52:46.000
+so I'm imagining, okay, first it's got
+
+00:52:46.000 --> 00:52:48.160
+to classify maybe as jeans because they
+
+00:52:48.160 --> 00:52:50.160
+could have other product lines. So there
+
+00:52:50.160 --> 00:52:51.839
+could be access to like the product
+
+00:52:51.839 --> 00:52:54.319
+merchandising hierarchy. And then I
+
+00:52:54.319 --> 00:52:56.000
+thought of fraud detection loops like
+
+00:52:56.000 --> 00:52:57.440
+they might say a color and you're like,
+
+00:52:57.440 --> 00:52:59.599
+"Oh, we don't sell that color." You
+
+00:52:59.599 --> 00:53:01.760
+know, it could be flagged for human in
+
+00:53:01.760 --> 00:53:04.480
+the, you know, review as a follow-up or
+
+00:53:04.480 --> 00:53:06.640
+something. And then the other thing is
+
+00:53:06.640 --> 00:53:08.720
+like in any kind of customer service
+
+00:53:08.720 --> 00:53:11.440
+this idea of a paro chart of the
+
+00:53:11.440 --> 00:53:13.599
+frequency of each and then you can kind
+
+00:53:13.599 --> 00:53:15.920
+of assign a cost to the the units in
+
+00:53:15.920 --> 00:53:17.800
+each uh
+
+00:53:17.800 --> 00:53:20.480
+bucket that's like a dynamic feedback
+
+00:53:20.480 --> 00:53:22.480
+loop to improve your product what's
+
+00:53:22.480 --> 00:53:25.200
+causing the root issue. And so this has
+
+00:53:25.200 --> 00:53:27.920
+the opportunity to accelerate that. If
+
+00:53:27.920 --> 00:53:29.680
+all of a sudden there was a bad batch
+
+00:53:29.680 --> 00:53:32.160
+and something happened uh you know this
+
+00:53:32.160 --> 00:53:34.800
+would be an earlier alert to that. And
+
+00:53:34.800 --> 00:53:37.200
+then also for convenience of the user,
+
+00:53:37.200 --> 00:53:39.440
+if you start to see this distribution of
+
+00:53:39.440 --> 00:53:41.599
+these are the three or four that like
+
+00:53:41.599 --> 00:53:44.240
+90% of people come in, you can give
+
+00:53:44.240 --> 00:53:45.920
+checklists or something like that that
+
+00:53:45.920 --> 00:53:48.079
+become dynamic. Are these reasonable
+
+00:53:48.079 --> 00:53:50.480
+scenarios or am I totally like out on
+
+00:53:50.480 --> 00:53:52.800
+Yeah, 100% of what you said is totally
+
+00:53:52.800 --> 00:53:54.559
+possible. Can you go back to your outer
+
+00:53:54.559 --> 00:53:56.160
+loop code decks where you're handling
+
+00:53:56.160 --> 00:53:58.319
+the agent response?
+
+00:53:58.319 --> 00:53:59.559
+Yeah.
+
+00:53:59.559 --> 00:54:02.240
+like um where you get a message from the
+
+00:54:02.240 --> 00:54:04.240
+human
+
+00:54:04.240 --> 00:54:06.640
+the human response. Um, oh, sorry, where
+
+00:54:06.640 --> 00:54:08.800
+you Yeah, this one. Like right over
+
+00:54:08.800 --> 00:54:11.119
+here, we could run like in this case, we
+
+00:54:11.119 --> 00:54:12.640
+just save stuff to the state and we move
+
+00:54:12.640 --> 00:54:15.680
+on with our life. But we could easily
+
+00:54:15.680 --> 00:54:17.280
+look back into our database and say like
+
+00:54:17.280 --> 00:54:19.599
+what's the skew ids that match this and
+
+00:54:19.599 --> 00:54:21.119
+that can be another function whether
+
+00:54:21.119 --> 00:54:24.079
+it's an LM embedding or just regular
+
+00:54:24.079 --> 00:54:26.319
+code that looks for the IDs for that
+
+00:54:26.319 --> 00:54:28.079
+customer ID. Like maybe we do a lookup
+
+00:54:28.079 --> 00:54:30.400
+of the customer ID based on the email or
+
+00:54:30.400 --> 00:54:31.520
+the phone number that's under the
+
+00:54:31.520 --> 00:54:33.440
+message. We look up the details. We look
+
+00:54:33.440 --> 00:54:34.880
+at their last purchase and we're like,
+
+00:54:34.880 --> 00:54:36.319
+"Is this the purchase you're talking
+
+00:54:36.319 --> 00:54:38.319
+about?" And like flight companies have
+
+00:54:38.319 --> 00:54:40.000
+done this forever. Whenever you book a
+
+00:54:40.000 --> 00:54:40.720
+flight and you call them, we're like,
+
+00:54:40.720 --> 00:54:41.760
+"Oh, are you talking about this flight
+
+00:54:41.760 --> 00:54:43.599
+that's coming up?" And you just say yes
+
+00:54:43.599 --> 00:54:45.440
+or no. And they can do that because they
+
+00:54:45.440 --> 00:54:46.559
+just associate your phone number with
+
+00:54:46.559 --> 00:54:48.480
+your data. We could go do that same
+
+00:54:48.480 --> 00:54:50.800
+thing here. We could save more metadata
+
+00:54:50.800 --> 00:54:53.440
+and we could we could query our SQL
+
+00:54:53.440 --> 00:54:55.599
+database or in this case our file system
+
+00:54:55.599 --> 00:54:57.839
+database for all the things that were
+
+00:54:57.839 --> 00:55:00.400
+returned in the last 50 days. And we can
+
+00:55:00.400 --> 00:55:02.400
+just analyze that totally offline in a
+
+00:55:02.400 --> 00:55:04.319
+totally different process that we run on
+
+00:55:04.319 --> 00:55:06.400
+batch every day, every hour, every three
+
+00:55:06.400 --> 00:55:08.640
+hours, whatever we want to build some of
+
+00:55:08.640 --> 00:55:09.760
+the analytics that you're talking about,
+
+00:55:09.760 --> 00:55:12.950
+Derek.
+
+00:55:15.109 --> 00:55:15.119
+Um, deterministic or something here.
+
+00:55:15.119 --> 00:55:16.800
+Exactly.
+
+00:55:16.800 --> 00:55:17.839
+Did you have anything to add to that,
+
+00:55:17.839 --> 00:55:20.319
+Dexter? Was that
+
+00:55:20.319 --> 00:55:21.520
+No, I think that makes sense. I mean, I
+
+00:55:21.520 --> 00:55:22.559
+think I think you're getting the core of
+
+00:55:22.559 --> 00:55:24.319
+it. It's just like it's all just code.
+
+00:55:24.319 --> 00:55:26.079
+And so if you own the loop and the
+
+00:55:26.079 --> 00:55:28.800
+control flow, then you can shell data
+
+00:55:28.800 --> 00:55:30.480
+out to other systems whenever you want,
+
+00:55:30.480 --> 00:55:31.920
+you can pull data in. It's not that you
+
+00:55:31.920 --> 00:55:33.760
+can't do that if you're using kind of a
+
+00:55:33.760 --> 00:55:35.520
+more blackboxy framework that kind of
+
+00:55:35.520 --> 00:55:37.200
+like wraps up the loop for you and just
+
+00:55:37.200 --> 00:55:39.440
+like calls functions without kind of
+
+00:55:39.440 --> 00:55:42.480
+giving you hands into the guts, but um
+
+00:55:42.480 --> 00:55:44.400
+it definitely becomes a lot more clear
+
+00:55:44.400 --> 00:55:45.920
+and you can I don't know, I think we're
+
+00:55:45.920 --> 00:55:48.400
+in the age with LMS of like I think uh
+
+00:55:48.400 --> 00:55:49.760
+somebody in the Ruby community wrote
+
+00:55:49.760 --> 00:55:52.000
+this back in like 2014. It was like
+
+00:55:52.000 --> 00:55:53.960
+duplication is better than the wrong
+
+00:55:53.960 --> 00:55:56.319
+abstraction. Like having way more code
+
+00:55:56.319 --> 00:55:58.960
+that someone else has already written is
+
+00:55:58.960 --> 00:56:01.359
+better than having an abstraction that
+
+00:56:01.359 --> 00:56:03.359
+gets in your way or makes things more
+
+00:56:03.359 --> 00:56:06.400
+complicated. Exactly. And also like code
+
+00:56:06.400 --> 00:56:09.440
+you than code you don't own. Especially
+
+00:56:09.440 --> 00:56:10.880
+in the world of AI where everything is
+
+00:56:10.880 --> 00:56:13.119
+changing so fast.
+
+00:56:13.119 --> 00:56:19.510
+Yeah. All right, Obby, what you got?
+
+00:56:22.309 --> 00:56:22.319
+Yeah, my question is like in in this
+
+00:56:22.319 --> 00:56:24.960
+flow, how many agents do you have u or
+
+00:56:24.960 --> 00:56:27.839
+how can we have this uh human in the
+
+00:56:27.839 --> 00:56:32.240
+loop system in a in a group chat with
+
+00:56:32.240 --> 00:56:36.640
+what we have in AG2 or autogen or um
+
+00:56:36.640 --> 00:56:39.920
+like a swarm kind of chat where there
+
+00:56:39.920 --> 00:56:41.920
+are multiple agents communicating with
+
+00:56:41.920 --> 00:56:44.079
+each other and at every step you want
+
+00:56:44.079 --> 00:56:48.240
+the human intervention Um, and you know,
+
+00:56:48.240 --> 00:56:51.359
+like if it's how do you because you
+
+00:56:51.359 --> 00:56:53.680
+can't really terminate a chat and say
+
+00:56:53.680 --> 00:56:56.559
+like um maybe you can terminate the chat
+
+00:56:56.559 --> 00:57:00.400
+and uh do that but you can't really pose
+
+00:57:00.400 --> 00:57:03.440
+uh a a workflow with uh with multiple
+
+00:57:03.440 --> 00:57:05.920
+agents working because then each worker
+
+00:57:05.920 --> 00:57:10.160
+that gets paused during the uh the
+
+00:57:10.160 --> 00:57:13.440
+system like imagine thousand customers
+
+00:57:13.440 --> 00:57:16.160
+uh using multiple workers and how how
+
+00:57:16.160 --> 00:57:19.760
+any things that are on hold. So like how
+
+00:57:19.760 --> 00:57:24.960
+do you how do you uh I kind of n
+
+00:57:24.960 --> 00:57:27.359
+I think the confusion that you're uh the
+
+00:57:27.359 --> 00:57:28.880
+the place where your question is coming
+
+00:57:28.880 --> 00:57:30.799
+from is from this premise of how these
+
+00:57:30.799 --> 00:57:33.200
+systems are running. You're running all
+
+00:57:33.200 --> 00:57:34.960
+these systems in a black box by these
+
+00:57:34.960 --> 00:57:36.240
+other frameworks that basically run
+
+00:57:36.240 --> 00:57:38.960
+while loops under the hood. Yeah. Okay.
+
+00:57:38.960 --> 00:57:41.119
+Now the problem is you want to go and
+
+00:57:41.119 --> 00:57:42.720
+stop them and those frameworks don't
+
+00:57:42.720 --> 00:57:44.559
+really give you a good way to stop them.
+
+00:57:44.559 --> 00:57:48.480
+Exactly. Exactly. And uh the only way I
+
+00:57:48.480 --> 00:57:50.960
+can think of is you know uh if if it's a
+
+00:57:50.960 --> 00:57:53.599
+group chat have some human intervention
+
+00:57:53.599 --> 00:57:57.200
+but uh basically end end the group chat
+
+00:57:57.200 --> 00:58:00.559
+and start a new request instead of boils
+
+00:58:00.559 --> 00:58:01.920
+down to the same thing that you have to
+
+00:58:01.920 --> 00:58:03.760
+do. What you have to do is you have to
+
+00:58:03.760 --> 00:58:06.079
+somehow serialize your state. At any
+
+00:58:06.079 --> 00:58:07.520
+point you should be able to view the
+
+00:58:07.520 --> 00:58:09.520
+state of the system that you are
+
+00:58:09.520 --> 00:58:11.680
+running. The reason that most people run
+
+00:58:11.680 --> 00:58:13.280
+into problems with these systems is
+
+00:58:13.280 --> 00:58:15.280
+you're not able to view the state. Think
+
+00:58:15.280 --> 00:58:17.280
+about how you do parallel tasks today.
+
+00:58:17.280 --> 00:58:18.960
+Instead of viewing it like an agent,
+
+00:58:18.960 --> 00:58:20.640
+just view every single one of these
+
+00:58:20.640 --> 00:58:24.160
+boxes that Dexter drew on the left as a
+
+00:58:24.160 --> 00:58:25.520
+No, that one. The other one you were
+
+00:58:25.520 --> 00:58:28.280
+doing. Can you can you go back?
+
+00:58:28.280 --> 00:58:31.359
+Yeah. Oh, sorry. Zoom. Yeah. The the the
+
+00:58:31.359 --> 00:58:32.960
+one with the web the web. Yeah, that
+
+00:58:32.960 --> 00:58:35.280
+one. This stuff that Dexter wrote over
+
+00:58:35.280 --> 00:58:36.960
+here. Each of these doesn't matter if
+
+00:58:36.960 --> 00:58:39.359
+it's a Y loop or not, right? All that
+
+00:58:39.359 --> 00:58:41.760
+matters is that as long as they're
+
+00:58:41.760 --> 00:58:43.520
+running and I can introspect them and
+
+00:58:43.520 --> 00:58:45.520
+have some way to serialize the state,
+
+00:58:45.520 --> 00:58:47.359
+the state of my system now just becomes
+
+00:58:47.359 --> 00:58:49.960
+a serialized state of all of these
+
+00:58:49.960 --> 00:58:53.520
+together at any given time. And in a
+
+00:58:53.520 --> 00:58:55.280
+multiprocessing job, I'm going to I'm
+
+00:58:55.280 --> 00:58:56.240
+going to delete my drawings. In a
+
+00:58:56.240 --> 00:58:57.920
+multipprocessing job, how do I go deal
+
+00:58:57.920 --> 00:59:00.480
+with this? Well, I build this way to
+
+00:59:00.480 --> 00:59:02.240
+communicate to each of those workers to
+
+00:59:02.240 --> 00:59:04.960
+pause. I pause it and I do a sync step
+
+00:59:04.960 --> 00:59:06.960
+and I tell them to exit their loop.
+
+00:59:06.960 --> 00:59:09.119
+That's how you do multi-threaded code.
+
+00:59:09.119 --> 00:59:10.640
+So if you want to do multi-threaded
+
+00:59:10.640 --> 00:59:12.960
+code, you got to do multi-threaded code.
+
+00:59:12.960 --> 00:59:14.799
+You tell each of those workers to stop.
+
+00:59:14.799 --> 00:59:16.319
+You get their state, get them to write
+
+00:59:16.319 --> 00:59:18.319
+it into their database. And you have to
+
+00:59:18.319 --> 00:59:20.319
+deal with atomic variables. And you have
+
+00:59:20.319 --> 00:59:22.880
+to deal with locks and contentions and
+
+00:59:22.880 --> 00:59:24.160
+all this stuff that we have to do in
+
+00:59:24.160 --> 00:59:25.880
+multi-threaded code. That doesn't go
+
+00:59:25.880 --> 00:59:28.160
+away. You just now have introduced that.
+
+00:59:28.160 --> 00:59:30.240
+The point is is that if you if you if if
+
+00:59:30.240 --> 00:59:32.319
+the if the internals are a black box,
+
+00:59:32.319 --> 00:59:33.680
+then you don't even have the option to
+
+00:59:33.680 --> 00:59:36.079
+go write that code. Exactly.
+
+00:59:36.079 --> 00:59:37.520
+That's kind of why like if you're using
+
+00:59:37.520 --> 00:59:39.200
+Swarm, you're kind of I don't I
+
+00:59:39.200 --> 00:59:40.720
+know Swarm specifically, but like any
+
+00:59:40.720 --> 00:59:42.160
+most of these frameworks that own the Y
+
+00:59:42.160 --> 00:59:43.760
+loop and don't let you touch the Y loop,
+
+00:59:43.760 --> 00:59:45.520
+you're basically because you
+
+00:59:45.520 --> 00:59:47.760
+can't go and stop. You can't go in and
+
+00:59:47.760 --> 00:59:50.160
+stop the loop. So, you just have to wait
+
+00:59:50.160 --> 00:59:53.040
+until the loop is done. Yeah, that's
+
+00:59:53.040 --> 00:59:54.960
+what I said. you know, like have the
+
+00:59:54.960 --> 00:59:58.000
+human intervention agent at the end and
+
+00:59:58.000 --> 01:00:00.400
+end the entire group chat and maybe
+
+01:00:00.400 --> 01:00:03.520
+somehow store the history in a database
+
+01:00:03.520 --> 01:00:06.319
+or something and do another request. But
+
+01:00:06.319 --> 01:00:09.200
+this is what my other question is, yeah,
+
+01:00:09.200 --> 01:00:10.720
+go ahead. But this is what Dexter says
+
+01:00:10.720 --> 01:00:12.240
+so much is like if the only benefit
+
+01:00:12.240 --> 01:00:13.359
+you're getting from there is just
+
+01:00:13.359 --> 01:00:15.440
+running the Y loop just write the damn Y
+
+01:00:15.440 --> 01:00:17.599
+loop and now you can just like that Y
+
+01:00:17.599 --> 01:00:19.599
+loop whenever you want to whenever you
+
+01:00:19.599 --> 01:00:21.760
+want to leave and that will make your
+
+01:00:21.760 --> 01:00:25.200
+life a lot faster and easier.
+
+01:00:25.200 --> 01:00:27.440
+My other question is like why do you
+
+01:00:27.440 --> 01:00:28.960
+want this? I know people always talk
+
+01:00:28.960 --> 01:00:30.319
+about like I want multi- aent systems
+
+01:00:30.319 --> 01:00:32.240
+and my question is always why and I'm
+
+01:00:32.240 --> 01:00:35.160
+not saying that useful Dexter sassy
+
+01:00:35.160 --> 01:00:38.880
+way threading is useful
+
+01:00:38.880 --> 01:00:41.280
+right like I run multi-threaded code all
+
+01:00:41.280 --> 01:00:42.880
+the time it's part of I'm talking about
+
+01:00:42.880 --> 01:00:44.079
+multi- threading though I'm talking
+
+01:00:44.079 --> 01:00:46.559
+about like I guess I guess like the
+
+01:00:46.559 --> 01:00:48.240
+model and like message passing and stuff
+
+01:00:48.240 --> 01:00:50.559
+like that exactly like message passing
+
+01:00:50.559 --> 01:00:52.400
+and running multiple channels in your
+
+01:00:52.400 --> 01:00:54.240
+codebase like Go is based on this as a
+
+01:00:54.240 --> 01:00:55.839
+programming language go is literally
+
+01:00:55.839 --> 01:00:58.000
+made so we can just send data across
+
+01:00:58.000 --> 01:01:00.640
+channels really fast and really easily.
+
+01:01:00.640 --> 01:01:02.799
+Uh it's made a whole design pattern
+
+01:01:02.799 --> 01:01:04.079
+around this because you do write this
+
+01:01:04.079 --> 01:01:06.799
+kind of code all the time and agents
+
+01:01:06.799 --> 01:01:08.640
+might benefit from this kind of code.
+
+01:01:08.640 --> 01:01:11.280
+But I think what you're saying is that
+
+01:01:11.280 --> 01:01:13.359
+highQL agents are probably good for 95%
+
+01:01:13.359 --> 01:01:15.839
+of developers because 95% of developers
+
+01:01:15.839 --> 01:01:18.000
+don't write multi-threaded code anyway.
+
+01:01:18.000 --> 01:01:19.440
+So just write the code that you're used
+
+01:01:19.440 --> 01:01:20.799
+to writing instead of trying to blow it
+
+01:01:20.799 --> 01:01:23.280
+up into like a multi-threaded system
+
+01:01:23.280 --> 01:01:27.430
+most of the time.
+
+01:01:29.630 --> 01:01:29.640
+I guess makes sense.
+
+01:01:29.640 --> 01:01:32.240
+Um I want to come back to kind of a
+
+01:01:32.240 --> 01:01:34.079
+little bit like just just one more thing
+
+01:01:34.079 --> 01:01:36.400
+that I wanted to get across. Um is kind
+
+01:01:36.400 --> 01:01:37.839
+of like something we've been hacking on
+
+01:01:37.839 --> 01:01:39.839
+and thinking about a lot which is um
+
+01:01:39.839 --> 01:01:41.440
+kind of like after having designed these
+
+01:01:41.440 --> 01:01:44.960
+systems for a really long time. Um we're
+
+01:01:44.960 --> 01:01:46.799
+kind of working on a this is a preview
+
+01:01:46.799 --> 01:01:48.559
+but we're talking about like the agent
+
+01:01:48.559 --> 01:01:51.520
+to human protocol basically where agents
+
+01:01:51.520 --> 01:01:53.440
+can either contact humans or request
+
+01:01:53.440 --> 01:01:55.119
+approvals. And in this one like the
+
+01:01:55.119 --> 01:01:57.240
+input is a message and the output is a
+
+01:01:57.240 --> 01:01:59.760
+response. And then so this is like a
+
+01:01:59.760 --> 01:02:03.040
+basic restbased API and then you also
+
+01:02:03.040 --> 01:02:04.799
+have events from a human. And so your
+
+01:02:04.799 --> 01:02:06.559
+agent can like fire something off and
+
+01:02:06.559 --> 01:02:08.400
+pull for it or you can fire something
+
+01:02:08.400 --> 01:02:10.280
+off and forget about it and wait for an
+
+01:02:10.280 --> 01:02:13.440
+event. Um but we have these kind of two
+
+01:02:13.440 --> 01:02:15.040
+different classes and then this
+
+01:02:15.040 --> 01:02:17.839
+conversation created one. Um so you have
+
+01:02:17.839 --> 01:02:19.839
+function call which is like the you know
+
+01:02:19.839 --> 01:02:21.760
+request approval call this function
+
+01:02:21.760 --> 01:02:24.240
+call. Uh, and then you have human
+
+01:02:24.240 --> 01:02:26.079
+contact, which is just like string to
+
+01:02:26.079 --> 01:02:28.160
+string either whether it's like request
+
+01:02:28.160 --> 01:02:30.400
+more information or I'm done for now or
+
+01:02:30.400 --> 01:02:32.799
+I need clarification or whatever it is.
+
+01:02:32.799 --> 01:02:34.559
+Um, and those can come into your agent.
+
+01:02:34.559 --> 01:02:36.400
+But that's that's kind of just like to
+
+01:02:36.400 --> 01:02:38.400
+close the loop on that server we were
+
+01:02:38.400 --> 01:02:40.960
+building basically. Um, and this can be
+
+01:02:40.960 --> 01:02:42.640
+a million different humans. This can be
+
+01:02:42.640 --> 01:02:44.359
+the manager, the CS
+
+01:02:44.359 --> 01:02:47.359
+manager. This can be the user you're
+
+01:02:47.359 --> 01:02:48.359
+talking
+
+01:02:48.359 --> 01:02:50.559
+to. This can be a hundred different
+
+01:02:50.559 --> 01:02:52.079
+things. But this is this is a thing
+
+01:02:52.079 --> 01:02:54.400
+we're thinking about a lot and um trying
+
+01:02:54.400 --> 01:02:55.599
+to trying to figure out the right
+
+01:02:55.599 --> 01:02:58.160
+interfaces for um and this is the kind
+
+01:02:58.160 --> 01:02:59.920
+of stuff that like I think this should
+
+01:02:59.920 --> 01:03:01.680
+be open source and this should be open
+
+01:03:01.680 --> 01:03:03.359
+protocol and this should be like a thing
+
+01:03:03.359 --> 01:03:05.280
+that everyone can like use and get to
+
+01:03:05.280 --> 01:03:06.640
+and build together which is why we're
+
+01:03:06.640 --> 01:03:09.280
+building it in the open. Um and then
+
+01:03:09.280 --> 01:03:11.040
+this implementation of like how to get
+
+01:03:11.040 --> 01:03:12.640
+in touch with humans on Discord and
+
+01:03:12.640 --> 01:03:14.240
+Slack and Microsoft Teams like no one
+
+01:03:14.240 --> 01:03:15.680
+should write that code. That's
+
+01:03:15.680 --> 01:03:18.480
+just a pain in the ass. Yeah. And and I
+
+01:03:18.480 --> 01:03:20.400
+think the key part here Oh, you stopped
+
+01:03:20.400 --> 01:03:22.319
+screen sharing. You want me to pull it
+
+01:03:22.319 --> 01:03:25.920
+back up? Um Um Yeah, pull it back up.
+
+01:03:25.920 --> 01:03:27.680
+The key part here I think that we'd like
+
+01:03:27.680 --> 01:03:29.359
+to talk about is like the stuff over
+
+01:03:29.359 --> 01:03:30.799
+here is going to be useful regardless of
+
+01:03:30.799 --> 01:03:33.440
+AI. Like the way if you had to build a
+
+01:03:33.440 --> 01:03:35.119
+process management system where you had
+
+01:03:35.119 --> 01:03:37.200
+to have a human and your customer
+
+01:03:37.200 --> 01:03:40.160
+success bot uh talking at the same time,
+
+01:03:40.160 --> 01:03:41.680
+like customers and your customer success
+
+01:03:41.680 --> 01:03:42.799
+agent, you're going to have to go design
+
+01:03:42.799 --> 01:03:45.920
+this system anyway. The fact that an LM
+
+01:03:45.920 --> 01:03:49.400
+triggers it is just an implementation
+
+01:03:49.400 --> 01:03:52.160
+detail. Like that's the key part to
+
+01:03:52.160 --> 01:03:53.920
+think about. The LM triggering this is
+
+01:03:53.920 --> 01:03:55.200
+an implementation detail. And the thing
+
+01:03:55.200 --> 01:03:56.799
+I think that confuses people the most
+
+01:03:56.799 --> 01:03:59.440
+about LLMs is they treat them like a
+
+01:03:59.440 --> 01:04:01.200
+magic new thing. But LLMs are just
+
+01:04:01.200 --> 01:04:03.280
+functions. They take an an input, in
+
+01:04:03.280 --> 01:04:05.920
+this case a thread, and they spit out
+
+01:04:05.920 --> 01:04:07.760
+one of the types that we want. And we do
+
+01:04:07.760 --> 01:04:10.079
+things based on types. And we know how
+
+01:04:10.079 --> 01:04:11.760
+to deal with things that spit out
+
+01:04:11.760 --> 01:04:14.160
+different types like unions. We have
+
+01:04:14.160 --> 01:04:15.680
+built a lot of software that deals with
+
+01:04:15.680 --> 01:04:18.000
+unions all the time. So like once you
+
+01:04:18.000 --> 01:04:19.520
+think of it that way, it becomes really
+
+01:04:19.520 --> 01:04:21.440
+easy to see what what to do here. And
+
+01:04:21.440 --> 01:04:23.359
+like all the stuff on the right of that
+
+01:04:23.359 --> 01:04:28.240
+is useful regardless of AI. Uh VJ has a
+
+01:04:28.240 --> 01:04:29.839
+question.
+
+01:04:29.839 --> 01:04:33.039
+Yeah. Hi. Uh first of all, thanks for
+
+01:04:33.039 --> 01:04:34.400
+giving me this opportunity on this
+
+01:04:34.400 --> 01:04:36.960
+platform. Uh I'm kind of new to this so
+
+01:04:36.960 --> 01:04:38.480
+please uh forgive me if my question
+
+01:04:38.480 --> 01:04:41.280
+seems naive or basic. I just wanted to
+
+01:04:41.280 --> 01:04:43.920
+add a thought to what you said by that
+
+01:04:43.920 --> 01:04:45.559
+uh
+
+01:04:45.559 --> 01:04:49.359
+um it's basically a way to input
+
+01:04:49.359 --> 01:04:52.359
+nondeterministic
+
+01:04:52.359 --> 01:04:55.680
+uh feedback or inputs or variables or
+
+01:04:55.680 --> 01:04:58.319
+whatever into your business flow. So
+
+01:04:58.319 --> 01:05:00.319
+what you've even demonstrated just now
+
+01:05:00.319 --> 01:05:03.359
+is basically uh a business logic or a
+
+01:05:03.359 --> 01:05:07.440
+way of defining control flow. Uh which
+
+01:05:07.440 --> 01:05:10.160
+again my my question was whether how do
+
+01:05:10.160 --> 01:05:12.240
+we draw the line between how much
+
+01:05:12.240 --> 01:05:14.720
+portion of your software is going to be
+
+01:05:14.720 --> 01:05:16.400
+deterministic and how much of that is
+
+01:05:16.400 --> 01:05:18.799
+going to be agent driven. But I think
+
+01:05:18.799 --> 01:05:20.480
+that was not the right question to ask.
+
+01:05:20.480 --> 01:05:24.319
+What was the right way to ask is or the
+
+01:05:24.319 --> 01:05:25.760
+right perception is to actually just
+
+01:05:25.760 --> 01:05:29.359
+look at it as um getting a paragraph or
+
+01:05:29.359 --> 01:05:31.520
+a text or whatever or random input which
+
+01:05:31.520 --> 01:05:33.680
+is nondeterministic versus filling a
+
+01:05:33.680 --> 01:05:36.480
+form of or a page or a CRM or whatever
+
+01:05:36.480 --> 01:05:39.440
+and then just processing it as usual the
+
+01:05:39.440 --> 01:05:43.039
+way you do it uh in your one. Exactly. I
+
+01:05:43.039 --> 01:05:44.680
+think that's like one use case for an
+
+01:05:44.680 --> 01:05:47.520
+outl but I think like you nailed it.
+
+01:05:47.520 --> 01:05:49.200
+Yeah. The way that I've always thought
+
+01:05:49.200 --> 01:05:51.240
+about this is like LLMs are just an
+
+01:05:51.240 --> 01:05:54.319
+accelerant. Like we could all make Slack
+
+01:05:54.319 --> 01:05:56.480
+take less than 70 gigs of RAM by writing
+
+01:05:56.480 --> 01:05:58.880
+in Rust and making it really damn good.
+
+01:05:58.880 --> 01:06:00.559
+But it turns out no one cares that it's
+
+01:06:00.559 --> 01:06:02.240
+an Electron app that takes 70 gigs of
+
+01:06:02.240 --> 01:06:05.039
+RAM. So why write in Rust? And it's the
+
+01:06:05.039 --> 01:06:07.359
+same with an LLM world. Like, hey, if
+
+01:06:07.359 --> 01:06:08.880
+you you could have someone type out the
+
+01:06:08.880 --> 01:06:10.400
+business form and go do that manually.
+
+01:06:10.400 --> 01:06:12.559
+Or you can use an LM to turn like voice
+
+01:06:12.559 --> 01:06:14.559
+into text with some voodoo magic with a
+
+01:06:14.559 --> 01:06:17.119
+video in there into the form. Great.
+
+01:06:17.119 --> 01:06:18.720
+then go do that. Especially if it gets
+
+01:06:18.720 --> 01:06:21.680
+you to ship faster, even if it has a 20%
+
+01:06:21.680 --> 01:06:24.079
+failure rate, because it might be better
+
+01:06:24.079 --> 01:06:26.640
+to ship in two days and get to
+
+01:06:26.640 --> 01:06:28.640
+production with a 20% failure rate than
+
+01:06:28.640 --> 01:06:31.839
+to build it out for 9 months perfectly
+
+01:06:31.839 --> 01:06:34.079
+with some LMS and your own custom models
+
+01:06:34.079 --> 01:06:36.960
+and some control flow and then not know
+
+01:06:36.960 --> 01:06:39.280
+it whether it works or not. And LM are
+
+01:06:39.280 --> 01:06:40.640
+just another tool in our software
+
+01:06:40.640 --> 01:06:42.960
+engineering toolbox like a boatload of
+
+01:06:42.960 --> 01:06:45.920
+RAM or bigger GPUs and bigger CPUs that
+
+01:06:45.920 --> 01:06:47.280
+you can just use to accelerate your
+
+01:06:47.280 --> 01:06:48.640
+development cycle and like product
+
+01:06:48.640 --> 01:06:53.390
+iteration
+
+01:06:55.670 --> 01:06:55.680
+speed. Yeah, I think that's great. I
+
+01:06:55.680 --> 01:06:57.799
+think
+
+01:06:57.799 --> 01:07:00.000
+um and and I think this is another
+
+01:07:00.000 --> 01:07:01.440
+lesson I learned over a long time was
+
+01:07:01.440 --> 01:07:03.280
+like a lot of people say, "Oh, AI is
+
+01:07:03.280 --> 01:07:04.400
+here. We're going to do agents." And
+
+01:07:04.400 --> 01:07:05.599
+they kind of take whatever their project
+
+01:07:05.599 --> 01:07:06.960
+is and they start a brand new that we're
+
+01:07:06.960 --> 01:07:08.559
+going to do agents. We're we have our
+
+01:07:08.559 --> 01:07:09.760
+SAS, we have our product, we have our
+
+01:07:09.760 --> 01:07:11.520
+tool, whatever it is. Now, we got to
+
+01:07:11.520 --> 01:07:13.520
+pull it up and we got to build agents
+
+01:07:13.520 --> 01:07:14.720
+and we're going to start from scratch.
+
+01:07:14.720 --> 01:07:16.160
+We're going to make these seven agents
+
+01:07:16.160 --> 01:07:18.160
+and I have to jump in and be like, "No,
+
+01:07:18.160 --> 01:07:20.559
+like the number one concept, the thing
+
+01:07:20.559 --> 01:07:22.799
+that LM are really freaking good at that
+
+01:07:22.799 --> 01:07:25.440
+creates magic is turning unstructured
+
+01:07:25.440 --> 01:07:27.839
+data into JSON." And that unstructured
+
+01:07:27.839 --> 01:07:29.760
+data might be JSON or XML or whatever it
+
+01:07:29.760 --> 01:07:31.280
+is, but it's like turning anything into
+
+01:07:31.280 --> 01:07:33.520
+JSON because your code can do something
+
+01:07:33.520 --> 01:07:35.599
+with JSON. And that's where the magic
+
+01:07:35.599 --> 01:07:38.319
+is. And you can pick up these small
+
+01:07:38.319 --> 01:07:40.319
+principles like how do you bring humans
+
+01:07:40.319 --> 01:07:42.319
+in or how do you do your control loop or
+
+01:07:42.319 --> 01:07:44.960
+or how do I construct a prompt? You can
+
+01:07:44.960 --> 01:07:46.799
+do all this stuff in the middle of your
+
+01:07:46.799 --> 01:07:50.880
+existing code. And because and because
+
+01:07:50.880 --> 01:07:52.960
+it's already like the best LLM apps are
+
+01:07:52.960 --> 01:07:55.920
+mostly just code anyways. You should
+
+01:07:55.920 --> 01:07:57.520
+just start sprinkling in more and more
+
+01:07:57.520 --> 01:07:59.440
+magic as you go rather than throwing out
+
+01:07:59.440 --> 01:08:00.640
+the whole thing and be like the way we
+
+01:08:00.640 --> 01:08:01.680
+do software has changed and we're going
+
+01:08:01.680 --> 01:08:03.039
+to do this kind of software now. Like
+
+01:08:03.039 --> 01:08:05.200
+it's all still mostly the same. If you
+
+01:08:05.200 --> 01:08:06.720
+if you look at any of the like founders
+
+01:08:06.720 --> 01:08:09.039
+building AI agents that are making like
+
+01:08:09.039 --> 01:08:12.000
+a 100K plus in revenue, it's all mostly
+
+01:08:12.000 --> 01:08:15.119
+code. Yeah, AI is a small part of it. Uh
+
+01:08:15.119 --> 01:08:16.480
+AJ, last question and then we're going
+
+01:08:16.480 --> 01:08:19.759
+to close it out today. Uh yeah. Um my
+
+01:08:19.759 --> 01:08:21.600
+question is just I guess zooming out a
+
+01:08:21.600 --> 01:08:23.359
+little bit and more just on business use
+
+01:08:23.359 --> 01:08:26.719
+cases. I wanted to get your um thoughts,
+
+01:08:26.719 --> 01:08:30.279
+both of your thoughts on sort of
+
+01:08:30.279 --> 01:08:32.560
+uh I I don't want to call it emergent
+
+01:08:32.560 --> 01:08:34.239
+phenomena, but just sort of emergent
+
+01:08:34.239 --> 01:08:36.319
+things that you've noticed as a result
+
+01:08:36.319 --> 01:08:38.400
+of building these human in the loop
+
+01:08:38.400 --> 01:08:40.719
+agents. Specifically, the question that
+
+01:08:40.719 --> 01:08:44.080
+I have is whether or not building human
+
+01:08:44.080 --> 01:08:47.759
+in the loop agents has allowed um your
+
+01:08:47.759 --> 01:08:49.480
+customers or those people that you're
+
+01:08:49.480 --> 01:08:52.640
+servicing to better map those
+
+01:08:52.640 --> 01:08:56.799
+non-written understandings that exist um
+
+01:08:56.799 --> 01:08:59.520
+in their brains but not uh from the
+
+01:08:59.520 --> 01:09:01.279
+documents that they're that you and your
+
+01:09:01.279 --> 01:09:03.359
+agents and your tools are calling. I'm
+
+01:09:03.359 --> 01:09:04.880
+just trying to get a sense of what like
+
+01:09:04.880 --> 01:09:07.120
+emergent behaviors are happening as a
+
+01:09:07.120 --> 01:09:11.199
+result of having human in the loop.
+
+01:09:11.199 --> 01:09:12.239
+I think people are willing to give
+
+01:09:12.239 --> 01:09:14.640
+agents access to more risky things. I
+
+01:09:14.640 --> 01:09:15.920
+think people are willing to actually
+
+01:09:15.920 --> 01:09:18.640
+build agents that um that do interesting
+
+01:09:18.640 --> 01:09:20.719
+important stuff that you would never
+
+01:09:20.719 --> 01:09:22.719
+give an agent. I mean like we have users
+
+01:09:22.719 --> 01:09:24.719
+doing it sending emails on behalf of
+
+01:09:24.719 --> 01:09:26.640
+them to their supply chain suppliers and
+
+01:09:26.640 --> 01:09:29.279
+logistics. I've seen people building
+
+01:09:29.279 --> 01:09:31.440
+agents that manage Terraform applies and
+
+01:09:31.440 --> 01:09:33.040
+like there's all these use cases that if
+
+01:09:33.040 --> 01:09:35.040
+you went to any IT manager in the world
+
+01:09:35.040 --> 01:09:36.960
+and you said like hey are LM smart
+
+01:09:36.960 --> 01:09:39.440
+enough to like spin up and tear down AWS
+
+01:09:39.440 --> 01:09:41.040
+infrastructure they would say like
+
+01:09:41.040 --> 01:09:44.319
+absolutely not keep an LLM as far as far
+
+01:09:44.319 --> 01:09:46.239
+away from that stuff as possible. Don't
+
+01:09:46.239 --> 01:09:48.159
+even think about touching it. And now
+
+01:09:48.159 --> 01:09:49.759
+we're seeing people ship developer tools
+
+01:09:49.759 --> 01:09:51.199
+where it's like, "Oh, well, if the agent
+
+01:09:51.199 --> 01:09:52.640
+hits me up in Slack with a Terraform
+
+01:09:52.640 --> 01:09:54.080
+plan and I just review it and I can give
+
+01:09:54.080 --> 01:09:55.199
+feedback like, oh wait, wait, wait,
+
+01:09:55.199 --> 01:09:57.600
+don't upgrade EKS. I was just trying to
+
+01:09:57.600 --> 01:09:59.600
+add a DNS record that can go back to the
+
+01:09:59.600 --> 01:10:01.040
+LLM, it can change the code, it can come
+
+01:10:01.040 --> 01:10:02.880
+back and suddenly you've created this
+
+01:10:02.880 --> 01:10:04.880
+kind of like flipped workflow where
+
+01:10:04.880 --> 01:10:06.960
+rather than me opening the SAS app to go
+
+01:10:06.960 --> 01:10:09.040
+ask an agent to go do something for me,
+
+01:10:09.040 --> 01:10:10.400
+the agent's just always working in the
+
+01:10:10.400 --> 01:10:12.400
+background and coming to me and I feel
+
+01:10:12.400 --> 01:10:14.000
+comfortable giving an access to scary
+
+01:10:14.000 --> 01:10:16.159
+things because I know deterministically
+
+01:10:16.159 --> 01:10:19.040
+I have required that that agent is going
+
+01:10:19.040 --> 01:10:20.560
+to have to go to a human. A human is
+
+01:10:20.560 --> 01:10:22.159
+going to have to click a button. There's
+
+01:10:22.159 --> 01:10:23.520
+no prompt. There's no question about it.
+
+01:10:23.520 --> 01:10:25.199
+a human has to click a button in order
+
+01:10:25.199 --> 01:10:28.239
+to actually uh push that thing through.
+
+01:10:28.239 --> 01:10:29.760
+And I think VJ said something kind of
+
+01:10:29.760 --> 01:10:31.120
+interesting here. It's like I will move
+
+01:10:31.120 --> 01:10:33.120
+my money if a bank views an agent in its
+
+01:10:33.120 --> 01:10:36.000
+core loop. And like we say that now, we
+
+01:10:36.000 --> 01:10:37.920
+do say that now, but I want to pose a
+
+01:10:37.920 --> 01:10:40.000
+paradigm shift that has happened before.
+
+01:10:40.000 --> 01:10:41.760
+Um I used to get a text message before
+
+01:10:41.760 --> 01:10:43.520
+every single time a credit card swiped
+
+01:10:43.520 --> 01:10:46.159
+on every dollar value that it swiped on.
+
+01:10:46.159 --> 01:10:47.520
+And now I get a text message every time
+
+01:10:47.520 --> 01:10:49.840
+I swipe over 500 bucks because like it's
+
+01:10:49.840 --> 01:10:52.400
+just not worth me thinking about uh how
+
+01:10:52.400 --> 01:10:54.000
+every credit every time I buy coffee I
+
+01:10:54.000 --> 01:10:56.560
+need to approve it. That kind of sucks.
+
+01:10:56.560 --> 01:10:58.719
+And like while today we feel that way
+
+01:10:58.719 --> 01:11:01.120
+about agents moving stuff. It's possible
+
+01:11:01.120 --> 01:11:02.640
+that as we all build trust and it
+
+01:11:02.640 --> 01:11:03.840
+doesn't even matter about the capability
+
+01:11:03.840 --> 01:11:05.440
+of the models. It's all about trust
+
+01:11:05.440 --> 01:11:07.440
+building and how software is architected
+
+01:11:07.440 --> 01:11:09.199
+around these systems. Like we didn't
+
+01:11:09.199 --> 01:11:12.239
+used to touch trust digital banking. My
+
+01:11:12.239 --> 01:11:13.679
+parents never trust that a check could
+
+01:11:13.679 --> 01:11:16.320
+be deposited over a phone and taking a
+
+01:11:16.320 --> 01:11:18.560
+picture of it until like they saw it
+
+01:11:18.560 --> 01:11:20.800
+happen for a long time. And some people
+
+01:11:20.800 --> 01:11:22.239
+will build that trust sooner. Some
+
+01:11:22.239 --> 01:11:24.239
+people will build that trust later. But
+
+01:11:24.239 --> 01:11:26.400
+the way we can we as engineers can help
+
+01:11:26.400 --> 01:11:28.239
+build that trust for everyone is by
+
+01:11:28.239 --> 01:11:30.719
+building software that works. By
+
+01:11:30.719 --> 01:11:32.800
+leveraging AI in a way that is reliable,
+
+01:11:32.800 --> 01:11:35.440
+trustworthy, and engaging, we'll earn
+
+01:11:35.440 --> 01:11:37.360
+the right over time to get everyone else
+
+01:11:37.360 --> 01:11:39.040
+to use our software stacks and have
+
+01:11:39.040 --> 01:11:40.800
+agents do stuff with less human in the
+
+01:11:40.800 --> 01:11:42.880
+loop. But still, some stuff will
+
+01:11:42.880 --> 01:11:44.400
+probably want that. Like before I close
+
+01:11:44.400 --> 01:11:45.600
+my bank account and it has a million
+
+01:11:45.600 --> 01:11:48.320
+bucks in it, I want to know that the
+
+01:11:48.320 --> 01:11:49.600
+bank account is being closed and no
+
+01:11:49.600 --> 01:11:51.280
+matter what, no matter how many agents
+
+01:11:51.280 --> 01:11:54.320
+there are, uh, ever happening. Yep. Um,
+
+01:11:54.320 --> 01:11:56.239
+so I think it's just like a paradigm
+
+01:11:56.239 --> 01:11:58.960
+shift that'll happen over time slowly.
+
+01:11:58.960 --> 01:12:00.560
+Yeah. And it's continuous, right? You
+
+01:12:00.560 --> 01:12:01.920
+start with like I mean even that refund
+
+01:12:01.920 --> 01:12:03.360
+request workflow, we'd be like, "Hey, if
+
+01:12:03.360 --> 01:12:05.040
+the amount is greater than $10, then
+
+01:12:05.040 --> 01:12:06.480
+check with a manager otherwise just do
+
+01:12:06.480 --> 01:12:07.600
+it." And you've seen if you've asked for
+
+01:12:07.600 --> 01:12:08.800
+a refund from Amazon, you know,
+
+01:12:08.800 --> 01:12:09.840
+sometimes it's just like, "Cool, here's
+
+01:12:09.840 --> 01:12:11.679
+a refund." like too small for us to care
+
+01:12:11.679 --> 01:12:14.640
+about. Yeah. Um this was super dope
+
+01:12:14.640 --> 01:12:16.080
+everybody. Thank you so much. Vibbov,
+
+01:12:16.080 --> 01:12:18.080
+thank you so much for uh helping helping
+
+01:12:18.080 --> 01:12:20.880
+make this happen. Um Nico says hello and
+
+01:12:20.880 --> 01:12:23.840
+then we will What's up Nico? We will
+
+01:12:23.840 --> 01:12:25.520
+come back next week with another session
+
+01:12:25.520 --> 01:12:27.760
+that we'll announce pretty soon. Um
+
+01:12:27.760 --> 01:12:29.040
+excited to see you all next week. Thank
+
+01:12:29.040 --> 01:12:32.000
+you for joining today. Uh another fun
+
+01:12:32.000 --> 01:12:35.520
+time of AI that works with Dexter.
+
+01:12:35.520 --> 01:12:37.480
+Super dope. Thanks everybody. Bye
+
+01:12:37.480 --> 01:12:41.440
+everyone. See you.

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-034",
+  "episode": 34,
+  "season": 2,
+  "title": "Git Worktrees for AI Coding Agents",
+  "source_folder": "2025-12-09-git-worktrees",
+  "recorded_at": "2025-12-09T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "OpM-G3WNH4g",
+  "youtube_url": "https://www.youtube.com/watch?v=OpM-G3WNH4g",
+  "transcript_origin": "upstream timestamped transcript.md",
+  "transcript_cleanup_priority": "low",
+  "status": "curated-from-existing-transcript"
+}

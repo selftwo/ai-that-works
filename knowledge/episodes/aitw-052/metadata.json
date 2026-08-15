@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-052",
+  "episode": 52,
+  "season": 2,
+  "title": "SSE Streaming",
+  "source_folder": "2026-04-07-sse-streaming",
+  "recorded_at": "2026-04-07T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "9MFiATinGC0",
+  "youtube_url": "https://www.youtube.com/watch?v=9MFiATinGC0",
+  "transcript_origin": "upstream timestamped transcript.txt",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}
+

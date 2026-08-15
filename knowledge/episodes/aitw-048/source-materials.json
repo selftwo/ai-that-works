@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-048",
+  "primary": [
+    "2026-03-10-claude-agent-skills-deep-dive/transcript.txt",
+    "2026-03-10-claude-agent-skills-deep-dive/meta.md",
+    "2026-03-10-claude-agent-skills-deep-dive/README.md"
+  ],
+  "supporting": [
+    "2026-03-10-claude-agent-skills-deep-dive/README.md",
+    "2026-03-10-claude-agent-skills-deep-dive/meta.md",
+    "2026-03-10-claude-agent-skills-deep-dive/whiteboards.md",
+    "2026-03-10-claude-agent-skills-deep-dive/action_clips.json",
+    "2026-03-10-claude-agent-skills-deep-dive/clips.json"
+  ],
+  "notes": "Supporting artifacts provide implementation context but do not independently verify speaker claims."
+}

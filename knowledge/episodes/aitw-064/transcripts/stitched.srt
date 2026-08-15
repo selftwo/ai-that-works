@@ -1,0 +1,6319 @@
+1
+00:00:01,590 --> 00:00:01,600
+We live in a world where we don't read
+
+2
+00:00:01,600 --> 00:00:03,360
+the code anymore. The only way to really
+
+3
+00:00:03,360 --> 00:00:05,040
+combat that is to have some
+
+4
+00:00:05,040 --> 00:00:06,799
+understanding of what the code does post
+
+5
+00:00:06,799 --> 00:00:08,400
+execution. [music] Everyone is giving
+
+6
+00:00:08,400 --> 00:00:10,160
+you different levels of observability.
+
+7
+00:00:10,160 --> 00:00:12,080
+Your job as an engineer is to go figure
+
+8
+00:00:12,080 --> 00:00:13,920
+out what works for you. So your agents
+
+9
+00:00:13,920 --> 00:00:15,839
+can understand what actually happened.
+
+10
+00:00:15,839 --> 00:00:17,920
+Does all of this eventually loop back
+
+11
+00:00:17,920 --> 00:00:19,600
+and now Claude can actually close the
+
+12
+00:00:19,600 --> 00:00:21,279
+loop and you can build a better and
+
+13
+00:00:21,279 --> 00:00:23,279
+better system so you can have alignment
+
+14
+00:00:23,279 --> 00:00:25,039
+in what you expected versus what
+
+15
+00:00:25,039 --> 00:00:26,960
+happened. Hey everyone, today's episode
+
+16
+00:00:26,960 --> 00:00:28,960
+is going to be about observability. And
+
+17
+00:00:28,960 --> 00:00:31,039
+the thing I find most fascinating about
+
+18
+00:00:31,039 --> 00:00:33,280
+observability is how we actually went
+
+19
+00:00:33,280 --> 00:00:35,920
+through and we're able to go and build
+
+20
+00:00:35,920 --> 00:00:37,840
+these black boxes now with code that we
+
+21
+00:00:37,840 --> 00:00:38,960
+either don't read or are
+
+22
+00:00:38,960 --> 00:00:41,840
+non-deterministic because they use LMS
+
+23
+00:00:41,840 --> 00:00:44,079
+and therefore have some level of
+
+24
+00:00:44,079 --> 00:00:46,239
+expected failure and hit rates. And the
+
+25
+00:00:46,239 --> 00:00:47,760
+most close analogy that we really relate
+
+26
+00:00:47,760 --> 00:00:49,440
+to is distributed systems and how we
+
+27
+00:00:49,440 --> 00:00:51,280
+actually built distributed systems. we
+
+28
+00:00:51,280 --> 00:00:52,719
+go a little bit into the history of how
+
+29
+00:00:52,719 --> 00:00:55,760
+we did metrics, wide logs, um, and user
+
+30
+00:00:55,760 --> 00:00:58,079
+expectations to eventually build a fully
+
+31
+00:00:58,079 --> 00:00:59,920
+probing system. One of the cool things
+
+32
+00:00:59,920 --> 00:01:01,199
+that we'll talk about is how to actually
+
+33
+00:01:01,199 --> 00:01:03,760
+build full tracing execution and what an
+
+34
+00:01:03,760 --> 00:01:05,040
+example of that looks like so that you
+
+35
+00:01:05,040 --> 00:01:06,720
+can get full call stacks and really
+
+36
+00:01:06,720 --> 00:01:08,159
+deeply have both you and Claude
+
+37
+00:01:08,159 --> 00:01:10,400
+introspect your code traces. But the
+
+38
+00:01:10,400 --> 00:01:12,159
+most important part is the value of
+
+39
+00:01:12,159 --> 00:01:13,840
+tracing, which is how you can go from
+
+40
+00:01:13,840 --> 00:01:16,400
+design to code to post execution and
+
+41
+00:01:16,400 --> 00:01:18,080
+build a closed loop system that helps
+
+42
+00:01:18,080 --> 00:01:20,479
+you better align with your agents. Let's
+
+43
+00:01:20,479 --> 00:01:21,520
+get started.
+
+44
+00:01:21,520 --> 00:01:23,840
+>> Let's do it, baby. Welcome to the AI
+
+45
+00:01:23,840 --> 00:01:26,640
+that works show. Uh, where Vibob
+
+46
+00:01:26,640 --> 00:01:28,640
+definitely always shows up on time. Uh,
+
+47
+00:01:28,640 --> 00:01:30,880
+my name is Dex. I am the CEO and
+
+48
+00:01:30,880 --> 00:01:33,119
+co-founder of Human Layer. We help you
+
+49
+00:01:33,119 --> 00:01:34,960
+solve hard problems and complex code
+
+50
+00:01:34,960 --> 00:01:37,680
+bases with AI. And I am joined by Vibv,
+
+51
+00:01:37,680 --> 00:01:40,560
+the CEO. I guess he's just co-founder of
+
+52
+00:01:40,560 --> 00:01:42,880
+of Boundary ML where they make a
+
+53
+00:01:42,880 --> 00:01:46,159
+programming language for AI and the AI
+
+54
+00:01:46,159 --> 00:01:49,920
+era and for AI agents and uh yeah, what
+
+55
+00:01:49,920 --> 00:01:51,119
+was your biggest takeaway from AI
+
+56
+00:01:51,119 --> 00:01:52,240
+engineer last week?
+
+57
+00:01:52,240 --> 00:01:54,880
+>> I think a lot of people are extremely
+
+58
+00:01:54,880 --> 00:01:56,479
+stressed about the quality of their code
+
+59
+00:01:56,479 --> 00:01:58,399
+bases over time. It seems to be a source
+
+60
+00:01:58,399 --> 00:02:00,320
+of anxiety for almost every human I've
+
+61
+00:02:00,320 --> 00:02:02,479
+met from the best engineers to the worst
+
+62
+00:02:02,479 --> 00:02:03,439
+engineers.
+
+63
+00:02:03,439 --> 00:02:05,439
+>> I agree. Yeah, that was kind of the
+
+64
+00:02:05,439 --> 00:02:07,840
+whole software factory theme was like
+
+65
+00:02:07,840 --> 00:02:10,080
+everyone had their own solution to how
+
+66
+00:02:10,080 --> 00:02:11,920
+do we fight slob? How do we how do we
+
+67
+00:02:11,920 --> 00:02:14,400
+let how do we use AI to help us ship
+
+68
+00:02:14,400 --> 00:02:17,840
+code without like screwing it up? And
+
+69
+00:02:17,840 --> 00:02:20,480
+it's like you had the people who said
+
+70
+00:02:20,480 --> 00:02:22,160
+just do more code review agents. They
+
+71
+00:02:22,160 --> 00:02:24,400
+say just do more linting. You had you
+
+72
+00:02:24,400 --> 00:02:26,720
+and Eric who were both like we need new
+
+73
+00:02:26,720 --> 00:02:29,120
+programming languages. Eric's languages
+
+74
+00:02:29,120 --> 00:02:31,120
+were more like alien space languages
+
+75
+00:02:31,120 --> 00:02:33,440
+that Jeff Huntley predicted. Uh I think
+
+76
+00:02:33,440 --> 00:02:35,599
+yours is a little more sane and uh you
+
+77
+00:02:35,599 --> 00:02:37,280
+know continuous innovation rather than
+
+78
+00:02:37,280 --> 00:02:41,760
+discontinuous. But um yeah I uh I think
+
+79
+00:02:41,760 --> 00:02:43,920
+software 2026 is going to be the year of
+
+80
+00:02:43,920 --> 00:02:46,239
+no more slop by hell or high water. We
+
+81
+00:02:46,239 --> 00:02:47,440
+are going to figure out how to make it
+
+82
+00:02:47,440 --> 00:02:49,280
+happen as a as as an industry.
+
+83
+00:02:49,280 --> 00:02:50,800
+>> I think we're going to have something
+
+84
+00:02:50,800 --> 00:02:52,160
+happen. I don't know if it's going to be
+
+85
+00:02:52,160 --> 00:02:53,760
+no slop, but I think we're going to get
+
+86
+00:02:53,760 --> 00:02:56,080
+further away. And I do think a lot of
+
+87
+00:02:56,080 --> 00:02:57,280
+people are feeling
+
+88
+00:02:57,280 --> 00:02:58,480
+>> Yeah.
+
+89
+00:02:58,480 --> 00:03:00,319
+U I think a lot of people are feeling a
+
+90
+00:03:00,319 --> 00:03:03,200
+lot of the anxiety of what like
+
+91
+00:03:03,200 --> 00:03:05,519
+their code base are devolving into. I
+
+92
+00:03:05,519 --> 00:03:07,760
+have another question for you. When you
+
+93
+00:03:07,760 --> 00:03:09,040
+had the opportunity to go talk about
+
+94
+00:03:09,040 --> 00:03:11,040
+human layer at the conference, what do
+
+95
+00:03:11,040 --> 00:03:15,280
+you think resonated the most? I think
+
+96
+00:03:15,280 --> 00:03:17,599
+there's this weird like the there's this
+
+97
+00:03:17,599 --> 00:03:20,080
+like spectrum of people's maturity with
+
+98
+00:03:20,080 --> 00:03:23,360
+AI and their LM intuition and like their
+
+99
+00:03:23,360 --> 00:03:26,000
+their proclivity to the hype machine and
+
+100
+00:03:26,000 --> 00:03:28,400
+things like this of like where are you
+
+101
+00:03:28,400 --> 00:03:30,000
+along your journey of like oh this
+
+102
+00:03:30,000 --> 00:03:31,920
+really works or no it doesn't and like
+
+103
+00:03:31,920 --> 00:03:33,120
+it's kind of like you know the midw
+
+104
+00:03:33,120 --> 00:03:35,360
+curve of like no I need six t- buck
+
+105
+00:03:35,360 --> 00:03:37,120
+sessions and I need this and I need that
+
+106
+00:03:37,120 --> 00:03:38,879
+and like the end of the curve is like
+
+107
+00:03:38,879 --> 00:03:40,560
+nope just read the code and make good
+
+108
+00:03:40,560 --> 00:03:42,480
+software there's a lot ofcept acceptance
+
+109
+00:03:42,480 --> 00:03:44,319
+that you know I think someone came up to
+
+110
+00:03:44,319 --> 00:03:46,239
+me and said 70% of the people at this at
+
+111
+00:03:46,239 --> 00:03:48,640
+this conference are actually like early
+
+112
+00:03:48,640 --> 00:03:50,799
+in the journey and they're like really
+
+113
+00:03:50,799 --> 00:03:52,799
+excited about whatever is being hyped
+
+114
+00:03:52,799 --> 00:03:54,480
+right now and there's about 30% of
+
+115
+00:03:54,480 --> 00:03:56,640
+people who have like yep seen that tried
+
+116
+00:03:56,640 --> 00:03:58,400
+that been doing that for a year doesn't
+
+117
+00:03:58,400 --> 00:04:01,439
+work like I am I am past that and like
+
+118
+00:04:01,439 --> 00:04:02,799
+so I don't know the biggest takeway for
+
+119
+00:04:02,799 --> 00:04:04,640
+me is like there's such a broad spectrum
+
+120
+00:04:04,640 --> 00:04:08,560
+of of AI and AI maturity and it's I know
+
+121
+00:04:08,560 --> 00:04:10,239
+on this show we work really hard to kind
+
+122
+00:04:10,239 --> 00:04:11,920
+of like cut through the hype and give
+
+123
+00:04:11,920 --> 00:04:13,599
+you stuff that actually works. And I
+
+124
+00:04:13,599 --> 00:04:15,120
+think that's like more important now
+
+125
+00:04:15,120 --> 00:04:18,880
+than ever. And I don't know, it's it's
+
+126
+00:04:18,880 --> 00:04:21,519
+hard to both like it's the broader the
+
+127
+00:04:21,519 --> 00:04:22,960
+audience and the broader like the
+
+128
+00:04:22,960 --> 00:04:24,320
+things. This is like a teaching in
+
+129
+00:04:24,320 --> 00:04:25,919
+general. It's like you have to you have
+
+130
+00:04:25,919 --> 00:04:28,320
+to know who you're talking to and who
+
+131
+00:04:28,320 --> 00:04:30,880
+you're trying to serve and uh it's
+
+132
+00:04:30,880 --> 00:04:33,759
+getting complicated. I think I uh I just
+
+133
+00:04:33,759 --> 00:04:35,919
+want to shout out a few folks like um I
+
+134
+00:04:35,919 --> 00:04:37,680
+know a few folks came up to both me and
+
+135
+00:04:37,680 --> 00:04:39,040
+Dex at the conference of like you guys
+
+136
+00:04:39,040 --> 00:04:40,479
+have been longtime fans and like have
+
+137
+00:04:40,479 --> 00:04:43,199
+been tuning in. Um I was as a founder
+
+138
+00:04:43,199 --> 00:04:45,199
+that was so cool. That was so cool to
+
+139
+00:04:45,199 --> 00:04:46,400
+just experience and have you guys come
+
+140
+00:04:46,400 --> 00:04:49,440
+out here um and just say hi and like
+
+141
+00:04:49,440 --> 00:04:51,360
+it's awesome to know that it's this is a
+
+142
+00:04:51,360 --> 00:04:52,880
+fun conversation you guys are tuning in
+
+143
+00:04:52,880 --> 00:04:53,360
+to.
+
+144
+00:04:53,360 --> 00:04:55,440
+>> I think I got Vibb hooked. He's never
+
+145
+00:04:55,440 --> 00:04:57,680
+been to an AI engineer conference before
+
+146
+00:04:57,680 --> 00:04:58,880
+and I think we're going to get him to
+
+147
+00:04:58,880 --> 00:05:00,880
+come to the rest of them. So, if you
+
+148
+00:05:00,880 --> 00:05:04,800
+want to uh hang out with us, uh go to
+
+149
+00:05:04,800 --> 00:05:06,400
+the AI engineer event near we're not
+
+150
+00:05:06,400 --> 00:05:07,520
+going to go to every single like I'm not
+
+151
+00:05:07,520 --> 00:05:09,440
+going to Singapore. It's too far.
+
+152
+00:05:09,440 --> 00:05:11,039
+>> But if you're an AI engineer in New
+
+153
+00:05:11,039 --> 00:05:12,800
+York, if you're an AI engineer Miami,
+
+154
+00:05:12,800 --> 00:05:14,320
+we're going to try to make it to I'm I'm
+
+155
+00:05:14,320 --> 00:05:15,360
+going to try to make it to all of those
+
+156
+00:05:15,360 --> 00:05:16,880
+because I I I love the crowd and
+
+157
+00:05:16,880 --> 00:05:18,320
+attracts really really smart people and
+
+158
+00:05:18,320 --> 00:05:20,479
+I always learn a ton. So, uh if you want
+
+159
+00:05:20,479 --> 00:05:22,639
+to hang out with us, AI engineer,
+
+160
+00:05:22,639 --> 00:05:24,560
+>> I think for me, uh I had a really
+
+161
+00:05:24,560 --> 00:05:25,520
+interesting takeway. It's actually
+
+162
+00:05:25,520 --> 00:05:29,520
+related to today's topic. So, uh, when I
+
+163
+00:05:29,520 --> 00:05:31,919
+was talking a lot about BAML, a topic
+
+164
+00:05:31,919 --> 00:05:33,199
+came up pretty often, which is like
+
+165
+00:05:33,199 --> 00:05:35,840
+observability. And I know everyone talks
+
+166
+00:05:35,840 --> 00:05:37,600
+about observability, but today I kind of
+
+167
+00:05:37,600 --> 00:05:39,680
+want to both whiteboard a few things and
+
+168
+00:05:39,680 --> 00:05:42,080
+also talk about stuff from like more
+
+169
+00:05:42,080 --> 00:05:43,280
+like first principles around
+
+170
+00:05:43,280 --> 00:05:45,520
+observability.
+
+171
+00:05:45,520 --> 00:05:47,919
+And really the reason that observability
+
+172
+00:05:47,919 --> 00:05:50,800
+came up really high is because when I
+
+173
+00:05:50,800 --> 00:05:52,720
+think about observability in today's day
+
+174
+00:05:52,720 --> 00:05:55,840
+and age, I actually think of it as the
+
+175
+00:05:55,840 --> 00:05:57,680
+only way to understand our codebase. And
+
+176
+00:05:57,680 --> 00:05:58,880
+Dexter, I'd love your thoughts on this
+
+177
+00:05:58,880 --> 00:06:01,039
+as we chat more. But when I think about
+
+178
+00:06:01,039 --> 00:06:03,039
+it, it's like look, I don't read every
+
+179
+00:06:03,039 --> 00:06:04,800
+line of code anymore. I' I've been
+
+180
+00:06:04,800 --> 00:06:06,479
+saying this for a bit. I I basically
+
+181
+00:06:06,479 --> 00:06:08,400
+stop reading the code. I read a lot. I
+
+182
+00:06:08,400 --> 00:06:10,639
+read some of it. I read invariants. I
+
+183
+00:06:10,639 --> 00:06:12,479
+read the very low layers. I read the API
+
+184
+00:06:12,479 --> 00:06:13,840
+surface area, but I don't read every
+
+185
+00:06:13,840 --> 00:06:15,199
+line of code. It's too much pain in the
+
+186
+00:06:15,199 --> 00:06:15,520
+ass.
+
+187
+00:06:15,520 --> 00:06:17,520
+>> Do you want to see what I read?
+
+188
+00:06:17,520 --> 00:06:18,880
+>> You read your specs?
+
+189
+00:06:18,880 --> 00:06:20,880
+>> No, I read We actually We added this
+
+190
+00:06:20,880 --> 00:06:22,639
+thing to Human Layer recently that is
+
+191
+00:06:22,639 --> 00:06:24,560
+like a PR walkthrough. Have you seen
+
+192
+00:06:24,560 --> 00:06:26,639
+this?
+
+193
+00:06:26,639 --> 00:06:29,680
+Let me find uh let me find a big one.
+
+194
+00:06:29,680 --> 00:06:31,280
+Keep keep going. I'll I'll find you a
+
+195
+00:06:31,280 --> 00:06:32,720
+good one. Keep keep talking about what
+
+196
+00:06:32,720 --> 00:06:34,000
+you read and what you don't.
+
+197
+00:06:34,000 --> 00:06:35,840
+>> I think when we live in a world where we
+
+198
+00:06:35,840 --> 00:06:37,600
+don't read the code anymore, the only
+
+199
+00:06:37,600 --> 00:06:39,360
+way to really combat that in my opinion
+
+200
+00:06:39,360 --> 00:06:41,440
+is basically to have some understanding
+
+201
+00:06:41,440 --> 00:06:44,400
+of what the code does post execution.
+
+202
+00:06:44,400 --> 00:06:46,000
+Uh it's kind of like how if you ever
+
+203
+00:06:46,000 --> 00:06:46,960
+have a website, the way that you
+
+204
+00:06:46,960 --> 00:06:48,319
+understand how your website is working
+
+205
+00:06:48,319 --> 00:06:49,680
+or not is not by like reading the code
+
+206
+00:06:49,680 --> 00:06:50,720
+of the website. You literally just look
+
+207
+00:06:50,720 --> 00:06:52,240
+at the funnel. You look at engagement
+
+208
+00:06:52,240 --> 00:06:54,560
+rates and that tells you all the data.
+
+209
+00:06:54,560 --> 00:06:56,240
+But now I think we kind of have to do
+
+210
+00:06:56,240 --> 00:07:01,360
+that for all systems, not just u uh not
+
+211
+00:07:01,360 --> 00:07:04,160
+just uh AI systems.
+
+212
+00:07:04,160 --> 00:07:05,840
+>> Let me let me let me let me get you this
+
+213
+00:07:05,840 --> 00:07:08,319
+example real quick.
+
+214
+00:07:08,319 --> 00:07:10,319
+Um wait, where did it go? Did it just
+
+215
+00:07:10,319 --> 00:07:12,240
+did it literally just close the tab? God
+
+216
+00:07:12,240 --> 00:07:13,840
+damn it. All right. all systems, not
+
+217
+00:07:13,840 --> 00:07:14,880
+just AI systems.
+
+218
+00:07:14,880 --> 00:07:16,479
+>> So like let's say we have a block of
+
+219
+00:07:16,479 --> 00:07:18,479
+code here and effectively it operates as
+
+220
+00:07:18,479 --> 00:07:21,599
+like a black box and as long as a black
+
+221
+00:07:21,599 --> 00:07:23,280
+box keeps on like giving you like
+
+222
+00:07:23,280 --> 00:07:25,680
+correct I guess blue box as long as a
+
+223
+00:07:25,680 --> 00:07:27,280
+blue box keeps giving you like correct
+
+224
+00:07:27,280 --> 00:07:29,599
+outcomes as far as you're concerned
+
+225
+00:07:29,599 --> 00:07:30,880
+that's kind of all you measure. You're
+
+226
+00:07:30,880 --> 00:07:32,800
+basically like how many of the how many
+
+227
+00:07:32,800 --> 00:07:34,800
+of the outcomes that we do for like user
+
+228
+00:07:34,800 --> 00:07:38,639
+A user B encountering this scenario how
+
+229
+00:07:38,639 --> 00:07:40,960
+many of them work? And at some point you
+
+230
+00:07:40,960 --> 00:07:42,240
+go down this road. You're like, "Okay,
+
+231
+00:07:42,240 --> 00:07:45,120
+well we have 10 that are working." And
+
+232
+00:07:45,120 --> 00:07:46,960
+at some point some user comes along and
+
+233
+00:07:46,960 --> 00:07:49,360
+says, "Hey, this stuff doesn't work."
+
+234
+00:07:49,360 --> 00:07:51,360
+And they report some bug. And what you
+
+235
+00:07:51,360 --> 00:07:54,080
+really measure as an end user. Uh at
+
+236
+00:07:54,080 --> 00:07:56,080
+least the way I think about this is you
+
+237
+00:07:56,080 --> 00:07:57,759
+measure like how often is someone
+
+238
+00:07:57,759 --> 00:08:00,000
+getting an undesired outcome out of
+
+239
+00:08:00,000 --> 00:08:02,000
+this. And and
+
+240
+00:08:02,000 --> 00:08:04,479
+>> right this was we started with like
+
+241
+00:08:04,479 --> 00:08:07,039
+uptime. This was like what appex was,
+
+242
+00:08:07,039 --> 00:08:09,280
+right? Aptex was this proprietary metric
+
+243
+00:08:09,280 --> 00:08:12,000
+that now everyone has which is like just
+
+244
+00:08:12,000 --> 00:08:15,360
+a number from zero to 100 uh or actually
+
+245
+00:08:15,360 --> 00:08:17,680
+it's like 99.9 it's like two decimal
+
+246
+00:08:17,680 --> 00:08:20,960
+places of like how how how often are
+
+247
+00:08:20,960 --> 00:08:22,879
+user getting disappointing results and
+
+248
+00:08:22,879 --> 00:08:26,000
+it was like a com combination of
+
+249
+00:08:26,000 --> 00:08:28,560
+response time and error rates and all
+
+250
+00:08:28,560 --> 00:08:30,240
+this stuff that gave you kind of this
+
+251
+00:08:30,240 --> 00:08:33,120
+onelevel picture of like is it is it
+
+252
+00:08:33,120 --> 00:08:34,719
+good and what percent of people are not
+
+253
+00:08:34,719 --> 00:08:35,120
+having
+
+254
+00:08:35,120 --> 00:08:36,719
+>> said he stole my thunder that's why I
+
+255
+00:08:36,719 --> 00:08:38,479
+drew through it this way cuz my next
+
+256
+00:08:38,479 --> 00:08:40,730
+boss is to exactly do this. It's like
+
+257
+00:08:40,730 --> 00:08:42,159
+[laughter] this is exactly how we do
+
+258
+00:08:42,159 --> 00:08:44,159
+distributed systems. If you guys think
+
+259
+00:08:44,159 --> 00:08:46,160
+about this um we basically have this
+
+260
+00:08:46,160 --> 00:08:47,920
+metric uh because it's impossible to
+
+261
+00:08:47,920 --> 00:08:49,760
+know the status of a distributed system,
+
+262
+00:08:49,760 --> 00:08:52,000
+you can only measure it as it exists at
+
+263
+00:08:52,000 --> 00:08:53,120
+any given time.
+
+264
+00:08:53,120 --> 00:08:55,200
+>> And what you really do as you become a
+
+265
+00:08:55,200 --> 00:08:57,760
+bigger and bigger company is instead of
+
+266
+00:08:57,760 --> 00:08:59,839
+measuring one system, you actually start
+
+267
+00:08:59,839 --> 00:09:02,959
+measuring subsystems as well.
+
+268
+00:09:02,959 --> 00:09:04,399
+uh and you basically start building all
+
+269
+00:09:04,399 --> 00:09:05,920
+these metrics and all these things that
+
+270
+00:09:05,920 --> 00:09:07,279
+say like how well is your system
+
+271
+00:09:07,279 --> 00:09:09,040
+performing over time rather than just
+
+272
+00:09:09,040 --> 00:09:11,760
+like a single part of your system uh and
+
+273
+00:09:11,760 --> 00:09:13,360
+now all of a sudden you've built GitHub
+
+274
+00:09:13,360 --> 00:09:14,800
+and now you have you eventually
+
+275
+00:09:14,800 --> 00:09:17,360
+hopefully end up with uh five nights of
+
+276
+00:09:17,360 --> 00:09:20,240
+uptime though that's very hard um and
+
+277
+00:09:20,240 --> 00:09:23,040
+obviously as your system gets well the
+
+278
+00:09:23,040 --> 00:09:24,800
+problem is what ends up happening is as
+
+279
+00:09:24,800 --> 00:09:26,399
+your system evolves and the thing about
+
+280
+00:09:26,399 --> 00:09:27,760
+regular software
+
+281
+00:09:27,760 --> 00:09:29,440
+>> is this doesn't happen very much your
+
+282
+00:09:29,440 --> 00:09:31,360
+system doesn't typically evolve the way
+
+283
+00:09:31,360 --> 00:09:33,760
+your users use distributed system is
+
+284
+00:09:33,760 --> 00:09:35,519
+very generally stable and predictable
+
+285
+00:09:35,519 --> 00:09:37,760
+over time and we've seen exactly what
+
+286
+00:09:37,760 --> 00:09:39,279
+happens when it becomes unpredictable.
+
+287
+00:09:39,279 --> 00:09:41,920
+For example, in the case of GitHub, more
+
+288
+00:09:41,920 --> 00:09:43,360
+code is being pushed to GitHub than they
+
+289
+00:09:43,360 --> 00:09:46,000
+ever predicted at a rate that they could
+
+290
+00:09:46,000 --> 00:09:48,080
+not have modeled. Like you could it is
+
+291
+00:09:48,080 --> 00:09:50,959
+impossible to go back to 2021 and say we
+
+292
+00:09:50,959 --> 00:09:52,480
+are going to push this much code into
+
+293
+00:09:52,480 --> 00:09:55,839
+GitHub. it like it would be an insane
+
+294
+00:09:55,839 --> 00:09:57,760
+bet to go make that bet just like it
+
+295
+00:09:57,760 --> 00:09:59,279
+would be an insane bet to go back to
+
+296
+00:09:59,279 --> 00:10:01,440
+2021 and say we're gonna need this much
+
+297
+00:10:01,440 --> 00:10:03,200
+RAM in the environment. So, we need to
+
+298
+00:10:03,200 --> 00:10:04,720
+start building these factories in like
+
+299
+00:10:04,720 --> 00:10:08,080
+2017 or 2020 so that we have RAM today.
+
+300
+00:10:08,080 --> 00:10:10,160
+>> It's just not going to happen. [snorts]
+
+301
+00:10:10,160 --> 00:10:13,200
+>> If I if I came to you in in 20 2021 and
+
+302
+00:10:13,200 --> 00:10:14,800
+said I'm going to thousandx the number
+
+303
+00:10:14,800 --> 00:10:17,519
+of software developers by 2025, you
+
+304
+00:10:17,519 --> 00:10:18,240
+would have been like
+
+305
+00:10:18,240 --> 00:10:19,600
+>> it's just not going to happen. uh
+
+306
+00:10:19,600 --> 00:10:21,200
+there's like a curve and you fit the
+
+307
+00:10:21,200 --> 00:10:22,640
+curve and you there's some like ratio
+
+308
+00:10:22,640 --> 00:10:24,560
+that you go do this. So effectively what
+
+309
+00:10:24,560 --> 00:10:26,160
+happens is when your distributed system
+
+310
+00:10:26,160 --> 00:10:28,399
+no longer models your system, what ends
+
+311
+00:10:28,399 --> 00:10:29,680
+up happening is you basically just
+
+312
+00:10:29,680 --> 00:10:32,959
+suddenly start getting way worse uptime.
+
+313
+00:10:32,959 --> 00:10:36,079
+And if you go back um yeah I mean any
+
+314
+00:10:36,079 --> 00:10:37,519
+company at a trillion dollar valuation
+
+315
+00:10:37,519 --> 00:10:40,079
+2020 2019 was crazy. It's just not what
+
+316
+00:10:40,079 --> 00:10:44,240
+you expected. Um but if you go back
+
+317
+00:10:44,240 --> 00:10:46,959
+>> to this kind of system and started doing
+
+318
+00:10:46,959 --> 00:10:48,240
+this,
+
+319
+00:10:48,240 --> 00:10:49,839
+>> think about how this works for agentic
+
+320
+00:10:49,839 --> 00:10:52,000
+systems. We kind of have the same thing.
+
+321
+00:10:52,000 --> 00:10:56,480
+Except the big difference here is except
+
+322
+00:10:56,480 --> 00:11:00,230
+your end user.
+
+323
+00:11:03,910 --> 00:11:03,920
+This this funny little person over here.
+
+324
+00:11:03,920 --> 00:11:06,959
+Um, can I draw?
+
+325
+00:11:06,959 --> 00:11:09,440
+How can I draw on here? Sorry.
+
+326
+00:11:09,440 --> 00:11:12,079
+>> You can do whatever you want, man.
+
+327
+00:11:12,079 --> 00:11:13,600
+>> This end user.
+
+328
+00:11:13,600 --> 00:11:15,360
+>> I loved the stick figures in your
+
+329
+00:11:15,360 --> 00:11:17,360
+presentation. This is what Excaladraw
+
+330
+00:11:17,360 --> 00:11:19,680
+was meant to be used for. I use JS Paint
+
+331
+00:11:19,680 --> 00:11:22,399
+just to be very clear. Um, this end user
+
+332
+00:11:22,399 --> 00:11:25,760
+over here, the only problem is, uh, this
+
+333
+00:11:25,760 --> 00:11:29,120
+end user is a lot more dynamic than
+
+334
+00:11:29,120 --> 00:11:31,440
+distributed systems are. And that makes
+
+335
+00:11:31,440 --> 00:11:34,000
+a huge difference because as this end
+
+336
+00:11:34,000 --> 00:11:36,240
+user, they're suddenly going to push in
+
+337
+00:11:36,240 --> 00:11:38,480
+a whole bunch of dynamic inputs into
+
+338
+00:11:38,480 --> 00:11:40,880
+your actual agentic system or your non
+
+339
+00:11:40,880 --> 00:11:42,880
+your basically your vibecoded slop that
+
+340
+00:11:42,880 --> 00:11:46,320
+you built over here. Um, and like I
+
+341
+00:11:46,320 --> 00:11:47,760
+don't say that in a bad I generally mean
+
+342
+00:11:47,760 --> 00:11:49,440
+this with love. I think everyone's going
+
+343
+00:11:49,440 --> 00:11:51,040
+to have more vibecoded slot than ever
+
+344
+00:11:51,040 --> 00:11:53,360
+before. And every single time this user
+
+345
+00:11:53,360 --> 00:11:54,880
+does this, you're going to have a lot
+
+346
+00:11:54,880 --> 00:11:58,000
+more reds. And the better and the better
+
+347
+00:11:58,000 --> 00:11:59,920
+and more capable you make your system,
+
+348
+00:11:59,920 --> 00:12:02,160
+ironically enough, the more reds you'll
+
+349
+00:12:02,160 --> 00:12:05,120
+have. And the more reds, go ahead.
+
+350
+00:12:05,120 --> 00:12:07,760
+>> Well,
+
+351
+00:12:07,760 --> 00:12:10,000
+>> well, the reason I say this is not
+
+352
+00:12:10,000 --> 00:12:11,839
+because your system is bad. It's because
+
+353
+00:12:11,839 --> 00:12:14,079
+a user is going to start building
+
+354
+00:12:14,079 --> 00:12:16,160
+effectively insane expectations about
+
+355
+00:12:16,160 --> 00:12:18,079
+what your system will do and it'll just
+
+356
+00:12:18,079 --> 00:12:20,160
+have more and more unmet expectations
+
+357
+00:12:20,160 --> 00:12:22,079
+because what you're really doing is
+
+358
+00:12:22,079 --> 00:12:24,320
+you're building like oh my god nope
+
+359
+00:12:24,320 --> 00:12:26,000
+wrong thing. You're basically building
+
+360
+00:12:26,000 --> 00:12:28,079
+this chart of like what the you what
+
+361
+00:12:28,079 --> 00:12:30,079
+your system can do and it's going like
+
+362
+00:12:30,079 --> 00:12:33,279
+this. But as your system gets better the
+
+363
+00:12:33,279 --> 00:12:34,880
+user's expectation of what your system
+
+364
+00:12:34,880 --> 00:12:37,519
+can do is going like this. So what's
+
+365
+00:12:37,519 --> 00:12:38,959
+really happening and the reason that
+
+366
+00:12:38,959 --> 00:12:40,240
+you're getting more reds is not because
+
+367
+00:12:40,240 --> 00:12:41,440
+your system is not getting better or
+
+368
+00:12:41,440 --> 00:12:42,480
+because the models aren't getting
+
+369
+00:12:42,480 --> 00:12:44,079
+better. The reason that you're happening
+
+370
+00:12:44,079 --> 00:12:46,160
+is this discrepancy is really what
+
+371
+00:12:46,160 --> 00:12:48,959
+you're really trying to like fight. It's
+
+372
+00:12:48,959 --> 00:12:50,800
+like what is the amount of delta that
+
+373
+00:12:50,800 --> 00:12:52,639
+the user is perceiving between what your
+
+374
+00:12:52,639 --> 00:12:54,639
+system it thinks your system can do
+
+375
+00:12:54,639 --> 00:12:57,360
+versus what it can actually do. And this
+
+376
+00:12:57,360 --> 00:12:58,880
+it's I think in the world that we're
+
+377
+00:12:58,880 --> 00:13:00,880
+headed towards today the user system is
+
+378
+00:13:00,880 --> 00:13:02,880
+going to go up.
+
+379
+00:13:02,880 --> 00:13:06,320
+And in this world and like my opinion is
+
+380
+00:13:06,320 --> 00:13:08,000
+that the only way to actually understand
+
+381
+00:13:08,000 --> 00:13:10,560
+the system is basically to have more and
+
+382
+00:13:10,560 --> 00:13:12,560
+more probing points through arbitrary
+
+383
+00:13:12,560 --> 00:13:14,800
+points in your software. So instead of
+
+384
+00:13:14,800 --> 00:13:16,800
+having a single uptime number, you
+
+385
+00:13:16,800 --> 00:13:18,560
+actually have many uptime numbers. You
+
+386
+00:13:18,560 --> 00:13:22,000
+have many implicit understandings of
+
+387
+00:13:22,000 --> 00:13:24,480
+exactly where your codebase is failing.
+
+388
+00:13:24,480 --> 00:13:31,990
+So then you can say something like oops.
+
+389
+00:13:34,150 --> 00:13:34,160
+So then you can say something like this.
+
+390
+00:13:34,160 --> 00:13:35,920
+It's like, hey, this is our uptime for
+
+391
+00:13:35,920 --> 00:13:38,240
+this section of the graph,
+
+392
+00:13:38,240 --> 00:13:39,839
+but that doesn't mean it's the same
+
+393
+00:13:39,839 --> 00:13:42,079
+exact uptime for this section of the
+
+394
+00:13:42,079 --> 00:13:44,560
+graph. And being able to introspect your
+
+395
+00:13:44,560 --> 00:13:46,399
+codebase at this level of granularity, I
+
+396
+00:13:46,399 --> 00:13:49,120
+think is the only way to truly go and go
+
+397
+00:13:49,120 --> 00:13:50,079
+do this. And I'll talk about a whole
+
+398
+00:13:50,079 --> 00:13:52,079
+bunch of like ways that we can talk
+
+399
+00:13:52,079 --> 00:13:54,399
+about this in a second. But I just I
+
+400
+00:13:54,399 --> 00:13:55,920
+first wanted to talk about like the phil
+
+401
+00:13:55,920 --> 00:13:57,839
+uh philosophy behind this. What are your
+
+402
+00:13:57,839 --> 00:13:59,279
+thoughts on this guys?
+
+403
+00:13:59,279 --> 00:14:01,360
+>> Yeah, this is this this is Andy Grove,
+
+404
+00:14:01,360 --> 00:14:02,800
+right? This Andy Grove's whole thing was
+
+405
+00:14:02,800 --> 00:14:04,720
+like I mean this was Intel a while ago.
+
+406
+00:14:04,720 --> 00:14:05,920
+This was not really about measuring
+
+407
+00:14:05,920 --> 00:14:07,279
+software. It was about measuring like
+
+408
+00:14:07,279 --> 00:14:09,360
+teams and people and processes, but it
+
+409
+00:14:09,360 --> 00:14:11,519
+was like treat it like a black box and
+
+410
+00:14:11,519 --> 00:14:13,279
+then when the black box no longer serves
+
+411
+00:14:13,279 --> 00:14:14,639
+you and you have to open the box like
+
+412
+00:14:14,639 --> 00:14:16,240
+maybe you put windows on the box, you
+
+413
+00:14:16,240 --> 00:14:17,839
+put little slits on where like the old
+
+414
+00:14:17,839 --> 00:14:19,440
+school observability is like you would
+
+415
+00:14:19,440 --> 00:14:21,120
+just like emit a couple metrics, right?
+
+416
+00:14:21,120 --> 00:14:22,480
+You would have like four numbers that
+
+417
+00:14:22,480 --> 00:14:24,160
+would just tell you like what's the
+
+418
+00:14:24,160 --> 00:14:25,839
+average time to do this? What's the
+
+419
+00:14:25,839 --> 00:14:27,600
+average rate of X? And so you're like
+
+420
+00:14:27,600 --> 00:14:29,600
+kind of poking slits in the box and then
+
+421
+00:14:29,600 --> 00:14:31,040
+eventually you're just like what you're
+
+422
+00:14:31,040 --> 00:14:33,360
+saying is like it's so complicated and
+
+423
+00:14:33,360 --> 00:14:36,959
+so random and so so like just the the
+
+424
+00:14:36,959 --> 00:14:39,040
+amount of different cases going in that
+
+425
+00:14:39,040 --> 00:14:40,800
+it's it's not enough to just poke slits
+
+426
+00:14:40,800 --> 00:14:42,160
+in. You kind of have to be able to
+
+427
+00:14:42,160 --> 00:14:43,760
+really look at every single thing that's
+
+428
+00:14:43,760 --> 00:14:44,320
+happening inside.
+
+429
+00:14:44,320 --> 00:14:45,680
+>> And the reason for this is like the
+
+430
+00:14:45,680 --> 00:14:47,760
+problem is once someone reports a bug,
+
+431
+00:14:47,760 --> 00:14:50,480
+as sad as it is, this metric is only
+
+432
+00:14:50,480 --> 00:14:52,959
+useful in hindsight. You can't have
+
+433
+00:14:52,959 --> 00:14:54,639
+foresight about what the problems is.
+
+434
+00:14:54,639 --> 00:14:55,920
+And if you did know what the foresight
+
+435
+00:14:55,920 --> 00:14:57,279
+is, then like great, just fix the
+
+436
+00:14:57,279 --> 00:14:58,880
+problem because just ask an agent, it'll
+
+437
+00:14:58,880 --> 00:15:02,320
+fix the solution for you. But if you
+
+438
+00:15:02,320 --> 00:15:04,160
+>> and this this was actually like if you
+
+439
+00:15:04,160 --> 00:15:05,199
+want you want to do a little more
+
+440
+00:15:05,199 --> 00:15:07,519
+history here
+
+441
+00:15:07,519 --> 00:15:09,519
+>> like so like the thing you used to have
+
+442
+00:15:09,519 --> 00:15:10,880
+was like here I'm gonna go off to the
+
+443
+00:15:10,880 --> 00:15:12,639
+right here was like you had basically
+
+444
+00:15:12,639 --> 00:15:15,040
+like the number the the the key the the
+
+445
+00:15:15,040 --> 00:15:16,560
+first thing we had was like when data
+
+446
+00:15:16,560 --> 00:15:18,079
+was expensive and memory was expensive
+
+447
+00:15:18,079 --> 00:15:19,279
+we had metrics
+
+448
+00:15:19,279 --> 00:15:21,519
+>> and so you literally had like one number
+
+449
+00:15:21,519 --> 00:15:24,079
+and you could say you know for for a
+
+450
+00:15:24,079 --> 00:15:26,720
+given server you know the what's the
+
+451
+00:15:26,720 --> 00:15:28,800
+error rate right and it would be good
+
+452
+00:15:28,800 --> 00:15:30,320
+and then it would pop up and then it
+
+453
+00:15:30,320 --> 00:15:32,959
+Come down, right? Oh my god. I can't do
+
+454
+00:15:32,959 --> 00:15:34,399
+the drawing thing. We're going to do
+
+455
+00:15:34,399 --> 00:15:34,959
+this one.
+
+456
+00:15:34,959 --> 00:15:37,519
+>> No, you got to have art, man. Artisal
+
+457
+00:15:37,519 --> 00:15:39,519
+art. Anyway, go on. Okay.
+
+458
+00:15:39,519 --> 00:15:42,240
+>> No. So then you could say, okay, for
+
+459
+00:15:42,240 --> 00:15:43,760
+server one, it looks like this. And for
+
+460
+00:15:43,760 --> 00:15:45,519
+server two, it looks like this. And like
+
+461
+00:15:45,519 --> 00:15:46,959
+you would just look at like, yeah, the
+
+462
+00:15:46,959 --> 00:15:50,480
+error rate for different things. Uh, and
+
+463
+00:15:50,480 --> 00:15:52,000
+and and you would just draw like, you
+
+464
+00:15:52,000 --> 00:15:54,480
+know, what is one one number per thing
+
+465
+00:15:54,480 --> 00:15:55,920
+you cared about and you would have like
+
+466
+00:15:55,920 --> 00:15:57,360
+a couple hundreds of these and you would
+
+467
+00:15:57,360 --> 00:16:00,079
+make dashboards with this stuff. Uh and
+
+468
+00:16:00,079 --> 00:16:01,600
+so your your data would basically look
+
+469
+00:16:01,600 --> 00:16:03,279
+like you know time stamp it was time
+
+470
+00:16:03,279 --> 00:16:04,560
+series right so you would have like a
+
+471
+00:16:04,560 --> 00:16:06,720
+time stamp and then you had you know
+
+472
+00:16:06,720 --> 00:16:10,959
+like 1s 2s 3s like into something I
+
+473
+00:16:10,959 --> 00:16:12,320
+don't know these are these are all dates
+
+474
+00:16:12,320 --> 00:16:13,680
+right
+
+475
+00:16:13,680 --> 00:16:16,240
+>> yeah exactly
+
+476
+00:16:16,240 --> 00:16:18,079
+>> and then you would just have like values
+
+477
+00:16:18,079 --> 00:16:19,600
+right and so you would say you know like
+
+478
+00:16:19,600 --> 00:16:23,120
+server one yeah thank you
+
+479
+00:16:23,120 --> 00:16:24,480
+>> yeah you'd basically just collect a
+
+480
+00:16:24,480 --> 00:16:26,160
+bunch of data for various servers or
+
+481
+00:16:26,160 --> 00:16:28,560
+various processes or various devices and
+
+482
+00:16:28,560 --> 00:16:30,880
+just basically try and slice and dice
+
+483
+00:16:30,880 --> 00:16:34,720
+them in some meaningful way.
+
+484
+00:16:34,720 --> 00:16:36,959
+>> Yep. Uh and so these would be like value
+
+485
+00:16:36,959 --> 00:16:37,759
+one.
+
+486
+00:16:37,759 --> 00:16:39,600
+>> Uh and then what we got to in like the
+
+487
+00:16:39,600 --> 00:16:41,440
+mid like basically like what Facebook
+
+488
+00:16:41,440 --> 00:16:43,519
+did with scuba and then charity majors
+
+489
+00:16:43,519 --> 00:16:46,160
+came and took and turned into like what
+
+490
+00:16:46,160 --> 00:16:48,320
+like they basically she coined the term
+
+491
+00:16:48,320 --> 00:16:51,040
+observability, right? Uh and so
+
+492
+00:16:51,040 --> 00:16:52,720
+observability was basically like instead
+
+493
+00:16:52,720 --> 00:16:55,199
+of just having metrics have what we call
+
+494
+00:16:55,199 --> 00:16:58,399
+like wider data like the the journey of
+
+495
+00:16:58,399 --> 00:17:00,240
+observability is like hardware and
+
+496
+00:17:00,240 --> 00:17:02,079
+storage and like software gets better
+
+497
+00:17:02,079 --> 00:17:04,240
+and more performant and we can store
+
+498
+00:17:04,240 --> 00:17:06,160
+more stuff without knowing what we want
+
+499
+00:17:06,160 --> 00:17:08,319
+and so you have like you can store like
+
+500
+00:17:08,319 --> 00:17:11,679
+user ID and you can store you know error
+
+501
+00:17:11,679 --> 00:17:13,199
+message and you're basically like
+
+502
+00:17:13,199 --> 00:17:14,880
+storing this why is this like this hold
+
+503
+00:17:14,880 --> 00:17:17,439
+on let me left justify this you you
+
+504
+00:17:17,439 --> 00:17:19,360
+start storing this like event data
+
+505
+00:17:19,360 --> 00:17:20,640
+basically basically where you have like
+
+506
+00:17:20,640 --> 00:17:23,919
+tons and tons of fields of like
+
+507
+00:17:23,919 --> 00:17:26,880
+team ID,
+
+508
+00:17:26,880 --> 00:17:29,280
+region and so like basically instead of
+
+509
+00:17:29,280 --> 00:17:31,440
+manually having to like decide what your
+
+510
+00:17:31,440 --> 00:17:32,799
+dimensions are like in this case you
+
+511
+00:17:32,799 --> 00:17:34,960
+store the timestamps for servers and
+
+512
+00:17:34,960 --> 00:17:36,960
+then you also store the time timestamps
+
+513
+00:17:36,960 --> 00:17:40,960
+for like you know service
+
+514
+00:17:40,960 --> 00:17:43,840
+service one service 2 like basically
+
+515
+00:17:43,840 --> 00:17:45,919
+spread ac if you have if you have uh
+
+516
+00:17:45,919 --> 00:17:48,559
+let's say you have like you know this
+
+517
+00:17:48,559 --> 00:17:50,640
+was like old old old pre-cluster days,
+
+518
+00:17:50,640 --> 00:17:53,280
+but you have like server one
+
+519
+00:17:53,280 --> 00:17:55,280
+and server two. And so the only
+
+520
+00:17:55,280 --> 00:17:56,640
+dimensions you have were like what
+
+521
+00:17:56,640 --> 00:17:58,640
+service was it? What server was it on?
+
+522
+00:17:58,640 --> 00:18:00,320
+And then you have like service one
+
+523
+00:18:00,320 --> 00:18:03,280
+running here and you have service two
+
+524
+00:18:03,280 --> 00:18:03,679
+running here.
+
+525
+00:18:03,679 --> 00:18:04,960
+>> I got something
+
+526
+00:18:04,960 --> 00:18:06,720
+>> and let's say you only have service one
+
+527
+00:18:06,720 --> 00:18:08,559
+over here. Does that make sense?
+
+528
+00:18:08,559 --> 00:18:10,240
+>> Talks about this and this basically just
+
+529
+00:18:10,240 --> 00:18:11,679
+is a great tear down of why you want
+
+530
+00:18:11,679 --> 00:18:14,000
+observer wide events. But like it
+
+531
+00:18:14,000 --> 00:18:15,120
+basically just talks about this and
+
+532
+00:18:15,120 --> 00:18:16,799
+talks about how you want to go get wide
+
+533
+00:18:16,799 --> 00:18:19,280
+events for all the unknown unknowns. And
+
+534
+00:18:19,280 --> 00:18:21,200
+the graphics he does here are like
+
+535
+00:18:21,200 --> 00:18:23,760
+>> yeah it's way easier to debug if you can
+
+536
+00:18:23,760 --> 00:18:25,919
+store all of the data and then go figure
+
+537
+00:18:25,919 --> 00:18:27,840
+out what you want later and query it
+
+538
+00:18:27,840 --> 00:18:30,160
+performantly and store it like without
+
+539
+00:18:30,160 --> 00:18:32,080
+taking up like billions of gigs of data.
+
+540
+00:18:32,080 --> 00:18:33,200
+>> Exactly. So this thing basically just
+
+541
+00:18:33,200 --> 00:18:34,960
+talks about this and says why you want
+
+542
+00:18:34,960 --> 00:18:37,840
+all this data. Um I'll link our linked
+
+543
+00:18:37,840 --> 00:18:40,400
+article. Boris is awesome. Um writes a
+
+544
+00:18:40,400 --> 00:18:43,120
+really good blog post about this stuff.
+
+545
+00:18:43,120 --> 00:18:44,880
+Why can't I send it? There you go.
+
+546
+00:18:44,880 --> 00:18:46,880
+>> Oh, yeah. This is better than mine.
+
+547
+00:18:46,880 --> 00:18:48,799
+>> Yeah, because this lets you correlate
+
+548
+00:18:48,799 --> 00:18:51,360
+across any dimension that you might want
+
+549
+00:18:51,360 --> 00:18:53,520
+to care about and you don't know what
+
+550
+00:18:53,520 --> 00:18:55,120
+the dimension is later. If it's like it
+
+551
+00:18:55,120 --> 00:18:56,720
+it makes it so much easier to find bugs
+
+552
+00:18:56,720 --> 00:18:59,039
+if it's like, oh, all the users that
+
+553
+00:18:59,039 --> 00:19:01,919
+have this thing is true, uh, that's
+
+554
+00:19:01,919 --> 00:19:03,520
+that's the thing that actually
+
+555
+00:19:03,520 --> 00:19:04,880
+correlates with the spike.
+
+556
+00:19:04,880 --> 00:19:06,400
+>> And and the most important thing for
+
+557
+00:19:06,400 --> 00:19:08,480
+everyone to really understand here is
+
+558
+00:19:08,480 --> 00:19:10,960
+not anything specific about this. It's
+
+559
+00:19:10,960 --> 00:19:12,400
+the most important thing to really
+
+560
+00:19:12,400 --> 00:19:15,679
+understand here is that when you do
+
+561
+00:19:15,679 --> 00:19:18,480
+observability of any kind,
+
+562
+00:19:18,480 --> 00:19:21,200
+observability is not useful at all for
+
+563
+00:19:21,200 --> 00:19:23,280
+things you already know. Observability
+
+564
+00:19:23,280 --> 00:19:26,000
+is useful in hindsight. When you like
+
+565
+00:19:26,000 --> 00:19:27,520
+why do we have these uptime metrics? Why
+
+566
+00:19:27,520 --> 00:19:28,799
+don't we just start with a standard
+
+567
+00:19:28,799 --> 00:19:30,080
+number and why do we break them down
+
+568
+00:19:30,080 --> 00:19:32,240
+more? It's because when something goes
+
+569
+00:19:32,240 --> 00:19:33,760
+down, you want to quickly be like, hey,
+
+570
+00:19:33,760 --> 00:19:35,120
+the main system is down because the
+
+571
+00:19:35,120 --> 00:19:37,679
+database is down. And boom. You want you
+
+572
+00:19:37,679 --> 00:19:38,720
+want to have that answer. You don't want
+
+573
+00:19:38,720 --> 00:19:40,320
+to be debugging it at that time. You
+
+574
+00:19:40,320 --> 00:19:42,880
+don't want your users or Dexter this
+
+575
+00:19:42,880 --> 00:19:44,799
+beautiful agent diagram like our users
+
+576
+00:19:44,799 --> 00:19:48,240
+are now not obviously just humans. So
+
+577
+00:19:48,240 --> 00:19:49,600
+let's write this down. We also have
+
+578
+00:19:49,600 --> 00:19:51,039
+agents using it. You want agents to be
+
+579
+00:19:51,039 --> 00:19:53,760
+able to understand the spec as well. So
+
+580
+00:19:53,760 --> 00:19:55,840
+the only thing you can find useful is
+
+581
+00:19:55,840 --> 00:19:58,480
+effectively hindsight observability.
+
+582
+00:19:58,480 --> 00:20:00,400
+And that's like the big that's kind of
+
+583
+00:20:00,400 --> 00:20:01,919
+the big argument that I want to push the
+
+584
+00:20:01,919 --> 00:20:04,400
+world towards more personally, which is
+
+585
+00:20:04,400 --> 00:20:06,080
+you want to be able to make your entire
+
+586
+00:20:06,080 --> 00:20:08,080
+black box observable because if you
+
+587
+00:20:08,080 --> 00:20:09,440
+don't make it observable, then you can't
+
+588
+00:20:09,440 --> 00:20:12,320
+have handset observability. And in order
+
+589
+00:20:12,320 --> 00:20:13,919
+to do that, you have a couple of
+
+590
+00:20:13,919 --> 00:20:15,679
+different options. And one of those
+
+591
+00:20:15,679 --> 00:20:17,919
+options just like
+
+592
+00:20:17,919 --> 00:20:20,240
+how do I zoom in?
+
+593
+00:20:20,240 --> 00:20:21,440
+one of those options like you're going
+
+594
+00:20:21,440 --> 00:20:24,000
+to write a bunch of code like service
+
+595
+00:20:24,000 --> 00:20:30,159
+API server service API
+
+596
+00:20:30,159 --> 00:20:31,919
+that does something who I don't know
+
+597
+00:20:31,919 --> 00:20:35,120
+what this router does but like uh like
+
+598
+00:20:35,120 --> 00:20:37,520
+hello route
+
+599
+00:20:37,520 --> 00:20:38,640
+uh you're going to build a bunch of
+
+600
+00:20:38,640 --> 00:20:40,480
+these routes as you go down this road
+
+601
+00:20:40,480 --> 00:20:42,000
+and as you build this route one of the
+
+602
+00:20:42,000 --> 00:20:43,600
+things that I recommend that you do for
+
+603
+00:20:43,600 --> 00:20:45,120
+all your top level API just like add
+
+604
+00:20:45,120 --> 00:20:47,600
+some sort of tracing on top of it it's
+
+605
+00:20:47,600 --> 00:20:50,159
+super lowhanging it's super trivial, but
+
+606
+00:20:50,159 --> 00:20:51,520
+it'll just make it so that when
+
+607
+00:20:51,520 --> 00:20:53,919
+something goes wrong, even if you don't
+
+608
+00:20:53,919 --> 00:20:55,919
+understand it, you can go do this and
+
+609
+00:20:55,919 --> 00:20:57,679
+just like ask an LM to go do this. Add
+
+610
+00:20:57,679 --> 00:20:59,440
+some llinter to guarantee this.
+
+611
+00:20:59,440 --> 00:21:01,039
+>> That's funny.
+
+612
+00:21:01,039 --> 00:21:03,520
+>> My one of my first projects that I built
+
+613
+00:21:03,520 --> 00:21:06,000
+uh at Sprout back in like 2015 was this
+
+614
+00:21:06,000 --> 00:21:07,840
+thing called instrumented where you
+
+615
+00:21:07,840 --> 00:21:09,039
+would like it would like take the
+
+616
+00:21:09,039 --> 00:21:10,960
+function name and it would emit like 15
+
+617
+00:21:10,960 --> 00:21:13,120
+metrics basically.
+
+618
+00:21:13,120 --> 00:21:14,880
+>> Uh this was based on like Kota Hail's
+
+619
+00:21:14,880 --> 00:21:16,880
+metrics, right? You would have like uh
+
+620
+00:21:16,880 --> 00:21:18,960
+you would have a meter for like you
+
+621
+00:21:18,960 --> 00:21:20,480
+would have like a counter for how often
+
+622
+00:21:20,480 --> 00:21:23,280
+it is getting called
+
+623
+00:21:23,280 --> 00:21:25,600
+throughput. You would have a timer for
+
+624
+00:21:25,600 --> 00:21:28,480
+like the histogram of like histogram of
+
+625
+00:21:28,480 --> 00:21:30,364
+latency.
+
+626
+00:21:30,364 --> 00:21:30,480
+[snorts]
+
+627
+00:21:30,480 --> 00:21:34,240
+>> You would have a counter for errors. Uh
+
+628
+00:21:34,240 --> 00:21:35,760
+and so you could do thing you could
+
+629
+00:21:35,760 --> 00:21:37,520
+compute things off of this like error
+
+630
+00:21:37,520 --> 00:21:40,000
+rate equals you know throughput over
+
+631
+00:21:40,000 --> 00:21:43,280
+errors or errors over throughput, right?
+
+632
+00:21:43,280 --> 00:21:45,280
+>> Yeah. Uh and you can look at like the
+
+633
+00:21:45,280 --> 00:21:48,320
+P99 and etc. And so like basically and
+
+634
+00:21:48,320 --> 00:21:50,159
+and and the histogram here like the the
+
+635
+00:21:50,159 --> 00:21:52,080
+the histogram every single thing is a
+
+636
+00:21:52,080 --> 00:21:55,120
+different metrics P50, P90,
+
+637
+00:21:55,120 --> 00:21:58,799
+P98, P99, etc.
+
+638
+00:21:58,799 --> 00:22:00,480
+Um and tracing is like you should talk
+
+639
+00:22:00,480 --> 00:22:02,559
+about what tracing really is like you
+
+640
+00:22:02,559 --> 00:22:04,159
+should draw a trace or do you have a do
+
+641
+00:22:04,159 --> 00:22:05,200
+you have a trace floating around
+
+642
+00:22:05,200 --> 00:22:06,640
+somewhere of like
+
+643
+00:22:06,640 --> 00:22:08,559
+>> I do I have a I have one that's
+
+644
+00:22:08,559 --> 00:22:09,840
+available right now. Yeah, because I
+
+645
+00:22:09,840 --> 00:22:11,280
+would say like distributed tracing was
+
+646
+00:22:11,280 --> 00:22:12,960
+the next hot thing after we got into
+
+647
+00:22:12,960 --> 00:22:14,640
+wide data sets. Like that was the thing
+
+648
+00:22:14,640 --> 00:22:16,480
+that people built on top of wide data
+
+649
+00:22:16,480 --> 00:22:18,159
+sets was like hotel traces, open
+
+650
+00:22:18,159 --> 00:22:20,240
+telemetry traces.
+
+651
+00:22:20,240 --> 00:22:21,760
+>> So I'm just going to show something
+
+652
+00:22:21,760 --> 00:22:24,960
+because that's probably easier.
+
+653
+00:22:24,960 --> 00:22:26,559
+>> You got waterfall. You got a waterfall
+
+654
+00:22:26,559 --> 00:22:27,360
+for me?
+
+655
+00:22:27,360 --> 00:22:29,280
+>> Yeah. Yeah. I'll just run this for
+
+656
+00:22:29,280 --> 00:22:30,480
+example. It doesn't really matter what
+
+657
+00:22:30,480 --> 00:22:31,679
+this pipeline does. I'm just going to
+
+658
+00:22:31,679 --> 00:22:32,799
+run this really fast.
+
+659
+00:22:32,799 --> 00:22:34,320
+>> This is like some image gen thing,
+
+660
+00:22:34,320 --> 00:22:35,520
+right?
+
+661
+00:22:35,520 --> 00:22:36,880
+>> Yeah. I mean it's called generate
+
+662
+00:22:36,880 --> 00:22:38,400
+images. So I really hope it generates
+
+663
+00:22:38,400 --> 00:22:41,360
+images. [laughter] Um otherwise it's
+
+664
+00:22:41,360 --> 00:22:42,880
+named poorly. But you're seeing a bunch
+
+665
+00:22:42,880 --> 00:22:46,880
+of functions here. This function uh
+
+666
+00:22:46,880 --> 00:22:48,640
+uh this function for example you can see
+
+667
+00:22:48,640 --> 00:22:50,559
+what it does. It basically is like it
+
+668
+00:22:50,559 --> 00:22:52,000
+generates an image then evaluates an
+
+669
+00:22:52,000 --> 00:22:53,679
+image and then while the score is low it
+
+670
+00:22:53,679 --> 00:22:54,880
+does that in a loop and eventually
+
+671
+00:22:54,880 --> 00:22:57,039
+returns the image that it finds uh if
+
+672
+00:22:57,039 --> 00:22:58,799
+it's less than three attempts. Do you
+
+673
+00:22:58,799 --> 00:23:00,159
+kind of get the gist of what the code is
+
+674
+00:23:00,159 --> 00:23:02,559
+doing? But uh I'm going to show you what
+
+675
+00:23:02,559 --> 00:23:04,080
+what we really want with tracing because
+
+676
+00:23:04,080 --> 00:23:05,600
+once you have tracing there's a lot of
+
+677
+00:23:05,600 --> 00:23:07,440
+things in here. Obviously, this is using
+
+678
+00:23:07,440 --> 00:23:08,880
+a lot of functions that we don't know.
+
+679
+00:23:08,880 --> 00:23:10,080
+We haven't read the code for any of
+
+680
+00:23:10,080 --> 00:23:12,000
+these. We don't know what HTTP calls
+
+681
+00:23:12,000 --> 00:23:13,600
+we're making. We have no almost no
+
+682
+00:23:13,600 --> 00:23:15,120
+introspection on any of this data.
+
+683
+00:23:15,120 --> 00:23:17,280
+>> Yeah. In the old days, if I wanted to in
+
+684
+00:23:17,280 --> 00:23:18,799
+the old days, if I wanted to debug this,
+
+685
+00:23:18,799 --> 00:23:20,640
+I'd be like jumping to definition and
+
+686
+00:23:20,640 --> 00:23:21,919
+clicking around and like, okay, let me
+
+687
+00:23:21,919 --> 00:23:23,520
+go read this function body to understand
+
+688
+00:23:23,520 --> 00:23:24,960
+what happens. Okay, let me go click into
+
+689
+00:23:24,960 --> 00:23:26,159
+another function to understand what
+
+690
+00:23:26,159 --> 00:23:27,520
+happens. And like building this all into
+
+691
+00:23:27,520 --> 00:23:28,799
+my head of like, okay, how do these
+
+692
+00:23:28,799 --> 00:23:30,240
+things fit together? Where are the slow
+
+693
+00:23:30,240 --> 00:23:32,080
+parts? Where are the errorprone parts,
+
+694
+00:23:32,080 --> 00:23:33,679
+etc.?
+
+695
+00:23:33,679 --> 00:23:35,840
+>> Yeah, exactly. And when I really Why is
+
+696
+00:23:35,840 --> 00:23:36,960
+it running so many? I have three
+
+697
+00:23:36,960 --> 00:23:38,480
+attempts.
+
+698
+00:23:38,480 --> 00:23:41,600
+Did I have a Oh, I'm dumb. I don't
+
+699
+00:23:41,600 --> 00:23:44,720
+increase attempts by one firstly. Like,
+
+700
+00:23:44,720 --> 00:23:46,159
+so I just want to show again like how do
+
+701
+00:23:46,159 --> 00:23:47,679
+you find bugs with tracing? Well,
+
+702
+00:23:47,679 --> 00:23:51,520
+>> well, this is at the very least logs.
+
+703
+00:23:51,520 --> 00:23:53,440
+>> This is this is tracing actually. I'm
+
+704
+00:23:53,440 --> 00:23:56,400
+dumping out the tracing values here. But
+
+705
+00:23:56,400 --> 00:23:58,559
+first things first, let's let's uh
+
+706
+00:23:58,559 --> 00:24:02,720
+cancel this function. Um
+
+707
+00:24:02,720 --> 00:24:04,400
+Oh, I'm sorry. All right, we don't have
+
+708
+00:24:04,400 --> 00:24:07,760
+plus+ because++ is silly. We should
+
+709
+00:24:07,760 --> 00:24:10,000
+probably add plus+.
+
+710
+00:24:10,000 --> 00:24:11,679
+Um,
+
+711
+00:24:11,679 --> 00:24:13,360
+as I go do this, I'm going to cancel
+
+712
+00:24:13,360 --> 00:24:13,679
+this.
+
+713
+00:24:13,679 --> 00:24:15,360
+>> Yeah, your agent tries BAML didn't find
+
+714
+00:24:15,360 --> 00:24:17,200
+that.
+
+715
+00:24:17,200 --> 00:24:21,440
+>> I didn't run this anyway. Um, so as I
+
+716
+00:24:21,440 --> 00:24:23,200
+run this, the first thing to notice is
+
+717
+00:24:23,200 --> 00:24:25,200
+like one really nice thing that you get
+
+718
+00:24:25,200 --> 00:24:27,360
+with really nice tracing is you can
+
+719
+00:24:27,360 --> 00:24:29,520
+build really nice tools like this. You
+
+720
+00:24:29,520 --> 00:24:31,440
+can clearly be like and watch.
+
+721
+00:24:31,440 --> 00:24:32,960
+>> Can we start with the trace before we go
+
+722
+00:24:32,960 --> 00:24:35,840
+to the UI you built on top of the trace?
+
+723
+00:24:35,840 --> 00:24:38,559
+>> Yeah, here we go.
+
+724
+00:24:38,559 --> 00:24:40,240
+>> We'll just do full screen. Let's open
+
+725
+00:24:40,240 --> 00:24:41,600
+the flame graph and just look at this
+
+726
+00:24:41,600 --> 00:24:44,789
+thing.
+
+727
+00:24:47,110 --> 00:24:47,120
+Uh let's go here.
+
+728
+00:24:47,120 --> 00:24:48,320
+>> If you scroll down, you have this
+
+729
+00:24:48,320 --> 00:24:50,559
+waterfall thing, right?
+
+730
+00:24:50,559 --> 00:24:52,159
+>> Yeah. And the waterfall thing basically
+
+731
+00:24:52,159 --> 00:24:53,679
+tells you exactly how much you're
+
+732
+00:24:53,679 --> 00:24:55,039
+spending and what things. And if you've
+
+733
+00:24:55,039 --> 00:24:56,400
+ever seen like a flame graph or
+
+734
+00:24:56,400 --> 00:24:58,159
+something like that, you can think of as
+
+735
+00:24:58,159 --> 00:25:00,559
+a uh sorry, I'm going to rerun this
+
+736
+00:25:00,559 --> 00:25:02,880
+because uh I lost the
+
+737
+00:25:02,880 --> 00:25:05,360
+>> Yeah, that's a big old
+
+738
+00:25:05,360 --> 00:25:08,080
+>> Yeah, I lost the source maps.
+
+739
+00:25:08,080 --> 00:25:09,440
+>> Oh, because you edited the file.
+
+740
+00:25:09,440 --> 00:25:12,240
+>> Uh yeah. Yeah. So, we have we'll work on
+
+741
+00:25:12,240 --> 00:25:16,559
+doing this. But um when this runs
+
+742
+00:25:16,559 --> 00:25:18,400
+this time, it's bounded to three, so it
+
+743
+00:25:18,400 --> 00:25:20,080
+should be faster. But like the first
+
+744
+00:25:20,080 --> 00:25:21,600
+value of tracing that you really get is
+
+745
+00:25:21,600 --> 00:25:23,039
+like the minute you start tracing,
+
+746
+00:25:23,039 --> 00:25:26,320
+finding bugs is so much easier because
+
+747
+00:25:26,320 --> 00:25:27,760
+the minute you can find bugs is how do
+
+748
+00:25:27,760 --> 00:25:29,520
+you find bugs? Well, even as the program
+
+749
+00:25:29,520 --> 00:25:30,880
+is executing without waiting for
+
+750
+00:25:30,880 --> 00:25:32,320
+completion, I realize that something is
+
+751
+00:25:32,320 --> 00:25:33,440
+off here because it should take three
+
+752
+00:25:33,440 --> 00:25:35,520
+attempts and boom, I can trace it very
+
+753
+00:25:35,520 --> 00:25:37,520
+fast. So if you think about your
+
+754
+00:25:37,520 --> 00:25:38,960
+production applications and users
+
+755
+00:25:38,960 --> 00:25:41,760
+getting un unexpected behavior, if you
+
+756
+00:25:41,760 --> 00:25:44,000
+can expose tracing to your users or
+
+757
+00:25:44,000 --> 00:25:45,360
+something like that, your users can
+
+758
+00:25:45,360 --> 00:25:46,880
+actually help diagnose and build the
+
+759
+00:25:46,880 --> 00:25:49,600
+right system automatically.
+
+760
+00:25:49,600 --> 00:25:51,760
+Let's go here. Uh, what is going on?
+
+761
+00:25:51,760 --> 00:25:55,029
+Sorry.
+
+762
+00:25:55,990 --> 00:25:56,000
+>> All right, we're going to run it one
+
+763
+00:25:56,000 --> 00:25:57,120
+more time.
+
+764
+00:25:57,120 --> 00:25:59,840
+>> One more time. Beta software. Um, but
+
+765
+00:25:59,840 --> 00:26:01,360
+and I'll talk about hotel and stuff in a
+
+766
+00:26:01,360 --> 00:26:02,559
+second, too. And I'll talk about LM
+
+767
+00:26:02,559 --> 00:26:04,400
+tracing as general because LM tracing I
+
+768
+00:26:04,400 --> 00:26:05,760
+think is slightly different than regular
+
+769
+00:26:05,760 --> 00:26:07,440
+tracing, but I think it's people are
+
+770
+00:26:07,440 --> 00:26:08,960
+treating as too different than regular
+
+771
+00:26:08,960 --> 00:26:10,000
+tracing.
+
+772
+00:26:10,000 --> 00:26:11,840
+>> Uh, it's different in some senses, but
+
+773
+00:26:11,840 --> 00:26:12,240
+most
+
+774
+00:26:12,240 --> 00:26:14,240
+>> how many hotel how many startups are
+
+775
+00:26:14,240 --> 00:26:16,400
+just hotel rappers billing themselves?
+
+776
+00:26:16,400 --> 00:26:17,760
+It's like, well, this is special. You
+
+777
+00:26:17,760 --> 00:26:19,039
+need you need to do it differently for
+
+778
+00:26:19,039 --> 00:26:20,720
+LLMs.
+
+779
+00:26:20,720 --> 00:26:22,640
+>> Yeah, it's like and I'll talk about
+
+780
+00:26:22,640 --> 00:26:24,159
+hotel in a second. I have a whole huge
+
+781
+00:26:24,159 --> 00:26:26,640
+bunch of gripes at the hotel, but it I
+
+782
+00:26:26,640 --> 00:26:27,919
+think the key part that you really want
+
+783
+00:26:27,919 --> 00:26:29,600
+to have is when you go look at this
+
+784
+00:26:29,600 --> 00:26:30,880
+flame graph and you go start
+
+785
+00:26:30,880 --> 00:26:32,159
+understanding what the code is actually
+
+786
+00:26:32,159 --> 00:26:34,000
+doing. You want to be able to really
+
+787
+00:26:34,000 --> 00:26:36,559
+quickly understand exactly where time is
+
+788
+00:26:36,559 --> 00:26:38,000
+being spent, where error rates are
+
+789
+00:26:38,000 --> 00:26:40,000
+happening, what's not happening as you
+
+790
+00:26:40,000 --> 00:26:42,880
+expect. Uh and like you could imagine
+
+791
+00:26:42,880 --> 00:26:44,480
+this is just a dimension. We Dextra
+
+792
+00:26:44,480 --> 00:26:45,760
+talks about wide events. If you want to
+
+793
+00:26:45,760 --> 00:26:47,919
+understand cost, you want to understand
+
+794
+00:26:47,919 --> 00:26:50,080
+how many times you call something out.
+
+795
+00:26:50,080 --> 00:26:51,840
+>> Well, technically technically cost and
+
+796
+00:26:51,840 --> 00:26:53,760
+time are metrics and the dimension is
+
+797
+00:26:53,760 --> 00:26:57,039
+like function name or or module or
+
+798
+00:26:57,039 --> 00:26:57,919
+whatever it is.
+
+799
+00:26:57,919 --> 00:26:59,520
+>> Yeah, sure. You want to be able to index
+
+800
+00:26:59,520 --> 00:27:01,039
+by function name or something else, but
+
+801
+00:27:01,039 --> 00:27:01,600
+like
+
+802
+00:27:01,600 --> 00:27:03,039
+>> obviously you're going to use packages
+
+803
+00:27:03,039 --> 00:27:04,159
+that you don't own. You want to be able
+
+804
+00:27:04,159 --> 00:27:05,520
+to understand what packages you don't
+
+805
+00:27:05,520 --> 00:27:07,360
+own that are being called by the system
+
+806
+00:27:07,360 --> 00:27:08,960
+and be able to really quickly like grab
+
+807
+00:27:08,960 --> 00:27:10,480
+through them
+
+808
+00:27:10,480 --> 00:27:12,080
+>> without having to go debug anything but
+
+809
+00:27:12,080 --> 00:27:13,440
+not have to look at them every single
+
+810
+00:27:13,440 --> 00:27:16,240
+time. But what you really want is the
+
+811
+00:27:16,240 --> 00:27:18,559
+minute think about how an LM works and
+
+812
+00:27:18,559 --> 00:27:19,760
+think about how all of you are going to
+
+813
+00:27:19,760 --> 00:27:20,880
+think about this code. None of you
+
+814
+00:27:20,880 --> 00:27:22,080
+actually know what happens under the
+
+815
+00:27:22,080 --> 00:27:23,919
+hood in these functions. You just know
+
+816
+00:27:23,919 --> 00:27:26,000
+at some point we call generate image.
+
+817
+00:27:26,000 --> 00:27:27,360
+But now you can actually really quickly
+
+818
+00:27:27,360 --> 00:27:29,440
+see what you call with generate image.
+
+819
+00:27:29,440 --> 00:27:32,240
+It calls it calls a thing called prompt.
+
+820
+00:27:32,240 --> 00:27:34,159
+It calls a thing called dot call
+
+821
+00:27:34,159 --> 00:27:36,080
+function. And eventually it goes to all
+
+822
+00:27:36,080 --> 00:27:38,159
+of this. It gets some environment
+
+823
+00:27:38,159 --> 00:27:42,480
+variables over here. Um, and eventually
+
+824
+00:27:42,480 --> 00:27:45,760
+eventually it calls HTTP.
+
+825
+00:27:45,760 --> 00:27:48,240
+And it makes an HTTP request. And you
+
+826
+00:27:48,240 --> 00:27:50,720
+can even see very fast that the bulk of
+
+827
+00:27:50,720 --> 00:27:53,039
+the time is actually being spent um on
+
+828
+00:27:53,039 --> 00:27:56,000
+like this. Oh, where'd it go? Um, on
+
+829
+00:27:56,000 --> 00:27:58,720
+this actual send request over here.
+
+830
+00:27:58,720 --> 00:28:00,559
+There's another one. Oh, waiting for
+
+831
+00:28:00,559 --> 00:28:02,000
+Okay, because there's an await here or
+
+832
+00:28:02,000 --> 00:28:04,159
+something. But the bulk of his time is
+
+833
+00:28:04,159 --> 00:28:06,000
+actually being spent Oh. Oh, sorry.
+
+834
+00:28:06,000 --> 00:28:07,200
+Sorry, the bulk of this time is actually
+
+835
+00:28:07,200 --> 00:28:09,279
+being sent on this like underscore send
+
+836
+00:28:09,279 --> 00:28:12,000
+which send calls under the hood and
+
+837
+00:28:12,000 --> 00:28:13,679
+without you sorry this is latency on the
+
+838
+00:28:13,679 --> 00:28:15,360
+right side. This is when it started.
+
+839
+00:28:15,360 --> 00:28:16,799
+This is like the time step when it
+
+840
+00:28:16,799 --> 00:28:18,559
+started and you can quickly see exactly
+
+841
+00:28:18,559 --> 00:28:20,320
+where it was being called without
+
+842
+00:28:20,320 --> 00:28:22,000
+understanding. So without any guessing
+
+843
+00:28:22,000 --> 00:28:23,600
+without digging through the codebase
+
+844
+00:28:23,600 --> 00:28:25,360
+without understanding the code ahead of
+
+845
+00:28:25,360 --> 00:28:27,520
+time with tracing and really in-depth
+
+846
+00:28:27,520 --> 00:28:28,880
+tracing you can actually go through and
+
+847
+00:28:28,880 --> 00:28:30,880
+figure out exactly what's happening and
+
+848
+00:28:30,880 --> 00:28:33,200
+where your bug might be. And I think
+
+849
+00:28:33,200 --> 00:28:35,679
+this is really the magic of what we want
+
+850
+00:28:35,679 --> 00:28:37,200
+with these sort of systems. Like when we
+
+851
+00:28:37,200 --> 00:28:38,799
+go back to like these total black boxes
+
+852
+00:28:38,799 --> 00:28:41,120
+that we don't understand, you really
+
+853
+00:28:41,120 --> 00:28:43,200
+want to go back in hindsight and say,
+
+854
+00:28:43,200 --> 00:28:44,880
+"How the heck do I understand what
+
+855
+00:28:44,880 --> 00:28:46,399
+happened when things went wrong?" Well,
+
+856
+00:28:46,399 --> 00:28:48,640
+what do you do? You pull up, you need to
+
+857
+00:28:48,640 --> 00:28:51,200
+pull up some sort of tracing system. And
+
+858
+00:28:51,200 --> 00:28:53,520
+the usefulness of this is merely a
+
+859
+00:28:53,520 --> 00:28:55,360
+function of how much tracing you were
+
+860
+00:28:55,360 --> 00:28:57,919
+able to tag on when you ship the code.
+
+861
+00:28:57,919 --> 00:28:58,399
+>> Yeah.
+
+862
+00:28:58,399 --> 00:28:59,679
+>> Does that make sense, Dexter?
+
+863
+00:28:59,679 --> 00:29:01,120
+>> Yeah. I I think of like the difference
+
+864
+00:29:01,120 --> 00:29:02,320
+between tra like what I would have done
+
+865
+00:29:02,320 --> 00:29:04,080
+before and like we'd spent a lot of time
+
+866
+00:29:04,080 --> 00:29:07,200
+in 2014 like sshing into servers and
+
+867
+00:29:07,200 --> 00:29:09,279
+like tailing and gpping logs for stuff
+
+868
+00:29:09,279 --> 00:29:11,440
+is like logs was the earliest version of
+
+869
+00:29:11,440 --> 00:29:13,120
+this. you had logs and then you had
+
+870
+00:29:13,120 --> 00:29:15,520
+metrics and then like now the like the
+
+871
+00:29:15,520 --> 00:29:17,840
+the story is like okay logs metrics
+
+872
+00:29:17,840 --> 00:29:19,919
+traces that's the full observability
+
+873
+00:29:19,919 --> 00:29:21,120
+story and they all have kind of
+
+874
+00:29:21,120 --> 00:29:22,559
+different purposes and different levels
+
+875
+00:29:22,559 --> 00:29:25,279
+of granularity but yeah no I remember
+
+876
+00:29:25,279 --> 00:29:27,679
+when we turned on New Relic in 2014 and
+
+877
+00:29:27,679 --> 00:29:29,279
+it was like oh now I don't have to read
+
+878
+00:29:29,279 --> 00:29:31,440
+the logs and put in special logging to
+
+879
+00:29:31,440 --> 00:29:33,760
+figure out what's slow because the trace
+
+880
+00:29:33,760 --> 00:29:35,279
+is just going to capture everything and
+
+881
+00:29:35,279 --> 00:29:37,440
+be like yep this is the bad SQL query
+
+882
+00:29:37,440 --> 00:29:39,279
+this request made 40 different SQL
+
+883
+00:29:39,279 --> 00:29:40,960
+queries and this is the one that's slow
+
+884
+00:29:40,960 --> 00:29:42,240
+and then you're like cool let me go fix
+
+885
+00:29:42,240 --> 00:29:44,240
+that.
+
+886
+00:29:44,240 --> 00:29:45,760
+>> Yeah, exactly. And I think that's the
+
+887
+00:29:45,760 --> 00:29:47,520
+general list and like every now and then
+
+888
+00:29:47,520 --> 00:29:49,039
+for certain types of functions you want
+
+889
+00:29:49,039 --> 00:29:50,399
+to capture both the inputs and the
+
+890
+00:29:50,399 --> 00:29:52,640
+outputs. Sometimes you only want to
+
+891
+00:29:52,640 --> 00:29:54,399
+capture the inputs, sometimes you only
+
+892
+00:29:54,399 --> 00:29:55,919
+want the outputs, sometimes you want the
+
+893
+00:29:55,919 --> 00:29:58,080
+error rates and everything else. And I
+
+894
+00:29:58,080 --> 00:29:59,760
+think this granularity of being able to
+
+895
+00:29:59,760 --> 00:30:01,520
+choose what you want is basically
+
+896
+00:30:01,520 --> 00:30:04,960
+effectively what you want to happen.
+
+897
+00:30:04,960 --> 00:30:06,880
+It seems like the tracing like the idea
+
+898
+00:30:06,880 --> 00:30:08,799
+behind tracing is like you actually want
+
+899
+00:30:08,799 --> 00:30:11,120
+to keep everything because the the idea
+
+900
+00:30:11,120 --> 00:30:13,039
+of trace is like when we run traces in
+
+901
+00:30:13,039 --> 00:30:14,720
+production in human layer we we do a
+
+902
+00:30:14,720 --> 00:30:16,799
+pretty high sample rate like the the
+
+903
+00:30:16,799 --> 00:30:19,039
+traces are not about like hey I need to
+
+904
+00:30:19,039 --> 00:30:21,760
+debug every single individual request.
+
+905
+00:30:21,760 --> 00:30:23,520
+It's like I need to understand the shape
+
+906
+00:30:23,520 --> 00:30:25,840
+of this thing and I need like a very
+
+907
+00:30:25,840 --> 00:30:27,360
+quick again it's all about like how do
+
+908
+00:30:27,360 --> 00:30:28,640
+you how do you create things that are
+
+909
+00:30:28,640 --> 00:30:30,159
+easy for humans to consume and
+
+910
+00:30:30,159 --> 00:30:32,080
+visualization is a huge part of that.
+
+911
+00:30:32,080 --> 00:30:33,840
+How do I make it obvious without me
+
+912
+00:30:33,840 --> 00:30:35,919
+having to read logs or think or read
+
+913
+00:30:35,919 --> 00:30:37,600
+charts and graphs and just be able to
+
+914
+00:30:37,600 --> 00:30:39,760
+see immediately like oh that's the thing
+
+915
+00:30:39,760 --> 00:30:40,799
+that's low
+
+916
+00:30:40,799 --> 00:30:42,480
+>> actually Kota has another really good
+
+917
+00:30:42,480 --> 00:30:44,159
+talk about this of like
+
+918
+00:30:44,159 --> 00:30:45,840
+>> how do you build tools for humans how do
+
+919
+00:30:45,840 --> 00:30:47,200
+you build tools where it's like I can
+
+920
+00:30:47,200 --> 00:30:48,720
+use my what is it like system one
+
+921
+00:30:48,720 --> 00:30:50,799
+thinking the thing that like looks at a
+
+922
+00:30:50,799 --> 00:30:52,320
+wall that is white and like knows it's
+
+923
+00:30:52,320 --> 00:30:53,440
+white without even having to like
+
+924
+00:30:53,440 --> 00:30:55,600
+process it versus like the part of my
+
+925
+00:30:55,600 --> 00:30:57,360
+brain if you ask me to multiply two
+
+926
+00:30:57,360 --> 00:30:59,520
+three-digit numbers I like turn on and
+
+927
+00:30:59,520 --> 00:31:02,640
+like focus and so how do you make as
+
+928
+00:31:02,640 --> 00:31:06,000
+possible just like obvious
+
+929
+00:31:06,000 --> 00:31:07,760
+analytical part of your brain until you
+
+930
+00:31:07,760 --> 00:31:09,120
+you want to save that energy for the
+
+931
+00:31:09,120 --> 00:31:10,720
+most important stuff. And if you can if
+
+932
+00:31:10,720 --> 00:31:12,240
+you can make it easy to tell just by
+
+933
+00:31:12,240 --> 00:31:14,320
+looking at something then like that's
+
+934
+00:31:14,320 --> 00:31:17,279
+that's a great tool for humans.
+
+935
+00:31:17,279 --> 00:31:18,720
+>> Yeah. And you can kind of see exactly
+
+936
+00:31:18,720 --> 00:31:20,080
+what's happening here. Like the inputs
+
+937
+00:31:20,080 --> 00:31:21,840
+the images are basically evolving over
+
+938
+00:31:21,840 --> 00:31:24,640
+time and it's very easy to go grasp that
+
+939
+00:31:24,640 --> 00:31:25,840
+without reading a single line of
+
+940
+00:31:25,840 --> 00:31:27,600
+tracing. But effectively all of it needs
+
+941
+00:31:27,600 --> 00:31:28,880
+to be powered by something that is
+
+942
+00:31:28,880 --> 00:31:31,600
+extremely rich. So any question an agent
+
+943
+00:31:31,600 --> 00:31:33,360
+asks, like you want the agent to ask
+
+944
+00:31:33,360 --> 00:31:35,520
+like did I call send? Did I did I make
+
+945
+00:31:35,520 --> 00:31:37,840
+an HTTP request? And you as a human
+
+946
+00:31:37,840 --> 00:31:38,880
+don't want to think about this. You
+
+947
+00:31:38,880 --> 00:31:40,399
+literally want the agent to be like,
+
+948
+00:31:40,399 --> 00:31:42,000
+hey, search through all the function
+
+949
+00:31:42,000 --> 00:31:43,919
+calls that I made in this call stack.
+
+950
+00:31:43,919 --> 00:31:46,640
+Was any of them HTTP.end
+
+951
+00:31:46,640 --> 00:31:49,360
+and how many times was http.send called?
+
+952
+00:31:49,360 --> 00:31:51,039
+>> You're talking about feeding traces to
+
+953
+00:31:51,039 --> 00:31:53,440
+an agent, not to a human. Basically like
+
+954
+00:31:53,440 --> 00:31:55,279
+less the visual part, but more the like,
+
+955
+00:31:55,279 --> 00:31:57,039
+okay, how do I give my agent the ability
+
+956
+00:31:57,039 --> 00:31:58,880
+to like, cool, here's a thing someone
+
+957
+00:31:58,880 --> 00:32:00,240
+complained about. go look through the
+
+958
+00:32:00,240 --> 00:32:01,519
+traces and figure out what the problem
+
+959
+00:32:01,519 --> 00:32:02,799
+is.
+
+960
+00:32:02,799 --> 00:32:05,039
+>> Exactly. So, like if I'm a human and I'm
+
+961
+00:32:05,039 --> 00:32:06,399
+looking at this, it's like this is
+
+962
+00:32:06,399 --> 00:32:08,720
+useless. Let's be real here. Like this
+
+963
+00:32:08,720 --> 00:32:12,399
+is like useless is such a strong word.
+
+964
+00:32:12,399 --> 00:32:15,200
+Um
+
+965
+00:32:15,200 --> 00:32:17,679
+I often find myself when I interact with
+
+966
+00:32:17,679 --> 00:32:19,200
+Claude and I have a giant document in
+
+967
+00:32:19,200 --> 00:32:20,320
+front of me, I'm like, "Claude, can you
+
+968
+00:32:20,320 --> 00:32:22,159
+please give me the last three the three
+
+969
+00:32:22,159 --> 00:32:23,440
+most important things I should read in
+
+970
+00:32:23,440 --> 00:32:25,279
+this document?" I just let Claude do a
+
+971
+00:32:25,279 --> 00:32:27,919
+lot of digestion for me. I think uh and
+
+972
+00:32:27,919 --> 00:32:29,360
+really should I read the whole document?
+
+973
+00:32:29,360 --> 00:32:30,960
+Yes. And for really important documents,
+
+974
+00:32:30,960 --> 00:32:33,440
+I do read the whole document. But same
+
+975
+00:32:33,440 --> 00:32:35,279
+with traces. It's impossible for me to
+
+976
+00:32:35,279 --> 00:32:36,880
+expect that I'm gonna I'm as a human,
+
+977
+00:32:36,880 --> 00:32:38,320
+I'm going to go debug this unless it's
+
+978
+00:32:38,320 --> 00:32:40,399
+like critical to some major thing that's
+
+979
+00:32:40,399 --> 00:32:42,240
+happening. Almost definitely what's
+
+980
+00:32:42,240 --> 00:32:43,360
+actually going to happen is I'm going to
+
+981
+00:32:43,360 --> 00:32:45,519
+ask Claude, "Hey Claude, can you tell me
+
+982
+00:32:45,519 --> 00:32:48,159
+what's going on so I can go read this I
+
+983
+00:32:48,159 --> 00:32:49,760
+can go read this and inspect this on my
+
+984
+00:32:49,760 --> 00:32:51,600
+own."
+
+985
+00:32:51,600 --> 00:32:53,519
+Uh, and like I want claw to like tell me
+
+986
+00:32:53,519 --> 00:32:55,279
+what line I should jump to, for example,
+
+987
+00:32:55,279 --> 00:32:58,159
+instead of reading it on my own. So when
+
+988
+00:32:58,159 --> 00:33:00,000
+I think about I think this is like the
+
+989
+00:33:00,000 --> 00:33:01,120
+big highlight that I wanted to go show
+
+990
+00:33:01,120 --> 00:33:02,720
+everyone is like when you think about
+
+991
+00:33:02,720 --> 00:33:04,720
+how to build tracing for your system,
+
+992
+00:33:04,720 --> 00:33:07,120
+trace every little thing, you can store
+
+993
+00:33:07,120 --> 00:33:08,559
+every little thing that you can get
+
+994
+00:33:08,559 --> 00:33:11,600
+access to. And like obviously I'm very
+
+995
+00:33:11,600 --> 00:33:12,960
+opinioned on this like we built the
+
+996
+00:33:12,960 --> 00:33:15,279
+whole thing around tracing, but even in
+
+997
+00:33:15,279 --> 00:33:17,279
+your own code like just do it. spend the
+
+998
+00:33:17,279 --> 00:33:18,880
+cost, spend the thing because like your
+
+999
+00:33:18,880 --> 00:33:20,159
+system is almost definitely going to
+
+1000
+00:33:20,159 --> 00:33:22,960
+have unexpected redness on here. And if
+
+1001
+00:33:22,960 --> 00:33:24,320
+you don't have these introspection
+
+1002
+00:33:24,320 --> 00:33:26,559
+points, you have zero chance of being
+
+1003
+00:33:26,559 --> 00:33:29,440
+able to debug the issue later. And we
+
+1004
+00:33:29,440 --> 00:33:30,799
+had this really clever idea. For
+
+1005
+00:33:30,799 --> 00:33:33,600
+example, storing values is very
+
+1006
+00:33:33,600 --> 00:33:36,480
+expensive. It slows down the program. It
+
+1007
+00:33:36,480 --> 00:33:37,840
+uh it does a whole bunch of stuff. If
+
+1008
+00:33:37,840 --> 00:33:39,360
+you wanted to copy these values and copy
+
+1009
+00:33:39,360 --> 00:33:41,919
+them somewhere, it's like
+
+1010
+00:33:41,919 --> 00:33:44,080
+>> you may be making a you may be making a
+
+1011
+00:33:44,080 --> 00:33:46,080
+network request to send the traces
+
+1012
+00:33:46,080 --> 00:33:48,720
+somewhere and if you have very high
+
+1013
+00:33:48,720 --> 00:33:51,519
+performance application then you're now
+
+1014
+00:33:51,519 --> 00:33:53,760
+using you know some of your network IO
+
+1015
+00:33:53,760 --> 00:33:57,360
+some of your CPU cycles just to record
+
+1016
+00:33:57,360 --> 00:33:59,360
+the other things that that might be
+
+1017
+00:33:59,360 --> 00:34:00,640
+slow.
+
+1018
+00:34:00,640 --> 00:34:03,120
+>> Yeah. Or saving to disk or anything like
+
+1019
+00:34:03,120 --> 00:34:04,960
+that. Yep. So like what you really want
+
+1020
+00:34:04,960 --> 00:34:06,320
+to do is by default you don't want to
+
+1021
+00:34:06,320 --> 00:34:08,720
+capture values at all and then unless
+
+1022
+00:34:08,720 --> 00:34:10,480
+something is like extremely dynamic. So
+
+1023
+00:34:10,480 --> 00:34:12,320
+in our case the compiler knows whenever
+
+1024
+00:34:12,320 --> 00:34:13,599
+you're interacting with a function it
+
+1025
+00:34:13,599 --> 00:34:16,399
+calls an LLM. Boom. As soon as you
+
+1026
+00:34:16,399 --> 00:34:18,000
+interact with an LM we store the input
+
+1027
+00:34:18,000 --> 00:34:18,879
+outputs.
+
+1028
+00:34:18,879 --> 00:34:20,399
+>> And of course we do a bunch of dduping.
+
+1029
+00:34:20,399 --> 00:34:21,760
+So if you pass the same image around we
+
+1030
+00:34:21,760 --> 00:34:23,200
+don't like copy and paste the image like
+
+1031
+00:34:23,200 --> 00:34:24,800
+60 times.
+
+1032
+00:34:24,800 --> 00:34:26,159
+>> But this is kind of how you can get
+
+1033
+00:34:26,159 --> 00:34:27,839
+extremely fast performance without
+
+1034
+00:34:27,839 --> 00:34:29,280
+having to worry about performance
+
+1035
+00:34:29,280 --> 00:34:30,960
+effectively.
+
+1036
+00:34:30,960 --> 00:34:33,440
+And that makes a huge difference. in
+
+1037
+00:34:33,440 --> 00:34:34,800
+terms of like being able to like
+
+1038
+00:34:34,800 --> 00:34:36,960
+introspect a program without any extra
+
+1039
+00:34:36,960 --> 00:34:40,399
+work. We know fetch calls are like
+
+1040
+00:34:40,399 --> 00:34:42,320
+interacting with external systems. So
+
+1041
+00:34:42,320 --> 00:34:44,240
+fetch calls get recorded.
+
+1042
+00:34:44,240 --> 00:34:46,639
+>> We also know headers are really risky.
+
+1043
+00:34:46,639 --> 00:34:48,480
+So by default we don't save headers,
+
+1044
+00:34:48,480 --> 00:34:50,320
+>> right? Because they may be authentic
+
+1045
+00:34:50,320 --> 00:34:51,760
+stuff in there. Yeah,
+
+1046
+00:34:51,760 --> 00:34:53,599
+>> exactly. So we just like store them. We
+
+1047
+00:34:53,599 --> 00:34:55,119
+know environment variables are risky. So
+
+1048
+00:34:55,119 --> 00:34:56,639
+any environment variable value gets
+
+1049
+00:34:56,639 --> 00:34:58,960
+automatically omitted. And there's a lot
+
+1050
+00:34:58,960 --> 00:35:00,560
+of things like that that we just do by
+
+1051
+00:35:00,560 --> 00:35:02,400
+default to make it safe. And like if
+
+1052
+00:35:02,400 --> 00:35:03,680
+you're using Sentry or something else,
+
+1053
+00:35:03,680 --> 00:35:05,920
+they do the similar kinds of stuff. But
+
+1054
+00:35:05,920 --> 00:35:07,599
+most tracing systems, I think, are built
+
+1055
+00:35:07,599 --> 00:35:09,760
+for error handling. And most proactive
+
+1056
+00:35:09,760 --> 00:35:11,920
+telemetry systems are built very much
+
+1057
+00:35:11,920 --> 00:35:14,720
+like users have to opt into it. And I
+
+1058
+00:35:14,720 --> 00:35:16,320
+think that's really the fundamental flaw
+
+1059
+00:35:16,320 --> 00:35:18,079
+in most tracing systems, which is users
+
+1060
+00:35:18,079 --> 00:35:20,560
+have to go write something like
+
+1061
+00:35:20,560 --> 00:35:22,000
+for every single function, you got to
+
+1062
+00:35:22,000 --> 00:35:23,440
+like write this thing. And if you're
+
+1063
+00:35:23,440 --> 00:35:25,680
+writing LM's writing all your code, then
+
+1064
+00:35:25,680 --> 00:35:27,680
+like maybe an LM will write at trace
+
+1065
+00:35:27,680 --> 00:35:29,760
+here. But is it really also going to
+
+1066
+00:35:29,760 --> 00:35:32,240
+write trace there? probably not. And now
+
+1067
+00:35:32,240 --> 00:35:35,200
+you just have a missing tracing system.
+
+1068
+00:35:35,200 --> 00:35:37,040
+>> Yep. And you could even do the the the
+
+1069
+00:35:37,040 --> 00:35:38,720
+even the dumber if you just do at log,
+
+1070
+00:35:38,720 --> 00:35:40,160
+right? If you just want to log like time
+
+1071
+00:35:40,160 --> 00:35:41,599
+stamp and when the function was called
+
+1072
+00:35:41,599 --> 00:35:43,760
+and its arguments, right? Like you could
+
+1073
+00:35:43,760 --> 00:35:45,440
+write all of this stuff and you could
+
+1074
+00:35:45,440 --> 00:35:47,760
+build it. But doing this in a performant
+
+1075
+00:35:47,760 --> 00:35:51,280
+way, in a way that is like the same
+
+1076
+00:35:51,280 --> 00:35:53,440
+across every service you run is like
+
+1077
+00:35:53,440 --> 00:35:55,119
+there's entire platform teams. I
+
+1078
+00:35:55,119 --> 00:35:56,560
+remember when we got we kind of like
+
+1079
+00:35:56,560 --> 00:35:58,640
+went from pets to cattle at at at
+
+1080
+00:35:58,640 --> 00:36:00,240
+Sprout. It was kind of like okay instead
+
+1081
+00:36:00,240 --> 00:36:01,599
+of having a server and it runs these
+
+1082
+00:36:01,599 --> 00:36:02,880
+four things and this server over there
+
+1083
+00:36:02,880 --> 00:36:04,800
+runs those four things we need like a
+
+1084
+00:36:04,800 --> 00:36:07,760
+generic servicebased thing which always
+
+1085
+00:36:07,760 --> 00:36:09,280
+has the same metrics endpoints and
+
+1086
+00:36:09,280 --> 00:36:11,040
+health check endpoints and emits the
+
+1087
+00:36:11,040 --> 00:36:12,800
+same like standard set of things. I mean
+
+1088
+00:36:12,800 --> 00:36:14,720
+this was what the Google S book was all
+
+1089
+00:36:14,720 --> 00:36:16,720
+about was like hey look we're going to
+
+1090
+00:36:16,720 --> 00:36:18,720
+have a team and they're going to be on
+
+1091
+00:36:18,720 --> 00:36:20,720
+call to help you with your services and
+
+1092
+00:36:20,720 --> 00:36:22,240
+if things go down they'll fix them for
+
+1093
+00:36:22,240 --> 00:36:24,320
+you. It's was trying to solve the the
+
+1094
+00:36:24,320 --> 00:36:26,480
+the you know engineers ship something
+
+1095
+00:36:26,480 --> 00:36:29,599
+and then DevOps DevOps has to cis admins
+
+1096
+00:36:29,599 --> 00:36:32,000
+have to maintain it. It was like cool if
+
+1097
+00:36:32,000 --> 00:36:33,680
+you build a service you're on call for
+
+1098
+00:36:33,680 --> 00:36:35,839
+it. The engineers have to like own the
+
+1099
+00:36:35,839 --> 00:36:38,720
+reliability of their stuff but the S sur
+
+1100
+00:36:38,720 --> 00:36:40,400
+team has tools and if you meet a certain
+
+1101
+00:36:40,400 --> 00:36:43,440
+bar if you like inject all of the shared
+
+1102
+00:36:43,440 --> 00:36:45,040
+logging patterns and tracing patterns
+
+1103
+00:36:45,040 --> 00:36:47,760
+and you do all the things then S can
+
+1104
+00:36:47,760 --> 00:36:49,200
+take that service over and run it for
+
+1105
+00:36:49,200 --> 00:36:52,560
+you. Um, and doing this at scale in a
+
+1106
+00:36:52,560 --> 00:36:54,079
+way is like there's entire there's
+
+1107
+00:36:54,079 --> 00:36:57,200
+entire giant teams inside any large tech
+
+1108
+00:36:57,200 --> 00:36:59,200
+company that's all their job is to like
+
+1109
+00:36:59,200 --> 00:37:01,280
+how do we equip people with tooling to
+
+1110
+00:37:01,280 --> 00:37:02,720
+help them make their stuff more
+
+1111
+00:37:02,720 --> 00:37:04,400
+observable and how do we make it so that
+
+1112
+00:37:04,400 --> 00:37:06,560
+we can actually help even if we don't
+
+1113
+00:37:06,560 --> 00:37:08,560
+really know if we haven't read all the
+
+1114
+00:37:08,560 --> 00:37:11,440
+code inside the service.
+
+1115
+00:37:11,440 --> 00:37:13,599
+>> Yeah. And you kind of want to be able to
+
+1116
+00:37:13,599 --> 00:37:20,150
+write stuff like this.
+
+1117
+00:37:25,990 --> 00:37:26,000
+User images.generate image where
+
+1118
+00:37:26,000 --> 00:37:30,710
+uh orgs thing.length
+
+1119
+00:37:41,510 --> 00:37:41,520
+>> one. Yeah. uh you kind of when you
+
+1120
+00:37:41,520 --> 00:37:42,800
+really think about what you want out of
+
+1121
+00:37:42,800 --> 00:37:44,640
+tracing, I think this is the feature of
+
+1122
+00:37:44,640 --> 00:37:45,839
+what we really want. We want to be able
+
+1123
+00:37:45,839 --> 00:37:47,680
+to write questions like find me
+
+1124
+00:37:47,680 --> 00:37:48,880
+everything where it took more than one
+
+1125
+00:37:48,880 --> 00:37:50,880
+second where the length or like what I
+
+1126
+00:37:50,880 --> 00:37:51,839
+really
+
+1127
+00:37:51,839 --> 00:37:53,119
+>> thing here is the prompt, right? It's
+
+1128
+00:37:53,119 --> 00:37:54,560
+like the thing you asked to generate,
+
+1129
+00:37:54,560 --> 00:37:55,839
+right?
+
+1130
+00:37:55,839 --> 00:37:57,359
+>> Yeah. Well, thing is like yeah, I guess
+
+1131
+00:37:57,359 --> 00:37:58,720
+this is the input argument to this
+
+1132
+00:37:58,720 --> 00:37:59,839
+function specifically.
+
+1133
+00:37:59,839 --> 00:38:02,000
+>> Yeah, it's a it's a really good variable
+
+1134
+00:38:02,000 --> 00:38:04,400
+name, dude. I really like it.
+
+1135
+00:38:04,400 --> 00:38:06,720
+>> I am uh I am known for my high quality
+
+1136
+00:38:06,720 --> 00:38:07,920
+code. [laughter]
+
+1137
+00:38:07,920 --> 00:38:10,079
+Uh but args is just like this is just
+
+1138
+00:38:10,079 --> 00:38:11,359
+the name of the parameter in this
+
+1139
+00:38:11,359 --> 00:38:13,359
+function. But what you really want over
+
+1140
+00:38:13,359 --> 00:38:14,400
+here is you want to be able to write
+
+1141
+00:38:14,400 --> 00:38:15,920
+this kind of query and you want all of
+
+1142
+00:38:15,920 --> 00:38:17,200
+this to be type safe. You want to be
+
+1143
+00:38:17,200 --> 00:38:18,560
+able to say like output is always going
+
+1144
+00:38:18,560 --> 00:38:20,880
+to be an image. So it has B 64 and you
+
+1145
+00:38:20,880 --> 00:38:22,240
+want the SQL query to tell you that. You
+
+1146
+00:38:22,240 --> 00:38:23,839
+want to know args has a thing called
+
+1147
+00:38:23,839 --> 00:38:25,680
+thing has a parameter called thing and
+
+1148
+00:38:25,680 --> 00:38:28,000
+thing is a string type because if you
+
+1149
+00:38:28,000 --> 00:38:28,640
+can do this
+
+1150
+00:38:28,640 --> 00:38:30,560
+>> you want type safety on your on your
+
+1151
+00:38:30,560 --> 00:38:32,480
+queries as well. You want to be able to
+
+1152
+00:38:32,480 --> 00:38:34,000
+kind of like have a schema to query
+
+1153
+00:38:34,000 --> 00:38:35,599
+against where any anybody can kind of
+
+1154
+00:38:35,599 --> 00:38:37,280
+quickly riff this out or an agent can
+
+1155
+00:38:37,280 --> 00:38:39,359
+quickly riff this out and basically like
+
+1156
+00:38:39,359 --> 00:38:41,200
+very instead of doing like GP or reading
+
+1157
+00:38:41,200 --> 00:38:42,480
+whole files, you want to be able to
+
+1158
+00:38:42,480 --> 00:38:43,920
+really just pull out the things you care
+
+1159
+00:38:43,920 --> 00:38:45,280
+about.
+
+1160
+00:38:45,280 --> 00:38:46,800
+>> Yeah. And you want this to look
+
+1161
+00:38:46,800 --> 00:38:51,760
+effectively as similar to your um
+
+1162
+00:38:51,760 --> 00:38:54,960
+as similar to your code as possible. So
+
+1163
+00:38:54,960 --> 00:38:56,400
+like I have generate image. You want
+
+1164
+00:38:56,400 --> 00:38:58,000
+this to basically mimic exactly what
+
+1165
+00:38:58,000 --> 00:39:00,400
+this code is. and you want it to look
+
+1166
+00:39:00,400 --> 00:39:01,920
+very close to your code because then if
+
+1167
+00:39:01,920 --> 00:39:03,680
+an agent can query the codebase out of
+
+1168
+00:39:03,680 --> 00:39:05,680
+it, then what you end up with is a way
+
+1169
+00:39:05,680 --> 00:39:07,760
+where like telemetry actually like means
+
+1170
+00:39:07,760 --> 00:39:10,240
+something very reasonable and then this
+
+1171
+00:39:10,240 --> 00:39:12,720
+tight loop of when you're probing this
+
+1172
+00:39:12,720 --> 00:39:14,640
+actually means that hey this we can find
+
+1173
+00:39:14,640 --> 00:39:16,720
+all the red instances in the first thing
+
+1174
+00:39:16,720 --> 00:39:19,119
+because generate image failed here so
+
+1175
+00:39:19,119 --> 00:39:20,480
+now we know obviously everything
+
+1176
+00:39:20,480 --> 00:39:22,240
+downstream is obviously going to fail as
+
+1177
+00:39:22,240 --> 00:39:24,079
+well and I think that's the kind of
+
+1178
+00:39:24,079 --> 00:39:25,119
+tight loop that you need with
+
+1179
+00:39:25,119 --> 00:39:26,240
+observability and when I talk about
+
+1180
+00:39:26,240 --> 00:39:28,240
+observability that's what I think people
+
+1181
+00:39:28,240 --> 00:39:29,680
+should be building for their systems.
+
+1182
+00:39:29,680 --> 00:39:31,440
+They should trace everything. They
+
+1183
+00:39:31,440 --> 00:39:32,560
+should go ahead and make sure their
+
+1184
+00:39:32,560 --> 00:39:34,800
+tracing is tied very closely to lines of
+
+1185
+00:39:34,800 --> 00:39:37,520
+code. And now you can start measuring
+
+1186
+00:39:37,520 --> 00:39:39,520
+everything, starting to collect stuff.
+
+1187
+00:39:39,520 --> 00:39:41,280
+Now, I'm going to show one last thing.
+
+1188
+00:39:41,280 --> 00:39:42,640
+You know about hotel. Everyone knows
+
+1189
+00:39:42,640 --> 00:39:44,079
+about hotel.
+
+1190
+00:39:44,079 --> 00:39:46,960
+>> I'm going to show you hotel.
+
+1191
+00:39:46,960 --> 00:39:49,200
+>> Um, and I and like if you've ever seen
+
+1192
+00:39:49,200 --> 00:39:51,040
+hotel, are we getting the hotel rant?
+
+1193
+00:39:51,040 --> 00:39:52,560
+I've gotten a piece of this. I'm ready
+
+1194
+00:39:52,560 --> 00:39:54,640
+for the the formalized version of it.
+
+1195
+00:39:54,640 --> 00:39:55,920
+>> I'll show that. Yeah, I'll show it to
+
+1196
+00:39:55,920 --> 00:39:58,320
+you. So when you do hotel firstly hotel
+
+1197
+00:39:58,320 --> 00:39:59,760
+does something amazing which is it has
+
+1198
+00:39:59,760 --> 00:40:03,200
+wide events thank god that's amazing
+
+1199
+00:40:03,200 --> 00:40:05,520
+the problem with hotel however is that
+
+1200
+00:40:05,520 --> 00:40:08,079
+when you do wide events and you start
+
+1201
+00:40:08,079 --> 00:40:09,520
+doing tracing you start collecting all
+
+1202
+00:40:09,520 --> 00:40:14,320
+this data hotel is not very
+
+1203
+00:40:14,320 --> 00:40:17,839
+how do I put this rich is a nice way to
+
+1204
+00:40:17,839 --> 00:40:18,960
+put this
+
+1205
+00:40:18,960 --> 00:40:21,359
+>> like the the density of information is
+
+1206
+00:40:21,359 --> 00:40:23,280
+low right you're using a lot of JSON
+
+1207
+00:40:23,280 --> 00:40:25,040
+using a lot of keys and and like okay
+
+1208
+00:40:25,040 --> 00:40:26,480
+yeah you have the start And you're
+
+1209
+00:40:26,480 --> 00:40:28,320
+hoping that the person And you're hoping
+
+1210
+00:40:28,320 --> 00:40:29,760
+that the person that wrote something
+
+1211
+00:40:29,760 --> 00:40:31,760
+wrote it in a very standardized way.
+
+1212
+00:40:31,760 --> 00:40:33,920
+>> Yeah. It feels like hotel is is just
+
+1213
+00:40:33,920 --> 00:40:35,920
+like a bunch of opinions on top of wide
+
+1214
+00:40:35,920 --> 00:40:37,440
+events, right? It's like, okay, cool.
+
+1215
+00:40:37,440 --> 00:40:39,040
+Like yes, you're going to have arbitrary
+
+1216
+00:40:39,040 --> 00:40:40,560
+things that you can attach to this like
+
+1217
+00:40:40,560 --> 00:40:42,800
+attributes or properties, but also like
+
+1218
+00:40:42,800 --> 00:40:45,359
+>> if you include these exact fields like
+
+1219
+00:40:45,359 --> 00:40:47,520
+span and parent span and trace ID and
+
+1220
+00:40:47,520 --> 00:40:48,880
+stuff, then you can get these like
+
+1221
+00:40:48,880 --> 00:40:51,920
+specific specific visualizations.
+
+1222
+00:40:51,920 --> 00:40:53,440
+>> Yeah, exactly. I know has really good
+
+1223
+00:40:53,440 --> 00:40:55,599
+support for spans. But the real thing is
+
+1224
+00:40:55,599 --> 00:40:58,160
+when you think about what types accepts,
+
+1225
+00:40:58,160 --> 00:41:00,960
+this is what OTEL accepts.
+
+1226
+00:41:00,960 --> 00:41:03,920
+String, boolean, int, float, sequence of
+
+1227
+00:41:03,920 --> 00:41:06,240
+stir, sequence of bool, sequence of int,
+
+1228
+00:41:06,240 --> 00:41:08,400
+sequence of float. And the fact of the
+
+1229
+00:41:08,400 --> 00:41:10,240
+matter is because this is the type of
+
+1230
+00:41:10,240 --> 00:41:12,880
+things that accepts, what people end up
+
+1231
+00:41:12,880 --> 00:41:15,359
+doing most of the time is they do
+
+1232
+00:41:15,359 --> 00:41:18,480
+>> put like B 64 JSON in there.
+
+1233
+00:41:18,480 --> 00:41:21,760
+Literally what they do JSON I don't know
+
+1234
+00:41:21,760 --> 00:41:25,359
+is it loads or like parse or two string
+
+1235
+00:41:25,359 --> 00:41:25,839
+>> two string
+
+1236
+00:41:25,839 --> 00:41:27,200
+>> don't pretend like you haven't written
+
+1237
+00:41:27,200 --> 00:41:28,640
+Python in a while I know you know the
+
+1238
+00:41:28,640 --> 00:41:30,720
+python it it's dumps
+
+1239
+00:41:30,720 --> 00:41:32,079
+>> you don't know what it is
+
+1240
+00:41:32,079 --> 00:41:35,359
+>> oh there you go dumps uh JSONd dumps for
+
+1241
+00:41:35,359 --> 00:41:37,119
+value and now you get you basically just
+
+1242
+00:41:37,119 --> 00:41:38,720
+store the JSON value as a string and
+
+1243
+00:41:38,720 --> 00:41:40,240
+then you decode it on the receiving end
+
+1244
+00:41:40,240 --> 00:41:41,440
+and hope that it's correct JSON
+
+1245
+00:41:41,440 --> 00:41:42,319
+>> which means you can't query it
+
+1246
+00:41:42,319 --> 00:41:44,240
+>> and what does
+
+1247
+00:41:44,240 --> 00:41:46,480
+>> exactly which means no querying which
+
+1248
+00:41:46,480 --> 00:41:49,119
+means that also So, um, think about how
+
+1249
+00:41:49,119 --> 00:41:50,640
+much data you're sending across the
+
+1250
+00:41:50,640 --> 00:41:52,720
+wire. So, we talked about performance
+
+1251
+00:41:52,720 --> 00:41:54,480
+and like normally I hate talking about
+
+1252
+00:41:54,480 --> 00:41:56,160
+performance
+
+1253
+00:41:56,160 --> 00:42:00,800
+because, uh, performance is one of the
+
+1254
+00:42:00,800 --> 00:42:02,240
+performance is not a thing that most
+
+1255
+00:42:02,240 --> 00:42:04,400
+people should ever care about. But when
+
+1256
+00:42:04,400 --> 00:42:05,680
+you're doing a massive amount of
+
+1257
+00:42:05,680 --> 00:42:07,200
+observability and you want to literally
+
+1258
+00:42:07,200 --> 00:42:08,960
+observe every single thing that you're
+
+1259
+00:42:08,960 --> 00:42:11,200
+passing through the wire, if you're
+
+1260
+00:42:11,200 --> 00:42:13,520
+sending like let's say you're sending
+
+1261
+00:42:13,520 --> 00:42:17,200
+like a like a 100 bytes of actual data,
+
+1262
+00:42:17,200 --> 00:42:19,520
+but then you JSON you turn it to a JSON
+
+1263
+00:42:19,520 --> 00:42:22,560
+string and this blows up to about like
+
+1264
+00:42:22,560 --> 00:42:26,640
+uh times 8 like 800 bytes.
+
+1265
+00:42:26,640 --> 00:42:28,800
+This is strictly going to affect your
+
+1266
+00:42:28,800 --> 00:42:30,240
+uptime. It's strictly going to affect
+
+1267
+00:42:30,240 --> 00:42:31,680
+your performance rate of every single
+
+1268
+00:42:31,680 --> 00:42:34,319
+piece of software. So when you blow
+
+1269
+00:42:34,319 --> 00:42:35,760
+something up by 8x in terms of the
+
+1270
+00:42:35,760 --> 00:42:37,040
+amount of data you're sending across the
+
+1271
+00:42:37,040 --> 00:42:38,560
+wire, you suddenly stop being able to
+
+1272
+00:42:38,560 --> 00:42:39,760
+trace everything and now you're making
+
+1273
+00:42:39,760 --> 00:42:42,720
+trade-offs of [ __ ] do Iel this one or
+
+1274
+00:42:42,720 --> 00:42:44,880
+do Iel something else and it's always a
+
+1275
+00:42:44,880 --> 00:42:46,640
+zero sum game and what you choose to
+
+1276
+00:42:46,640 --> 00:42:48,480
+tell and what you choose to go around
+
+1277
+00:42:48,480 --> 00:42:49,920
+this. So when you actually think about
+
+1278
+00:42:49,920 --> 00:42:51,119
+how you want to do high performance
+
+1279
+00:42:51,119 --> 00:42:52,960
+telemetry there, like you said, there
+
+1280
+00:42:52,960 --> 00:42:54,400
+are entire companies that do this. And
+
+1281
+00:42:54,400 --> 00:42:56,400
+if you look, there's like uh if you guys
+
+1282
+00:42:56,400 --> 00:42:58,800
+haven't seen this, EVPF is like one way
+
+1283
+00:42:58,800 --> 00:43:00,880
+to do this
+
+1284
+00:43:00,880 --> 00:43:02,720
+or like uh I don't know if it's on here
+
+1285
+00:43:02,720 --> 00:43:04,240
+where basically like tracks the system
+
+1286
+00:43:04,240 --> 00:43:05,920
+traces to know exactly what call stacks
+
+1287
+00:43:05,920 --> 00:43:07,200
+you're using and where you're spending
+
+1288
+00:43:07,200 --> 00:43:08,880
+time without your process being
+
+1289
+00:43:08,880 --> 00:43:10,640
+hammered. This lets you monitor
+
+1290
+00:43:10,640 --> 00:43:12,319
+basically without without doing SIS
+
+1291
+00:43:12,319 --> 00:43:14,000
+calls like it lets you it lets you
+
+1292
+00:43:14,000 --> 00:43:15,440
+understand what's happening in the
+
+1293
+00:43:15,440 --> 00:43:17,599
+kernel stack without actually like
+
+1294
+00:43:17,599 --> 00:43:19,839
+leaving user land.
+
+1295
+00:43:19,839 --> 00:43:21,599
+>> Exactly. So it makes your code faster
+
+1296
+00:43:21,599 --> 00:43:23,200
+because you do and the reason people are
+
+1297
+00:43:23,200 --> 00:43:24,560
+trying to solve these problems from many
+
+1298
+00:43:24,560 --> 00:43:26,800
+different angles is because in a world
+
+1299
+00:43:26,800 --> 00:43:29,200
+of LMS where a agents write all the code
+
+1300
+00:43:29,200 --> 00:43:30,880
+and everything is non-deterministic
+
+1301
+00:43:30,880 --> 00:43:32,160
+tracing is the only way to understand
+
+1302
+00:43:32,160 --> 00:43:34,640
+all the data. The problem is you also
+
+1303
+00:43:34,640 --> 00:43:36,000
+want tracing to have a really good
+
+1304
+00:43:36,000 --> 00:43:38,400
+understanding of your shape of data.
+
+1305
+00:43:38,400 --> 00:43:40,000
+like you want to understand and be able
+
+1306
+00:43:40,000 --> 00:43:41,280
+to write this kind of query. And you
+
+1307
+00:43:41,280 --> 00:43:42,480
+can't do that unless you actually like
+
+1308
+00:43:42,480 --> 00:43:45,040
+embed tracing into your app. So like my
+
+1309
+00:43:45,040 --> 00:43:46,560
+whole pitch today is like go write a
+
+1310
+00:43:46,560 --> 00:43:49,280
+[ __ ] ton of traces like in your codebase
+
+1311
+00:43:49,280 --> 00:43:50,960
+and just vibe code the head out of it
+
+1312
+00:43:50,960 --> 00:43:52,960
+and make it really easy for agents to go
+
+1313
+00:43:52,960 --> 00:43:55,520
+query everything here. So if agents
+
+1314
+00:43:55,520 --> 00:43:56,880
+can't query everything here every time
+
+1315
+00:43:56,880 --> 00:43:58,640
+you get a re user bug, you can build a
+
+1316
+00:43:58,640 --> 00:44:00,160
+really nice feedback loop to like ship
+
+1317
+00:44:00,160 --> 00:44:02,560
+your updates much faster. That was the
+
+1318
+00:44:02,560 --> 00:44:03,920
+whole point of today's conversation on
+
+1319
+00:44:03,920 --> 00:44:06,640
+tracing observability. Uh please go do
+
+1320
+00:44:06,640 --> 00:44:09,040
+it. Uh, and likely I suspect you should
+
+1321
+00:44:09,040 --> 00:44:10,160
+probably not do it yourself. It's a
+
+1322
+00:44:10,160 --> 00:44:12,160
+waste of time. Buy some vendor that
+
+1323
+00:44:12,160 --> 00:44:13,839
+gives you tracing and just like plug it
+
+1324
+00:44:13,839 --> 00:44:15,200
+in and make sure they're performant and
+
+1325
+00:44:15,200 --> 00:44:16,560
+make sure they capture extremely rich
+
+1326
+00:44:16,560 --> 00:44:18,640
+data and make sure they give you agent
+
+1327
+00:44:18,640 --> 00:44:21,440
+uh integration on it.
+
+1328
+00:44:21,440 --> 00:44:22,720
+>> I like it.
+
+1329
+00:44:22,720 --> 00:44:27,280
+>> Um, I'll do one more thing. Uh, if uh
+
+1330
+00:44:27,280 --> 00:44:28,720
+we're doing we're doing like small
+
+1331
+00:44:28,720 --> 00:44:30,319
+onboarding sessions. I know Dexter came
+
+1332
+00:44:30,319 --> 00:44:32,720
+to one of them. Uh, if you guys sign up
+
+1333
+00:44:32,720 --> 00:44:35,359
+here, we can get you hooked up and uh
+
+1334
+00:44:35,359 --> 00:44:36,640
+try it out. if you actually want to try
+
+1335
+00:44:36,640 --> 00:44:38,800
+like the new tracing stuff that we do.
+
+1336
+00:44:38,800 --> 00:44:42,319
+Uh we do it like roughly every Thursday.
+
+1337
+00:44:42,319 --> 00:44:45,040
+But um we we're exploring the space a
+
+1338
+00:44:45,040 --> 00:44:46,319
+lot. Tracing is like one of the things
+
+1339
+00:44:46,319 --> 00:44:48,000
+I'm deeply deeply passionate about right
+
+1340
+00:44:48,000 --> 00:44:49,680
+now. Uh because I want to make it fast
+
+1341
+00:44:49,680 --> 00:44:51,040
+and I want to make it low memory and I
+
+1342
+00:44:51,040 --> 00:44:52,319
+want to make it rich
+
+1343
+00:44:52,319 --> 00:44:53,920
+>> and I want to have no tradeoffs.
+
+1344
+00:44:53,920 --> 00:44:56,800
+>> And this comes back to that whole idea
+
+1345
+00:44:56,800 --> 00:44:58,400
+of like what a lot of people are hacking
+
+1346
+00:44:58,400 --> 00:45:00,400
+together. I think I saw something
+
+1347
+00:45:00,400 --> 00:45:03,200
+probably last week of like here's how I
+
+1348
+00:45:03,200 --> 00:45:05,760
+review code. And what I do is I let the
+
+1349
+00:45:05,760 --> 00:45:08,000
+agent just vibe it out and riff it out.
+
+1350
+00:45:08,000 --> 00:45:10,640
+And then I have it create an HTML file
+
+1351
+00:45:10,640 --> 00:45:12,640
+per folder that explains the changes in
+
+1352
+00:45:12,640 --> 00:45:14,560
+that folder at a high level in a way
+
+1353
+00:45:14,560 --> 00:45:16,240
+that I can kind of it's like zooming out
+
+1354
+00:45:16,240 --> 00:45:18,000
+of the code and g give me a way to
+
+1355
+00:45:18,000 --> 00:45:21,599
+digest 2,000 lines of code in a minute.
+
+1356
+00:45:21,599 --> 00:45:23,040
+And then if I want to drill in, I can,
+
+1357
+00:45:23,040 --> 00:45:24,480
+but I want to get like the shape of
+
+1358
+00:45:24,480 --> 00:45:26,000
+everything. And then they give feedback
+
+1359
+00:45:26,000 --> 00:45:28,560
+on each report for each module or each
+
+1360
+00:45:28,560 --> 00:45:30,640
+file and they proceed that way. And then
+
+1361
+00:45:30,640 --> 00:45:32,000
+eventually they might dig into the code
+
+1362
+00:45:32,000 --> 00:45:34,800
+and stuff. Um, and it seems like you're
+
+1363
+00:45:34,800 --> 00:45:36,720
+kind of just trying to productize this
+
+1364
+00:45:36,720 --> 00:45:39,040
+of like, hey, look, before you like you
+
+1365
+00:45:39,040 --> 00:45:40,640
+will probably still end up reading code
+
+1366
+00:45:40,640 --> 00:45:42,960
+sometimes in important places, but
+
+1367
+00:45:42,960 --> 00:45:45,040
+before you go dig into the lines, how
+
+1368
+00:45:45,040 --> 00:45:48,000
+can you be 10x or 100x more efficient
+
+1369
+00:45:48,000 --> 00:45:51,119
+with your time and your mental energy to
+
+1370
+00:45:51,119 --> 00:45:54,000
+get understanding of what is happening?
+
+1371
+00:45:54,000 --> 00:45:56,160
+And I think that's where like
+
+1372
+00:45:56,160 --> 00:45:58,319
+dynamically visualizing the code at the
+
+1373
+00:45:58,319 --> 00:46:00,640
+programming language level is a really
+
+1374
+00:46:00,640 --> 00:46:03,119
+like powerful idea for like okay how do
+
+1375
+00:46:03,119 --> 00:46:05,359
+we understand what's happening uh as
+
+1376
+00:46:05,359 --> 00:46:07,839
+quickly as possible and maintain the
+
+1377
+00:46:07,839 --> 00:46:09,280
+ability to go drill down into the code
+
+1378
+00:46:09,280 --> 00:46:12,079
+but also have this option to um just
+
+1379
+00:46:12,079 --> 00:46:13,280
+kind of like cool I don't need to read
+
+1380
+00:46:13,280 --> 00:46:15,520
+that I trust that that that's as as as
+
+1381
+00:46:15,520 --> 00:46:17,680
+designed as expected and it's provable
+
+1382
+00:46:17,680 --> 00:46:20,000
+it's not an LLM read something and then
+
+1383
+00:46:20,000 --> 00:46:21,760
+decided and might have hallucinated or
+
+1384
+00:46:21,760 --> 00:46:23,520
+might have misunderstood it's
+
+1385
+00:46:23,520 --> 00:46:25,520
+deterministic based on the syntax that
+
+1386
+00:46:25,520 --> 00:46:26,160
+was written.
+
+1387
+00:46:26,160 --> 00:46:27,680
+>> Yeah. And like Dylan actually had this
+
+1388
+00:46:27,680 --> 00:46:28,319
+great tweet.
+
+1389
+00:46:28,319 --> 00:46:30,160
+>> I love this. This is in my presentation.
+
+1390
+00:46:30,160 --> 00:46:31,839
+>> Yeah. Exactly. Yeah. Yeah. Exactly. Uh
+
+1391
+00:46:31,839 --> 00:46:33,119
+Dylan had this great tweet where he's
+
+1392
+00:46:33,119 --> 00:46:34,960
+like the way he codes now he's just he
+
+1393
+00:46:34,960 --> 00:46:36,240
+does basically like show me the call
+
+1394
+00:46:36,240 --> 00:46:37,119
+stack.
+
+1395
+00:46:37,119 --> 00:46:38,720
+>> And this is basically just hoping that
+
+1396
+00:46:38,720 --> 00:46:40,880
+cloud code gives you this. And he's
+
+1397
+00:46:40,880 --> 00:46:42,800
+basically building a tracing system in
+
+1398
+00:46:42,800 --> 00:46:43,760
+some ways.
+
+1399
+00:46:43,760 --> 00:46:45,200
+>> Well, this is part of planning, right?
+
+1400
+00:46:45,200 --> 00:46:46,800
+This is before the code is written. He's
+
+1401
+00:46:46,800 --> 00:46:48,240
+like, cool. like okay whatever we're
+
+1402
+00:46:48,240 --> 00:46:49,839
+going to go build I don't need to see
+
+1403
+00:46:49,839 --> 00:46:51,280
+every line of code but I need to
+
+1404
+00:46:51,280 --> 00:46:54,079
+understand the type signatures and the
+
+1405
+00:46:54,079 --> 00:46:56,079
+the objects that we're making and how
+
+1406
+00:46:56,079 --> 00:46:57,920
+all these things fits together because
+
+1407
+00:46:57,920 --> 00:46:59,599
+there's still I mean a lot of people are
+
+1408
+00:46:59,599 --> 00:47:01,280
+happy to look at a mermaid diagram and
+
+1409
+00:47:01,280 --> 00:47:03,040
+say like cool this looks good and look
+
+1410
+00:47:03,040 --> 00:47:04,800
+at sequence diagrams say this looks good
+
+1411
+00:47:04,800 --> 00:47:07,119
+but what we're finding and I think a lot
+
+1412
+00:47:07,119 --> 00:47:08,800
+of people are finding is that LMS are
+
+1413
+00:47:08,800 --> 00:47:10,560
+actually like even with system
+
+1414
+00:47:10,560 --> 00:47:13,280
+architecture defined and aligned and you
+
+1415
+00:47:13,280 --> 00:47:14,640
+and the you and the model have made a
+
+1416
+00:47:14,640 --> 00:47:17,760
+plan for this you can still end up with
+
+1417
+00:47:17,760 --> 00:47:19,680
+really bad code, sloppy code, bad
+
+1418
+00:47:19,680 --> 00:47:22,000
+interfaces, like objects that overlap
+
+1419
+00:47:22,000 --> 00:47:23,200
+each other, all these things that make
+
+1420
+00:47:23,200 --> 00:47:24,880
+your software harder to maintain in the
+
+1421
+00:47:24,880 --> 00:47:26,400
+long term and make it get you to the
+
+1422
+00:47:26,400 --> 00:47:27,599
+point where it's like, oh, if I change
+
+1423
+00:47:27,599 --> 00:47:28,800
+something over here, it breaks something
+
+1424
+00:47:28,800 --> 00:47:30,880
+over there and you just get like slowed
+
+1425
+00:47:30,880 --> 00:47:33,119
+down and kneecapped by the like
+
+1426
+00:47:33,119 --> 00:47:35,520
+deterioration in code quality. So like
+
+1427
+00:47:35,520 --> 00:47:36,960
+this is a layer that we're working a
+
+1428
+00:47:36,960 --> 00:47:38,400
+lot. Also in human layer, we have this a
+
+1429
+00:47:38,400 --> 00:47:39,760
+concept called like a technical design
+
+1430
+00:47:39,760 --> 00:47:41,200
+doc. I think we did an episode about
+
+1431
+00:47:41,200 --> 00:47:43,359
+this a couple weeks ago of like, no, you
+
+1432
+00:47:43,359 --> 00:47:45,440
+should get into that level of basically
+
+1433
+00:47:45,440 --> 00:47:47,119
+anything that you can't trust the LLM to
+
+1434
+00:47:47,119 --> 00:47:49,599
+get right 99% of the time. It is worth
+
+1435
+00:47:49,599 --> 00:47:51,839
+your time to align at this level of
+
+1436
+00:47:51,839 --> 00:47:54,720
+abstraction because 5 minutes or 10
+
+1437
+00:47:54,720 --> 00:47:57,599
+minutes doing this can save you hours.
+
+1438
+00:47:57,599 --> 00:47:58,800
+when you get to code review and you're
+
+1439
+00:47:58,800 --> 00:48:00,720
+like, "Oh, yes, it's it's correct and it
+
+1440
+00:48:00,720 --> 00:48:02,400
+works and I went to the website and it's
+
+1441
+00:48:02,400 --> 00:48:04,400
+good." But I know as someone who's like
+
+1442
+00:48:04,400 --> 00:48:06,560
+worked in large code bases for 10 years,
+
+1443
+00:48:06,560 --> 00:48:08,720
+okay, this is actually like not going to
+
+1444
+00:48:08,720 --> 00:48:10,800
+set us up for success in even the medium
+
+1445
+00:48:10,800 --> 00:48:12,720
+term, not even long term, like in in
+
+1446
+00:48:12,720 --> 00:48:13,839
+four weeks, you're probably going to
+
+1447
+00:48:13,839 --> 00:48:15,280
+start to regret that you merged that.
+
+1448
+00:48:15,280 --> 00:48:17,680
+And so it's like, cool, where can we
+
+1449
+00:48:17,680 --> 00:48:20,240
+find leverage? Where can we kind of like
+
+1450
+00:48:20,240 --> 00:48:21,760
+make it so that instead of reading code
+
+1451
+00:48:21,760 --> 00:48:23,680
+for an hour, I can read a doc for five
+
+1452
+00:48:23,680 --> 00:48:25,040
+minutes
+
+1453
+00:48:25,040 --> 00:48:27,680
+>> or see a visualization?
+
+1454
+00:48:27,680 --> 00:48:29,119
+What's really interesting about this is
+
+1455
+00:48:29,119 --> 00:48:30,880
+it's basically just like a spectrum,
+
+1456
+00:48:30,880 --> 00:48:33,359
+right? Like you start from
+
+1457
+00:48:33,359 --> 00:48:35,119
+you effectively start from like a
+
+1458
+00:48:35,119 --> 00:48:36,480
+different place depending on what you're
+
+1459
+00:48:36,480 --> 00:48:39,520
+trying to build
+
+1460
+00:48:39,520 --> 00:48:42,000
+and like at some point what you do is
+
+1461
+00:48:42,000 --> 00:48:45,440
+you you have tracing during planning
+
+1462
+00:48:45,440 --> 00:48:47,280
+then you have tracing what the heck
+
+1463
+00:48:47,280 --> 00:48:48,800
+happened then you have tracing like
+
+1464
+00:48:48,800 --> 00:48:50,800
+during ad during like code effectively
+
+1465
+00:48:50,800 --> 00:48:52,720
+like while the code is while the code is
+
+1466
+00:48:52,720 --> 00:48:53,839
+like written.
+
+1467
+00:48:53,839 --> 00:48:56,960
+>> Yep. Um so you have tracing during
+
+1468
+00:48:56,960 --> 00:48:59,040
+planning or design phase. Then you have
+
+1469
+00:48:59,040 --> 00:49:01,200
+tracing during the code and then you
+
+1470
+00:49:01,200 --> 00:49:02,559
+kind of have the last layer which is
+
+1471
+00:49:02,559 --> 00:49:05,680
+like you kind of want tracing uh where'd
+
+1472
+00:49:05,680 --> 00:49:08,559
+he go
+
+1473
+00:49:08,559 --> 00:49:11,280
+pipeline.
+
+1474
+00:49:11,280 --> 00:49:12,880
+You kind of want tracing like during
+
+1475
+00:49:12,880 --> 00:49:15,839
+execution is the way I draw this out.
+
+1476
+00:49:15,839 --> 00:49:17,200
+>> Yep.
+
+1477
+00:49:17,200 --> 00:49:18,720
+>> And it's kind of like we're all
+
+1478
+00:49:18,720 --> 00:49:21,520
+basically talking about the same thing.
+
+1479
+00:49:21,520 --> 00:49:23,200
+You basically have this like spectrum of
+
+1480
+00:49:23,200 --> 00:49:24,400
+tracing that we're trying to build.
+
+1481
+00:49:24,400 --> 00:49:27,280
+>> Oh, sorry. I only see your Slack.
+
+1482
+00:49:27,280 --> 00:49:30,559
+>> Oh, you don't see my Slack. Sorry.
+
+1483
+00:49:30,559 --> 00:49:33,119
+Pull this up. Window. Entire screen.
+
+1484
+00:49:33,119 --> 00:49:39,910
+There we go.
+
+1485
+00:49:42,470 --> 00:49:42,480
+>> Yep. Okay.
+
+1486
+00:49:42,480 --> 00:49:43,200
+>> It's like
+
+1487
+00:49:43,200 --> 00:49:44,960
+>> this is kind of like the spectrum of
+
+1488
+00:49:44,960 --> 00:49:46,319
+what we're doing. And the reason that
+
+1489
+00:49:46,319 --> 00:49:48,640
+we're all doing this is really simply
+
+1490
+00:49:48,640 --> 00:49:50,880
+because these systems are
+
+1491
+00:49:50,880 --> 00:49:54,079
+non-deterministic. And the only way to
+
+1492
+00:49:54,079 --> 00:49:56,960
+build like extremely rich systems is
+
+1493
+00:49:56,960 --> 00:49:58,720
+literally to go ahead and build
+
+1494
+00:49:58,720 --> 00:50:00,319
+different levels of introspection as you
+
+1495
+00:50:00,319 --> 00:50:01,440
+go do this. Y
+
+1496
+00:50:01,440 --> 00:50:02,800
+>> you need tracing design.
+
+1497
+00:50:02,800 --> 00:50:04,640
+>> Yeah. You can't yolo it. You can't you
+
+1498
+00:50:04,640 --> 00:50:06,000
+can't just write it without being able
+
+1499
+00:50:06,000 --> 00:50:08,559
+to see it because like we are I mean
+
+1500
+00:50:08,559 --> 00:50:09,680
+it's almost like a learning thing like
+
+1501
+00:50:09,680 --> 00:50:11,040
+we're all learning what the frontier
+
+1502
+00:50:11,040 --> 00:50:13,200
+here looks like and part of that it's
+
+1503
+00:50:13,200 --> 00:50:14,559
+the same thing we do vibe valves, right?
+
+1504
+00:50:14,559 --> 00:50:16,000
+It's just like just go run the thing and
+
+1505
+00:50:16,000 --> 00:50:17,520
+see what it's like cuz you need to
+
+1506
+00:50:17,520 --> 00:50:19,839
+develop intuition.
+
+1507
+00:50:19,839 --> 00:50:21,680
+>> Yeah. And this is still vibe. Like
+
+1508
+00:50:21,680 --> 00:50:23,359
+there's no way Dylan knows every line of
+
+1509
+00:50:23,359 --> 00:50:24,960
+code that's happening in these boxes.
+
+1510
+00:50:24,960 --> 00:50:25,280
+>> Yeah.
+
+1511
+00:50:25,280 --> 00:50:26,800
+>> There's probably more functions than
+
+1512
+00:50:26,800 --> 00:50:29,280
+these boxes. He's just at a high level
+
+1513
+00:50:29,280 --> 00:50:31,440
+making sure the key parts are correct.
+
+1514
+00:50:31,440 --> 00:50:33,920
+>> We should have Dylan on and do a do an
+
+1515
+00:50:33,920 --> 00:50:35,760
+episode and he can talk about this and
+
+1516
+00:50:35,760 --> 00:50:36,960
+>> Oh, I'd actually be really curious about
+
+1517
+00:50:36,960 --> 00:50:37,839
+this. Yeah.
+
+1518
+00:50:37,839 --> 00:50:38,240
+>> Yeah.
+
+1519
+00:50:38,240 --> 00:50:40,319
+>> I mean, he has his own podcast about how
+
+1520
+00:50:40,319 --> 00:50:42,800
+to do good engineering now. So, uh, you
+
+1521
+00:50:42,800 --> 00:50:45,785
+know, I will I I will work on him.
+
+1522
+00:50:45,785 --> 00:50:46,000
+[laughter]
+
+1523
+00:50:46,000 --> 00:50:47,920
+>> Yeah. We did one podcast with Reese
+
+1524
+00:50:47,920 --> 00:50:49,839
+Sullivan and suddenly he goes and is
+
+1525
+00:50:49,839 --> 00:50:51,119
+like, "Oh, we're going to do one too
+
+1526
+00:50:51,119 --> 00:50:52,960
+now." It's great. It's a good show. You
+
+1527
+00:50:52,960 --> 00:50:53,920
+should go watch it. The first two
+
+1528
+00:50:53,920 --> 00:50:54,960
+episodes are out there. They're a lot of
+
+1529
+00:50:54,960 --> 00:50:55,280
+fun.
+
+1530
+00:50:55,280 --> 00:50:56,559
+>> I actually really enjoy watching their
+
+1531
+00:50:56,559 --> 00:50:58,319
+show. It's It's also a different thing.
+
+1532
+00:50:58,319 --> 00:51:00,720
+Uh, it's Dylan. You can look him up on
+
+1533
+00:51:00,720 --> 00:51:01,920
+Twitter. Here you go.
+
+1534
+00:51:01,920 --> 00:51:03,200
+>> Yeah, he's a cl he's like a principal
+
+1535
+00:51:03,200 --> 00:51:04,640
+engineer at Cloudflare. Super smart
+
+1536
+00:51:04,640 --> 00:51:04,960
+dude.
+
+1537
+00:51:04,960 --> 00:51:07,200
+>> Yeah, he's Yeah, I really like their
+
+1538
+00:51:07,200 --> 00:51:10,400
+content. Uh but like effectively like
+
+1539
+00:51:10,400 --> 00:51:11,440
+this whole episode is about
+
+1540
+00:51:11,440 --> 00:51:13,680
+observability. Everyone is giving you
+
+1541
+00:51:13,680 --> 00:51:15,520
+different levels of observability. Your
+
+1542
+00:51:15,520 --> 00:51:17,359
+job as an engineer is to go figure out
+
+1543
+00:51:17,359 --> 00:51:19,440
+what works for you and figure out how
+
+1544
+00:51:19,440 --> 00:51:21,040
+you can add different layers. So you can
+
+1545
+00:51:21,040 --> 00:51:23,280
+go from tracing during design, tracing
+
+1546
+00:51:23,280 --> 00:51:25,040
+during visualizing the code and
+
+1547
+00:51:25,040 --> 00:51:26,160
+understand your code so you don't have
+
+1548
+00:51:26,160 --> 00:51:27,920
+to read every line of code and tracing
+
+1549
+00:51:27,920 --> 00:51:30,160
+post execution. So your agents can
+
+1550
+00:51:30,160 --> 00:51:32,079
+understand what actually happened and
+
+1551
+00:51:32,079 --> 00:51:34,160
+does does all of this eventually loop
+
+1552
+00:51:34,160 --> 00:51:35,839
+back? I don't know how to do the arrows,
+
+1553
+00:51:35,839 --> 00:51:36,480
+Dexter.
+
+1554
+00:51:36,480 --> 00:51:39,839
+>> Five five Click back
+
+1555
+00:51:39,839 --> 00:51:40,559
+>> five.
+
+1556
+00:51:40,559 --> 00:51:40,960
+>> Click.
+
+1557
+00:51:40,960 --> 00:51:42,480
+>> Click.
+
+1558
+00:51:42,480 --> 00:51:44,400
+>> Oh my god. I'll do it.
+
+1559
+00:51:44,400 --> 00:51:46,045
+>> Can you do it for me? Thank you.
+
+1560
+00:51:46,045 --> 00:51:47,760
+[laughter] So So like cuz then what you
+
+1561
+00:51:47,760 --> 00:51:49,359
+can do is you can feed back an agent
+
+1562
+00:51:49,359 --> 00:51:51,040
+into this loop. Uh you can't do it
+
+1563
+00:51:51,040 --> 00:51:52,079
+either. Got them.
+
+1564
+00:51:52,079 --> 00:51:53,040
+>> No excuse.
+
+1565
+00:51:53,040 --> 00:51:54,000
+>> What you can do if you build this
+
+1566
+00:51:54,000 --> 00:51:56,720
+tracing system.
+
+1567
+00:51:56,720 --> 00:51:58,000
+>> There we go. What you can do if you
+
+1568
+00:51:58,000 --> 00:51:59,680
+build a really nice tracing system is
+
+1569
+00:51:59,680 --> 00:52:01,440
+you can go back and feed these logs in
+
+1570
+00:52:01,440 --> 00:52:03,599
+and say, "Hey Claude, what's missing in
+
+1571
+00:52:03,599 --> 00:52:05,920
+the design that made the actual trace
+
+1572
+00:52:05,920 --> 00:52:07,760
+not be the call site you tried to draw
+
+1573
+00:52:07,760 --> 00:52:10,559
+me?" And now Claude can actually close
+
+1574
+00:52:10,559 --> 00:52:12,480
+the loop and you can build a better and
+
+1575
+00:52:12,480 --> 00:52:14,720
+better system that and again it's all
+
+1576
+00:52:14,720 --> 00:52:16,079
+about alignment. So you can have
+
+1577
+00:52:16,079 --> 00:52:18,640
+alignment and what you expected versus
+
+1578
+00:52:18,640 --> 00:52:20,480
+what happened.
+
+1579
+00:52:20,480 --> 00:52:22,400
+>> It's good. I like it. That's a good
+
+1580
+00:52:22,400 --> 00:52:24,960
+episode.

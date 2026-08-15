@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-044",
+  "primary": [
+    "2026-02-10-agentic-backpressure-deep-dive/transcript.txt",
+    "2026-02-10-agentic-backpressure-deep-dive/meta.md",
+    "2026-02-10-agentic-backpressure-deep-dive/README.md"
+  ],
+  "supporting": [
+    "2026-02-10-agentic-backpressure-deep-dive/README.md",
+    "2026-02-10-agentic-backpressure-deep-dive/EPISODE.md",
+    "2026-02-10-agentic-backpressure-deep-dive/meta.md",
+    "2026-02-10-agentic-backpressure-deep-dive/00-sdk-basics.ts",
+    "2026-02-10-agentic-backpressure-deep-dive/01-hello-world.test.ts",
+    "2026-02-10-agentic-backpressure-deep-dive/02-wrong-assumptions.test.ts",
+    "2026-02-10-agentic-backpressure-deep-dive/03-state-and-continuity.test.ts",
+    "2026-02-10-agentic-backpressure-deep-dive/04-structured-output.test.ts",
+    "2026-02-10-agentic-backpressure-deep-dive/05-hooks-and-side-effects.test.ts"
+  ],
+  "notes": "Supporting artifacts provide implementation context but do not independently verify speaker claims."
+}

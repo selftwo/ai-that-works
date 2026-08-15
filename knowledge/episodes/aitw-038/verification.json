@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "source_mapping": "passed: meta.md and README.md agree on YouTube ID 4YTl9w_bESE",
+  "transcript_range": "00:00.296 to 01:10:53.710",
+  "timestamp_order": "passed: 316 timestamps are monotonic using knowledge/scripts/verify_transcript.py",
+  "spot_checks": ["early building", "compiler plumbing", "test selection", "safe rollout", "Twitch rejection", "part time startup", "bounded bet", "parser cases", "founder time cost"],
+  "timestamped_claim_count": 9,
+  "source_duration_check": "not run: source media was not downloaded",
+  "remaining_uncertainty": ["transcript provenance and ASR model", "exact recording start", "speaker retrospective claims", "screen-only evidence", "transcribed names and technical terms"]
+}

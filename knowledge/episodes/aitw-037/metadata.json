@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "guid": "aitw-037",
+  "episode": 37,
+  "season": 2,
+  "title": "Founding HumanLayer: Dex's Journey",
+  "source_folder": "2025-12-23-founding-humanlayer",
+  "recorded_at": "2025-12-23T18:00:00Z",
+  "recorded_at_provenance": "Source meta.md eventDate. This may be the scheduled event time rather than the exact recording start.",
+  "youtube_video_id": "LEOA19Ss9lc",
+  "youtube_url": "https://www.youtube.com/watch?v=LEOA19Ss9lc",
+  "transcript_origin": "upstream timestamped transcript.md",
+  "transcript_cleanup_priority": "medium",
+  "status": "curated-from-existing-transcript"
+}
