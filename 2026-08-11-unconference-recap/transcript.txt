@@ -1,0 +1,1516 @@
+[00:00:01.910] We hosted the unconferences last
+[00:00:01.920] weekend. Every single person is doing
+[00:00:03.760] something differently than every other
+[00:00:05.279] person and every single person is
+[00:00:07.040] changing their mechanism every few
+[00:00:08.720] months.
+[00:00:09.120] >> If you can't look back two years and
+[00:00:10.719] want to kick your own ass, you're
+[00:00:12.240] probably not learning fast enough. And
+[00:00:13.920] AI is just compressing that timeline.
+[00:00:16.560] >> No one is operating the same way that
+[00:00:18.240] they used to be operating. [music] And
+[00:00:19.439] no one expects to be operating in the
+[00:00:21.039] same way they're currently operating.
+[00:00:22.480] >> It's actually really hard to tell who's
+[00:00:24.080] who's ahead of whom or if the problems
+[00:00:26.240] are different. It's a very
+[00:00:27.279] multi-dimensional space. Today's episode
+[00:00:29.359] we get to talk about the AI that works
+[00:00:31.119] unconference which is an event that we
+[00:00:32.800] host about every 3 to four months where
+[00:00:34.800] we put a bunch of the smartest people
+[00:00:36.239] that we know in a room together and we
+[00:00:37.920] just let them build the agenda. We had
+[00:00:40.000] all sorts of topics and we recaped some
+[00:00:41.680] of them from cash engineering to slot
+[00:00:43.840] factories to harness engineering and all
+[00:00:46.079] the way to building evals to some degree
+[00:00:48.320] and we talked about some of the
+[00:00:49.280] learnings that we had what was
+[00:00:50.399] consistent what was not consistent
+[00:00:52.000] across engineers in different domains
+[00:00:54.000] different size of companies and
+[00:00:55.280] different edgeorgs. If you're interested
+[00:00:57.680] in hearing what happened, check out this
+[00:00:59.440] episode and we'll show some examples and
+[00:01:01.520] eventually we'll at the very end we hit
+[00:01:02.960] the live Q&A with the audience and see
+[00:01:04.559] what kinds of questions came up. Let's
+[00:01:06.720] get started.
+[00:01:07.600] >> I'm so excited to be here with you
+[00:01:10.960] talking about AI that works. This is the
+[00:01:13.760] AI that works show, ladies and
+[00:01:15.600] gentlemen. We are uh going to talk about
+[00:01:18.799] things that work in prod.
+[00:01:26.630] My name is Dex Horthy and I am the CEO
+[00:01:26.640] and co-founder of Human Layer. We build
+[00:01:29.280] a multiplayer a collaborative agent
+[00:01:31.680] coding workspace
+[00:01:34.000] and I'm joined by Vib. Vib, please
+[00:01:37.759] introduce yourself.
+[00:01:38.799] >> My name is Vibbof and I'm the co-founder
+[00:01:41.520] of Boundary and we build a programming
+[00:01:44.159] language and an observability suite for
+[00:01:47.119] building uh code bases that you don't
+[00:01:49.680] have to read every line of code.
+[00:01:51.360] >> Wow. Wow. Really? Uh, choosing violence
+[00:01:55.680] today, huh?
+[00:01:56.960] >> Uh, we're just going to start with the
+[00:01:58.799] violence. Um,
+[00:02:00.240] >> when dude, when we started this show, we
+[00:02:02.320] you we I we were not I'm the read the
+[00:02:05.040] code guy and you're the don't read the
+[00:02:06.560] code. If anything, it was the opposite.
+[00:02:08.160] If anything, [laughter] we swapped
+[00:02:09.200] places.
+[00:02:10.959] >> Hey, you know, it's a eb and flow of yin
+[00:02:12.879] and yang.
+[00:02:14.000] >> Uh, six months from now, I'll be saying
+[00:02:15.760] the opposite and you'll be saying the
+[00:02:17.040] opposite, and that's okay. I mean, I
+[00:02:19.040] think the beauty of the world as it goes
+[00:02:20.879] right now is that it changes so fast.
+[00:02:23.280] And I personally find that the value of
+[00:02:26.319] >> like literally just flipping your
+[00:02:27.920] perspective every now and then to the
+[00:02:29.680] opposite extreme is probably the
+[00:02:31.520] healthiest way to really challenge the
+[00:02:33.200] system as it is today. I don't I just
+[00:02:35.040] think like if you're trying to stride
+[00:02:36.319] the middle, you're basically falling
+[00:02:37.519] behind.
+[00:02:38.080] >> If you were not changing your mind every
+[00:02:41.680] 3 minutes, you were falling behind.
+[00:02:43.360] Sorry, every 3 months. Not every 3
+[00:02:44.959] minutes. [laughter] Sorry. It has like I
+[00:02:46.879] offered a slightly slower time scale
+[00:02:48.640] than you. So maybe maybe 3 months for
+[00:02:50.560] me, 3 minutes for you.
+[00:02:51.920] >> I I had a buddy in college who used to
+[00:02:54.160] say, you know, if you can't look back
+[00:02:55.440] two years and want to kick your own ass,
+[00:02:57.440] you're probably not learning fast enough
+[00:02:59.120] and AI is just compressing that
+[00:03:01.200] timeline.
+[00:03:02.879] >> What's your uh Immod's got a fun
+[00:03:04.480] question. What do you think about clawed
+[00:03:05.760] watermark stuff?
+[00:03:07.440] >> We already have the watermark. It's uh
+[00:03:09.840] loadbearing [ __ ] [laughter]
+[00:03:13.040] uh it's a trap. Like if you need a
+[00:03:15.680] watermark to tell what text was written
+[00:03:17.280] by Claude, you're not paying attention,
+[00:03:18.879] buddy.
+[00:03:19.200] >> Wait, wait, wait. So, catch me up on
+[00:03:20.480] this. Claude is watermarking text, not
+[00:03:22.560] just
+[00:03:23.040] >> they they are putting stuff. So, you
+[00:03:25.200] know how like when you copy structured
+[00:03:27.280] text on your laptop and sometimes you
+[00:03:29.680] paste it into something like if you copy
+[00:03:31.360] markdown from GitHub and you paste it
+[00:03:32.959] into Google Docs, it like brings the
+[00:03:34.560] styles with it. It's like actually it's
+[00:03:36.799] like, you know, pasting XML and then the
+[00:03:38.959] the client reads it. They're I guess
+[00:03:41.360] adding metadata and tags and stuff where
+[00:03:43.680] basically if you copy text out of cloud
+[00:03:45.440] and you paste it into something that
+[00:03:47.760] like supports rich text, there will be
+[00:03:50.080] little like smidges of
+[00:03:52.560] >> interesting
+[00:03:53.760] >> and it will persist through
+[00:03:56.000] >> it'll persist through some editing. So
+[00:03:58.239] if you if you edit the right if you
+[00:03:59.920] delete the right block of text or change
+[00:04:01.840] it some way, you'll lose that metadata
+[00:04:04.080] if the client doesn't support it. But I
+[00:04:05.599] think they're having some something
+[00:04:06.959] something like that. It'll be like
+[00:04:08.879] little spans and divs that like change
+[00:04:10.640] the styles. Um, but yeah, they posted a
+[00:04:12.720] thing.
+[00:04:13.360] >> Why do you think they're doing that?
+[00:04:15.200] >> Uh, because the EU told them they had
+[00:04:16.880] to.
+[00:04:19.040] >> Okay. Well, there you go. That's a good
+[00:04:22.160] >> Now, why is the EU doing that? Uh, you
+[00:04:25.040] know, just Europe doing Europe things. I
+[00:04:28.160] love Europe for the record. Uh, but this
+[00:04:30.160] is a very EU coded coded move.
+[00:04:34.560] >> Interesting. You're trying to do things
+[00:04:37.040] for the rest of the world, I guess.
+[00:04:39.040] >> Yep. Signed Provenence metadata. Yeah,
+[00:04:41.919] it will sign any image it generates gets
+[00:04:44.320] uh Yeah. I I mean, I think the images
+[00:04:46.160] and the video stuff is way more
+[00:04:47.759] important of like, hey, look, people
+[00:04:49.520] spreading misinformation with AI using
+[00:04:51.440] images of things that didn't happen is
+[00:04:53.600] actually like a useful thing.
+[00:04:55.680] >> Yeah. So like for example, new models
+[00:04:57.440] will mark AI generated content from day
+[00:04:59.600] one. Words everywhere you use claude
+[00:05:02.240] will help detect claude marks. So I
+[00:05:04.400] guess idea is you can query it very
+[00:05:05.840] easily to know if it's clawed. This is
+[00:05:08.000] going to help systems like Reddit and
+[00:05:09.520] stuff basically like remove like cloud
+[00:05:11.440] claude speak directly into the stuff
+[00:05:13.360] which I think is not a bad place if the
+[00:05:15.280] platform opts into doing that.
+[00:05:17.199] >> Well, so it's not cloudspeak. It's it's
+[00:05:18.880] it's other it's like unreadable
+[00:05:20.800] metadata.
+[00:05:22.160] >> Yeah, that's what I mean. So that's why
+[00:05:23.919] like Reddit can probably do this in a
+[00:05:25.520] better way because they're like uh if
+[00:05:27.759] they I assume you have a programmatic
+[00:05:29.280] API that Reddit could check on the back
+[00:05:30.639] end to know if something is like
+[00:05:32.240] cloudspeak.
+[00:05:33.919] >> Ah I see. Yeah. Yeah. I mean it depends.
+[00:05:36.240] It depends if it's a rich text editor.
+[00:05:38.320] I'm guessing
+[00:05:39.440] >> if it's an API I suspect they'll have
+[00:05:41.360] ways
+[00:05:42.479] >> like and Reddit does have a rich text
+[00:05:44.400] editor.
+[00:05:45.440] >> What if they're going to inject like
+[00:05:47.600] Unicode characters that match the same
+[00:05:50.000] like they look the same but they're
+[00:05:51.680] actually
+[00:05:53.199] Providence metadata for JPEG. I mean,
+[00:05:55.360] honestly, you know, I I'm kind of torn
+[00:05:58.160] about all this because like it's telling
+[00:05:59.280] you it's going to generate it for SVGs,
+[00:06:01.199] PGs, JPEGs. And like the reason I'm torn
+[00:06:03.919] is because I'm asking myself a very very
+[00:06:06.240] important question, which is do I even
+[00:06:08.160] believe that people care? And the
+[00:06:10.080] analogy to this, I think, is like
+[00:06:11.440] cameras. Cameras and locker rooms used
+[00:06:13.600] to be banned. Now we got Tik Tok reels
+[00:06:15.840] about locker rooms. And like society
+[00:06:18.400] just moved on and accepted it as like a
+[00:06:20.400] norm rather than trying to fight it. As
+[00:06:22.479] much as I hate
+[00:06:22.960] >> that's a very interesting example, huh?
+[00:06:25.759] >> I mean, as much as I hate to say it,
+[00:06:27.440] like I think people are going to be
+[00:06:29.039] watching content that is fully AI
+[00:06:30.960] generated and not care.
+[00:06:33.600] >> Like AI generated, human delivered is
+[00:06:36.800] probably what I was going to for a
+[00:06:38.479] while. And I see YouTube already doing
+[00:06:40.080] this in so many different ways. I watch
+[00:06:41.759] channels like you can hear the claudisms
+[00:06:44.160] out of their mouth and they're literally
+[00:06:45.680] reading out of a teleprompter talking
+[00:06:48.000] about uh like talk verbatim saying the
+[00:06:50.880] script that Claude wrote for them.
+[00:06:53.039] >> No, I was at a wedding this year for the
+[00:06:54.800] first time and I was like is that a chat
+[00:06:56.880] GPT tick in your wedding speech? Are you
+[00:06:59.520] serious?
+[00:07:01.120] >> I'm not sure. Unconfirmed. But like it
+[00:07:03.039] was the first time I was like on alert
+[00:07:04.400] for it. I don't know. It's also like you
+[00:07:06.800] get to this point of like okay cool. I
+[00:07:08.160] can I can generate an image with claude
+[00:07:09.919] and then I can pull it up and I can take
+[00:07:11.360] out the certific certification that came
+[00:07:13.280] from claude. Right? You can always
+[00:07:14.319] remove metadata from the image.
+[00:07:16.479] >> So what that comes down to is now like
+[00:07:17.919] okay if you take a photo with your
+[00:07:19.360] iPhone your iPhone's going to sign it
+[00:07:21.199] using like a hardware like private key
+[00:07:23.280] basically that proves that this was
+[00:07:24.639] taken on an iPhone with a real camera.
+[00:07:27.440] But that stuff can all be cracked. Like
+[00:07:29.520] there is no it's just like DRM. Like
+[00:07:31.199] there is no like guaranteed failsafe way
+[00:07:34.240] to prove that a thing was really made. I
+[00:07:37.120] think DRM are really good for the
+[00:07:39.440] majority of use cases like
+[00:07:41.280] >> No, they're not. People stopped using
+[00:07:42.880] them because people just kept cracking
+[00:07:44.400] them.
+[00:07:44.960] >> Yeah.
+[00:07:45.440] >> Like people don't use DRM anymore
+[00:07:47.440] >> for a while or do they really not on
+[00:07:49.680] Netflix and stuff? Like for example, if
+[00:07:51.039] you're on Apple and you're trying to
+[00:07:52.080] like FaceTime and share your screen and
+[00:07:53.520] you're watching TV, it instantly gets
+[00:07:55.680] blocked like Appleider.
+[00:07:58.639] >> Yeah. So I mean DRM like I guess Yeah,
+[00:08:00.479] that that's true. They still like blocks
+[00:08:02.000] if you're watching something on Hulu and
+[00:08:03.680] you take a screen cap, it blocks it cuz
+[00:08:05.280] it's like if you're in the the blast
+[00:08:07.440] ecosystem, okay, and if you don't have
+[00:08:09.199] that, then like the Netflix app does the
+[00:08:11.919] same thing too, right?
+[00:08:13.599] >> I I don't know. I when I hear DRM, I I
+[00:08:16.400] think of like how they used to like if
+[00:08:17.599] you if you bought a song from iTunes and
+[00:08:19.599] then you sent it to somebody, that
+[00:08:20.960] person couldn't play the file unless
+[00:08:22.800] they like were logged into your iTunes
+[00:08:24.639] account.
+[00:08:25.520] >> Yeah, that stuff I agree. But like the
+[00:08:27.840] actual like premise that you're going to
+[00:08:29.599] encode data I think anyway we're way off
+[00:08:32.000] topic. This is not what we intend to
+[00:08:33.440] spend 10 minutes talking about. Let's go
+[00:08:35.519] into what we're going to talk about
+[00:08:36.640] today which uh hopefully many of you got
+[00:08:38.880] the chance to check it out. We or some
+[00:08:40.560] of you perhaps didn't. We hosted the
+[00:08:42.719] unconference this last weekend and I
+[00:08:44.320] think what today's episode of is going
+[00:08:46.640] to be about is actually going to be
+[00:08:48.160] recapping what we learned about the
+[00:08:50.320] unconference topics that came up. Sadly,
+[00:08:53.279] we do chat and mass rule, so we can't
+[00:08:54.800] say who did what uh because we don't yet
+[00:08:57.040] have approval from every single person
+[00:08:58.640] out there. Um I suspect some people
+[00:09:00.959] spoke about it and what that they were
+[00:09:02.560] there and that they mentioned it, so we
+[00:09:03.839] can mention them probably.
+[00:09:06.320] But in general, um it was a very fun
+[00:09:11.200] vibe of learning a lot of different
+[00:09:12.959] techniques. I think the only the one big
+[00:09:15.760] takeaway I had and I don't know about
+[00:09:17.839] you Dexter was that we're all still
+[00:09:21.120] figuring stuff out. Every single person
+[00:09:23.360] is doing something differently than
+[00:09:24.880] every other person and every single
+[00:09:26.560] person is changing their mechanism every
+[00:09:28.640] few months. Like no one is operating the
+[00:09:31.519] same way that they used to be operating
+[00:09:32.959] and no one expects to be operating in
+[00:09:34.720] the same way they're currently
+[00:09:35.680] operating. And the crazy thing is like
+[00:09:38.320] there is a spectrum of like the the
+[00:09:41.600] software factory stuff. There's like a
+[00:09:43.040] spectrum of like read all the code
+[00:09:45.200] versus like just make your factory work
+[00:09:48.320] and like use feedback loops and use code
+[00:09:50.160] to do it. And what's interesting is like
+[00:09:51.920] sometimes you would think of that as
+[00:09:52.880] like a linear journey. But like people
+[00:09:55.440] move back and forth across that spectrum
+[00:09:57.760] and people are on different sides and
+[00:09:59.200] it's like it's it's actually really hard
+[00:10:00.480] to tell who's who's ahead of whom or if
+[00:10:02.880] the problems are different. It's a very
+[00:10:04.480] multi-dimensional space. I think the one
+[00:10:06.720] thing that was very clear was that
+[00:10:09.440] everyone accepts that if you let models
+[00:10:12.640] like like run unattended, they will
+[00:10:15.760] write slop code and you have to be you
+[00:10:17.760] either have to accept it or you have to
+[00:10:19.600] do something about it.
+[00:10:21.440] >> Yes. Uh I think there's zero people in
+[00:10:23.600] the world that don't believe that. It's
+[00:10:24.720] like the convergence of models running
+[00:10:26.480] code is slop. Like they converge to I
+[00:10:29.279] guess they diverge to slop is a better
+[00:10:31.200] framing.
+[00:10:32.240] >> Yeah. is uh what is the entropy thing of
+[00:10:34.160] like everything everything naturally
+[00:10:35.839] devolves into chaos.
+[00:10:37.600] >> Yeah. Uh I yeah I don't think there was
+[00:10:39.760] a single person that said I mean there
+[00:10:41.440] was I can't say who but there was
+[00:10:44.000] someone that was like you can just write
+[00:10:45.360] code for like uh forever without reading
+[00:10:48.399] anything. Um that was not me by the way.
+[00:10:51.040] I do believe you have to read a
+[00:10:52.320] minuscule amount of code.
+[00:10:54.320] >> Yeah. Uh yeah, it was like a just merge
+[00:10:56.320] merge without review automerge
+[00:10:57.920] everything kind of thing. It's like
+[00:10:59.200] yeah, but I mean some people are writing
+[00:11:00.560] some people I someone is saying they
+[00:11:02.160] wrote like
+[00:11:03.440] >> 70 deterministic llinters for Rust. Like
+[00:11:06.079] they just they just vibe coded a bunch
+[00:11:07.760] of tools that like look for every single
+[00:11:09.920] anti-attern. And every time they see an
+[00:11:11.440] antiattern, they don't update their
+[00:11:12.800] agents memory. They don't update their
+[00:11:14.480] prompts or their skills. They actually
+[00:11:16.399] just go build another llinter so that
+[00:11:18.000] the next time someone writes code like
+[00:11:19.519] this, it gets like fed back to the
+[00:11:21.120] agent.
+[00:11:21.839] >> Yeah.
+[00:11:22.320] >> Yeah. and tells the agent like, "Hey,
+[00:11:23.760] here's here's what you did wrong."
+[00:11:25.680] >> Um, I had a really interesting
+[00:11:26.959] conversation last night, uh, kind of
+[00:11:28.959] following up from that where we were
+[00:11:30.399] talking about like, how do you design
+[00:11:31.519] llinters in the world of AI?
+[00:11:33.760] >> And I think the missing thing out of
+[00:11:35.200] most llinters is some sort of natural
+[00:11:36.720] language.
+[00:11:38.560] Like, and the thing is,
+[00:11:39.600] >> oh yeah, cuz someone was saying, yeah,
+[00:11:41.040] it was like Deepseek V4 Flash is like
+[00:11:43.120] small, fast, cheap, and smart. And like
+[00:11:45.440] if you just write if you can just write
+[00:11:46.800] a list of a hundred rules of like this
+[00:11:48.480] should never happen, this should never
+[00:11:49.600] happen, this should never happen,
+[00:11:51.360] >> like easier to maintain and like almost
+[00:11:54.560] as good as a deterministic llinter and
+[00:11:56.720] like yeah, it's more expensive and it's
+[00:11:58.160] slower, but like it's close enough that
+[00:12:00.399] the trade-off is like it's you're you're
+[00:12:02.240] right on the
+[00:12:03.040] >> pay let's say you're paying $1,000 per
+[00:12:05.440] feature to ship slop. Is it worth it to
+[00:12:07.920] pay like $5 to review that slot?
+[00:12:10.480] Probably.
+[00:12:11.839] >> Like like $5 to have a lint to run on.
+[00:12:14.399] It's like 100% a trade-off that I think
+[00:12:16.560] people would make.
+[00:12:17.279] >> And I mean, my take with all of this is
+[00:12:19.040] like it's it's not like your goal should
+[00:12:21.279] not be to get to like I mean lights it's
+[00:12:24.320] always good to like set a goal that's
+[00:12:25.600] farther than you actually are going to
+[00:12:27.040] end up, right? If you're like, "Hey, I'm
+[00:12:28.720] going to make a billion dollars this
+[00:12:30.079] year and you make 200 million, then the
+[00:12:32.720] goal worked, right?" Like, yeah, you
+[00:12:34.480] didn't hit the number you said, but like
+[00:12:36.320] setting ambitious goals is a way to like
+[00:12:38.480] because you're always, you know, it's
+[00:12:39.519] like the you halfway and halfway and
+[00:12:41.440] halfway. uh like the higher your goal
+[00:12:44.000] the the the more progress you'll make.
+[00:12:45.600] And so that idea of like I don't if you
+[00:12:47.760] say your goal lights off fine but like
+[00:12:50.000] be okay with like hey we went from 50 PR
+[00:12:53.600] you know 50% of PR is being merged
+[00:12:55.279] without without any feedback to 90% of
+[00:12:58.160] PRs being merged without any feedback.
+[00:13:00.240] But until until you're actually merged a
+[00:13:02.800] thousand PRs in a month or two and you
+[00:13:05.680] read all the code and you have no
+[00:13:07.120] feedback, you should not like stop
+[00:13:09.600] reading the code until you're very
+[00:13:11.120] confident of like yes, this has been
+[00:13:12.560] working for long enough that it's like
+[00:13:14.720] cuz I don't know Kyle made this tweet
+[00:13:16.079] this morning here. Let me pull it up. It
+[00:13:17.360] was just like I think it's already got
+[00:13:18.959] like 50,000 views. I don't think one
+[00:13:21.360] should be merging code at a faster rate
+[00:13:24.000] with AI than they what they were merging
+[00:13:26.000] before unless they actually have a grasp
+[00:13:28.480] of the system and they believe that the
+[00:13:30.000] system is converging.
+[00:13:31.120] >> If you're not reading the code you have
+[00:13:32.639] no idea how much garbage is in your
+[00:13:34.800] code. Like you can't say like oh we
+[00:13:36.000] don't read the code the models are good
+[00:13:37.200] enough. It's like no if you don't read
+[00:13:39.040] the code then you don't know you like
+[00:13:40.720] you cannot say that it's good or not.
+[00:13:42.240] >> Scroll down. Scroll down. Scroll down
+[00:13:44.639] right there.
+[00:13:46.399] >> Right there.
+[00:13:47.600] >> Yeah. Read the least amount of code you
+[00:13:48.880] need to ship reliable software and a
+[00:13:50.240] large enough code base or best engineers
+[00:13:51.680] don't read all the code. Many more worse
+[00:13:53.279] engineers ship slob all the time. Yeah,
+[00:13:54.880] companies work. Anyways, that was like
+[00:13:57.600] one part of the discourse. What I liked
+[00:13:59.279] about the unconference though was it was
+[00:14:01.199] like the audience built the agenda and
+[00:14:02.800] there was lots of people who like kind
+[00:14:04.240] of care about code but people shared uh
+[00:14:07.040] like their take on Andre Karpathy's LM
+[00:14:09.600] wiki and how they maintain a like
+[00:14:11.519] recurring improving memory system over
+[00:14:13.760] time that like how you can have like all
+[00:14:15.760] the right information in your context
+[00:14:17.279] window back to context engineering and
+[00:14:18.880] stuff. There were people talking about
+[00:14:20.079] how to build coding harnesses for
+[00:14:21.839] hardware and build the right feedback
+[00:14:23.360] loops there.
+[00:14:24.639] >> Do you remember?
+[00:14:25.360] >> Oh, you got schedule. Nice.
+[00:14:28.880] Um
+[00:14:30.720] real one one person who was there Quinn
+[00:14:32.880] Quinn law from uh the pipecat and uh
+[00:14:36.079] >> yeah he's always he's he's uh
+[00:14:38.000] technically I'm sure he also he gave he
+[00:14:40.240] gave this talk uh well he gave the talk
+[00:14:42.880] um
+[00:14:44.560] >> at AI engineer so um but yeah that was
+[00:14:47.199] good migrating large code bases personal
+[00:14:49.360] context layer um we talked about KV
+[00:14:51.360] cache engineering like some really like
+[00:14:53.199] down to the metal like
+[00:14:55.120] >> I missed that one was it dope Yeah.
+[00:14:58.160] >> I've looked at this stuff before, but I
+[00:14:59.839] think if you haven't, um, I think the
+[00:15:01.920] biggest takeaway is you don't probably
+[00:15:03.279] realize how much
+[00:15:05.120] >> things like I learned something new. For
+[00:15:07.040] example, if you change the reasoning
+[00:15:08.560] midway, did you know that you invalidate
+[00:15:10.480] your full cache?
+[00:15:11.680] >> Like,
+[00:15:13.120] >> you change the reasoning in the middle
+[00:15:15.120] >> all the way back. You invalidate the
+[00:15:16.480] full cache.
+[00:15:17.680] >> Well, so my my my understanding was like
+[00:15:19.440] there's certain ways to use the APIs
+[00:15:21.199] where they will either keep all the
+[00:15:22.880] reasoning in or they will only keep the
+[00:15:24.800] most recent reasoning block. No,
+[00:15:26.880] >> but
+[00:15:27.600] >> if you take out the reasoning block
+[00:15:28.959] here, you still keep the previous cache,
+[00:15:30.959] right?
+[00:15:31.600] >> Nope, you don't. I'll show you why. Uh,
+[00:15:33.519] reason
+[00:15:34.320] >> that's that's a bad API design.
+[00:15:36.480] >> No, I'll show you why. Uh, GLM grammar.
+[00:15:41.199] Let's see if I can find it.
+[00:15:43.760] Uh,
+[00:15:44.480] >> I'm going to make you a whiteboard in
+[00:15:45.680] case you want to draw it, by the way.
+[00:15:46.800] >> No, no. I'm just going to pull up chatt
+[00:15:50.240] uh
+[00:15:51.920] for the prompt. Can you get it for me?
+[00:15:56.480] Yeah, I'll just find out like like the
+[00:15:58.240] grammar of text for what it looks like
+[00:16:00.240] for GLM or like um uh for GLM or for
+[00:16:04.000] like uh OSS 12B.
+[00:16:06.800] >> Yeah.
+[00:16:07.519] >> Um
+[00:16:09.199] or get it for GPT1 12B. I just want to
+[00:16:12.000] look at the prompt and like the grammar
+[00:16:13.680] and the prompt. It's I know it's
+[00:16:14.959] somewhere. Can you just access it
+[00:16:16.160] online? I just want to show the template
+[00:16:17.839] of what's going on for it.
+[00:16:19.360] >> By the way, we only see we only see the
+[00:16:21.120] unconference thing if you want.
+[00:16:22.880] >> I'll show this in a second. Uh I don't
+[00:16:24.320] know. How did you make did you you took
+[00:16:25.839] a picture of the all the post-its on the
+[00:16:27.920] whiteboard and this is amazing
+[00:16:30.399] >> I just take a picture I was like hey
+[00:16:31.839] Claude do this and it made some mistakes
+[00:16:33.920] >> but we were able to go fix that along
+[00:16:35.519] the way.
+[00:16:36.560] >> Yeah.
+[00:16:36.959] >> Um and that was pretty like it made very
+[00:16:39.519] few mistakes.
+[00:16:40.639] >> Oh yeah. the the the other one I really
+[00:16:42.399] liked is like kind of the more like
+[00:16:44.079] human take on the sharing learnings with
+[00:16:46.000] your engineering team of like hey look
+[00:16:47.759] everybody's on their own journey
+[00:16:49.440] learning AI and building like competence
+[00:16:51.600] with using it for both technical and
+[00:16:53.199] non-technical work and a lot of people
+[00:16:56.480] using AI for non-technical work are um
+[00:16:59.759] technical people
+[00:17:01.279] >> so I'm going to I'm going to share a
+[00:17:02.720] different screen really fast and like
+[00:17:04.000] you'll see what I mean so like check
+[00:17:05.839] this out so like the grammar often has
+[00:17:08.079] this so reasoning is often one of the
+[00:17:10.240] earliest messages that goes off into any
+[00:17:12.240] prompt. So this is like the actual
+[00:17:13.919] >> the start and the message things are
+[00:17:16.160] basically those are like special tokens.
+[00:17:18.079] >> Yeah, these are special tokens like well
+[00:17:19.919] maybe start and system message is a
+[00:17:21.839] special token. I suspect this is a
+[00:17:23.280] special token if I were them. But
+[00:17:24.480] anyway, the point here is like
+[00:17:26.319] >> see this reasoning stuff right over
+[00:17:27.919] here.
+[00:17:28.720] >> Yeah,
+[00:17:29.280] >> you change the reasoning. You change one
+[00:17:30.799] of the earliest tokens in your whole
+[00:17:32.160] prompt. Everything is invalidated.
+[00:17:34.320] >> No. Oh, I see. You don't mean changing
+[00:17:36.480] the content of the reasoning. You mean
+[00:17:38.480] changing the changing the content of
+[00:17:40.880] when you change the reasoning level?
+[00:17:42.240] That's crazy.
+[00:17:43.679] >> Um, yeah.
+[00:17:44.559] >> Why would they make it like that?
+[00:17:47.280] >> Um, some other interesting facts that I
+[00:17:49.039] learned is like the reasoning tokens
+[00:17:50.559] aren't actually hard-coded. So like
+[00:17:52.080] there's some models that only have
+[00:17:53.200] medium and high. You can also pass low
+[00:17:55.360] into them and they mostly work because
+[00:17:57.120] like they're trained on semantic meaning
+[00:17:58.480] of what it means.
+[00:18:00.559] >> At least empirically. Obviously, you're
+[00:18:02.080] not going to get the same results. Like
+[00:18:03.200] if you really think about what's
+[00:18:04.240] happening here is like the model gets
+[00:18:06.080] trained on like this token yields to
+[00:18:08.000] some amount of reasoning tokens being
+[00:18:09.600] favored or not favored
+[00:18:11.760] >> in the post- training loop. So like when
+[00:18:13.600] it does that obviously put in low it
+[00:18:15.520] hasn't it has an approximate meaning of
+[00:18:17.200] what that means.
+[00:18:18.240] >> So it's allowed to generate so many
+[00:18:19.600] tokens before it prefers to generate the
+[00:18:21.360] stop reasoning token.
+[00:18:22.880] >> Yeah. This is like any other instruction
+[00:18:24.400] of like hey run the test after you
+[00:18:25.919] change code. It's like it changes the
+[00:18:28.799] chance that the next token will be more
+[00:18:30.400] reasoning or reasoning end and into the
+[00:18:32.640] actual like messaging and tool calling.
+[00:18:35.360] >> Exactly. So that was uh that was really
+[00:18:37.280] interesting talk. Um I thought um I
+[00:18:40.720] don't know which of these did you get to
+[00:18:42.400] um uh attend that you thought was
+[00:18:44.240] interesting. I love the building one
+[00:18:46.160] too.
+[00:18:48.080] >> I
+[00:18:49.679] >> that was uh
+[00:18:50.640] >> I was running around doing conference
+[00:18:52.000] stuff.
+[00:18:54.160] Um
+[00:18:55.760] what how what did you think of the eval
+[00:18:57.120] talk? What was
+[00:18:57.840] >> eval talk? I thought the most
+[00:18:58.880] fascinating part was building evals for
+[00:19:00.480] your skills. Building evals for skills
+[00:19:02.480] was a fantastic takeaway. Um I had not
+[00:19:05.280] thought of him that way of like if
+[00:19:07.600] you're going to build a software
+[00:19:08.720] factory. The idea is if you're going to
+[00:19:10.880] build a software factory, you can't
+[00:19:12.400] actually eval most of the stuff that
+[00:19:14.080] you're trying to do. Uh
+[00:19:16.000] >> it's such like it's like long long
+[00:19:18.160] context like long like like long horizon
+[00:19:21.039] tasks and like you can't just look at
+[00:19:23.120] the trace and say like this is good or
+[00:19:24.880] bad.
+[00:19:25.840] >> Yeah. So let me join the room and let me
+[00:19:27.520] scal really fast. So like the idea is
+[00:19:29.760] like look there's like two parts of
+[00:19:31.360] software factory. is planning where you
+[00:19:34.240] basically build specs and once your
+[00:19:35.919] specs are complete then you can build
+[00:19:38.160] like implement
+[00:19:40.960] uh one fairly consistent conclusion
+[00:19:43.200] about the whole thing is that the
+[00:19:44.480] implement loop is solved like you like
+[00:19:47.840] coding agents can implement most things
+[00:19:49.600] and you can eval this pretty well like
+[00:19:52.080] right here you have some skills you have
+[00:19:54.240] some other stuff that you end up doing
+[00:19:55.600] you have like skills you have your
+[00:19:56.720] environment that you're going to set up
+[00:19:58.720] >> yeah you have your test and winters
+[00:20:00.960] >> yeah like all the stuff around that like
+[00:20:02.799] tests uh llinters
+[00:20:09.270] and like if this is bad this is only bad
+[00:20:09.280] due to a couple of things which is
+[00:20:10.960] either your skills are wrong your plan
+[00:20:13.679] was wrong or your environment is set up
+[00:20:15.840] incorrectly and in that world you can
+[00:20:18.559] really even you can do a closed loop
+[00:20:20.080] eval in the implement loop really really
+[00:20:21.840] fast so if you can do that then the next
+[00:20:24.240] part just becomes like can you merge
+[00:20:27.679] uh and I what we find the biggest
+[00:20:29.440] bottleneck was really the planning side
+[00:20:30.960] but The whole part is like because this
+[00:20:33.200] is so evvalable then what you can also
+[00:20:35.919] do is you can also go ahead and actually
+[00:20:38.240] like uh you can also go ahead and
+[00:20:40.000] actually just validate the
+[00:20:41.520] implementation loop.
+[00:20:46.870] >> Interesting. Oh yeah because you can
+[00:20:46.880] take a plan that you already know was
+[00:20:49.760] implemented well change the skill and
+[00:20:52.240] then just see if it still implements
+[00:20:53.679] well.
+[00:20:54.400] >> Exactly. Exactly. And that's one thing
+[00:20:56.240] that I found to be very very
+[00:20:57.600] interesting. Um,
+[00:20:58.559] >> I mean this is what we talked about on
+[00:20:59.919] the very first episode of AI that works
+[00:21:02.640] was like how do you take this large
+[00:21:04.320] problem and break it down into like
+[00:21:06.640] things that you can probe at a lower
+[00:21:08.640] level so you can optimize smaller parts
+[00:21:11.120] of it and you can figure out like okay
+[00:21:13.200] the end end is slow and expensive to run
+[00:21:15.520] and it's like there's lots of edge cases
+[00:21:17.520] how can I break it down into smaller
+[00:21:19.440] problems
+[00:21:21.200] >> another thing verification loops uh like
+[00:21:24.559] adversarial review I I'll call that.
+[00:21:27.760] >> Oh my god, I'm so sick of that word.
+[00:21:30.559] >> Yeah, I know.
+[00:21:31.600] >> It is not a magic word. Saying the word
+[00:21:33.600] adversarial does not magically make the
+[00:21:36.320] code better. I mean, it will make the
+[00:21:37.840] code slightly better and it will catch
+[00:21:39.280] all the dumb stuff, but like adversarial
+[00:21:42.240] review does not solve your problem.
+[00:21:44.240] >> Yeah. Yeah. But almost everyone had some
+[00:21:46.320] variant of adversarial review in their
+[00:21:48.240] process. Almost anyone that was shipping
+[00:21:50.559] code with AI, they were always like
+[00:21:52.400] having some sort of loop at the very
+[00:21:53.840] end. And I think the idea is not
+[00:21:56.320] >> the idea is not that you should do this
+[00:21:57.760] as a the idea is like you're going to do
+[00:21:59.840] oops
+[00:22:00.320] >> the idea is you're going to do something
+[00:22:02.320] then you'll have like a loop like an uh
+[00:22:04.960] ad loop and then the idea is that this
+[00:22:08.080] thing will loop before it goes to a
+[00:22:09.679] human.
+[00:22:10.799] >> You want to delay going to the human as
+[00:22:12.480] much as possible and this this just
+[00:22:14.000] increases the odds of like it being
+[00:22:15.919] correct for the human by the time it
+[00:22:17.600] gets there.
+[00:22:19.760] Um, and I thought that was fascinating
+[00:22:21.120] that almost every independent whe
+[00:22:22.880] whatever they called it, different
+[00:22:24.080] people called the different things
+[00:22:25.120] always had that kind of process coming
+[00:22:27.039] in. Scorecards for hill climbing. I
+[00:22:29.919] didn't check that one. Slopfree software
+[00:22:31.440] factories was uh
+[00:22:32.480] >> that was one I went to that was um I
+[00:22:34.240] won't say who it was but uh it was very
+[00:22:35.840] good. Uh they talked about like how they
+[00:22:38.400] have basically like three parts of their
+[00:22:40.320] loop which is like discuss and decide
+[00:22:43.120] and brainstorm all of the planning all
+[00:22:45.280] the parts in planning of like one thing
+[00:22:46.960] and then they have implement and then
+[00:22:48.880] they basically have compound. They only
+[00:22:50.559] have three skills. They have like figure
+[00:22:52.240] out what we're going to do at a high
+[00:22:53.600] level that gives us leverage over what's
+[00:22:55.039] coming next. Do the implementation and
+[00:22:57.679] then compound is like hey review what
+[00:23:00.320] what went wrong. Pull in PR comments.
+[00:23:02.880] Pull in agent traces. is pull in user
+[00:23:04.960] messages and then like figure out and
+[00:23:06.720] they do like once a week they just get a
+[00:23:08.320] report of like here's all the things
+[00:23:10.159] that went wrong this week that like the
+[00:23:11.760] agent didn't solve and that humans
+[00:23:13.200] needed to get involved for like
+[00:23:15.440] prioritize and then they just pick a
+[00:23:17.360] couple things every week to like build
+[00:23:18.880] that into the implement system or into
+[00:23:20.799] the planning system.
+[00:23:21.840] >> I didn't check out I I actually missed
+[00:23:23.679] these because I was in the middle of
+[00:23:25.520] something. Uh but I I mean obviously
+[00:23:28.080] harness engineering there people we just
+[00:23:30.320] shared actually I think this they posted
+[00:23:32.400] about this so I can pull this up.
+[00:23:34.559] >> Oh the um the orchestration primitives
+[00:23:36.720] thing.
+[00:23:37.360] >> I thought that was kind of nice. It was
+[00:23:38.960] like some really nice diagrams that they
+[00:23:40.880] made actually.
+[00:23:41.919] >> This is uh Will is one of the OG BAML
+[00:23:44.159] guys. He built a coding agent in BAML
+[00:23:46.000] like forever ago.
+[00:23:47.760] >> Yeah. Yeah, but I think the coolest part
+[00:23:48.960] is actually he he just like had it go
+[00:23:51.280] and search through a bunch of stuff
+[00:23:53.156] [sighs]
+[00:23:53.600] >> uh and like found a bunch of control
+[00:23:54.880] flows and like I know we've all talked
+[00:23:56.320] about these processes, but it's just
+[00:23:57.760] nice to see the entire list of
+[00:23:59.200] everything kind of
+[00:24:00.880] >> built out. And what's really fascinating
+[00:24:02.960] to me personally is I look at this I'm
+[00:24:04.480] like okay well this literally just looks
+[00:24:07.280] like code
+[00:24:09.440] >> and like it's interesting
+[00:24:10.960] >> this is how you would design a
+[00:24:12.080] programming language. Well, I don't know
+[00:24:14.240] about that, but this is definitely how
+[00:24:15.520] you would like like these strategies are
+[00:24:17.919] not new. And I think that's probably the
+[00:24:19.520] most important part here is like none of
+[00:24:21.039] these strategies of execution patterns
+[00:24:22.720] are new at all.
+[00:24:24.159] >> So given that they're not new, go ahead.
+[00:24:26.720] >> Did did you ever um
+[00:24:30.159] did you ever read design patterns that
+[00:24:32.720] like C++ book?
+[00:24:35.360] >> I'm actually illiterate and I don't
+[00:24:37.440] really read, which is a very sad thing
+[00:24:40.080] about myself to admit. At my first job,
+[00:24:42.000] I had a 20-minute bus commute. And I
+[00:24:44.159] would always read on the bus. So, I just
+[00:24:45.760] read like 40 minutes a day. And I would
+[00:24:47.440] read. That's how I learned Closure.
+[00:24:48.880] That's how I read Clean Code. That's how
+[00:24:50.559] I It's the only way I can read is like
+[00:24:52.559] it was before phones were super
+[00:24:53.919] addictive. Uh or I just had managed to
+[00:24:56.960] not get hit by that. Uh I also had like
+[00:25:00.159] for two years out of college, I was poor
+[00:25:01.919] and so I just had a flip phone instead
+[00:25:03.520] of an iPhone. Uh
+[00:25:04.880] >> dude, that was wild.
+[00:25:06.240] >> Yeah. Yeah. It was crazy, dude. T9. I'm
+[00:25:08.880] um Yeah. Okay. Pattern. Thank you for
+[00:25:11.200] sharing that.
+[00:25:11.600] >> Cool.
+[00:25:12.159] >> Um, anyways, yeah, design patterns is
+[00:25:13.919] one of those books. I mean, they had
+[00:25:14.960] like 40 things of like the observer
+[00:25:17.919] pattern and the flyweight pattern. It
+[00:25:19.760] was all these things that like basically
+[00:25:21.120] like if you like people keep reinventing
+[00:25:24.559] the same idea over and over again poorly
+[00:25:27.200] with the wrong algorithm. And it's just
+[00:25:28.960] like if you keep iterating on this code
+[00:25:31.679] for a while, you will land at one of
+[00:25:34.240] these 40 patterns. Factory pattern like
+[00:25:37.600] Yeah.
+[00:25:38.720] >> Yeah. So, my big gripe with this thing,
+[00:25:40.480] like it's really nice visually, and
+[00:25:41.840] honestly, uh Will did a fantastic job.
+[00:25:44.240] But my big gripe is just like there's
+[00:25:46.720] not like 100 patterns. There's literally
+[00:25:49.120] only like
+[00:25:50.960] there's a reason like map reduce for
+[00:25:52.559] example is just map and reduce and that
+[00:25:55.120] breaks down everything you need to do in
+[00:25:56.720] distributed systems
+[00:25:58.720] and like pretty much all other
+[00:26:00.159] computation workload you have to do.
+[00:26:02.320] >> And the beauty of most systems is like
+[00:26:03.919] the minimum that you can have. But it is
+[00:26:05.520] useful to see concrete examples of
+[00:26:08.000] certain patterns. And obviously I know
+[00:26:10.159] map reduce has a couple more constructs
+[00:26:11.520] but like at at a very high level it is
+[00:26:13.760] map and reduced. I mean I do think that
+[00:26:16.320] for many
+[00:26:18.240] I mean in some ways data structure is
+[00:26:19.760] very similar to kind of what you're
+[00:26:20.880] saying texture. It's like while all
+[00:26:22.159] boils down to the same 40 patterns it is
+[00:26:24.559] useful to learn like the 100 most common
+[00:26:26.559] applications of those 40 cap patterns
+[00:26:28.240] even though that's way more than the 40
+[00:26:29.679] patterns themselves
+[00:26:31.440] >> because it just makes you a better
+[00:26:32.640] engineer. you if you can do it.
+[00:26:34.559] >> The problem is if you read too many
+[00:26:36.080] design patterns or you read too much uh
+[00:26:38.159] you know you download a Google library
+[00:26:40.080] and you go spelunking through the Google
+[00:26:41.760] code you're just like oh I'm going to
+[00:26:43.279] just make an abstract singleton factory
+[00:26:45.200] factory [laughter] for everything and
+[00:26:46.720] like it's not it's not done in bad faith
+[00:26:49.360] it's just is like what will naturally h
+[00:26:51.520] like if you just build the code you will
+[00:26:53.200] naturally land on these design patterns
+[00:26:55.039] and if you read about the design
+[00:26:56.480] patterns you will naturally land on like
+[00:26:58.799] a lot of [ __ ] probably.
+[00:27:01.919] Yeah, it is a software is a fine
+[00:27:03.760] balancing act is what I would say.
+[00:27:06.240] >> Um, okay. So, unfortunately, I think
+[00:27:08.720] Avery won't be able to join today. Um,
+[00:27:11.520] his AV is not working. I don't know why.
+[00:27:14.799] >> Uh, I should tell him to just use my mic
+[00:27:16.559] setup.
+[00:27:17.600] >> You should just do his slides as if
+[00:27:19.200] you're Avery. You should just steal his
+[00:27:21.360] steal his
+[00:27:21.840] >> valor. Okay. Maybe maybe what we can do
+[00:27:23.600] is we can have uh Avery and perhaps one
+[00:27:25.520] of the other speakers come on next time
+[00:27:27.039] and actually give their talks because I
+[00:27:28.559] thought some of the talks were
+[00:27:29.600] phenomenally well done. Okay. I mean, I
+[00:27:32.880] have a if you need 20 minutes, I have a
+[00:27:34.880] talk I'm working on for a launch today
+[00:27:36.799] that we could talk about that a lot of
+[00:27:38.640] people seem to so we talked about this a
+[00:27:40.640] little bit at the unconference. Uh, but
+[00:27:42.880] like is a thing that I think like
+[00:27:45.039] >> everybody is on this journey towards
+[00:27:47.679] it's a little bit human layer coded, but
+[00:27:49.440] it's like basically like where do you
+[00:27:51.120] put your [ __ ] plan docs and like how
+[00:27:53.279] do you organize them and where should
+[00:27:54.640] they live and how do you work with them
+[00:27:56.320] and like I think the journey that
+[00:27:58.159] everybody goes on to get there. Was the
+[00:28:00.080] other guy gonna come? Is he Is he in?
+[00:28:01.600] Did he reply?
+[00:28:03.120] >> Um I was out all night and I did not
+[00:28:05.760] message someone.
+[00:28:07.279] >> Okay.
+[00:28:07.919] >> So sadly, but
+[00:28:09.360] >> I know
+[00:28:09.760] >> I'm I'm down to charity to talk or
+[00:28:11.520] honestly if people have questions, we're
+[00:28:12.880] happy to take questions or like today
+[00:28:14.320] can just be a light day as well.
+[00:28:16.080] >> We can answer uh do we needed design
+[00:28:18.240] patterns with AI? Isn't AI already
+[00:28:20.000] knowing it? And I will say that the
+[00:28:22.480] problem is AI knows it too well and it's
+[00:28:24.320] in the second it's in the second class
+[00:28:25.919] of the like, oh, I'm just going to use
+[00:28:27.440] factory patterns for everything. uh or
+[00:28:29.440] it's like I'm going to use an over
+[00:28:30.559] complicated algorithm for a thing that
+[00:28:32.320] doesn't need it.
+[00:28:33.279] >> I'll see if Avery has the slides. This I
+[00:28:35.279] mean this just b Avery's thing just
+[00:28:36.880] proves this basically.
+[00:28:38.480] >> Like basically I think what we found is
+[00:28:39.919] very similar to slop code bench where if
+[00:28:41.360] you let the AI go wild it is not going
+[00:28:44.080] to do a good job.
+[00:28:45.679] >> Yeah.
+[00:28:46.080] >> As far as I know.
+[00:28:47.600] >> Uh because it will mess up one out of 10
+[00:28:49.840] times. And every one out of 10 times it
+[00:28:52.000] messes up means that if it's made a 100
+[00:28:54.000] decisions it's messed up 10 times.
+[00:28:56.080] >> It compounds, right? It's like, okay, if
+[00:28:57.919] you put AI in a 100% clean codebase and
+[00:29:00.240] it messes up one out of 10 times, well,
+[00:29:02.720] the the the the odds that it's going to
+[00:29:04.720] mess up is a function of like the
+[00:29:07.200] cleanliness of the codebase that exists.
+[00:29:10.080] So, if we come like
+[00:29:11.360] >> I've got a good example. Yeah, Avery was
+[00:29:13.840] kind enough to send me the thing. This
+[00:29:15.600] is kind of interesting. So, like check
+[00:29:16.880] out this like imagine building a thing
+[00:29:18.320] that does ticket master and you have to
+[00:29:19.840] do three things. You have to either open
+[00:29:21.600] and by the way, all credit to Avery. If
+[00:29:23.360] you like him, go follow him on Twitter.
+[00:29:25.039] He
+[00:29:25.360] >> I thought you just said you weren't
+[00:29:26.640] gonna steal his slides and do them for
+[00:29:28.159] me.
+[00:29:28.240] >> Yeah, but this is so good. He just sent
+[00:29:29.600] it for me. Um, but I'll have him do the
+[00:29:31.679] full talk later. But you have open,
+[00:29:32.960] held, and sold. You can represent this
+[00:29:34.559] as two bulls. And both bulls can never
+[00:29:37.440] be true. And the consequence of this is
+[00:29:40.000] if you chose the left representation
+[00:29:41.840] instead of the right representation,
+[00:29:43.919] regardless of what it is, and this is
+[00:29:45.200] Rus code, so excuse us. Um, when you go
+[00:29:48.880] add a new state, see here, you have one
+[00:29:52.399] thing to update here. You have to now
+[00:29:54.480] update 1 2 3 four places. And now you
+[00:29:57.360] can take this up to the nth degree.
+[00:29:59.600] >> What are the odds that an agent will
+[00:30:01.279] forget to update one of the places?
+[00:30:03.200] >> The more complex the system, the more
+[00:30:05.120] likely it will miss one state and
+[00:30:07.440] therefore you will be sad.
+[00:30:09.679] >> And your code will have
+[00:30:10.640] >> 40 lines of code that can get way more
+[00:30:13.200] complex with one mistake. Imagine
+[00:30:15.440] 400,000 lines of code.
+[00:30:16.720] >> This isn't 40. How many lines of code is
+[00:30:18.080] this? 1 2 3
+[00:30:19.679] >> 4 5 6 7 8 9 10. It's like 20.
+[00:30:22.960] >> Yeah. like it's just guaranteed to mess
+[00:30:25.200] up.
+[00:30:26.000] >> Yeah.
+[00:30:26.399] >> Um and I'm not I'm not going to steal
+[00:30:28.880] any more of this thunder because come
+[00:30:30.960] next week if you want to see the full
+[00:30:32.480] talk on uh they've rememeasured slop and
+[00:30:35.679] had 200 agents implement the same
+[00:30:37.520] feature and did the stats on like how
+[00:30:39.200] many what percentage of them got it
+[00:30:40.880] wrong versus got it right.
+[00:30:42.559] >> Yeah, that was fantastic. Uh Matas has
+[00:30:44.559] got a great question. Beyond separate
+[00:30:46.080] models, what adversarial review
+[00:30:47.679] approaches do you recommend? Uh how
+[00:30:50.159] using how many documents? I'll tell you
+[00:30:52.080] what we do. And Dexter, I'd love your
+[00:30:53.440] thoughts on this, too, because I'll
+[00:30:54.399] learn something new. Um, when it comes
+[00:30:56.320] to separate models, so I don't really
+[00:30:57.760] care about separate models personally. I
+[00:30:59.279] just clear the context. That's fine
+[00:31:00.640] enough. It doesn't really matter. But
+[00:31:02.320] what I do care about is I'd like to
+[00:31:04.640] frame adversarial review as a design
+[00:31:07.200] constraint that probably the model
+[00:31:08.960] skipped on. So in our case, performance
+[00:31:11.520] is a very concrete measurable thing. The
+[00:31:14.320] best way to do adversarial review for us
+[00:31:16.240] is we just say, is this fast? and you
+[00:31:19.760] just ask it like what would make this
+[00:31:21.279] faster and it will literally just come
+[00:31:22.640] up with better data structures
+[00:31:25.039] and once you have a better data
+[00:31:26.720] structure it often will actually clean
+[00:31:28.080] up the code a lot more like funnily
+[00:31:29.760] enough faster code is usually better
+[00:31:31.600] code especially when it comes from like
+[00:31:33.440] initial model code
+[00:31:35.919] >> yeah um I think I think I put it in this
+[00:31:38.399] category of like there's this paper
+[00:31:39.919] we've talked about before called don't
+[00:31:41.120] waste your back pressure which is like
+[00:31:43.440] >> if you are just reading all the code and
+[00:31:45.679] trying to decide if it's correct uh then
+[00:31:48.880] then like then yeah you're screwed. So
+[00:31:50.960] like what you can do is like in the
+[00:31:52.559] early part of the effort you can use a
+[00:31:54.240] compiler to check stuff and now you as a
+[00:31:56.240] human don't have to like check for the
+[00:31:57.600] symbols in the compiler. Uh you may
+[00:32:00.399] bring in like a type system as well. I
+[00:32:02.240] mean type system compiler is kind of the
+[00:32:03.760] same. Uh and then like basically
+[00:32:06.320] >> all right fine.
+[00:32:08.559] Uh if you're using a lang but like if
+[00:32:10.399] you if you use C the compiler is doing
+[00:32:12.399] the type checking.
+[00:32:13.200] >> Yeah. Yeah. Yeah. Yeah.
+[00:32:14.159] >> Um, so if you're using a fake language
+[00:32:15.760] with fake types, then yes, you need a
+[00:32:17.360] type system separate from your compiler.
+[00:32:19.519] >> Uh, like Python or TypeScript. Welcome
+[00:32:22.000] to TypeScript where everything's made up
+[00:32:23.279] and the types don't matter. Uh,
+[00:32:25.279] >> well, yeah. Anyway, go on.
+[00:32:28.240] >> This has MCP servers, but this is like
+[00:32:29.919] using Playright, using external tools,
+[00:32:31.760] giving the agent back pressure.
+[00:32:32.799] >> What do you guys do though in practice?
+[00:32:35.679] Um
+[00:32:37.440] what the last feature I was building uh
+[00:32:40.480] was something where I basically um I had
+[00:32:44.480] this like vision for a thing and I just
+[00:32:47.440] basically I wrote a PRD uh Sol Street.
+[00:32:50.480] I'll pull up the PRD that we made. Um
+[00:32:53.519] what is it? V3.
+[00:32:55.840] So this is a very large task with lots
+[00:32:57.760] of stuff. I'll talk about what I did.
+[00:32:59.279] But um the first thing we had was um
+[00:33:04.480] oh actually I need the mockup. Let me go
+[00:33:07.039] find the mockup. I kind of stopped using
+[00:33:08.480] the doc and I just used this mockup. But
+[00:33:10.799] somewhere in here uh I started with just
+[00:33:13.679] like hey here's the new prompt
+[00:33:15.039] experience in human layer and then we
+[00:33:17.039] iterated on this and then I just
+[00:33:18.799] literally was like okay what does every
+[00:33:20.320] drop down look like? What is every like
+[00:33:22.480] ticket? What's the behavior when we're
+[00:33:24.000] fetching stuff?
+[00:33:24.720] >> What are you sharing? Do you meant to
+[00:33:26.399] share?
+[00:33:26.720] >> Oh sorry I'm not sharing. ASR. Um, wow.
+[00:33:30.320] So, you guys have just been staring at
+[00:33:31.600] the article. So, uh, I built this PRD
+[00:33:34.240] basically, which is like the new
+[00:33:35.279] prompting experience in human layer. Uh,
+[00:33:37.519] and then I went through and was like,
+[00:33:38.799] okay, what does every drop down look
+[00:33:40.080] like? What are the options? Uh, what
+[00:33:41.840] happens? What are the loading states?
+[00:33:43.840] How do we like generate stuff? What do
+[00:33:45.840] errors look like? What does the
+[00:33:47.200] directory selector look like?
+[00:33:49.440] >> Etc., etc. Like, we just kind of like
+[00:33:51.360] went and figured out all of this. And
+[00:33:53.440] then I just sent Fable on like an
+[00:33:55.039] infinite loop to go to go implement
+[00:33:57.039] this. Just like keep going, implement
+[00:33:58.559] everything. Uh I think it technically
+[00:34:00.480] made a plan.
+[00:34:02.399] >> Yeah, exactly. Use the browser to go
+[00:34:04.240] through and do this.
+[00:34:05.600] >> Then what I did was uh I played with it.
+[00:34:10.639] I vibed it.
+[00:34:12.720] Um I had it have codec. So it was like
+[00:34:14.879] basically like it was like now launch a
+[00:34:16.720] codec cli
+[00:34:19.919] codeex cli to review take the feedback.
+[00:34:23.839] Uh and I basically I did this uh the way
+[00:34:26.320] I did this was I cued a bunch of
+[00:34:27.599] messages. So I was like I was like at
+[00:34:29.760] prompt.md which told it to like track
+[00:34:31.919] its progress and look at the prd and
+[00:34:33.599] things like this. And then I did
+[00:34:34.639] slashcompact and then I said at
+[00:34:36.800] prompt.md keep going
+[00:34:39.919] >> and then I did like slashcompact. And so
+[00:34:42.000] I queued all these up. So like I I don't
+[00:34:43.760] even use Ralph loops anymore. I just use
+[00:34:45.280] in human layer you can queue up a bunch
+[00:34:46.560] of messages and they'll send one at a
+[00:34:47.919] time and then it was like yeah you know
+[00:34:49.919] CRLM which is our codeex review skill
+[00:34:52.240] like review and fix etc. And I just did
+[00:34:54.560] this like ran this overnight. Um
+[00:34:57.440] >> and then I came back in the morning and
+[00:34:59.119] I like you know vibed some changes for
+[00:35:03.200] for an hour or two.
+[00:35:04.880] >> Yeah. And then you merged.
+[00:35:06.560] >> Nope.
+[00:35:08.160] Uh I looked at the PR and it was 20,000
+[00:35:10.320] lines.
+[00:35:16.390] Uh, and it was mostly isolated in its
+[00:35:16.400] own tree, which is what we like to do
+[00:35:17.599] when we're riffing out new features.
+[00:35:18.880] We're like, "Cool. If you need to use
+[00:35:20.720] shared code, you may not change the code
+[00:35:23.599] that the main tree is using. If you need
+[00:35:25.839] to change it like a tiny bit, you can,
+[00:35:28.400] but don't add extra props. Don't add
+[00:35:30.240] extra like parameters. Like, you will
+[00:35:32.079] copy that function and put it in the new
+[00:35:33.680] tree. And eventually, we'll just throw
+[00:35:35.119] away the old tree." Uh, but we kind of
+[00:35:37.040] force it to like repeat code if we don't
+[00:35:39.440] know what the abstractions are. Um, but
+[00:35:42.960] so for this PR, I then basically like
+[00:35:46.720] reverse engineered it into seven small
+[00:35:49.119] PRs.
+[00:35:50.960] >> Seven small PRs of like 3 to 5K each.
+[00:35:54.560] And so that was actually the interesting
+[00:35:56.480] planning where we used the code as kind
+[00:35:58.800] of like the spec of what we're building
+[00:36:01.359] >> and then we built it into this like PR
+[00:36:03.440] splitting plan which to build this
+[00:36:04.880] actually took me like an hour or two
+[00:36:06.560] because it was asking a bunch of
+[00:36:07.680] questions and I actually like changed
+[00:36:08.960] some of the behavior basically. Um but
+[00:36:11.839] then this is basically for each one it's
+[00:36:13.920] basically make a new work tree. Here's
+[00:36:15.839] your reference code. When you want to
+[00:36:17.599] copy files like copy the file and delete
+[00:36:19.920] from it rather than reading the file and
+[00:36:21.920] like writing the new code. um and things
+[00:36:25.040] like this. So, I'm I'm now on PR number
+[00:36:27.040] four of this, but each of the PRs was
+[00:36:29.520] only a couple thousand lines of the last
+[00:36:30.880] one I merged last night was like 1500
+[00:36:32.720] lines. I vibed out the got the behavior
+[00:36:35.040] right. So, I was like we prototyped to
+[00:36:36.560] get the shape of it and then I went back
+[00:36:38.640] and broke it down into things that like
+[00:36:40.880] Kyle will actually review. And so, here
+[00:36:42.800] is like one of the PRs that got merged.
+[00:36:45.200] Um, so this is I don't know this was
+[00:36:47.920] only a couple hundred lines, but
+[00:36:49.839] >> we do a slightly different approach
+[00:36:51.200] where it's like we actually do it like
+[00:36:52.880] so you're doing it more aggressively up
+[00:36:54.480] front. We do something very um
+[00:36:57.760] uh we do something slightly different
+[00:36:59.359] which is like you kind of just merge it
+[00:37:01.440] ahead of time and then you we kind of
+[00:37:02.720] just bake in time as a part of
+[00:37:04.480] engineering process to like refactor
+[00:37:06.240] recur like retroactively.
+[00:37:08.160] >> Okay. And Matteas asked the question
+[00:37:10.400] about the thing I was going to talk
+[00:37:12.079] about right now, which is where do you
+[00:37:13.760] keep the spec driven dev? Where do you
+[00:37:15.200] keep your docs? Do you keep it in the
+[00:37:16.480] repo alongside the code or
+[00:37:19.440] >> in docs? So this is literally like the
+[00:37:22.960] journey that everybody freaking goes on,
+[00:37:24.720] so I'm going to share again. Um, and I
+[00:37:27.359] didn't finish drawing this, but maybe we
+[00:37:28.640] can finish on the show. Uh so basically
+[00:37:31.040] like we hear all this thing about
+[00:37:32.960] artifacts and we talk about artifacts as
+[00:37:34.480] like markdown documents of like plans,
+[00:37:37.200] research,
+[00:37:38.800] specs, whatever you want to call it,
+[00:37:40.480] right? Um so let me give this a border.
+[00:37:45.040] Um
+[00:37:47.040] and like they're separate from the code,
+[00:37:49.200] right? Usually they're like fairly
+[00:37:50.720] short-lived. Um and they you use them to
+[00:37:54.079] produce code. Uh, and the first thing
+[00:37:57.200] that everyone ends up doing is they end
+[00:37:59.280] up in your code. You have a plan.mmd and
+[00:38:01.119] a review.mmd and maybe you have a couple
+[00:38:02.800] for different features and you either
+[00:38:04.160] get ignore them or you commit them
+[00:38:05.839] because you want to come back to them
+[00:38:06.960] later or you want to share them.
+[00:38:09.839] Eventually you maybe like put them in a
+[00:38:11.599] special directory. Uh, so you have like
+[00:38:13.440] a folder for all your plans and then you
+[00:38:15.440] start sharing this across your team and
+[00:38:17.520] they like build up over time and then
+[00:38:19.599] the model finds them but they're out of
+[00:38:21.280] date. Uh, and so like it actually like
+[00:38:24.079] slows you down instead of making you
+[00:38:25.599] faster. Is it are you following this so
+[00:38:26.960] far? Like did you go on this journey
+[00:38:28.320] kind of?
+[00:38:29.760] >> I I had um Yeah. I mean I Yes. People
+[00:38:34.720] initially check in MD files and then you
+[00:38:36.640] quickly realize you can't do this.
+[00:38:38.640] >> Yeah. Um and so like the next thing
+[00:38:41.040] people usually do is like you scope them
+[00:38:42.720] by feature and then when the feature is
+[00:38:44.320] shipped you try to clean up the old
+[00:38:46.000] ones. You can do this automatically or
+[00:38:48.000] manually. Um, and then like the real
+[00:38:51.359] challenge that I hate is like you have
+[00:38:53.119] work tree one and work tree two and you
+[00:38:54.960] have feature two over here and feature
+[00:38:56.320] three over here and your co-orker has
+[00:38:57.760] feature four and you constantly end up
+[00:38:59.839] asking yourself like wait what branch
+[00:39:01.440] was that artifact on? Like what branch
+[00:39:03.359] was that plan on and like oh I want to
+[00:39:05.280] reference that plan over here but it's
+[00:39:06.880] from an older checkout. It's from a
+[00:39:08.240] feature that didn't get merged yet. So I
+[00:39:09.599] have to go like find it. Uh it sucks.
+[00:39:12.560] It's hard. I do we this happened with a
+[00:39:14.160] bunch of customers that we've worked
+[00:39:15.280] with. Um, the other thing too is like
+[00:39:18.000] GitHub is really good for reviewing like
+[00:39:20.960] diffs like when things are changing,
+[00:39:24.320] >> but you well it's not even bad for
+[00:39:25.520] markdown. Like it's good for markdown
+[00:39:26.960] diffs, but like if you just want a
+[00:39:29.200] document that's not changing that much,
+[00:39:30.960] I can't comment on this in GitHub. Even
+[00:39:32.720] if I go look at the raw code, like
+[00:39:34.000] there's no way to comment on a on a
+[00:39:35.359] thing. You can only comment on a change.
+[00:39:38.320] >> Um, and so the b the takeaway here is
+[00:39:40.560] like don't store your artifacts in git.
+[00:39:42.160] Like put them somewhere else. Uh and so
+[00:39:44.720] what we like to do is we get ignore
+[00:39:46.560] this. Some people put them in notion or
+[00:39:48.079] in Google docs or vib. I know you guys
+[00:39:49.920] have built a system to do this your like
+[00:39:51.599] beep thing. Um and so you get ignore
+[00:39:55.200] this and then basically you sync it with
+[00:39:57.119] an external system. So basically what
+[00:39:58.720] we've built is like there's this flow of
+[00:40:01.200] like the agent like does like a is
+[00:40:04.640] talking to the file system.
+[00:40:11.589] Um actually we'll say the agent calls
+[00:40:11.599] calls a thing in the harness which
+[00:40:12.960] touches the file system
+[00:40:21.030] file
+[00:40:21.040] system. Uh and then the file system says
+[00:40:24.240] like okay
+[00:40:27.040] and then what we have is basically a
+[00:40:28.800] hook that is um
+[00:40:32.160] >> yeah you guys sync like from the harness
+[00:40:34.079] itself anytime you read certain files in
+[00:40:36.000] that plans folder effectively you kind
+[00:40:37.599] of sync it with like a cloud artifact.
+[00:40:39.280] Yeah.
+[00:40:39.920] >> Yeah. And so this actually gets pushed
+[00:40:41.760] to an API where we store the file
+[00:40:43.839] contents
+[00:40:45.760] uh and then you can see them in a web
+[00:40:47.599] UI. Um, so the hook will like sync this
+[00:40:51.119] and then this goes back and then the
+[00:40:52.960] harness says okay the hook is done and
+[00:40:54.560] then it passes control back to the
+[00:40:56.000] agent. Um, I'll call this the model
+[00:40:59.280] technically since the agent is the
+[00:41:01.119] harness plus the model. Uh, and then
+[00:41:03.119] over here you can serve these and look
+[00:41:04.400] at them. This is how this is how human
+[00:41:05.760] layer stuff works when I'm all these
+[00:41:07.119] docs I'm showing you. That's exactly how
+[00:41:08.560] these were created. Um, and what's cool
+[00:41:10.960] there is like the other side of it that
+[00:41:12.480] we also like to do here is um, oh,
+[00:41:15.200] sorry, I stopped sharing my whole screen
+[00:41:16.720] again, but uh, we'll pop back. Um,
+[00:41:20.079] actually, let me just take a screenshot
+[00:41:21.520] of this doc. So, like here's our doc
+[00:41:24.480] here.
+[00:41:27.359] Um, and so you can view these in the UI
+[00:41:29.599] now.
+[00:41:31.200] Uh and then the other thing that happens
+[00:41:34.400] is like another model running in another
+[00:41:37.839] harness. Basically uh what we have built
+[00:41:41.200] into our sort of meta harness is like
+[00:41:51.510] uh we call this like the the demon or
+[00:41:51.520] the worker. Basically, when when the
+[00:41:54.560] when the client requests a new session,
+[00:42:03.910] we start a watcher against that API.
+[00:42:03.920] Um,
+[00:42:10.710] and so here's your API server, right?
+[00:42:10.720] Um, the API requests a session. We start
+[00:42:13.280] a watcher for like basically
+[00:42:22.069] notify me when task files change when
+[00:42:22.079] artifact when task like artifact files
+[00:42:24.560] change. Um and we group these like per
+[00:42:27.760] per like thing you're working on. And so
+[00:42:29.520] if some this agent over here updates it,
+[00:42:32.319] that change will flow into my local
+[00:42:35.359] Oops.
+[00:42:36.079] >> I'm getting you kind of have like a
+[00:42:38.000] Dropbox like sync kind of mechanism
+[00:42:39.760] here, right?
+[00:42:40.319] >> Yeah, exactly. So it's just constantly
+[00:42:42.000] watching this stuff and then this flows
+[00:42:44.960] into the file system.
+[00:42:48.400] >> So the outer thing is actually writing
+[00:42:50.160] to the file system and then when the har
+[00:42:52.560] when the model wants to read a file the
+[00:42:54.240] harness goes and touches the file system
+[00:42:56.400] and this thing has been synced down.
+[00:43:00.240] Um so this is how you can kind of like
+[00:43:02.240] it's a it's built on an electric SQL
+[00:43:04.240] sync. Um there is one weird race
+[00:43:06.480] condition that we don't handle. Uh, but
+[00:43:09.119] what we found is like you probably don't
+[00:43:10.960] need CRDTS for this for most cases. Like
+[00:43:13.599] CRDTS would be the way to do this like
+[00:43:15.359] perfect like like all race conditions
+[00:43:17.520] handled like no merging. Uh, but the
+[00:43:19.920] scrappy way of doing this is just
+[00:43:21.119] dropping things on the file system and
+[00:43:22.560] then the agent can read them. And what's
+[00:43:23.920] nice here is you don't need any extra
+[00:43:25.040] MCP tools. Um, so I didn't I didn't mean
+[00:43:28.560] to tell turn this into a like here's how
+[00:43:30.319] human layer does this, but basically
+[00:43:32.079] like the the idea is like you should
+[00:43:35.599] like make your files accessible to the
+[00:43:37.839] agent whether it's a Google MCP or an
+[00:43:39.520] Ocean MCP or just like having some
+[00:43:41.839] process that just drops them on the file
+[00:43:43.599] system for you or you uh or or or yeah
+[00:43:49.599] and then sorry not or uh and then once
+[00:43:52.000] they're available to the agent the agent
+[00:43:53.680] can read and write them. You want to be
+[00:43:55.520] able to comment on them. You want to be
+[00:43:56.880] able to read them. You want to be able
+[00:43:58.000] to read them from your phone. You want
+[00:43:59.280] to be able to have them in a a place
+[00:44:00.880] that is like stored. But the thing is
+[00:44:02.800] like I don't think you need like you
+[00:44:05.200] don't need Git for this. Like you need
+[00:44:06.640] probably like linear history, right? And
+[00:44:08.560] so you want to be able to say like,
+[00:44:10.000] okay, what are the past versions of this
+[00:44:11.839] and what changed? But
+[00:44:13.280] >> you know what I really want? If I'm
+[00:44:14.480] completely honest, I actually don't even
+[00:44:15.920] want versioning or ranking. What I
+[00:44:17.440] really just want is I just want Dropbox.
+[00:44:19.760] I literally just want to have Dropbox
+[00:44:21.440] where I point it at a directory and I
+[00:44:22.960] say this directory is an agent
+[00:44:25.520] directory. Whatever happens here
+[00:44:27.760] reflected on the cloud, multiple people
+[00:44:29.520] might be talking to at the same time.
+[00:44:30.800] Give me a cdt sync on it and then let me
+[00:44:34.000] comment and make the comments available
+[00:44:36.319] via the file system somehow.
+[00:44:38.240] >> The comments are good. We also we also
+[00:44:39.599] did give you version history so you can
+[00:44:41.440] like look at like okay what changed
+[00:44:42.960] recently and stuff. Yeah, I mean I think
+[00:44:44.560] Dropbox has like similar kinds of like
+[00:44:46.000] linear versioning, but like it's like I
+[00:44:48.400] want this to just be a file system
+[00:44:49.920] construct which is just like always
+[00:44:51.599] working. I can just point to it anywhere
+[00:44:53.040] and it just works. Like if I have to
+[00:44:54.880] hook into a specific agent that means
+[00:44:57.359] like when a new one comes out like Pi, I
+[00:44:59.040] kind of get stuck on it. Matias has a
+[00:45:00.560] good point about like a one drive
+[00:45:01.599] folder. So that's kind of the idea. The
+[00:45:04.240] problem is and this is what I run into.
+[00:45:06.880] It's mostly about edit resolution and
+[00:45:08.960] how comments work. Edit resolution is
+[00:45:11.760] really hard to go deal with in a typical
+[00:45:13.760] CRT system because if you're building an
+[00:45:16.160] agent-based system, you want to have
+[00:45:17.599] delayed resolving of edits because if
+[00:45:20.079] you edit it right now immediately as it
+[00:45:22.240] does, you kind of want to have the user
+[00:45:24.079] prompt and say, I actually do want this
+[00:45:26.079] error to um um I actually do want this
+[00:45:30.240] error to propagate up
+[00:45:32.400] >> and like I'm sorry, I want this edit to
+[00:45:34.240] immediately interrupt the agent and
+[00:45:35.760] invalidate its cache or I want to hold
+[00:45:38.000] off on this edit until after the agent
+[00:45:39.680] is done working. There's a very
+[00:45:41.359] important problem to solve there or else
+[00:45:42.640] you get kind of get screwed.
+[00:45:44.240] >> Yeah, the cloud code harness had this
+[00:45:45.599] for a little while. I don't know if they
+[00:45:46.800] still have it, but they basically had
+[00:45:48.000] like if an agent touches a file
+[00:45:50.800] >> and then that file changes on disk that
+[00:45:53.040] the agent hasn't seen, it will inject a
+[00:45:55.680] system message to remind the agent. You
+[00:45:58.160] don't see it, but you can see it in the
+[00:45:59.359] thinking traces. Claude is like, "Oh,
+[00:46:00.720] the system reminder tells me that the
+[00:46:02.079] user has edited the file." Uh, so that I
+[00:46:05.040] should and and so I should read it again
+[00:46:06.720] before I try to edit it. And it's like,
+[00:46:08.240] see what's different. Yeah.
+[00:46:11.280] >> Um, yeah, we created a context repo
+[00:46:13.359] that's ties a set of GitLab repos
+[00:46:15.200] together, gives every engineer one place
+[00:46:17.280] to understand how the repos fit, write a
+[00:46:18.960] plan, brand. Yeah. So, this was the
+[00:46:20.640] second generation of what we built is
+[00:46:22.319] like we built a separate repo that we
+[00:46:24.560] would hard link into every repo that had
+[00:46:27.040] code in it and the agent would read and
+[00:46:29.040] write there and then we had a hook that
+[00:46:30.800] was basically like on commit it would
+[00:46:33.119] also sync that thing. It would just do a
+[00:46:35.200] straight pushpull. There was no
+[00:46:36.640] branching in that other repo, but it was
+[00:46:38.400] a thing that like when certain things
+[00:46:40.480] happened, it would get synced up. That
+[00:46:41.920] was even less like real-time sync. That
+[00:46:44.079] was like on demand sync. But again, like
+[00:46:46.640] it didn't really matter unless two
+[00:46:48.560] people were working on the exact same
+[00:46:50.480] document, which tended to be pretty
+[00:46:52.160] rare. And the only reason we wanted to
+[00:46:54.319] go like more real time sync was because
+[00:46:57.119] we wanted to get to a point where like
+[00:46:58.560] two people could be like collaborating
+[00:47:00.160] on one doc with the agent at the same
+[00:47:02.000] time. Um, but yeah, Narin, that's that's
+[00:47:04.400] the natural thing. And you will probably
+[00:47:06.720] like if you keep working on this, you
+[00:47:08.240] will you you might you may eventually
+[00:47:09.920] end up with a thing that is more real
+[00:47:11.760] time. Um because the craziest thing for
+[00:47:13.760] me was always like the first time in
+[00:47:16.400] December or something we were testing
+[00:47:17.760] this and me and Kyle were sitting next
+[00:47:19.200] to each other and I was having my agent
+[00:47:21.520] edit the doc and push it and then he was
+[00:47:23.280] having his agent edit the doc and push
+[00:47:25.119] it and we were both staring at the page
+[00:47:26.560] in GitHub real time when we were storing
+[00:47:28.319] artifacts in GitHub. That was like the
+[00:47:30.560] magic moment for me. That was when I was
+[00:47:32.160] like, "Oh, this this needs to be a
+[00:47:33.680] product."
+[00:47:34.560] >> Cool. Um, this is cool. I think um, we
+[00:47:38.640] should probably close it off here. And I
+[00:47:40.960] saw there were a couple more questions
+[00:47:42.240] around sandboxes and more about like
+[00:47:44.560] process and workflow.
+[00:47:46.880] >> Is there any Google Doc like system that
+[00:47:48.800] lets agents and users dynamically update
+[00:47:50.880] docs and spreadsheets in real time?
+[00:47:52.319] Cloud keeps making a bunch of new Google
+[00:47:53.760] Docs for each edit as the API doesn't
+[00:47:56.160] let it make edits directly. Yeah. This
+[00:47:58.000] is this is really hard and we should
+[00:48:00.240] probably get Kyle on to talk about this,
+[00:48:01.599] but basically like yeah, the the model
+[00:48:04.319] tools are not good. What you need is
+[00:48:06.000] something like code mode where the model
+[00:48:07.599] can what we what we ended up doing is
+[00:48:09.280] like the model wrote a like markdown
+[00:48:11.920] edit and then a small model took that
+[00:48:14.880] edit and turned it into like a snippet
+[00:48:17.280] of quickjs JavaScript and uh sorry, give
+[00:48:20.079] me one sec. Sorry, I'm back. Kyle heard
+[00:48:22.400] me say his name and he thought I needed
+[00:48:24.000] something.
+[00:48:25.359] Yeah, I need you to come do a great
+[00:48:26.559] podcast episode because I'm I'm throwing
+[00:48:28.960] it over.
+[00:48:29.760] >> I actually do think the feature is code
+[00:48:31.200] mode for almost all things like we
+[00:48:32.880] should actually do an episode maybe we
+[00:48:34.160] can do a renewed episode and like code
+[00:48:35.599] mode sandbox and the whole like design
+[00:48:37.520] patterns that get evoked when you enable
+[00:48:39.280] the model to write code instead of
+[00:48:40.559] calling tools cuz I think 100% code
+[00:48:43.680] there.
+[00:48:44.319] >> Reese is not allowed back on the
+[00:48:45.760] podcast. He went and started a competing
+[00:48:47.520] podcast. He's dead to me. [laughter]
+[00:48:50.960] >> No, I think we can talk about code mode.
+[00:48:52.480] I think code mode will be fun. Um, I
+[00:48:54.480] think there's a
+[00:48:55.839] >> we've been advising more and more
+[00:48:57.280] companies to actually do code modas
+[00:48:58.640] inside of calling for many scenarios.
+[00:49:01.760] >> It's how all the RLM [ __ ] works.
+[00:49:04.559] >> Yeah. Anyway, it's 11:09. Um, Andre,
+[00:49:08.160] sorry we didn't get to your question. I
+[00:49:09.680] It's for two reasons. One, I have no
+[00:49:11.119] idea what ED is. I So maybe next time
+[00:49:13.760] let us know what it is. We'll take a
+[00:49:14.960] look at it or tweet at us or something.
+[00:49:17.119] >> It's the Employment Development
+[00:49:18.640] Department of California.
+[00:49:20.319] >> Eval driven dev. Oh, eval driven dev. We
+[00:49:23.040] will put a pin in that. We can talk
+[00:49:24.480] about that forever. Um,
+[00:49:25.839] >> yeah, go watch the emails.
+[00:49:27.359] >> Let's do it.
+[00:49:28.400] >> All right. Thank you everyone. We'll
+[00:49:29.839] catch you guys everyone.
