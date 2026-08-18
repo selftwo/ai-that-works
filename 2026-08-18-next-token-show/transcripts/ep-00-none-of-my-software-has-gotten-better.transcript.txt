@@ -1,0 +1,1489 @@
+# Cleaned transcript
+
+Generated from YouTube automatic English captions. Timestamps mark the start of each newly emitted caption segment.
+
+[00:00:00] Welcome to the next token. Today's
+[00:00:02] Monday, June 15th, 2026. I'm your host,
+[00:00:06] Dylan Mulroy, a principal software
+[00:00:07] engineer at Cloudflare, and this is a
+[00:00:10] show about three developers who do not
+[00:00:12] have the time or energy to be hosting a
+[00:00:14] podcast.
+[00:00:15] >> I'm Reese. I spent the past few years
+[00:00:17] years building apps at public that people love
+[00:00:19] like on Stack Overflow and Chip Talkers.
+[00:00:22] Recently worked over at Vercel for a
+[00:00:24] year and now I'm doing a AI startup to
+[00:00:27] enable agents to [music] pull anything.
+[00:00:29] >> Hi, I'm Sunil Pai. You might know me
+[00:00:31] me from my time on the React team, PartyKit
+[00:00:34] CSS-in-JS library,
+[00:00:36] Twitter.
+[00:00:38] Two of us work at Cloudflare who sponsor
+[00:00:40] the show, of course, and Reese just
+[00:00:43] shows up. I'm occupationally tired.
+[00:00:46] >> On today's show, we're going to be
+[00:00:47] be talking about all things Fable, and
+[00:00:50] finally we'll hear Sunil calling
+[00:00:53] everyone out on their [ __ ]
+[00:00:56] [ __ ] So, to get started,
+[00:00:58] I do want to talk about Fable. It is the
+[00:01:00] kind of pressing topic at the moment.
+[00:01:03] Last Thursday, I believe, Anthropic
+[00:01:06] finally released Mythos or I guess Fable
+[00:01:10] 5 to the general public, and it had some
+[00:01:12] protections in it which we can dive
+[00:01:14] into. But things have changed a lot
+[00:01:17] since it was released and subsequently
+[00:01:20] banned by the US government. After the
+[00:01:23] ban occurred, I put out this tweet,
+[00:01:25] prepositioned
+[00:01:27] the the good folks of x.com, the
+[00:01:29] app, to consider what would
+[00:01:31] happen if all models were banned and we
+[00:01:34] had to go back to writing code by hand.
+[00:01:37] And my take on this and why I tweeted
+[00:01:40] it, I think probably all three of us
+[00:01:42] have mixed feelings on the state of our
+[00:01:45] industry and how our work has changed
+[00:01:47] with using AI models.
+[00:01:49] There's certainly part of me that
+[00:01:52] longs to go back to writing code by
+[00:01:54] hand, but there's another part of me
+[00:01:56] that is having more fun than I've ever
+[00:01:59] had developing and I think the the
+[00:02:01] responses to this tweet also kind of
+[00:02:03] reflected that. Um having gone through a
+[00:02:07] bunch of the replies, they kind of break
+[00:02:09] down into two or three categories.
+[00:02:12] Uh the first being I'd be happy,
+[00:02:15] relieved, excited to return to the way
+[00:02:17] things were uh pre-Opus 4.5. Uh a group
+[00:02:21] saying I'd be disappointed,
+[00:02:23] sad, upset, I'd quit my job, I'd leave
+[00:02:26] tech. Um and then there's this third
+[00:02:28] group which I find incredibly annoying
+[00:02:31] uh which were
+[00:02:33] this group of people were all that were
+[00:02:34] like
+[00:02:35] "Oh, you've only been doing this for 6
+[00:02:38] months."
+[00:02:39] Um so I'm curious like
+[00:02:42] where you guys at on Fable? Where you
+[00:02:44] guys at on like your feelings of how
+[00:02:47] your jobs have changed and uh yeah,
+[00:02:50] we'll start there.
+[00:02:52] >> I want Fable back. I
+[00:02:55] I I want it back. I miss it.
+[00:02:57] Um
+[00:02:59] I don't know. It's it's interesting. I
+[00:03:00] feel like I
+[00:03:04] with with each model release,
+[00:03:06] I feel like I get to
+[00:03:08] the limits of the model over like the
+[00:03:10] course of a month
+[00:03:11] and then I'm like in my mind I can
+[00:03:13] express very clearly like how all of the
+[00:03:15] pieces need to fit together and how it
+[00:03:18] needs to do the work. Um
+[00:03:21] but then
+[00:03:22] like
+[00:03:23] I don't know. At the end of the day,
+[00:03:24] they're just like token predictors. So
+[00:03:27] if they can't predict it in the right
+[00:03:29] way, they don't uh work. But then in
+[00:03:32] terms of like
+[00:03:34] if if I feel like if the models went
+[00:03:35] away tomorrow
+[00:03:38] not much would substantially change
+[00:03:40] still in terms of like um
+[00:03:44] there's a there's a
+[00:03:46] Do you Do you remember the tweet from
+[00:03:46] Greg Brockman that was like, "How did we
+[00:03:48] write all that code before?"
+[00:03:49] >> Yeah.
+[00:03:50] Yeah. >> There there was that one and I feel like
+[00:03:52] like the answer to that was we just didn't
+[00:03:54] have like the ability to brute force
+[00:03:56] things the way that we do now. Uh the
+[00:03:58] reason we were able to like write so
+[00:03:59] much code before was because we had a
+[00:04:02] bunch of like really elegant patterns
+[00:04:04] and thought process put into like the
+[00:04:06] design of our software. I mean, you do
+[00:04:08] still kind of need that, but like it's
+[00:04:11] changing, I would say. Yeah, that's like
+[00:04:13] my initial kind of reads on that.
+[00:04:15] >> What about you, Sunil?
+[00:04:16] Sunil? >> Yeah, I'm actually glad we get to talk
+[00:04:18] talk about this a week after it's done like
+[00:04:22] So, I
+[00:04:23] The first is that it's obviously dialed
+[00:04:25] for different types of tasks, right?
+[00:04:27] Like I tried using it to do like
+[00:04:28] front-end development. Like, "Hey, can
+[00:04:30] change this? Can you change that?"
+[00:04:31] And for like 3 minutes it would start
+[00:04:34] thinking about the entire universe of
+[00:04:36] options I had of it. I'm like, "Bro,
+[00:04:37] just center the [ __ ] div."
+[00:04:39] __ ] div." Um
+[00:04:40] But But then I tried it on like a bigger
+[00:04:42] PR, and it loved just going off and like
+[00:04:45] it obviously catches a bunch of edge
+[00:04:46] cases, and I really enjoyed that.
+[00:04:48] Uh but it's it's
+[00:04:50] I I suspect what's happening is at least
+[00:04:53] until maybe even like 4.7 or 4.6, these
+[00:04:56] trained for developer
+[00:04:59] feedback loops, but this one's clearly
+[00:05:02] like goal-seeking for like something
+[00:05:03] longer. And because
+[00:05:06] especially in the model companies,
+[00:05:07] that's kind of how they develop software
+[00:05:09] now, right? Like they just set up a
+[00:05:11] whole bunch of context, and they just go
+[00:05:12] for it.
+[00:05:13] That being said, I definitely found it
+[00:05:15] going down like some blind alleyways. I
+[00:05:19] think that's just fundamental to the
+[00:05:21] nature of like models, like
+[00:05:23] it's still exploring latent space,
+[00:05:24] right? Like it's still exploring this
+[00:05:26] multi-dimensional space. So, the moment
+[00:05:29] starts getting far away from
+[00:05:31] something, it starts getting like
+[00:05:32] farther farther. So, if you're not like
+[00:05:34] paying attention to the reasoning
+[00:05:35] traces, it's I think like my toes still
+[00:05:37] like suffers from that, which means
+[00:05:40] uh one of two things, I think. One is I
+[00:05:41] think it's still too expensive, but
+[00:05:43] fine, capitalism and uh
+[00:05:45] uh from what I understand uh
+[00:05:48] just institutional funds are going to
+[00:05:49] burn billions of dollars on this. Cool.
+[00:05:52] Thank you from the UK.
+[00:05:54] Um
+[00:05:55] But I think like I'm going to have to
+[00:05:56] change the way I develop like
+[00:05:57] fundamentally not like for a while I was
+[00:05:59] so happy. Yay, I I get to be this cool
+[00:06:02] principal engineer who burns tokens,
+[00:06:03] does big things. But now I'm facing the
+[00:06:06] oh, I actually need to change my
+[00:06:07] workflow and how I even like think about
+[00:06:09] the role of software.
+[00:06:11] Um
+[00:06:12] Still $250 for a day was too much for
+[00:06:14] me. I think I'm just cheap.
+[00:06:16] >> I do miss it. Don't get me wrong. It's
+[00:06:17] It's cool. And you also mentioned that like
+[00:06:19] you're going to have to change your
+[00:06:21] workflow. And like a big part of this is
+[00:06:24] talking about both how realistic these
+[00:06:27] workflows are for the average developer
+[00:06:30] using these tools.
+[00:06:31] And two like how that is tied into
+[00:06:34] costs. So,
+[00:06:35] unlike you guys, I actually have not
+[00:06:36] used Fable. Uh I did not get a chance
+[00:06:39] before it was taken away from us.
+[00:06:41] That being said, I perceive that I
+[00:06:43] wouldn't be the biggest fan of Fable
+[00:06:45] because it's a kind of
+[00:06:48] a very long-running
+[00:06:50] that doesn't have supervision and
+[00:06:52] that's like antithetical to how I work
+[00:06:53] with AI right now.
+[00:06:55] That being said, given the cost of
+[00:06:58] Fable, I think Sunil, you had a really
+[00:06:59] good tweet about this uh
+[00:07:02] either of the weekend or late last week
+[00:07:03] about and I think you might have
+[00:07:04] mentioned this
+[00:07:06] about how you set off Fable on a task
+[00:07:10] and it it did it got the task done over
+[00:07:12] some amount of time, but it the price
+[00:07:15] tag on that was $250. You know, we have
+[00:07:17] tweets coming out of these model labs
+[00:07:19] talking about how they're doing all
+[00:07:21] these autonomous you know, cloud agents
+[00:07:25] uh just having being completely
+[00:07:27] hands-off, having these swarms
+[00:07:30] sub agents or you know, having these
+[00:07:33] autonomous self-written loops.
+[00:07:36] practical do you think these
+[00:07:38] workflows that the
+[00:07:41] the model labs are talking about and
+[00:07:44] kind of
+[00:07:45] having a degree of evangelism
+[00:07:48] with on
+[00:07:49] X or even I think you see this coming
+[00:07:51] through in the features that especially
+[00:07:53] Anthropic is adding to Claude code. Uh
+[00:07:56] they're starting to bake these into the
+[00:07:58] harness themselves. And to me
+[00:08:02] I just don't see and I have not seen
+[00:08:05] quality software produced from these
+[00:08:07] features. And to the the cost of these
+[00:08:12] features and capabilities with models
+[00:08:15] like Fable just seem
+[00:08:17] totally out of reach for most developers
+[00:08:20] and
+[00:08:21] Fortune 500s uh
+[00:08:23] adopting AI.
+[00:08:25] >> Can I pick your brain a little bit? I
+[00:08:26] I just did the math and the amount I spent
+[00:08:29] $250 on that run was my monthly salary
+[00:08:33] when I started in 2006 2005 2006.
+[00:08:37] Holy [ __ ] I mean, let's be clear third
+[00:08:39] be clear third world is already being priced out of uh
+[00:08:41] AI programming and they have to use they
+[00:08:43] have to like fundamentally have to use
+[00:08:45] open models, sovereign models, etc.
+[00:08:48] That's one thing. But you are you
+[00:08:49] actually said the thing which is none of
+[00:08:51] my software has gotten better. Like zero
+[00:08:54] uh
+[00:08:55] things that I've used. And it's fine to
+[00:08:57] say it's it's too late to say that oh
+[00:09:00] it's only the beginning. No, all the
+[00:09:02] companies of the software that I use
+[00:09:04] right now are are all using AI for code
+[00:09:07] stuff and they've had multiple software
+[00:09:09] releases. But no, I don't think I can
+[00:09:11] think of a single company who in the
+[00:09:13] last 6 months has finished 2 years of
+[00:09:15] their road map. Like that that just
+[00:09:18] doesn't make sense to me. And I'm giving
+[00:09:19] like a healthy like oh maybe they've
+[00:09:21] like 3x 4x their speed. No, it it like
+[00:09:24] doesn't show. Me I I got super happy. I
+[00:09:26] got to clear go through my backlog etc.
+[00:09:29] which is why I keep talking about like
+[00:09:30] the role of code. Like it's
+[00:09:32] >> Yeah.
+[00:09:33] Yeah. >> Like it serves a different purpose right
+[00:09:35] right now.
+[00:09:36] Uh I'm like working harder than ever.
+[00:09:38] It's It
+[00:09:40] This thing is too expensive, but no, I
+[00:09:41] don't I don't think the software that
+[00:09:43] comes out of OpenAI or Anthropic is
+[00:09:45] particularly sci-fi, and I'm seeing
+[00:09:47] that I haven't seen before.
+[00:09:49] >> Yep. I I totally agree with you.
+[00:09:51] you. I I when I was
+[00:09:54] coming out of my existential crisis from
+[00:09:56] the holidays trying to grapple with how
+[00:09:59] our roles as software engineers are
+[00:10:00] changing, I definitely got bit by
+[00:10:02] a bit of AI psychosis where, you know,
+[00:10:05] trying to figure out how to do this
+[00:10:06] stuff, installing beads, that malware
+[00:10:09] all over my systems, and just like
+[00:10:11] trying to have swarms of orchestrated
+[00:10:14] and managed agents. And like to the
+[00:10:16] lab's credit, they have like
+[00:10:18] actual tooling built around those
+[00:10:20] workflows now, but I just don't buy
+[00:10:23] that it's producing quality. And I,
+[00:10:26] you know, maybe outside of the exception
+[00:10:28] of Anthropic's like rewrite of bun from
+[00:10:31] zig to rust, like I don't really see a
+[00:10:34] compelling
+[00:10:36] argument, at least for the day-to-day
+[00:10:38] product feature development that
+[00:10:41] I think the three of us are doing.
+[00:10:43] >> I have a friend who's working at
+[00:10:45] at Anthropic now, uh, who I get to send now
+[00:10:47] that I'm using the Claude desktop app, I
+[00:10:49] get to send all my feedback to.
+[00:10:51] And I'll like hit bugs using the Claude
+[00:10:53] desktop app, but they've got their like
+[00:10:56] reproduction setup going, and they've
+[00:10:58] got, um,
+[00:10:59] basically just the ability to like
+[00:11:01] fix anything that I like fix the things
+[00:11:03] that I'm able to report to them. I'd say
+[00:11:05] like decently impressed of that
+[00:11:07] iteration loop. There is like the
+[00:11:09] pushback there of like, well, there
+[00:11:11] shouldn't be bug like bugs to begin
+[00:11:12] with. Um, but then it's like, well,
+[00:11:15] we've always kind of written software
+[00:11:16] with bugs, and so
+[00:11:18] the more we're able to like close that
+[00:11:20] feedback loop of users reporting bugs to
+[00:11:24] improving the software, I think it's
+[00:11:25] interesting.
+[00:11:25] >> Do you suspect it's because it's not
+[00:11:27] not just compressing bugs being fixed, but
+[00:11:29] also bugs being created? Like if you
+[00:11:31] shorten a timeline, you just end up with
+[00:11:33] the same average of like
+[00:11:35] buggy software coming out. That's not a
+[00:11:37] bad outcome. I'm just saying it's that
+[00:11:39] why it is the way it is.
+[00:11:41] >> I'd I'd be interested to see to your
+[00:11:43] your like original point, Dylan, of like
+[00:11:45] going back to writing software the old
+[00:11:47] way.
+[00:11:48] Like that domain rewrite that domain
+[00:11:50] rewrite we did, I feel like
+[00:11:53] So, with the context back when Dylan and
+[00:11:54] I worked at Pexel, we spent two, three
+[00:11:57] months rewriting the systems to be in
+[00:11:59] effect. I I feel I feel like that
+[00:12:01] timeline maybe would have been able to
+[00:12:02] be shortened to about a month and a
+[00:12:05] half, I would say,
+[00:12:06] with the current tools. Would you say
+[00:12:08] that's like maybe a fair assessment?
+[00:12:10] >> I think there's parts of that project
+[00:12:11] project that certainly would have been
+[00:12:13] expedited, but I still don't think
+[00:12:17] we would have came out the other side
+[00:12:19] with the quality that we had. And
+[00:12:22] there's certainly parts of it like
+[00:12:25] the the streaming API for search results
+[00:12:28] and all of the caching we did in there.
+[00:12:30] Like I there's no world where
+[00:12:34] I I at least could get a model to
+[00:12:36] produce the same quality
+[00:12:39] and
+[00:12:40] uh design
+[00:12:41] that came out of that.
+[00:12:43] >> Yeah, Hashimoto actually Hashimoto just
+[00:12:45] just tweeted about this. Did you see? He just
+[00:12:47] let the LLM loose and said find perf
+[00:12:49] improvements and it found I think like
+[00:12:51] 20, 30x or something. And he's like,
+[00:12:54] "Well, this sounds like a success story
+[00:12:55] except I had to tear it all down because
+[00:12:57] I knew there were 1,000x improvements,
+[00:12:59] the LLM just couldn't find it." And
+[00:13:01] with the current setup that it made, it
+[00:13:02] would have been impossible for me to do
+[00:13:04] it. I had to like burn it down.
+[00:13:07] Do you think it's still like finding
+[00:13:08] local minima for the things that it
+[00:13:10] thinks are good?
+[00:13:11] >> I know they they miss something they
+[00:13:13] they miss some ability to
+[00:13:16] reason about problems the way that
+[00:13:17] humans can in that like whenever I
+[00:13:20] approach problem-solving versus like
+[00:13:22] them do it, it's two completely
+[00:13:24] different chains of thoughts. I know
+[00:13:26] they they like don't understand problems
+[00:13:28] holistically and they don't understand
+[00:13:30] there's some good things that I saw and
+[00:13:32] so
+[00:13:33] so far it's been like
+[00:13:35] >> Have you read Where Good Ideas Come From
+[00:13:36] From by Steven Johnson?
+[00:13:38] >> I have not.
+[00:13:38] not. >> So very dry book, but it's really really
+[00:13:40] really good. I recommend it. He says that there
+[00:13:42] are basically six ways that ideas
+[00:13:43] happen.
+[00:13:44] Uh there are these things called fluid
+[00:13:46] networks, the adjacent possible, etc.
+[00:13:48] etc. I wrote a blog post about this and
+[00:13:50] I don't mean to be pitching my blog
+[00:13:52] here, but I did write a blog post about
+[00:13:53] it.
+[00:13:54] And like that's where my theory about
+[00:13:56] the latent space comes through. Like
+[00:13:57] when humans are thinking about ideas,
+[00:13:59] uh they'll be like, "Okay, I want to
+[00:14:01] think of like two different things and
+[00:14:02] match them." In fact, one of the things
+[00:14:04] that he talks about is the reason that
+[00:14:06] there are good ideas in cities is
+[00:14:08] because there are different kind of
+[00:14:09] people who go and sit next to each other
+[00:14:10] in a restaurant or they go out to like
+[00:14:13] meet each other and that's where the
+[00:14:14] good ideas come from. And so when you're
+[00:14:16] exploring latent space, you simply
+[00:14:18] cannot form like that connection.
+[00:14:20] Uh which is where the good idea come
+[00:14:22] from. Like do you think Fable would have
+[00:14:23] come up with
+[00:14:25] uh
+[00:14:26] the design of the architecture and I
+[00:14:27] know domains was particularly special
+[00:14:29] inside Vercel because it was a very
+[00:14:31] unique architecture. Do you think it
+[00:14:32] would have figured out even close to it
+[00:14:34] or come up with ideas for it?
+[00:14:36] Probably not, right?
+[00:14:38] >> I don't think it would have come
+[00:14:39] come anywhere close
+[00:14:41] on its own to
+[00:14:43] building something given the constraints
+[00:14:44] we had that worked. I think it would
+[00:14:47] have
+[00:14:49] let us prototype our ideas faster
+[00:14:52] um and probably do like there was a lot
+[00:14:55] of benchmarking we did in measuring
+[00:14:57] memory usage and CPU usage.
+[00:15:00] Um I think it would have made
+[00:15:03] that part of the loop much better, but
+[00:15:05] like the the actual implementation
+[00:15:07] design, I just don't see it. Like the
+[00:15:09] way I work with AI today is like I
+[00:15:13] very hand-holdy. It's
+[00:15:15] it
+[00:15:17] and directing architecture and talking
+[00:15:19] about types. I still do a lot of
+[00:15:21] type-driven development starting there
+[00:15:23] working my way down.
+[00:15:24] And
+[00:15:26] the models are getting better at taking
+[00:15:29] the output of those conversations and
+[00:15:31] getting into code that I don't have to
+[00:15:34] like nitpick and refactor as much, but
+[00:15:37] they're still, at least in my
+[00:15:39] experience, really far away from like
+[00:15:41] nailing the
+[00:15:43] like the architecture and abstractions
+[00:15:46] of
+[00:15:47] uh codebases that work. I do I do want
+[00:15:50] to go back a little bit and talk about
+[00:15:52] like cost and like
+[00:15:54] is this
+[00:15:56] realistic for
+[00:15:58] the median developer even?
+[00:16:01] And
+[00:16:02] I Reese, you were saying that you your
+[00:16:05] connection at Anthropic is turning
+[00:16:07] around these bug fixes as you report
+[00:16:09] them, but again, that's somebody that
+[00:16:11] has infinite tokens inside one of the
+[00:16:13] labs.
+[00:16:15] Do you think
+[00:16:18] given the cost of these things,
+[00:16:21] you see
+[00:16:24] Y Combinator startups or Cloudflares or
+[00:16:28] your insurance companies on the Fortune
+[00:16:30] 500 doing workflows like this in 6
+[00:16:32] months? And um
+[00:16:34] do you think the cost is just
+[00:16:37] too prohibitive at the moment?
+[00:16:39] >> a little bit of a capitalist on it where
+[00:16:41] where I'm like, if there's like if I spend
+[00:16:43] $200 in tokens and I get $400 of output,
+[00:16:46] that's that's still like kind of a net
+[00:16:48] positive. Other thing that I think's
+[00:16:49] interesting on cost is um
+[00:16:52] Did you see the skills chat CN put out
+[00:16:54] online? It was like a slash improve
+[00:16:57] skill or something like that.
+[00:16:58] >> Yeah, yeah, I read through that.
+[00:17:00] that. >> I like initially dismissed it cuz I was
+[00:17:01] was like, I don't know why like I I don't
+[00:17:04] really need skills, but then I was like,
+[00:17:05] oh, this is for distilling fable output
+[00:17:08] to be able to set piece and off to other
+[00:17:10] model like
+[00:17:11] like get the good reasoning tokens from
+[00:17:13] fable and then send that off to other
+[00:17:15] models to implement. My my like rough
+[00:17:16] thoughts top cost is I'm like wondering
+[00:17:19] if if if it's if it's maybe not like a
+[00:17:21] new thing in that if you think about
+[00:17:22] like startups versus incumbent
+[00:17:24] companies, like incumbent companies have
+[00:17:27] always had
+[00:17:28] more resources to like give to
+[00:17:31] engineers, like more like higher
+[00:17:33] salaries they can pay their employees. I
+[00:17:35] don't know that cost is the difference
+[00:17:37] maker when it comes to implementation.
+[00:17:40] >> Okay, let me ask you this, okay, as a YC
+[00:17:42] YC company.
+[00:17:42] >> I will happily take pushback on that.
+[00:17:44] that. >> So you you are a YC company, okay, and
+[00:17:48] and you extrapolate all these desires by
+[00:17:50] these model companies what it's going to
+[00:17:51] do. What that implies is that
+[00:17:54] there is a YC company or an entire batch
+[00:17:56] of YC companies that are going to show
+[00:17:58] up with ideas, extremely detailed plans
+[00:18:01] that they feed into a code generating,
+[00:18:03] business generating machine. The only
+[00:18:05] role that the people play is finding
+[00:18:07] customers and finding bugs and desires
+[00:18:09] and features and feeding it back into
+[00:18:11] it. Would you be willing to have 1, 10,
+[00:18:14] 100 Mythos runs going on concurrently
+[00:18:17] all the time? That's the role of the
+[00:18:18] business now, right? That's the thing it
+[00:18:20] does. Uh and are you willing to bet that
+[00:18:23] the revenue that you can generate, that
+[00:18:25] every single company in every single
+[00:18:28] company in the batch that YC has, that
+[00:18:30] it generates would be
+[00:18:33] so successful that it would like make up
+[00:18:35] for the thousands of dollars you're
+[00:18:36] burning in a single day?
+[00:18:38] >> Yeah, I guess I'm not thinking that you
+[00:18:39] you would have like hundreds of Mythos runs
+[00:18:42] going. Like you'd use the right models
+[00:18:44] for the tasks. And so like there's
+[00:18:45] definitely scenarios where you like need
+[00:18:47] that class of model. I I feel like the
+[00:18:49] explorations around model combinations
+[00:18:52] has been really underexplored. And so
+[00:18:54] there's a lot more to be done there.
+[00:18:55] >> I agree with that, but I think the other
+[00:19:00] other problem with that is something that came
+[00:19:02] out with Fable in that it will downgrade
+[00:19:06] in this case for security purposes
+[00:19:08] >> Oh, yeah, no, let's talk about that.
+[00:19:10] that. Yeah, yeah, yeah, 100%. Okay, keep the
+[00:19:11] cost everything aside.
+[00:19:12] >> So like
+[00:19:13] >> [snorts] >> I've never heard of an adversarial tool.
+[00:19:15] tool. >> My my problem with this real quick is
+[00:19:18] is actually not the routing to other models
+[00:19:21] because I actually do think that
+[00:19:23] is probably
+[00:19:25] something that will be important going
+[00:19:27] forward. And there was a tweet uh some
+[00:19:29] product just put out like a dynamic
+[00:19:31] router or something. Uh I saw a tweet
+[00:19:32] about that got some attention. But my
+[00:19:34] problem here is
+[00:19:36] and I could be completely wrong on this,
+[00:19:38] but my understanding is when Fable falls
+[00:19:41] back to Opus 48, that has to bust the
+[00:19:44] cache, which means you're getting
+[00:19:47] basically double charged on the
+[00:19:49] inference on whatever that entire batch
+[00:19:53] of context is. Like that seems crazy to
+[00:19:56] me given the cost of these models.
+[00:19:58] >> It's not It's not just the caching
+[00:19:59] caching stuff. It's also
+[00:20:01] like if you're saying I've decided that
+[00:20:04] a thing that I'm working on requires My
+[00:20:06] Tho's. And My Tho's decides, oh no, you
+[00:20:09] need like 4 date, and I'm just going to
+[00:20:11] make it stupider results for you. By the
+[00:20:13] way, I won't know unless I'm looking at
+[00:20:14] the screen, right? It's not like I get a
+[00:20:16] notification on my phone or like an
+[00:20:18] alert or something. It just does it.
+[00:20:21] So
+[00:20:22] uh yeah, that's not how I want my tools
+[00:20:24] to behave, dog. Like sorry.
+[00:20:27] Like no.
+[00:20:27] >> Yeah, I agree.
+[00:20:29] agree. >> Just every I mean, there's also the
+[00:20:30] the thing where if it detected you were
+[00:20:32] trying to talk about biology and stuff,
+[00:20:34] it decides to like sabotage you, which
+[00:20:37] is so dangerous.
+[00:20:38] And uh I'm
+[00:20:40] I'm completely against this. Uh it was
+[00:20:43] stupid It was stupid as hell. I think
+[00:20:44] they're starting to walk that stuff
+[00:20:45] back. At least call it a subagent. Like
+[00:20:48] call it a subagent. Cursor does that. It
+[00:20:50] takes a stupider model and it makes you
+[00:20:52] a subagent.
+[00:20:53] But uh not in the main thread.
+[00:20:55] >> I I think what's tough is figuring out
+[00:20:58] out how you roll out models like My Tho's.
+[00:21:00] Like I do think you can at that word
+[00:21:02] that it's probably for the best that
+[00:21:04] there are cybersecurity restrictions on
+[00:21:06] it. Like I don't know that everyone in
+[00:21:07] the world having access to Mythos models
+[00:21:09] unrestricted
+[00:21:11] would be would end well.
+[00:21:12] >> Wait, do you think we should cap out
+[00:21:13] out here? Like 2026 June indulgence levels
+[00:21:16] reached. That's the access to
+[00:21:18] intelligence for everyone on the planet.
+[00:21:20] >> Yeah, and so now now we just get
+[00:21:22] get whatever Dario says. Like
+[00:21:25] you peons only get Opus 4A.
+[00:21:29] >> It's not so much that. It's more like if
+[00:21:31] if you're going to do
+[00:21:34] um
+[00:21:35] like cybersecurity work, having like a
+[00:21:37] verification process, I don't know is
+[00:21:39] like
+[00:21:39] >> Do you think it's for the labs to decide
+[00:21:42] decide or do you think it's for
+[00:21:45] governments to decide and not
+[00:21:46] necessarily just the US government?
+[00:21:48] >> You're definitely going to do one of
+[00:21:50] of these constitutional amendments, the
+[00:21:51] right to bear intelligence or something
+[00:21:53] like that, right?
+[00:21:55] I I I bet. Regulated YC-funded mafia now
+[00:21:59] or something like that. Yeah.
+[00:22:01] >> We we like have precedent for this
+[00:22:03] this already on like there's like certain
+[00:22:05] intelligence you can only access once
+[00:22:08] you've like verified to access that in
+[00:22:10] that information. Like all rocket like
+[00:22:13] isn't it
+[00:22:14] like rocket development in the United
+[00:22:16] States?
+[00:22:17] >> Wait, that's information versus
+[00:22:19] versus intelligence. We're talking about
+[00:22:20] information or intelligence.
+[00:22:21] >> Is that the same thing? At least from
+[00:22:23] from like the model's perspective, they're
+[00:22:24] the same thing.
+[00:22:25] >> Yeah.
+[00:22:26] Yeah. >> Or like I'm talking about the set of
+[00:22:28] of information you're trying to access.
+[00:22:30] You're like trying to access information
+[00:22:31] around cybersecurity.
+[00:22:33] >> It sounds a lot like the same arguments
+[00:22:35] arguments that the government made about
+[00:22:36] encryption in like the late '90s. Like
+[00:22:39] >> Do you know PG What is it? P What is it?
+[00:22:42] it? P3P? Pretty good privacy? Yeah, the one
+[00:22:45] that they exported the like source code
+[00:22:48] of in a book.
+[00:22:48] >> Yeah, yeah. I I read something about
+[00:22:50] about this this past weekend.
+[00:22:51] >> Yeah, there was a book called Pretty
+[00:22:53] Pretty Good Privacy and they
+[00:22:55] um
+[00:22:56] they did a bunch of regulations on
+[00:22:58] encryption. They like government I what
+[00:23:00] what they classified it as I think it
+[00:23:02] was thing with LMs where they classified
+[00:23:04] it as like national national security
+[00:23:07] encryption and they put export
+[00:23:09] restrictions on it and people got around
+[00:23:10] that through exploiting pretty good
+[00:23:13] privacy as a book instead because books
+[00:23:15] are freedom of speech. And so the whole
+[00:23:18] source code of it was classified as
+[00:23:19] freedom of speech written into a book.
+[00:23:21] Put this through ChatGPT cuz I was
+[00:23:22] curious if you wanted to do the same
+[00:23:24] thing for like those last models.
+[00:23:27] >> You need like a billion pages to get the
+[00:23:29] the weights in.
+[00:23:30] >> Okay, but that's just like a single
+[00:23:31] single flash drive, right? Like
+[00:23:33] >> Well, flash drives aren't freedom of
+[00:23:34] of speech. Aren't protected under
+[00:23:37] >> This I feel like this whole thing is my
+[00:23:38] my argument for why like open weight models
+[00:23:40] need to win.
+[00:23:41] And like maybe that's like un-American
+[00:23:43] me wanting the
+[00:23:45] the Chinese labs to start catching up a
+[00:23:47] little bit more, which I think they
+[00:23:48] will.
+[00:23:49] Or Nvidia's putting out a bunch of good
+[00:23:51] open weight models, but I don't want one
+[00:23:54] or two
+[00:23:56] companies telling me what I
+[00:23:58] can or can't do or how to develop or do
+[00:24:00] my work.
+[00:24:02] >> I I think that's inevitable, by the way.
+[00:24:03] way. Not Not only will models get better, not
+[00:24:06] not only will hardware get better, but
+[00:24:08] people will dis- figure out how to do
+[00:24:10] distributed compute to run these
+[00:24:12] machines. People will figure out how to
+[00:24:14] chain these models separately to get
+[00:24:15] different types of intelligence. By the
+[00:24:17] way, that's another thing I've been
+[00:24:18] thinking about, which is I don't like
+[00:24:20] it. I You wouldn't hire like one type of
+[00:24:22] programmer
+[00:24:24] as your entire like workforce, like 30
+[00:24:26] of the same. I mean, that That's what
+[00:24:28] IBM used to do back in the day and they
+[00:24:30] they'd call it culture fit. Uh I suspect
+[00:24:32] intelligence comes in like different
+[00:24:34] training forms. And we will be looking
+[00:24:37] back at this conversation like we were
+[00:24:39] talking about a [ __ ] ThinkPad from
+[00:24:41] ] ThinkPad from the early 2000s or something. I think
+[00:24:43] it's inevitable at this point. Uh this
+[00:24:45] is just a uh
+[00:24:47] flash in the moment
+[00:24:49] event that we'll remember that the week
+[00:24:52] before they had a UFC fight at the White
+[00:24:55] House the intelligence model.
+[00:24:58] >> It is
+[00:24:58] is sounds like fun fiction at this point.
+[00:25:00] They were riding dirt bikes off ramps, I
+[00:25:02] think. I think I saw a couple of photos.
+[00:25:05] So, it will look very quaint in the
+[00:25:07] future, I think.
+[00:25:08] >> I think the other thing is maybe like a
+[00:25:10] a lead time on intelligence in that like
+[00:25:12] like I saw a a lot of people reacting on
+[00:25:14] Anthropic where they were like Anthropic
+[00:25:16] doesn't want anyone to use this for
+[00:25:18] biology ever or Anthropic doesn't want
+[00:25:20] us to use anyone to use this for
+[00:25:22] cybersecurity ever. I I possibly have
+[00:25:24] given them too much grace, but I'm sort
+[00:25:26] of thinking like I'm I'm curious to see
+[00:25:28] over the next 6 to 12 months is is it
+[00:25:31] that they are like we're going to work
+[00:25:33] on expanding access to intelligence and
+[00:25:36] this information, but we're going to try
+[00:25:37] and do it in like a responsible way or
+[00:25:39] is it going to be the opposite where
+[00:25:41] it's like this is incredibly locked
+[00:25:43] down, it's not accessible to people.
+[00:25:44] >> Let's say OpenAI releases
+[00:25:47] releases uh GPT-56 or six in the next week or two
+[00:25:51] whenever.
+[00:25:53] And they don't say a single word about
+[00:25:56] it being a threat to biology, to
+[00:26:00] people's jobs, to national security.
+[00:26:04] Do you think this topic ever comes up
+[00:26:06] again and like does does it just make it
+[00:26:09] not matter then?
+[00:26:10] >> I think there's an alternate world where
+[00:26:12] where xAI got a Methuselah's model first and
+[00:26:17] we see a bunch of cybersecur- I I like I
+[00:26:21] think there's an alternate timeline
+[00:26:22] we're in where xAI releases a maximally
+[00:26:25] based cyber- like maximally based
+[00:26:29] uh
+[00:26:30] model and there's no no restrictions on
+[00:26:33] it and we're like seeing we would be
+[00:26:37] like seeing some of the like biggest
+[00:26:38] data breaches we've ever seen.
+[00:26:40] >> Croc maxing.
+[00:26:41] maxing. >> What what is the US defense budget? Some
+[00:26:44] Some trillion? I don't know. Some absurd
+[00:26:46] >> Yeah. Uh I assume and I think Anthropic
+[00:26:49] Anthropic was doing about 80 billion in revenue
+[00:26:51] this year so far or something.
+[00:26:54] Let's say they do 200 for the year.
+[00:26:56] Uh is the US government willing to uh
+[00:26:59] sole customer rights for a maximally
+[00:27:03] based model that Grok creates?
+[00:27:05] I suspect so, right? Like Elon would be
+[00:27:07] like, "Yep, you're the only customer I'm
+[00:27:09] doing." It'll be like trained on
+[00:27:12] uh optimally uh
+[00:27:14] defending the planet as it were and
+[00:27:16] bringing freedom to uh all parts of the
+[00:27:20] uh all parts of Earth.
+[00:27:21] >> All hail Grok.
+[00:27:23] Grok. >> Yeah, all hail Grok.
+[00:27:25] Grok. >> All right. We'll come back to Fable in 2
+[00:27:27] 2 weeks' time. See how things have
+[00:27:29] progressed. See if Reese is still uh
+[00:27:34] in his anthropic psychosis. Um
+[00:27:38] and also see if GPT or OpenAI has a kind
+[00:27:42] of had their own answer to this.
+[00:27:45] >> I have to tell you, like I am tempted uh
+[00:27:48] uh by letting the agent do a bunch of
+[00:27:50] things while I sit back. But in
+[00:27:53] practice, I don't see that happening a
+[00:27:54] lot.
+[00:27:55] Which uh takes me to our next section,
+[00:27:58] by the way.
+[00:27:59] Uh receipts.
+[00:28:01] Uh the reason that we have a receipt
+[00:28:02] section is one of the things that
+[00:28:04] happens in the industry. I won't say
+[00:28:06] especially Twitter, but probably
+[00:28:07] especially Twitter. Uh is people love
+[00:28:10] making predictions. Oh, things are going
+[00:28:11] to change. And they start getting really
+[00:28:13] specific about it. And I think the
+[00:28:15] reason they do that is because they know
+[00:28:17] no one's checking in on them in a few
+[00:28:18] months, 2 months, 3 months, 6 months.
+[00:28:20] So, that's what we're going to do. Okay,
+[00:28:22] we are actually going to
+[00:28:23] uh we're
+[00:28:25] we have the tweets.
+[00:28:26] >> Hold people accountable.
+[00:28:28] accountable. >> Hold people accountable. If you're going
+[00:28:29] going to use your reputation and your 60,000
+[00:28:34] followers uh to
+[00:28:36] just swamp my timeline and get a bunch
+[00:28:38] of hot takes, then we're going to check
+[00:28:39] in on those predictions in a while. I
+[00:28:42] was the first uh the
+[00:28:43] for this episode, we'll take some of the
+[00:28:45] bigger popular ones, okay? Like
+[00:28:47] someone's that like everyone knows
+[00:28:49] about. So, Geoffrey Hinton, "People
+[00:28:51] should stop training radiologists now."
+[00:28:54] Uh this dude's considered the godfather
+[00:28:56] of AI, and
+[00:28:57] I feel like naming some someone
+[00:28:59] something like that means they're never
+[00:29:01] going to work on anything meaningful for
+[00:29:03] the rest of their life. It's like giving
+[00:29:04] a lifetime achievement award.
+[00:29:06] Uh but he won like the Nobel Prize in
+[00:29:08] like 2016 uh for some ML something or
+[00:29:12] the other. And his claim was, uh "People
+[00:29:15] should stop training radiologists now.
+[00:29:17] It's just completely obvious that within
+[00:29:19] 5 years deep learning is going to do
+[00:29:21] better than radiologists. It might be 10
+[00:29:23] years."
+[00:29:24] >> People should stop training radiologists
+[00:29:26] radiologists now. It's just completely obvious within
+[00:29:28] 5 years
+[00:29:29] um deep learning is going to do better
+[00:29:31] than radiologists cuz it's going to be
+[00:29:32] able to get a lot more experience.
+[00:29:34] >> I don't really think that's come to
+[00:29:35] to pass. Are there any kinds of doctors
+[00:29:38] that have become obsolete in the last
+[00:29:40] uh 6 months to a year? What are What are
+[00:29:43] you seeing?
+[00:29:45] I I don't know what you're talking
+[00:29:46] >> I don't think so. And I think actually
+[00:29:48] actually the the CEO of Nvidia was on a podcast
+[00:29:51] recently.
+[00:29:52] And Jensen was talking about how, I
+[00:29:54] don't know, a decade ago, 15 years ago,
+[00:29:57] there was a bunch of murmur and talk in
+[00:30:00] the industry about how, you know,
+[00:30:03] whether it was just software engineering
+[00:30:05] in general and automation or ML was
+[00:30:07] going to replace radiologists.
+[00:30:10] And all of that discourse
+[00:30:14] actually had a negative impact, at least
+[00:30:17] in the United States, in that
+[00:30:20] people stopped pursuing
+[00:30:22] specialization or medical degrees in
+[00:30:24] radiology, and we now currently have a
+[00:30:27] shortage of radiologists in the United
+[00:30:29] States.
+[00:30:30] And I think that actually draws like a
+[00:30:32] really
+[00:30:33] uh sharp parallel to what
+[00:30:36] especially like leadership in the AI
+[00:30:38] labs are saying now, like software
+[00:30:40] engineers are going to be replaced, you
+[00:30:42] know, don't go to school for CS degrees.
+[00:30:45] Basically, things kind of
+[00:30:47] the discourse we all see happening on X.
+[00:30:49] And
+[00:30:52] it's almost
+[00:30:54] I fear doing the same thing for young
+[00:30:56] software engineers or kids in high
+[00:30:58] school trying to think about what they
+[00:30:59] want to do, like discouraging people
+[00:31:01] from going into tech.
+[00:31:02] I don't see
+[00:31:04] I don't know. I was also I'm so bad at
+[00:31:06] this predict prediction uh stuff cuz if
+[00:31:09] you would've told me
+[00:31:10] uh where where where at today a year
+[00:31:12] ago, I would've said [ __ ]
+[00:31:14] [ __ ] Uh but I also at this point, even like
+[00:31:17] looking at models like Mythos and Fable
+[00:31:19] and GPT-5.5, like I don't see
+[00:31:27] the human the technical operator of these things
+[00:31:28] going away. And at this point, I see
+[00:31:31] just like an even bigger need. I We'll
+[00:31:33] We'll talk about it in a future episode,
+[00:31:35] but what it looks like to break into the
+[00:31:38] industry and how do we level up junior
+[00:31:40] devs.
+[00:31:41] Um but I I don't I don't see
+[00:31:45] good technical operators and PMs uh
+[00:31:49] getting replaced by technology. And
+[00:31:52] especially like right now, I don't see
+[00:31:54] uh many doctors to this exact claims
+[00:31:56] point um disappearing either.
+[00:31:58] >> So, I said something on Twitter
+[00:32:01] Twitter about how I think the reason that I'm so
+[00:32:03] tired is actually because uh it's true
+[00:32:06] that these agents uh do a great job of
+[00:32:08] all the menial work and automating a
+[00:32:10] bunch of things. But it means that I
+[00:32:12] have to be like perpetually locked in
+[00:32:14] because I'm only dealing with the hard
+[00:32:16] problems.
+[00:32:17] And someone replied to that and said the
+[00:32:18] same thing is happening with doctors.
+[00:32:20] That uh because a lot of uh people who
+[00:32:23] have a slight flu or uh they get a
+[00:32:25] little rash, they go to ChatGPT for
+[00:32:27] that. It means that the only patients
+[00:32:29] they're seeing are getting uh are the
+[00:32:30] serious ailments. They can't really
+[00:32:32] Google or or get on ChatGPT.
+[00:32:35] Uh which means A, like it's getting
+[00:32:37] harder to get juniors into the industry.
+[00:32:40] Uh, but it's just putting a lot of
+[00:32:41] burden on the people who are already
+[00:32:42] here. I can I absolutely feel that.
+[00:32:44] >> Yeah, the juniors I'm letting the
+[00:32:46] the industry, I think must be super tough
+[00:32:48] because
+[00:32:49] like I didn't go to like a well-known
+[00:32:52] or anything, but like the way
+[00:32:53] that I was able to stand out on like
+[00:32:56] uh, applications is I had a bunch of
+[00:32:58] projects that I did. Like I had either
+[00:33:00] like hackathon projects or like I was
+[00:33:02] supposed to do in game development, so
+[00:33:03] like game jams, just similar thing. Like
+[00:33:05] those projects helped me stand out some.
+[00:33:07] All of those projects could be done 80
+[00:33:10] 90% of the way with AI now, and that
+[00:33:13] last 10% is like very difficult, but
+[00:33:15] it's also not what people see
+[00:33:17] when they're immediately looking at an
+[00:33:18] application.
+[00:33:19] >> So it goes back to another thing we were
+[00:33:21] were talking about, which is I think people
+[00:33:22] are just putting out 90% apps now all
+[00:33:24] day long anyway. I think that's why
+[00:33:26] software isn't getting really good.
+[00:33:27] >> Oh, yeah.
+[00:33:28] yeah. >> Because if you're given the option to do
+[00:33:29] do the last 10% versus let me do the 90% of
+[00:33:32] something else.
+[00:33:33] >> Yeah, I mean, I feel that even
+[00:33:35] even I think I'm starting to pull back a
+[00:33:37] little bit. Uh, but like the beginning
+[00:33:40] of the year when this was all kind of
+[00:33:41] fresh and new, like I was just cranking
+[00:33:43] out ideas and code bases and tools left
+[00:33:46] and right, and so many of those are now
+[00:33:48] just abandoned graveyards on GitHub, and
+[00:33:52] like
+[00:33:53] not useful to anybody.
+[00:33:55] >> I think probably one of the most common
+[00:33:56] common pieces of like startup advice that I see
+[00:33:59] is like just get your ideas and concepts
+[00:34:02] out into the world. And like even if
+[00:34:05] it's early, even if it's buggy, like get
+[00:34:08] something out that people can
+[00:34:09] immediately start using. And like if it
+[00:34:12] solves a problem for them, great. If
+[00:34:14] not, like
+[00:34:15] um,
+[00:34:16] figure out what the like basically you
+[00:34:19] don't know what people end up wanting,
+[00:34:22] and
+[00:34:23] you have to iterate and figure out what
+[00:34:25] that is. And it's like weird advice in
+[00:34:28] an AI world now, where that's like even
+[00:34:30] easier That's easier to do than ever.
+[00:34:32] But now so many people are doing it that
+[00:34:35] >> Yeah, I was going to say like I feel
+[00:34:37] feel like it's like a constant stream of
+[00:34:39] Twitter being like announcing or I just
+[00:34:41] built this or this is what I'm working
+[00:34:42] on and like I just like by default now
+[00:34:46] ignore that. Like it just I don't pay
+[00:34:49] attention to what
+[00:34:51] other than a very small handful of
+[00:34:53] people people are doing.
+[00:34:54] >> Other than these startups that sell
+[00:34:56] sell sleeping drugs. Like that's That's what
+[00:34:58] I want If you're selling what people are
+[00:35:00] doing
+[00:35:00] >> could probably hit up Brian Johnson.
+[00:35:02] Johnson. >> Yeah, just straight up. Like
+[00:35:04] Like >> Brian Johnson's your guy, dude.
+[00:35:06] dude. >> I mean I think maybe what's interesting
+[00:35:07] interesting on it is like Dylan, you deployed the I
+[00:35:09] sent you that half-baked executor on
+[00:35:13] Cloudflare. Uh
+[00:35:14] demo that is possibly still running on
+[00:35:16] your account.
+[00:35:17] >> It's yeah, just broken as all hell.
+[00:35:19] hell. >> Oh, okay. I know. The new version's
+[00:35:21] version's good.
+[00:35:22] >> [laughter]
+[00:35:22] [laughter] [gasps]
+[00:35:23] >> But there was there like there's been
+[00:35:24] been enough
+[00:35:26] uh
+[00:35:26] I think it's maybe okay to put out the
+[00:35:28] 90% software if you
+[00:35:31] Like I don't I don't think that you
+[00:35:32] should represent the 90% software as
+[00:35:34] like fully finished. I think like owning
+[00:35:37] it is like hey, these are like
+[00:35:39] experiments that I've done. Um this is
+[00:35:42] the problem that I'm trying to solve.
+[00:35:44] And then the other thing is if there is
+[00:35:47] that group of people that um
+[00:35:51] get enamored by it or like see the
+[00:35:52] vision, then you like keep iterating on
+[00:35:55] it to make it good. But I think I I do
+[00:35:57] feel like the only way that you can make
+[00:35:59] software and products good is like by
+[00:36:01] getting it into the hands of people to
+[00:36:03] use.
+[00:36:03] >> So, I think for this claim we're
+[00:36:05] we're probably all in agreement that
+[00:36:07] people should stop training as
+[00:36:08] radiologists is
+[00:36:10] a bad claim and BS and I think that can
+[00:36:13] be equally applied to uh software and
+[00:36:17] product engineering at this point.
+[00:36:19] The next The next claim that I want to
+[00:36:21] talk about here is
+[00:36:23] uh we'll group two together.
+[00:36:25] The first being Dario
+[00:36:28] who on March 10th of last year made the
+[00:36:30] claim AI will write 90% of code in 3 to
+[00:36:33] 6 months and essentially all of the code
+[00:36:36] in 12 months.
+[00:36:37] >> I think I don't know. We might be 6 to
+[00:36:40] to 12 months away from when the model is
+[00:36:43] doing most maybe all of what squeeze do
+[00:36:46] end to end.
+[00:36:47] >> And then on top of that Sundar of Google
+[00:36:51] Google said more than a quarter of new code at
+[00:36:52] Google is generated by AI and he said
+[00:36:55] that in 2024, October 2024 and then
+[00:36:58] followed up on that this year saying 75%
+[00:37:01] of all new code at Google is now AI
+[00:37:02] generated.
+[00:37:04] And
+[00:37:06] I'll take the the first stab at this. I
+[00:37:08] think both of these claims, I think both
+[00:37:11] leaders and CEOs have the receipts to
+[00:37:14] back this up. In fact, I remember
+[00:37:16] tweeting there's I probably have old
+[00:37:17] tweets about Dario saying this that
+[00:37:20] there's just no world where AI would be
+[00:37:23] writing 90% of code let alone all of
+[00:37:26] code and at that point last summer in
+[00:37:28] March of last year, I was writing 95%
+[00:37:31] plus of my code.
+[00:37:32] And
+[00:37:33] as of January of this year, AI's
+[00:37:36] basically writing all but 100% of my
+[00:37:39] code.
+[00:37:40] I'm curious where you guys fall at on
+[00:37:43] this.
+[00:37:44] >> I don't like the phrase of like AI is
+[00:37:47] is writing the code. The only time that I
+[00:37:49] will handwrite something now is if it's
+[00:37:51] like critically important and even then
+[00:37:54] I'm like hand writing the types in the
+[00:37:55] SDKs. Surface, I'm not handwriting the
+[00:37:58] implementation. And so like AI is like
+[00:38:00] writing that code but the like again
+[00:38:04] going back to like the last 10% like
+[00:38:06] when people when people say oh AI is
+[00:38:08] writing the code, it makes it sound too
+[00:38:10] autonomous. It's like it's giving too
+[00:38:11] much credit to Claude, I feel like.
+[00:38:13] >> Yeah. Yeah, I agree.
+[00:38:15] agree. It's like lacking nuance.
+[00:38:17] Right? Like the nuance is like
+[00:38:19] we're still driving and steering at
+[00:38:21] least most of us.
+[00:38:23] >> I'm I'm like I'm still having to like
+[00:38:24] like dictate everything and give it the
+[00:38:26] proper context and like set it up for
+[00:38:28] success. I do think that like
+[00:38:30] my role in that decreases over time.
+[00:38:33] Like I I'm not saying that that's how it
+[00:38:34] will all be for forever, but like
+[00:38:36] >> Yep.
+[00:38:37] Yep. >> AI writing 90% of the code If AI If AI
+[00:38:40] AI was able to write 90% of code
+[00:38:41] autonomously, I think that we'd be like
+[00:38:43] out of jobs or something like that. You
+[00:38:45] know what I mean?
+[00:38:46] >> I agree. Yeah.
+[00:38:47] Yeah. >> If
+[00:38:47] If >> [laughter]
+[00:38:48] [laughter] >> Uh
+[00:38:49] Uh >> There's like a distinct different Right.
+[00:38:50] Right. We're we're kind of moving the goal post
+[00:38:52] now, but like I'd be curious I I don't
+[00:38:54] know the full video or the full quote
+[00:38:56] off the top of my head, but I'm curious
+[00:38:58] if at that time if Dario and Sundar's
+[00:39:02] thinking was that like it would be
+[00:39:04] autonomous or if in their mind it is
+[00:39:07] where we're at today where we are the
+[00:39:09] ones very much overseeing and steering
+[00:39:12] and front-loading context and research
+[00:39:15] planning or constraints.
+[00:39:18] >> But also like I'm happy to be in that
+[00:39:20] that world because like I never learned Vim
+[00:39:23] because I couldn't be bothered and now I
+[00:39:25] feel like
+[00:39:25] >> Oh my god.
+[00:39:26] god. >> I don't need to in that
+[00:39:28] that >> That's so disappointing. It's the most
+[00:39:30] most disappointing thing I've ever heard.
+[00:39:31] >> I don't need to navigate the
+[00:39:34] the codebase that
+[00:39:37] you know?
+[00:39:38] >> It is fair. I have used uh them far less
+[00:39:41] less this year than I have
+[00:39:43] >> That That's actually blessed in my
+[00:39:45] my comment.
+[00:39:48] >> Uh well, you know, at least I learned
+[00:39:50] learned Vim key binds.
+[00:39:53] Uh Sundar
+[00:39:55] >> What changes have you seen in Google
+[00:39:56] Google software in the last 6 months?
+[00:39:59] Gmail, Google Photos, Google Search.
+[00:40:02] So there's So 75% I just checked by the
+[00:40:04] way. Google's about 190,000 employees of
+[00:40:07] about 80 to 90,000 are engineers.
+[00:40:11] your software feel Just Google
+[00:40:13] software feel 2x better is the question.
+[00:40:16] Like everyone keeps making these claims
+[00:40:19] about lines of code and I'm like, but
+[00:40:21] what you know you So, for example,
+[00:40:24] uh
+[00:40:25] Cloudflare dashboard has famously, uh
+[00:40:27] how do I put this politely, uh not been
+[00:40:30] super pleasant to work with.
+[00:40:32] Uh but, you can constantly see now
+[00:40:35] people are noticing that it's like
+[00:40:36] getting better and prettier, by the way.
+[00:40:38] Like, it's actually starting to look
+[00:40:39] really nice. And all of that value is
+[00:40:42] coming because of like the people we put
+[00:40:43] on it, not because of like lines of
+[00:40:45] code.
+[00:40:46] >> Yeah.
+[00:40:47] Yeah. >> So, okay, it's fine, man. Like, 90% of
+[00:40:49] of code will be written by so and so. 75%
+[00:40:51] of Google.
+[00:40:52] Uh what what is the impact, bro? Like, I
+[00:40:54] just need I just need Gmail to like get
+[00:40:57] better. You know what? Like, so for the
+[00:40:59] last year, there's been a scam where you
+[00:41:01] get an email saying
+[00:41:03] uh someone logged into your X account,
+[00:41:05] please click here to like fix it. And
+[00:41:07] this seems like the most common pattern
+[00:41:09] that
+[00:41:10] um
+[00:41:12] uh
+[00:41:12] some engineer on the Gmail team should
+[00:41:14] be like, "Yep, that's spam." And that's
+[00:41:16] just not being fixed. So, I need to know
+[00:41:18] what they're writing all this code for,
+[00:41:20] bro.
+[00:41:21] Uh
+[00:41:22] I I I If you can't fix that for me, I I
+[00:41:24] I'm not super interested.
+[00:41:26] >> I will say my my Google software hasn't
+[00:41:28] hasn't gotten worse.
+[00:41:30] >> That's a low bar.
+[00:41:32] bar. >> I It is a It is a low bar, but like I
+[00:41:34] I feel like there's this weird thing
+[00:41:35] happening with AI writing code at the
+[00:41:37] moment where the software isn't getting
+[00:41:39] better, but it's also not getting The
+[00:41:41] software isn't getting exponentially
+[00:41:42] better, but it's also not getting
+[00:41:44] exponentially worse.
+[00:41:45] >> I feel like we
+[00:41:46] we should be striving for the the latter.
+[00:41:49] Which This is actually a good a good uh
+[00:41:52] segue into uh
+[00:41:55] presenting new claims that don't have an
+[00:41:58] answer.
+[00:41:59] Um and I think we can probably all agree
+[00:42:02] on this past one that for the claim that
+[00:42:05] AI will be writing
+[00:42:06] X percentage of code, I think we'll put
+[00:42:09] the asterisk that they're not talking
+[00:42:11] about uh
+[00:42:12] AI autonomously
+[00:42:14] hands-off writing code. So, we've just
+[00:42:17] two claims that have been, you
+[00:42:20] know, hot topics in the past couple of
+[00:42:23] years, and we have come through our our
+[00:42:25] own conclusions on them. I now want to
+[00:42:29] get into the fun part of this segment,
+[00:42:32] and going forward is putting people on
+[00:42:35] the spot and
+[00:42:37] some accountability.
+[00:42:38] So, in a recent interview,
+[00:42:41] Boris
+[00:42:43] Cherny, hopefully I'm getting his name
+[00:42:44] right, of Claude Code,
+[00:42:47] created Claude Code, works at Anthropic.
+[00:42:49] He made the claim that "I don't prompt
+[00:42:52] Claude anymore. I have loops running
+[00:42:54] that prompt Claude and figuring out what
+[00:42:56] to do. My job is to write loops, and
+[00:42:58] this is a transition we're going to see
+[00:43:01] for the rest of the year."
+[00:43:02] And then on top of that, the same day,
+[00:43:05] Peter Steinberger
+[00:43:08] of OpenAI, who created Open Claude, also
+[00:43:10] tweeted out, "Here's your monthly
+[00:43:12] reminder that you shouldn't be prompting
+[00:43:14] coding agents anymore. You should be
+[00:43:16] designing loops
+[00:43:18] that prompt your agents."
+[00:43:20] And we've talked about this a little bit
+[00:43:22] already,
+[00:43:23] but this is something I'm very
+[00:43:25] interested in tracking over the next
+[00:43:28] couple months, 6 months, a year to see
+[00:43:30] how this plays out, and to see if these
+[00:43:33] guys are right, and if, you know, come
+[00:43:36] December of this year, the three of us
+[00:43:39] are now just
+[00:43:41] writing
+[00:43:43] directing agents to direct loops.
+[00:43:46] Again, we've talked about this a little
+[00:43:47] bit, but we'd love to hear where you
+[00:43:49] guys think this this ends up in 6
+[00:43:51] months.
+[00:43:52] >> Well, I think we should make our own
+[00:43:53] own bets on this. Like, what's the over
+[00:43:55] under? Like,
+[00:43:57] and
+[00:43:58] let's say that he's not accurate
+[00:44:00] accurate, but like, I assume some
+[00:44:01] version of this like Peter Steinberger
+[00:44:04] and Boris Cherny are not idiots. They're
+[00:44:06] just extremely psycho susceptible.
+[00:44:08] Whatever. So, what version of this
+[00:44:10] actually comes through? That that I
+[00:44:11] would like us also to like make a
+[00:44:13] prediction on the thing. Like you can
+[00:44:15] say it's not completely it won't happen
+[00:44:17] at all, but yeah, loops sound appealing.
+[00:44:20] So, what's your bet?
+[00:44:21] >> I do feel like this is likely some form
+[00:44:24] form of this is likely the future. You see
+[00:44:26] this happening with Codex with the gold
+[00:44:28] feature or
+[00:44:31] notably the pie auto research or auto
+[00:44:34] research in general popularized by
+[00:44:36] Karpathy and the guys at Spotify.
+[00:44:39] Um
+[00:44:40] I think that's effective,
+[00:44:42] but it's also very token hungry and I
+[00:44:45] don't see these workflows becoming
+[00:44:48] mainstream unless one of two things
+[00:44:51] happen. One, token at economics change
+[00:44:54] and it becomes far cheaper
+[00:44:56] to
+[00:44:58] run models and agents that can do this
+[00:45:01] kind of workflow uh with good results.
+[00:45:04] Um
+[00:45:05] Or
+[00:45:06] open models get good enough to offload
+[00:45:09] these kind of workflows to. I think
+[00:45:11] without those two things happening,
+[00:45:13] these kinds of workflows are kind of
+[00:45:17] uh
+[00:45:17] going to be gatekept by
+[00:45:20] the people that are token rich and that
+[00:45:21] can
+[00:45:23] spend tons and tons of money. Or maybe
+[00:45:24] it turns into a thing where like
+[00:45:26] maybe at Cloudflare all the principal
+[00:45:28] engineers get in a room and there's a
+[00:45:29] pool of
+[00:45:31] RFCs that we've written out. Like what
+[00:45:33] are we going to throw to you know, Fable
+[00:45:36] 10 here and we bike shed that and that's
+[00:45:39] what we spend our tokens on. Um
+[00:45:42] Curious curious on your thoughts, you
+[00:45:43] know.
+[00:45:44] >> A whole bunch of VC companies will start
+[00:45:48] start redefining what the word loop means.
+[00:45:50] Like they'll say, "Oh yeah, you need to
+[00:45:52] loop, but you have to involve customer
+[00:45:54] feedback in that. Therefore, we have
+[00:45:56] created a thing that collects all your
+[00:45:58] Slack complaints, tweets, etc., feeds it
+[00:46:01] back into the loop and then does another
+[00:46:04] round of like burning tokens to like fix
+[00:46:06] thing. There you go. It's the
+[00:46:07] self-healing e-commerce website where we
+[00:46:10] uh surfboards uh like uh rude
+[00:46:14] surfboards. I suspect that's going to
+[00:46:16] happen anyway. Like people will but
+[00:46:18] people badly want to frame this as
+[00:46:19] something good where
+[00:46:21] it's it's the human centipede of uh
+[00:46:25] software development life cycle
+[00:46:26] software.
+[00:46:28] >> One of the ways that I like to try and
+[00:46:30] and take out the noise from what's like
+[00:46:32] actually relevant is how closely things
+[00:46:35] relate to how we work today.
+[00:46:37] And loops is actually like significantly
+[00:46:40] is like very close to how we work today
+[00:46:42] in that like if you're a software
+[00:46:43] engineer, you go and you reproduce a bug
+[00:46:45] problem. Well, like you are scanning
+[00:46:47] socials, you get feedback. You go like
+[00:46:50] I'm scanning socials, I go I get
+[00:46:52] feedback, I get reproduce that feedback,
+[00:46:54] I implement a fix, I test that fix.
+[00:46:57] There's like a bunch of things. There's
+[00:46:58] one there's like what level of loop are
+[00:47:00] you in? Are you in like some inner
+[00:47:02] development loop that's like what I
+[00:47:05] demoed of being able to test test
+[00:47:07] software autonomously? Are you in more
+[00:47:09] of like a Are you in like a bigger loop
+[00:47:12] that's like you're going from customer
+[00:47:14] feedback all the way to production and
+[00:47:16] like living around that? I'm decently
+[00:47:19] bullish on a world where intelligence
+[00:47:21] continues to get better and tokens
+[00:47:24] continues and tokens get cheaper is the
+[00:47:26] world that I'm like optimizing for. I
+[00:47:29] like view it as a game of Factorio.
+[00:47:31] >> The
+[00:47:33] The >> There are those good bottlenecks. There
+[00:47:35] There are those like bottlenecks that exist
+[00:47:36] and what's interesting with LLMs is
+[00:47:39] they've given us the ability to remove
+[00:47:40] those bottlenecks theoretically
+[00:47:42] theoretically.
+[00:47:44] >> All right. So, con- concretely, I want
+[00:47:47] want to hear from
+[00:47:48] all of us here.
+[00:47:49] >> Yeah.
+[00:47:50] Yeah. >> Six months from today,
+[00:47:52] today, the three of us on a day-to-day basis,
+[00:47:54] this impact us? I'll take the
+[00:47:56] position to start that
+[00:47:59] I think that we will likely be operating
+[00:48:03] in a workflow
+[00:48:05] similar to this for for many tasks, even
+[00:48:08] probably product or feature development,
+[00:48:11] as long as the tokenomics makes sense.
+[00:48:14] Otherwise, I think you might see
+[00:48:17] a world that's more traditional to
+[00:48:20] people bikeshedding
+[00:48:22] in, you know, principal VP level rooms
+[00:48:25] and meetings on where we where we spend
+[00:48:28] the tokens at.
+[00:48:31] >> I'm going to take the position that the
+[00:48:33] the tokenomics
+[00:48:35] don't use the Like, I don't consider
+[00:48:37] tokenomics as part of loops.
+[00:48:40] Uh
+[00:48:41] I view the I view tokenomics
+[00:48:43] >> Mr. Money bags over here.
+[00:48:44] here. >> Yeah, I I view tokenomics as like baked
+[00:48:46] baked into loops already. Uh
+[00:48:48] That's like, if I have to go manually
+[00:48:49] test something and report the report the
+[00:48:51] results back to the agent. Um that's
+[00:48:55] like me I'm already spending that. Not
+[00:48:57] only am I spending tokens on that, I'm
+[00:48:59] also spending my time on that.
+[00:49:01] I'm surprisingly bullish on loops. So
+[00:49:04] I think I think that they're right. I
+[00:49:06] think that loops do
+[00:49:08] yield actually decent result from LLMs.
+[00:49:11] Um at the same time, I have like
+[00:49:13] concerns on the fact that like
+[00:49:17] you lose all of the friction that you
+[00:49:19] get you you learn from friction and you
+[00:49:21] learn from
+[00:49:23] dealing with bad software how to not
+[00:49:24] write bad software.
+[00:49:25] And loops completely eliminate all of
+[00:49:27] that friction. And so you like miss the
+[00:49:30] things with that would act actually
+[00:49:32] improve or fix your code base. Uh yeah,
+[00:49:36] I'm very bullish on loops. I think that
+[00:49:38] he's pretty much correct.
+[00:49:40] >> Yeah, I think I think you're right. I
+[00:49:41] I think there's a class of problems that
+[00:49:43] already obviously loop-shaped.
+[00:49:46] in 6 months, yeah, I suspect I will
+[00:49:48] be having one or two things going on in
+[00:49:50] the background at all time.
+[00:49:52] Spending um
+[00:49:53] daddy princess money.
+[00:49:55] Uh this assumes that I haven't taken the
+[00:49:57] motorcycle into the woods to like
+[00:49:59] disappear because I'm just tired of you
+[00:50:02] all.
+[00:50:03] I was just considering doing that today
+[00:50:04] because like the weather in Newcastle is
+[00:50:06] super nice this week. I was like what if
+[00:50:08] I pretend like I lost my memory or
+[00:50:11] something? That happens in TV shows a
+[00:50:13] lot, right?
+[00:50:14] >> Grandpa Sunil has wandered off into the
+[00:50:16] the woods again.
+[00:50:17] >> That's 100% what I was thinking. Like I
+[00:50:20] I would make a big deal of it. I'll be
+[00:50:21] like guys, I think I need some time
+[00:50:24] like
+[00:50:25] to recover.
+[00:50:26] I would I still would like my salary and
+[00:50:29] access to tokens, though. [laughter]
+[00:50:31] >> Of course you would.
+[00:50:32] would. >> Yeah, of course I would still do that.
+[00:50:34] that. It's part of the healing process.
+[00:50:36] But no, enough problems are loop-shaped
+[00:50:38] I suspect it's going to Yeah, it's
+[00:50:41] going to go mainstream.
+[00:50:43] >> All right. Well, I think I think that's
+[00:50:45] that's a wrap. Thank you everyone for joining
+[00:50:48] us on the next token episode zero. We'll
+[00:50:51] be back in 2 weeks with more opinions,
+[00:50:54] hot takes, our workflows, talking about
+[00:50:57] this and that, and whatever Sunil
+[00:50:59] happens to be dramatic about that day.
+[00:51:02] Follow the show wherever you're watching
+[00:51:04] or listening and let us know what you
+[00:51:06] think.
+[00:51:07] >> So we will be in San Francisco for AI
+[00:51:10] AI Engineer World Fair
+[00:51:12] which is dope. Uh Shawn Wang puts
+[00:51:14] together a I mean like everyone shows up
+[00:51:16] for this. My guys put together a
+[00:51:18] generation of conference.
+[00:51:20] So and we show up for these things. Uh
+[00:51:22] but if you're not going I think we will
+[00:51:24] actually be recording a live episode
+[00:51:27] right there at AI Engineer. That's going
+[00:51:29] to be dope. Uh but if you're not going
+[00:51:31] to see us at AI Engineer, we're actually
+[00:51:33] going to do coffee flare, which is just
+[00:51:35] coffee swag. Come and meet us. A whole
+[00:51:37] bunch of the team will be there
+[00:51:38] especially because it's a circle of a
+[00:51:40] lot of Cloudflare people.
+[00:51:41] So that's June 20th, Tuesday at a place
+[00:51:45] called Site Class Soma.
+[00:51:47] Uh
+[00:51:48] no badges, no nothing. We We might have
+[00:51:50] a sign-up thing, but you know where the
+[00:51:52] already know where it is. You can
+[00:51:53] just show up. Uh we are famously known
+[00:51:55] for having very good caps, so [music]
+[00:51:57] you should come and get caps from us.
+[00:52:00] >> Alrighty. Thanks, y'all, and we'll see
+[00:52:02] see you next time.

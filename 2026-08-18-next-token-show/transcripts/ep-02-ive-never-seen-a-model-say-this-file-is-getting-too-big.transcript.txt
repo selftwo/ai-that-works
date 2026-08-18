@@ -1,0 +1,2008 @@
+# Cleaned transcript
+
+Generated from YouTube automatic English captions. Timestamps mark the start of each newly emitted caption segment.
+
+[00:00:00] Welcome to the next token. Today is
+[00:00:01] Friday, July 17th. I'm Dylan Mulroy and
+[00:00:05] this is a podcast about three developers
+[00:00:07] who don't have the time or energy to be
+[00:00:09] hosting a podcast.
+[00:00:11] >> Hey, I'm Reese Sullivan. I'm working on
+[00:00:13] on my startup, Executa.
+[00:00:15] >> Uh hi, I'm Sunil Pai. I work at
+[00:00:17] at Cloudflare. Uh so does Dylan and they
+[00:00:19] sponsor the show for us.
+[00:00:22] >> So, on today's show, uh we need to start
+[00:00:24] start off by uh settling a bet. And we're
+[00:00:27] going to uh talk about the news and what
+[00:00:29] is top of mind for uh the three of us
+[00:00:32] over the past week or two since we last
+[00:00:34] recorded. And then today is the first of
+[00:00:38] probably many, but at least three
+[00:00:40] episodes focusing on each of our
+[00:00:42] workflows with AI and genetic
+[00:00:45] engineering and how we're doing this
+[00:00:46] day-to-day at our companies and day jobs
+[00:00:49] thinking about that. So, to get
+[00:00:52] started here, we need to uh settle a bet
+[00:00:54] we made at AI Engineer where we were
+[00:00:57] last recorded. Uh Sunil, you want to
+[00:01:00] explain to our audience?
+[00:01:01] >> this is Okay, so this is embarrassing
+[00:01:03] embarrassing because
+[00:01:04] I consider myself a man of the world and
+[00:01:07] I don't like making bets that uh
+[00:01:09] that I lose.
+[00:01:11] Uh on while we were So, we were
+[00:01:13] recording right in the center of AIE
+[00:01:15] Expo and Fable was still like the
+[00:01:18] government was like it's still so uh
+[00:01:20] dangerous and we're not going to let it
+[00:01:22] out without
+[00:01:24] uh uh controls and which is why I think
+[00:01:26] even OpenAI were like, "Yeah, we can't
+[00:01:28] really roll out 5.6 to anyone."
+[00:01:31] Dylan, you said that by the time the
+[00:01:35] next episode rolls around, we will have
+[00:01:37] access to Fable as well as 5.6.
+[00:01:41] I very confidently I was like,
+[00:01:43] "Well, I'm letting you know."
+[00:01:46] >> Shush.
+[00:01:47] Shush. Uh I said, "Well, there's no chance
+[00:01:49] because the US government can't uh find
+[00:01:51] their hands uh
+[00:01:53] uh out of their arse or whatever the
+[00:01:54] phrase is."
+[00:01:55] Uh and I bet $10 against that. Uh Reese,
+[00:01:58] you decided to join me because I clearly
+[00:02:00] seem like the most uh
+[00:02:02] the smarter one of the lot and you said
+[00:02:04] $10.
+[00:02:05] >> [laughter]
+[00:02:06] [laughter] >> I said it was going to be weeks or
+[00:02:07] or months.
+[00:02:08] >> Months? You said like months.
+[00:02:11] months. >> take. I I either said weeks or months,
+[00:02:13] months, but I was like it's not going to It's
+[00:02:14] going to be a while.
+[00:02:15] >> And from the communications we've had
+[00:02:17] had from OpenAI on the 5.6 rollout, it's
+[00:02:19] It sounds like it's going to
+[00:02:20] be like weeks. Uh and so
+[00:02:22] >> Oh, sounds like I'm about to lose. 10
+[00:02:25] 10 bucks? 20 bucks? My timeline's late.
+[00:02:27] Bucks.
+[00:02:28] >> July late July. Fable's coming back.
+[00:02:30] back. >> Like I Like it wasn't even about the
+[00:02:32] the money. I just enjoy being right.
+[00:02:35] So, we did We recorded the whole episode
+[00:02:37] for like an hour and a half 2 hours. We
+[00:02:40] got off and within 10 minutes, Twitter
+[00:02:44] was a blaze that Fable is back and 5.6
+[00:02:47] rolling out.
+[00:02:48] >> Right, right. Is it
+[00:02:49] it So bad. Yeah, it was like literally we
+[00:02:51] had like gotten up from the the podcast
+[00:02:54] uh station which was like smack-dab
+[00:02:56] of the Expo hall, like OpenAI's
+[00:02:58] booth with like hundreds of people
+[00:03:00] around it right beside us. Pull up our
+[00:03:02] phones and sure enough
+[00:03:04] uh
+[00:03:05] Fable was released and then a few days
+[00:03:07] later 5.6 was also released.
+[00:03:10] You have to understand like my my my
+[00:03:12] my life is built around people like owing
+[00:03:14] me favors, okay? So, yeah.
+[00:03:19] >> Well, uh I will uh anxiously be awaiting
+[00:03:22] awaiting uh the Venmo transactions from both of
+[00:03:24] you, so I am up 20 bucks.
+[00:03:26] >> I'm good for it just so we're clear.
+[00:03:28] clear. Like I'm in the UK, so this is like uh
+[00:03:31] like uh paper This money doesn't even
+[00:03:34] make sense to me, but I'm good for it,
+[00:03:35] okay? Uh we're trying to We don't do
+[00:03:37] Venmo here, like uh but I'm just saying
+[00:03:41] I'm good for it.
+[00:03:42] >> Yeah, sorry.
+[00:03:44] sorry. It may The check's in the mail. Check's
+[00:03:46] in the mail.
+[00:03:47] >> Perfect. Perfect. I'll I'll Venmo
+[00:03:48] Venmo request Reese. Reese, you want to kick
+[00:03:50] us off uh this week with what's top of
+[00:03:52] mind for you over the since we last
+[00:03:54] recorded?
+[00:03:55] >> Yeah, I
+[00:03:57] I I wanted to talk on [music]
+[00:03:59] OpenAI versus Anthropic's comms game
+[00:04:02] because
+[00:04:04] >> like they both had really bad
+[00:04:07] bad communication
+[00:04:09] 6 months ago ish
+[00:04:11] and OpenAI kind of they locked in a bit
+[00:04:14] in terms of like
+[00:04:16] I don't like the changes are so small in
+[00:04:18] terms of they just kind of improved
+[00:04:19] their communication game a little bit by
+[00:04:21] being like hey this is what we're
+[00:04:23] planning on doing. This is what we're
+[00:04:25] doing actively and this is like what
+[00:04:27] we're seeing.
+[00:04:29] And so I got some like
+[00:04:31] tweets here where
+[00:04:33] one was the first one of like how
+[00:04:36] Anthropic handled the extension of rate
+[00:04:38] limits or the extension of favorable
+[00:04:40] access to on the
+[00:04:42] >> Oh right right right.
+[00:04:44] right. >> So I like
+[00:04:46] like I don't know I don't just like
+[00:04:48] they can do whatever they want with the
+[00:04:50] model. It more just like confuses me
+[00:04:52] from a perspective of like
+[00:04:54] if you're going to have to make this
+[00:04:55] decision anyways to extend it like
+[00:04:59] this it seems like something that you
+[00:05:01] could communicate up front in terms of
+[00:05:03] like
+[00:05:04] like if I think about how OpenAI would
+[00:05:05] have communicated this it probably would
+[00:05:07] have been something along lines of like
+[00:05:08] hey here's the new model it's like
+[00:05:11] limited capacity but we want to see like
+[00:05:13] how people are using it what you can do
+[00:05:14] with it and depending on the capacity or
+[00:05:17] usage we have like we'll see see if we
+[00:05:19] can extend it in the future that kind of
+[00:05:21] thing.
+[00:05:21] >> Yeah just like
+[00:05:23] like transparent almost like
+[00:05:25] >> Yeah.
+[00:05:25] Yeah. >> owning the reality of the situation
+[00:05:27] situation they're in.
+[00:05:28] >> Yeah and the other thing is like
+[00:05:31] like I've I've seen rumors on Twitter of like
+[00:05:33] them trying to do like a distilled Opus
+[00:05:35] 5 or something like that. So like maybe
+[00:05:37] that's another thing where like they
+[00:05:38] have this other model that's coming out
+[00:05:40] soon.
+[00:05:41] >> Do you think that OpenAI releasing
+[00:05:45] releasing 5/6 Soul, Terra, and Luna, kind of
+[00:05:49] forced Anthropic's hand here to extend
+[00:05:52] the limits. And
+[00:05:55] in the same vein, I think a a second
+[00:05:56] question I have is like
+[00:05:59] do you think this is coming from them
+[00:06:02] having scarcity around compute and them
+[00:06:06] genuinely struggling to be able to serve
+[00:06:08] the inference for these models?
+[00:06:10] Yeah, I guess that would be my my my two
+[00:06:12] questions around around this topic
+[00:06:14] because I I still to this day have not
+[00:06:17] used Fable at all.
+[00:06:19] Uh I don't have an Anthropic
+[00:06:20] subscription and because
+[00:06:23] uh Fable does not support zero data
+[00:06:26] retention, we don't have access to it in
+[00:06:28] Cloudflare. And many enterprises don't
+[00:06:31] because zero data retention is a very
+[00:06:34] important characteristic of really any
+[00:06:37] uh third-party service that enterprises
+[00:06:40] use. >> Yeah, I mean I I I assume that they
+[00:06:42] they limited just I wish that I knew more
+[00:06:44] about how the inference of it works
+[00:06:46] because like I would have assumed that
+[00:06:47] like the night before Fable was was
+[00:06:50] taken away with a bunch of people
+[00:06:52] hammering their max plans thinking that
+[00:06:55] it would like trying to get all of their
+[00:06:56] usage used up cuz they're like, well,
+[00:06:58] this is going away, so I'm just going to
+[00:06:59] like burn my tokens.
+[00:07:00] >> Yeah.
+[00:07:01] Yeah. >> I like would have expected that I would
+[00:07:03] would have expected to see more people
+[00:07:05] reporting errors on Twitter of like, oh,
+[00:07:07] it's at capacity or like like getting
+[00:07:09] those use like getting uh capacity
+[00:07:12] issues. And there didn't seem to be any
+[00:07:14] of those.
+[00:07:14] >> I'm curious if like enterprises that are
+[00:07:16] are building products
+[00:07:18] over API, who are doing like way heavier
+[00:07:21] load,
+[00:07:22] maybe have seen
+[00:07:24] that in higher
+[00:07:26] um
+[00:07:27] in higher numbers. Actually, that's a
+[00:07:28] great question for everyone listening.
+[00:07:29] If you work at a company that is
+[00:07:31] building products around uh Anthropic
+[00:07:35] models, uh especially Fable, during this
+[00:07:38] time period where they were kind of
+[00:07:39] extending the limits for Fable post GPT
+[00:07:44] 56 rollout. Did you see
+[00:07:47] availability issues, error rates
+[00:07:48] increase on your products and in your
+[00:07:51] telemetry?
+[00:07:52] >> Yeah, I'd be interested to know how
+[00:07:53] how people building AI products are also
+[00:07:55] like
+[00:07:57] like I I assume that
+[00:07:59] you wouldn't just immediately swap to
+[00:08:00] running everything through Fable. In
+[00:08:02] that like it's a good model, but the
+[00:08:05] price jump the like price jump for
+[00:08:07] output seems like if you if you
+[00:08:10] didn't have a subsize it seemed weird to
+[00:08:12] me. Let's see. Then the other ones Oh,
+[00:08:14] another one was like they did a research
+[00:08:16] on July 15th
+[00:08:19] Claude did.
+[00:08:21] And that was also an interesting one to
+[00:08:22] me where it was like
+[00:08:24] like it it was just like a statement of
+[00:08:26] fact. We've done a reset. It wasn't like
+[00:08:28] a oh, we like love you guys using the
+[00:08:31] product. Like here's a like there there
+[00:08:33] was no fluff for it, which is maybe
+[00:08:34] appreciated. But it seems like if they
+[00:08:36] added fluff, it would again be like a
+[00:08:38] free kind of win just in terms of
+[00:08:40] sentiment. Whereas like
+[00:08:42] otherwise it just like it
+[00:08:45] you have all these like little
+[00:08:46] opportunities to like win like consumer
+[00:08:49] favor, I would say.
+[00:08:50] >> Yeah, yeah, for sure.
+[00:08:52] sure. >> And I feel like they don't take
+[00:08:53] take advantage of them. And but like the
+[00:08:55] other thing is they've
+[00:08:57] got like a pretty good product, you
+[00:08:58] know, like and maybe that's that's just
+[00:09:00] like in a position where they don't like
+[00:09:02] have to
+[00:09:03] care about that.
+[00:09:04] >> I I feel like that is shrinking away and
+[00:09:07] and like I mean
+[00:09:09] both of these companies are
+[00:09:12] I think dealing with similar
+[00:09:15] adoption stories that like both
+[00:09:18] Cloudflare and Vercel for that matter
+[00:09:19] dealt with and I think both companies
+[00:09:21] are very good at and is that
+[00:09:23] and a lot of successful dev tool
+[00:09:25] companies over the past 10-15 years is
+[00:09:27] target
+[00:09:28] like the developers for their hobby
+[00:09:31] projects outside of work, consulting,
+[00:09:32] contracting. And if you win the hearts
+[00:09:34] and minds of them for that type of work,
+[00:09:37] they're going to be your biggest
+[00:09:38] advocates
+[00:09:39] in the in you know, the enterprising
+[00:09:41] companies where like the real money is.
+[00:09:43] And right now, at least me personally,
+[00:09:46] like I have like
+[00:09:48] probably a borderline negative opinion
+[00:09:51] of Anthropic despite them having been
+[00:09:55] the company and their models that had,
+[00:09:58] you know, sold me on agentic engineering
+[00:10:00] being the future with Opus 45 and 46. Um
+[00:10:04] just the
+[00:10:07] I don't
+[00:10:08] like their stance or the way that to
+[00:10:12] your point, Reese, that they communicate
+[00:10:14] that like it just feels like they know
+[00:10:15] better than us and they
+[00:10:19] don't
+[00:10:21] care about all the feedback, it seems
+[00:10:25] like, that the developer community is
+[00:10:27] blatantly like
+[00:10:29] shouting about on Twitter. And Twitter's
+[00:10:31] a bubble, but like
+[00:10:32] regardless, right now, like
+[00:10:35] developers are and like coding use cases
+[00:10:38] are the places where these companies are
+[00:10:40] getting
+[00:10:41] the majority of their revenue revenue
+[00:10:43] from, at least in my understanding and
+[00:10:44] the the reporting that I've seen.
+[00:10:47] And
+[00:10:48] like I am far more likely
+[00:10:50] to go into Cloudflare and advocate for
+[00:10:52] OpenAI models right now, uh because
+[00:10:56] they're just more transparent in the way
+[00:10:58] they work. They seem like they're
+[00:11:00] actually working towards better token
+[00:11:01] economics and, you know,
+[00:11:04] usage. But I think both of these
+[00:11:07] companies are in a really tough place um
+[00:11:09] too, which we'll talk about here in a
+[00:11:10] little bit, uh which is what I want to
+[00:11:12] get into talking about.
+[00:11:14] >> Go ahead and say it, Neil.
+[00:11:15] Neil. >> Yeah, so about like 4 years ago, uh 5,
+[00:11:18] 5, maybe, uh Cloudflare the big problem
+[00:11:20] that Cloudflare was facing was people
+[00:11:22] didn't know who they were.
+[00:11:24] Uh like they were like, "Oh, you have
+[00:11:26] some I thought you were a CDN company."
+[00:11:28] And the word CDN barely shows up in
+[00:11:30] marketing. And the thing that Cloudflare
+[00:11:32] did was well, we have all of these
+[00:11:34] people, let them tweet about what
+[00:11:36] they're working about online. Like we
+[00:11:38] don't we don't even want to like curate
+[00:11:39] the message. And what's happened now is
+[00:11:42] Cloudflare doesn't shut the up on
+[00:11:43] Twitter. Like they're just
+[00:11:44] >> [laughter]
+[00:11:44] [laughter] >> non-stop all over it. And every like not
+[00:11:47] even like announcement weeks.
+[00:11:49] Announcement weeks we drown out everyone
+[00:11:50] for a week, right?
+[00:11:52] >> Yeah.
+[00:11:52] Yeah. >> So you can see the same thing happening
+[00:11:54] happening in OpenAI. I don't know if it's
+[00:11:55] connected to the TVPN
+[00:11:57] acquisition, but there seems to be a
+[00:12:00] direct line there. All the DX boys, the
+[00:12:04] builders in residence, and the Codex
+[00:12:06] people are just talking about their
+[00:12:09] stuff all I mean, they just hi- hired
+[00:12:11] Polly Narvaez, one of the most
+[00:12:13] beloved community leaders, right?
+[00:12:16] >> Yep.
+[00:12:16] Yep. >> Uh that doesn't seem like a mistake to
+[00:12:18] to me. I know for a fact Anthropic is very
+[00:12:21] uh I don't say hush-hush, but their
+[00:12:23] aren't really encouraged to
+[00:12:25] talk I mean, like company secrets,
+[00:12:27] whatever it is. They So, there is a
+[00:12:29] difference between Timothy saying, "Hey,
+[00:12:31] I pushed the reset button." versus the
+[00:12:33] official Claude
+[00:12:35] uh uh uh
+[00:12:36] Twitter account just saying, "Oh, like
+[00:12:38] limits are reset." And I think
+[00:12:41] to be clear, they're both
+[00:12:42] trillion-dollar companies, and I don't
+[00:12:43] to simp for any of them. But
+[00:12:45] obviously, they're doing a a charm
+[00:12:47] offensive on the OpenAI side, right?
+[00:12:50] Uh I that maybe that's what maybe that's
+[00:12:53] what we're seeing. Yeah.
+[00:12:56] >> Yeah, it just like it's it's weird the
+[00:12:59] the the thing that's weird to me like you
+[00:13:00] you had a
+[00:13:01] you like last point of like you had a
+[00:13:02] bit of just like companies it's like
+[00:13:05] there's not really a huge reason to be
+[00:13:06] attached to either. I don't think it
+[00:13:08] would like impact them that much to just
+[00:13:09] like slightly tweak their communication
+[00:13:11] style.
+[00:13:12] >> Uh
+[00:13:12] Uh >> I have a proposal. I have a proposal.
+[00:13:14] proposal. Also, by the way, like this is related
+[00:13:16] to the last ad that Anthropic put down
+[00:13:18] where they had houses burning and
+[00:13:19] gravestones.
+[00:13:20] >> it was
+[00:13:21] >> [snorts] >> so weird.
+[00:13:22] weird. >> Such a bad idea. Okay, so here's my
+[00:13:24] my proposal, okay? Let them have the same
+[00:13:27] messaging
+[00:13:28] uh like Dario's words even though
+[00:13:30] they're kind of weird. Pay George
+[00:13:33] Clooney and Sarah Ferguson $500 a year
+[00:13:38] to just say those words. Just look
+[00:13:40] extremely attractive on screen and say
+[00:13:42] that. I suspect it might help even a
+[00:13:45] little bit and they could use all the
+[00:13:46] help they could use have right now. Just
+[00:13:48] don't make the houses burning videos.
+[00:13:50] That's what I'm saying. You know?
+[00:13:52] >> It is so crazy and we should actually
+[00:13:55] actually maybe at one point soon do an episode or
+[00:13:58] have a segment about this but like
+[00:14:01] I recently was back home and I grew up
+[00:14:04] in
+[00:14:05] York Pennsylvania and I was around a
+[00:14:08] bunch of people that are not in the tech
+[00:14:09] community that are just you know typical
+[00:14:12] I know Pennsylvania's not really the the
+[00:14:15] Rust Belt or the Midwest but it shares a
+[00:14:17] lot of character list characteristics
+[00:14:19] like it and like even my friends and
+[00:14:21] family that I that I know are highly
+[00:14:23] educated and stuff man they have such
+[00:14:26] negative disposition
+[00:14:28] about AI and they have very incorrect
+[00:14:32] assumptions about how it works the
+[00:14:34] energy around it all these things and
+[00:14:37] like these kind of ads especially this
+[00:14:40] one and the way Dario in particular
+[00:14:42] talks about the future and these models
+[00:14:45] is
+[00:14:46] I think really really hurting the
+[00:14:49] potential not only these companies but
+[00:14:51] the the technology too and like honestly
+[00:14:53] like improving our energy
+[00:14:55] infrastructure.
+[00:14:57] >> Do you ever notice how whenever like the
+[00:15:00] the AGI ASI people talk to you and they're
+[00:15:02] like here's all of the very detailed
+[00:15:05] ways it can go wrong and then you're
+[00:15:07] like what are the ways that
+[00:15:08] >> Yeah it always leads with the ways to go
+[00:15:10] go wrong.
+[00:15:11] >> It always leads with the
+[00:15:12] the ways it can go wrong then you're like
+[00:15:14] okay what what am I going to do in the
+[00:15:15] AGI world and you get kind of like
+[00:15:18] ambiguous
+[00:15:19] >> [laughter]
+[00:15:20] [laughter] >> Yeah these like ambiguous answers that
+[00:15:22] that are like, well, you know,
+[00:15:24] it'll be a a beautiful world.
+[00:15:26] >> I actually before we move on
+[00:15:28] on >> Or go ahead.
+[00:15:29] ahead. >> I want
+[00:15:30] want I want to say
+[00:15:30] >> a hot take.
+[00:15:32] take. >> Uh open invite to open AI, Anthropic,
+[00:15:36] Anthropic, >> SpaceX, I guess. I don't really use
+[00:15:38] use those models. Thinking Machines,
+[00:15:40] >> uh to come on to the show and be
+[00:15:42] be specific about how the world gets
+[00:15:44] better. Specifics. None of this woo-woo
+[00:15:46] we will take over labor and you
+[00:15:48] will uh uh like uh food and health and
+[00:15:51] energy will be solved. No, like please
+[00:15:53] come on to the show and give us 10
+[00:15:55] minutes of best-case scenarios with as
+[00:15:57] as you can get. I will
+[00:15:59] >> I would love that.
+[00:16:00] that. >> I will pay 20 more dollars for that. I
+[00:16:02] I don't mind using money for [laughter]
+[00:16:03] that. I'm just
+[00:16:04] >> Huge budget over here.
+[00:16:06] here. >> Just saying, okay? I would like just
+[00:16:08] just come on and like I and uh like like like
+[00:16:11] the three of us aren't Well, it doesn't
+[00:16:13] really matter to us uh and I assume
+[00:16:15] there are way more high-profile podcasts
+[00:16:18] events they can go to, but I promise
+[00:16:20] you I will be your biggest fan if you
+[00:16:22] can come here and be specific about it.
+[00:16:23] I'm like just just come on. It's fine.
+[00:16:26] It'll be good.
+[00:16:27] >> I would mention like in the short term,
+[00:16:28] term, I have like enjoy like I I'm very happy
+[00:16:31] excited these technologies exist.
+[00:16:33] >> Yep.
+[00:16:33] Yep. >> Like I I very much see the upside in
+[00:16:35] in them. Was it the ability to like your
+[00:16:38] ability to jump into like a new code
+[00:16:39] base now and like stop being immediately
+[00:16:42] like productive in it is like pretty
+[00:16:43] incredible. They're not quite there yet,
+[00:16:46] but it's more like uh hooking them up to
+[00:16:48] things, but like
+[00:16:50] the ability for it to go synthesize a
+[00:16:52] bunch of information out of all of your
+[00:16:53] like positive models or like
+[00:16:55] >> Yep.
+[00:16:56] Yep. >> There's
+[00:16:58] There's Yeah. It's really nice.
+[00:16:59] >> for everyone listening, I may have to
+[00:17:02] to step away here briefly because I was
+[00:17:05] using
+[00:17:07] Codex's computer use
+[00:17:09] skill or MCP, which is very very good.
+[00:17:12] And if you haven't used it, please try
+[00:17:13] it out cuz it is like remarkably
+[00:17:15] amazing, but I have a package showing up
+[00:17:20] likely during the recording of this that
+[00:17:22] I did not plan for. I had asked Codex to
+[00:17:26] go research what the cost or process to
+[00:17:29] order a new Apple remote for Apple TV
+[00:17:31] was, and it actually went through the
+[00:17:34] whole flow, and because I was logged
+[00:17:36] into one password and have my credit
+[00:17:38] card in one password, it did the full
+[00:17:39] checkout, and I got a text this morning
+[00:17:42] that I have a package arriving during
+[00:17:44] the time frame of this recording. So, if
+[00:17:46] I have to go sign for that, apologize.
+[00:17:49] But yeah, check out check out computer
+[00:17:50] use. It's very good.
+[00:17:52] >> I'm surprised we haven't seen more
+[00:17:54] more like accessibility cool outs about
+[00:17:56] computer use. I might my assumption is
+[00:17:59] that it would be a big benefit there,
+[00:18:01] but maybe there's like already good
+[00:18:02] systems in place
+[00:18:04] for that. But yeah.
+[00:18:05] >> If OpenAI gets their teams to like
+[00:18:07] like collaborate, I assume the plan is to get
+[00:18:09] ChatGPT Codex to like take over the
+[00:18:11] computer. Like they finally like have
+[00:18:13] the technology, but they need to get all
+[00:18:17] 300 teams to point in the same direction
+[00:18:19] to do it. I think that's what they want
+[00:18:20] to do.
+[00:18:21] >> It is remarkably good. I use it now for
+[00:18:23] for like a lot of testing, like letting the
+[00:18:26] agent test stuff using computer use, and
+[00:18:29] it is uh
+[00:18:30] it's very good. I'm excited for it to be
+[00:18:32] faster and more reliable. I almost want
+[00:18:34] like a code mode API around computer
+[00:18:36] use.
+[00:18:37] >> I'm surprised this is this is where I'm
+[00:18:39] I'm at with my testing stuff. Where I
+[00:18:40] actually don't want to use computer use
+[00:18:42] for testing because you can't like
+[00:18:44] codify Codex's computer use into like
+[00:18:48] end-to-end tests in your repo.
+[00:18:50] you can more you can have like a
+[00:18:53] you can instead of having it use
+[00:18:55] computer use, you can just have it drive
+[00:18:56] like Playwright, and then test against
+[00:18:59] whatever you use, which is pretty nice.
+[00:19:01] >> So, wait. Well, we'll
+[00:19:02] we'll we'll save that for maybe
+[00:19:05] our next episode for going through your
+[00:19:07] workflow. But moving on to the next
+[00:19:09] topic, the thing I wanted to talk about
+[00:19:10] before we dive into my workflow,
+[00:19:12] And we still have to get through Suno's
+[00:19:15] hot take on
+[00:19:17] conferences. Is I am really really
+[00:19:20] excited about Thinking Machines and
+[00:19:23] [music] Inkling and American open source
+[00:19:27] open weight models. So for anyone that
+[00:19:29] doesn't know, Mira Murati, hopefully I'm
+[00:19:31] getting her name right. I believe she
+[00:19:33] was the former CTO of OpenAI. She spun
+[00:19:35] off and created her own company called
+[00:19:37] Thinking Machines and in the past week
+[00:19:39] they released their first model called
+[00:19:41] Inkling and it is open weight open
+[00:19:44] source and the write-up and release
+[00:19:48] this was phenomenal. Their
+[00:19:51] benchmarks were incredibly transparent.
+[00:19:53] I think they got a lot of praise across
+[00:19:56] Twitter for the way they demonstrated
+[00:19:58] the capabilities
+[00:20:01] of this model.
+[00:20:02] And one thing that is
+[00:20:05] insanely cool and distinctly unique
+[00:20:07] about Inkling is they shipped
+[00:20:11] tools or a harness. I'm not sure which.
+[00:20:14] I haven't I only read over the the blog
+[00:20:17] briefly, but they shipped tooling to
+[00:20:20] essentially RL and fine-tune the model
+[00:20:24] your own hands. And the demo or the
+[00:20:26] the demo they give is in an open code
+[00:20:29] session. They they load up Inkling and
+[00:20:32] they run the you know slash post train
+[00:20:35] or whatever the command is. I can't
+[00:20:37] recall. And say basically stop
+[00:20:39] outputting words with the letter E in it
+[00:20:42] and it runs this whole skill and updates
+[00:20:45] the weights and biases or you know, I
+[00:20:47] don't fully understand the full you know
+[00:20:51] post training process, but
+[00:20:53] it updates itself similar to like
+[00:20:55] something like Pi.
+[00:20:57] And then it showed an example of them
+[00:20:59] talking back and forth with the model
+[00:21:02] and
+[00:21:03] sure enough the letter E doesn't show up
+[00:21:05] anywhere. And like I think that's
+[00:21:08] fascinating and insanely cool. Uh like I
+[00:21:11] like thinking of use cases. Like I I use
+[00:21:13] my an agent to like budget. And like if
+[00:21:17] I could fine-tune it to like nail down
+[00:21:19] be really, really good at using the
+[00:21:21] tools and the knowledge around how I'm
+[00:21:24] to do my ball
+[00:21:25] budget, excuse me. Um
+[00:21:27] I think that would be insane. Um so I'm
+[00:21:30] curious on your guys' take on this. And
+[00:21:32] like my the other part of this is there
+[00:21:34] was a good tweet from Xiaoyan Zhu
+[00:21:36] saying, "My bet is Thinking Machines
+[00:21:39] will soon make more money than Anthropic
+[00:21:40] AI. Not by winning the race to build one
+[00:21:42] standardized frontier model, by becoming
+[00:21:45] the Palantir forward-deployed engineer
+[00:21:47] enterprise custom models. The
+[00:21:48] playbook: One, release the best American
+[00:21:51] open-weight model. Two, drive widespread
+[00:21:54] adoption. Three, charge the
+[00:21:56] largest companies seven to nine figures
+[00:21:58] to post-train and run custom models
+[00:22:00] their own firewall.
+[00:22:02] The model rests on three bets. Large
+[00:22:04] enterprises will increasingly demand
+[00:22:06] their own models with their own data,
+[00:22:08] and this is how they differentiate and
+[00:22:09] win. Enterprises won't need just one
+[00:22:11] model. They'll continuously need new
+[00:22:13] models for different workflows,
+[00:22:14] departments, and proprietary data sets.
+[00:22:16] That creates extremely sticky recurring
+[00:22:18] revenue. Three, auto research will make
+[00:22:21] custom model development increasingly
+[00:22:23] scalable. Tinker can become the
+[00:22:25] interface enterprises use to post-train
+[00:22:27] models with Thinking Machines
+[00:22:29] providing the expertise and
+[00:22:31] infrastructure behind it.
+[00:22:32] Forward-deployed engineers, infra
+[00:22:34] huge contracts.
+[00:22:36] Four, eventually maybe everyone wants
+[00:22:38] their own model and auto research and
+[00:22:40] training inside Tinker, which Tinker
+[00:22:42] must be the tooling that they have to
+[00:22:44] post-train this. And auto research and
+[00:22:45] inside Tinker on top of
+[00:22:47] Thinking Machines base model will make
+[00:22:48] it happen.
+[00:22:49] >> [snorts]
+[00:22:49] [snorts] >> Meanwhile, Henry Ford-styled
+[00:22:51] standardized models will make no
+[00:22:52] margins. OpenAI and Anthropic will have
+[00:22:54] their API margin squeezed by DeepSeek,
+[00:22:57] JLM, Grok, Meta, etc. And their consumer
+[00:23:00] subscriptions are loss centers already.
+[00:23:03] The fat margin will move to
+[00:23:04] customization, proprietary data,
+[00:23:06] post-training evals, deployment, and
+[00:23:07] If this thesis is right,
+[00:23:09] Think Machines isn't building just
+[00:23:11] another frontier lab, it's building the
+[00:23:12] highest value layer between frontier
+[00:23:14] research and enterprise model ownership.
+[00:23:16] Turns out the best
+[00:23:17] the best business model for enterprise
+[00:23:19] is not to sell commodity API access,
+[00:23:22] sell them their own model.
+[00:23:24] I'm extremely bullish on this approach.
+[00:23:25] Mira Murati may be the most commercially
+[00:23:27] savvy frontier lab leader, I have to
+[00:23:29] admit it, and I actually
+[00:23:31] completely agree with this tweet. I
+[00:23:33] think
+[00:23:34] that this is partially aligns with like
+[00:23:37] Cloudflare's bet on Workers AI and
+[00:23:40] hosting and running open weight models.
+[00:23:43] Um I think that both Anthropic and
+[00:23:46] OpenAI have
+[00:23:48] got themselves into financial positions
+[00:23:51] that
+[00:23:52] are going to be increasingly hard to
+[00:23:55] deliver returns to their investors on,
+[00:23:57] and a model like this could really,
+[00:23:58] really disrupt the two big labs. So,
+[00:24:01] curious on uh
+[00:24:03] how you guys felt about this.
+[00:24:05] >> Uh I I have two thoughts. First of all,
+[00:24:07] all, I don't know if you know, I am a Mira
+[00:24:09] Murati stan like from the beginning.
+[00:24:11] Holy extremely accomplished, knows
+[00:24:13] how to get work done, like big-time
+[00:24:16] fan. The second is a week ago
+[00:24:18] from today, so on the 10th of July, they
+[00:24:20] published their internal manifesto thing
+[00:24:22] called The Future Worth Building is
+[00:24:24] Human, where they actually go over these
+[00:24:26] details, and it's a remarkable document
+[00:24:28] for two reasons.
+[00:24:29] These manifestos are usually very
+[00:24:32] surface-level,
+[00:24:33] very solar-punk future-looking,
+[00:24:36] actually like goes into
+[00:24:37] specifics into some of like even the
+[00:24:39] writings that have influenced them. Like
+[00:24:41] they talk They have like a Hayek
+[00:24:44] uh document written in like 1945 about
+[00:24:46] like the use of knowledge in society. I
+[00:24:48] highly recommend anyone uh who's
+[00:24:50] watching this to find the link in uh uh
+[00:24:53] the notes for this episode and read it.
+[00:24:56] And they go into the details about this
+[00:24:57] because they say we are pursuing these
+[00:24:59] directions. We train strong models. We
+[00:25:01] build tools that enable people to make
+[00:25:03] AI their own. We develop interfaces and
+[00:25:06] we publish research. Uh which is a
+[00:25:09] remarkable thing for also a company
+[00:25:11] that's raised billions of dollars to say
+[00:25:14] that this is the direction that they're
+[00:25:16] going in. It's uh
+[00:25:18] um
+[00:25:19] I'm I'm a fan. Uh and the third thing
+[00:25:21] which is just a bonus thing is Thinking
+[00:25:24] Machines would have been too long for
+[00:25:26] the Twitter handle which is why that
+[00:25:27] Twitter handle is Thinking Machines
+[00:25:29] which is the cutest thing I've ever seen
+[00:25:31] in my life. I I I love it.
+[00:25:34] >> Race, do you think this puts Anthropic
+[00:25:36] Anthropic and OpenAI kind of in the hot seat?
+[00:25:38] >> I don't know. I feel like it maybe gets
+[00:25:41] gets I I think I'm maybe a little bearish on
+[00:25:43] it in that I feel like it maybe gets
+[00:25:44] better lessened away.
+[00:25:46] >> What do you mean by that?
+[00:25:49] that? >> In that like there's
+[00:25:52] there's you know how as the models get better,
+[00:25:54] you like can get rid of your
+[00:25:56] like certain like guiding skills or
+[00:25:58] whatnot. Like they stop like doing
+[00:26:00] certain anti-patterns
+[00:26:02] just as the nature of like putting
+[00:26:04] more compute into them and uh scaling
+[00:26:07] them up.
+[00:26:08] Um
+[00:26:10] >> [clears throat]
+[00:26:11] throat] >> I feel like we've kind of seen like
+[00:26:14] like micro-optimizations
+[00:26:16] a bit less. But then I At the
+[00:26:18] same time, I think there was some stuff
+[00:26:19] from RAMP that showed that they like
+[00:26:21] were able to fine-tune fine-tune models
+[00:26:23] uh like better and cheaper
+[00:26:25] results out of them. Um so I think it's
+[00:26:28] it's like cool to exist. I maybe just
+[00:26:30] don't relate as much to like the um
+[00:26:34] space that it exists in at the moment.
+[00:26:37] Like for me I feel like for the
+[00:26:38] budgeting one, I would rather do like I
+[00:26:41] would rather codify that as a set of
+[00:26:42] skills and instructions so that I can
+[00:26:44] like swap out the model as I need than
+[00:26:47] like a fine-tuned model.
+[00:26:49] Why Why both if it's effectively pennies
+[00:26:52] pennies or cheap?
+[00:26:54] >> Um
+[00:26:56] Um >> Which I think is like the enterprise use
+[00:26:57] use case. Like so much of our workloads at
+[00:27:01] Cloudflare that are not like individuals
+[00:27:03] using coding agents. Like many of our
+[00:27:04] automated business processes are running
+[00:27:06] on open weight
+[00:27:08] models.
+[00:27:10] >> But do you need fine-tuning for this?
+[00:27:12] >> I think that we could achieve
+[00:27:15] achieve likely better results
+[00:27:16] >> Better results.
+[00:27:17] results. >> increase efficiency, both better
+[00:27:20] better outcomes for our users of those products
+[00:27:22] and better outcomes financially for us.
+[00:27:25] Um which I think matters as well.
+[00:27:29] >> Yeah, that makes sense. That makes
+[00:27:30] makes sense, yeah.
+[00:27:31] Do you think the best
+[00:27:34] And this is just a completely random
+[00:27:35] country. Okay, so the country of
+[00:27:37] Kazakhstan.
+[00:27:38] Do you think a model will be able to
+[00:27:40] from first principles derive the best
+[00:27:43] way to run civic processes, etc. in
+[00:27:46] Kazakhstan? Because I don't I suspect
+[00:27:48] most of that knowledge is not openly
+[00:27:51] available. And I don't think they could
+[00:27:53] be easily condensed into simple skills
+[00:27:56] that you can fit in a context window.
+[00:27:59] Do you see what like the whole
+[00:28:00] fine-tuning thing is that you can chuck
+[00:28:01] whole bunch of data at it and get it
+[00:28:03] tuned to your use case.
+[00:28:05] So for example, the
+[00:28:06] I've been having a theory recently that
+[00:28:08] you know like Claude wise and open AI
+[00:28:11] wise, you know, not just M dashes, but
+[00:28:12] the X not Y etc. thing.
+[00:28:15] >> Yeah.
+[00:28:15] Yeah. >> Those are not problems that can be
+[00:28:17] be solved by just like skills, right? Like
+[00:28:19] and the other thing I was I don't know
+[00:28:20] if we mentioned it in the last call,
+[00:28:22] which is I don't want to hire five
+[00:28:24] different Clauds for a team. Like uh
+[00:28:27] >> Yep.
+[00:28:27] Yep. >> Uh Miami 5-0 was not made of five uh Mr.
+[00:28:31] T characters. Like they're like
+[00:28:32] different You want to like have like
+[00:28:34] different models that can like interact
+[00:28:36] with each others and they're not just
+[00:28:38] the same model but with skills. So
+[00:28:40] there's something there and it's a short
+[00:28:42] worth taking. I guess that's what I'm
+[00:28:43] saying. Like uh
+[00:28:45] I would bet
+[00:28:45] >> Oh yeah, I fully agree. It's like,
+[00:28:48] like, well worth exploring. Um Um
+[00:28:51] Yeah, I mean, just to see how it works
+[00:28:53] out.
+[00:28:54] >> Sweet. Well, this is definitely
+[00:28:55] definitely something I want to keep kind of our
+[00:28:57] finger on the pulse of, especially
+[00:28:59] around finicky machines, and see where
+[00:29:02] this goes, because I I'm I'm personally
+[00:29:05] very excited about it.
+[00:29:07] And I do think it does put Anthropic and
+[00:29:10] OpenAI in a pretty in a much harder
+[00:29:13] position given their financial positions
+[00:29:15] and, you know, the returns they have to
+[00:29:17] do, the revenue they have to make to
+[00:29:19] satisfy, you know, data center build-out
+[00:29:21] obligations to companies like
+[00:29:23] Oracle.
+[00:29:25] So,
+[00:29:26] we'll we'll keep a pulse on that over
+[00:29:27] the the coming months. Before we The
+[00:29:29] last topic to get into before we dive
+[00:29:32] into my workflow and how I work with AI
+[00:29:35] every day is, Sunil, you not only
+[00:29:39] recently attended AI World Fair with us,
+[00:29:41] but you also
+[00:29:43] attended a local
+[00:29:45] >> First Conf.
+[00:29:46] Conf. >> So, we were on the Expo floor of AI
+[00:29:49] AI Engineer World's Fair, 7,000 people, 10
+[00:29:54] tracks, workshops,
+[00:29:57] taking over all of Moscone, what have
+[00:29:59] you. And I did that. I spent a week in
+[00:30:03] New York, where I went to the new
+[00:30:04] Cloudflare office. I went to John's of
+[00:30:06] Bleecker Street to get pizza. I love it.
+[00:30:10] I've heard it's a top five pizza of the
+[00:30:11] world. And of course, I bought the
+[00:30:13] merch. I buy the merch everywhere.
+[00:30:15] And then I went to Berlin. Beautiful
+[00:30:18] city, by the way, especially if you like
+[00:30:19] it's made for cyclists, so you can have
+[00:30:21] like two beers, get a buzz on, and just
+[00:30:23] like cycle through the city. Amazing
+[00:30:25] feeling. I don't recommend it.
+[00:30:28] Sorry, younger people. Oh, it's so bad.
+[00:30:30] You should not get drunk and ride a
+[00:30:32] cycle through a beautiful city. Don't do
+[00:30:33] that.
+[00:30:34] Um
+[00:30:35] uh but Local First Conf is It was
+[00:30:39] wonderful, because I I to say it was
+[00:30:40] like 300, maybe 350 people, maybe less
+[00:30:43] actually. I don't know.
+[00:30:44] Uh but bunch of research nerds, people
+[00:30:47] like from Ink & Switch, Jazz Tools, who
+[00:30:50] who are
+[00:30:51] talking about data sovereignty,
+[00:30:53] owning your stack, and not having a big
+[00:30:56] tech influence, which is funny because
+[00:30:57] Cloudflare was sponsoring it, and it did
+[00:30:59] get a few people on Blue Sky mad about
+[00:31:01] that. And I don't really I did catch
+[00:31:03] that. I just like whatever, you know.
+[00:31:07] I get mad about it on Twitter later.
+[00:31:10] It's fine.
+[00:31:11] But
+[00:31:12] it did strike me
+[00:31:15] about
+[00:31:17] where change happens and
+[00:31:20] how do I put this? I met Dan Ingalls,
+[00:31:23] one of the creators of object-oriented
+[00:31:26] at Local First Conf. Like I
+[00:31:29] don't think the organizers knew
+[00:31:31] beforehand that he was coming, and he
+[00:31:33] was just like a dude in a t-shirt and
+[00:31:35] sitting around. Like I saw his
+[00:31:37] badge. I was like, wait, there can't be
+[00:31:39] like two Dan Ingalls in the world.
+[00:31:42] Um
+[00:31:43] and it like
+[00:31:44] a conference like AI Engineer World's
+[00:31:46] Fair must exist. It's surely a sign that
+[00:31:49] something is going right, and Sean Wang
+[00:31:51] has built like this generational
+[00:31:52] conference.
+[00:31:54] Um
+[00:31:55] but I think if you want to be closer in
+[00:31:58] the know of the people like doing the
+[00:32:01] work,
+[00:32:02] I've managed to interact with
+[00:32:04] and I'm saying this is worth the 7,000
+[00:32:06] I did enjoy my time at Local
+[00:32:08] First Conf, and I met a lot more
+[00:32:10] interesting people there non-stop over
+[00:32:13] 3 days of the conference.
+[00:32:15] I don't really have a point here to
+[00:32:17] make, I guess. It was just
+[00:32:19] it was just very strange to me that
+[00:32:21] this happened. I guess
+[00:32:24] it's kind of why our podcast exists in
+[00:32:26] the first place. Like we are three
+[00:32:28] practitioners, and we are tired of
+[00:32:29] hearing like hypemen and people selling
+[00:32:32] things all the time,
+[00:32:34] which is why I want to see how Dylan
+[00:32:36] like literally types on his keyboard,
+[00:32:38] you know? Like that's that's the thing
+[00:32:40] that like interests me. I'm I'm not
+[00:32:41] interested in your AI agent framework. I
+[00:32:43] want to see a dude like punch his
+[00:32:45] keyboard and generate code.
+[00:32:47] >> Well, I have bad news for you. I've been
+[00:32:49] been using a lot of dictation
+[00:32:51] to drive agents. But this is actually
+[00:32:54] I think it's encouraging to me cuz I I
+[00:32:56] think at least
+[00:32:58] you and I talked a bit
+[00:33:00] when we were sitting at the the pub
+[00:33:01] after we recorded our last podcast, but
+[00:33:06] I personally feel like I didn't get a
+[00:33:08] ton out of AI world fair, and I think
+[00:33:11] that was a combination of one just like
+[00:33:14] we've been going
+[00:33:16] I I feel pretty confident saying the
+[00:33:17] three of us have put a lot of time and
+[00:33:20] effort and care into figuring out how to
+[00:33:22] use
+[00:33:23] this tech, and I think
+[00:33:25] maybe a a large portion of the talks at
+[00:33:28] AI engineer were kind of maybe higher
+[00:33:30] level, kind of more hype driven, or just
+[00:33:33] stuff that like
+[00:33:35] I haven't found to work thus far. So,
+[00:33:38] it's it
+[00:33:39] it's encouraging to me to hear that like
+[00:33:41] there is progress being pushed in the
+[00:33:45] other niches of engineering like local
+[00:33:49] first technology, and that the you know,
+[00:33:51] the bar and the needle is still moving
+[00:33:53] even if it's
+[00:33:54] uh drowned out in my Twitter algorithm,
+[00:33:57] and I'm not currently seeing stuff like
+[00:33:58] that. So, I'm that makes me relieved to
+[00:34:01] hear. Reese, any any thoughts before we
+[00:34:05] look at how I produce slop on a daily
+[00:34:06] basis?
+[00:34:08] >> Uh no, I'm let's jump into the slop
+[00:34:11] slop cannon.
+[00:34:13] >> [music]
+[00:34:15] [music] >> Okay, so transitioning to the segment
+[00:34:18] segment that many of y'all have been waiting for
+[00:34:21] and asking for. This will be the first
+[00:34:24] of at least three
+[00:34:26] episodes or segments where Reese and I
+[00:34:30] go over how we're working with AI on a
+[00:34:32] day-to-day basis in real uh code bases
+[00:34:35] you know, users.
+[00:34:38] Um and I want to kind of start by
+[00:34:41] talking about my tooling, kind of where
+[00:34:43] I came from, where I'm at right now as
+[00:34:46] far as tooling, and then I can walk
+[00:34:48] through a example of a feature I shipped
+[00:34:52] to
+[00:34:53] um Hurder, which we'll talk about here
+[00:34:55] in a second, in the past week. And also,
+[00:34:58] coincidentally, how my workflow uh since
+[00:35:01] I recorded, or not recorded, but ran
+[00:35:03] through implementing this the first time
+[00:35:05] till today has already started to change
+[00:35:08] a little bit. Um
+[00:35:11] So,
+[00:35:12] I have been living in the terminal for
+[00:35:16] basically the bath the past
+[00:35:18] 14 years. I've been using
+[00:35:21] uh tmux since 2014. I abandoned VS Code
+[00:35:27] sometime around 2019, 2020, and jumped
+[00:35:30] into the Neovim world.
+[00:35:33] Uh
+[00:35:33] and that was mostly because of actually
+[00:35:35] RSI pain. So, uh my my workflow has been
+[00:35:39] largely geared around the terminal and
+[00:35:41] tmux for the better part of my career.
+[00:35:43] And up until Opus 4.5, I was not very
+[00:35:46] I was using Claude Code a
+[00:35:48] bit. Then, like many people, I
+[00:35:51] used Opus 4.5 and realized very quickly
+[00:35:53] uh the technology changed and
+[00:35:55] agentic engineering was going to uh be
+[00:35:58] the future of where this was all going.
+[00:36:01] And, you know, I had a existential
+[00:36:04] dilemma over the holidays, I think like
+[00:36:06] many many people had, had some like
+[00:36:09] restless nights about figuring out like
+[00:36:10] what
+[00:36:11] what does my job mean? I've been
+[00:36:14] programming since I was 11 years old,
+[00:36:17] uh reading code articles daily. Um like,
+[00:36:20] what does it mean for me to be a
+[00:36:21] software engineer when being a software
+[00:36:23] engineer
+[00:36:24] uh is so much of my identity, for better
+[00:36:27] or worse. And
+[00:36:29] um um
+[00:36:30] you know, took a lot of time to get
+[00:36:33] where I'm at today. And I think that's
+[00:36:35] probably one thing that's not talked
+[00:36:36] about enough is that
+[00:36:39] this is like a completely new skill set.
+[00:36:41] Like I don't think you can go from the
+[00:36:43] workflows we were doing
+[00:36:45] in the past to agentic engineering and
+[00:36:48] getting good results off the rip. I I
+[00:36:50] don't think when the models are there, I
+[00:36:52] don't think the toolings are there or
+[00:36:54] the tooling is there. And it it's
+[00:36:58] still incredibly hard. And the thing
+[00:36:59] that, you know, I think we've talked
+[00:37:01] about a little bit, but like it is
+[00:37:02] exhausting to work
+[00:37:04] in this way with this technology despite
+[00:37:06] it actually
+[00:37:08] sometimes annoyingly uh making me
+[00:37:11] generally more productive. So, bearing
+[00:37:13] in mind that I've been in the terminal
+[00:37:15] forever. I am I've had a, you know, a
+[00:37:17] pull towards using the terminal-based
+[00:37:21] harnesses. So, I started with
+[00:37:23] Claude Code in October. Uh and last year
+[00:37:26] I was using Claude, you know, on the
+[00:37:28] side, like I mentioned, but then really
+[00:37:29] went full-time into Claude Code through
+[00:37:31] holidays and into like, you know,
+[00:37:32] January, February. And then I had
+[00:37:35] switched to using Open Code for a month
+[00:37:37] or two. And then I found Py. So, that's
+[00:37:42] probably the first
+[00:37:44] important thing uh to in my current
+[00:37:48] tooling
+[00:37:49] is Py. That is the agent harness I use
+[00:37:51] every day. And it is
+[00:37:54] uh Anyone that doesn't know, Py is made
+[00:37:57] by our good friend uh Mario, friend of
+[00:38:01] the pod, uh at Arendelle. And it is
+[00:38:05] advertised as a one
+[00:38:08] shitty coding agent. But more
+[00:38:10] importantly, uh it is advertised as a uh
+[00:38:15] minimalistic coding agent. And so, like
+[00:38:19] what does that really mean in practice?
+[00:38:21] Um yeah, here's the the the copy. Here's
+[00:38:23] the website. We'll link it in the show
+[00:38:25] notes, but Pi, there are many agent
+[00:38:27] harnesses, but this one is yours. Pi is
+[00:38:29] a minimal agent harness. Adapt Pi to
+[00:38:31] your workflows, not the other way
+[00:38:32] around.
+[00:38:34] So,
+[00:38:35] Pi has a incredibly minimal system
+[00:38:38] prompt. I mean, it is like
+[00:38:41] a paragraph or two,
+[00:38:43] a couple outlines of the tools it has,
+[00:38:46] and that is it. Like, it is probably,
+[00:38:49] you know, under
+[00:38:51] certainly under 2K tokens, probably
+[00:38:53] under 1K.
+[00:38:55] Um, and when I first used Pi,
+[00:38:58] this is all based on vibes, but I think
+[00:39:00] there are there are benchmarks out there
+[00:39:02] that show
+[00:39:04] similar results, but like I could feel
+[00:39:07] immediately a difference between using
+[00:39:09] Pi and something like Open Code, which
+[00:39:12] at the time, I don't know if this is
+[00:39:14] still the case with Open Code, but I
+[00:39:15] believe Open Code at the time was based
+[00:39:17] on your model, it was trying to emulate
+[00:39:19] the system prompt of like, you know,
+[00:39:22] Codex or Claude Code when you switched
+[00:39:24] models.
+[00:39:25] This is just static. There's like four
+[00:39:26] tools, you know, read, write, bash.
+[00:39:30] It doesn't even have web search or web
+[00:39:32] fetch tools. And you could feel off the
+[00:39:34] rip that like to me it it felt more
+[00:39:38] focused and more likely to do what I was
+[00:39:41] asking with better results, even like
+[00:39:43] with models like Opus 4.5 and or like
+[00:39:46] K2.
+[00:39:47] Um,
+[00:39:49] and I I I attribute that to the minimal
+[00:39:52] context that's going into it. And
+[00:39:56] importantly,
+[00:39:57] the team behind Pi does not make updates
+[00:40:00] to
+[00:40:01] the harness very often, and I find that
+[00:40:04] very important.
+[00:40:06] In a time where these models are very
+[00:40:08] dynamic and stochastic and
+[00:40:11] non-deterministic,
+[00:40:13] don't want
+[00:40:14] the other parts of my tooling regularly
+[00:40:17] changing behavior underneath of me
+[00:40:19] because that makes it harder for me to
+[00:40:21] find a stable workflow with consistent
+[00:40:23] results.
+[00:40:24] And Pie really I think has helped me get
+[00:40:27] to a place where I can get a stable
+[00:40:30] workflow.
+[00:40:31] The other remarkably cool thing about
+[00:40:34] Pie which you've I believe that amp has
+[00:40:37] now cribbed and open code is also
+[00:40:40] working on I think for their two dot o
+[00:40:42] release is Pie out of the box knows how
+[00:40:45] to modify itself. So it has one of the
+[00:40:48] most beautiful plugin systems I've ever
+[00:40:51] seen. So you can basically load up a Pie
+[00:40:54] session and say, "Hey, I I I want you to
+[00:40:57] build a MCP tool." And it will go read
+[00:40:59] its docs. It has very clear instructions
+[00:41:01] on its APIs, where its source code is,
+[00:41:04] and how to basically extend itself. So
+[00:41:06] it's
+[00:41:06] super easy to model Pie
+[00:41:10] around your workflow.
+[00:41:12] One cool thing that I saw recently was
+[00:41:14] from Ben Vinegar from Modum. He was
+[00:41:17] talking about how he built
+[00:41:19] he shaped a custom harness with Pie
+[00:41:21] around his workflow for
+[00:41:24] editing
+[00:41:26] his podcast. Like he basically built
+[00:41:29] extensions tooling, you know, whatever
+[00:41:31] it is with Pie so like he could load up
+[00:41:33] into it and it was specifically shaped
+[00:41:36] for his workflow around doing that
+[00:41:38] particular task. So that that's one
+[00:41:40] reason why I love Pie. It's great.
+[00:41:43] I have a
+[00:41:45] handful of extensions.
+[00:41:47] I don't use very many admittedly.
+[00:41:49] There's like an extension market that
+[00:41:51] you can go to and install stuff. But my
+[00:41:54] would my advice to anyone trying Pie
+[00:41:56] would be use it out of the box and don't
+[00:42:00] add extensions until you start to feel
+[00:42:02] pain.
+[00:42:03] And then when you do feel pain, take a
+[00:42:05] look at the extensions that are publicly
+[00:42:08] available and decide if that fits you
+[00:42:10] well. And if it does, install it. If it
+[00:42:12] doesn't, use them as inspiration and
+[00:42:14] then tell Pi to build something like it
+[00:42:16] that is more equipped to you because
+[00:42:19] it just works. So, the extensions I use
+[00:42:21] is I have a custom gateway that I use at
+[00:42:24] work
+[00:42:25] that we use through
+[00:42:26] Cloudflare gateway. I have a
+[00:42:29] Pi cloak extension, which basically just
+[00:42:31] masks environment variables if they
+[00:42:34] somehow get into the session. A Pi skill
+[00:42:36] toggle, which basically turns skills on
+[00:42:39] and off for letting the agent invoke
+[00:42:42] skills or making me
+[00:42:44] invoke skills. I have an extension for
+[00:42:45] saving markdown, so I can do {slash} MD
+[00:42:47] and that will save the last agent
+[00:42:50] message to a markdown file. I have my
+[00:42:51] web tools extension, which is basically
+[00:42:53] a port of open codes web search and what
+[00:42:56] that tools.
+[00:42:57] Um
+[00:42:59] I have an answer tool, which I don't
+[00:43:00] ever use anymore. I can probably get rid
+[00:43:02] of this.
+[00:43:03] Uh if the agent compacts, which it
+[00:43:05] really does, this just continues it.
+[00:43:08] Uh a get I get AI integration, a get
+[00:43:11] interceptor, which I think is quite
+[00:43:12] funny. Uh
+[00:43:14] This basically will block the agent if
+[00:43:16] it tries to use no verify cuz I use a
+[00:43:19] lot of like linting rules with like ox
+[00:43:22] lint or like AST grep. Uh so, if the
+[00:43:25] agent tries to use no verify in a bash
+[00:43:27] command, it spits out no verify is not
+[00:43:30] allowed. Good get hooks exist for a
+[00:43:32] reason. Do not attempt to bypass them.
+[00:43:34] Instead, fix the underlying issue that
+[00:43:36] is causing the hook to fail or ask the
+[00:43:37] user for help.
+[00:43:39] Um
+[00:43:41] So, just like very minimal. Like, I
+[00:43:42] don't have a lot of extra here.
+[00:43:44] These are just some like kind of quality
+[00:43:46] of life things that I added.
+[00:43:48] Then I have an MCP tool I also built.
+[00:43:51] So, that is like the extent of my my Pi
+[00:43:53] agent. And you can see here like this is
+[00:43:55] all it is. Um nothing super fancy. And
+[00:43:59] then I also have been
+[00:44:02] using Matt Pocock's
+[00:44:04] uh uh
+[00:44:05] engineering skills quite a bit, uh which
+[00:44:07] we'll get into a bit.
+[00:44:10] The other second important tool in my
+[00:44:13] uh tool chain is Herder,
+[00:44:16] uh which this is what is kind of
+[00:44:19] encapsulating or wrapping around my Pi
+[00:44:22] session here. That is what the sidebar
+[00:44:23] on the side is. Um these different
+[00:44:26] workspaces, these different agents
+[00:44:28] running. So, Herder is a lot like uh
+[00:44:32] Tmux, but
+[00:44:34] for the age of agents. And as I
+[00:44:37] mentioned at the top of the show, I've
+[00:44:38] been using Tmux since 2014. I've been
+[00:44:41] dragging my Tmux config along with me
+[00:44:43] for a long time.
+[00:44:44] And
+[00:44:46] I was really skeptical of Herder when I
+[00:44:48] first used it. I admittedly have been
+[00:44:50] waiting for Mitchell Hashimoto to finish
+[00:44:52] his conquest of getting rid of terminal
+[00:44:55] multiplexers through uh Ghosty, uh but
+[00:44:58] that's not here yet. But, the next best
+[00:45:00] thing is that Herder is built on lib
+[00:45:03] Ghosty. So, this actually ended up
+[00:45:05] solving a bunch of my pain points with
+[00:45:07] Tmux, which is things like uh ANSI
+[00:45:10] escape sequences not supporting Kitty
+[00:45:12] image protocol. Like, there's just a lot
+[00:45:14] of weird things that make Tmux not
+[00:45:17] optimal when working with like a modern
+[00:45:19] uh terminal like Ghosty or Kitty or, you
+[00:45:22] know, whatever else. I was able to
+[00:45:24] basically convert all of my bindings
+[00:45:27] from Tmux to Herder in one shot, and now
+[00:45:30] I have basically this working product,
+[00:45:34] and some cool things about Herder is
+[00:45:37] that it has agent tracking and like
+[00:45:40] their support. So, I could like come in
+[00:45:42] here and be like review the code, right?
+[00:45:44] And you'll see when I run that, it kicks
+[00:45:46] off. So, I can see a status of like if
+[00:45:47] it's blocked, if it's running, what's
+[00:45:49] going on. Um
+[00:45:52] which I love, uh which I didn't have
+[00:45:55] with Tmux. When I was running Tmux, I
+[00:45:57] was like using sound notifications to
+[00:45:59] like grab my attention back when agents
+[00:46:01] finished, and that was you know, kind of
+[00:46:02] chaotic.
+[00:46:04] >> Did Did you convert the bindings or did
+[00:46:07] did uh
+[00:46:07] >> Oh, yeah. I I literally just told GPT to
+[00:46:11] to uh set up Herder and copy all of my key
+[00:46:14] bindings and settings over to Herder,
+[00:46:16] and it basically just like one shot it,
+[00:46:18] and I
+[00:46:19] >> I think that that's a fun quick cool out
+[00:46:21] out of like the cost of adopting new tools
+[00:46:24] has never been Yeah. Lower. And so, like
+[00:46:26] you really get to experiment with what
+[00:46:27] makes the best workflow for you.
+[00:46:29] >> Yeah. I I love it a ton.
+[00:46:32] ton. Um
+[00:46:33] And then other than that, uh another
+[00:46:36] important tool is
+[00:46:38] uh Planotator, which is a tool that
+[00:46:42] launches a local web app that lets you
+[00:46:45] basically
+[00:46:46] review
+[00:46:48] files.
+[00:46:49] Uh it lets you do local code review, and
+[00:46:52] it lets you kind of like annotate files,
+[00:46:55] code review, or even like the previous
+[00:46:57] agent message, and send those results
+[00:46:59] right back into the coding agent. We'll
+[00:47:01] dive into that here in a couple minutes.
+[00:47:03] I'll give it like a real example of how
+[00:47:05] that works. But that's been a really
+[00:47:07] important tool. And then I find myself
+[00:47:09] very rarely diving into my code editor,
+[00:47:12] which is Neovim, uh anymore, which is
+[00:47:14] quite sad. But uh from time to time when
+[00:47:17] I do need to do manual editing, I'm
+[00:47:18] using Neovim. So, that's basically like
+[00:47:20] my full
+[00:47:22] tool stack at the moment.
+[00:47:25] So, to
+[00:47:27] give an example of something I built in
+[00:47:30] my actual workflow here. I started
+[00:47:32] working on a feature for Herder. So,
+[00:47:35] when you create a new tab in Herder, I
+[00:47:37] can come in here, I can create a new
+[00:47:39] tab. And when I create a new tab, it,
+[00:47:41] you know, it will ask me to name the
+[00:47:44] tab. So, if I do like Fubar, it's going
+[00:47:46] to name it Fubar up there, right? So, I
+[00:47:48] can also come in here and create a new
+[00:47:50] workspace. However, when I create a new
+[00:47:52] workspace, it does not let me give me
+[00:47:55] the option to rename it. It just kind of
+[00:47:56] adopts the current directory and then I
+[00:47:58] have to do this second step where I have
+[00:47:59] to, you know, rename it over here. Now
+[00:48:02] it's foobarbat, right? So I wanted to
+[00:48:04] basically add the feature where when I
+[00:48:06] create a new workspace, I can get that
+[00:48:08] same modal to name it before it opens.
+[00:48:14] Let me uh grab the session here.
+[00:48:20] If we do pi dash resume.
+[00:48:26] Right here. Oh, that's still not the
+[00:48:29] right one.
+[00:48:30] Pi dash resume.
+[00:48:33] So a uh one thing you'll see in here is
+[00:48:36] pi has this feature called tree, which
+[00:48:37] is probably like the most sticky feature
+[00:48:39] of pi for me uh beyond the things I've
+[00:48:41] already talked about. Tree lets you jump
+[00:48:44] around any point of the conversation. Uh
+[00:48:48] so like you can go down some path. Let's
+[00:48:50] say I want to write unit tests for a
+[00:48:51] feature. I can like go build that out
+[00:48:54] and then I can jump back to the root of
+[00:48:55] the conversation and like you can choose
+[00:48:58] when you jump to another point in the
+[00:48:59] conversation, you can choose to
+[00:49:00] summarize it, summarize it with a custom
+[00:49:02] prompt, no summary, or just jump back
+[00:49:04] and forth. This is almost like doing
+[00:49:05] manual sub agents,
+[00:49:07] uh which I'll demonstrate here in a
+[00:49:09] second, but like I literally cannot live
+[00:49:12] without this feature in a
+[00:49:14] uh coding agent uh anymore. It's
+[00:49:17] probably
+[00:49:18] probably the most important feature
+[00:49:19] feature of pi to me.
+[00:49:21] >> Does slash tree come with pi or did you
+[00:49:24] you add it with an extension?
+[00:49:26] >> Slash tree is built natively into pi.
+[00:49:31] All right. So where I started here was
+[00:49:35] I started by and I forget the the exact
+[00:49:39] name of this strategy, but I will often
+[00:49:42] start work with an agent by
+[00:49:46] asking it questions that
+[00:49:49] I either know the answer to or I myself
+[00:49:53] need the answer to, but I'll I'll start
+[00:49:54] with asking questions, right? So, I
+[00:49:56] asked, "How does the feature work for
+[00:49:57] Herder where when creating a new tab in
+[00:50:00] a space a user can be prompted to name
+[00:50:01] it first? What is the code path? How's
+[00:50:03] the abstraction designed? How's the
+[00:50:05] config value to enable/disable
+[00:50:09] feature read and parsed and passed
+[00:50:11] to the create tab flow/feature?"
+[00:50:13] if we jump through the conversation
+[00:50:16] here, we can see that
+[00:50:18] it ended up coming out here with this
+[00:50:22] basically overview of how this feature
+[00:50:24] works, right? And in fact, this is a big
+[00:50:26] blob of text that is really hard to just
+[00:50:28] like read in the terminal. So, this is a
+[00:50:29] great example of like a place where I
+[00:50:32] will use Planetator. So, I'll do
+[00:50:33] Planetator last. And what this will do
+[00:50:36] is it's going to launch a web app where
+[00:50:39] it will load the last agent's message
+[00:50:42] into a web app right here, and I can go
+[00:50:44] through and read it. And I can, you
+[00:50:47] know, it just makes it easier to digest.
+[00:50:49] And on top of that, I can come in here
+[00:50:51] and I can be like, you know, "Are you
+[00:50:53] sure about this?
+[00:50:55] Can you be more clear?"
+[00:50:58] Right? Something like this, right? Just
+[00:51:00] this is just a throwaway example, and I
+[00:51:01] can save that, and it basically
+[00:51:03] aggregates these comments as I go
+[00:51:05] through.
+[00:51:07] And then I can if I were to click send
+[00:51:08] feedback, which I'll show in a second,
+[00:51:10] this would send all of this back into my
+[00:51:13] session and let the answer or let the
+[00:51:15] agent respond.
+[00:51:17] So,
+[00:51:18] here my intent was to basically have it
+[00:51:21] go off and do research, almost like a
+[00:51:23] sub-agent would, right? Like I'm being
+[00:51:24] own sub-agent. My I have a hot take
+[00:51:27] I think
+[00:51:28] sub-agents
+[00:51:30] sub-agents in coding
+[00:51:31] have a tendency to
+[00:51:34] take thinking away from the developer
+[00:51:37] too easily. So, I like kind of doing
+[00:51:39] this this thing on my own, and I I don't
+[00:51:41] want to defer
+[00:51:43] the prompts and the context gathering to
+[00:51:45] another agent
+[00:51:46] orchestrating a sub-agent. Like I want
+[00:51:48] be in control of that.
+[00:51:50] So, you know, we can click send
+[00:51:51] feedback. It will send it and you can
+[00:51:53] see here
+[00:51:54] uh
+[00:51:55] it sent the message in a message message
+[00:51:57] feedback and it would go address that.
+[00:51:59] So,
+[00:52:00] I will oftentimes like go back and forth
+[00:52:02] with agents planning work this way,
+[00:52:05] asking questions, gathering context. Um
+[00:52:07] but in this case, I was pretty happy
+[00:52:09] with uh the outcome of this. I felt, you
+[00:52:12] know, this feels like enough information
+[00:52:15] about how this feature works. So, then I
+[00:52:17] ended up doing tree and I jumped back to
+[00:52:20] zero context and I uh started a new
+[00:52:24] thread in the same session, right? I'm
+[00:52:26] now back to 0% context and then I was
+[00:52:29] like, how does the create new workspace
+[00:52:31] feature abstractions code path
+[00:52:32] configuration types and data paths work
+[00:52:35] for Herder?
+[00:52:36] And I let that run off and eventually it
+[00:52:38] resolved um to
+[00:52:42] Let me find my labels here.
+[00:52:47] Create workspace research. You can also
+[00:52:48] label anywhere in the conversation and
+[00:52:50] jump around them.
+[00:52:51] So, here it came out with the same thing
+[00:52:53] and we can go look at this in Planitator
+[00:52:56] again
+[00:52:57] and it outlines how the current create
+[00:52:59] workspace feature is, which is the thing
+[00:53:01] I want to change, right?
+[00:53:03] So, here's this nice very succinct uh
+[00:53:06] compact way that this works.
+[00:53:10] So, again, I was happy with that outcome
+[00:53:13] and now I jumped back to uh
+[00:53:19] I jumped back to 0% context and actually
+[00:53:21] here uh I used the save markdown skill
+[00:53:24] and I wrote this last message to a
+[00:53:26] markdown file, which you can see is
+[00:53:28] right here. This is exactly what we just
+[00:53:30] looked like, saved it to a markdown
+[00:53:31] file.
+[00:53:34] So, I jumped back and then we jumped to
+[00:53:38] and I say uh
+[00:53:41] open this in Neovim.
+[00:53:44] You can see I have rarely used my editor
+[00:53:46] cuz I have a bunch of updates.
+[00:53:48] Um,
+[00:53:50] I asked read at create workspace MD,
+[00:53:53] which is the file I just made from that
+[00:53:54] last branch, to learn how workspace
+[00:53:56] creation works in Hurder. Here is how
+[00:53:58] tab creation plus renaming works and I
+[00:54:00] just copy and pasted that first branch
+[00:54:03] where we got the summary of how the tab
+[00:54:04] rename works. I copy and pasted that
+[00:54:07] into just like a details tab.
+[00:54:10] And then down at the bottom I said,
+[00:54:12] uh, I closed the details, right? I
+[00:54:15] I don't know. This is all vibes putting
+[00:54:16] it inside those like tags, but just
+[00:54:18] trying to like distinguish the different
+[00:54:20] signal there. I said, "How would you add
+[00:54:23] design and implement the feature
+[00:54:24] capability to Hurder for introducing a
+[00:54:26] similar feature to tabs with a new
+[00:54:28] configuration option so that when you
+[00:54:30] create a new workspace, you're given the
+[00:54:32] option to name the workspace at creation
+[00:54:34] time. Walk me through the code paths,
+[00:54:36] data structures you would create, update
+[00:54:38] or change, the types you would add,
+[00:54:39] change, delete, anything relevant like
+[00:54:42] that."
+[00:54:43] I really want you to focus on code
+[00:54:45] paths, types, abstractions, and data
+[00:54:47] flow.
+[00:54:49] I do this thing when I'm planning with
+[00:54:51] agents where
+[00:54:54] rather than having these kind of
+[00:54:55] high-level uh, almost like PRD product
+[00:54:59] I like my specs looking more like
+[00:55:02] pseudo code and I focus on having the
+[00:55:05] agent outline types. I basically do
+[00:55:07] type-driven development uh, with the
+[00:55:10] So, my my specs end up looking
+[00:55:13] like an outline of code and I also do
+[00:55:15] this thing that's gotten some attention
+[00:55:17] on Twitter where I have it like outline
+[00:55:19] the call stack uh, of like what the
+[00:55:22] agent plans what the call stack is today
+[00:55:25] uh, and how it wants to change it. And
+[00:55:28] at each level of the call stack I ask it
+[00:55:30] to say, "What is the input type? What is
+[00:55:32] the output type? What are any side
+[00:55:34] effects that can occur and what are any
+[00:55:36] errors that can occur?" And I make it
+[00:55:37] just outline that. And that I I find, at
+[00:55:41] least on a vibe basis, that that really
+[00:55:43] helps keep the agents on track and stay
+[00:55:45] aligned with like my expectation of like
+[00:55:48] abstractions.
+[00:55:50] So, I ran that off, and it ended up
+[00:55:53] coming out with uh
+[00:55:55] the initial spec.
+[00:55:59] And you can see here we have this
+[00:56:01] document, and I have that loaded into
+[00:56:03] Neovim, which in fact we should just
+[00:56:05] look at in planetator.
+[00:56:06] Right, so let's say planetator, and we
+[00:56:09] can use annotate, and here I can mark
+[00:56:11] any file. Uh and I think this is yeah,
+[00:56:15] create a namespace spec.
+[00:56:17] So, if you look at the spec in here, you
+[00:56:20] close this, we have
+[00:56:23] you know, this outline of code paths
+[00:56:27] focusing on types already.
+[00:56:29] Um you know, I'm not going to walk
+[00:56:30] through this all line by line here, but
+[00:56:32] you can see that there's like a real
+[00:56:34] emphasis on code and types here rather
+[00:56:37] than just like
+[00:56:39] you know, as a user I want to do XYZ.
+[00:56:41] And it also outlines uh I have it
+[00:56:43] outlined like red green refactor tests,
+[00:56:46] and doing like a much inspired from Matt
+[00:56:49] Pocock's skills, like vertical slices.
+[00:56:51] Like, what is the narrowest
+[00:56:53] part of this feature that you could
+[00:56:55] implement that proves it end to end, and
+[00:56:57] then let's add to that over time.
+[00:57:00] >> What that note on terminal control in
+[00:57:02] in the planning.com from?
+[00:57:06] Uh where was it?
+[00:57:07] it? >> Point 11. It mentions uh testing in
+[00:57:10] in terminal control. It's uh up a little
+[00:57:13] bit. I'm going curious that's coming
+[00:57:14] from agent MD or from you.
+[00:57:17] >> I after it produced that spec and I read
+[00:57:20] read through it, I uh I have a skill for
+[00:57:24] terminal control, and I said add
+[00:57:26] verification and proof with terminal
+[00:57:27] control to our spec so that a human can
+[00:57:30] verify the correctness of your
+[00:57:31] implementation. So, that was me after
+[00:57:33] the first spec came out.
+[00:57:35] Uh Sunu, you you had a question.
+[00:57:38] >> So,
+[00:57:40] So, I the the idea of having it almost like
+[00:57:43] generate types and then having it like
+[00:57:45] fill in the blanks is very appealing.
+[00:57:47] But, the question is like why? Have you
+[00:57:49] noticed Is it because you feel strongly
+[00:57:52] that the function boundary should be
+[00:57:53] defined by you? Or are you saying that
+[00:57:57] models are still not good enough at
+[00:57:59] generating those boundaries? Or you
+[00:58:01] noticed just like
+[00:58:02] I want to understand like why you do it
+[00:58:04] this way. It is very appealing by the
+[00:58:06] way. Like I And the reason I'm asking is
+[00:58:08] like does it scale?
+[00:58:09] >> Yeah. I do it because one, that's almost
+[00:58:12] almost how I worked
+[00:58:13] previous to AI. I always started
+[00:58:18] at the type level and thought about
+[00:58:19] types and interfaces first. And, you
+[00:58:24] know, when I used to create a new
+[00:58:28] JavaScript module or file, like I tried
+[00:58:31] to keep a single module
+[00:58:33] centered around a single core type and
+[00:58:37] then build functions and combinators
+[00:58:39] around that type. And if I feel myself
+[00:58:41] starting to operate over different
+[00:58:43] types, that's probably a a good sign
+[00:58:45] that I need to break out to a new
+[00:58:47] module. And I kind of compose those
+[00:58:49] together. And I definitely do not think
+[00:58:52] that agents are good enough or the
+[00:58:55] models today are good enough at doing uh
+[00:58:58] like abstraction and system design. Uh
+[00:59:01] they
+[00:59:02] even with
+[00:59:03] guidance and skills and everything, they
+[00:59:06] still
+[00:59:07] quite frankly produce really bad slop.
+[00:59:10] So, this gives me
+[00:59:11] the ability up front to align on
+[00:59:17] how the system is going to fit together
+[00:59:19] and how data is going to flow through
+[00:59:21] it. And like looking at a call stack, I
+[00:59:23] can like very clearly see how data will
+[00:59:25] flow through it. and it it because, you
+[00:59:28] know, it's
+[00:59:30] so much code is coming out and I mean I
+[00:59:32] still read all the code in review, but
+[00:59:35] like this also helps cement my
+[00:59:36] understanding of the abstractions and
+[00:59:39] how data and code flows through through
+[00:59:41] my services that I'm working on.
+[00:59:43] >> I've never seen a model go, "Oh, this
+[00:59:45] this file is getting too big. I need to
+[00:59:47] refactor it."
+[00:59:47] >> Yeah, [laughter] exactly.
+[00:59:50] exactly. >> Like
+[00:59:51] Like they don't they don't feel the friction
+[00:59:53] in the way that they feel. I really like
+[00:59:54] this flow. This is great.
+[00:59:55] >> They also do this thing where like
+[00:59:58] like they make tons of tiny abstractions.
+[01:00:01] Like I can give them uh Matt Pocock's
+[01:00:04] skill and like deep modules, for
+[01:00:06] example, which I think is very useful
+[01:00:08] and I still use and
+[01:00:10] will inject into the context for some of
+[01:00:12] this, but it will like make these very
+[01:00:14] thin interfaces and create just like
+[01:00:17] one-off adapters and it's just like
+[01:00:20] want you to
+[01:00:22] look at the abstractions we currently
+[01:00:24] have. I want you to look at the
+[01:00:25] interfaces we already have. Does it fit
+[01:00:27] anywhere? Can we adapt any of them? Is
+[01:00:28] something wrong? Uh rather than just
+[01:00:30] being so trigger-happy to make a new
+[01:00:32] So, I've been trying to
+[01:00:34] like put resistance between introducing
+[01:00:37] new abstractions with the agent, if that
+[01:00:39] makes sense.
+[01:00:43] >> The other thing I really love is this
+[01:00:45] this plan editor is incredible and I regret
+[01:00:48] not trying it even though you've told me
+[01:00:50] like 10 times to do it because the UX
+[01:00:52] model of just being able to like paint
+[01:00:56] like just brush strokes over areas and
+[01:00:58] like comment on it and then pass it on
+[01:01:01] is very different from this idea of the
+[01:01:03] entire source code be behind a chat
+[01:01:06] window and the chat being the only thing
+[01:01:07] that you interact with. How has every
+[01:01:10] other agentic AI ID not stolen this
+[01:01:14] year? This is just absolutely remarkable
+[01:01:16] UX. I love it.
+[01:01:17] >> Codex just in the past couple days
+[01:01:19] days introduced the ability to like annotate
+[01:01:22] the previous agent message and send
+[01:01:24] feedback in. So, like
+[01:01:25] >> [gasps]
+[01:01:25] [gasps] >> I actually like a lot of times I will
+[01:01:28] will not settle on the first output of a
+[01:01:30] plan, right? I'll come in here and be
+[01:01:31] like, I don't like the name of this
+[01:01:33] type. You're like, this should be
+[01:01:35] this should be workspace
+[01:01:38] name action instead.
+[01:01:41] And then I'll come down here and be
+[01:01:42] like,
+[01:01:43] you know,
+[01:01:45] this is wrong, you know, back and forth
+[01:01:48] and then I'll have it update the spec
+[01:01:49] and then I'll launch back in and just go
+[01:01:52] back and forth using plan annotator like
+[01:01:53] this because I can
+[01:01:55] make these larger brush strokes to the
+[01:01:57] full plan rather than being like having
+[01:01:59] to scroll up and down in my terminal and
+[01:02:01] like copy and paste pieces and like
+[01:02:04] aggregate that together in a tiny text
+[01:02:05] box. It's It's so useful. Plan annotator
+[01:02:07] has been without a doubt the most
+[01:02:08] important tool, I think, to like getting
+[01:02:10] good outcomes.
+[01:02:12] >> I feel like it would also cool out that
+[01:02:13] that this is is probably not how the labs the
+[01:02:16] like
+[01:02:17] labs want you to be working with the
+[01:02:19] models. Like
+[01:02:21] like that's why
+[01:02:23] like that's why the like interfaces
+[01:02:25] aren't designed like this and that like
+[01:02:28] they don't they
+[01:02:29] I think that they probably want you to
+[01:02:30] be deferring more to the models and like
+[01:02:33] trying to solve these problems through
+[01:02:34] like loops rather than
+[01:02:36] >> How do you square that with Codex
+[01:02:38] Codex adopting the ability to
+[01:02:40] or annotate the previous agent message
+[01:02:43] now?
+[01:02:44] >> That it's like nowhere near the same.
+[01:02:47] same. I think it's like a
+[01:02:49] parallel feature. It's not like
+[01:02:52] trying to solve the same. Do you know
+[01:02:53] what I mean?
+[01:02:55] >> Interesting.
+[01:02:55] Interesting. >> Like it's it's more for like
+[01:02:56] like highlighting a bit of text than it is uh
+[01:02:59] >> Like planning and doing work.
+[01:03:02] work. >> Yeah.
+[01:03:03] Yeah. I I would say this is maybe more for
+[01:03:06] like Claude than it is for OpenAI, I I
+[01:03:09] would say on like Claude desktop.
+[01:03:11] >> I haven't used Claude or any of that
+[01:03:13] that stuff for so long that I I I can't
+[01:03:16] comment on I don't I just don't know
+[01:03:18] whether what the state of the art is
+[01:03:20] currently.
+[01:03:21] Beyond pushing loops and dynamic
+[01:03:23] workflows and stuff.
+[01:03:24] >> But it was I think that this is a better
+[01:03:27] better flow than like the loops and dynamic
+[01:03:29] workflows. I know it's it's so
+[01:03:30] interesting how much uh
+[01:03:32] how how much the way how many different
+[01:03:34] ways of working have evolved over the
+[01:03:36] past 3 years.
+[01:03:38] >> Yeah.
+[01:03:39] Yeah. >> Like you have this you have
+[01:03:42] have whatever the hell the bun rewrite was
+[01:03:44] which is like incredible.
+[01:03:46] >> Oh, we've got dogs barking.
+[01:03:49] >> [laughter]
+[01:03:52] >> That might be the delivery of
+[01:03:55] of uh
+[01:03:56] >> of your Codex Apple TV remote.
+[01:03:58] remote. >> Yeah, I might have to step away for yep,
+[01:04:00] yep, I'll be right back.
+[01:04:03] New Apple remote courtesy of
+[01:04:06] >> courtesy of Codex.
+[01:04:07] Codex. >> Codex, is this now an unboxing stream?
+[01:04:09] stream? Is that what we're doing?
+[01:04:11] >> Um
+[01:04:12] Um >> See it.
+[01:04:14] it. Oh, dude, this is
+[01:04:15] >> Hey, Ollie.
+[01:04:16] Ollie. I need to set I want to set up Codex
+[01:04:18] computer used to just order groceries
+[01:04:19] for me automatically.
+[01:04:20] >> Dude, I'm telling you it auto ordered an
+[01:04:23] an Apple remote for me and I didn't even
+[01:04:24] know it.
+[01:04:25] >> Yeah.
+[01:04:26] Yeah. >> Thank you, Codex.
+[01:04:27] Codex. >> I guess I could just give it its own
+[01:04:29] own credit card.
+[01:04:30] >> I'm still stunned by the Plan out data
+[01:04:31] data UX because now I'm thinking about how it
+[01:04:34] would generalize for like like regular
+[01:04:36] life use cases.
+[01:04:38] Like it doesn't know just for coding
+[01:04:40] agents, right?
+[01:04:41] >> I use it when I'm budgeting. Like it'll
+[01:04:42] it'll put out like I'll be like how can I
+[01:04:45] recon reconcile like my Amex and I'll
+[01:04:47] like it outline like what it thinks how
+[01:04:48] to square, you know, transactions to
+[01:04:50] different budget categories and I'll
+[01:04:52] just launch that in the Plan out data
+[01:04:54] and I'll correct it where it needs to
+[01:04:55] and then it'll go do go through executor
+[01:04:57] with the YNAB MCP generated by the open
+[01:05:01] API spec and just do it. Yeah, it's
+[01:05:03] fantastic. So, I want to show you
+[01:05:05] another feature of Plan out data which
+[01:05:07] is its local code review capabilities.
+[01:05:10] And this is something that I like really
+[01:05:13] hyper-focused on early in the year. Like
+[01:05:16] was tweeting about it a lot. I was
+[01:05:18] generating prototypes. Um I I felt very
+[01:05:22] early on that local code review
+[01:05:24] was an issue. Like I did not want to
+[01:05:26] push code to GitLab or GitHub and have
+[01:05:31] it public yet. Like I didn't feel like
+[01:05:33] that flow was good for reviewing code. I
+[01:05:35] didn't want like co-workers to have to
+[01:05:37] notifications for pushes that
+[01:05:39] weren't ready yet. So, I was really like
+[01:05:41] trying to find a solution and
+[01:05:44] Planetator was that. So, once I have the
+[01:05:46] spec finished, right? We have our spec
+[01:05:48] file here. It has all the stuff
+[01:05:50] outlined. It has
+[01:05:52] the types, the code, blah blah blah.
+[01:05:54] Um validation, verification, tests,
+[01:05:56] everything. So, once I kick this off and
+[01:05:59] it goes through implementing it, I will
+[01:06:01] let it run, let it finish, let it do its
+[01:06:03] first pass over to anything. I currently
+[01:06:05] have been experimenting with a skill uh
+[01:06:08] my own skill for doing code review that
+[01:06:10] um
+[01:06:11] I have a skill for my own coding
+[01:06:13] standards. Basically, it's like a
+[01:06:14] two-track It actually uses Matt Pocock's
+[01:06:16] for kind of two-track comparison.
+[01:06:18] it checks one sub-agent will check
+[01:06:21] the spec. One sub-agent will
+[01:06:23] against my coding standards and
+[01:06:25] then do an initial pass.
+[01:06:27] I've found that like I'm spending more
+[01:06:29] time than I want doing code review and
+[01:06:32] constantly have to like nitpick the same
+[01:06:34] thing. So, I'm just trying I've been
+[01:06:36] experimenting with how to get a good
+[01:06:39] first pass over that.
+[01:06:40] But, once the code's done, you we can
+[01:06:43] come in here and do something like
+[01:06:44] Planetator review.
+[01:06:47] And this will launch up and if you diff
+[01:06:49] it against origin/main, you can come in
+[01:06:51] and kind of see basically all the
+[01:06:53] changes. And then I'll come through here
+[01:06:55] and this is where I this is how I still
+[01:06:57] read all of the code, right? Like I'll
+[01:06:58] come in here and I will read the diffs.
+[01:07:02] And let's say I don't like this. Like I
+[01:07:04] do it, you know, X, Y, and Z.
+[01:07:08] Add comment, you know,
+[01:07:10] just step through file through file, and
+[01:07:12] this is all built on PR diffs, so it's
+[01:07:14] lovely diffing.
+[01:07:16] And you can basically just step through
+[01:07:18] everything, see it, and then you can
+[01:07:19] send feedback. And that will feed back
+[01:07:21] into the agent code review feedback, and
+[01:07:23] then it will go uh address it and fix
+[01:07:26] it. And then I basically just repeat
+[01:07:27] this process
+[01:07:29] until I'm happy with it.
+[01:07:31] So, that that's basically like where my
+[01:07:33] workflow has been at for the past 2
+[01:07:36] months. It gets pretty close to
+[01:07:38] producing code that I would have written
+[01:07:41] myself before AI and agentic engineering
+[01:07:43] was here. And I'm able to work on two or
+[01:07:46] three features, whether that's in work
+[01:07:48] trees or several projects kind of at
+[01:07:51] once and jump back and forth on while
+[01:07:52] the agents are reviewing or writing
+[01:07:54] code. It is way more exhausting, I
+[01:07:57] think, than before, but I am more
+[01:07:59] productive, and that's how I'm getting
+[01:08:00] good outcomes.
+[01:08:02] Um one thing I do want to talk about
+[01:08:04] quick is I mentioned at the start of uh
+[01:08:08] me talking about my workflow that I've
+[01:08:09] started to experiment with Matt Pocock
+[01:08:11] skills a little bit more, and in
+[01:08:14] particular leaning into his kind of
+[01:08:17] wayfinder workflow, which if anyone's
+[01:08:20] familiar with uh his grill me and grill
+[01:08:22] me with docs, which have been quite
+[01:08:24] popular,
+[01:08:25] um those two skills basically help you
+[01:08:28] align with the agent on like what you're
+[01:08:30] actually trying to build or solve. It
+[01:08:31] will like kind of relentlessly interview
+[01:08:33] you and go down every path. And he built
+[01:08:36] on top of that to build this thing
+[01:08:37] called wayfinder, which is for bigger
+[01:08:39] work that might take
+[01:08:41] multiple planning sessions.
+[01:08:44] Um and this will outline like a map of
+[01:08:47] like
+[01:08:48] either grilling sessions that need done
+[01:08:50] to get the feature completed,
+[01:08:51] prototypes, uh or other tasks. And you
+[01:08:55] can see an example of this. I started
+[01:08:57] trying to build uh a new app here, and
+[01:09:00] this is the map that was produced. Uh
+[01:09:03] and you can see all these different sub
+[01:09:05] tickets that went into planning. Before,
+[01:09:07] if you were just doing like grow me with
+[01:09:09] docs or I was just trying to build my
+[01:09:10] own text back up, like this would have
+[01:09:12] been a ton of work. Like this is like
+[01:09:13] way too much for one text back or one
+[01:09:15] past over things. Uh some of these
+[01:09:18] you'll see are labeled as research. Uh
+[01:09:21] some other ones are going to be
+[01:09:23] grilling, which this was like an
+[01:09:25] interview session with me and the agent.
+[01:09:27] Some of these are prototyping
+[01:09:29] um or tasks. So, it'll go and create
+[01:09:32] throwaway implementations.
+[01:09:34] Um you can see here it has like the
+[01:09:36] proof of like I went and like
+[01:09:37] implemented a potential like interface
+[01:09:40] for this project. Like what do you think
+[01:09:41] about it? And it'll eventually build up
+[01:09:44] this text back in the way that I showed
+[01:09:47] before, but it goes through all of these
+[01:09:49] places that there was ambiguity in my
+[01:09:52] initial plan and it resolves all the
+[01:09:55] ambiguity over these different sessions
+[01:09:57] and then it'll eventually spit out kind
+[01:09:59] of issues for that agent to go
+[01:10:00] implement. So, I'm playing with that. Uh
+[01:10:03] I'll keep everyone updated on how I feel
+[01:10:05] about that in the next coming weeks, but
+[01:10:07] uh that's kind of my my workflow right
+[01:10:09] now.
+[01:10:10] >> Cool. Thanks for sharing. Uh this is
+[01:10:12] is amazing because uh yeah, I keep thinking
+[01:10:15] that you and I have like fairly similar
+[01:10:18] output in terms of standards, but it is
+[01:10:20] so completely different from how I do
+[01:10:23] this. Thank you very much. I'm like
+[01:10:24] quite grateful.
+[01:10:25] >> I'm uh I'm excited to see how you guys
+[01:10:28] guys work. Work is work.
+[01:10:30] >> Yeah.
+[01:10:30] Yeah. Well, thank you everyone for tuning in.
+[01:10:32] That's it for the next token episode
+[01:10:35] two, aka the third episode. At some
+[01:10:38] point we're going to have to figure out
+[01:10:39] uh this zero indexing problem we've got
+[01:10:41] ourselves into. Uh we'll be back in two
+[01:10:44] weeks with more opinions, predictions,
+[01:10:46] workflows, and uh whatever Sunil happens
+[01:10:48] to be tilted at at the time. Follow the
+[01:10:51] show wherever you're watching or
+[01:10:52] listening and tell us what you think in
+[01:10:53] the comments.
+[01:10:55] >> Uh
+[01:10:55] Uh one of the things that's been on my mind
+[01:10:57] is I also want to talk about this
+[01:10:59] industry wide phenomenon of burnout
+[01:11:02] that's happening
+[01:11:03] and if I may be vulnerable for a second
+[01:11:05] I'm actually deep in the throws of
+[01:11:07] burnout like I've actually gone for the
+[01:11:09] last two weeks with approximately zero
+[01:11:13] lines of code which is weird for me
+[01:11:14] because I was averaging about 50 to
+[01:11:16] 60,000 [music]
+[01:11:17] of code a week before that
+[01:11:19] and I'm actually so which is why I
+[01:11:21] started two weeks of leave you know you
+[01:11:23] see the ship burning and you immediately
+[01:11:26] some leave so
+[01:11:27] I saw that I saw the Odyssey today I did
+[01:11:29] this podcast with my friends and I'm
+[01:11:31] going to set up the Mac Mini that I
+[01:11:33] bought for open class six months ago
+[01:11:36] but I would love for us to like talk
+[01:11:38] about that and I'm looking forward to
+[01:11:40] seeing Reese's workflow I'm looking
+[01:11:42] forward to sharing my workflow but I do
+[01:11:44] want to talk about how we survive as an
+[01:11:46] industry through whatever the is
+[01:11:49] going on with everyone at the moment so
+[01:11:51] but still so grateful Dylan for you
+[01:11:53] showing us
+[01:11:54] how you do [music] things
+[01:11:56] >> Well go go get rested up and hopefully
+[01:12:00] hopefully recover here I'm not far behind you on
+[01:12:03] that front I am
+[01:12:05] I am straddling
+[01:12:06] burnout myself and I think once we get
+[01:12:09] artifacts to open beta here in the next
+[01:12:12] couple weeks I'm probably also going to
+[01:12:13] take
+[01:12:14] two weeks off just to kind of
+[01:12:18] step away and
+[01:12:20] let my
+[01:12:21] brain get away from the AI mush
+[01:12:24] but thank you everyone we will catch you
+[01:12:26] next time

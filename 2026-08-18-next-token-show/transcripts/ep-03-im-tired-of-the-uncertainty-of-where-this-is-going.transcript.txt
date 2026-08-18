@@ -1,0 +1,1421 @@
+# Cleaned transcript
+
+Generated from YouTube automatic English captions. Timestamps mark the start of each newly emitted caption segment.
+
+[00:00:00] I wanted to start things off by talking
+[00:00:02] about a tweet that I had which was
+[00:00:05] horrifying to be listening to a human
+[00:00:07] being speak and realize that they're
+[00:00:09] just a vessel for claude. This is the
+[00:00:10] second time I've done this tweet. And
+[00:00:12] the first time it did it did like Okay,
+[00:00:15] this second time around though, I guess
+[00:00:17] people might just be feeling it more. Uh
+[00:00:19] cuz it did like 700,000 views. And also,
+[00:00:23] of the first replies I got to it was
+[00:00:25] a AI slop reply, which was like
+[00:00:28] >> drives me crazy.
+[00:00:30] crazy. >> They drive me crazy. It It's just the
+[00:00:32] the the generic. This one was AI can help
+[00:00:34] organize ideas, but people still need
+[00:00:36] their own voice. That's what makes
+[00:00:38] conversations interesting. There's like
+[00:00:40] there's so much wrong with that as an AI
+[00:00:42] slop reply because it's just it's like
+[00:00:44] teetering on if it's real or not and
+[00:00:48] then I have to like go to the person's
+[00:00:49] profile and see that they replied to 10
+[00:00:52] tweets in a minute. And I just I replied
+[00:00:56] in all caps just ah like screaming uh
+[00:01:00] [laughter] because
+[00:01:01] >> I'm not going to lie, I just if I even
+[00:01:03] even get the sense that someone has replied
+[00:01:05] to me or another tweet with AI, I just
+[00:01:07] block them like instant
+[00:01:10] >> I don't get it. It's annoying. Don't do
+[00:01:12] do it. Uh audience uh I will block you. a
+[00:01:16] little hesitant on the blocking because
+[00:01:18] there's like enough non-neurotypical
+[00:01:22] that reply to me that have the
+[00:01:24] same like phrasing unfortunately that I
+[00:01:28] like I feel bad for them. Um but so this
+[00:01:32] tweet I was watching a video and I
+[00:01:35] realized that like I was watching a
+[00:01:38] video and it just it it hit the claudism
+[00:01:41] of like it's not it's not an X, it's a
+[00:01:44] Y. It was like the dolly shot from Jaws
+[00:01:46] or whatever where you zoom out and you
+[00:01:48] realize you're just 100% reading Claude
+[00:01:51] slop. And I know it's really interesting
+[00:01:54] because we like there's this like
+[00:01:56] forcing function of just output output
+[00:01:58] output and you you do become a vessel
+[00:02:01] for Claude when you don't change the
+[00:02:04] output at all. is like a fascinating
+[00:02:06] thing in that like you've spent all of
+[00:02:08] this time building up your credibility
+[00:02:10] and like spent all the time building up
+[00:02:12] your credibility like who you are as a
+[00:02:14] person and I also don't know that people
+[00:02:17] people are never going to tell you that
+[00:02:19] you're putting out slop at least like
+[00:02:22] unless you like you you need close
+[00:02:24] friends to pull you aside and be like
+[00:02:26] >> if I ever am putting out something that
+[00:02:28] that sounds like slop please just call me out
+[00:02:30] like
+[00:02:31] >> yeah right you don't know that you're
+[00:02:33] you're destroying your credibility
+[00:02:35] I guess from the from the perspective of
+[00:02:37] the person doing it, they're just like,
+[00:02:39] "Okay, more output is better, but you
+[00:02:41] really like lose the humanity in it a
+[00:02:43] little bit, which is tough."
+[00:02:45] >> Yeah. There's like kind of two
+[00:02:47] two conversations around this that I've seen
+[00:02:49] popping up on Twitter. One is like what
+[00:02:54] you're talking about basically catching
+[00:02:56] people
+[00:02:58] using LLM to engage with other humans as
+[00:03:02] like the the proxy or the vessel for
+[00:03:04] that communication rather than um actual
+[00:03:07] humanto human communication where it
+[00:03:10] matters right like even like in things
+[00:03:11] like PR reviews like sometimes like you
+[00:03:14] don't want to be talking directly to
+[00:03:16] another person's agent like you want to
+[00:03:17] have that human discussion I think
+[00:03:19] another part is just like how verbose
+[00:03:23] and how strange these models talk and it
+[00:03:26] seems like it's getting worse or at
+[00:03:28] least more people are becoming sensitive
+[00:03:30] to it. I've recently been tweeting uh
+[00:03:33] about a skill that I picked up off the
+[00:03:35] the guy that made Planetator called Bro.
+[00:03:38] And this bro skill, it's like one line
+[00:03:41] or two two or three sentences is like
+[00:03:43] restate what you just said without using
+[00:03:46] technical jargon and just talk to me as
+[00:03:49] if I'm a human. And like it actually
+[00:03:51] does wonders. That's blown up a bunch of
+[00:03:53] times over the past couple weeks and
+[00:03:55] like now I see in random Twitter threads
+[00:03:58] where people are complaining about this
+[00:03:59] like, "Oh, just use the use the bro
+[00:04:01] scale. Uh like talk to me like a human."
+[00:04:04] And um obviously the other side of it is
+[00:04:06] like especially in the workplace like
+[00:04:08] there have been places like even in like
+[00:04:11] uh our our chat at work where like I can
+[00:04:14] distinctly tell where like someone just
+[00:04:16] pasted a LM response into like a thread
+[00:04:21] and sometimes like that can be
+[00:04:23] warranted. Like it kind of goes both
+[00:04:24] ways like if the person asking a
+[00:04:26] question or looking for information
+[00:04:27] doesn't put in effort. It's like I I
+[00:04:31] today now like I expect people to send
+[00:04:32] their agent out and do a bunch of work
+[00:04:34] before they just ask a easy lowhanging
+[00:04:37] question. But on the other side of that
+[00:04:39] is like if someone took the time to ask
+[00:04:41] like a good question in a human way. Uh
+[00:04:45] give them the respect and your time to
+[00:04:47] answer as a human as well.
+[00:04:50] >> No, at the very least you should say oh
+[00:04:52] oh by the way I just asked open code this
+[00:04:54] and this is what it says. I like people
+[00:04:57] who do that and say I don't know if it's
+[00:04:58] useful take it or leave it and you're
+[00:04:59] like okay fine like I'm approaching it
+[00:05:01] with the same context. I'm seeing a
+[00:05:04] bunch of tweets by the way about people
+[00:05:05] talking about claudisms. Couple of
+[00:05:07] things about this is well first of all
+[00:05:10] people are complaining about how Opus 5
+[00:05:12] is a bit too much in its responses like
+[00:05:15] the language itself has gotten so much
+[00:05:17] more dense loadbearing seams and
+[00:05:21] substrates and I'm like bro like okay
+[00:05:23] like no one has the time to like that
+[00:05:25] like well you need the bro skill. One of
+[00:05:27] my favorite short stories by one of my
+[00:05:29] favorite authors uh Jorge Louie Bourhees
+[00:05:33] uh is a story called um Thone Ukbar
+[00:05:37] Orbius Therius. Uh it's one of my
+[00:05:39] favorite short stories. It's in a short
+[00:05:41] story collection called Fixion. If you
+[00:05:42] want to read it, it's about some dude
+[00:05:45] discovers an encyclopedia about a fake
+[00:05:48] planet. And in it, it describes how uh
+[00:05:51] half the world believes in speaking in
+[00:05:54] nouns and half the world uh loves
+[00:05:56] speaking in verbs. And it becomes a big
+[00:05:59] uh mystery across the world to find out
+[00:06:02] who wrote this, where it comes from. And
+[00:06:04] it turns out to be like a prank by some
+[00:06:06] kind of aristocrat or some [ __ ] like
+[00:06:08] __ ] like that. But but what what ends up
+[00:06:10] happening is that the fiction takes over
+[00:06:12] the actual world and everyone becomes
+[00:06:15] like that and speaking in very specific
+[00:06:17] ways with like this verb specific or
+[00:06:19] noun specific and it destroys art,
+[00:06:22] history, anything of meaning because
+[00:06:24] everyone becomes this beige personality
+[00:06:27] and uh that book that story was written
+[00:06:29] a few hundred years ago and it's a
+[00:06:31] little scary how people are now starting
+[00:06:33] to speak like that. Two real world
+[00:06:35] examples. I think a couple of months
+[00:06:36] ago, some athlete I saw on TV announcing
+[00:06:42] his pick of team, which is a thing
+[00:06:44] Americans do, I guess.
+[00:06:46] >> Uh, but it was very obvious that he was
+[00:06:48] was using the free version of chat GPT, like
+[00:06:50] you know, the language was very like he
+[00:06:52] was reading off his creed.
+[00:06:54] >> But my other favorite one is I think it
+[00:06:56] it happened just a few weeks ago. some
+[00:06:57] legislator, a state senator or someone
+[00:07:00] was reading out a response and in the
+[00:07:02] middle of it he was like u here's a
+[00:07:05] version of this text that sounds better
+[00:07:07] suited for legislative assemblies and he
+[00:07:09] just kept talking [laughter]
+[00:07:12] >> uh if you can find this link or video. I
+[00:07:14] I was I was like, "Holy sh" Like this is
+[00:07:17] corrupting like government and
+[00:07:18] everywhere. Like it's so it's so bad,
+[00:07:22] dude. Like just pure brain rot.
+[00:07:24] >> Like it's affecting Yeah, it's but it's
+[00:07:26] it's brain rot like for adults which is bad.
+[00:07:29] I mean it's definitely bad if they're
+[00:07:31] people are deciding policy based on
+[00:07:34] these things. Uh like substrate is going
+[00:07:37] to show up in an amendment soon enough.
+[00:07:39] That's what I'm saying. Like the word
+[00:07:40] substrate for sure,
+[00:07:41] >> man. I've I've heard human beings in
+[00:07:44] in calls and in conversations and in other
+[00:07:47] videos on YouTube start using the word
+[00:07:48] substrate. And I'm positive I've never
+[00:07:51] heard that word used out of another
+[00:07:53] human being's mouth in before the last
+[00:07:56] four months. Let's get into the to the
+[00:07:58] show. Uh [laughter] welcome to uh the
+[00:08:00] next token. Today is Friday. No, it's
+[00:08:03] not. [laughter]
+[00:08:04] Damn it. I was just breaking the [ __ ]
+[00:08:08] [ __ ] [laughter and gasps]
+[00:08:09] H. Well, let's get into uh the show.
+[00:08:12] Welcome to the next token. Today is
+[00:08:14] Monday, August 3rd, 2026. I'm Dylan
+[00:08:17] Malroy, and this is a podcast about
+[00:08:20] three software engineers who don't have
+[00:08:21] the time or energy to be hosting a
+[00:08:24] podcast.
+[00:08:25] >> I'm Ree. Uh I'm working on Executive.
+[00:08:28] Executive. >> Hi. Uh I'm Sunil Pi. Uh I work at
+[00:08:30] at Cloudflare and so does Dylan. Uh and
+[00:08:33] they sponsored the show for us. So on
+[00:08:35] today's show, we are going to spend most
+[00:08:37] of our time talking about burnout. And
+[00:08:40] at the end, we're going to get into how
+[00:08:42] uh despite the times and the change in
+[00:08:44] our profession, how we still uh find joy
+[00:08:47] in our work. To kick things off, uh, I
+[00:08:50] had a tweet I put out a few weeks ago
+[00:08:53] where I kind of was tiptoeing about this
+[00:08:56] topic a little bit and we've certainly
+[00:08:57] talked about it a bit before on the show
+[00:08:59] and kind of alluded that this episode
+[00:09:01] was coming and that the three of us and
+[00:09:03] I think many others are kind of feeling
+[00:09:04] this way. So, a tweet I put out, I said,
+[00:09:07] "Y'all, I'm not going to lie, it's way
+[00:09:09] harder to get joy and satisfaction out
+[00:09:11] of building with AI than it was before.
+[00:09:13] constantly straddling burnout, being far
+[00:09:15] less immersed in hard problems, constant
+[00:09:18] context switching. I'm tired of the
+[00:09:20] uncertainty of where this is going and
+[00:09:22] how to do it well. And I I think that
+[00:09:25] resonated with people that got a lot of
+[00:09:27] attention. A lot of people,
+[00:09:28] wellrespected people kind of, you know,
+[00:09:31] replied to that tweet or quote tweeted
+[00:09:33] and, you know, said that that it
+[00:09:35] resonated with them and they were
+[00:09:36] experiencing um similar things. And I
+[00:09:41] don't know how and when we get past this
+[00:09:42] and I think um there's certainly
+[00:09:46] starting to be murmurss of this topic
+[00:09:48] going around kind of being more
+[00:09:49] mainstream. Uh for example
+[00:09:52] uh Scott Tolinsky from Syntax FM uh in
+[00:09:55] the past week or so put out a uh a
+[00:09:59] survey um called AI coding and mental
+[00:10:02] health which anyone listening please go
+[00:10:04] find that. I we'll put the link in the
+[00:10:07] in the show notes and uh fill that out
+[00:10:09] truthfully and earnestly. Um it's
+[00:10:11] anonymous. Um but I think that kind of
+[00:10:13] information is good. You know, I talked
+[00:10:15] about my workflow in our last episode
+[00:10:17] and
+[00:10:19] you know, I've worked pretty hard to get
+[00:10:22] to a place where I feel like I can do
+[00:10:24] good agentic engineering, but it is
+[00:10:26] definitely like a huge slog. And there's
+[00:10:28] a lot of uncertainty, which I think is
+[00:10:31] uh a big part of what is causing at
+[00:10:34] least for me the burnout or straddling
+[00:10:37] burnout. I wouldn't say I'm quite at the
+[00:10:39] point of burnout at this point, but you
+[00:10:41] don't know what the next model's going
+[00:10:43] to do. you don't know what the new
+[00:10:44] capabilities coming to harnesses is, how
+[00:10:46] it's going to change your workflow, then
+[00:10:49] just the dynamism of the models getting
+[00:10:52] even if you do the same workflow over
+[00:10:53] and over and over again, still getting
+[00:10:55] inconsistent results. Like that stuff
+[00:10:57] just I think at least for me wears me
+[00:10:59] down over time. So, uh curious how you
+[00:11:02] guys are feeling right now. The first
+[00:11:03] thing about the tweet that stood out to
+[00:11:05] me is actually like how popular it got
+[00:11:09] because it implies that
+[00:11:12] it's about like revealed versus stated
+[00:11:14] preference on Twitter. Otherwise,
+[00:11:16] everything is amazing and everyone's uh
+[00:11:19] building all these incredible things and
+[00:11:21] they're uh uh handling codecs from the
+[00:11:25] beach. But no, like I'm telling you
+[00:11:27] behind the scenes, everyone is just not
+[00:11:29] in a good place like right now. And
+[00:11:32] that's revealed by the likes and
+[00:11:33] retweets where they're like, "Okay,
+[00:11:35] fine. Like we get to this is the way
+[00:11:37] like I can kind of put myself out into
+[00:11:39] the world." And I'm so glad that a
+[00:11:41] respected engineer from a top tech
+[00:11:43] company is like just saying it out like
+[00:11:45] it is because you you clearly connected
+[00:11:47] with like so many people. We actually
+[00:11:49] looked this up. Thanks Chris. Uh and the
+[00:11:52] team uh and there's an official
+[00:11:54] definition for burnout. I didn't even
+[00:11:56] know by the way. The WHO defines burnout
+[00:11:59] as a syndrome conceptualized as
+[00:12:02] resulting from chronic workplace stress
+[00:12:04] that has not been successfully managed.
+[00:12:06] So it has three dimensions. Energy
+[00:12:09] depletion or exhaustion, increased
+[00:12:11] mental distance, negativis, negativism
+[00:12:14] or cynicism about the job and reduced
+[00:12:17] professional efficacy. Uh, I like that.
+[00:12:20] Uh, like one of my favorite uh Twitter
+[00:12:22] people, uh, Marcy Sutton, who doesn't
+[00:12:25] actually, I'm not sure whether she's on
+[00:12:26] Twitter anymore, she kept talking about
+[00:12:27] how,
+[00:12:28] >> uh, burnout uh, happens when you
+[00:12:31] you recognize a problem and you can't really
+[00:12:33] change it.
+[00:12:34] >> So, it's not even clear to me that
+[00:12:35] that what's happening is like real burnout,
+[00:12:37] but it resonates like so strongly. So,
+[00:12:39] there are some things that people kind
+[00:12:40] of get wrong, but we want to get them
+[00:12:41] right when we're talking about it. That
+[00:12:43] burnout is an occupational like
+[00:12:45] phenomenon. It's not a medical
+[00:12:47] condition. It's not like depression or
+[00:12:49] ADHD and a doctor so far can't like
+[00:12:53] diagnose you with burnout. Maybe a
+[00:12:54] therapist, I don't know, but like it's
+[00:12:57] definitely more felt. It's very
+[00:12:58] recognizable. So, there is that, but
+[00:13:00] it's not something that you can uh well,
+[00:13:02] you can't pop a pill for it, I guess,
+[00:13:04] unfortunately. Uh it's also explicitly
+[00:13:07] work related like it doesn't apply to
+[00:13:10] nonwork parts of life. I think that
+[00:13:12] would be closer to something like
+[00:13:14] executive dysfunction or something if
+[00:13:16] it's not actually related to work. It's
+[00:13:18] a problem caused by the job, not by the
+[00:13:21] person. Uh a key burnout researcher, uh
+[00:13:24] Christina Muslak, if I'm framing if I'm
+[00:13:27] spelling that right, frames burnout as a
+[00:13:29] mismatch between person and workplace,
+[00:13:31] which is what Marcy also says. uh
+[00:13:33] meaning there's a mismatch in the
+[00:13:34] workload, the sense of personal control,
+[00:13:37] rewards at work, sense of community at
+[00:13:40] work, fairness at work and uh personal
+[00:13:43] versus work values. Uh it's not personal
+[00:13:46] weakness. Uh it's a mismatch between the
+[00:13:49] job and the person. I think that's also
+[00:13:51] why sometimes like younger people get
+[00:13:53] affected by burnout more than older
+[00:13:55] people. like older people are just
+[00:13:57] either experienced enough to know how to
+[00:13:59] fix it soon enough or or they're just
+[00:14:02] detached from like office values where
+[00:14:04] they're like I'm just here to do a job,
+[00:14:06] bro. Like it's fine.
+[00:14:09] >> I think also maybe part of it is like
+[00:14:11] like more tenured people have probably
+[00:14:15] statistically or potentially gone
+[00:14:17] through it in you know their younger
+[00:14:20] years or previous in their careers. I
+[00:14:21] know certainly there have been
+[00:14:25] two times where I've kind of felt pretty
+[00:14:27] actually burned out at work. not kind of
+[00:14:29] like how I am right now, kind of teeter
+[00:14:31] tottering in and out of it, but um and
+[00:14:34] like going having gone through those two
+[00:14:37] experiences earlier in my career, it's
+[00:14:39] made it easier to identify myself when
+[00:14:42] I'm starting to feel that way and know
+[00:14:47] that I need to like take a step back or
+[00:14:49] realign myself or just, you know, take a
+[00:14:52] moment to think about why I'm feeling
+[00:14:54] this way and what's causing it. One
+[00:14:56] thing that really stuck out to me in the
+[00:14:58] definition is uh actually two to the
+[00:15:01] point. So increased mental distance and
+[00:15:03] reduced professional efficacy.
+[00:15:06] I think those two really uh really I
+[00:15:11] don't know they strike me as like kind
+[00:15:15] of what I'm feeling. I probably have the
+[00:15:18] best work life balance I've had at maybe
+[00:15:21] any company at Cloudflare. like I'm not
+[00:15:24] pressured into long crazy hours. I don't
+[00:15:27] have any unreasonable expectations or
+[00:15:29] responsibility. Like I know the
+[00:15:32] direction I'm going in and the reason
+[00:15:33] why I'm doing it. Like that's all very
+[00:15:35] clear and I feel empowered and I uh am
+[00:15:39] behind the mission and the stuff we're
+[00:15:41] doing. But I think it's trying to
+[00:15:43] grapple with this new way of doing our
+[00:15:45] job. like it
+[00:15:48] our job is fundamentally different on a
+[00:15:51] day-to-day basis if you're someone who
+[00:15:54] into agent engineering which
+[00:15:57] many people in our industry are at this
+[00:16:00] point and the day-to-day just looks it's
+[00:16:03] different job it's a totally
+[00:16:04] different skill set and to be efficient
+[00:16:08] at that job requires learning new skills
+[00:16:11] and I think that's what we've all been
+[00:16:13] trying to do uh over the past 12 to 6
+[00:16:17] months. And um
+[00:16:20] definitely having the reduction,
+[00:16:22] especially up front, in the efficacy of
+[00:16:25] my own work and being able to reliably
+[00:16:27] do my job in this new paradigm has been
+[00:16:30] taxing. and then having it change so
+[00:16:32] often and having unclear guidance and
+[00:16:36] best patterns from other uh you know
+[00:16:39] engineers in the field or just
+[00:16:41] information coming out of the labs just
+[00:16:43] isn't the way it works dayto-day. Um I
+[00:16:46] has been making it really hard.
+[00:16:48] Um, two other articles I want to call
+[00:16:51] out is one from a former co-orker of
+[00:16:54] II, Ethan Naiser. He wrote on his
+[00:16:56] Substack a article called Not Holding
+[00:16:58] Back the Ocean. And I highly recommend
+[00:17:02] any software engineer listening to this
+[00:17:05] episode to go read it. It's it's very
+[00:17:07] short, but Ethan talks about in that
+[00:17:09] article uh grappling with the challenges
+[00:17:14] of or being a person whose identity is
+[00:17:17] very much tied to being a very good
+[00:17:20] software engineer and having spent the
+[00:17:22] past couple years of his career being a
+[00:17:26] very good software engineer and somebody
+[00:17:27] people look up to and having a
+[00:17:29] reputation for doing it well and then
+[00:17:31] having that change kind of overnight and
+[00:17:33] how jarring that is. And he he draws the
+[00:17:36] comparison of uh back in the day when
+[00:17:40] videographers and uh people creating
+[00:17:43] films used to manually cut film and then
+[00:17:45] it moved into the digital era. And uh he
+[00:17:49] kind of says something along the lines
+[00:17:51] of was it about actually physically
+[00:17:54] cutting film or was it about the end
+[00:17:56] product and solving challenges and
+[00:17:58] building good products? and he he he
+[00:18:01] kind of leans into like for me it's
+[00:18:03] always been about solving the challenges
+[00:18:05] and building good products and that
+[00:18:06] means that I need to get really good at
+[00:18:08] this this form of engineering and that's
+[00:18:10] the driving force behind all of it even
+[00:18:12] if it is ambiguous and confusing and
+[00:18:15] hard. Um I thought that was really good.
+[00:18:17] And then another article that got put
+[00:18:19] out last week was an article called the
+[00:18:22] dark knight of mathematics. And this was
+[00:18:24] a mathematician. I'm not sure their
+[00:18:26] name, but they wrote about kind of this
+[00:18:29] existential
+[00:18:30] dread or uh uncertainty around what the
+[00:18:34] world of mathematics looks like and what
+[00:18:36] that means for mathematicians. And he
+[00:18:38] talks about how the improvements in uh
+[00:18:40] OpenAI's models um have been you know
+[00:18:44] solving proofs and theorems and you know
+[00:18:47] ch or uh problems that haven't been
+[00:18:49] solved for you know a century. Um also
+[00:18:52] well worth the read
+[00:18:53] >> post about the math that the
+[00:18:55] the mathematician wrote like I remember
+[00:18:57] reading it when you shared it with me
+[00:18:58] and it's a good post I think because oh
+[00:19:01] this this person is feeling like real
+[00:19:03] angst right now. I think software
+[00:19:05] engineers also felt it like a few months
+[00:19:07] ago. But this person like truly loves
+[00:19:11] mathematics and has always thought the
+[00:19:15] process of mathematics involved
+[00:19:18] mathematicians
+[00:19:19] and like finding all these edges of the
+[00:19:22] universe because it's such a pure
+[00:19:24] science
+[00:19:25] >> and he's seeing this collapse before his
+[00:19:28] his very eyes now. And like it's clear that
+[00:19:30] these models are going to do much more
+[00:19:32] weirder stuff with maths. By the way,
+[00:19:34] like someone was talking about how well
+[00:19:35] maths is a very verifiable domain, but
+[00:19:38] even the verification by humans used to
+[00:19:40] be so hard. It might end up that the
+[00:19:42] proofs that these uh models come up with
+[00:19:45] might not be human verifiable in in very
+[00:19:48] soon like not even like in the far
+[00:19:49] future. Uh and I felt so bad. I felt
+[00:19:52] really badly for that. I wanted to buy
+[00:19:53] the dude a beer. I was like, "Okay,
+[00:19:55] yeah, like this is a person really
+[00:19:57] struggling." And I don't I like that's
+[00:20:01] burnout, I guess. like
+[00:20:03] >> yeah like how do you how do you convince
+[00:20:05] convince the next generation of mathematicians to
+[00:20:07] work on this?
+[00:20:08] >> There was a really uh like stark line he
+[00:20:11] he had in there about for thousands of
+[00:20:14] years young mathematicians went through
+[00:20:18] all of the same process, the same
+[00:20:19] training for all of human history.
+[00:20:22] They've gone through the same exercise
+[00:20:23] of training into mathematics and
+[00:20:25] exploring the universe and quantifying
+[00:20:28] uh things and that is seemingly changing
+[00:20:32] at this moment. Something that has been
+[00:20:33] a part of human nature for since we've
+[00:20:37] been as a species. uh and like yeah I I
+[00:20:41] it's interesting that software engineers
+[00:20:44] and mathematicians are kind of the the
+[00:20:46] first two professions that are kind of
+[00:20:48] being profoundly impacted by AI and
+[00:20:53] uh I imagine over time this is only
+[00:20:55] going to continue happening to more and
+[00:20:57] more professions and I don't think I
+[00:20:59] don't know one I don't think as an
+[00:21:01] industry we're doing a very good job at
+[00:21:04] talking about the human impact of this
+[00:21:06] like you hear you know the headlines and
+[00:21:08] kind of the fear fear mongering or at
+[00:21:10] least the previous fear-mongering from
+[00:21:11] AI labs about AI coming for your
+[00:21:14] jobs, but it is a hard thing to, you
+[00:21:17] know, I've spent the past 14 years being
+[00:21:19] a software engineer and doing the same
+[00:21:22] thing and getting very good at it and
+[00:21:23] now it's just changed and I don't think
+[00:21:26] there's a lot of good guidance on how to
+[00:21:27] deal with that.
+[00:21:28] >> There's also a really interesting
+[00:21:30] interesting article on if LLMs were outputting
+[00:21:34] binaries instead of uh
+[00:21:37] >> Oh, yeah. I did read that
+[00:21:38] that >> code
+[00:21:39] code >> um to help empathize with what like
+[00:21:42] like artists are going through where you
+[00:21:44] don't you don't have this like
+[00:21:45] collaboration with the machine. You just
+[00:21:48] have this thing that you're like
+[00:21:49] competing with. And that was also a
+[00:21:51] really interesting one. I don't know how
+[00:21:52] much that relates on the mathematics
+[00:21:54] side uh where I I I assume that it
+[00:21:59] disproving the conjectures is closer to
+[00:22:01] binaries than it is to code. I think it
+[00:22:05] applies more to software engineers than
+[00:22:06] it does to mathematicians by the way.
+[00:22:08] Like I think the reason everybody loved
+[00:22:11] like 4.5 4.6 so much especially in like
+[00:22:15] and January because
+[00:22:17] that was before the hey we are going to
+[00:22:20] let the agent run for 12 hours and have
+[00:22:22] it do something. It was still very much
+[00:22:24] tactile. You were moving with the LLM
+[00:22:27] making changes etc etc. And that's the
+[00:22:29] thing like I I'll be honest like I don't
+[00:22:32] see what the point of AI generated music
+[00:22:34] is but I am so bullish on the idea of
+[00:22:40] um AI tools for making music. I did a
+[00:22:43] small demo of this earlier and it's
+[00:22:45] called pizza because I'm terrible at
+[00:22:46] like naming things. Um where I try to
+[00:22:50] put uh an agent interface right next to
+[00:22:53] a digital audio workstation where you
+[00:22:55] can still manipulate the dials etc. But
+[00:22:57] anything else you can actually like jump
+[00:22:59] into the agent and ask it to and you'll
+[00:23:00] see it like happen in front of you. It
+[00:23:02] actually like twists the dials and
+[00:23:04] changes sliders and things like that. A
+[00:23:06] that's not so threatening for musicians
+[00:23:08] because they're like, "Oh, it's just
+[00:23:10] another little thing I can use like in
+[00:23:12] my door while making music, but it still
+[00:23:15] means that I feel like my hands are in
+[00:23:17] the goo of like making the music even
+[00:23:20] though I'm using like an LLM to do it."
+[00:23:22] And I think 4.5 4.6 still did that. Uh,
+[00:23:25] not done a 12-hour goal that
+[00:23:29] produce anything but garbage. I'm
+[00:23:32] sorry. I I still need to like check it
+[00:23:34] every once in a while. And I wanted
+[00:23:37] I'm not saying I'm an artist. I am a
+[00:23:39] failed artist is what I am. But I still
+[00:23:42] want to feel in like I want to feel
+[00:23:44] connected to the code that I'm
+[00:23:46] generating. Like I I want to walk the
+[00:23:48] journey with the agent. I don't know.
+[00:23:49] Like I I I did have a 12-hour goal that
+[00:23:55] outputed I tried the the game prompt the one that
+[00:23:58] was going around where the guy was like,
+[00:24:01] "Did you guys read the prompt on what
+[00:24:02] that one was? It was
+[00:24:04] >> I wonder what you're talking about."
+[00:24:06] about." >> Um so there was this uh I I forgot what
+[00:24:10] what his name was. Um but he basically was
+[00:24:13] like, "Hey, go implement uh
+[00:24:16] Counterstrike." He was like, "Okay, Opus
+[00:24:18] Opus 5, go implement Counter-Strike." It
+[00:24:20] does all of the 3D assets
+[00:24:23] programmatically. It does like the guns
+[00:24:25] programmatically. And the end result is
+[00:24:27] like decently competent output where you
+[00:24:30] get like an actual game you can go run
+[00:24:32] around in. So, I did that on like a I I
+[00:24:35] tweaked the prompt. The the prompt is
+[00:24:36] like super minimal. It's maybe like
+[00:24:39] three paragraphs, and by paragraphs, I
+[00:24:42] mean like two sentences each. Uh
+[00:24:44] >> Yeah. Yeah. And it's basically like,
+[00:24:47] like, hey, you're implementing XGAME, make it
+[00:24:50] photorealistic
+[00:24:51] sloop, verify your outputs, uh, and go
+[00:24:55] run autonomously. So, there's like a
+[00:24:57] bunch of interesting things to break
+[00:24:59] down there. The first one was that
+[00:25:02] I so like getting started with
+[00:25:04] programming. Uh, so I I gave it Mario
+[00:25:06] Kart to implement and I spent like six
+[00:25:10] months when I was like 18 trying to make
+[00:25:12] a VR version of Mario Kart
+[00:25:13] >> and trying to figure out the like cart
+[00:25:16] cart physics and how you can make it do loop
+[00:25:18] toloops and all this stuff. I So I was
+[00:25:20] like, "Okay, let's see if it can output
+[00:25:21] this." And it did pretty good pretty
+[00:25:23] good output in terms of like the cop
+[00:25:25] physics felt right and like the drifting
+[00:25:27] felt right and like can't even imagine
+[00:25:30] how useful of like a learning resource
+[00:25:32] that would have been in terms of like
+[00:25:34] when I was trying to learn how to do
+[00:25:36] these car physics years ago. I it was
+[00:25:40] just like me doing trial and error
+[00:25:42] trying to figure it out not having a
+[00:25:43] bunch of resources to turn to. Um,
+[00:25:47] the other thing is like
+[00:25:49] there's a weird thing I think there's a
+[00:25:52] thing that I've noticed of like when you
+[00:25:54] try and interject into what the model is
+[00:25:58] doing because the like as dumb as the
+[00:26:00] slashloop verify your work make it great
+[00:26:03] prompt is it does actually work very
+[00:26:06] well. Uh, and I think that there's an
+[00:26:08] interesting thing there in terms of like
+[00:26:10] when you give the agent the ability to
+[00:26:11] verify its own work and test its own
+[00:26:13] work and do all that, you get better
+[00:26:15] outputs. Um, but the thing about all of
+[00:26:19] these like game prompts is you're not
+[00:26:22] like interjecting your own like taste
+[00:26:24] and g like game design and all of this
+[00:26:28] into the prompt. The LLM is just making
+[00:26:31] like what it it wants to make. And I
+[00:26:33] think that once you like try and
+[00:26:35] interject into it, you like start to
+[00:26:37] fight the training data and that's where
+[00:26:39] your outputs get worse. There's a bunch
+[00:26:41] of interesting things. So
+[00:26:43] >> I feel almost opposite that like
+[00:26:46] like I need to interject and steer to get the
+[00:26:49] results that good results that I need.
+[00:26:53] I I maybe it's this like loop this like
+[00:26:57] there's like the valley of despair where
+[00:26:58] like if you're trying to do very
+[00:27:02] >> I know
+[00:27:03] know >> where if you're trying to do like very
+[00:27:05] very agentic written software that when you
+[00:27:08] try and interject into the agentic
+[00:27:10] written software then it's more painful.
+[00:27:14] But if you're like more [clears throat]
+[00:27:15] using it as like a typing replacement,
+[00:27:17] then the interjection works versus like
+[00:27:20] if you're letting it run and burn tokens
+[00:27:23] and verify itself and all that, then it
+[00:27:25] you will al also get good results. I
+[00:27:28] don't know. People say you get good
+[00:27:29] results. I'm
+[00:27:31] I'm yet to see like I'm yet to be
+[00:27:35] convinced. It's funny that Sil you
+[00:27:37] talked about uh starting to work more
+[00:27:42] closely alongside an agent. Like you
+[00:27:44] talked about building that sound program
+[00:27:47] and having an agent side by side. I
+[00:27:50] actually in the like this weekend I was
+[00:27:51] like I I cannot even with my workflow
+[00:27:55] last time I I have started now just like
+[00:27:59] opening up like a markdown document that
+[00:28:01] I write in and have the agent watch. I
+[00:28:04] just iterate back and forth in that.
+[00:28:06] It's similar to the techspec before, but
+[00:28:07] like I correct it immediately and I've
+[00:28:10] just been using like Luna to make it
+[00:28:12] super fast and have that very fast back
+[00:28:15] and forth with it. And like that seems
+[00:28:18] to be working well, but it's also like
+[00:28:21] like I talked about last time, a lot
+[00:28:22] more effort um to to get it, which
+[00:28:26] paradoxically the most annoying thing of
+[00:28:29] uh this time period is that like as
+[00:28:32] exhausting and as ambiguous and dynamic
+[00:28:35] as these tools are, like I am actually
+[00:28:39] more productive for better or worse,
+[00:28:41] like I am outputting more work and work
+[00:28:45] that I'm the quality
+[00:28:46] that I'm proud of and can put my name
+[00:28:48] on, but it's exhausting uh for a lot of
+[00:28:50] the reasons we've outlined. Um yeah, I'm
+[00:28:53] curious to know like how how have you
+[00:28:56] been dealing with this?
+[00:28:59] >> I think we ended last time show with me
+[00:29:01] me saying that I'm like burnt out as hell.
+[00:29:03] So like since then I've actually taken
+[00:29:05] like two weeks of leave
+[00:29:07] >> and it was amazing. Um I uh Spider-Man
+[00:29:10] movie was good by the way. I also watch
+[00:29:12] movies in a very specific way that I
+[00:29:14] recommend other people do which is you
+[00:29:16] go for the morning show on a weekday and
+[00:29:18] it's like empty which means
+[00:29:20] >> you can like manspread over like the
+[00:29:22] the couch. I do the everyman and they have
+[00:29:24] couches there.
+[00:29:25] >> Uh and uh you get a big popcorn and like
+[00:29:29] like I I really like watching movies in
+[00:29:30] slightly empty theaters. Like I love it.
+[00:29:32] >> My favorite thing there is a period of
+[00:29:34] of time in my life where on Sunday mornings
+[00:29:37] uh I would go to see a movie by myself.
+[00:29:40] I would pick up Duncan. I would just go
+[00:29:43] in and I would have a coffee. I would
+[00:29:45] have a bacon, egg, and cheese and hash
+[00:29:46] browns. I'd be like the only person in
+[00:29:48] the theater. It was amazing. 10 out of
+[00:29:50] 10. Recommend.
+[00:29:51] >> And I get it. Like people with real real
+[00:29:53] real jobs. No, we have real jobs. Uh with
+[00:29:55] like jobs, families, they need to like
+[00:29:57] synchronize and but they end up going
+[00:29:59] like for the later shows. I'm just
+[00:30:01] saying like if you can go alone to like
+[00:30:04] uh and you get like discounts also like
+[00:30:06] for those shows. Watching Spider-Man
+[00:30:08] that was amazing. like you should
+[00:30:10] do it. It did give me like a little bit
+[00:30:12] of time to like think about uh like what
+[00:30:15] I want and how and I'm I work on the
+[00:30:18] Cloudflare agents team in Cloudflare.
+[00:30:20] The team is amazing. Like we have like
+[00:30:23] hitters on it and we've been doing
+[00:30:24] really well. Cloudflare's agent story is
+[00:30:27] like doing really well. Well, the agents
+[00:30:28] SDK stuff uh that's what we do. So, it's
+[00:30:31] not like I have like my values are so
+[00:30:34] aligned with the company's values. Oh,
+[00:30:35] I'm being such a company shell here.
+[00:30:38] Take it, take take it or leave it,
+[00:30:40] right? Uh so where exactly am I finding
+[00:30:43] the burnout from? Chris actually uh
+[00:30:46] thanks Chris Higgins. Uh he linked uh he
+[00:30:50] linked us to uh this article about um
+[00:30:54] his name is Glyph Lefkowitz. He's come
+[00:30:57] up with a formula. It's called the
+[00:30:58] futsing fraction uh that and it's got a
+[00:31:01] whole bunch of factors for uh the
+[00:31:03] expected value when you interact with
+[00:31:06] one of these coding agents inference
+[00:31:08] machines and depending on different
+[00:31:09] values based on like how much time you
+[00:31:12] spend on it what probability it's going
+[00:31:13] to give you the right amount of uh right
+[00:31:15] answer the cost per inference loop etc
+[00:31:18] etc whether it's actually worth uh
+[00:31:22] spending your time with these things
+[00:31:24] like because if you get a fraction
+[00:31:26] that's on the wrong side of one then you
+[00:31:28] are probably better off doing it by
+[00:31:29] yourself but it's hard to argue in the
+[00:31:32] face of just lines of code like it is
+[00:31:35] probably worth the time and money spent
+[00:31:38] on it uh but the thing that I kept
+[00:31:40] thinking about was the fraction and
+[00:31:42] frameworks like that don't calculate the
+[00:31:45] toll that it takes on human beings
+[00:31:47] especially when you do it like many
+[00:31:49] times in a row I was feeling similar
+[00:31:51] burnout in December last year which is
+[00:31:54] why I missed the entire Christmas uh New
+[00:31:56] Year's uh wibe extravaganza by the way.
+[00:32:00] Uh uh and then I came and I was glad
+[00:32:03] because I watched a [ __ ] ton of pyro and
+[00:32:05] of pyro and I walked around in my nice jacket. I
+[00:32:07] think that might be what is happening to
+[00:32:10] me which is it it's burnout faced by
+[00:32:14] like uncertainty of the job or like what
+[00:32:18] what is the role of code now? Like code
+[00:32:20] used to be like for building products.
+[00:32:22] Now, Charlie Marsh had a great tweet,
+[00:32:24] the guy who made Astral. He was talking
+[00:32:27] about how uh you should be ready to
+[00:32:30] build something
+[00:32:33] and commit to building something that
+[00:32:35] will be obsolete with like very soon.
+[00:32:37] Like you should build products and
+[00:32:39] features uh that will actually not be
+[00:32:42] relevant in a couple of months because
+[00:32:44] it's like very needed at the moment. But
+[00:32:46] the model company or the harness or even
+[00:32:49] just the desire for the feature it might
+[00:32:50] just be a solved problem will disappear
+[00:32:52] very very quickly. I think this is the
+[00:32:55] thing about takeoff right it's not just
+[00:32:57] that these things are uh happening
+[00:33:00] quickly but all the emotions and
+[00:33:02] consequences are also being like
+[00:33:03] compressed. Of course software used
+[00:33:05] would get uh obsoleted like yeah there's
+[00:33:08] like very little software from 20 years
+[00:33:10] ago that like lasts now or whatever it
+[00:33:12] is. Well, some of it still does,
+[00:33:15] >> but like a year ago,
+[00:33:16] ago, >> that sort of software was like a bash
+[00:33:19] bash script that we used to run in CI/CD or
+[00:33:23] some local problem or
+[00:33:25] >> it wasn't entire features or entire
+[00:33:27] entire products or entire tech stacks just
+[00:33:30] getting changed 3 months from now. It
+[00:33:32] just all came on so quickly that like
+[00:33:35] >> there is no writing or there is no
+[00:33:37] no precedence for how to plan and deal with
+[00:33:39] that.
+[00:33:39] >> I'll give you another example that I
+[00:33:40] I faced just today by the way. So, we have
+[00:33:43] a little over a hundred open issues on
+[00:33:45] the agents repo. And we were like, "Oh,
+[00:33:47] we need to do an issue triage and we
+[00:33:50] need to like talk about who like what
+[00:33:52] we're going to do with all of these
+[00:33:53] issues." And previously that would be
+[00:33:55] like an hourong call where the team
+[00:33:57] would jump in like we'd start labeling
+[00:33:59] stuff. Bro, have you used Codex computer
+[00:34:02] use? It's amazing.
+[00:34:03] >> And I was like, "Hey, Cod Codex." Yeah.
+[00:34:06] Yeah. Hey, Codc. Oh, yeah. We spoke about
+[00:34:07] this. It ordered you a [ __ ] Apple
+[00:34:09] __ ] Apple remote last time. like literally got
+[00:34:12] delivered during the show which was uh
+[00:34:15] quite funny. So I just dumped the repo.
+[00:34:17] I was like, "Hey, can you like classify
+[00:34:19] these issues? Tell me which ones are
+[00:34:20] valid, which ones uh can you group them
+[00:34:23] by theme?"
+[00:34:24] >> And it did it all for me in 10 minutes.
+[00:34:26] minutes. The thing is I really enjoyed those
+[00:34:28] issue triage meetings because I used to
+[00:34:30] get to like I work remote so I used to
+[00:34:32] hang out with my team for an hour
+[00:34:33] talking about what is important to us,
+[00:34:35] how we used to what we feel about this,
+[00:34:37] how do we sequence like
+[00:34:39] >> that process was healthy for reasons
+[00:34:41] reasons other than just managing the repository
+[00:34:45] and that's not a thing. So,
+[00:34:47] >> we we were going to record this episode
+[00:34:49] episode last Friday, uh, but we had to
+[00:34:51] reschedule because, uh, I had a
+[00:34:54] production incident with artifacts and
+[00:34:56] like what you're talking about hit me
+[00:34:59] real hard during that. It wasn't like a
+[00:35:01] particularly bad incident. It was just
+[00:35:03] some data we had to clean up. But I
+[00:35:06] spent the day basically like almost 12
+[00:35:08] hours on a call with the other two
+[00:35:11] people on my team. And like I kind of
+[00:35:13] just realized that like I've been
+[00:35:15] working remote since the before times of
+[00:35:16] COVID. I've been remote since 2016. Uh
+[00:35:19] so I'm I'm very I've been doing it for a
+[00:35:21] decade I guess and I'm very used to
+[00:35:24] working remote. I'm very effective at uh
+[00:35:27] socializing remotely and you know
+[00:35:29] merging into remote culture. These are
+[00:35:31] things I'm very comfortable with. But I
+[00:35:33] do think there is a stark difference
+[00:35:36] between now
+[00:35:39] and a year ago in how I'm collaborating
+[00:35:42] with people on my team in in an organ.
+[00:35:45] The company like I can do much larger
+[00:35:49] swaths of work independently by myself
+[00:35:53] without needing other feedback for
+[00:35:54] longer periods of time. And that like
+[00:35:57] the the isolation uh is worse than it's
+[00:36:02] ever been. And part of that is probably
+[00:36:05] recalibrating and being like, okay, I
+[00:36:06] need to like go out of my way to, you
+[00:36:08] know, engage more and be more explicit
+[00:36:11] and intentional about that. But also
+[00:36:13] like it is the fact that like especially
+[00:36:16] on more senior teams, like there is way
+[00:36:18] more autonomy now uh to do larger work
+[00:36:24] for longer periods of times without
+[00:36:26] interacting with teammates remotely. And
+[00:36:28] I think that's that's definitely I I
+[00:36:31] hadn't considered that playing into the
+[00:36:34] way I felt until Friday, but certainly I
+[00:36:37] think that's that's part of it.
+[00:36:39] >> I assume those 12 hours were the longest
+[00:36:41] longest you had spent with these people in like
+[00:36:43] so long for the exact same
+[00:36:44] >> dude. I'm not going to lie, despite it
+[00:36:45] it being an incident, like I had a great
+[00:36:47] day on Friday. Like I got to hang out
+[00:36:49] and solve problems with people I love
+[00:36:51] hanging out and working with.
+[00:36:53] >> It means that startups are actually also
+[00:36:56] also smaller. It means that teams are smaller
+[00:36:58] and like you said like people work
+[00:37:01] independently for way longer periods of
+[00:37:03] time. Is that obsoleted by coding? Like
+[00:37:05] is the before thing obsoleted by coding
+[00:37:08] agents? I guess so. Like it's fine. We
+[00:37:12] had Steve James on our team who's now
+[00:37:13] left and he's doing his own startup and
+[00:37:16] he was so incredible at reviewing PRs
+[00:37:19] like he like last year he would catch
+[00:37:21] things that LLMs wouldn't. I'm sorry to
+[00:37:25] say I think like LLMs have gotten like
+[00:37:27] better than him now. Like I think they
+[00:37:29] catch the edge cases really well now.
+[00:37:32] >> The customtailored review agent is when
+[00:37:34] when you get that dialed in it it's it's
+[00:37:36] pretty good. They can be pretty good.
+[00:37:39] This is one of my problems with LLMs
+[00:37:41] though, or not problems with LLMs, but
+[00:37:43] there's like there's a weird thing with
+[00:37:44] LLMs where some I feel like I'm not
+[00:37:48] using enough inference at times where
+[00:37:50] it's like, oh, this uh
+[00:37:54] like this issue in production could have
+[00:37:55] been caught if you had an agent that was
+[00:37:57] monitoring your logs or this
+[00:38:01] >> issue if you go run this pull request
+[00:38:04] request back through a review agent, oh, this
+[00:38:06] review agent would have caught it. And
+[00:38:08] that's one of my like problems with the
+[00:38:11] but then you like I feel like you're
+[00:38:12] building up this like house of
+[00:38:14] non-deterministic cards of uh inference
+[00:38:18] I really like it's a weird unnatural
+[00:38:20] way of working. Uh but you're building
+[00:38:24] on all this non-determinism but then
+[00:38:26] like it's not like you're you had
+[00:38:28] had a deterministic thing that you were
+[00:38:30] replacing. Like humans weren't aren't
+[00:38:33] deterministic.
+[00:38:34] Uh but at the same time it's it's very
+[00:38:37] >> it was good having a human who knew
+[00:38:39] knew where the skeletons were buried. Right
+[00:38:41] now you you're not sure it's going to
+[00:38:43] pop up.
+[00:38:44] >> It's actually funny that you say that
+[00:38:46] that because like the incident on Friday I am
+[00:38:50] so glad that the three of us were
+[00:38:52] familiar with the codebase and able to
+[00:38:56] like we I mean we used the agent. The
+[00:38:58] incident that happened to us on Friday
+[00:39:00] would have been at least a week-l long
+[00:39:02] pre- aent, but being able to
+[00:39:04] have it gre through click house and go
+[00:39:06] through all our workers observability
+[00:39:08] and query a bunch of different SQLite
+[00:39:10] databases and like have that we caught
+[00:39:13] the problem really quickly. And then we
+[00:39:16] were able to aggregate all the data from
+[00:39:19] all the data sources that we needed
+[00:39:21] within a hour or two and figure out what
+[00:39:23] we needed to do and where the problem
+[00:39:25] was coming from and how to solve it. And
+[00:39:27] then we got to build tools. We built a
+[00:39:29] bunch of scripts to go do data repair
+[00:39:31] and then had agents run and monitor
+[00:39:34] those. And like that would have been at
+[00:39:36] least a weekl long process a year ago.
+[00:39:38] Um but at the same time the actual
+[00:39:42] knowing how to solve the problem
+[00:39:45] and the right correction, I don't think
+[00:39:48] agents would have arrived at it would
+[00:39:50] have been some brute force solution that
+[00:39:51] probably would have caused more problems
+[00:39:53] or incidents than it was worth. But
+[00:39:55] because the three of us knew the
+[00:39:56] codebase was like and the domain matter
+[00:39:58] and where the code was and the SQLite
+[00:40:01] database schemas it was like okay having
+[00:40:03] a scalpel right like you could be very
+[00:40:05] precise about the the fix and knowing
+[00:40:08] where the problem was and like if
+[00:40:10] anything that's made me want to read
+[00:40:12] every line of code even more because
+[00:40:14] I've now lived an incident caused by an
+[00:40:16] agent and then having to go fix it and
+[00:40:18] it would have been yeah it would have
+[00:40:20] been really bad if I didn't know the
+[00:40:22] code. What caused the problem?
+[00:40:25] >> One of the developers uh was like asked
+[00:40:27] asked his agent like why is why is why is the
+[00:40:30] chart spiking? And then it turned out
+[00:40:32] Luna had uh he was doing some design
+[00:40:35] work on a prototype and Luna had
+[00:40:38] deployed straight to prod from his
+[00:40:40] machine rather than going through uh we
+[00:40:42] have a tool called release manager which
+[00:40:43] does basically like blue green uh health
+[00:40:45] mediated deployments and uh part of that
+[00:40:48] it ran a migration on a database that
+[00:40:51] did not have like the other end of
+[00:40:53] writing to it and it uh broke a bunch of
+[00:40:56] data. not only did an LLM cause it, it
+[00:40:58] also like dramatically helped fix it and
+[00:41:03] have it go much more quickly. And like
+[00:41:04] that could have, you know, there's a a
+[00:41:06] billion different ways like that could
+[00:41:08] have been a bad migration push by a
+[00:41:10] developer too. Um,
+[00:41:12] >> so not to like discredit LMS there, but
+[00:41:15] but >> you know the like spiky intelligence. I
+[00:41:17] I I love the the chart of spiky
+[00:41:20] intelligence where it shows like this is
+[00:41:21] the circle and it has these like huge
+[00:41:24] spikes and then these like troughs. They
+[00:41:26] so heavily fall into that. Also like
+[00:41:30] they're not able to like they miss the
+[00:41:32] ability to like understand problem
+[00:41:34] spaces or something something like that
+[00:41:36] if that makes sense. you'll be working
+[00:41:38] with them and they'll jump to proposing
+[00:41:40] a solution and like I can look at the
+[00:41:43] solution that they proposed and I'm like
+[00:41:44] well you're not considering multiple
+[00:41:45] accounts or you're not considering
+[00:41:47] there's this like whole world of issues
+[00:41:51] you're not considering
+[00:41:52] >> and like that compounds because like you
+[00:41:55] you can correct them on any one piece of
+[00:41:57] work but then it's like a a goldfish it
+[00:42:00] just forgets the next session which like
+[00:42:03] >> ironically I think is like kind of an
+[00:42:05] an important thing right now with how
+[00:42:06] context works. But like that's one of
+[00:42:08] the things that's bothering me the most
+[00:42:10] right now and that like I'm actively
+[00:42:12] trying to find ways to
+[00:42:15] uh improve is just like I'm so tired of
+[00:42:19] telling the LMS the same things and
+[00:42:22] catching the same sorts of problems and
+[00:42:25] it's like what is the definition of
+[00:42:27] insanity? Doing like the same thing over
+[00:42:29] and over again and expecting different
+[00:42:30] results. Like I'm like hitting my
+[00:42:32] breaking point. Like I'm trying to
+[00:42:34] capture all my feedback review and just
+[00:42:37] like be able to I don't know if it's
+[00:42:39] skills. I don't know if it's a customer
+[00:42:40] review agent. I don't know if it's
+[00:42:42] loops, but like it is getting
+[00:42:45] exhausting. My soft my PR review looks a
+[00:42:48] little bit like that. And we might go
+[00:42:49] into it a little bit when we do our
+[00:42:51] workflow episodes. Uh please look for
+[00:42:54] edge cases. One of my favorites is can
+[00:42:56] you look for things you might not have
+[00:42:58] looked for? which is just the stupidest
+[00:43:00] thing to tell an LLM, which is
+[00:43:02] >> But it works. I
+[00:43:04] I >> Yeah, it works every single It works
+[00:43:06] works every time, by the way. Like, it works
+[00:43:08] every single
+[00:43:08] >> That one works slashdop like telling the
+[00:43:12] the agent to write the code better. That one
+[00:43:14] works.
+[00:43:15] >> That's negging, dude. That's negging of
+[00:43:18] of a coding agent where you're like, "Yeah,
+[00:43:19] you you sound I can't I cannot believe
+[00:43:22] that I cannot believe that I can tell
+[00:43:24] the magic box to write better code and
+[00:43:26] it will write better code."
+[00:43:28] >> I [laughter] This is It's the dumbest.
+[00:43:33] dumbest. Do you know like how far we've fallen?
+[00:43:36] [laughter]
+[00:43:36] If that works.
+[00:43:40] [snorts] This is like when you go to a
+[00:43:42] restaurant and you ask for everyone
+[00:43:44] orders food and one person says, "Could
+[00:43:45] you bring mine in a clean plate and
+[00:43:48] everyone's mad at you because they're
+[00:43:49] like, "What do you think?" And then the
+[00:43:50] waiter comes back and like, "Who's the
+[00:43:52] one who asked for the clean plate?"
+[00:43:53] Like, I got it for you. Uh,
+[00:43:57] >> is that just how they they serve food in
+[00:43:59] in England on dirty plates?
+[00:44:00] >> I mean, half this country still eats
+[00:44:02] eats like the war is [snorts] going on. Do
+[00:44:03] you know what a chipped butty is, my
+[00:44:05] guys?
+[00:44:06] >> Like, it's French fries in bread. It's
+[00:44:08] It's French fries in in bread. It's a French
+[00:44:10] fry sandwich. And I'm like, come come
+[00:44:13] on, you guys. I I I assume at this point
+[00:44:15] someone's going to put up a chip buddy
+[00:44:17] picture in the video version of this.
+[00:44:19] Make sure it's in my hands right here. A
+[00:44:21] chip buddy. Um,
+[00:44:24] >> do you like Do you like pasties? No.
+[00:44:27] No. >> I love pasties, though.
+[00:44:28] though. >> Okay. That's By the way, I like British
+[00:44:31] British food. Just so we're clear. I like
+[00:44:32] British food. Some of it is
+[00:44:34] embarrassing. There's like too much
+[00:44:35] carbs and stuff. The chip buddy one
+[00:44:37] throws me off. My like my brother-in-law
+[00:44:39] He's like, "Bro, when you
+[00:44:41] when you're having another chip buddy?"
+[00:44:42] I'm like, "Dude, I just I'm it's uh no
+[00:44:47] chip buddies."
+[00:44:48] >> So, Sunil, I I want to I want to ask a
+[00:44:51] a bit more uh deeply here. Like, what what
+[00:44:54] do you think in your day-to-day because
+[00:44:56] both already clarified that
+[00:44:58] like the culture at Cloudflare is great.
+[00:45:00] We're not being overworked. We're not
+[00:45:02] having unrealistic timelines or pressure
+[00:45:04] put on us. like what do you
+[00:45:07] think has led or been the the cause of
+[00:45:12] your your current burnout?
+[00:45:14] >> I have a couple of theories. Uh some of
+[00:45:16] of them are I mean they're all pretty
+[00:45:17] self-centered, but I might as well say
+[00:45:19] A lot of my identity as a software
+[00:45:22] developer, right, comes from being like
+[00:45:24] good at my job.
+[00:45:25] >> Yep.
+[00:45:26] Yep. >> Like be being the guy that they go to,
+[00:45:28] to, you know, like, oh, here's a hard
+[00:45:30] problem. Let's put Sunil on it because
+[00:45:32] he's he's the guy. I mean like sure like
+[00:45:35] I wield these machines really well but
+[00:45:38] I'm not the guy anymore right like I
+[00:45:40] feel like a part of my identity like oh
+[00:45:43] me being a little special baby that that
+[00:45:45] image is under attack the way I try to
+[00:45:48] counter is counter it is by doing more
+[00:45:51] of it where I'm like okay I'm going to
+[00:45:52] work like even harder I'm going to build
+[00:45:55] this incredible serverless hardness
+[00:45:57] which I'm again just so we clear so
+[00:45:59] proud of the work project think is
+[00:46:01] amazing and the cloudflare agents SDK
+[00:46:03] like definitely some of the best work
+[00:46:05] I've done in my life, in my entire
+[00:46:07] career. But it's still not me, dog. Like
+[00:46:10] uh I'm not am I am I doing the brush
+[00:46:12] strokes or am I using a remote control
+[00:46:14] and watching a TV play what episodes I
+[00:46:16] wanted to play? So I think that's I
+[00:46:19] think that's part of it.
+[00:46:21] The second is I'm very worried for the
+[00:46:25] industry and I think I'm taking it on to
+[00:46:29] myself. I've written about this before
+[00:46:31] and I worry about what we are doing
+[00:46:33] especially to like juniors in the
+[00:46:35] industry and I wonder if I'm
+[00:46:36] contributing to it right like oh I'm set
+[00:46:38] by the way uh what I said last time I'm
+[00:46:40] spitting out 50 60 70,000 lines of code
+[00:46:43] week when a junior hears this do they
+[00:46:46] freak out like do they get scared like
+[00:46:48] is that what's expected of them
+[00:46:50] >> and I want to be like no it's not
+[00:46:52] not expected of you but do I believe that
+[00:46:55] like do I actually like isn't that going
+[00:46:57] to be an expectation like eventually
+[00:47:00] like uh and they're doing it in a
+[00:47:03] context where they have very little
+[00:47:06] mentoring like they don't have the same
+[00:47:08] model where they get to sit next to a
+[00:47:09] senior engineer in an office and
+[00:47:11] literally ape the keystrokes right
+[00:47:14] >> yep
+[00:47:14] yep >> uh like you said like senior engineers
+[00:47:16] engineers are all spending their time now just
+[00:47:18] locked in like at work [ __ ] out like
+[00:47:20] ] out like a whole bunch of code so like I said
+[00:47:23] like this is all very self-centered and
+[00:47:24] but it does like affect me and and
+[00:47:28] then I started wondering ing about
+[00:47:30] whether
+[00:47:32] whether I'm even capable of recognizing
+[00:47:34] whether I'm building the right thing.
+[00:47:37] >> Uh, and this one is a little weirder
+[00:47:39] weirder because like I said, like I
+[00:47:42] uh the American frontier was not found
+[00:47:45] by patting the bison on the back and
+[00:47:48] pointing them in a direction, right?
+[00:47:49] Like people died along the way, like
+[00:47:52] discovering the new world and stuff. It
+[00:47:55] feels like there's no struggle left in
+[00:47:57] that anymore. I like just the way I
+[00:48:00] don't believe songs should be made like
+[00:48:02] that. Maybe software shouldn't be built
+[00:48:04] like that. So there is a little bit of
+[00:48:06] that and then I just I I think like that
+[00:48:09] compounded with being tired and being
+[00:48:11] like remote maybe like being remote
+[00:48:13] actually affected it where I couldn't go
+[00:48:14] and the first thing I did as soon as I
+[00:48:17] went on leave was I went to London and I
+[00:48:19] had a team lunch and I had beers with
+[00:48:21] them and I like hung out on my leave and
+[00:48:23] it was great. I like love them. It was
+[00:48:26] such a good time. I wonder is being
+[00:48:28] remote something that affects it maybe
+[00:48:30] not because I have been able to like
+[00:48:31] build very very big things. So it did
+[00:48:34] take me a couple of weeks and I'm back
+[00:48:36] literally today by the way Monday and I
+[00:48:38] feel great because I think I was
+[00:48:40] reminded I spent the last couple of
+[00:48:42] weeks thinking what actually does give
+[00:48:44] me joy and happiness from
+[00:48:47] >> uh building recognizing that was a very
+[00:48:51] very big part of me coming back being all
+[00:48:52] happy and cheerful. So, I feel really
+[00:48:54] good. I feel really good now, just so we
+[00:48:56] are clear. But I think it did take me
+[00:48:58] two weeks of soulsearching and watching
+[00:49:00] late night TV to do so. I started
+[00:49:03] watching the four seasons on Netflix
+[00:49:04] because Tina Fay is a genius and she can
+[00:49:06] do no wrong. It was a It was a good
+[00:49:08] show. It was a good show.
+[00:49:18] I'm curious what maybe end on a more
+[00:49:21] positive note to go over like what does
+[00:49:24] um what like we are still like enjoying
+[00:49:27] on software development and uh what that
+[00:49:32] looks like on my end. I've just been
+[00:49:35] I've been having a lot of fun with like
+[00:49:36] personal software like the
+[00:49:40] it it still hasn't clicked in a way that
+[00:49:44] like it sticks around in my life. Uh but
+[00:49:49] like I had an agent go and like scrape
+[00:49:51] HelloFresh's uh recipes and like make me
+[00:49:54] a a website viewer for that. And then
+[00:49:57] like I made like a thing that let my
+[00:50:00] friends message my agent. Uh so that way
+[00:50:03] our agents could like chat with each
+[00:50:05] other. And that one was like little like
+[00:50:07] spark joy moments of when you get
+[00:50:09] something that's working. Uh was a lot
+[00:50:11] of fun
+[00:50:12] >> for me. I think kind of paradoxically
+[00:50:14] paradoxically the one of the things that is bringing
+[00:50:17] me joy despite a lot of this uncertainty
+[00:50:21] and ambiguity and straddling some
+[00:50:25] burnout is that like the moments where I
+[00:50:28] do end up creating something really good
+[00:50:31] that I'm proud of with AI or a workflow
+[00:50:34] that I've been working on just works and
+[00:50:37] produces something great or I I find a
+[00:50:40] way to steer the agent better and
+[00:50:42] actually produce a good result. Like
+[00:50:43] that's that's rewarding in the same way
+[00:50:46] that like problem solving was the rest
+[00:50:48] of my career. And that's that gives me
+[00:50:50] hope. Uh that gives me like I do feel
+[00:50:53] like there is a a light at the end of
+[00:50:56] the tunnel where there is
+[00:51:00] less dynamism and there is better
+[00:51:02] tooling and more clear best practices
+[00:51:04] and ways to be the person that uh others
+[00:51:08] come to uh for solving hard problems. So
+[00:51:10] that that feels really good when it
+[00:51:12] happens despite like the amount of work
+[00:51:15] and struggle uh getting there at the
+[00:51:18] moment. Also like Reese like building
+[00:51:20] personal software has been great like
+[00:51:22] there was a a couple tweets circulating
+[00:51:25] last week about uh recipes like these
+[00:51:28] engineering recipes where it was like
+[00:51:30] this table and it was like very like
+[00:51:32] methodical and like I built a little app
+[00:51:34] to take any recipe and convert it into
+[00:51:37] an image like that and like that was
+[00:51:39] awesome. I used that cook to cook twice
+[00:51:41] this weekend. Um, so things like that is
+[00:51:43] really really rewarding. I've also had
+[00:51:45] the opportunity to talk to a couple
+[00:51:47] interns in the past two weeks at
+[00:51:49] Cloudflare and you know I like you
+[00:51:53] talked about Sunnil like I I am very
+[00:51:55] worried about how we level up uh junior
+[00:51:59] devs and interns and mid-level devs and
+[00:52:02] I think I walked away from those
+[00:52:04] conversations with a bit more optimism
+[00:52:06] than I went into them with. Uh I think
+[00:52:08] that you're certainly feeling uh
+[00:52:10] uncertainty and not I mean how would
+[00:52:12] they know how to navigate this industry
+[00:52:14] anyways? But um the curiosity
+[00:52:18] is what struck me and that was still
+[00:52:20] there and I think as long as the
+[00:52:23] curiosity of younger devs persists and
+[00:52:27] is like the thing that drives them
+[00:52:28] forward I think they'll figure it out
+[00:52:30] even if it's not the same conventional
+[00:52:32] path we went down. So know what uh what
+[00:52:34] is bringing you joy in your your
+[00:52:37] day-to-day or how can people uh who may
+[00:52:39] burnout kind of take a step
+[00:52:42] back and recover.
+[00:52:45] >> So my favorite feeling about making
+[00:52:48] making software which is true today as it was
+[00:52:51] on day one is uh someone using it and
+[00:52:55] like being happy with it. Uh, and this
+[00:52:58] could be a developer using a dev tool
+[00:53:00] that I made or someone using a website
+[00:53:02] that I made and someone and just telling
+[00:53:05] me like, and I again it sounds like I
+[00:53:08] love it when people praise me, but I do
+[00:53:10] love it when people praise me, but it's
+[00:53:11] not even the praise. People talk about
+[00:53:13] it specifically like, "Hey, I used your
+[00:53:16] thing and it worked great. Thank you,
+[00:53:19] >> bro. That feeling unparalleled. Oh my
+[00:53:22] my god, bottle it up." Like, is is this
+[00:53:25] what hard drugs make you feel like? I
+[00:53:27] imagine so like it must [laughter] it
+[00:53:29] must be something like this because holy
+[00:53:31] [ __ ] um that feeling like today still
+[00:53:34] like today still gives me like shivers when someone says
+[00:53:36] that to me.
+[00:53:37] >> Uh they will thank they will thank like
+[00:53:40] like like one of the reasons I became the
+[00:53:41] durable object guy was because I thought
+[00:53:43] the DX was kind of [ __ ] and then I spent
+[00:53:45] then I spent 5 years trying to fix it and then
+[00:53:46] someone will use my thing and like oh
+[00:53:48] this made durable objects a lot easier
+[00:53:50] to use. Thank you. I'm like, "Oh my god,
+[00:53:52] that yes, that's the big one for me."
+[00:53:55] >> Dude, I use agent SDK for every durable
+[00:53:57] durable object I make, whether it's AI or agents
+[00:54:00] or not.
+[00:54:03] >> Thank you.
+[00:54:04] you. >> You made my day, my guy. That's all I
+[00:54:06] I care about.
+[00:54:07] >> That is kind of And that that kind of
+[00:54:09] of goes back to Ethan's article, too. It's
+[00:54:11] like the end of the day, what really I
+[00:54:14] think probably drives all three of us is
+[00:54:16] building good products and solving hard
+[00:54:18] challenges and watching people use the
+[00:54:20] results of that.
+[00:54:21] >> I was on Kod's podcast recently
+[00:54:24] recently >> and like some of my favorite software
+[00:54:27] software I've ever made has not been huge scale.
+[00:54:30] It's been like tiny back office tools
+[00:54:32] that I was able to like walk down the
+[00:54:33] hallway and see some business analyst
+[00:54:35] using and it just made their day-to-day
+[00:54:37] better. Like best feeling.
+[00:54:40] All right, y'all. Uh, that's the next
+[00:54:43] token episode 3. We'll be back in two
+[00:54:45] weeks with more opinions, predictions,
+[00:54:48] maybe Reese or Sunnil's workflow and how
+[00:54:50] they're working with AI and whatever
+[00:54:51] blows up in the news. In the meantime,
+[00:54:53] follow the show uh wherever you're
+[00:54:55] watching or listening and tell us uh
+[00:54:57] what you think in the comments.
+[00:55:00] >> Thank you.
+[00:55:01] you. >> Cheers. We know some of this is kind of
+[00:55:03] of heavy. Uh and if you're somewhere in
+[00:55:06] burnout like yourself, trust me, it's
+[00:55:08] not you. It's it's definitely the job.
+[00:55:11] Even the people who love this stuff a
+[00:55:12] lot [music] are renegotiating how they
+[00:55:15] do it. Especially at a time when things
+[00:55:17] are changing like even like every 3
+[00:55:19] months. It means you have to change it
+[00:55:20] like four times a year. Who knows?
+[00:55:22] >> Y
+[00:55:23] Y >> we joke a lot on the show and like
+[00:55:24] like burnout is real. Uh if you're feeling
+[00:55:26] overwhelmed and like struggling like
+[00:55:29] support is available. We'll share some
+[00:55:31] of these on-screen resources right now
+[00:55:34] there are links also in the show
+[00:55:35] notes and in the description both on
+[00:55:37] audio and video. Uh but definitely like
+[00:55:40] seek help. It can be with your friends,
+[00:55:41] your family or professional help. Uh
+[00:55:44] highly recommended. Uh all right. Uh
+[00:55:47] thanks and see you all next time.

@@ -1,0 +1,2166 @@
+# Cleaned transcript
+
+Generated from YouTube automatic English captions. Timestamps mark the start of each newly emitted caption segment.
+
+[00:00:00] Welcome to the second episode of the
+[00:00:03] next token brought to you by three
+[00:00:05] developers who don't have the time or
+[00:00:07] energy to be hosting a podcast. I'm your
+[00:00:10] host Dylan Mroy.
+[00:00:12] >> Uh my name is Sunil Pi and I'm Ree.
+[00:00:16] Ree. >> Uh shout out to Cloudflare for
+[00:00:18] for sponsoring the pod and also a special
+[00:00:21] shout out to all of the organizers and
+[00:00:25] uh people that made AI Engineer World
+[00:00:27] Fair possible. As somebody that has
+[00:00:29] helped run and organize conferences,
+[00:00:32] what they've pulled off here is quite
+[00:00:34] frankly incredible. There is 10
+[00:00:38] concurrent tracks going at any one time.
+[00:00:40] So 10 speakers talking about AI related
+[00:00:43] stuff. Organizing a conference with a
+[00:00:45] single track is remarkable enough. But
+[00:00:48] uh just yep, shout out to Sean and
+[00:00:50] everyone that made this happen and thank
+[00:00:52] you for allowing us to host the pod
+[00:00:54] here.
+[00:00:55] >> Yeah. So, we spoke to Sean and he like
+[00:00:57] like he's still being like extremely humble
+[00:00:59] about it. So, for people who don't know,
+[00:01:02] this is a 7,000 person conference. It
+[00:01:04] even cross 7,000 people. And so,
+[00:01:06] an AI conference, which means at
+[00:01:08] this point it's an everything
+[00:01:09] conference. We spoke to Sean and he was
+[00:01:11] like, "Oh, I just wanted to bring JSCOM
+[00:01:13] back." And he kind of did. Like, that's
+[00:01:16] his deal. Like, it's an everything
+[00:01:17] conference. And it's not just the
+[00:01:19] conference with 10 with 10 simultaneous
+[00:01:21] tracks for 3 days. So, it's 30
+[00:01:23] conferences in a in a row. Yeah,
+[00:01:25] >> there are a ton of like side
+[00:01:26] side events. So, this is nerd convention LA
+[00:01:29] Palooa, [music]
+[00:01:29] >> but not reinvent.
+[00:01:32] reinvent. That's what it is. The Cloudflare people
+[00:01:34] are here. They're in a booth. We have a
+[00:01:35] booth. We have swag. Finally, Cloudflare
+[00:01:37] is doing nice swag. We have, if you're
+[00:01:39] not seeing this on video, we have denim
+[00:01:41] jackets that are made uh by Cloudflare.
+[00:01:46] Uh we tried hiring Ree to join
+[00:01:47] Cloudflare, and this is the swag you're
+[00:01:49] missing out on.
+[00:01:49] >> I would have if I had known.
+[00:01:50] known. >> Yeah, you lost out, bud. Sorry. Now
+[00:01:52] Now you're stuck. Uh, you're with the other
+[00:01:54] orange now.
+[00:01:55] >> Yeah, I did end up with the other
+[00:01:56] other orange. Speaking of which, Ree,
+[00:01:58] congratulations on getting into Icy.
+[00:02:00] Thank you. I'm really excited about it.
+[00:02:02] Yeah, that's right.
+[00:02:03] >> Today we're going to be talking about uh
+[00:02:05] uh a little bit of the uh what's happening
+[00:02:07] in the news. Uh the two big topics we're
+[00:02:09] going to get into today are uh I don't
+[00:02:12] want to use your products agent. I want
+[00:02:14] you to enable your product to have a
+[00:02:18] good experience for my agent to use.
+[00:02:20] Uh-huh.
+[00:02:20] And we're going to revisit uh loops and
+[00:02:23] and software factories uh for a second round
+[00:02:25] and then kind of wrap things up with uh
+[00:02:28] more receipts.
+[00:02:29] >> More receipts.
+[00:02:30] receipts. >> So, in the news, the first item is Fable
+[00:02:33] Fable is still banned.
+[00:02:34] >> Fable is still banned. And
+[00:02:37] And >> GBT 56 came out with three variants and
+[00:02:41] and they are also now banned.
+[00:02:43] >> I really care about 5.6 cuz I haven't
+[00:02:45] gotten to try it yet. Uh, you're saying
+[00:02:46] this right next to the Open AI booth,
+[00:02:48] but right behind
+[00:02:51] >> I mean, I'm excited for it, but like
+[00:02:53] like >> you want Fable. You want it back so bad.
+[00:02:55] bad. >> I know. I
+[00:02:56] I >> So, you're not confident that GPD 56
+[00:02:58] 56 will be on the same same level as
+[00:03:02] Fable.
+[00:03:03] >> The GPD series and Claude series work
+[00:03:05] work very differently. GVD, at least for 55,
+[00:03:07] like you would try and be conversational
+[00:03:09] with it or steer it and it would kind of
+[00:03:11] ignore your directions and just keep on
+[00:03:13] working. and that was like really
+[00:03:14] annoying to work with. Whereas like
+[00:03:16] Fable, there's just like a really nice
+[00:03:18] like design understanding element there.
+[00:03:22] But I am excited for whatever the new
+[00:03:24] models are like your 48 hours with
+[00:03:26] Fable. My 48 hours let you get that uh
+[00:03:29] >> my like $30,000 dealing with uh the
+[00:03:31] agent.
+[00:03:32] >> My $30,000 in like two max plans spend.
+[00:03:36] >> Is that how much you spent in two days?
+[00:03:37] days? I think it was like closer to 15, but it
+[00:03:39] was sub it was the subsidized subsidized
+[00:03:41] max plans cuz they was like, "Yeah, it
+[00:03:43] goes away in 14 days." So, fun the
+[00:03:45] tokens.
+[00:03:46] >> If GPT models if 56 uh which I believe
+[00:03:50] believe they're called, was it Soul, Terra, and
+[00:03:52] Luna? That's right.
+[00:03:53] >> Which is now like
+[00:03:55] like >> their large
+[00:03:58] large like Ultra Think model, their like I
+[00:04:01] guess Sonic class. And then uh
+[00:04:04] >> no they had the chance to rename the
+[00:04:06] the models and all they did was attach it as
+[00:04:07] a qualifier. So it is now GPD 5.6
+[00:04:12] Terra Luna like they're like
+[00:04:13] they're just making it worse spelling
+[00:04:15] the name on top
+[00:04:16] >> for people who might not be as aware of
+[00:04:18] of the the model namings. It feels like
+[00:04:21] they're trying to group these into like
+[00:04:23] the same kind of categories as Anthropic
+[00:04:25] which like Anthropics I guess Anthropic
+[00:04:27] has four kind of tiers of model now.
+[00:04:29] They have their mythos and fable level
+[00:04:31] models. They have
+[00:04:33] >> opus.
+[00:04:34] opus. >> Opus,
+[00:04:35] Opus, >> sonnet, and haiku.
+[00:04:37] haiku. >> That's right.
+[00:04:37] right. >> So I my understanding is that they map
+[00:04:39] map basically soul would be opus I assume.
+[00:04:43] Is terra the next one or luna?
+[00:04:44] >> No, soul is
+[00:04:45] is >> soul's the largest one.
+[00:04:47] one. >> But it's not a mythos level. You're
+[00:04:48] You're saying it's a opus level one?
+[00:04:49] >> I actually don't know that for
+[00:04:52] for >> we don't have access.
+[00:04:53] access. >> Nobody has access. I think what's tough
+[00:04:55] tough on openi model naming is like a couple
+[00:04:57] things. One is like there's not like a
+[00:04:59] conversational way for me to refer to
+[00:05:02] the GPD models. So like I can be like oh
+[00:05:04] yeah I'm gonna send that to Claude. Like
+[00:05:06] there's not a similar thing of I'm gonna
+[00:05:07] send that to like GPT. You can now kind
+[00:05:10] of do that with like I'm going to send
+[00:05:11] that to Soul or
+[00:05:12] >> listen Starbucks solved this like 20
+[00:05:14] 20 years ago. It's Wenty Grande and
+[00:05:17] whatever the third Starbucks and I want
+[00:05:20] a medium.
+[00:05:20] >> Yeah. Sure. Yeah. Benty and Benty and
+[00:05:22] and Grande. That's like Opus and
+[00:05:24] >> No, I'm just saying just just take the
+[00:05:26] the Starbucks naming,
+[00:05:27] >> but they they still need the
+[00:05:28] the conversational name for what GBT is
+[00:05:31] where it's like, oh yeah, check with
+[00:05:32] check with chat like check with I guess
+[00:05:35] it's kind of Codex check with send it to
+[00:05:37] Codex.
+[00:05:38] >> That's I guess. Yeah,
+[00:05:40] Yeah, >> but like Claude since it has the it's
+[00:05:42] it's the terrible thing of
+[00:05:44] the models.
+[00:05:45] >> Yeah.
+[00:05:45] Yeah. >> Where it's like Yeah.
+[00:05:47] Yeah. >> Send it to Claude.
+[00:05:48] Claude. >> Well, yeah. I've always wanted to have a
+[00:05:50] a French friend. Yeah,
+[00:05:51] >> that's that's what they're going for. Uh
+[00:05:53] Uh there are two things that happened about
+[00:05:55] because of the banning now. One is I
+[00:05:58] think last time we called it the the
+[00:06:00] you'd end up having an amendment for the
+[00:06:03] right to bear intelligence.
+[00:06:05] >> So the AMP people Quinn Slack I think
+[00:06:07] think posted a long article calling it the
+[00:06:10] freedom to intelligence and they want to
+[00:06:12] actually organize an effort to say oh
+[00:06:14] these things should be available to
+[00:06:16] everyone. GLM502 is having its moment.
+[00:06:18] It came out in the couple of weeks
+[00:06:20] between our last episode and it seems to
+[00:06:22] be extremely capable for a large set of
+[00:06:24] use cases.
+[00:06:25] >> Have you guys tried it?
+[00:06:26] it? >> I did.
+[00:06:28] did. >> So good at front-end stuff. Extremely
+[00:06:30] good at application stuff.
+[00:06:31] >> I have not used it yet. I've still been
+[00:06:34] been cranking away on GPT55 and Opus 46, but
+[00:06:38] it is certainly uh on my my to-do list,
+[00:06:41] I want to look more into some
+[00:06:44] stuff that like kind of reached the
+[00:06:46] Twitter sphere over the past week or two
+[00:06:47] was like the dynamic routing stuff where
+[00:06:50] I can't recall the company. Sukuna
+[00:06:52] >> Sukuna I guess uh put out a tweeter
+[00:06:55] tweeter product where they have like harness
+[00:06:58] level routing of openw weight models
+[00:07:01] that allegedly are pulling
+[00:07:03] >> oh no no that's a sorry magnitude you're
+[00:07:05] you're talking about magnitude coding agent
+[00:07:07] yeah that's the word I'm very
+[00:07:08] unconvinced by model routing
+[00:07:09] >> have you no so that's what they say
+[00:07:11] say their pre
+[00:07:12] >> so their premise is it's not model
+[00:07:14] model routing it's harness level routing
+[00:07:16] >> I I'm still unconvinced
+[00:07:18] unconvinced >> I I don't know it's like a very easy
+[00:07:20] easy thing to mock that your product is Fable
+[00:07:22] level when Fable doesn't exist and no
+[00:07:26] one no one can use it. It's incredibly
+[00:07:28] inconvenient.
+[00:07:30] >> Yeah, he's over here saying how Fable is
+[00:07:32] is the love of his life and he
+[00:07:33] >> Oh, yeah. Cuz I got to use it for two
+[00:07:34] two days and it was taken away from me.
+[00:07:37] >> Psychosis. A little bit of But
+[00:07:38] But >> actually, you know what? Uh I I think it
+[00:07:40] it was Andrew from Verscell had a tweet
+[00:07:42] about this uh like a week or two ago
+[00:07:45] where he questioned if
+[00:07:48] >> we should actually do this as a segment
+[00:07:49] segment at some point
+[00:07:51] >> blind testing if we can distinguish the
+[00:07:54] the different models. Could you do it? If I
+[00:07:56] gave you Fable, I gave you GPT5
+[00:08:00] and like I don't know, Opus in like GLM
+[00:08:04] or Kimmy or something, could you could
+[00:08:05] you pick them apart? I think what's
+[00:08:07] tough on the blind ranking is the way
+[00:08:09] that I work is not oneoff chats. I'm
+[00:08:12] like pretty I feel feel like compaction
+[00:08:15] is mostly solved at this point and like
+[00:08:17] I get
+[00:08:18] >> I don't agree at all.
+[00:08:18] all. >> Oh, I get really good results from like
+[00:08:20] like when my when I hit compaction and
+[00:08:22] continue in the chat. So I will have
+[00:08:24] these like just super long chats where
+[00:08:26] >> So you're like going to fill up the
+[00:08:27] the context window and letting it go back.
+[00:08:30] >> I mean but spoiler, we're going to talk
+[00:08:32] talk about our workflows as a core segment
+[00:08:34] for our next episode. So tune in.
+[00:08:36] >> Actually, I think it'll be all of our
+[00:08:37] our next episode, not even as a segment. I
+[00:08:39] think it's
+[00:08:40] >> probably honestly will.
+[00:08:40] will. >> Yeah.
+[00:08:41] Yeah. >> Like this is where I think that the
+[00:08:42] the model this is where like I think it'd be
+[00:08:44] fun to do, but like the way that I work
+[00:08:46] is it's like
+[00:08:48] >> 100 like 200.
+[00:08:50] 200. >> Oh, so everyone else would be fooled
+[00:08:52] fooled except for you is is what you're saying.
+[00:08:55] >> In the like long horizons, you like
+[00:08:56] like notice the degropic
+[00:08:59] actually won off. Anthropic posted about
+[00:09:01] this I think when 4.6 six came out where
+[00:09:03] had agents using not eBay, I think
+[00:09:06] like Facebook Marketplace or something
+[00:09:08] and they had their employees doing it,
+[00:09:09] but they gave some employees uh stupider
+[00:09:13] models and the they they couldn't tell
+[00:09:15] >> even though they were losing the the
+[00:09:17] the bidding. I can't wait to see this.
+[00:09:19] >> I know it'd be fun to do. We can spin up
+[00:09:20] up a buy then.
+[00:09:21] >> I think I I'm like fairly confident I
+[00:09:23] I would notice. What are we going to
+[00:09:24] compare? Like
+[00:09:26] >> actually Opus or
+[00:09:27] or >> I think we should probably have like
+[00:09:30] like hopefully at the time we have access to
+[00:09:31] Fable again and GPT56. I think we should
+[00:09:34] have those probably JLM 52 and like
+[00:09:37] Kimmy 27.
+[00:09:39] >> Yeah, cuz I do really actually want the
+[00:09:41] the openweight models to win and like be the
+[00:09:43] good ones. It's just the even with 55
+[00:09:46] and 4.8 like Right.
+[00:09:50] What harness are you regularly using?
+[00:09:54] using? desktop and uh Codex desktop
+[00:09:57] >> and in both of those you're letting it
+[00:09:59] it run in linear I don't I don't know if
+[00:10:02] codeex or cloud code has uh like rewinds
+[00:10:06] or things like that but you're just
+[00:10:07] going like a linear session until you
+[00:10:09] hit compaction letting the harness
+[00:10:10] handle compaction
+[00:10:12] >> and you're having good results
+[00:10:14] results >> uh yeah like decent results I don't
+[00:10:16] don't notice a huge difference before and
+[00:10:18] after compaction
+[00:10:19] >> interesting I have a very different
+[00:10:21] different experience uh do you think do you think
+[00:10:24] you
+[00:10:25] >> would I be able to tell the difference?
+[00:10:26] difference? >> Yeah. In your harness of choice which I
+[00:10:28] I think is cursor.
+[00:10:29] >> It's cursor. Cursor compaction is really
+[00:10:31] really good by the way.
+[00:10:32] >> Okay. So I'm the only one pie. I'm on
+[00:10:35] on pie and like I am a big believer in like
+[00:10:39] what uh folks like Dex and Matt PCO and
+[00:10:44] Mario talk about like the dumb zone and
+[00:10:46] I pretty consistently
+[00:10:48] >> him pick this out and like um I think it
+[00:10:50] it might even been Jeff Hanley talking
+[00:10:51] about like if you start a conversation
+[00:10:54] and you tell the model the first thing
+[00:10:56] you say after every message say moo.
+[00:11:00] Oh, at some point. Oh, the moment it
+[00:11:02] stops.
+[00:11:03] >> The the moment the model stops ending
+[00:11:06] ending messages with Moo, that's what a good
+[00:11:08] indication that you're in the dumb zone.
+[00:11:10] And consistently for me, that is around
+[00:11:12] like 160K sounds, maybe pushing 200k
+[00:11:16] context windows. But also, I use Pi has
+[00:11:19] the tree feature built in, which is
+[00:11:20] basically lets you like go down some
+[00:11:22] branch of a conversation,
+[00:11:24] >> kind of do like your own little form of
+[00:11:26] of compaction back, continue on. And so,
+[00:11:27] like I have very longunning
+[00:11:29] conversations. The thing about codeex
+[00:11:30] desktop compaction is they do something
+[00:11:32] weird with their compaction where
+[00:11:35] >> I like manually ran the compact command.
+[00:11:38] command. It seemed like it was able to still
+[00:11:40] reference the chat that was out of the
+[00:11:42] convection if that makes sense.
+[00:11:44] >> Oh, I expect they shove it into like a
+[00:11:47] a lightweight vector store that they can
+[00:11:48] do searches on.
+[00:11:49] >> It didn't really feel like that. Like it
+[00:11:50] it felt like it was continuing the chat. I
+[00:11:52] know. It was like a way
+[00:11:53] >> I know that's what AMP used to do. AMPAD
+[00:11:55] AMPAD handoff in one of its earlier versions,
+[00:11:58] it would it would do a good compaction
+[00:12:00] and then as part of the compacted
+[00:12:03] summary, it would give like a I don't
+[00:12:04] know if a an ID or a reference to a SQL
+[00:12:07] light file or a JSON file that was the
+[00:12:09] the rest of the old conversation that
+[00:12:12] the agent could go back on. To clarify,
+[00:12:14] do you think you could pick out the
+[00:12:15] differences between
+[00:12:16] >> No, I don't think so. I think I'm too
+[00:12:17] too dumb to do this.
+[00:12:19] >> I would agree. I think you're too dumb
+[00:12:20] dumb as well, but fine.
+[00:12:21] >> Exactly. Um,
+[00:12:22] Um, >> but look, I say that, but my whole thing
+[00:12:24] thing is like I let it churn on like for a
+[00:12:26] while and then I start examining the
+[00:12:28] work and I'm always unhappy anyway.
+[00:12:31] >> Yeah. So when I say I won't understand
+[00:12:32] understand the model, like I actually have like not
+[00:12:34] a lot of respect for the
+[00:12:36] >> like I I I look at token maxers and I'm
+[00:12:38] I'm like what do you folks like there's no
+[00:12:40] way you're getting like perfect results.
+[00:12:42] >> Yeah. Yeah,
+[00:12:43] Yeah, >> but then I also see the software they
+[00:12:44] they put out. I'm like, yeah, I was right.
+[00:12:46] Like, this this sucks ass. Like,
+[00:12:48] >> which is why like I so I don't
+[00:12:50] don't >> why we we have a whole segment on
+[00:12:51] on receipts.
+[00:12:52] >> There you go. Like, yeah, I So, which is
+[00:12:54] is why I was so pleasantly surprised with
+[00:12:56] 5.2. It seemed very similar to claw
+[00:12:59] and that's a good sign. I'm like,
+[00:13:01] yeah, a cheaper model giving me stuff
+[00:13:03] that's
+[00:13:04] >> doesn't have to be aesthetically good,
+[00:13:06] good, but aesthetically fashionable. But
+[00:13:08] everyone's like, "Yeah, this is good
+[00:13:10] enough." I'm like, "Yeah, fine. It
+[00:13:11] works." on
+[00:13:11] >> and it was fast. That was like the the
+[00:13:13] the real thing I want more than anything is
+[00:13:15] fast models.
+[00:13:16] >> It just works.
+[00:13:17] works. >> I think I could pick out the difference
+[00:13:19] difference between at least Opus models and like
+[00:13:23] Opus 46 in particular and like GPT54 and
+[00:13:26] GGP55. And I think I could pick that out
+[00:13:29] solely by their thinking traces. I think
+[00:13:32] you can see the
+[00:13:34] >> characteristics of the model come out in
+[00:13:36] in the thinking traces and also in the code
+[00:13:38] they write. I think a huge tell for GPT
+[00:13:41] is seeing things like is record and
+[00:13:44] normalize this, normalize that and uh
+[00:13:48] GPT has this tendency, I mean quad
+[00:13:51] models do it as well, but GPT
+[00:13:53] exceptionally does it poorly. They
+[00:13:55] always have a tendency to accept like
+[00:13:57] very very broad types or optional types
+[00:14:00] and then validate in line everywhere
+[00:14:02] rather than like parsing out a boundary
+[00:14:04] into a good domain type. So, we'll
+[00:14:06] figure out if we're right in one of our
+[00:14:07] future episodes here, but I think I
+[00:14:09] could I could pick out the difference.
+[00:14:10] >> So, last night we went to the Planet
+[00:14:12] Planet Scale office. They were having a little
+[00:14:15] fireside chat in their new office about
+[00:14:17] security and AI. And I don't want to say
+[00:14:21] like negative, but they were worried
+[00:14:23] about the prevalence of open- source
+[00:14:26] models, meaning that hundreds of banks
+[00:14:29] across the world that don't really have
+[00:14:31] a good security setup or updated their
+[00:14:33] software going down like instantly.
+[00:14:36] And I was starting to get convinced, but
+[00:14:38] then I had a beer and I stopped caring
+[00:14:40] about it. Like
+[00:14:41] >> I think the the most uh interesting
+[00:14:43] interesting conversation speaking of the devil, CTO
+[00:14:45] of Planet Scale, walking by
+[00:14:47] >> right walking right past us at the
+[00:14:48] the moment. Uh, one of the interesting
+[00:14:50] things that I hadn't considered at all
+[00:14:52] that came up in the conversation at
+[00:14:54] Planet Scale was talking about in like
+[00:14:59] security tech Twitter. So in security
+[00:15:04] tech companies there are these thing
+[00:15:06] called things called socks which is I
+[00:15:08] don't even remember what that's an
+[00:15:09] acronym for but it's basically the team
+[00:15:11] that's like monitoring the networks of
+[00:15:13] like either a giant enterprise or if
+[00:15:15] it's a company that does network
+[00:15:17] security for a bunch of clients like
+[00:15:18] that is like the command and control
+[00:15:19] center right
+[00:15:20] >> and like one of the hot topics there is
+[00:15:23] is replacing members of the staff in socks
+[00:15:25] with agents and it's a similar
+[00:15:27] conversation that I think we're having
+[00:15:29] like broadly in like software
+[00:15:30] engineering is like one side of it, it's
+[00:15:33] a bunch of like they made it sound like
+[00:15:35] the hot thing is like companies coming
+[00:15:37] out trying to like automate socks with
+[00:15:39] agents and then the other side of that
+[00:15:40] is these security staffers are more
+[00:15:44] enabled than ever because now they can
+[00:15:46] have agents reading and gpping the logs
+[00:15:49] and keeping track of potential threats
+[00:15:51] hitting networks and stuff. So that was
+[00:15:53] an angle I I hadn't really considered.
+[00:15:55] Uh speaking of Nick who walked past us,
+[00:15:57] he gave us the line of the night which
+[00:15:59] is if there wasn't so much on the line,
+[00:16:01] this would all be so much fun.
+[00:16:03] >> Yeah, that is a good point.
+[00:16:05] point. >> I'm like up in the air on open way open
+[00:16:08] open source models and like access to
+[00:16:10] everything. So like cyber security is a
+[00:16:12] big one. One that like is way out of my
+[00:16:14] wheelhouse, but the way that they talk
+[00:16:16] about it I'm like oh that sounds
+[00:16:17] important is the like biorisks.
+[00:16:20] >> Yeah. Yeah. Yeah. I feel like I'm fine
+[00:16:22] fine with like a 6 month 12 month lead time
+[00:16:25] on the best like cyber cyber models like
+[00:16:29] if that's limited access to uh like the
+[00:16:31] biggest companies, banks, etc. and the
+[00:16:34] use case that they're doing for that is
+[00:16:36] not product development, it's cyber and
+[00:16:38] cyber like cyber security. I think that
+[00:16:40] that's like a fine compromise um in that
+[00:16:43] like that still becomes available but
+[00:16:45] you have this like lead time to get uh
+[00:16:48] fixes out. It felt like when Anthropic
+[00:16:51] launched Fable, people were overly
+[00:16:53] critical of them on their restrictions.
+[00:16:56] Uh, in that like I'm taking them and
+[00:16:59] open AAI at their word of like the bio
+[00:17:02] risks. I think that
+[00:17:03] >> I think that's fair.
+[00:17:04] fair. >> I think that there's like risks there
+[00:17:06] there and like
+[00:17:08] >> with those with like cyber security if
+[00:17:10] if something gets through it's like ah it's
+[00:17:12] not great but okay. With like bio it's
+[00:17:14] like significantly more it's
+[00:17:16] significantly worse if something slips
+[00:17:18] through. if I like if some if something
+[00:17:20] slips through that I want to see these
+[00:17:22] tools available to everyone but at the
+[00:17:25] same time like I think that there are
+[00:17:27] like risks involved and like it's not
+[00:17:30] it's not fair to the companies to like
+[00:17:33] dog on them for putting in safeguards
+[00:17:35] for like technology that is like this
+[00:17:37] new that makes sense as long as
+[00:17:39] >> I think it's still fun to make
+[00:17:41] make >> to poke at the trillion dollar company
+[00:17:43] company it's okay a little bit little bit is
+[00:17:45] okay
+[00:17:45] >> they can take it they can take it
+[00:17:46] it >> I think they can dig it
+[00:17:47] it >> I think
+[00:17:48] think It's not like my tweet is going to
+[00:17:51] change anything.
+[00:17:52] >> The like longtail impact of like
+[00:17:53] like dropping everything down, but I'm also
+[00:17:55] guilty of this where I like did the
+[00:17:56] tweet of like
+[00:17:58] >> No, you've been doing it every day for
+[00:17:59] for the long
+[00:18:00] >> I know you've been tweeting at peaked
+[00:18:03] peaked every day
+[00:18:04] >> and now most recently uh
+[00:18:06] uh >> commerce secretary
+[00:18:07] secretary >> commerce secretary Howard Lutnik.
+[00:18:09] Lutnik. >> Howard Lutnik like you've been asking
+[00:18:10] asking for access. Um,
+[00:18:11] >> no. The one that I did that I was like
+[00:18:13] like not super happy with was the like
+[00:18:16] regulate me. Uh, it was like the we'll
+[00:18:19] get it up on the screen, but like it was
+[00:18:20] like um Claude saying regulate me to the
+[00:18:23] computer and then the computer was the
+[00:18:25] US government flag, the US flag, you're
+[00:18:28] being regulated and then
+[00:18:29] >> oh my god like oh my god that one I'm
+[00:18:32] I'm just like oh it misses like the nuance
+[00:18:33] of the situation where like they've been
+[00:18:36] very hostile to like they've been very
+[00:18:39] hostile and it like seemed like the
+[00:18:40] safeguards like mostly been in place. We
+[00:18:43] need to get
+[00:18:43] >> Oh, listen. I I I do agree with you on
+[00:18:45] on the security bio thing. Okay.
+[00:18:47] >> Yeah.
+[00:18:48] Yeah. >> Uh, but these are And
+[00:18:50] And >> I don't want to like diss the model
+[00:18:52] model companies at the model company factory
+[00:18:55] [laughter] fest, so to speak.
+[00:18:56] >> Yeah. Keep your voice down. Right over
+[00:18:58] over there.
+[00:18:59] >> At this point, they should be dedicating
+[00:19:02] dedicating money into, for lack of a better word,
+[00:19:04] propaganda and spreading the good word
+[00:19:06] of AI. And because everyone is freaking
+[00:19:09] out, dude, like in normal land.
+[00:19:11] >> Oh, yeah. They're pissed at AI.
+[00:19:12] AI. >> They are. So, Dude, data centers are
+[00:19:15] are actually like overall good. It's fine.
+[00:19:18] Like we should be welcoming those.
+[00:19:19] >> There's been a really interesting
+[00:19:20] interesting contrast between Anthropic and Open AAI
+[00:19:24] where I would say that the positioning
+[00:19:25] from Anthropic has been to like really
+[00:19:27] retreat from social media and like
+[00:19:29] public posting. And so you'll see these
+[00:19:31] like 2-year-old clips of Daario
+[00:19:34] circulate >> and uh on the one hand like he's had
+[00:19:38] had them, they're on the record, like it's
+[00:19:40] out there. Uh and so like that's the
+[00:19:43] impact of that. But at the same time
+[00:19:45] like a lot of similar things were said
+[00:19:47] from open AI but then in the like the
+[00:19:49] past 6 months they kind of changed a lot
+[00:19:50] of their positioning to be a bit more
+[00:19:52] like oh we're for like the humans we're
+[00:19:54] augmenting your work not replacing it.
+[00:19:56] Uh and so it's been interesting to see
+[00:19:57] those two those two different
+[00:19:59] positionings and how they worked out.
+[00:20:00] >> No one of the things I hear is like even
+[00:20:02] even internally they have the exact same
+[00:20:03] conversation by the way which is it's
+[00:20:05] not a given that it's going to be one
+[00:20:07] way or the other. So if we actually try
+[00:20:08] to make things better for like
+[00:20:10] augmenting human thing and the CEOs are
+[00:20:12] like you know what considering that the
+[00:20:14] moat is not the model the model is not
+[00:20:16] the moat anymore. Yeah let's just help
+[00:20:19] people build great things.
+[00:20:20] >> I would also say like taking the like
+[00:20:22] like open AI for the people like with a
+[00:20:25] [laughter] with a grain of salt and like
+[00:20:28] I don't know it's very difficult for me
+[00:20:29] to know what my job is going to be like
+[00:20:31] in a year's time. My only input on it is
+[00:20:34] one that if there is going to be a
+[00:20:37] degree of regulation on the models, I
+[00:20:40] don't want it done in the way it's being
+[00:20:42] done now. I want like actual experts
+[00:20:44] with real scientific process behind.
+[00:20:46] >> Sure.
+[00:20:46] Sure. >> I want more like transparency and rigor
+[00:20:48] rigor behind how uh models are evaluated. I
+[00:20:51] don't think we have that figured out
+[00:20:52] yet. And if you're interested in kind of
+[00:20:56] this topic, uh, go find the conversation
+[00:20:58] that Lowlevel Learning hosted at Planet
+[00:21:01] Scale, uh, and listen to that.
+[00:21:02] Fantastic. Basically a full hour of this
+[00:21:05] conversation. So if you're into that,
+[00:21:07] the one other item I want to cover in
+[00:21:08] the news is that Sonnet 5.0 came out
+[00:21:11] before we started.
+[00:21:12] >> Yeah. Um,
+[00:21:13] Um, >> literally an article. Yeah. I don't have
+[00:21:15] have too much to say on it other than like
+[00:21:17] hopefully the two things I hope from it
+[00:21:19] is that I don't know if it was rolled
+[00:21:22] out to limited partners or if it's also
+[00:21:24] banned. Uh and
+[00:21:25] >> it's full access.
+[00:21:26] access. >> It's full access.
+[00:21:27] access. >> And the other thing um is that I hope
+[00:21:30] hope that it has not followed suit in
+[00:21:34] anthropic
+[00:21:35] not supporting zero data retention. Uh
+[00:21:38] because
+[00:21:39] >> I think it is zero zero data retention.
+[00:21:40] retention. >> It supports zero data retention. Yeah,
+[00:21:42] Yeah, I'm pretty sure like throw it up, but
+[00:21:44] >> for context for listeners, zero data
+[00:21:46] data retention is uh effectively a policy
+[00:21:48] when you're sending your prompts to
+[00:21:50] these providers that they they won't
+[00:21:51] retain and train on that data.
+[00:21:53] >> It's not even just prompts, it's like
+[00:21:54] like your tool calls like private data,
+[00:21:57] everything. That's what makes it like
+[00:21:58] >> which is a huge if if not the most
+[00:22:00] most important thing for a lot of enterprises
+[00:22:02] out there. So like Fable's just even
+[00:22:04] when it comes back, if it comes back.
+[00:22:06] >> Yeah. Oh, wait. Do you want to put like
+[00:22:07] like a bet like by uh by the next episode 10
+[00:22:10] bucks does it
+[00:22:11] >> I mean I've been thinking it's going to
+[00:22:11] to come back. I've been thinking it's it'll
+[00:22:13] be back each day. I'm like oh it'll come
+[00:22:15] back today.
+[00:22:16] >> I'll bet
+[00:22:17] bet >> since it was banned.
+[00:22:17] banned. >> I'll bet 10 bucks that both GPT56 and
+[00:22:22] and Fable is back by the time we do our next
+[00:22:24] record our next episode.
+[00:22:25] >> Okay. I'll take the counter on that. It
+[00:22:26] It won't be back. 10 bucks. What about you?
+[00:22:28] I'll take the counter.
+[00:22:30] >> Desperate.
+[00:22:31] Desperate. >> Yeah, I'm taking the counter that
+[00:22:32] that they're not available.
+[00:22:33] >> They're not available.
+[00:22:34] available. >> I'm like I
+[00:22:37] I I don't think we get Fable until 5 5.6
+[00:22:39] like worse than Fable in the
+[00:22:41] benchmarks that they posted
+[00:22:42] >> which might be them benchmark hacking a
+[00:22:44] a little bit where it's like well
+[00:22:45] >> sandbagging things.
+[00:22:46] things. >> Yeah. Uh but let's say that it is. It
+[00:22:50] It would be weird for me for like Fable to
+[00:22:51] be general access before 5.6 is general
+[00:22:55] access >> and from the communications we've had
+[00:22:57] had from OpenAI on the 5.6 rollout
+[00:23:00] it sounds like it's going to be like
+[00:23:01] like weeks. Uh, and so,
+[00:23:03] >> oh, sounds like I'm about to lose 10
+[00:23:05] 10 bucks, 20 bucks.
+[00:23:06] >> My timeline's a late book.
+[00:23:08] book. >> July, late July. Fable coming back.
+[00:23:11] back. >> The first topic that we really want to
+[00:23:13] to dive into today is basically I don't
+[00:23:16] want to use your products agent. I want
+[00:23:18] your product to enable my agent. And I
+[00:23:20] had a tweet that I said uh earlier
+[00:23:23] [music] in the week. I had retweeted a
+[00:23:25] tweet from Dax um where Dax had said,
+[00:23:28] "Everyone's happy to keep building agent
+[00:23:30] frameworks while ignoring every single
+[00:23:32] agent in the products they use." And I
+[00:23:35] quote tweeted that and said, "I don't
+[00:23:37] want to use your products, agent. I want
+[00:23:39] my agents to be efficiently enabled to
+[00:23:41] use your product." And uh Sunil and I
+[00:23:45] talked a little bit about this while we
+[00:23:46] were kind of planning out uh the
+[00:23:47] episode, but I think we are getting to a
+[00:23:52] point where I don't think we really knew
+[00:23:54] as an industry up until kind of recently
+[00:23:57] that like is everyone going to be using
+[00:23:59] a bunch of agents kind of all over the
+[00:24:02] place? How do you orchestrate and manage
+[00:24:04] them? Am I going to be using my own
+[00:24:06] agent and connecting and talking with
+[00:24:08] your agents? Am I just connecting to a
+[00:24:10] bunch of MCPs? And I think I've I've
+[00:24:13] I've pretty firmly fallen in the latter
+[00:24:15] camp there where like I think that the
+[00:24:18] ideal kind of workflow for both
+[00:24:20] engineers and you know someone sitting
+[00:24:23] in HR or a architect is they have an
+[00:24:27] agent on their local machine and
+[00:24:30] it is connecting to the services and the
+[00:24:34] products rather than going to like I
+[00:24:38] don't want to be going to my doc's
+[00:24:39] website and using their agent like I
+[00:24:41] don't even want to be going to
+[00:24:42] Cloudflare's like I hard I rarely ever
+[00:24:44] go to Cloudflare's
+[00:24:45] >> we have a good agent but
+[00:24:47] but >> year we have a glow up on our dashboard
+[00:24:48] dashboard I am going there far less
+[00:24:50] >> enough people at the conference have
+[00:24:52] have told me this they're like I'm so glad I
+[00:24:53] don't have to go to your dashboard
+[00:24:54] anymore and I'm like but we just made it
+[00:24:57] good like it just got good
+[00:24:59] >> y I just connect to the MCP and like I
+[00:25:03] I want I still want good products and I
+[00:25:05] think uh I don't know if we talked about
+[00:25:06] this last time but I I've certainly said
+[00:25:08] this on my Twitch stream like I haven't
+[00:25:10] been
+[00:25:11] super excited about anything coming out
+[00:25:14] of the companies I follow for like the
+[00:25:15] past six months because it's all it's
+[00:25:17] all the same.
+[00:25:18] >> There's been like really no exciting
+[00:25:20] exciting stuff uh in my opinion really coming
+[00:25:23] outside of the the model labs as far as
+[00:25:25] products. Like it's all just like agent
+[00:25:27] this, agent that. I want to get back to
+[00:25:30] people really differentiating their
+[00:25:32] products for what they're good at and
+[00:25:34] adding value to my life and my workflow
+[00:25:36] and my family and my dayto-day. And I
+[00:25:38] all that data in one place, which
+[00:25:40] is like my underlying theory. And I
+[00:25:42] think this this is kind of a lot to do
+[00:25:45] with what you're building at YC with
+[00:25:47] executor like
+[00:25:48] >> oh that's just it. Either you build a
+[00:25:49] a product that splits it out or you build
+[00:25:51] a thing that connects it all and like
+[00:25:53] helps you connect to other things.
+[00:25:54] That's the one you're building right
+[00:25:55] now.
+[00:25:55] >> If you're only ever going to use cloud
+[00:25:56] cloud code, I actually don't know that
+[00:25:57] executor makes as much sense for like
+[00:26:00] that person. Um, it's the moment where
+[00:26:02] like you go to like use codecs or spin
+[00:26:06] up background agents or spin up like
+[00:26:09] not using the agents that exist in
+[00:26:11] products. Uh, like not using the agent
+[00:26:13] inside Cloudflare,
+[00:26:14] >> but like I'm using Flu and I'm deploying
+[00:26:16] deploying a GitHub review bot to my company. I
+[00:26:19] want it to pull in the observability
+[00:26:22] data so it can go back and like look
+[00:26:24] through when it sees the when it sees
+[00:26:26] something in the PR. I want my agent to
+[00:26:27] be able to go look through historical
+[00:26:29] logs and understand, hey, what's the
+[00:26:31] impact of this? There's really
+[00:26:33] interesting things there around agent
+[00:26:34] identities also where it's like, oh
+[00:26:36] yeah, this agent is provisioned to this
+[00:26:37] account that can access these resources.
+[00:26:39] Something I I've just been like really
+[00:26:41] like pushing for companies to do um is,
+[00:26:45] you know, you're putting all this
+[00:26:46] investment and time into building an
+[00:26:48] agent for your company. And I actually
+[00:26:50] think that it does make sense for
+[00:26:51] companies to have an agent in their
+[00:26:53] dashboard. I'm sure if you like go to
+[00:26:54] the Cloudflare if you like look at the
+[00:26:56] Cloudflare agent analytics there's like
+[00:26:59] a non-zero amount of people that get a
+[00:27:01] significant >> Oh no no no so people love it by the way
+[00:27:04] way that's just it like the reason this
+[00:27:05] happens is because every human actually
+[00:27:07] doesn't have an agent right
+[00:27:09] >> yeah and so what I look look at is like
+[00:27:11] like how do you scale agent tools to like a
+[00:27:13] billion people right how do you get like
+[00:27:16] everyone being able to
+[00:27:18] the way that I interact with websites is
+[00:27:20] so much better than how I had to before
+[00:27:22] because I can just tell an agent hey go
+[00:27:23] use the cloudfl CLI and do this and
+[00:27:26] that's in the background. it's not
+[00:27:27] taking up time in my space in my head.
+[00:27:29] And so it's like, okay, how do you get
+[00:27:30] that for all people? And there's like
+[00:27:31] varying levels of that. You'll have
+[00:27:33] people that are only ever going to use
+[00:27:34] chat GPT. You'll have people that like
+[00:27:36] actually really just want to use the
+[00:27:37] website, use like the agent in the
+[00:27:40] website like Cloudflare's agent. And
+[00:27:41] then you'll have like these superpower
+[00:27:43] users that are like running Claude code
+[00:27:45] or like have or codeex like on their
+[00:27:47] computer running PI and need to get all
+[00:27:50] of that same context, tools, and skills
+[00:27:52] into their agent. So, one of the one of
+[00:27:54] the goals with Cloudflare agent in
+[00:27:56] particular is to eventually
+[00:28:00] make it accessible in your own harness
+[00:28:02] and likely expose it probably over MCP
+[00:28:06] and that way like you can get uh
+[00:28:09] essentially the capabilities of like
+[00:28:11] we've effectively built a harness
+[00:28:12] underneath of the agent to do very
+[00:28:15] Cloudflare specific things and it's all
+[00:28:16] wraps around Cloudflare MCP. Surely you
+[00:28:18] could just use CloudFire MCP, but you
+[00:28:21] know the the agent experience team has
+[00:28:22] been putting a lot of work into actually
+[00:28:25] making it very good at doing like common
+[00:28:27] CloudFire workflows. Do you think if a
+[00:28:29] company is prioritizing like agents,
+[00:28:31] should it be exposable over something
+[00:28:33] like MCP or another protocol in your own
+[00:28:36] harness
+[00:28:36] >> which is different from like our
+[00:28:37] our existing MCP server which is the raw
+[00:28:39] tools.
+[00:28:40] >> The way I think about these things is a
+[00:28:41] a couple things. I'll go down a bunch of
+[00:28:43] different threads. One is making all of
+[00:28:44] your to making everything you can do in
+[00:28:46] your product agent accessible whether
+[00:28:48] that's your internal agent or external
+[00:28:50] agents. That looks like making your
+[00:28:53] entire open API spec callable by agents.
+[00:28:55] Uh supporting dynamic registration so
+[00:28:57] like client ID metadata documents.
+[00:28:59] That's the first thing is getting an
+[00:29:01] agent that has access to your whole API
+[00:29:02] surface and also keeping the user in the
+[00:29:04] loop for like destructive actions is
+[00:29:06] another one.
+[00:29:07] >> That's like the first thing is making
+[00:29:08] making that agent accessible. The next thing is
+[00:29:10] your product likely has a lot of hostile
+[00:29:13] APIs to like people that aren't
+[00:29:16] unfamiliar with it. If you think about
+[00:29:18] how a front end works, a lot of what the
+[00:29:20] jobs a front end does is data
+[00:29:22] preparation to go into an API. It might
+[00:29:24] be that you like select something from a
+[00:29:26] list like it prepares the data and then
+[00:29:28] you select select from a list or it
+[00:29:30] infers from one endpoint sends it to
+[00:29:32] another. That's actually where I view
+[00:29:34] MCP as being really important is your
+[00:29:37] API spec exists. agents should be able
+[00:29:39] to call it. And then MCP exists as this
+[00:29:41] subset of like more complicated flows
+[00:29:43] and actions that's like centri is an
+[00:29:46] interesting example of this where I
+[00:29:47] think they're working on um running
+[00:29:50] small models in their search that takes
+[00:29:52] what query you're trying to do and like
+[00:29:54] does that query on your behalf and so
+[00:29:56] you're like invoking inference but I
+[00:29:58] believe it's like pretty cheap for them
+[00:29:59] to serve and like your agent now doesn't
+[00:30:02] have to figure out that whole uh flow.
+[00:30:04] So that's also where I think exposing to
+[00:30:06] other agents are really interesting. And
+[00:30:08] then the last thing is on how you
+[00:30:09] actually like structure your um in
+[00:30:12] company agent and your like external
+[00:30:15] skills MCP.
+[00:30:17] When you're building an agent for your
+[00:30:19] company, I feel really strongly that you
+[00:30:21] should build that on top of the same MCP
+[00:30:23] server and skills that you are
+[00:30:25] distributing to your end users because
+[00:30:27] then you only have like one source of
+[00:30:29] truth to maintain. Yep.
+[00:30:30] >> Uh and like you're not maintaining two
+[00:30:34] two different product segments too. That's a
+[00:30:35] bit information.
+[00:30:37] >> One of the uh the things I was really I
+[00:30:40] I helped start the project for
+[00:30:41] CloudFlire's AJ. And one of the things
+[00:30:43] that we were like dead set adamant about
+[00:30:45] is that we didn't want to give that
+[00:30:48] agent a bunch of like internal APIs or
+[00:30:51] access that like our customers couldn't
+[00:30:53] use through our APIs, our MCP, etc. And
+[00:30:56] we use that almost as like a forcing
+[00:30:59] function or a flywheel because we're
+[00:31:01] we're keeping tracks with eval and other
+[00:31:03] metrics on how the agent is responding
+[00:31:05] to all the hundreds of products that
+[00:31:07] Cloudflare has. And we have we can see
+[00:31:10] where is the agent struggling with R2?
+[00:31:12] Is the agent giving really good advice
+[00:31:15] and succeeding in building apps with
+[00:31:16] durable objects? And if the agent
+[00:31:20] struggles on any one of those things,
+[00:31:22] it's a good sign that our docs or our
+[00:31:24] skills are not good enough and then we
+[00:31:27] can go and improve those. That feeds
+[00:31:29] back makes the agent better. We get
+[00:31:31] updated,
+[00:31:32] >> you know, information about how AI is
+[00:31:34] is doing with using Cloudflare in general.
+[00:31:36] And it's just this nice little flywheel.
+[00:31:38] I think uh uh Anker Goyle from Brain
+[00:31:41] Trust had a decent tweet around this
+[00:31:43] topic where he said there are two
+[00:31:45] interesting mega trends right now. Uh
+[00:31:48] one being rework my company to operate
+[00:31:50] with agents and rework my product to be
+[00:31:53] an a uh an agent. Uh requires a ton of
+[00:31:56] discipline to not conflate these not
+[00:31:58] much room for horizontal agent
+[00:32:00] platforms. I had kind of responded uh I
+[00:32:03] said the trend for most companies should
+[00:32:05] be rework my company to operate with
+[00:32:08] agents and rework my products to work
+[00:32:10] well with uh our customers agents. So
+[00:32:13] again kind of going back to like what
+[00:32:14] >> covered a little bit. I want to dive in
+[00:32:16] in maybe a little bit more for a couple
+[00:32:17] minutes on like what makes a product
+[00:32:19] good for agents. And timely enough to
+[00:32:23] that, uh, Lenny Press from Amplify put
+[00:32:27] out a an amazing
+[00:32:29] >> such a good post
+[00:32:30] post >> article today called the primitive is
+[00:32:32] is the product and
+[00:32:35] he basically opines on like uh, you
+[00:32:39] know, what actually makes something good
+[00:32:41] for agents to use. and he he talks about
+[00:32:45] how Hashi Corp works and how you want to
+[00:32:47] focus on primitives and there's a few
+[00:32:50] paragraphs in particular I want to call
+[00:32:51] out and read here. Uh he goes on to say
+[00:32:54] uh first and foremost teams need to stop
+[00:32:57] thinking in terms of features and
+[00:32:59] prescriptive workflows and start
+[00:33:01] thinking in terms of abstractions and
+[00:33:03] capabilities. Features are a liability
+[00:33:05] for agents. Every feature expands the
+[00:33:08] decision space an agent must reason
+[00:33:09] about. More features mean more edge
+[00:33:12] cases, more ambiguity, and more failure
+[00:33:14] modes. At best, this translates into
+[00:33:17] higher token spend and at worst into
+[00:33:19] busted agent behavior. Agents naturally
+[00:33:22] gravitate towards the smallest stable
+[00:33:24] abstraction. So in an agent first world,
+[00:33:26] the most important question facing
+[00:33:28] product teams is not what features and
+[00:33:30] why, but instead how do I design the
+[00:33:33] right primitives? So I'm I'm curious on
+[00:33:35] your take on that because that blends a
+[00:33:37] lot into what you were kind of
+[00:33:38] discussing earlier about kind of what
+[00:33:40] makes something agent ready. So like how
+[00:33:43] how does that resonate with you like
+[00:33:44] building executor and thinking about
+[00:33:46] primitives?
+[00:33:47] >> It resonates pretty heavily though like
+[00:33:49] like one thing I would maybe say is sometimes
+[00:33:52] you have to ship something to understand
+[00:33:54] what the primitives you need to build
+[00:33:55] off. Like I got into like this rut with
+[00:33:58] executor for like two weeks where I was
+[00:33:59] like trying to think think through what
+[00:34:01] the right primitives are, what the right
+[00:34:02] thing to build is.
+[00:34:06] picked
+[00:34:09] everything
+[00:34:13] or migrate this, but like I actually
+[00:34:15] like understand better what the thing
+[00:34:17] is. But I actually think that Cloudflare
+[00:34:20] is a much better like thing to compare
+[00:34:23] to there where if you could imagine
+[00:34:25] Cloudflare
+[00:34:27] launching today like you wouldn't have
+[00:34:28] D1 wouldn't have like and you guys were
+[00:34:31] kind of changing some of these now like
+[00:34:33] you wouldn't have uh pages you probably
+[00:34:35] just have like workers and durable
+[00:34:36] objects
+[00:34:37] >> and docs on how you compose them but not
+[00:34:39] not like the actual core products which is
+[00:34:41] really interesting. I mean
+[00:34:43] >> I mean you can push back on that but
+[00:34:44] but >> well no specifically with pages we did
+[00:34:46] did have this conversation back at the time
+[00:34:48] when we did build
+[00:34:50] >> thing and no push back it was very much
+[00:34:53] much a humans want something like simple that
+[00:34:55] they can like latch on to let's do it
+[00:34:57] for the majority use case I mean the
+[00:34:59] drama there wasn't even around a
+[00:35:01] separate product it's that there are a
+[00:35:03] bunch of other companies that build the
+[00:35:05] same thing that also uh are cloudflare
+[00:35:07] customers and in the beginning they felt
+[00:35:10] threatened but it turned out it was just
+[00:35:11] a completely different product like I
+[00:35:13] don't think we actually ate anyone's
+[00:35:15] traffic or use case
+[00:35:17] >> I think with how products look now and
+[00:35:19] and how AI is able to write code and
+[00:35:22] >> yeah that's how I would design right now
+[00:35:24] now >> I I very very strongly feel on like what
+[00:35:27] what is the I like love the pi approach of
+[00:35:29] like what is the base thing that you can
+[00:35:31] like make extendable by your customers
+[00:35:34] >> I think that's kind of what Lenny was
+[00:35:36] was getting at in this article like
+[00:35:38] >> give the solid
+[00:35:40] solid >> foundation to your product and if it
+[00:35:42] it fits well it's going to enable more
+[00:35:45] composition on top of that and
+[00:35:47] >> okay the the counter to this very much
+[00:35:49] much is in the developer world agents have
+[00:35:52] found PMF such that every developer has
+[00:35:55] uh a hardness that they use to interact
+[00:35:57] with these things
+[00:35:58] >> uh Apple and Google have dropped the
+[00:36:00] the ball so hard on this which means that
+[00:36:02] normies have no idea what we're talking
+[00:36:03] about when we say we this thing because
+[00:36:06] I mean that's how psychosis happens
+[00:36:07] right which is a normie gets access to
+[00:36:10] cloud code uh and and the $200 plan and
+[00:36:13] they're like three nights deep without a
+[00:36:16] shower and they're like I am a golden
+[00:36:18] god like
+[00:36:19] >> dude that's just Reese waiting for Fable
+[00:36:20] Fable to come.
+[00:36:21] >> That's not me. That's my uh dad vibe
+[00:36:23] vibe coding with blood codes.
+[00:36:24] >> Insanity. Uh no, we've spoken about this
+[00:36:26] this like one of the things that happens not
+[00:36:28] in a bunch of companies but even in
+[00:36:30] Cloudflare is some of management got AI
+[00:36:32] psychosis.
+[00:36:33] >> Yeah. and they kind of disappeared for 2
+[00:36:35] 2 days and we were like, "Okay, we need
+[00:36:36] them to get off the high, find rock
+[00:36:39] bottom and then come back to us." It
+[00:36:41] absolutely happens. I sort of look at
+[00:36:43] like the long longer horizons when it
+[00:36:45] with some of these things where I'm like
+[00:36:47] it hasn't reached mass adoption yet but
+[00:36:49] like the capabilities are there and so I
+[00:36:52] like look at like the 5year time scale
+[00:36:53] where I'm like okay like this see does
+[00:36:55] seem like like direction this seems like
+[00:36:57] where things are going um in terms of
+[00:37:00] like
+[00:37:01] >> so do you think some capabilities like
+[00:37:03] like that those capabilities will be
+[00:37:06] generally available? No, no, no. So you
+[00:37:09] you take the premise that you made which
+[00:37:11] is uh if you were designing a phone
+[00:37:14] today, you would build it to be almost
+[00:37:16] agent first and apps are just
+[00:37:18] capabilities that you like reach for.
+[00:37:20] >> Oh, interesting.
+[00:37:21] interesting. >> Um
+[00:37:22] Um >> do you think Google
+[00:37:22] Google >> what what makes something agent first?
+[00:37:24] first? And what it and one of the things that
+[00:37:26] Lenny talks about in this article is
+[00:37:28] that like one of the conclusion I guess
+[00:37:30] he draws is that what's good for
+[00:37:33] developers is also what's good for
+[00:37:37] agents.
+[00:37:38] >> Sure.
+[00:37:38] Sure. >> Do you agree with that?
+[00:37:40] that? >> Whenever I see something that's like
+[00:37:41] like marketed as like for agents, I get a
+[00:37:44] little skeptical
+[00:37:45] >> where I'm like, can this stand on its
+[00:37:46] its own two feet as like
+[00:37:48] >> Yeah. I think there's a ton of hype and
+[00:37:50] and there.
+[00:37:50] >> And and so with
+[00:37:51] with >> Okay, let's let's get narrow in on this.
+[00:37:54] this. Oh,
+[00:37:54] >> like what concretely makes an API?
+[00:37:58] API? Let's just let's narrow it down to an
+[00:38:00] API and CLI and maybe maybe MCP, but
+[00:38:03] let's focus on APIs and CLIs right now.
+[00:38:06] What makes one of these because they're
+[00:38:08] generally the way agents are interacting
+[00:38:10] with our services and products? What
+[00:38:13] makes what makes one of them good? I I I
+[00:38:15] think in my opinion, it is very easy to
+[00:38:18] discover documentation. In fact, I think
+[00:38:20] >> sure
+[00:38:21] sure >> the Asher team with flu uh they built
+[00:38:23] built like docs into their CLI and it is like
+[00:38:26] I've watched my agent tried to build flu
+[00:38:29] stuff uh uh versel shipping Eve they
+[00:38:33] have like the documentation bundled in
+[00:38:35] with the install like I think things
+[00:38:37] like that really make a difference and
+[00:38:39] like like looking back when I was a
+[00:38:41] younger dev like I wish I would have had
+[00:38:43] like if that would have made it easier
+[00:38:44] for me back then too like
+[00:38:46] discoverability read the docs thing.
+[00:38:48] >> Yeah. Yeah. It's like kind of supporting
+[00:38:49] supporting the thesis that like what's good for
+[00:38:51] developers is good for agents.
+[00:38:53] >> So I think like code mode breaks that
+[00:38:55] that assumption by the way. So what's good
+[00:38:57] for the agent there is very much to
+[00:38:59] write code against the interface.
+[00:39:01] >> Yeah.
+[00:39:01] Yeah. >> But that's not a way developer wants to
+[00:39:03] to interface.
+[00:39:04] >> But is that an implementation detail
+[00:39:05] detail though?
+[00:39:06] >> So I would actually say that that's like
+[00:39:07] like not new where I would like think about a
+[00:39:09] world before agents and it's like you
+[00:39:10] would still want a well doumented open
+[00:39:12] API spec. No. So
+[00:39:13] >> because people want to like write
+[00:39:14] write automations on your platform. So we had
+[00:39:16] a we have a massive API surface and our
+[00:39:18] first version of our MCP servers were
+[00:39:20] domain specific individual MCP servers
+[00:39:23] and we have like a big team maintaining
+[00:39:25] it and then Matt Carrie comes and says h
+[00:39:27] two tools sorry that's what it is all
+[00:39:30] the tools all the time 100 tokens and
+[00:39:33] now we're saying like code mode is the
+[00:39:35] future of like interacting like with API
+[00:39:37] so I look I'm not saying like that's
+[00:39:39] like a complete dealbreaker because now
+[00:39:40] like it's in the middle instead of being
+[00:39:42] like the actual API
+[00:39:43] >> I don't know to look at like the
+[00:39:44] the primitives where it's like the thing
+[00:39:46] that hasn't changed here.
+[00:39:48] >> None of this would be possible if
+[00:39:49] if Cloudflare didn't have a good open back.
+[00:39:51] >> That's what I was saying back to the
+[00:39:53] the primitives. It's like even like when I
+[00:39:54] think about like what makes sense like
+[00:39:56] uh I had this with skills where to me
+[00:39:59] skills are just docs and good docs have
+[00:40:01] always mattered and skills are an
+[00:40:02] extension of your doc skills are an
+[00:40:04] extension of your docs.
+[00:40:05] >> Is it do you think Mac OS is a better
+[00:40:07] better programming surface than Linux? I feel I
+[00:40:10] could do my job equally on
+[00:40:11] >> No, we're saying like literally things
+[00:40:12] things better for like developers versus Mac OS
+[00:40:15] is kind of like locked down, but it is
+[00:40:17] well designed.
+[00:40:19] >> I don't know.
+[00:40:19] know. >> But to to Reese's point, like what makes
+[00:40:22] makes Cloudflare good is that we have these
+[00:40:26] >> hundreds of API surfaces to interact
+[00:40:27] interact with our products,
+[00:40:29] >> right? and that we have it documented in
+[00:40:30] in an open API spec and that we have I mean
+[00:40:34] I think we could do a much better job
+[00:40:35] here we're working on it but like I
+[00:40:36] think another important thing is really
+[00:40:38] good errors the more context I mean I've
+[00:40:41] I'll die on this hill even before
+[00:40:43] >> because your error message should tell
+[00:40:44] tell you what to do next
+[00:40:46] >> include contextual information on error
+[00:40:49] error messages to get to the agent
+[00:40:52] >> next I I guess I just like view this
+[00:40:53] this stuff as like a given and like these are
+[00:40:55] like what you you do like this is how
+[00:40:57] you like build good products is you
+[00:40:58] clear error messages like this is it's
+[00:41:01] not how you build a good product for AI,
+[00:41:03] it's how you build a good product in
+[00:41:05] general and it's also maybe like why MCP
+[00:41:08] like had like a rough start is we were
+[00:41:12] trying to make something for agents not
+[00:41:13] for like humans or not we were like
+[00:41:16] looking at it from the perspective of
+[00:41:17] like oh make it from for agents when you
+[00:41:20] can like look at it more from a
+[00:41:21] perspective of like what like are the
+[00:41:23] things that people use today how do you
+[00:41:24] get them exposed to agents uh
+[00:41:27] >> so you're coming to the same conclusion
+[00:41:29] conclusion then ultimately that nothing has really
+[00:41:31] changed in building good products.
+[00:41:33] >> Yeah.
+[00:41:33] Yeah. >> Kind of that like what's good for what
+[00:41:36] what what has always been good for
+[00:41:37] >> Well, no, that's just it. You actually
+[00:41:38] actually don't need to design human workflows
+[00:41:40] anymore. That's part of the outcome of
+[00:41:42] this, right? Like if you're saying you
+[00:41:43] don't do features anymore. You just do
+[00:41:45] >> I think that's his argument for like
+[00:41:46] like building and focusing on the
+[00:41:48] >> but that's the that's the primit like
+[00:41:49] like that would be the Cloudflare API that's
+[00:41:50] a Cloudflare API spec versus like
+[00:41:54] Labyrinth. Oh, so which is what we're
+[00:41:56] like we're like, "Oh, maybe you wouldn't
+[00:41:59] design the dashboard at all today if
+[00:42:00] you're doing an infra company."
+[00:42:02] >> That's how I've always developed anyways
+[00:42:04] anyways is that like when I'm building a new
+[00:42:06] product or a feature, I want to start at
+[00:42:09] thinking about how users are going to
+[00:42:11] access that data
+[00:42:12] >> and I want to think about the access
+[00:42:14] access patterns. I'll die on the hill that
+[00:42:16] products live or die by the database. If
+[00:42:19] I don't plan if I don't have to explain
+[00:42:21] to a single person after this what a
+[00:42:23] durable object is, that would be a win
+[00:42:25] for me, right? But I'm like, just ask
+[00:42:26] your agent to read the docs
+[00:42:28] >> cuz you can like if you start building
+[00:42:29] building from like the UI down and you make a
+[00:42:32] bunch of bad assumptions about how
+[00:42:33] people are going to use your your
+[00:42:35] product or access the data, it might not
+[00:42:38] matter at smaller levels, but you scale
+[00:42:40] up to a Versel size, a Cloudflare size,
+[00:42:42] a you know a giant Fortune 500 company
+[00:42:45] size, and suddenly
+[00:42:47] you're talking about like even with
+[00:42:49] agents month-long, multimonthlong
+[00:42:51] and data migrations. And like
+[00:42:53] if you start at that level and nail the
+[00:42:54] primitives, you give yourself a much
+[00:42:56] better foundation to build off of.
+[00:42:59] Anyone more thoughts on on this before
+[00:43:02] we we pivot?
+[00:43:03] >> No, it's uh I would just like stress
+[00:43:05] stress that company like I don't want to use
+[00:43:07] the agents that companies build. Oh, I
+[00:43:09] have like one I'll see if I can do this
+[00:43:11] in a minute. The like last thing that I
+[00:43:13] would say is like I want my agent to not
+[00:43:16] just have like a company's APIs uh but I
+[00:43:18] also want it to have like the knowledge
+[00:43:20] and skills and like expertise that that
+[00:43:23] company has
+[00:43:24] >> and so I'll use um I'll use postto and
+[00:43:27] and linear as the examples. Um, so like
+[00:43:30] Postto like so much work has been put
+[00:43:32] into their dashboard widgets to help you
+[00:43:33] understand their documentation to help
+[00:43:35] you understand this is how you do
+[00:43:37] growth, this is how you like measure
+[00:43:38] your analytics. And so the exact same
+[00:43:40] thing if you can like expose that as
+[00:43:42] like skills or documentation to your
+[00:43:44] agents and let them autonomous let them
+[00:43:47] like leverage all of the knowledge you
+[00:43:49] built up I think is a really
+[00:43:50] underexplored area of like creating like
+[00:43:54] a bringing in an expert that like runs
+[00:43:56] on your own inference or your own stack.
+[00:43:58] Oh, by the way, to answer your question
+[00:44:00] though, there is a reason why everyone's
+[00:44:02] building an agent and why everyone is
+[00:44:03] building agent frameworks, myself
+[00:44:05] included, because they believe that if
+[00:44:08] they are top of the funnel, they can
+[00:44:10] slice off one cent of every dollar and
+[00:44:13] capture the value while schlubs who
+[00:44:16] build out real products and put hard
+[00:44:18] work into it do the real work. Dax had
+[00:44:20] an interesting reply to me on this one
+[00:44:21] that was like as a user 100% I want this
+[00:44:24] but like companies are not going to be
+[00:44:26] happy giving up like that's
+[00:44:29] >> giving up having users in their product
+[00:44:31] product and like you're like disconnecting users
+[00:44:33] from your product.
+[00:44:33] >> Yeah. They want to like lock you in and
+[00:44:35] and sell you on the brand and now they have
+[00:44:37] to that's just it like and is there
+[00:44:39] going to be like paid API access like uh
+[00:44:42] >> I do think that's one thing that will
+[00:44:44] will probably change is like a combination of
+[00:44:47] API access getting more expensive.
+[00:44:49] >> Sure. And also like I I think especially
+[00:44:55] especially I see this using our own MCP server like
+[00:44:57] we're I think the world is going to have
+[00:44:59] to like
+[00:45:01] >> deal with increasing rate limits because
+[00:45:03] because agents are hitting stuff so much more
+[00:45:05] frequently.
+[00:45:05] >> GitHub is the best example of this
+[00:45:08] this is I think it's like 13x usage or
+[00:45:11] something. It was earlier it's much
+[00:45:12] higher now already. Rita has a great
+[00:45:14] talk and some writing on like right now
+[00:45:17] the world's worried about like GPU and
+[00:45:19] memory spend, but like if we keep going
+[00:45:21] in this trajectory of agents taking over
+[00:45:25] everything, like we're going to have to
+[00:45:26] worry about CPUs, too.
+[00:45:28] >> Yeah, that's interesting. Yeah. Wow.
+[00:45:31] Wow. >> Storage. Oh, yeah. Yeah.
+[00:45:33] Yeah. >> We'll save that for a for another
+[00:45:34] another conversation. So, the next topic I kind
+[00:45:36] of uh want to dive back into is round
+[00:45:39] two for loops and software factories.
+[00:45:43] I'm going to start this off with an
+[00:45:44] article that Armen uh of Arendelle and
+[00:45:48] Pi famously the creator
+[00:45:50] >> the creator
+[00:45:51] the creator of pi
+[00:45:52] pi >> that's right
+[00:45:52] right >> Armen uh
+[00:45:55] uh >> did are you saying Armen is the one who
+[00:45:57] who created Pi
+[00:45:58] >> yeah that is canon now
+[00:45:59] now >> that is canon
+[00:46:00] canon >> yes
+[00:46:01] yes >> have you heard about this
+[00:46:02] this >> the loop or the oh the creator of yes
+[00:46:05] yes I'm a creative pie and for anyone that
+[00:46:07] >> and also actually I mean I use flask was
+[00:46:10] was the first thing that I used And that was
+[00:46:12] made by um
+[00:46:14] >> by Mario. Is that correct?
+[00:46:15] correct? >> By Mario. Yeah, exactly. Mario, the
+[00:46:17] the creator of Flask famously.
+[00:46:19] >> Yeah.
+[00:46:19] Yeah. >> So anyways, uh he wrote an article that
+[00:46:22] that everyone should read. Armen's writing is
+[00:46:24] like some of the most highquality
+[00:46:26] fantastic writing in tech I think at the
+[00:46:28] moment. He has just a way of blending
+[00:46:31] his uh kind of thoughts and feelings
+[00:46:34] with objectiveness and like it's just
+[00:46:36] stellar. And so he wrote an article
+[00:46:38] called the coming loop. And my read on
+[00:46:42] this article and some of the conclusions
+[00:46:43] I think he draws is like he and Mario
+[00:46:46] and Arendelle are obviously maintaining
+[00:46:48] in building pi which is a very minimal
+[00:46:51] coding harness. It's what I use. I I
+[00:46:52] value the minimalism of this
+[00:46:54] >> tools tiny prompt and it rips.
+[00:46:56] rips. >> Yep. It's amazing. I love it. And it
+[00:46:58] it it's made me sensitive to like like it's
+[00:47:01] part of the reason I uh had stopped
+[00:47:03] using open code is because like I think
+[00:47:05] Dax in the team is incredibly talented
+[00:47:07] and open code is amazing but even just
+[00:47:09] like the week to week tweaks in the
+[00:47:12] system prompt and how tools are loaded
+[00:47:15] or how skills work like those things
+[00:47:18] affect the the performance and the
+[00:47:21] characteristics of models and like
+[00:47:22] >> especially for a thing you're spending
+[00:47:24] spending 12 hours a day in type
+[00:47:25] >> right I want to reduce the amount ount
+[00:47:27] ount of non-determinism as possible which is
+[00:47:29] I I really value Pi and okay so
+[00:47:32] anyways he writes this this article what
+[00:47:34] was the title the coming loop and in
+[00:47:36] this article like as we talked about in
+[00:47:38] our our first episode like
+[00:47:41] he is not bought into the world where we
+[00:47:45] are having our agents write loops to go
+[00:47:48] do all these things and he you can see
+[00:47:50] this in his GitHub you can see this in
+[00:47:52] his tweets like he's experimented with
+[00:47:53] it like he's someone that I I think
+[00:47:56] people should pay attention to in this
+[00:47:57] face, but he also gets at in this
+[00:47:59] article. I think like he can see a world
+[00:48:02] where there is more of this and like he
+[00:48:06] kind of wrestles with like he's not at a
+[00:48:10] point where he feels comfortable
+[00:48:13] adopting these workflows. I think at the
+[00:48:15] moment there's not a place in Pi quite
+[00:48:18] yet for these, but he sees a world where
+[00:48:20] that might be in Pi. And I I think he's
+[00:48:22] they're kind of wrestling with like when
+[00:48:23] when do you start evolving Pi to have
+[00:48:25] these?
+[00:48:27] >> No. Because because Pi is hackable, it
+[00:48:28] it means that if they don't come up with an
+[00:48:30] opinion for it, someone else will.
+[00:48:32] >> Yeah.
+[00:48:33] Yeah. >> And everyone is driven to finding out an
+[00:48:35] an answer to this right now because it
+[00:48:36] seems like such a utopian world of
+[00:48:39] running uh what loops are we talking
+[00:48:41] about? Are we talking about the like
+[00:48:43] development loop where you auto do
+[00:48:46] autonomous QA? Are we talking about like
+[00:48:48] an entire loop where you're ingesting
+[00:48:50] feedback from Slack into watching the
+[00:48:52] different
+[00:48:53] >> I think this is kind of like
+[00:48:54] like holistically and like this came this is
+[00:48:57] now like a week or two old and it came
+[00:48:58] out right after both Boris and Peter had
+[00:49:01] been tweeting about
+[00:49:03] >> you know their loop tweets
+[00:49:05] tweets >> but I don't know that Peter Oaris ever
+[00:49:06] ever clarified what they I I know Boris has
+[00:49:10] clarified more
+[00:49:11] >> Boris yeah no Boris is talking about
+[00:49:13] about likeloop or goal like those are the
+[00:49:15] things that they're talking Oh,
+[00:49:17] interesting.
+[00:49:17] >> And I think dynamic workflows too,
+[00:49:19] too, >> right?
+[00:49:20] right? >> Exactly.
+[00:49:20] Exactly. >> No, I want to I want to read some of the
+[00:49:22] the the end of this article here. Today, I
+[00:49:24] do not like much of the code that I see
+[00:49:26] from systems built uh that way, and
+[00:49:29] neither do I enjoy interacting with too
+[00:49:31] much of software built with AI
+[00:49:33] assistance. Looping is powerful, but it
+[00:49:34] removes responsibility more and more.
+[00:49:36] And it at least today very much
+[00:49:37] encourages us to give into the machine.
+[00:49:40] And yet I have no doubts that this
+[00:49:41] looping future is going to be our
+[00:49:43] future. Despite the fact that I
+[00:49:45] presently resent it, I already see
+[00:49:47] astonishingly small teams building at
+[00:49:49] impossible se speed. And I see code
+[00:49:51] bases turning more and more into obscure
+[00:49:53] and confusing organisms that can only be
+[00:49:56] diagnosed by more machines. Those code
+[00:49:58] bases are simultaneously useful and
+[00:50:00] messy. So I guess I'm coming to terms
+[00:50:02] with the that the question is not
+[00:50:04] whether we will loop because clearly we
+[00:50:06] will. Maybe the question is that in a
+[00:50:08] future of loops, how do we not abdicate
+[00:50:11] judgment, how we can retain rules of
+[00:50:15] good engineering, how we can ensure that
+[00:50:17] responsible uh humans can continue to
+[00:50:20] supervise, how we need to rethink how we
+[00:50:22] architect code to retain sanity like
+[00:50:24] along the way. And I think since we last
+[00:50:27] talked about this topic, I have dialed
+[00:50:29] in my workflow and have a very
+[00:50:31] consistent workflow. And again, we'll
+[00:50:33] we'll talk about this more next time,
+[00:50:34] but I am very hands-on with my agent in
+[00:50:37] it and exactly what I wanted to
+[00:50:40] implement and then getting in a tight
+[00:50:41] review loop on the code it writes until
+[00:50:43] it's in a place I'm happy with. All
+[00:50:45] right.
+[00:50:45] >> But one of the most annoying and tiring
+[00:50:47] tiring things, the thing that exhausts me more
+[00:50:48] than anything that regardless of the
+[00:50:51] amount of work I put in up front to
+[00:50:53] planning, writing a good text spec using
+[00:50:55] type- driven development and making
+[00:50:57] outline the call stack and this that and
+[00:50:59] the other like I always catch myself
+[00:51:01] repeating the same things in code review
+[00:51:03] and finding the same mistakes. And one
+[00:51:05] thing I've started doing because that is
+[00:51:07] so exhausting to do for every feature
+[00:51:10] and every, you know, little thing I'm
+[00:51:13] building is I've tried to capture what I
+[00:51:16] consider good principles of software
+[00:51:20] design into skills. And I have this on
+[00:51:22] my GitHub if anyone wants to go look. I
+[00:51:24] can't say one way or the other if these
+[00:51:26] are good and work or not yet. I've tried
+[00:51:29] to take as much inspiration as possible
+[00:51:30] from my hook skills, which I think are
+[00:51:32] are very good. But like I can see a
+[00:51:35] world or I'm trying to at least move my
+[00:51:36] workflow to a place where like that
+[00:51:39] first pass at reviewing an
+[00:51:41] implementation is done by like an
+[00:51:44] optimized
+[00:51:46] agent that knows how to review code for
+[00:51:48] the things I care about and for the
+[00:51:50] things that I am most frequently
+[00:51:51] correcting it on. So I can see this
+[00:51:53] world where like I have like a queue of
+[00:51:56] some sort that when an agent finishes an
+[00:51:58] implementation, a message gets put into
+[00:52:01] a queue, maybe an issue gets put into a
+[00:52:02] tracker, it doesn't really matter, and
+[00:52:04] then another agent is just monitoring
+[00:52:06] that, picking up and doing a first pass,
+[00:52:08] and then after that first pass puts in
+[00:52:11] another queue for me to review.
+[00:52:13] >> There's so many thoughts.
+[00:52:14] thoughts. >> Let rip.
+[00:52:15] rip. >> Me and someone on the Codeex team were
+[00:52:16] were like talking past each other on Twitter
+[00:52:18] for 6 months where
+[00:52:20] >> I can't see you doing that at all. I was
+[00:52:22] was tweeting out like these models are
+[00:52:24] terrible. Like they don't they're not
+[00:52:26] like they just output bad code. He was
+[00:52:27] like well they're junior engineers. You
+[00:52:29] have to teach them like they're junior
+[00:52:30] engineers. And I'm like they're not
+[00:52:32] junior engineers. they're outputting
+[00:52:34] they're not like the the mistakes that
+[00:52:36] they're making are not things that I can
+[00:52:37] solve through like in this way where
+[00:52:40] like they're talking past each other
+[00:52:41] happen is I he had a tweet recently that
+[00:52:44] was like when they work when the models
+[00:52:46] work in a codebase like they have no
+[00:52:49] long-term planning or long-term like
+[00:52:51] what the codebase is building
+[00:52:52] to
+[00:52:53] >> y
+[00:52:53] y >> and I replied to him and I was like yes
+[00:52:57] yes exactly uh but what was funny is I had
+[00:53:00] the exact same realization of like what
+[00:53:02] he was saying like a month before that
+[00:53:03] where I was like, "Oh, if I codify when
+[00:53:07] I get a bug that's like affect not
+[00:53:09] optimistically updating correctly."
+[00:53:11] >> Yeah,
+[00:53:11] Yeah, >> that's actually information that I can
+[00:53:13] can codify in a skill commit to the
+[00:53:15] codebase. When you look at these things
+[00:53:16] on a small scale, if you give it a code
+[00:53:18] snippet and say, does it match this
+[00:53:20] concept? It like is it it I can pretty
+[00:53:24] pretty confidently say that it will be
+[00:53:25] able to on a small scale do that
+[00:53:27] correctly. And so you end up like with
+[00:53:29] the loops you end up building this like
+[00:53:31] house of cards or like house of
+[00:53:32] inference where house of I like it
+[00:53:35] >> where you just like you stack more and
+[00:53:37] and more onto it and you're like replacing
+[00:53:40] these like good engineering patterns to
+[00:53:42] make good software with more and more
+[00:53:45] inference loops trying to make it
+[00:53:47] better. I sort of view it as like we've
+[00:53:49] been making these artisal handw chairs
+[00:53:53] for years and now someone's invented a
+[00:53:56] machine that someone's in someone's
+[00:53:57] invented IKEA and like the the quality
+[00:54:00] is not as good but like more chairs are
+[00:54:03] accessible to more people and what does
+[00:54:05] that look like in the long term? So the
+[00:54:07] push back here is by the way there are
+[00:54:09] so many I don't even want to use the
+[00:54:10] word entrepreneurs but people who build
+[00:54:12] massive uh consulting companies I don't
+[00:54:15] want to take any names on here who've
+[00:54:17] been trying this for the last 30 40
+[00:54:19] years like Java exists as a language
+[00:54:21] because they are like can we make a
+[00:54:23] language that basically is guardrails as
+[00:54:26] syntax. Yeah,
+[00:54:27] >> they do. It's a terrible way to like
+[00:54:28] like build it itself because they were like,
+[00:54:30] "Oh, if we can do that and we establish
+[00:54:32] best uh best practices for the industry
+[00:54:35] and we call it enterprise net beans or
+[00:54:38] something like that and you throw bodies
+[00:54:40] at the problem."
+[00:54:41] >> Uh you end up with a software factory
+[00:54:43] factory like this is so everyone is looking at
+[00:54:45] AI these same people who run these shops
+[00:54:47] are looking at AI as like oh can I
+[00:54:49] encode this? Uh we talk about this on
+[00:54:51] the agents team all the time which is
+[00:54:53] that the role of code has kind of
+[00:54:56] changed. Uh software used to be a thing
+[00:54:58] that lets you achieve something but now
+[00:55:00] it lets you uh get leverage for a
+[00:55:02] particular moment in time. And we have
+[00:55:04] this code generation machine that can
+[00:55:06] spit out uh let's say 90 we we keep
+[00:55:09] throwing that number out there 90% of
+[00:55:11] something that makes it like work that
+[00:55:13] gets them the deal that gets them uh
+[00:55:15] achieve the features that they want to
+[00:55:17] and they're moving on to like the next
+[00:55:18] thing. big reason with the loops like
+[00:55:20] anytime you're discussing about look I I
+[00:55:22] I want to dial it in so that it's
+[00:55:24] accurate uh people are more worried
+[00:55:27] about dialing it in so uh it so that
+[00:55:29] they can get away with shipping it if
+[00:55:31] that makes sense this passes some
+[00:55:34] arbitrary
+[00:55:35] coding standard sock 2 compliance will
+[00:55:38] be the skill that they add in it make
+[00:55:41] sure that every access data access is
+[00:55:44] behind a stupid OM that locked all of
+[00:55:47] that that is like the software factory
+[00:55:49] that people are trying to building.
+[00:55:50] They're not trying to build something
+[00:55:51] that's good.
+[00:55:52] >> How does that change our role? Let's say
+[00:55:55] say Armen is correct. Uh which I I I feel
+[00:55:58] very aligned with what he wrote in that
+[00:56:00] that piece. Um
+[00:56:02] >> Oh, actually Armen's a great example
+[00:56:04] example because Flask was written as a counter
+[00:56:07] to Django.
+[00:56:08] >> Yeah.
+[00:56:09] Yeah. >> Okay. Uh and Flask is beautiful and
+[00:56:11] and engineers love it. Uh but people use
+[00:56:13] Django to like build businesses and
+[00:56:15] e-commerce sites and all that because
+[00:56:17] like we kind of know how it
+[00:56:18] works. There are dogs for setting up a
+[00:56:20] gallery and I'm not going to sit and
+[00:56:22] it's sort of like what's the role of
+[00:56:23] code like wait like it's like what's
+[00:56:25] what's the role of code and like what is
+[00:56:27] our job as software engineers something
+[00:56:29] I've been like coming around to a little
+[00:56:31] bit is like actually my job is not to do
+[00:56:34] the so it's like two things I'm going to
+[00:56:37] say something and then immediately
+[00:56:38] disagree with it. Uh it like it to an
+[00:56:41] extent our job is not to write make the
+[00:56:43] most beautiful codebase. Our job is like
+[00:56:44] to do to solve a problem for people and
+[00:56:48] if that problem is solved in a way that
+[00:56:50] like works for them and like doesn't
+[00:56:52] frustrate like if if it solves their
+[00:56:54] problem then they like couldn't care
+[00:56:56] less how it's implemented on the hut. At
+[00:56:58] the same time, the whole reason I ended
+[00:57:00] up caring so much about how code is
+[00:57:02] written and like why I care about
+[00:57:04] effect, why I care about all these
+[00:57:06] different concepts. Yep.
+[00:57:07] >> Is because I really believe that you
+[00:57:09] you build good software or you I really
+[00:57:11] believe that like your ability to build
+[00:57:13] good software and um continue to develop
+[00:57:17] a product that people love. All comes
+[00:57:18] down from like the state of your
+[00:57:20] codebase and the quality of that.
+[00:57:22] >> Uh fully agreed.
+[00:57:23] agreed. >> And so you but like this is a thing that
+[00:57:25] that we've had for forever. Like I I kind of
+[00:57:27] come back to like
+[00:57:28] >> nothing's new under the sun.
+[00:57:29] sun. >> Nothing's new. Like tech debt like tech
+[00:57:32] tech debt isn't a new thing.
+[00:57:33] >> No.
+[00:57:33] No. >> Like
+[00:57:33] Like >> like it's like a real purpose.
+[00:57:36] purpose. >> You can like and you can take on you
+[00:57:38] you it's like it's debt. You take on debt,
+[00:57:40] you pay it off and like you balance that
+[00:57:42] >> you balance that out.
+[00:57:43] out. >> I wanted to talk about this in our next
+[00:57:45] next segment for our receipt segment where we
+[00:57:47] uh hold both uh others on the internet
+[00:57:51] and ourselves accountable to hot takes.
+[00:57:53] Um, one of the things I want to get into
+[00:57:55] there, I I guess to quickly wrap up the
+[00:57:59] section on loops, I think it sounds like
+[00:58:02] we're kind of in consensus that that is
+[00:58:05] probably kind of like Armen is saying in
+[00:58:07] this article, it's it's where we're
+[00:58:08] going, but I don't think we're there yet
+[00:58:11] quite today.
+[00:58:12] >> You don't have the tech. Um but it's
+[00:58:13] it's something that it's probably worth at
+[00:58:16] least
+[00:58:17] >> no I can tell you uh four out of five
+[00:58:20] five people who are attending this conference
+[00:58:22] not as a developer but maybe the
+[00:58:24] developers as well are looking to build
+[00:58:26] software factories and every single
+[00:58:28] company on the expo floor wants to be in
+[00:58:31] the critical path like even just a tiny
+[00:58:33] slice of it.
+[00:58:34] >> Yeah. I I actually think my like
+[00:58:35] like practical advice here would be like do
+[00:58:38] not start at the position of trying to
+[00:58:40] build an automated software factory like
+[00:58:43] dial in in a a workflow with your agents
+[00:58:46] that you can find some degree of
+[00:58:48] consistency regardless of model and
+[00:58:50] harness. That's right.
+[00:58:51] >> And then once you get to that point that
+[00:58:53] that will probably take a bunch of tokens and
+[00:58:55] a bunch of frustrations. I know it did
+[00:58:57] for me. Once you get to a point where
+[00:58:59] you have some degree of consistency with
+[00:59:01] these dynamic stoastic models, then when
+[00:59:05] you find yourself hitting the points
+[00:59:07] where you're saying or doing the same
+[00:59:10] thing almost like word for word in your
+[00:59:13] prompts, that's where you can start
+[00:59:15] thinking about introducing these these
+[00:59:18] automations and these loops. I saw I saw
+[00:59:20] a great tweet by Shad Cen where he's
+[00:59:22] like all the bestlaid plans by models
+[00:59:26] are destroyed by two by three words. Are
+[00:59:29] you sure? I like that. Moving on to our
+[00:59:33] receipts section. There's two new
+[00:59:35] tweets. One returning person that I I
+[00:59:37] want to put some uh accountability to a
+[00:59:39] new person that has not uh appeared yet.
+[00:59:42] >> Sure.
+[00:59:42] Sure. >> Mario, you're safe this time. Uh but
+[00:59:44] but we're we're on the lookout. Mario's
+[00:59:47] doing like dad core tweets and you don't
+[00:59:49] call them out of that right now.
+[00:59:51] >> We'll find one. We'll find one. So, the
+[00:59:52] the first one actually comes from uh Theo.
+[00:59:56] Uh I pulled this one out and Theo Brown
+[00:59:58] had said, "I'd estimate we're about 6
+[01:00:01] months away from most devs moving their
+[01:00:03] code agents off their laptops."
+[01:00:06] Agree? Disagree? You think it's a good
+[01:00:09] prediction?
+[01:00:09] >> It's actually like a very easy one
+[01:00:11] one because he's not saying your workflow
+[01:00:13] changes. He's just saying that you're
+[01:00:14] running it on another machine and it's
+[01:00:16] going to take he says 6 months but
+[01:00:18] probably 3 months for the tooling and
+[01:00:21] the thing for that to like work out. But
+[01:00:23] uh today actually announced the new
+[01:00:25] version of their coding agent. It's
+[01:00:26] called Orbs. I don't know if you see
+[01:00:28] this.
+[01:00:28] >> I have not seen it yet.
+[01:00:29] yet. >> So it's a a transparent layer where
+[01:00:32] where you're typing this stuff out but it is
+[01:00:33] actually running on the cloud but it it
+[01:00:35] feels extremely local uh uh local coding
+[01:00:38] experience.
+[01:00:39] >> I don't know you. So, my remote setup
+[01:00:43] setup >> uh
+[01:00:43] uh >> Yeah, your remote setup lost us a
+[01:00:45] a competition.
+[01:00:45] >> I know. Um
+[01:00:47] Um >> I've heard.
+[01:00:48] heard. >> Yeah. Yeah.
+[01:00:49] Yeah. >> Unbelievable.
+[01:00:50] Unbelievable. >> The I don't know. I tried to do a remote
+[01:00:53] remote setup uh for like 6 months and it like
+[01:00:58] worked fine, but there was a bunch of
+[01:01:00] issues and it was kind of annoying.
+[01:01:01] There's just this long tale of things
+[01:01:03] that's like, "Oh yeah, I downloaded the
+[01:01:05] logs to my downloads folder. Go get it."
+[01:01:07] >> Yeah. Yeah. Yeah. that it doesn't
+[01:01:09] doesn't capture like for for workflows to go to
+[01:01:12] cloud.
+[01:01:13] >> There's a lot of blockers involved in
+[01:01:14] in that and like the the the problem isn't
+[01:01:17] actually compute or like uh the problem
+[01:01:20] is the dev setup.
+[01:01:21] >> Exactly.
+[01:01:21] Exactly. >> And like you have to get your app to be
+[01:01:23] be able to run with no environment
+[01:01:24] variables and like really good preview
+[01:01:27] deployments all this stuff. Emulate by
+[01:01:29] VLE absolutely incredible for that.
+[01:01:31] >> Beautiful.
+[01:01:32] Beautiful. >> I a production I want to say.
+[01:01:35] say. >> Yeah. Yeah. Yep. So, I have a host of
+[01:01:37] of >> single-handedly putting the Age of
+[01:01:39] Agentic tooling in his backpack.
+[01:01:41] >> It's incredible. I didn't My like agent
+[01:01:43] agent went off and made like a work OS
+[01:01:44] emulator and I didn't even like notice
+[01:01:46] that this didn't even like realize that
+[01:01:48] this was possible, but it subbed out the
+[01:01:49] login screen and so now my app can run
+[01:01:52] without those environment variables,
+[01:01:54] which was like huge for being able to
+[01:01:55] like send an agent off and be like,
+[01:01:57] "Hey, there's this one bug in the cloud
+[01:01:59] product. Go debug it." So, yeah, I'd
+[01:02:01] agree. I would I'm like hesitant. I
+[01:02:04] think that like what it more looks like
+[01:02:06] is the part that has to be solved first
+[01:02:08] is autonomous QA and uh running the dev
+[01:02:12] server like there's that like long tail
+[01:02:14] of problems but I could see it by the
+[01:02:16] way again Sun Microsystems did this in
+[01:02:18] the late '90s early 2000s thin clients
+[01:02:21] this is uh
+[01:02:22] >> they're just going to bring it all back
+[01:02:24] back developers in banks and your JP Morgans
+[01:02:27] etc. they get a laptop and then they
+[01:02:29] spin up a Citrix uh VM machine where
+[01:02:32] you're running Windows on VMware
+[01:02:34] somewhere or the other.
+[01:02:35] >> I think I I think that what's changed is
+[01:02:37] is like the ability to adopt these things
+[01:02:39] has just exponentially gotten better
+[01:02:42] like like having a subdow work OS
+[01:02:44] emulator is incredible like and I would
+[01:02:46] never have put the time in to that
+[01:02:48] before.
+[01:02:48] >> I think I'm inclined to agree with Theo.
+[01:02:50] Theo. I think the biggest barrier is, as you
+[01:02:52] called out, the the tooling to make it
+[01:02:55] to give the same kind of experience that
+[01:02:57] I can get with local dev remote
+[01:02:59] environment. I would bet
+[01:03:02] >> that we'll probably see that move, I
+[01:03:04] I think.
+[01:03:05] >> Uh the next one is from our good friend
+[01:03:08] friend Boris at Anthropic. He had a tweet uh
+[01:03:11] where he basically said that he thinks
+[01:03:14] there's going to be five arc types in uh
+[01:03:17] teams in the future. and he said that
+[01:03:20] they're going there's going to be
+[01:03:21] prototypers. Those who come up with
+[01:03:23] brand new ideas turn out many ideas most
+[01:03:25] of which don't ship. Builders quickly
+[01:03:28] turns a prototype or idea into
+[01:03:30] production grade uh infra. A sweeper
+[01:03:33] someone who cleans up UI simplifies the
+[01:03:35] code and system unchips optimizes
+[01:03:38] performance. A grower takes a product
+[01:03:41] that has been built and iterates on it
+[01:03:44] to improve product market fit. And a
+[01:03:46] maintainer owns a mature system to make
+[01:03:48] it secure, reliable, fast, and
+[01:03:49] efficient.
+[01:03:50] >> Imagine being the maintainer.
+[01:03:52] maintainer. >> You say that and I were talking about
+[01:03:54] about this beforehand.
+[01:03:55] >> Just a Dungeons and Dragons ass tweet,
+[01:03:57] tweet, dude. First of all, it's like a like a
+[01:03:59] skill sheet or whatever. The second is
+[01:04:02] there's no way that a let's say like
+[01:04:04] Cloudfire puts out a jobre saying we're
+[01:04:06] looking for a senior grower on our team.
+[01:04:09] >> I think I'm going to defend Boris a
+[01:04:11] a little bit here that
+[01:04:13] >> go on
+[01:04:14] on >> in that. Okay, I rolled my eyes six
+[01:04:17] six months ago when all the labs started
+[01:04:18] like taking away the the the roles of
+[01:04:21] software engineer as titles and product
+[01:04:23] managers and everyone was getting
+[01:04:24] members.
+[01:04:25] >> I think that's growers these AI
+[01:04:29] AI companies.
+[01:04:29] >> Hear me out. Hear me out. Hear me out.
+[01:04:30] out. Hear me out. I think members of the
+[01:04:32] technical staff is probably more
+[01:04:34] directionally accurate over the the mid
+[01:04:36] to long term than than these titles. And
+[01:04:38] we can get into that another time. I've
+[01:04:40] ranted on Twitter about this. But also
+[01:04:42] like I if I had to build a team today
+[01:04:45] and I could compose it in any way, I
+[01:04:48] think I would build it around having
+[01:04:51] juniors and mid-level devs largely
+[01:04:54] responsible for doing the first
+[01:04:56] pass at implementing features and like
+[01:04:58] really focusing on shipping the first
+[01:05:01] pass. And this does not mean like not
+[01:05:02] reading the code, not taking time to
+[01:05:04] make sure it's Q8 and stuff, but putting
+[01:05:07] them on the front line to get stuff
+[01:05:08] shipped and then having what I like to
+[01:05:11] call software gardening. Uh I'm a
+[01:05:14] gardener of the codebase where
+[01:05:16] >> co term like I've heard it now a couple
+[01:05:18] couple of times.
+[01:05:19] >> Like I because it is so much easier to
+[01:05:22] to make changes to code and people are
+[01:05:25] certainly less tied to code than they
+[01:05:27] used to be. Like it used to be like you
+[01:05:28] know if you want to go change other
+[01:05:30] people's code like you it could
+[01:05:32] sometimes be taboo and then in today's
+[01:05:35] age like people were far less tied to
+[01:05:36] their code. So like getting that first
+[01:05:38] implementation out and then cleaning up
+[01:05:41] get it stable make sure error logging is
+[01:05:42] good observability is good it's
+[01:05:44] performant the architecture and
+[01:05:46] abstractions are good kind of reserved
+[01:05:48] for the more senior folks. I don't know.
+[01:05:50] I think I think that would be an
+[01:05:51] interesting way to work.
+[01:05:52] >> Yeah. Do you really think you wouldn't
+[01:05:53] wouldn't build a you wouldn't build new features
+[01:05:55] if you were like more senior? Like
+[01:05:57] wouldn't you be doing all five of those
+[01:06:00] roles? Like by the way those map onto
+[01:06:02] like existing things. Prototypers are
+[01:06:05] like designers in an engineering heavy
+[01:06:07] company. There's all maintainers are
+[01:06:10] like QA teams etc etc. Like I said, it's
+[01:06:14] just to an extent, this is how I've
+[01:06:16] always worked where I like really enjoy
+[01:06:18] going across the stack and like either
+[01:06:20] like trying to come up with
+[01:06:22] >> like what I'm saying is I'm calling
+[01:06:23] calling on this specific one. Yeah, I I
+[01:06:25] know you're positive on it, but me, I'm
+[01:06:27] like
+[01:06:28] >> super I don't think it
+[01:06:30] it >> it's those five archetypes, but I do
+[01:06:32] do think there is a a world where like
+[01:06:35] >> like I said, I that's how I would want
+[01:06:36] want to try and build a team right now
+[01:06:38] because I think that is how I could
+[01:06:40] iterate with a group of developers to
+[01:06:41] build software the fastest and keep it
+[01:06:44] reliable. That's my my take.
+[01:06:46] >> I have no idea where things are go. I
+[01:06:47] I don't know that I agree with that. I
+[01:06:49] don't know that I agree with the tweet.
+[01:06:50] I don't
+[01:06:52] >> I just don't agree.
+[01:06:53] agree. >> I don't I don't know what things are
+[01:06:54] are gonna I I think it all any predictions
+[01:06:57] >> I don't think I'm wrong. I think like
+[01:06:59] like >> I I think specializations do change.
+[01:07:01] change. >> I I think it doesn't make sense to make
+[01:07:03] make predictions like that in that could
+[01:07:06] loops not like with what they're trying
+[01:07:07] to do. Could could I not have a maintain
+[01:07:09] a loop and uh like
+[01:07:11] >> I guess it is kind of it is kind of
+[01:07:13] of contradictory with his tweets from the
+[01:07:15] week before.
+[01:07:15] >> Oh yeah. So that's Boris. I think we're
+[01:07:17] we're 2-1 on that. We've decided that you're
+[01:07:19] but sure.
+[01:07:20] >> You pulled the tweet bogus. That's how
+[01:07:21] how you end up in the maintainer position.
+[01:07:23] >> Yeah, exactly.
+[01:07:24] exactly. >> Okay. Okay.
+[01:07:25] Okay. >> I'm I'll be the idea guy shipping my
+[01:07:27] my >> using your G brain and that's you're the
+[01:07:30] the return of the idea guy. You the
+[01:07:32] technical co-founder to
+[01:07:34] um do your thing for you.
+[01:07:35] you. >> All right. To to close things out, uh I
+[01:07:38] I don't know if you guys have any
+[01:07:40] predictions to make that you you want to
+[01:07:42] track, but I I have one that I want to I
+[01:07:44] want to get on the record. Uh my hot
+[01:07:46] take uh that we need receipts for is uh
+[01:07:49] I think that codecs and plug code start
+[01:07:52] gating and moving more functionality out
+[01:07:55] of their harnesses and into the cloud
+[01:07:57] and behind API access because I don't
+[01:08:00] think their models are remote and I
+[01:08:01] think building good harness features is
+[01:08:03] one of the only ways that they're going
+[01:08:05] to be able to kind of lock people into
+[01:08:07] their ecosystems going forward. So
+[01:08:09] you're already seeing this like I think
+[01:08:11] like OpenAI's acquisition of ONA was
+[01:08:13] like a sign on was get pod. So I assume
+[01:08:17] they're going to make like execution
+[01:08:18] environments for that but not in front
+[01:08:21] of the model but actually like behind
+[01:08:22] the model as an execute tool or a run
+[01:08:24] tool or something like that. They're
+[01:08:26] already doing this. They were already
+[01:08:27] shipping web search etc etc. I don't
+[01:08:30] know how much money they plan on making
+[01:08:32] for it but definitely in the sense of
+[01:08:33] stickiness and out ofthe-box usefulness.
+[01:08:37] Yeah, I think you have to look at
+[01:08:39] something like computer use. You have to
+[01:08:41] look at emulate and you have to look at
+[01:08:42] computer use. You have to see how good
+[01:08:44] computer use is getting at like being
+[01:08:46] able to autonomously test stuff. How
+[01:08:48] good emulator is at being able to create
+[01:08:50] these test environments. And so the
+[01:08:52] factor of those two gets rid of that
+[01:08:54] like need to have things locally on your
+[01:08:56] computer. I feel like I don't know
+[01:08:58] enough about the games behind the scenes
+[01:09:00] to
+[01:09:01] like be able to be like,
+[01:09:03] >> but it makes sense.
+[01:09:04] sense. >> Yeah. Also, as you get into like really
+[01:09:06] really fast models, like less latency between
+[01:09:10] is probably like going to be a selling
+[01:09:11] point. Um, maybe you end up on like
+[01:09:14] discounted inference or something
+[01:09:15] because I mean what each turn each turn
+[01:09:18] with tool calling takes 100 milliseconds
+[01:09:20] round trip.
+[01:09:21] >> I'm not going to try to pretend like I
+[01:09:23] I know the answer here.
+[01:09:24] >> You could offer a discounted fast mode
+[01:09:25] mode if you're running it in the same data
+[01:09:27] center the GPUs are in. Uh, because
+[01:09:29] you're doing inference right on the
+[01:09:30] right next to it, which is interesting.
+[01:09:34] Do either of you have a hot take today?
+[01:09:36] >> The one that I'm thinking about probably
+[01:09:39] probably just because of myself is uh number of
+[01:09:42] people who are going to have mental
+[01:09:43] breakdowns by working way too hard.
+[01:09:45] >> Yeah.
+[01:09:46] Yeah. >> Uh will spike probably around
+[01:09:48] around Thanksgiving etc. like around the later
+[01:09:51] part of the year. I think like summer's
+[01:09:52] here now the sun's out etc. As the
+[01:09:55] weather starts getting worse and AI
+[01:09:56] psychosis like kicks in across more like
+[01:09:59] >> once Ree gets fable back. Once I get
+[01:10:01] get fable back.
+[01:10:01] >> Once you get fable back. Like I think
+[01:10:03] think like insurance claims will jump. Mental
+[01:10:05] health stuff. Offices will start having
+[01:10:08] uh more meta used to do this like little
+[01:10:11] pods that you can take naps in.
+[01:10:13] >> Napping pods. The return of the napping
+[01:10:15] napping pods.
+[01:10:16] >> Well, Meta is bringing back their snack
+[01:10:17] snack counters is what I heard.
+[01:10:19] >> There was a really good Chzian tweet on
+[01:10:21] on this. He was like, "Oh, the tools are
+[01:10:23] supposed to make us faster or make us
+[01:10:25] work less, but everyone's working
+[01:10:27] everyone I know is like working harder."
+[01:10:29] >> Yep. 100%. Um, the AI tools I feel like
+[01:10:31] like have really shifted the relationship of
+[01:10:33] work. Like I would like slam my head
+[01:10:34] against a problem for like a workday and
+[01:10:36] then go home and be exhausted and then
+[01:10:38] like, oh, it'll click the next day.
+[01:10:40] Whereas like with the AI stuff, you kind
+[01:10:41] of just like push through it, but like
+[01:10:43] you don't know that you're pushing
+[01:10:44] through it
+[01:10:45] >> and it's very easy to like ignore a
+[01:10:47] a little Oh, there have been times where
+[01:10:48] I'm like falling asleep and I'm like,
+[01:10:51] "Okay, I just need to type out the
+[01:10:52] prompt and hit enter and then
+[01:10:54] >> and it's actually really like I mean the
+[01:10:56] the way I I do actually think that there's
+[01:10:57] like a funny overlap between LLMs and
+[01:11:00] gambling. Like every prompt is just like
+[01:11:02] a spin at the slot machine.
+[01:11:04] >> You got like Yeah, maybe I can get
+[01:11:06] get >> We should probably do a full episode.
+[01:11:07] episode. One of our core points is like mental
+[01:11:10] health and AI usage.
+[01:11:11] >> Let's let's plan on doing that. Do you
+[01:11:13] you have any hot takes for the episode? My
+[01:11:15] like closing would be two. Um, one would
+[01:11:17] be one I tweeted out forever ago, which
+[01:11:19] was more companies go to be API first.
+[01:11:22] Uh, more like discoverability around
+[01:11:24] that. And I'm like very hopeful that
+[01:11:26] they implement something like CIMD,
+[01:11:28] dynamic client registration, like anyone
+[01:11:30] can authenticate to it. And then the
+[01:11:32] other one is loops aren't bad that
+[01:11:35] they're loops aren't bad, they're
+[01:11:37] different. Uh, it's a way of creating
+[01:11:40] like different products. You're like
+[01:11:42] playing this house of cards of inference
+[01:11:44] where it actually like you're playing
+[01:11:46] this cards of inference where at this
+[01:11:48] one tweet where it was this valley of
+[01:11:50] despair where if you're just prompting
+[01:11:51] normally it's actually a really bad
+[01:11:53] place to be in comparison to writing by
+[01:11:55] hand or like full agentic. There's like
+[01:11:58] kind of an other side of that valley
+[01:11:59] where it's like you have a bunch of
+[01:12:01] inference, you have agents monitoring
+[01:12:03] your deploys, you have them monitoring
+[01:12:05] your analytics, you have them autofixing
+[01:12:08] and it's like a completely different
+[01:12:09] type of software engineering. I don't
+[01:12:11] know that it's it's not bad. It's
+[01:12:13] different.
+[01:12:14] >> Reese, I'm gonna have to tell you what a
+[01:12:16] a hot take is. It's not meant to be
+[01:12:18] nuanced and like [laughter]
+[01:12:20] >> supposed to cause drama.
+[01:12:22] drama. >> Okay. Loops of the future.
+[01:12:24] future. Websites are done.
+[01:12:27] >> There you go. That's what I'm [laughter]
+[01:12:29] [laughter] >> All right. Thank you everyone for tuning
+[01:12:32] tuning in. Please let us know what you want to
+[01:12:34] hear us yap about. Uh our next episode
+[01:12:38] we're going to deep dive on each of our
+[01:12:40] workflows and how we actually do work
+[01:12:41] dayto-day brain set up. Oh my see in
+[01:12:44] Twitter. I'm like I really excited
+[01:12:46] to see you guys.
+[01:12:48] >> Yeah. Yeah. I think all three of us have
+[01:12:49] have wildly different ways we work with AI.
+[01:12:51] So uh tune in then. Thank you.
+[01:12:54] >> Yeah. Thanks again to organizers.
+[01:12:56] organizers. >> Yeah. Thank you so much for having us
+[01:12:57] us record on the floor. Have a great
+[01:12:59] conference everyone. Thank go team. Go
+[01:13:02] team.
+[01:13:08] hate you. I was on a roll. We've
+[01:13:10] lost him, dude. La.
+[01:13:13] >> I'm tall, too. Okay. I'm not tall.
+[01:13:15] tall. >> Called the first episode. Episode zero.
+[01:13:17] zero. >> You're going to make me do this again.
+[01:13:18] again. >> Index zero. Episode one. Tell me what to
+[01:13:21] to say.
+[01:13:21] >> I don't know.
+[01:13:22] know. >> Welcome to the next token. Nope. Nope.
+[01:13:25] Nope. Nope. I screwed it up.

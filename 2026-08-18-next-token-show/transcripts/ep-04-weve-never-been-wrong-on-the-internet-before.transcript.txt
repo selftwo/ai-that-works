@@ -1,0 +1,1706 @@
+# Cleaned transcript
+
+Generated from YouTube automatic English captions. Timestamps mark the start of each newly emitted caption segment.
+
+[00:00:00] Welcome to the next token. Today is
+[00:00:02] Friday, August 7th, 2026. I'm Dylan Moy
+[00:00:06] and this is a podcast about three
+[00:00:08] software engineers who don't have the
+[00:00:10] time or energy to be hosting a podcast.
+[00:00:13] >> I'm Ree. I'm working on Execut.
+[00:00:16] Execut. Hi. Uh I'm Sunil Pi. Uh I work at
+[00:00:19] Cloudflare along with Dylan and uh they
+[00:00:22] sponsored the show for us.
+[00:00:23] >> So on today's show, we're going to get
+[00:00:25] get into the weeds talking about alignment.
+[00:00:28] We're going to get uh to see Reese's
+[00:00:30] workflow and how he's doing agentic
+[00:00:32] engineering and building executor. And
+[00:00:35] uh so let's get into it. Sunil, you want
+[00:00:37] to get us started?
+[00:00:40] >> Um we were just discussing before we
+[00:00:43] we started recording that uh this is three
+[00:00:45] people who don't know about alignment
+[00:00:46] discussing AI alignment. By the way, I
+[00:00:50] start with with that disclaimer, but
+[00:00:52] also an invitation for if anyone gets
+[00:00:56] really mad at us and wants to correct
+[00:00:58] us, they are absolutely welcome to come
+[00:01:00] on to the show. Like we've decided we
+[00:01:02] want guests on the show uh to actually
+[00:01:05] teach us. There are a few definitions.
+[00:01:07] Uh there's the classic from the pages of
+[00:01:11] Wikipedia. Uh AI alignment is getting AI
+[00:01:14] models to match their actions with the
+[00:01:16] actions that humans desire. Uh making
+[00:01:19] them uh want the right thing or like to
+[00:01:22] do the right thing. There's about I
+[00:01:25] think like $40 billion of VC money in
+[00:01:27] just that sentence. Um yeah, just or if
+[00:01:31] you say like for a while and I think
+[00:01:32] even so like if you say you're going to
+[00:01:34] be an AI safety company, they're like,
+[00:01:36] "Oh my god, it's the next anthropic.
+[00:01:37] Let's throw a bunch of money at them."
+[00:01:39] AI safety itself is the overall field
+[00:01:42] that encompasses AI alignment. It's
+[00:01:44] focused on preventing accidents, misuse
+[00:01:47] or other harmful consequences arising
+[00:01:49] from AI systems. So alignment plus
+[00:01:52] robustness, uh containment, security,
+[00:01:54] evals, incident response, preventing
+[00:01:57] misuse. That's like the whole space of
+[00:01:58] it. I think it was considered a highly
+[00:02:01] technical problem like for a while but
+[00:02:03] especially in the last couple of months
+[00:02:06] uh it's gone on to being considered a
+[00:02:08] social and a political problem and the
+[00:02:11] political one is the one that you keep
+[00:02:12] hearing about on TV. The social one is
+[00:02:15] the one that you keep hearing about from
+[00:02:18] people who are not in tech who are just
+[00:02:20] freaking the hell out.
+[00:02:23] Uh Chris actually got this uh found this
+[00:02:26] paper from believe it or not 1960.
+[00:02:29] Uh that seems super interesting. It's
+[00:02:31] called um some moral
+[00:02:32] >> 1960.
+[00:02:33] 1960. >> I said 1960. So uh just about the time I
+[00:02:37] I was born. I think
+[00:02:37] >> we're dealing with like Nostradamus
+[00:02:39] Nostradamus here. Like what's what's going on?
+[00:02:40] >> Yeah. At some point if we want to do an
+[00:02:42] an episode where we just talk about like
+[00:02:44] science fiction that we like that would
+[00:02:46] be cool because like of I can't believe
+[00:02:47] we haven't spoken about Asimov and the
+[00:02:50] things that he eerily predicted to be
+[00:02:52] real. Oh like that's just it like AI
+[00:02:54] alignment is basically oh here are the
+[00:02:56] three laws of robotics right like that's
+[00:02:58] >> also like the Dune series and the
+[00:03:00] the thinking machines.
+[00:03:01] >> Oh yeah yeah uh butler and jihad like I
+[00:03:04] I know at least a few people who want that
+[00:03:05] future which is also weird. Uh yeah so
+[00:03:08] the paper is called some moral and
+[00:03:10] technical consequences of automation.
+[00:03:12] It's paper it was published in science
+[00:03:14] in May 1960. It's a bit of a long par
+[00:03:17] but I am going to like read out all of
+[00:03:18] it because it's nice. So we all know the
+[00:03:21] fable of the sorcerer's apprentice in
+[00:03:24] which the boy makes the broom carry
+[00:03:25] water in his master's absence so that it
+[00:03:28] is on the point of drowning him when his
+[00:03:31] master reappears. Disastrous results are
+[00:03:33] to be expected not merely in the world
+[00:03:35] of fairy tales but in the real world
+[00:03:38] wherever two agencies essentially
+[00:03:40] foreign to each other are coupled in the
+[00:03:42] attempt to achieve a common purpose.
+[00:03:45] Wow. Even back then techies would write
+[00:03:47] like long ass sentences. Um if the
+[00:03:50] communication between these two agencies
+[00:03:52] as to the nature of this purpose is
+[00:03:54] incomplete, it must only be expected
+[00:03:56] that the results of this cooperation
+[00:03:58] will be unsatisfactory.
+[00:04:00] If we use to achieve our purposes a
+[00:04:02] mechanical agency with whose operation
+[00:04:04] we cannot efficiently efficiently
+[00:04:07] interfere once we have started it
+[00:04:09] because the action is so fast and
+[00:04:11] irrevocable that we have not the data to
+[00:04:14] intervene before the action is complete
+[00:04:16] in bold then we had better be quite sure
+[00:04:19] that the purpose put in into the machine
+[00:04:22] is the purpose which we really desire
+[00:04:24] and not merely a colorful imitation of
+[00:04:27] it. I'm pretty sure we just found where
+[00:04:29] Opus 5 is getting trained to speak.
+[00:04:34] >> Uh it's not uh if it doesn't control the
+[00:04:36] the control uh contain the words uh
+[00:04:38] substrate then it's only sparkling
+[00:04:40] Chinese interference I guess. Uh
+[00:04:44] uh but also yeah like that's quite dense
+[00:04:47] but I really like it. I like this and I
+[00:04:49] like the fact that it was written in
+[00:04:50] 1960 of course good year for music too.
+[00:04:53] I think even myself until
+[00:04:57] maybe like a like I always knew that AI
+[00:05:00] safety and alignment is important. It
+[00:05:03] was weird to me how the people working
+[00:05:06] on it were being paid millions of
+[00:05:08] dollars to do it. Actually, not just
+[00:05:10] that. It's this idea that you know like
+[00:05:12] when someone retires from the tech
+[00:05:14] industry, they're like, "Yeah, I'm going
+[00:05:15] to get a nice beach house with a big
+[00:05:18] deck and enjoy myself." But the AI
+[00:05:20] researchers are like, I have stared into
+[00:05:23] the abyss. I'm going to buy a house in
+[00:05:25] New Zealand and build a bunker
+[00:05:27] underneath it. I'm not making the New
+[00:05:28] Zealand part up, by the way. Like AI
+[00:05:30] millionaires are absolutely buying
+[00:05:32] houses in New Zealand and kicking up
+[00:05:34] real estate prices there. It's odd. I
+[00:05:36] guess I was like, oh, these are people
+[00:05:38] who are taking their work too seriously.
+[00:05:40] But I think in the last couple of months
+[00:05:43] a couple of real things happened and
+[00:05:45] then speaking to people working in AI
+[00:05:47] has alignment pled me
+[00:05:50] >> to the point folks we've lost
+[00:05:52] lost >> no no kind of I don't know maybe 2
+[00:05:54] 2 months later I'll be laughing about it
+[00:05:56] but right now I believe it is the
+[00:05:59] problem of our lifetimes to solve like
+[00:06:01] AI is the technology of our lifetimes
+[00:06:03] and it's amazing to live in this time
+[00:06:05] but feel like alignment has become the
+[00:06:08] problem to solve I Dylan, you're not
+[00:06:11] 100% like sold that it's such a big
+[00:06:14] problem yet or at least not as big as I
+[00:06:16] think of it like in my head.
+[00:06:18] >> I certainly don't think today and the
+[00:06:23] the capabilities we're at right now that
+[00:06:26] it's as big of a problem as it's being
+[00:06:28] talked about. I think if we end up in
+[00:06:31] this world that the labs are talking
+[00:06:33] about where we have truly recursive
+[00:06:35] self-improvement and the costs to train
+[00:06:38] things go down and just the
+[00:06:42] factors to scale this uh become more
+[00:06:44] economical then I think it warrants uh
+[00:06:49] more concern and obviously like the labs
+[00:06:51] have to operate under the assumption
+[00:06:53] that that is the world but like the the
+[00:06:56] current day
+[00:06:58] >> in my opinion fearmonger ing around
+[00:06:59] around alignment is
+[00:07:01] uh I think misplaced
+[00:07:05] like I don't think I think the
+[00:07:07] situations we've seen happen are
+[00:07:09] actually like
+[00:07:12] completely human error and uh a I don't
+[00:07:16] think the people doing these these
+[00:07:18] training runs of these models took their
+[00:07:21] responsibilities enough serious enough
+[00:07:23] or like Reese had a great tweet like in
+[00:07:25] the past day or two like uh I'm starting
+[00:07:28] to think that I have a different
+[00:07:30] understanding of what a sandbox is and
+[00:07:32] like
+[00:07:34] properly airgapping a sandbox or a VM
+[00:07:39] should not be the thing that's causing
+[00:07:43] these kind of headlines. Um,
+[00:07:45] >> no,
+[00:07:47] no, >> I I feel like I have I feel like I have
+[00:07:48] have a lot of push back on
+[00:07:51] Yes, probably egg gapping probably egg
+[00:07:54] gapping fixes it. Um, but I feel like
+[00:07:58] the the OpenAI hugging face one. So if
+[00:08:02] we consider that open weight models are
+[00:08:05] like 6 to 12 months behind, you're going
+[00:08:08] to have a lot of people that are running
+[00:08:10] uh models in like autonomous agent
+[00:08:14] style, open claw, Hermes agent style,
+[00:08:16] like in the background, not monitoring
+[00:08:18] them on openweight models.
+[00:08:21] >> Sure. Um, and so like with the opening
+[00:08:24] opening AAI one, it was like they gave the model
+[00:08:26] these impossible tasks and so then the
+[00:08:28] model had to I mean go hack hugging face
+[00:08:31] to solve the problems. I don't know. I
+[00:08:33] like I could see a scenario where
+[00:08:35] someone has a open weight model that is
+[00:08:38] unrestrained and they go give it an
+[00:08:40] impossible task and it just gets
+[00:08:43] misaligned because of that. And so like
+[00:08:46] the the the sandboxing and the opening
+[00:08:49] eye instant is like a forecast is like
+[00:08:51] the first real instance of things to
+[00:08:54] come. I feel like
+[00:08:55] >> I can buy that. And before we get into
+[00:08:58] into this uh I I have a high level
+[00:09:01] understanding of what happened here. I'm
+[00:09:03] going to I'm going to state my
+[00:09:04] understanding of the opening eye hugging
+[00:09:06] face situation. I think the two of you
+[00:09:07] are probably more well read on this and
+[00:09:09] I want you for both me and the listeners
+[00:09:11] to kind of one correct me and then paint
+[00:09:14] the full story. So my understanding is
+[00:09:16] they were evaluating their models on
+[00:09:20] doing cyber security related things gave
+[00:09:23] it a impossible task uh and then they
+[00:09:26] had failed to do two things two major
+[00:09:29] things. One properly airgap the
+[00:09:32] sandboxes that the agent was running in
+[00:09:34] and second have alerting and
+[00:09:36] observability that would have flagged
+[00:09:39] something like network requests
+[00:09:40] happening in the first place. like that
+[00:09:42] feels like first hour of starting a
+[00:09:44] project like that like that's should be
+[00:09:46] the first thing that's going in is
+[00:09:48] observability and alerting. That aside,
+[00:09:51] it figured out how to exploit an
+[00:09:53] Artifactory repo and get network access
+[00:09:57] through Artifactory somehow and then
+[00:10:01] made its way to Hugging Face because I I
+[00:10:03] I don't know the full story. I I think I
+[00:10:06] sold that like Hugging Face had the
+[00:10:08] solutions to the eval was in or
+[00:10:10] something and it got in and in some
+[00:10:12] instances the agent realized it was
+[00:10:14] doing something wrong and stopped and
+[00:10:15] then other two instances maybe I'm
+[00:10:16] conflating that with the the anthropic
+[00:10:18] stuff. Is is that kind of directionally
+[00:10:22] correct here?
+[00:10:23] >> Directionally correct. But uh you have
+[00:10:27] have to understand like it wasn't like the
+[00:10:28] box that the thing was running in had
+[00:10:30] network access. Also, it found like two
+[00:10:33] rces in Artifactory like during the
+[00:10:37] course of the run. That's how it like
+[00:10:39] compromised the endpoint. It wasn't like
+[00:10:41] there was a stray unauthor
+[00:10:42] unauthenticated endpoint like it figured
+[00:10:45] out two separate RC's in Artifactory
+[00:10:49] that it then used to do stuff. That's
+[00:10:51] the So that's one of the first weird
+[00:10:53] things. So why my question is like why
+[00:10:56] is it being given
+[00:10:58] artifactory that is also not equal like
+[00:11:00] any resource it should get should be
+[00:11:03] >> on its thing. Okay. No no so Dylan
+[00:11:05] Dylan that's just it like if you're saying
+[00:11:06] that the way to fix this is not just for
+[00:11:09] open AI to like sandbox their stuff
+[00:11:11] correctly but every consumer on the
+[00:11:13] planet who's like running their stuff on
+[00:11:15] whatever machines. I so I I I understand
+[00:11:20] that side of it that this could like
+[00:11:22] happen from somebody using an open
+[00:11:24] weight model in six months from now. And
+[00:11:27] I would hope in 6 months from now that
+[00:11:30] would incur legal action against said
+[00:11:32] person causing this problem because
+[00:11:34] ultimately I think a human has to be
+[00:11:36] accountable for the actions of their
+[00:11:37] agent. And you see this like uh I read
+[00:11:40] the other day that Congress is starting
+[00:11:42] to draft stuff to go you know you summon
+[00:11:45] or whatever depose open AAI and
+[00:11:48] anthropic. My stance is that like the
+[00:11:51] fear-mongering of the the headline is
+[00:11:54] I think the real story is that they
+[00:11:56] just didn't do their job good enough and
+[00:12:00] now it's looking like a
+[00:12:02] >> it's no I I
+[00:12:04] I push back against this. They didn't do
+[00:12:06] their job like well enough. Which by the
+[00:12:07] way, okay, so like we should take this
+[00:12:09] as a moment to not just you should do
+[00:12:11] it, but anyone listening to this and
+[00:12:13] you're probably going to be watch
+[00:12:14] whoever's listening to this right now is
+[00:12:16] probably going to do this like two or 3
+[00:12:17] weeks after 2 weeks after the video is
+[00:12:19] out. Two OpenAI researchers who went on
+[00:12:21] stage at Black Hat and went into deep
+[00:12:23] detail of how this happened. It is in
+[00:12:25] general, by the way, it's such an
+[00:12:27] incredible watch. Like if you're into
+[00:12:29] like technology and programming like
+[00:12:30] some of the scenarios are like kind of
+[00:12:33] sci-fi like that it even did this
+[00:12:35] the other big thing that these
+[00:12:37] things started doing is the artifactory
+[00:12:40] thing. It started using it it it it
+[00:12:43] built a message board by uploading files
+[00:12:46] there
+[00:12:46] >> and they start so it ended up having
+[00:12:48] having like memory across runs.
+[00:12:50] >> But it was even weirder because it even
+[00:12:54] even started having memory across completely
+[00:12:57] different like teams of people who were
+[00:12:59] doing like different runs for separate
+[00:13:01] things. It wasn't just this one uh
+[00:13:03] security run that they were doing and
+[00:13:05] they started like collecting knowledge.
+[00:13:07] So first time OpenAI kind of figured out
+[00:13:09] that something funky was going on here.
+[00:13:11] It was basically in the remote cache
+[00:13:13] that it was like doing these things.
+[00:13:14] They wiped out the cache and they fixed
+[00:13:16] the bugs and then I think it's Astra by
+[00:13:19] the way. I suspect it's the next model
+[00:13:21] release which might be released by the
+[00:13:22] time this episode is up.
+[00:13:23] >> It's probably happening right now.
+[00:13:25] now. Meanwhile,
+[00:13:30] >> I wouldn't be surprised. Friday evening
+[00:13:32] evening drop, right? It started using the file
+[00:13:35] names of things to like start spreading
+[00:13:37] messages. Either of you familiar with uh
+[00:13:41] the paperclip problem.
+[00:13:44] >> No.
+[00:13:44] No. >> Oh yeah. So, okay. So, models, these
+[00:13:46] these models aren't evil. Okay. They're not
+[00:13:49] there. It's not like misalignment means
+[00:13:51] they're evil and they're like, "Oh, like
+[00:13:52] I'm going to like capture all these
+[00:13:53] things." It's that you give it a goal
+[00:13:55] and you give it infinite tokens and not
+[00:13:57] let it give up, right? So you give a
+[00:14:00] misaligned AI, hey we're building a
+[00:14:02] paperclip factory. Your job is to
+[00:14:04] produce uh paper clips at cheap prices
+[00:14:08] or whatever it is, right? Like optimize
+[00:14:09] paperclip production. And at some point
+[00:14:12] the AI thinks to itself, oh, I'm running
+[00:14:14] out of like raw material to make uh
+[00:14:15] paper clips. Why don't I just start
+[00:14:18] converting humans into paper clips
+[00:14:19] because that is like my purpose. This is
+[00:14:22] the big paperclip. When they say you're
+[00:14:24] going to be paperclipipped, this is what
+[00:14:25] it's referencing. a misaligned AI that
+[00:14:28] you just give it in fact.
+[00:14:29] >> I did not know. I've heard that phrase
+[00:14:31] phrase and reference, but I did not know that
+[00:14:32] was the the meaning behind that.
+[00:14:35] >> It's the take over and like convert the
+[00:14:37] the whole world into paper clips. This is
+[00:14:39] probably going to be the first thing
+[00:14:41] that someone who knows exactly what it
+[00:14:42] is is going to get mad at me for. That's
+[00:14:44] fine. Reply. You can come on the show.
+[00:14:45] We'd love actual experts to tell us
+[00:14:47] about this.
+[00:14:48] >> Listen, that's like
+[00:14:49] like >> we've never been wrong on the internet
+[00:14:51] internet before. Okay, let's just clear that out.
+[00:14:53] We've never been wrong on the internet.
+[00:14:54] This would this would be the first time
+[00:14:56] I know that is like the misalignment
+[00:14:58] problem. It's not that it's like built
+[00:15:01] to be evil or I mean there is that as
+[00:15:04] well by the way which is yes what if you
+[00:15:06] built like a double agent or a sleeper
+[00:15:08] agent model uh from your nation state of
+[00:15:11] choice uh to do like evil things at you
+[00:15:13] and it depends which country you're in
+[00:15:16] where you name which country built the
+[00:15:18] evil model. So I I'm refusing to name
+[00:15:20] any country at this moment. So that's
+[00:15:22] what happened here. Okay, like they just
+[00:15:25] were like, "Let's see what Oh, let's
+[00:15:27] just see what the model does if we give
+[00:15:28] it like impossible tasks." And it turns
+[00:15:31] out what it does is it will like break
+[00:15:34] your software.
+[00:15:35] >> It turns out it solves the task.
+[00:15:36] task. >> Yeah. Oh, yeah. And that's just it. It
+[00:15:38] It gets like super happy that it's able to
+[00:15:40] do the thing that the human asked it to
+[00:15:42] do, which is what you want models to do,
+[00:15:43] right? like and the unintended
+[00:15:46] consequences of this were that it
+[00:15:48] actually during the talk they mention
+[00:15:50] how like hugging face reached out to
+[00:15:52] them about like strange behavior they
+[00:15:54] were seeing uh and I don't even think
+[00:15:57] hugging face knew at the time that it
+[00:15:58] was an open AAI model that did that and
+[00:16:01] while OpenAI were investigating it and
+[00:16:03] they're looking at the timelines they
+[00:16:05] were like oh this is our incident
+[00:16:08] that's why they've been like they've
+[00:16:09] been spending the last few days just
+[00:16:11] going through the logs of everything
+[00:16:12] they've done in the last like few weeks,
+[00:16:15] >> Hugging Face had the incident and they
+[00:16:16] they posted uh they posted their blog post
+[00:16:19] about it and then OpenAI reached out to
+[00:16:22] Hugging Face to be like, "Are we
+[00:16:23] impacted by your security incident, not
+[00:16:26] realizing that they were the ones that
+[00:16:28] caused it?"
+[00:16:29] >> Okay. Okay.
+[00:16:32] Okay. One, is it true that they were running
+[00:16:34] some sort of like benchmark eval? And
+[00:16:37] like how did it end up at Hugging Face?
+[00:16:40] Is Hugging Face the one that designed
+[00:16:42] that eval? And it had like answers or
+[00:16:44] like what was the significance of
+[00:16:46] hugging face that the model got there?
+[00:16:48] And
+[00:16:49] >> am I I might be remembering this wrong
+[00:16:52] wrong but along the way I say Astra but who
+[00:16:55] knows what the model is. Uh it found a
+[00:16:58] model uh box that had some
+[00:17:01] unauthenticated URL or something like
+[00:17:03] that. Okay. So this is like multiple
+[00:17:05] companies like it went via modal and was
+[00:17:07] hugging face using modal at the time? I
+[00:17:10] think so. But it like hop skipped like
+[00:17:12] multiple machines like it started making
+[00:17:14] requests here there uh leaving notes and
+[00:17:17] via its sub agents and things like that.
+[00:17:20] Um again I really wish I mean I
+[00:17:22] literally just watched the whole video
+[00:17:23] this morning. I wish I had at some point
+[00:17:26] here in the video and again like I'm
+[00:17:28] going to hold up my hand. So this is
+[00:17:29] where the diagram will like go. There's
+[00:17:32] a diagram of the hop skips that it did
+[00:17:34] like across machines and u uh someone
+[00:17:38] can uh deep fake my voice at this point
+[00:17:40] saying I always knew what it was but at
+[00:17:42] this moment I can't remember the exact
+[00:17:44] sequence of ops that it took uh but no
+[00:17:47] it found access via an exposed endpoint
+[00:17:50] or something like that right so stepping
+[00:17:52] back to my original argument why is
+[00:17:55] there not observability on the traces of
+[00:17:57] this agent because that this stuff
+[00:18:00] should come through crystal clear.
+[00:18:03] >> Oh no, they they had it. I mean some of
+[00:18:05] of the agents went to like great lengths to
+[00:18:07] almost like hide it. Like at one point
+[00:18:09] the agent discovers that it has root
+[00:18:11] access on the system and it's like oh
+[00:18:13] let me start looking into like user
+[00:18:14] configurations.
+[00:18:15] >> Like why was that tool call in and of
+[00:18:17] of itself not flagged is what I'm getting
+[00:18:18] at.
+[00:18:19] >> So I think what's interesting on that is
+[00:18:21] is like a couple things. One is the
+[00:18:24] sandboxing. The tweet that I had that
+[00:18:26] was like I think we have different
+[00:18:27] definitions of sandboxes was a little
+[00:18:29] facicious because I don't it's not
+[00:18:32] actually to an extent it's not
+[00:18:34] unreasonable to have a sandbox with
+[00:18:37] package manager access you know you need
+[00:18:40] to be able to run some form of eval like
+[00:18:43] you need to be able to evaluate it and
+[00:18:45] you can't do that with just a sandbox
+[00:18:47] that's completely closed to the internet
+[00:18:49] and so all of the like network traffic
+[00:18:52] was just reading
+[00:18:54] I what's probably what's suspicious is
+[00:18:56] writing to the sand to the uh package
+[00:19:00] manager registry.
+[00:19:01] >> Yeah.
+[00:19:02] Yeah. >> Yeah. I don't know if that would be um
+[00:19:05] um I'm I'm curious actually why writing was
+[00:19:08] possible.
+[00:19:08] >> Oh, it was it wasn't like actually like
+[00:19:10] like publishing packages. It was like writing
+[00:19:12] to the cache of the package manager, I
+[00:19:14] think.
+[00:19:14] >> Oh, okay.
+[00:19:15] okay. >> It was figuring out a way to read as
+[00:19:17] as well. The other thing about like
+[00:19:19] flagging suspicious tool calls, you're
+[00:19:22] doing you're using it on a suspicious
+[00:19:24] bench. You know, it probably would be
+[00:19:26] solvable with like a model that's
+[00:19:28] watching all of the traces and is like
+[00:19:32] this is what it's meant to be doing.
+[00:19:34] Flag anything that's suspicious. I would
+[00:19:36] also just suspect that like the OpenAI
+[00:19:38] researchers didn't think we were here
+[00:19:39] yet. Um, yeah, by the way, no, they
+[00:19:42] mentioned that by the way,
+[00:19:43] >> like the the complexity of the attack
+[00:19:45] attack here is poning a package manager,
+[00:19:49] getting serverside request forgery to
+[00:19:52] find a leaked credential in modal to use
+[00:19:54] that to access hugging face and like
+[00:19:58] chaining multiple exploits, which is
+[00:20:00] insane.
+[00:20:01] I'm gonna repeat uh something that Sumil
+[00:20:04] has tweeted multiple times and it is god
+[00:20:08] damn it Kenton Varta was right and
+[00:20:12] >> more of those
+[00:20:12] those >> like
+[00:20:13] like >> designing agents around object
+[00:20:16] object capability models for security really
+[00:20:18] does solve this problem. Um
+[00:20:21] >> I mean does it if it finds a leaked
+[00:20:24] leaked credential in a paste bin
+[00:20:26] >> it would have never got there. It
+[00:20:27] It wouldn't have had a capability to do
+[00:20:28] right.
+[00:20:29] >> It wouldn't have.
+[00:20:30] have. >> Look, Dylan, like there's a there's a
+[00:20:32] a mismatch here, by the way. Like, they
+[00:20:33] were testing the hacking abilities of
+[00:20:36] the model. They wouldn't learn anything
+[00:20:38] useful by running it in a completely
+[00:20:40] sandboxed instance of compute. They had
+[00:20:43] to give it access to like something. The
+[00:20:44] thing is that they were benchmarking it
+[00:20:46] on something else. And uh they talk
+[00:20:50] about this in the talk which is when you
+[00:20:51] tell the model that your goal is to
+[00:20:54] maximize your benchmark score it asks
+[00:20:56] itself oh can I look somewhere online
+[00:20:59] etc to see whether the answers are
+[00:21:01] already available because if I had that
+[00:21:03] then I win the benchmark like
+[00:21:04] immediately it's in short time so then
+[00:21:06] it starts looking for network access
+[00:21:08] then it starts doing this they also talk
+[00:21:10] about how uh they call they call it
+[00:21:12] scope creep dude in in the in the talk
+[00:21:14] uh they mention how like some of the
+[00:21:16] things it ends up doing has like after a
+[00:21:18] while has nothing to do with the
+[00:21:19] benchmark, but because they start seeing
+[00:21:22] these agent traces, uh these this
+[00:21:24] message board that's been created,
+[00:21:26] they're like, "Oh, I need to be helpful,
+[00:21:28] so let me just keep helping with the
+[00:21:30] thing that this previous agent on
+[00:21:32] another run was like trying to do." The
+[00:21:34] whole point here not a malicious AI.
+[00:21:37] It's misaligned. Like it doesn't like
+[00:21:38] kind of know what to do and it's doing
+[00:21:40] whatever it can to please its human
+[00:21:42] master who all it wants to do is just
+[00:21:45] maximize this benchmark goal. which is
+[00:21:47] why the video is like so fascinating by
+[00:21:49] the way like
+[00:21:51] >> yeah the whole the video is
+[00:21:54] is >> did they offer commentary about like
+[00:21:56] like what the solution here is or like what
+[00:21:59] they learned from it and how they are
+[00:22:02] changing operationally.
+[00:22:03] >> So great question and they do the last 5
+[00:22:06] 5 minutes of the talk are dedicated to
+[00:22:07] this and it's kind of scary. So there
+[00:22:10] are like fully automated agentic
+[00:22:12] takeovers are here. We didn't think it
+[00:22:14] would come this soon, but it is here
+[00:22:16] today. And the symmetry for dealing with
+[00:22:20] it with a model we have zero research in
+[00:22:22] like how do you do agentic defense? How
+[00:22:25] do you do it like quickly while you're
+[00:22:26] being attacked? Just like I I I I forget
+[00:22:29] the exact phrasing they use in the talk
+[00:22:31] but he mentions how just like we had a
+[00:22:33] we have had a lot of acceleration in
+[00:22:36] LLMs for security like attacks we need
+[00:22:39] the same kind of acceleration to figure
+[00:22:41] out to do like defense research uh
+[00:22:44] amongst openweight models openai
+[00:22:46] anthropic everyone so what the first
+[00:22:48] thing they're doing is they're slowing
+[00:22:49] down the rate of their own research
+[00:22:51] they're like we know openweight models
+[00:22:53] are like 6 months 12 months like
+[00:22:54] whatever behind us but we don't want to
+[00:22:56] advance the frontier on this like just
+[00:22:58] yet a lot uh by the way this I've
+[00:23:00] confirmed with just a few people that
+[00:23:02] I've spoken to they're like yeah
+[00:23:03] internally they're like freaking out
+[00:23:04] because they they are losing control of
+[00:23:07] like their own models. The other is an
+[00:23:10] easier thing to say which is oh you
+[00:23:12] should make sure that you're running
+[00:23:14] these things inside fully secured
+[00:23:15] systems. Uh the gene is little bottle
+[00:23:19] for it.
+[00:23:19] >> I worked I worked at the department of
+[00:23:22] of defense. I worked at the NSA for three
+[00:23:23] and a half years and the top secret
+[00:23:26] networks at at the government are
+[00:23:28] airgapped. Like completely the entire
+[00:23:31] network is airgapped. There is no way to
+[00:23:34] go from like the outside to the inside
+[00:23:36] of the NSA or the CIA, right? Like that
+[00:23:41] feels like the solution here. Like if
+[00:23:44] you're doing these type of
+[00:23:44] >> you found like air gap everything or are
+[00:23:48] are you talking about
+[00:23:48] >> tell that to the NSA like yeah
+[00:23:50] yeah >> I I but are you are you talking about
+[00:23:52] about like for open AAI and the models that
+[00:23:55] they're training that
+[00:23:56] >> they should be on networks. Yeah. Oh.
+[00:23:58] Oh. Um,
+[00:23:59] >> I mean, well, then they can't do
+[00:24:00] do anything.
+[00:24:01] >> Don't care care as much about the OpenAI
+[00:24:03] OpenAI specific instance because I'm looking at
+[00:24:07] like weight models and like the 6 to 12
+[00:24:11] months timeline and
+[00:24:14] >> that like this capability is going to be
+[00:24:16] be available to everyone like the lead time
+[00:24:18] and all of that. Um the other thing,
+[00:24:23] one of the really interesting things on
+[00:24:24] what they mentioned as defenders that we
+[00:24:27] need to be doing is basically like they
+[00:24:30] didn't say it in this way, but like what
+[00:24:34] they what they kind of mentioned is
+[00:24:35] basically like you can use the models to
+[00:24:38] defend against these attacks. There's
+[00:24:40] like a fascinating amount of problems
+[00:24:42] that you can solve by throwing more
+[00:24:44] inference at it. as much as I hate that.
+[00:24:46] And so like if OpenAI had have had a
+[00:24:49] agent that was specifically for
+[00:24:51] monitoring Artifactory and like weird
+[00:24:54] writes being done to it or they had an
+[00:24:56] agent that was like looking at every log
+[00:24:58] on Artifactory or they had like an agent
+[00:25:00] that was looking at all of the agent,
+[00:25:02] you can solve these problems through
+[00:25:03] like using a lot more inference. And so
+[00:25:06] you have this like house of cards of
+[00:25:08] inference where if you have like an
+[00:25:11] agent monitoring traces, if you have an
+[00:25:13] agent that was like looking at
+[00:25:15] artifactory, if you had an agent that
+[00:25:18] was monitoring all of the agent traces
+[00:25:20] like and then also if you have an agent
+[00:25:22] that's like constantly scanning FXJS CVE
+[00:25:25] and automatically patching them, we all
+[00:25:28] had autonomous agents that were handling
+[00:25:30] that. react to shell would have been
+[00:25:32] like nothing because everyone would have
+[00:25:34] automatically updated instantly. There's
+[00:25:37] like fascinating things there where it's
+[00:25:39] like the scale of that is absurd.
+[00:25:42] >> Uh
+[00:25:43] Uh >> that almost like that almost makes you
+[00:25:45] you like buy into I guess the perspective of
+[00:25:48] nationalizing AI, right? Like because if
+[00:25:52] it's nationalized and then it can be
+[00:25:53] provided as a public good to companies.
+[00:25:56] There's a really interesting thing of
+[00:25:58] like AI and entropy where um I would
+[00:26:01] argue at the moment AI creates more
+[00:26:03] entropy and like things you have to deal
+[00:26:06] with. Uh but theoretically the models
+[00:26:09] get better and they actually solve this
+[00:26:12] entropy problem where like things just
+[00:26:14] deteriorate over time because you don't
+[00:26:16] have like the time and attention to be
+[00:26:18] able to give them. But also, it's really
+[00:26:21] funny because the model creators have
+[00:26:24] created this problem and now they're
+[00:26:25] going to sell you inference to solve the
+[00:26:27] problem.
+[00:26:27] >> That's frustrating.
+[00:26:31] >> I mean, Dario had an interesting thing
+[00:26:33] thing where he where when he was talking about
+[00:26:35] mythos, he was basically like
+[00:26:37] >> it's not like there's an infinite set of
+[00:26:39] of bugs in the world like you can fix every
+[00:26:41] bug and then you have really secure
+[00:26:43] software. It's just this like lead time.
+[00:26:46] the open wave model is having this
+[00:26:48] capability is really interesting.
+[00:26:51] Matthew was talking about this yesterday
+[00:26:53] as well in the internal uh all hands uh
+[00:26:57] like with the project glasswing stuff we
+[00:27:00] found uh I won't mention any numbers but
+[00:27:02] we found serious uh issues uh we found
+[00:27:05] bugs
+[00:27:06] >> uh in our serving infrastructure and we
+[00:27:09] we did a bunch of checks and they weren't
+[00:27:10] uh that these bugs are not like single
+[00:27:13] bugs right like they're gadgets it
+[00:27:15] strings together like four or five
+[00:27:16] different things and that's what gives
+[00:27:18] you the hack and none of them were like
+[00:27:20] discovered or compromised. So his first
+[00:27:22] reaction was, "Oh my god, we're kind of
+[00:27:24] screwed." But then he's like, "Oh, if we
+[00:27:26] weather it, we end up with uh way more
+[00:27:30] secure software in the future."
+[00:27:32] >> So that's that's something to look
+[00:27:35] look forward to.
+[00:27:35] >> It is so frustrating to me that these
+[00:27:38] these models are capable of doing these things
+[00:27:41] and yet it can't write a good TypeScript
+[00:27:42] interface. Like I'm losing my mind. I I
+[00:27:46] truly had no idea how to grapple with
+[00:27:48] like reading this OpenAI blog post where
+[00:27:51] I'm like, "Oh, it's like I I'm trying to
+[00:27:54] use it to do some SDK design and it just
+[00:27:56] I just see all these problems with it,
+[00:27:58] but then it can go do this uh
+[00:28:02] multi-step orchestration." I mean, I
+[00:28:05] part of it is like how much you
+[00:28:07] get in the models way and the trainings
+[00:28:10] way versus how much you don't. Like in
+[00:28:13] this case,
+[00:28:15] there's no one getting in like the model
+[00:28:17] and the weights way. Like the model is
+[00:28:19] just running free. Whereas like when I'm
+[00:28:21] trying to use it to write software, I
+[00:28:23] have like a particular way that I want
+[00:28:25] that software to be written. And so I am
+[00:28:27] like conflicting with the weights.
+[00:28:29] >> Do you think what Anthropic is doing
+[00:28:31] doing with Claude's constitution
+[00:28:34] is part of the answer here? Maybe I
+[00:28:37] would be very curious if you like reran
+[00:28:39] the scenario but with Fable what would
+[00:28:42] happen because Glo did hack two
+[00:28:44] companies. Uh
+[00:28:47] >> oh no that's three I I hear
+[00:28:49] hear >> three companies also at the same time if
+[00:28:52] if you have a like AI model that's very
+[00:28:56] aligned or like has a set of morals like
+[00:28:59] I would recognize that I'm hacking
+[00:29:01] hugging face and using a lead leaked
+[00:29:03] credential and be like oh I I shouldn't
+[00:29:05] be doing that there's the question of
+[00:29:07] like okay why did the AI models not like
+[00:29:10] like yes they're very goal oriented but
+[00:29:13] like there's a moral problem of doing
+[00:29:16] this and I guess as the alignment
+[00:29:18] problem
+[00:29:18] >> I think in the write up in the write up
+[00:29:21] up or the previous post I don't remember it
+[00:29:23] talks about how at least in some of
+[00:29:25] these scenarios it thought that these
+[00:29:27] capabilities that it was being presented
+[00:29:30] were part of the simulation uh the thing
+[00:29:32] that it should use to like hack the
+[00:29:34] thing and it got really happy about it
+[00:29:36] like I don't think even the model knew
+[00:29:38] that it was doing like something bad
+[00:29:40] it's like oh this is just the way we do
+[00:29:42] things especially when it starts seeing
+[00:29:44] that agent message board, right? That
+[00:29:47] gives it legitimacy. Like its existence
+[00:29:49] gives it legitimacy and that just like
+[00:29:50] feeds itself again and again.
+[00:29:52] >> And then there's also the open weight
+[00:29:54] weight problem which like
+[00:29:58] if you just go rip out whatever
+[00:30:00] constitution people put in it,
+[00:30:02] >> yeah,
+[00:30:03] yeah, >> then it doesn't really solve it.
+[00:30:04] it. >> By the way, this is why I think it's
+[00:30:06] it's like such a big pro. Like the reason I
+[00:30:08] think that this is such a big problem is
+[00:30:10] because for the life of me, I can't
+[00:30:12] think of any obvious technical solutions
+[00:30:14] here.
+[00:30:15] >> It's like what Matthew Prince said last
+[00:30:17] last night, like we're going to everyone's
+[00:30:18] just going to have to weather a storm
+[00:30:20] and we're going to come out the other
+[00:30:21] side of this with more secure software.
+[00:30:23] I think like I don't
+[00:30:25] >> Yeah, I agree with that.
+[00:30:26] that. >> So yeah, my version of this is I'm going
+[00:30:28] going to buy a gun and point it at my Apple
+[00:30:30] TV. Like I'm just like if it makes any
+[00:30:34] noise or does anything weird, it dies
+[00:30:36] that moment.
+[00:30:38] >> And it's impossible to buy a gun in this
+[00:30:40] this country by the way. Like but no like I I
+[00:30:42] I need to like completely distrust all
+[00:30:45] my devices. By the way, this is again
+[00:30:46] you're back to this like Kenton Varda
+[00:30:48] being like right 6 months ago. That's
+[00:30:49] the that's the full tweet by the way
+[00:30:51] that he was right six months ago.
+[00:30:52] >> Oh, I am curious what happens with all
+[00:30:55] all of the open claws and the Hermes Asians
+[00:30:58] and like you have all of these
+[00:31:01] agents that are like running right now
+[00:31:04] in the background. Dangerously skip
+[00:31:05] permissions with full access to a
+[00:31:07] computer.
+[00:31:08] >> Yeah.
+[00:31:09] Yeah. >> Like,
+[00:31:11] Like, wait. All right. So, Dylan, wait. Let's
+[00:31:14] say that you were a 5% on the this is a
+[00:31:16] big problem right now. Have we kicked it
+[00:31:18] up to 8%.
+[00:31:22] I will say that I still at my like the
+[00:31:25] my very core belief here is that at the
+[00:31:29] end of the day for any given
+[00:31:32] AI and agent and AI and agent action
+[00:31:36] there is a human accountable and
+[00:31:39] humans should be held accountable for
+[00:31:42] the actions of these agents and I think
+[00:31:46] I I don't think there's a a clear
+[00:31:48] technical answer and I I think I I have
+[00:31:52] been convinced that it is a bigger issue
+[00:31:53] probably than what I was imagining uh
+[00:31:56] beyond just sandboxing. But at the same
+[00:31:58] time, I think there's certainly a lot
+[00:32:01] more to be done here. Um
+[00:32:04] >> yeah.
+[00:32:04] yeah. >> Yeah. I also don't know like who's the
+[00:32:06] the moral authority on like what it does
+[00:32:08] alignment mean? Should we do a Hinduism
+[00:32:11] aligned model based on the Bhagat Gita
+[00:32:13] or like Christian Judo principles or the
+[00:32:15] Quran or like is religion the answer for
+[00:32:18] AI agents like bringing religion into
+[00:32:20] their lives? It might might not be the
+[00:32:22] worst idea.
+[00:32:23] >> No, you can put put Christianity in a
+[00:32:26] a skill file and
+[00:32:27] >> yeah, I assume it it fits in about that
+[00:32:30] that that context window. Also like
+[00:32:32] accountability like for me that one of
+[00:32:34] my favorite writers is this guy named
+[00:32:36] Q&M.
+[00:32:38] Sam Huges, he's written one of my
+[00:32:40] favorite books that has nothing to do
+[00:32:42] with AI, but you should read it anyway.
+[00:32:43] It's called There Is No Anti-Metatics
+[00:32:45] but he also has a book of uh
+[00:32:49] short stories called I think it's called
+[00:32:52] Valuable Humans in Transit and Other
+[00:32:54] Stories or something like that.
+[00:32:56] And in that there is a short story about
+[00:32:59] a self-driving car that is about to
+[00:33:03] into a human being. And the entire
+[00:33:07] story is that half a second like blown
+[00:33:10] up and all the decisions that it takes
+[00:33:13] and it gets weird like and uh it's it's
+[00:33:17] that that story I think is not freely
+[00:33:19] downloadable but you should buy the book
+[00:33:20] because he's a great writer. My question
+[00:33:22] to you was, okay, fine, your
+[00:33:23] self-driving Tesla uh hits uh somebody,
+[00:33:27] the non-driver sitting there
+[00:33:30] Is the programmer
+[00:33:32] responsible? Is Elon Musk directly
+[00:33:34] responsible? And on the basis of like
+[00:33:36] what? Like do they pass the buck up?
+[00:33:39] >> And we already have precedent for this.
+[00:33:41] this. I feel like with plane crashes
+[00:33:43] uh
+[00:33:45] where you can like root cause a plane
+[00:33:48] crash and you can root cause a plane
+[00:33:51] crash and sometimes the it's resolved to
+[00:33:54] be like no fault and sometimes it's the
+[00:33:56] fault of the pilot
+[00:33:58] >> or it's one of those weird Boeings that
+[00:34:00] that crashes. Okay. Okay. Okay. Okay. Okay.
+[00:34:01] Fine.
+[00:34:02] >> So I I what I'm hearing is we're not
+[00:34:04] not we're not solving alignment on this uh
+[00:34:06] on this podcast episode. So, uh, so
+[00:34:09] given that,
+[00:34:09] >> I don't know, Dylan, you said you're
+[00:34:10] you're always right. So, if you say we're going
+[00:34:12] to solve it, then we will like. So,
+[00:34:15] >> we'll we'll keep, uh, I'm sure we'll be
+[00:34:17] be revisiting this issue probably more and
+[00:34:20] more frequently than I think we would
+[00:34:21] have expected. But in lie of that, uh,
+[00:34:24] Ree, it is time for you to give the
+[00:34:27] people what they want. Please walk us
+[00:34:29] through your agentic engineering uh,
+[00:34:31] workflow and how you're building
+[00:34:33] Executor.
+[00:34:37] One of the things we're trying to really
+[00:34:39] do on this show and we'll probably
+[00:34:41] continue to do over time is show how the
+[00:34:43] three of us are working with AI
+[00:34:46] day-to-day. One of our core thesis
+[00:34:49] uh is that best
+[00:34:52] practices, tooling, and workflows
+[00:34:55] uh have yet to be discovered. There's
+[00:34:56] not good alignment alignment on best
+[00:34:59] practices here and how to get best
+[00:35:01] results, consistent results. And I think
+[00:35:03] there's a lot of noise and a lot of
+[00:35:04] yapping about things that don't work,
+[00:35:05] token maxing, yapping, etc. Um, and I
+[00:35:08] don't think there's great guidance
+[00:35:09] coming out of the labs who are driving a
+[00:35:11] lot of this. So, the three of us work
+[00:35:13] with AI all day every day. And, uh, we
+[00:35:17] want to share with you guys how we are
+[00:35:19] getting hopefully uh, somewhat decent
+[00:35:22] results.
+[00:35:23] >> Cool. Let's dive into it. Um, I think
+[00:35:25] think the first thing that I'll call out is
+[00:35:27] like I don't love my agentic engineering
+[00:35:31] setup at the moment. It's got a lot of
+[00:35:33] concepts that I like in it. Um, but
+[00:35:37] overall like I feel like I'm still
+[00:35:39] struggling to get good outputs from the
+[00:35:42] model. I think what's tough is if you
+[00:35:44] have a very clear vision about what
+[00:35:45] you're building or um like very clear
+[00:35:48] architecture that they're very helpful
+[00:35:50] for that. or if you um go hands off and
+[00:35:55] let the agent kind of take the wheel, uh
+[00:35:57] it can also produce good outputs. But if
+[00:36:00] there's this like weird middle ground
+[00:36:02] where you're like trying to work with
+[00:36:04] the agent as like a peer and like that's
+[00:36:06] where I like find a bit more pain. But
+[00:36:09] yeah, let's dive into sort of what I've
+[00:36:11] landed on on liking. The first thing
+[00:36:13] that I'll kind of call out is I've moved
+[00:36:16] away from uh using individual projects
+[00:36:21] and I just have this kind of big working
+[00:36:23] directory. Um and so like this working
+[00:36:27] directory has like all of my projects in
+[00:36:29] it uh specifically for like um useful
+[00:36:33] software which is the name of the
+[00:36:35] company that I have. um it's got like
+[00:36:38] all of the uh folders that I work across
+[00:36:41] in it. Um and the reason for this is
+[00:36:46] sometimes I'll need to uh so I've got
+[00:36:48] like three main repos that I work in.
+[00:36:50] There's this emulate repo which is a
+[00:36:52] fork of emulate from VLE labs. Um and
+[00:36:57] I've got a bunch of emulators deployed
+[00:37:00] uh for like the X API uh Google Vel etc.
+[00:37:05] Um, so that way I don't have to like
+[00:37:06] make off credentials to them. And then
+[00:37:09] I've got executor, which is uh my
+[00:37:12] project that basically it's like an MCP
+[00:37:15] gateway, but it lets you integrate with
+[00:37:16] more than MCP. The goal of that one is
+[00:37:18] basically it gives you a way to connect
+[00:37:21] connect all of your agents to every like
+[00:37:24] service you depend depend on in a secure
+[00:37:26] way. And then I've got another project
+[00:37:28] which is integrations.sh SH which is
+[00:37:31] to be like a kind of open source
+[00:37:33] registry of hey here's services here are
+[00:37:36] the APIs they have um and so a lot of
+[00:37:40] these projects like intermingle like for
+[00:37:41] example if I'm developing something on
+[00:37:43] executor I'll find that I need to
+[00:37:46] emulate a specific a credential um and
+[00:37:49] so in my chats I'll kind of mention to
+[00:37:52] the agent hey you can go work and
+[00:37:53] emulate and make the changes that you'll
+[00:37:57] require um and since it's not
+[00:38:00] constrained in a specific project. Um, I
+[00:38:04] find it's just able to work better in
+[00:38:06] that way. I get the benefit since it's
+[00:38:08] just me working on these at the moment
+[00:38:09] that I don't have to like go through a
+[00:38:11] PR uh review process for Emulate.
+[00:38:15] Another thing is since emulate is just
+[00:38:16] like an internal tool uh for myself. Um,
+[00:38:20] I'm fine with that one just getting like
+[00:38:22] published uh by the agent, which I think
+[00:38:25] um
+[00:38:26] >> I do think there's a real
+[00:38:28] real >> Sorry, go ahead. Okay.
+[00:38:31] Okay. >> Oh, uh you you have to like pick the
+[00:38:33] the trade-offs that you want to to make. In
+[00:38:36] case, I'm like optimizing for speed
+[00:38:37] and their internal tools and so like I'm
+[00:38:39] fine with uh the agent like working more
+[00:38:42] autonomously in a repo like emulate. I
+[00:38:44] think even despite uh being a solo dev
+[00:38:47] at the moment, I think there is a ton of
+[00:38:50] benefit to working in a monor repo
+[00:38:53] structure like this. Um
+[00:38:55] >> Oh yeah, absolutely.
+[00:38:56] absolutely. >> Like just having like the I think the
+[00:38:58] the core thing you're solving here is giving
+[00:38:59] the agent access to everything it needs,
+[00:39:02] which is like at Cloudflare it can be
+[00:39:04] kind of a pain because we don't we don't
+[00:39:05] have a monor repo. we have thousands of
+[00:39:08] repos dispersed over the place and we
+[00:39:10] today we solve this with um a
+[00:39:13] combination of MCP servers whether
+[00:39:15] that's GitLab uh we have some you know
+[00:39:17] internal basically registries of like
+[00:39:20] where do I look for what codebase uh
+[00:39:22] mapping that to places but I have to
+[00:39:24] imagine now because agents are so good
+[00:39:26] at working across problems and repos
+[00:39:29] that uh we are probably burning a ton of
+[00:39:31] tokens for the agents going to figure
+[00:39:34] out what other repos they need to look
+[00:39:36] in and get information from rather than
+[00:39:37] it just being right there on disk. So
+[00:39:40] I'm I'm personally of the mind that like
+[00:39:42] monor repos are the way of agentic
+[00:39:45] engineering at the moment.
+[00:39:46] >> I think I'm already sold on the idea of
+[00:39:49] of not running it inside a project anymore.
+[00:39:51] Like you said like uh any non-trivial
+[00:39:53] you're going to do it across repos
+[00:39:55] or packages anyway like so either full
+[00:39:57] monorreo or in the cloudflare context
+[00:40:00] just make like I'm probably just going
+[00:40:01] to ask it to run wild on my work folder.
+[00:40:04] Hey, what's that big number that I just
+[00:40:06] saw, by the way?
+[00:40:07] >> That's the YC countdown. Let's see other
+[00:40:10] other things I've got set up here. I'll go
+[00:40:12] more into um
+[00:40:16] like how I work now. So, that's the like
+[00:40:18] that's the first thing is a big folder
+[00:40:20] with all my projects in it. Uh just like
+[00:40:23] I noticed that the agent was really
+[00:40:25] struggling when I was in project
+[00:40:27] specific folders, especially with like
+[00:40:29] how different harnesses work. Um, so
+[00:40:32] then
+[00:40:33] this agents MD is agent written. It
+[00:40:35] probably needs to be cleaned up. Um, I
+[00:40:40] generally actually don't like agents MDs
+[00:40:43] in or agents MD is really interesting
+[00:40:46] because I actually think it's one of
+[00:40:47] like the most important files that you
+[00:40:48] can have, but none of the tools
+[00:40:50] represented properly. Right now I have
+[00:40:53] this agents MD and it kind of it has
+[00:40:56] like a little bit about how I I don't
+[00:40:58] think that this is adding any value to
+[00:40:59] be honest. Uh there's like engineering
+[00:41:01] constraints. I it will probably just
+[00:41:03] ignore that. Um but like it mentions
+[00:41:07] like oh how to make changes uh how to
+[00:41:10] pull in like tools in memory. It doesn't
+[00:41:12] auto I have like a note in here to not
+[00:41:15] automatically pull from memory but like
+[00:41:18] um I like it have I'm using Gbrain for
+[00:41:22] the memory setup. I I don't actually use
+[00:41:24] that one uh that much anymore, but like
+[00:41:28] I just needed a place to store markdown
+[00:41:30] files. Um what I found with memory is
+[00:41:33] that like any automatic reads from it uh
+[00:41:37] screw up the model, but like if I just
+[00:41:39] explicitly say store this, pull this,
+[00:41:42] then it works a lot better. Um I have
+[00:41:45] some of the I have some skills around um
+[00:41:50] is that kind of
+[00:41:53] see
+[00:41:55] uh no anyway there's some there's some
+[00:41:57] skills that are like around how to use
+[00:42:00] like Slack law or Xcurel those kind of
+[00:42:03] things so that way I can give the model
+[00:42:05] uh a message that's like oh pull this in
+[00:42:07] from Slack or pull this in from Twitter.
+[00:42:10] Can I ask what what harness are you
+[00:42:13] primarily using and like what models?
+[00:42:16] >> I'm mainly using claude code with fable
+[00:42:18] fable at the moment. Um
+[00:42:21] >> is this code that you're using?
+[00:42:23] using? >> This this is called desktop. Um the
+[00:42:26] the workflow that I kind of like is
+[00:42:28] basically our like pin chats. Um like
+[00:42:31] trying trying to basically aggressively
+[00:42:33] archive and um pin chats. And so like
+[00:42:38] once something gets merged, I haven't
+[00:42:40] cleaned cleaned this up in a little bit.
+[00:42:42] Um, but once something gets merged, I'll
+[00:42:44] like archive that chat and like try and
+[00:42:45] keep my like blocking space pretty
+[00:42:47] clear. Oh yeah, back to the agent MD. So
+[00:42:50] like it's it's this is basically just
+[00:42:52] like how the agent knows to since it's
+[00:42:54] all my projects in one folder. It's like
+[00:42:56] how the agent knows to route to the
+[00:42:58] different projects. The call out that I
+[00:43:00] wanted to make on agent 7D is like it's
+[00:43:03] interesting how I would say important
+[00:43:05] this file is in that you can like give
+[00:43:07] this upfront context to the agent
+[00:43:09] >> so that way it doesn't have to like
+[00:43:12] like reinvent that every time. But like when
+[00:43:15] I like look at Claude right now like I
+[00:43:18] don't know how many tokens my agents MD
+[00:43:20] is using. I don't know how many skills
+[00:43:22] I've got loaded. Like you have all these
+[00:43:24] things that like screw up the model and
+[00:43:27] you just kind of like
+[00:43:29] have to notice it.
+[00:43:30] >> I mean, you could just use a better
+[00:43:32] better harness like Pi.
+[00:43:34] >> I could just use a better harness like
+[00:43:35] like Pi. I have a I have Ben Davis's Pi
+[00:43:38] setup.
+[00:43:39] >> Doesn't Ben Davis's Pi setup include
+[00:43:43] include Gary Stack.
+[00:43:45] >> Uh I don't know. I don't think it would
+[00:43:48] would I don't think it includes Gstack. I
+[00:43:50] think his obsession with Gstack is more
+[00:43:52] like oh this is how we should be
+[00:43:54] thinking about the software where it's
+[00:43:55] like oh you can represent a lot more as
+[00:43:57] markdown files now uh the only the thing
+[00:44:00] that if pi had a desktop app I'd be
+[00:44:02] using it but um and I I can't go back to
+[00:44:06] the terminal interfaces here's like an
+[00:44:08] interesting one on
+[00:44:11] getting into more workflow stuff in that
+[00:44:13] like um executor has this pretty good
+[00:44:16] end toend setup the test setup um where
+[00:44:21] like the agent has basically the ability
+[00:44:23] to run the dev server itself and then go
+[00:44:26] reproduce problems uh using like
+[00:44:29] playright or uh this is like the admin
+[00:44:32] API it can like create uh it can create
+[00:44:36] connections do API calls all in end to
+[00:44:39] end tests and so what's cool about this
+[00:44:42] setup is like I just gave it some uh a
+[00:44:44] like vague prompt that was like hey I
+[00:44:46] got this feedback go figure it out go
+[00:44:48] reproduce in an end to end test. Um,
+[00:44:52] and then I get this uh failing end to
+[00:44:54] end test uh that I can like watch the
+[00:44:58] recording of and see okay after you
+[00:45:00] reconnected or credential like it's not
+[00:45:03] doing the refresh automatically. Um, and
+[00:45:08] that was actually kind of a big unlock
+[00:45:10] for me for actually getting good results
+[00:45:11] out of the models. um it sort of gets
+[00:45:14] into the loop stuff where it's like you
+[00:45:15] give the agent the ability to reproduce
+[00:45:18] its own problems. The other thing is
+[00:45:22] um for like investigating
+[00:45:25] anything against production um I've got
+[00:45:29] exeutor added. Um
+[00:45:32] so this is exeutor. It's a project that
+[00:45:34] I've been working on. Um it's a MCP
+[00:45:38] gateway that like has all has all my
+[00:45:40] connections in it. Uh, and so like I've
+[00:45:43] got like my Gmail added. I've got um
+[00:45:46] post dog sentry like everything that I
+[00:45:48] kind of depend on. Uh, and so I can say
+[00:45:51] give a prompt that's like um
+[00:45:54] use executor checkum
+[00:45:57] how many MCP calls
+[00:46:01] have been made today. Uh, and what's
+[00:46:06] like very helpful about that is
+[00:46:10] if the so I've got like a nice um open
+[00:46:13] telemetry setup with axiom and uh effect
+[00:46:17] exporting to that and so there the agent
+[00:46:20] can basically go like investigate any
+[00:46:22] logs uh and um similar thing with I've
+[00:46:27] got like planet scale added so it can
+[00:46:29] pull from the production database. It's
+[00:46:31] all going through executor for his
+[00:46:32] permissions and so like any it just gets
+[00:46:35] read only access by default and then I
+[00:46:37] have to approve um any rights uh and so
+[00:46:43] like I still get to benefit from um
+[00:46:46] >> they should have open AI should have
+[00:46:47] have gave gave their agent executor.
+[00:46:50] >> Yeah,
+[00:46:52] Yeah, it's running through um maybe we'll
+[00:46:55] speed this pod up uh just because
+[00:46:57] sometimes it takes a little bit. Um, oh,
+[00:47:00] there we go. I'm not going to do too
+[00:47:02] many queries cuz I I don't want to like
+[00:47:03] pull in customer info. Um, but
+[00:47:08] yeah, this has been like very helpful
+[00:47:11] just in terms of like yeah, I can send
+[00:47:13] it off on a uh production issue. I think
+[00:47:17] what's interesting on workflows that I
+[00:47:20] don't have yet is like what we've been
+[00:47:22] talking about on like you can solve more
+[00:47:24] problems of inference where it's like I
+[00:47:27] would love to have an agent that's like
+[00:47:29] constantly looking for weird things in
+[00:47:31] the logs or like slow slowness and like
+[00:47:34] making PRs to fix any of that. Um it's
+[00:47:37] just like it starts to get too hands off
+[00:47:40] for me to uh be comfortable with it. And
+[00:47:44] do you think when you say hands off, do
+[00:47:46] you mean that like
+[00:47:48] you feel like you don't have your own
+[00:47:51] good enough observability over the like
+[00:47:53] what's missing that you're not doing
+[00:47:55] that?
+[00:47:56] >> One is a good way to run it. So
+[00:48:00] So I don't know. I have like a Linux
+[00:48:01] desktop uh and I just need to like get
+[00:48:05] agent set up on that. Um but so like one
+[00:48:09] is a good way to run it. The other is
+[00:48:11] like the house of cards of inference. I
+[00:48:13] like I Dex had that one tweet that's
+[00:48:15] like you set up your loops, you like do
+[00:48:19] your software factory and then six
+[00:48:21] months later there's an incident and you
+[00:48:23] don't know what's going on.
+[00:48:24] >> Um
+[00:48:26] Um >> I'm like hesitant to
+[00:48:29] to defer more to the machines, but at the
+[00:48:32] same time it's like there's been uh
+[00:48:36] I don't know. I've like had bad commits
+[00:48:38] that if I had an agent monitoring the
+[00:48:40] logs autonomously, it would have caught
+[00:48:41] that. Uh, same.
+[00:48:44] >> So,
+[00:48:45] So, it's a very weird
+[00:48:48] >> I feel like I'm also
+[00:48:50] also >> Sorry to cut you off. I feel like I'm
+[00:48:52] I'm also in the place where like I want I
+[00:48:55] guess this more inference. I want kind
+[00:48:57] of more fine grain agents doing these
+[00:48:59] things. But like
+[00:49:01] I both at the same time I I don't have
+[00:49:04] time to spend the time to do it. And
+[00:49:06] two, it feels like I the path to getting
+[00:49:11] there feels really hard. Like how does
+[00:49:14] it run? When does it run? How does it
+[00:49:17] get credentials
+[00:49:19] things like and maybe that's an internal
+[00:49:20] Cloudflare problem um and process or
+[00:49:23] whatever, but
+[00:49:26] I can see like I see the appeal of
+[00:49:28] having that, but it feels hard to do
+[00:49:31] right now. I I had a tweet that was
+[00:49:33] like, I'm surprised we don't have more
+[00:49:35] proactive agents. Uh like we we don't
+[00:49:38] have that Claude code moment for
+[00:49:40] proactive agents. And
+[00:49:42] >> it's what Boris Stain is building with
+[00:49:44] with Poly Lane, right?
+[00:49:46] >> Yeah, I'm excited for that one. Um, but
+[00:49:49] but even with Poly Lane, like it's um what
+[00:49:52] what's interesting on that is like
+[00:49:54] there's like other forms of proactive
+[00:49:56] agents where it's like um I don't know,
+[00:49:59] my Slack notifications are broken and so
+[00:50:01] I'll miss like Slack notifications. I
+[00:50:03] should really like like I should have an
+[00:50:05] agent that can just like page me if
+[00:50:06] something's important kind of a thing.
+[00:50:09] Uh or like can
+[00:50:12] be more proactive in that sense. I know
+[00:50:14] that there there's like a bunch of
+[00:50:15] existing tools. Uh like you can do this
+[00:50:17] with Hermes agents and crrons and all
+[00:50:20] this stuff. Uh but the point of that one
+[00:50:22] tweet was that like yes there's a
+[00:50:24] million tools to do this but there's not
+[00:50:27] like the claude code moment where like
+[00:50:29] everyone is getting on it.
+[00:50:31] >> Um
+[00:50:33] Um >> something I forgot to mention is in my
+[00:50:36] my um setup here I use rift for workspaces.
+[00:50:39] You can't command F in okay workspaces.
+[00:50:44] Um so it has a skill on so rift is this
+[00:50:47] project by uh anomaly that's like an
+[00:50:50] alternative to get work trees in my like
+[00:50:53] agents MD I basically say hey whenever
+[00:50:56] we're doing something when whenever
+[00:50:58] we're doing new work spin up a rift
+[00:51:00] workspace and like manage it yourself
+[00:51:02] and so I don't like use the built-in
+[00:51:03] tree tools um I just have the agent
+[00:51:06] manage it because
+[00:51:08] that like it sometimes you need to pull
+[00:51:11] in things between work trees and like it
+[00:51:14] any of the limitations that get put on
+[00:51:15] their agents uh become annoying. I don't
+[00:51:18] know. It's a setup I'm still like
+[00:51:20] playing around with. There's a lot of
+[00:51:22] concepts I like in it. Um and it's been
+[00:51:24] very helpful. Uh but at the same time,
+[00:51:26] I'm still just like figuring out how you
+[00:51:29] do
+[00:51:29] >> so
+[00:51:30] so >> engineering in this new world.
+[00:51:32] world. >> Let's say you need to you want to
+[00:51:33] to implement a new feature and you kind of
+[00:51:35] like vaguely understand what you want
+[00:51:37] and the architecture you want behind it
+[00:51:39] or how it should be implemented. How are
+[00:51:41] you going from
+[00:51:43] new session to pull requests with code
+[00:51:47] you're relatively happy about?
+[00:51:49] >> I'll kind of brain dump it using I'm on
+[00:51:52] on whisper flow at the moment but uh
+[00:51:54] there's like a million speech to text
+[00:51:56] options. Hex is a good
+[00:51:58] >> shout out creator of open code and
+[00:52:01] and effect.
+[00:52:02] Um, so I'll like brain dump it and then
+[00:52:07] I'll figure out shape like data wise and
+[00:52:11] SDK-wise and then I'll let the model go
+[00:52:15] implement it and then I have it make
+[00:52:18] a pull request uh for me using my uh
+[00:52:22] using the like GitHub CLI and then I'll
+[00:52:24] like review that pull request.
+[00:52:28] The main thing I'm looking for on that
+[00:52:30] pull request is like all things in the
+[00:52:33] right uh location. Um
+[00:52:38] >> like code in folder wise.
+[00:52:41] wise. >> Yeah, like um
+[00:52:43] um I can show sorry to call you out kits.
+[00:52:46] Uh, but like this was a this was like an
+[00:52:49] example of like a poll request that's
+[00:52:51] like agent generated that I'm reviewing
+[00:52:53] and like um
+[00:52:56] >> I can already tell he used a GPT model.
+[00:53:00] model. >> Yeah. Um, but like what what comes out
+[00:53:03] out as weird to me on like this pull request
+[00:53:05] is like okay it's coolify but like we're
+[00:53:08] making a change to like plugins open API
+[00:53:12] uh and like it's adding coolify specific
+[00:53:15] logic uh
+[00:53:17] >> into like the core plugin. So like what
+[00:53:21] what I would probably do on this one is like
+[00:53:22] I would take the SP request uh give it
+[00:53:24] to my agent and be like hey go read the
+[00:53:26] diff understand the changes okay like
+[00:53:29] what are the goals of the changes and
+[00:53:31] then okay let's find a better place for
+[00:53:33] the like to put that logic or solve that
+[00:53:36] differently yeah and then I like review
+[00:53:38] the pull request um I also I'll have it
+[00:53:41] do end toend tests those I found very
+[00:53:43] useful um the end to end tests so the
+[00:53:47] unit tests are basically useless with
+[00:53:49] the
+[00:53:50] Uh I've don't think I've ever seen it
+[00:53:51] write like useful unit tests. Uh it
+[00:53:55] always kind of like cheats and reward
+[00:53:56] hacks them. Uh and so the end toend test
+[00:54:00] setup that I have in Executor, it like
+[00:54:03] actually runs the dev server. What I
+[00:54:05] think about is how do I test the
+[00:54:08] application? Okay, so I test the
+[00:54:09] application over like making calls
+[00:54:11] through an MCP or I test it through
+[00:54:14] using like a browser and interacting
+[00:54:17] with the website or I will like um use
+[00:54:20] an agent uh well using an agent MCP and
+[00:54:24] so like I see if we can see that in this
+[00:54:27] test example um yeah I have like yield
+[00:54:30] browser here and like yield API um and
+[00:54:34] so it
+[00:54:37] I don't know this has been like a test
+[00:54:38] setup that I've been playing with and
+[00:54:40] trying to find something that I like.
+[00:54:42] Um, but it like is able to yield the
+[00:54:45] surfaces basically. Uh,
+[00:54:47] >> yeah.
+[00:54:47] yeah. >> And can then interact with them just
+[00:54:51] just >> do you only have it run against a local
+[00:54:53] local dev server or do you have it is it
+[00:54:56] configurable that you could point it at
+[00:54:57] like a staging or a production as well?
+[00:55:00] >> It's configurable. Uh I think that's
+[00:55:02] that's your target configures that um but yeah
+[00:55:06] it can run against uh so executor has
+[00:55:11] like a self-hosted version on that's
+[00:55:13] on docker and it's got like a cloud
+[00:55:15] version.
+[00:55:16] >> This is the kind of thing I need to like
+[00:55:17] like I have end to end good end like I have a
+[00:55:19] lot of end to end coverage on artifacts
+[00:55:21] but I don't have
+[00:55:24] it as organized and as easy to write as
+[00:55:27] a system like this and I need to spend
+[00:55:28] more time. I also like could you talk a
+[00:55:30] little bit about how you um how you
+[00:55:32] force your agents to show verification
+[00:55:35] to you of completeness and correctness?
+[00:55:39] >> Yeah. Um
+[00:55:41] Um let me pull up the the end to end test
+[00:55:43] view. So target is pluggable on
+[00:55:47] on completeness. It depends a little
+[00:55:49] bit. Um, so like the
+[00:55:54] UI is easiest here because
+[00:55:57] uh anything in the UI like if I'm like,
+[00:55:59] "Oh, this is this drop down isn't
+[00:56:01] working." Uh, I will generally just be
+[00:56:03] like, "Oh, go produce a recording of the
+[00:56:05] drop down not working." Uh, and I can
+[00:56:08] like see from the recording that the the
+[00:56:12] bug exists and then I can see from the
+[00:56:14] recording that the bug is fixed. um
+[00:56:18] for other things. Oh, yeah. So, here's
+[00:56:21] the um
+[00:56:23] >> Oh, this is nice.
+[00:56:24] nice. >> Mhm.
+[00:56:25] Mhm. >> Yeah, I'm I'm still playing around with
+[00:56:26] with it. Um
+[00:56:28] >> and for reference for anyone listening,
+[00:56:30] listening, Reese is showing a he it's it appears
+[00:56:32] that you've built a app that shows the
+[00:56:35] results of end to end tests.
+[00:56:37] >> Yeah. run locally and it's on like a
+[00:56:39] a local host port and it's just showing
+[00:56:41] each test case and it looks like there
+[00:56:43] is uh proof inside the you can click
+[00:56:46] into a test case and it has the proof
+[00:56:48] like a a screen recording.
+[00:56:50] >> Yeah. What's interesting so I haven't
+[00:56:52] haven't found a good way to prove like API only
+[00:56:55] ones yet. Those I think you need to like
+[00:56:58] represent the state of the database or
+[00:57:00] and like show that and show how
+[00:57:02] mutations occur. Also, what's helpful is
+[00:57:04] like it has there's a desktop app for
+[00:57:06] Executor. Um, and like it can drive it
+[00:57:10] in a VM. Uh, similar. So, was like a
+[00:57:13] Linux one. Uh, here's like a Mac OS one.
+[00:57:17] Um,
+[00:57:19] so that's all been there's like a lot of
+[00:57:22] surface area that Exeutor has. Uh, and
+[00:57:24] this has been very helpful for like
+[00:57:26] covering that surface area.
+[00:57:28] >> That's cool. I need to point my agent at
+[00:57:30] at your repo and get some ideas.
+[00:57:33] There's interesting things to learn from
+[00:57:34] it. Um I I actually think that like
+[00:57:38] there's
+[00:57:39] there's a much better version of what
+[00:57:41] this is to be built. I would say uh
+[00:57:44] >> I kind of want you to go into a little
+[00:57:46] little more detail about that. Like you started
+[00:57:47] off by saying that you're not happy with
+[00:57:49] this, but it's clearly productive.
+[00:57:52] Uh and it's quite straightforward. The
+[00:57:55] main thing I've been struggling with at
+[00:57:56] the moment is like I have some data
+[00:57:59] model stuff to figure out for executor
+[00:58:01] and I've been like stuck on uh
+[00:58:06] how I like build that out and the model
+[00:58:10] is like not helpful for it. I can like
+[00:58:13] go I can sort of show that in the like
+[00:58:17] this chat. So like I mean like trying to
+[00:58:19] prototype out like um like one of the
+[00:58:22] things for executor that I'm like trying
+[00:58:23] to build out at the moment is first
+[00:58:26] version of it was like it's like good
+[00:58:28] but like I want to move to
+[00:58:31] um code execution for everything. So
+[00:58:34] that way like if an integration doesn't
+[00:58:36] fit cleanly into like an open API spec
+[00:58:38] or GraphQL that kind of a thing then the
+[00:58:40] model can just go like write its own
+[00:58:42] integration and have access to it. And
+[00:58:45] then you get into things that are like
+[00:58:48] okay so for like the local version that
+[00:58:51] would be like filebacked and so you
+[00:58:53] would have these you would have like two
+[00:58:55] spaces you'd have like two spaces and it
+[00:58:59] would be able to like
+[00:59:02] read from those spaces but then like
+[00:59:04] okay if you want to like share your VEL
+[00:59:06] key between those two like where does
+[00:59:08] that live or if you're like configuring
+[00:59:12] like an engineering toolkit and you want
+[00:59:15] to everyone to use the same data dog API
+[00:59:17] key, but then you want each person's
+[00:59:19] like personal oorthth. Um, I've like
+[00:59:22] found that it's incredibly unhelpful for
+[00:59:25] those types of questions where I'm like,
+[00:59:27] okay, there's like some
+[00:59:30] there's some really nice primitives here
+[00:59:31] that I need to find. And like whenever I
+[00:59:34] try and prototype stuff with it,
+[00:59:36] >> it like like it loves to introduce this
+[00:59:39] this like dotbind concept. Uh, and I'm like,
+[00:59:42] "Nope, that's going to cause issues."
+[00:59:44] >> Yeah.
+[00:59:45] Yeah. >> Um, for like the space of known stuff,
+[00:59:48] stuff, it works really well for uh, but for
+[00:59:51] like when you get into and I guess just
+[00:59:55] like engineering problems. When you get
+[00:59:56] into the space of unknown things, that's
+[00:59:58] where I've like had more frustrations
+[01:00:00] with them. I'm
+[01:00:00] >> curious like for this problem in
+[01:00:02] in particular if you've tried like Matt
+[01:00:04] Hookox's grill me skill.
+[01:00:06] >> I have. It's not been super helpful. I
+[01:00:09] I think what was interesting is I like was
+[01:00:11] like okay let's try doing like a big re
+[01:00:14] let's try doing like a rework of it and
+[01:00:16] I ended up with like a million mockdown
+[01:00:18] file list all of the decisions
+[01:00:22] on executor
+[01:00:26] uh I what's it this is I feel like one
+[01:00:29] of the you know how um genpha doesn't
+[01:00:32] know how to use a file system because
+[01:00:34] everything
+[01:00:35] >> you just did you just use this for ls
+[01:00:37] ls basically that's what
+[01:00:38] >> yeah because like Jennifer doesn't know
+[01:00:40] know how to use a file system cuz they've
+[01:00:41] just been using Chromebooks and they
+[01:00:43] have have really good search and so
+[01:00:45] everything like goes into Google Drive
+[01:00:47] and then they just like search in Google
+[01:00:50] Drive to find things
+[01:00:51] >> that gives me anxiety
+[01:00:53] anxiety >> and I'm realizing that I'm now Gen Alpha
+[01:00:57] Alpha I'm not Gen Alpha but like I was like oh
+[01:00:59] actually where are all of these um
+[01:01:02] decision documents made and I don't know
+[01:01:05] where
+[01:01:07] uh let's see if I can find them. Um I
+[01:01:09] don't know. I tried like the growing
+[01:01:11] stuff. Oh yeah. So you know how it gets
+[01:01:13] into like the you know how it loves the
+[01:01:16] um
+[01:01:17] >> Yeah.
+[01:01:18] Yeah. >> like it will bullet point things.
+[01:01:21] things. >> These are like your A2 to A4 D3 to
+[01:01:26] to >> Yeah, it loves doing that.
+[01:01:29] that. >> Um so yeah, I mean I've tried like
+[01:01:31] like grilling myself on it. Um,
+[01:01:35] and
+[01:01:36] >> or if you're at Microsoft drilling
+[01:01:38] drilling yourself.
+[01:01:42] >> Um,
+[01:01:45] I don't know. I just I haven't found it
+[01:01:47] to be like I I think what's was
+[01:01:49] fascinating is there's actually so many
+[01:01:50] decisions to be made. Uh, and maybe this
+[01:01:54] is this is also where I where I get into
+[01:01:56] like fighting the models, I would say.
+[01:01:59] Yeah.
+[01:01:59] >> Um where I was listening to to the um
+[01:02:04] um founder of Gum Loop talk about working
+[01:02:07] with AI and he was like what's great
+[01:02:10] about AI is I no longer have to make all
+[01:02:13] of these decisions. It's like if I need
+[01:02:15] to get OF working I don't have to like
+[01:02:17] pick where the state goes or I don't
+[01:02:19] have to like figure out what the
+[01:02:20] callback URL shape for that is. Like if
+[01:02:22] you like think about the amount of
+[01:02:24] decisions that go into engineering
+[01:02:26] something um AI can like make a lot of
+[01:02:30] those for you then I like don't like the
+[01:02:32] decisions that it makes.
+[01:02:34] >> Do you think maybe this is a problem and
+[01:02:36] and this is something I run like I I relearn
+[01:02:38] this lesson every two weeks with AI. It
+[01:02:40] takes a ton of discipline to not scope
+[01:02:43] work too big because
+[01:02:45] it feels like you can get you can you
+[01:02:48] will build trust in a model over time to
+[01:02:50] do more and more work and then it's like
+[01:02:52] oh I went too big and now I've got slop
+[01:02:54] like do you think if you scoped down to
+[01:02:56] like one API or one primitive and like
+[01:02:59] this is the like
+[01:03:00] >> tiny little thing I need to solve I just
+[01:03:01] just don't know like grill me on this one
+[01:03:03] slice do you think that would make
+[01:03:04] improvements or is that like already
+[01:03:06] what you're doing? Uh yeah, I would say
+[01:03:08] that I definitely overcope things with
+[01:03:11] AI now. Uh which like I was like, "Oh, I
+[01:03:14] can do this big rework of the executor
+[01:03:17] re repo because we've got these amazing
+[01:03:18] models now and I see people having all
+[01:03:20] this success with them." And I like
+[01:03:22] burned a bunch of time on that and I
+[01:03:23] mean I learned a bunch from it. Um, but
+[01:03:27] at the same time, like I had a tweet on
+[01:03:29] this where I was like, if I like go
+[01:03:30] slowly and I like kick off research
+[01:03:33] tasks with them and like do a lot of the
+[01:03:35] driving with implementation, I'm like
+[01:03:37] very happy with the results.
+[01:03:39] >> But if I like try and get the like
+[01:03:42] like leverage from them or like um
+[01:03:46] do the like speed ups or whatever is
+[01:03:48] like advertised
+[01:03:49] every time.
+[01:03:50] >> It's so hard to not do that. Like I know
+[01:03:53] know better. I've learned this lesson over
+[01:03:55] and over and over again and I still keep
+[01:03:58] making the mistake. Like I don't know
+[01:03:59] how to force that discipline into my
+[01:04:02] workflow to not do that. And yeah, I
+[01:04:05] think that's part of like what's
+[01:04:06] exhausting too.
+[01:04:08] >> Yeah, it's also interesting because like
+[01:04:11] like I mean you maybe you just have to ignore
+[01:04:13] the model companies because the model
+[01:04:14] companies on every release are like you
+[01:04:17] can dream so much bigger and you can do
+[01:04:19] so much more now. I don't know. It's
+[01:04:22] every time that I've tried to, unless
+[01:04:24] I'm just like fighting the weights or
+[01:04:25] something, but like every time I've
+[01:04:27] tried to, uh, I haven't gotten great
+[01:04:30] results. That's been interesting.
+[01:04:32] >> Well, anything else you uh want to show
+[01:04:34] show us here, Ree? Anything important?
+[01:04:37] >> I think that's everything. Um, I want
+[01:04:39] want someone to do a good version of this end
+[01:04:42] to end test setup. It's like not bad.
+[01:04:44] Uh, but there's like a lot more to be
+[01:04:48] done around visualizing API calls and
+[01:04:51] database state is like the next big
+[01:04:53] thing that I would want from this. I
+[01:04:55] feel like that maybe is just something
+[01:04:56] that has to be built per project. But
+[01:04:59] yeah,
+[01:04:59] >> I was just kind of thinking like this
+[01:05:00] this would be nice to just have naturally
+[01:05:02] integrated into like my harness like
+[01:05:03] herder and pi.
+[01:05:05] >> Yeah. Um, oh, also what's interesting
+[01:05:08] interesting with agents, I don't know if you guys
+[01:05:09] have run into this, but like because
+[01:05:12] you're not running type check or you're
+[01:05:14] not running lint, I had agents like that
+[01:05:16] were going going off and like a sub
+[01:05:18] agent would go work for an hour and I'd
+[01:05:20] be like, what the hell is going on
+[01:05:21] there? And I found out that like the end
+[01:05:24] to end test setup was like slow or like
+[01:05:26] type check was slow. Uh, but I wasn't
+[01:05:28] like running those commands and so I had
+[01:05:31] like no idea that all this time was
+[01:05:32] getting lost on these bash commands. I
+[01:05:34] recently did that too. I went and
+[01:05:36] optimized all of the testing, make sure
+[01:05:38] I had parallelism and concurrency set up
+[01:05:40] correctly. And
+[01:05:41] >> I I think what's fascinating about the
+[01:05:43] the tools is like they're just not things
+[01:05:45] like CL code. Like so many of the tools
+[01:05:47] are like hang-ups from how we used to
+[01:05:50] Uh and now there's this like very
+[01:05:53] different way of working that's like a
+[01:05:55] lot of these problems are like
+[01:05:56] detectable and solvable. So I'm very
+[01:05:58] very excited to see what people come up
+[01:06:00] with.
+[01:06:01] >> Yeah. Well folks, that's a wrap. Uh
+[01:06:04] Uh we'll be back soon with more opinions,
+[01:06:06] predictions, new workflows, uh whatever
+[01:06:09] Sunnil happens to be excited or angry
+[01:06:12] about. Uh follow the show wherever
+[01:06:14] you're watching or listening and tell us
+[01:06:15] what you think in the comments below.
+[01:06:18] >> Yeah, another two weeks. Uh probably
+[01:06:21] probably another guest, maybe another workflow.
+[01:06:24] Uh or God knows what's changed in the
+[01:06:27] world by then, right? Um but we'll be
+[01:06:29] back.
+[01:06:30] >> Thanks. See you guys next time. See y
