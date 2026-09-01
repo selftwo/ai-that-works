@@ -247,12 +247,14 @@ function validateEpisodeFolder(folderPath: string, options?: LintOptions, allFol
 function findEpisodeFolders(rootPath: string): string[] {
   const entries = readdirSync(rootPath);
   const episodeFolders: string[] = [];
+  // Folders that look like episode dates but are not episodes (selftwo custom corpora)
+  const ignoredFolders = new Set(['2026-08-18-next-token-show']);
   
   for (const entry of entries) {
     const fullPath = join(rootPath, entry);
     const stat = statSync(fullPath);
     
-    if (stat.isDirectory() && entry.match(/^\d{4}-\d{2}-\d{2}-/)) {
+    if (stat.isDirectory() && entry.match(/^\d{4}-\d{2}-\d{2}-/) && !ignoredFolders.has(entry)) {
       episodeFolders.push(fullPath);
     }
   }

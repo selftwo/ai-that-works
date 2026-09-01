@@ -1,6 +1,68 @@
 {
   "episodes": [
     {
+      "folder": "2026-09-01-code-mode-extensible-software",
+      "guid": "aitw-072",
+      "title": "Code Mode for Extensible Software",
+      "description": "Making software extensible has always involved designing good and flexible interfaces (e.g. vs code extensions, iphone apps). But the most flexible interface is code, and today Vaibhav's gonna share some very futuristic ideas on what the next generation of customizable tools looks like.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/code-mode-extensible-software",
+      "eventDate": "2026-09-01T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/playlist?list=PLi60mUelRAbFqfgymVfZttlkIyt0XHZjt",
+        "type": "video/youtube"
+      },
+      "links": {
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-09-01-code-mode-extensible-software"
+      },
+      "season": 2,
+      "episode": 72,
+      "isPast": false,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-08-25-software-factory-design-patterns",
+      "guid": "aitw-071",
+      "title": "Software Factory Design Patterns",
+      "description": "In this episode, we'll talk about key interfaces and how they fit together in the modern software factory, what you could buy vs build, what you should always own, across compute, dev environment, harness, and orchestration. We'll dig into how sessions / traces / artifacts / plans all become perrs of code in the new forge / system of record for software\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/software-factory-design",
+      "eventDate": "2026-08-25T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=tGbjIvvYuHE",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=tGbjIvvYuHE",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-25-software-factory-design-patterns"
+      },
+      "season": 2,
+      "episode": 71,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-08-18-syncs-and-ab-testing-200-agents",
+      "guid": "aitw-070",
+      "title": "syncs and A/B testing 200 agents",
+      "description": "We've got a special two-part episode for you this week! We brought on two guests to tackle two massive technical challenges in production AI:\n\nWhat actually happens when you spin up 200 agents in parallel to run real A/B tests?\n\nHow do you cleanly sync data all the way from raw state, through your agent layer, down to the frontend?\n\nTune in for practical takeaways on scaling agent infrastructure that works.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/syncs-and-ab-testing",
+      "eventDate": "2026-08-18T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=GF7dnSlCM4U",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=GF7dnSlCM4U",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-18-syncs-and-ab-testing-200-agents"
+      },
+      "season": 2,
+      "episode": 70,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
       "folder": "2026-08-11-unconference-recap",
       "guid": "aitw-069",
       "title": "Unconference RECAP",
@@ -1508,15 +1570,15 @@
     }
   ],
   "meta": {
-    "totalEpisodes": 72,
-    "completedEpisodes": 68,
-    "upcomingEpisodes": 0,
+    "totalEpisodes": 75,
+    "completedEpisodes": 70,
+    "upcomingEpisodes": 1,
     "workshops": 3,
     "seasons": [
       1,
       2
     ],
-    "lastUpdated": "2026-08-15T01:16:29.873Z",
+    "lastUpdated": "2026-09-01T14:09:04.276Z",
     "generatedBy": "validate-metadata.ts"
   }
 }
